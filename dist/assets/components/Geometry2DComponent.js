@@ -1,4 +1,4 @@
-/* X_ITE v15.1.8 */
+/* X_ITE v15.1.9 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -78,7 +78,7 @@ function Arc2DOptions (executionContext)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40));
 }
 
 Object .setPrototypeOf (Arc2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype);
@@ -105,7 +105,7 @@ function ArcClose2DOptions (executionContext)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40));
 }
 
 Object .setPrototypeOf (ArcClose2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype);
@@ -144,7 +144,7 @@ function Circle2DOptions (executionContext)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40));
 }
 
 Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
@@ -235,7 +235,7 @@ function Disk2DOptions (executionContext)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40))
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "dimension", new (external_X_ITE_X3D_Fields_default()).SFInt32 (40));
 
    this .diskTexCoords = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();
    this .diskNormals   = external_X_ITE_X3D_X3DGeometryNode_default().createArray ();

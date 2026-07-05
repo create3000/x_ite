@@ -1,4 +1,4 @@
-/* X_ITE v15.1.8 */
+/* X_ITE v15.1.9 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -2001,7 +2001,7 @@ function uvSeam (i, dimension, points, pointIndex, seamIndex)
    }
 
    if (pointIndex .has (key))
-      seamIndex .set (i, pointIndex .get (key))
+      seamIndex .set (i, pointIndex .get (key));
    else
       pointIndex .set (key, i);
 }
@@ -4067,7 +4067,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, NURBS_X3
             uScale = uMax - uMin,
             vScale = vMax - vMin,
             offset = new (external_X_ITE_X3D_Vector3_default()) (uMin, vMin, 0),
-            scale  = new (external_X_ITE_X3D_Vector3_default()) (uScale, vScale, 1)
+            scale  = new (external_X_ITE_X3D_Vector3_default()) (uScale, vScale, 1);
 
          // Triangulate holes on unit square.
 

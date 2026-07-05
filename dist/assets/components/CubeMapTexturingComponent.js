@@ -1,4 +1,4 @@
-/* X_ITE v15.1.8 */
+/* X_ITE v15.1.9 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -151,6 +151,8 @@ function X3DEnvironmentTextureNode (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DEnvironmentTextureNode);
 
+   // Private properties
+
    const gl = this .getBrowser () .getContext ();
 
    this .target = gl .TEXTURE_CUBE_MAP;
@@ -163,24 +165,27 @@ function X3DEnvironmentTextureNode (executionContext)
       gl .TEXTURE_CUBE_MAP_POSITIVE_Y, // Top
       gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
    ];
-
-   this .size   = 1;
-   this .levels = 0;
 }
 
 Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (external_X_ITE_X3D_X3DSingleTextureNode_default()).prototype),
 {
+   initialize ()
+   {
+      external_X_ITE_X3D_X3DSingleTextureNode_default().prototype .initialize .call (this);
+
+      this .clearTexture ();
+   },
    getTarget ()
    {
       return this .target;
    },
-   getTextureType ()
-   {
-      return 4;
-   },
    getTargets ()
    {
       return this .targets;
+   },
+   getTextureType ()
+   {
+      return 4;
    },
    getSize ()
    {
@@ -298,10 +303,6 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
       const gl = this .getBrowser () .getContext ();
 
       this .frameBuffer = gl .createFramebuffer ();
-
-      // Upload default data.
-
-      this .clearTexture ();
 
       // Initialize.
 
@@ -523,10 +524,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    {
       CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
-      // Upload default data.
-
-      this .clearTexture ();
-
       // Initialize.
 
       this ._size .addInterest ("set_size__", this);
@@ -554,6 +551,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
+
+      // Dispose old framebuffer.
+
+      this .frameBuffer ?.dispose ();
 
       // Transfer 6 textures of size x size pixels.
 
@@ -804,10 +805,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
    {
       CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
       external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
-
-      // Upload default data.
-
-      this .clearTexture ();
 
       // Initialize.
 

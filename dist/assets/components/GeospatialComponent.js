@@ -1,4 +1,4 @@
-/* X_ITE v15.1.8 */
+/* X_ITE v15.1.9 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1599,7 +1599,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
          return previous + (childInlineNode .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE ||
             childInlineNode .checkLoadState () === (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
       },
-      0)
+      0);
 
       if (loaded !== 4)
          return;

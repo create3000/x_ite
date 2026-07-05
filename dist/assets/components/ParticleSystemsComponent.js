@@ -1,4 +1,4 @@
-/* X_ITE v15.1.8 */
+/* X_ITE v15.1.9 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -385,7 +385,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
       key += geometryType;
       key += createParticles && this .on ? 1 : 0;
       key += ".";
-      key += numColors
+      key += numColors;
       key += ".";
       key += numTexCoords;
       key += ".";
@@ -393,7 +393,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
       key += ".";
       key += numScales;
       key += ".";
-      key += numForces
+      key += numForces;
       key += ".";
       key += boundedHierarchyRoot;
 
@@ -407,7 +407,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
          gl      = browser .getContext (),
          defines = this .defines .slice ();
 
-      defines .push (`#define X3D_GEOMETRY_TYPE ${particleSystem .geometryType}`)
+      defines .push (`#define X3D_GEOMETRY_TYPE ${particleSystem .geometryType}`);
       defines .push (`${particleSystem .createParticles && this .on ? "#define X3D_CREATE_PARTICLES" : ""}`);
       defines .push (`#define X3D_NUM_COLORS ${particleSystem .numColors}`);
       defines .push (`#define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}`);
@@ -1201,7 +1201,7 @@ function SortComparator (vertices, axis)
    {
        return Math .min (vertices [a + axis], vertices [a + 4 + axis], vertices [a + 8 + axis]) <
               Math .min (vertices [b + axis], vertices [b + 4 + axis], vertices [b + 8 + axis]);
-   }
+   };
 }
 
 function Triangle (tree, triangle)
@@ -1293,8 +1293,8 @@ function Node (tree, triangles, first, size)
       v1 .set (vertices [t + 4], vertices [t + 5], vertices [t + 6]);
       v2 .set (vertices [t + 8], vertices [t + 9], vertices [t + 10]);
 
-      min .min (v0, v1, v2);
-      max .max (v0, v1, v2);
+      min .min (v0) .min (v1) .min (v2);
+      max .max (v0) .max (v1) .max (v2);
    }
 
    for (let i = 0; i < 5; ++ i)
@@ -3406,7 +3406,7 @@ Object .assign (Object .setPrototypeOf (WindPhysicsModel .prototype, ParticleSys
          {
             return false;
          }
-      }
+      };
    })(),
 });
 

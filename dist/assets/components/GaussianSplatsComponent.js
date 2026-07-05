@@ -1,4 +1,4 @@
-/* X_ITE v15.1.8 */
+/* X_ITE v15.1.9 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -150,7 +150,7 @@ precision highp int;precision highp float;precision highp sampler2D;precision hi
 #if defined(X3D_XR_SESSION)
 uniform mat4 x3d_EyeMatrix;
 #endif
-uniform vec2 x3d_FocalLength;uniform sampler2D x3d_PositionsTexture;uniform sampler2D x3d_ScalesTexture;uniform mediump sampler2D x3d_OrientationsTexture;uniform mediump sampler2D x3d_OpacitiesTexture;
+uniform int x3d_ViewpointType;uniform vec2 x3d_FocalLength;uniform sampler2D x3d_PositionsTexture;uniform sampler2D x3d_ScalesTexture;uniform mediump sampler2D x3d_OrientationsTexture;uniform mediump sampler2D x3d_OpacitiesTexture;
 #if!defined(X3D_POINTING_PASS)&&!defined(X3D_DEPTH_PASS)
 uniform mediump sampler2DArray x3d_SphericalHarmonicsTexture;
 #endif
@@ -173,7 +173,7 @@ const float SH_C3_0=-.5900435899266435;const float SH_C3_1=2.890611442640554;con
 #endif
 #endif
 #endif
-mat3 computeCov3D(const in vec4 rotation,const in vec3 scale){float qx=rotation.x;float qy=rotation.y;float qz=rotation.z;float qw=-rotation.w;float yy=qy*qy;float zz=qz*qz;float xy=qx*qy;float zw=qz*qw;float xz=qx*qz;float yw=qy*qw;float xx=qx*qx;float yz=qy*qz;float xw=qx*qw;mat3 R=mat3(1.-2.*(yy+zz),2.*(xy+zw),2.*(xz-yw),2.*(xy-zw),1.-2.*(zz+xx),2.*(yz+xw),2.*(xz+yw),2.*(yz-xw),1.-2.*(yy+xx));mat3 S=mat3(scale.x,0.,0.,0.,scale.y,0.,0.,0.,scale.z);mat3 M=S*R;mat3 Sigma=transpose(M)*M;return Sigma;}vec3 computeCov2D(const in vec3 viewSplatCenter,const in mat3 cov3D){float x=viewSplatCenter.x;float y=viewSplatCenter.y;float z=viewSplatCenter.z;float zz=z*z;mat3 J=mat3(x3d_FocalLength.x/z,0.,-(x3d_FocalLength.x*x)/zz,0.,x3d_FocalLength.y/z,-(x3d_FocalLength.y*y)/zz,0.,0.,0.);mat3 W=transpose(mat3(x3d_ModelViewMatrix));mat3 T=W*J;mat3 cov=transpose(T)*cov3D*T;cov[0][0]+=.3;cov[1][1]+=.3;return vec3(cov[0][0],cov[0][1],cov[1][1]);}
+mat3 computeCov3D(const in vec4 rotation,const in vec3 scale){float qx=rotation.x;float qy=rotation.y;float qz=rotation.z;float qw=-rotation.w;float yy=qy*qy;float zz=qz*qz;float xy=qx*qy;float zw=qz*qw;float xz=qx*qz;float yw=qy*qw;float xx=qx*qx;float yz=qy*qz;float xw=qx*qw;mat3 R=mat3(1.-2.*(yy+zz),2.*(xy+zw),2.*(xz-yw),2.*(xy-zw),1.-2.*(zz+xx),2.*(yz+xw),2.*(xz+yw),2.*(yz-xw),1.-2.*(yy+xx));mat3 S=mat3(scale.x,0.,0.,0.,scale.y,0.,0.,0.,scale.z);mat3 M=S*R;mat3 Sigma=transpose(M)*M;return Sigma;}vec3 computeCov2D(const in vec3 viewSplatCenter,const in mat3 cov3D){mat3 J;if(x3d_ViewpointType==0){float x=viewSplatCenter.x;float y=viewSplatCenter.y;float z=viewSplatCenter.z;float zz=z*z;J=mat3(x3d_FocalLength.x/z,0.,-(x3d_FocalLength.x*x)/zz,0.,x3d_FocalLength.y/z,-(x3d_FocalLength.y*y)/zz,0.,0.,0.);}else{J=mat3(x3d_FocalLength.x,0.,0.,0.,x3d_FocalLength.y,0.,0.,0.,0.);}mat3 W=transpose(mat3(x3d_ModelViewMatrix));mat3 T=W*J;mat3 cov=transpose(T)*cov3D*T;cov[0][0]+=.3;cov[1][1]+=.3;return vec3(cov[0][0],cov[0][1],cov[1][1]);}
 #if!defined(X3D_POINTING_PASS)&&!defined(X3D_DEPTH_PASS)
 vec3 computeColorFromSH(const in ivec2 texelCoord,const in vec3 splatCenter){vec3 sh0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,0),0).rgb;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
@@ -588,6 +588,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       gl .uniform4i (shaderNode .x3d_Viewport, ... viewport);
 
+      // Set uniform 0 for perspective and 1 for ortho viewpoint.
+      gl .uniform1i (shaderNode .x3d_ViewpointType, projectionMatrixArray [15]);
+
       // The projection matrix stores the focal length in the first and second element of the diagonal.
       // We need to convert from NDC space to screen space, which is done by multiplying with the
       // framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
@@ -653,6 +656,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
+
+      // Set uniform 0 for perspective and 1 for ortho viewpoint.
+      gl .uniform1i (shaderNode .x3d_ViewpointType, projectionMatrixArray [15]);
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
       // We need to convert from NDC space to screen space, which is done by multiplying with the
@@ -750,6 +756,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             "x3d_ScalesTexture",
             "x3d_OpacitiesTexture",
             "x3d_SphericalHarmonicsTexture",
+            "x3d_ViewpointType",
             "x3d_FocalLength",
          ],
       });
@@ -787,6 +794,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             "x3d_OrientationsTexture",
             "x3d_ScalesTexture",
             "x3d_OpacitiesTexture",
+            "x3d_ViewpointType",
             "x3d_FocalLength",
          ],
       });

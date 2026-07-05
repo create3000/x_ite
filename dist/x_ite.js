@@ -1,4 +1,4 @@
-/* X_ITE v15.1.8 */
+/* X_ITE v15.1.9 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 894
+/***/ 310
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 364
+/***/ 4
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 395
+/***/ 83
 (module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2027,7 +2027,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     if ( true ) {
 
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(228) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(726) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2258,7 +2258,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 872
+/***/ 384
 (module) {
 
 /**
@@ -7037,7 +7037,7 @@ if (true) {
 
 /***/ },
 
-/***/ 226
+/***/ 734
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7072,20 +7072,20 @@ Object .defineProperty (Namespace, "add",
 
 /***/ },
 
-/***/ 228
+/***/ 726
 (module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
 // Bundlers are able to synchronously require an ESM module from a CommonJS one.
-const { jQuery } = __webpack_require__( 44 );
+const { jQuery } = __webpack_require__( 454 );
 module.exports = jQuery;
 
 
 /***/ },
 
-/***/ 44
+/***/ 454
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7093,7 +7093,7 @@ module.exports = jQuery;
 /* harmony export */   jQuery: () => (/* binding */ jQuery)
 /* harmony export */ });
 /* unused harmony export $ */
-/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(226);
+/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(734);
 /*!
  * jQuery JavaScript Library v4.0.0+slim
  * https://jquery.com/
@@ -14035,7 +14035,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(226);
+var Namespace = __webpack_require__(734);
 ;// ./src/x_ite/Base/X3DConstants.js
 const X3DConstants =
 {
@@ -15262,7 +15262,7 @@ const Features_default_ = Features;
 
 /* harmony default export */ const x_ite_Features = (Namespace/* default */.A .add ("Features", Features_default_));
 ;// ./src/x_ite/Base/X3DObject.js
-/* provided dependency */ var $ = __webpack_require__(44).A;
+/* provided dependency */ var $ = __webpack_require__(454).A;
 
 
 
@@ -16141,7 +16141,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, Base_X3DChildOb
    {
       const array = [... this];
 
-      array .splice (start, deleteCount, ... insertValues)
+      array .splice (start, deleteCount, ... insertValues);
 
       return new (this .constructor) (array);
    },
@@ -16710,7 +16710,7 @@ Object .defineProperties (X3DField,
          });
       },
    },
-})
+});
 
 const X3DField_default_ = X3DField;
 ;
@@ -17546,7 +17546,7 @@ Object .assign (Color4,
    },
    lerp (a, b, t, r)
    {
-      // Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
+      // Linearly interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
       // Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
       const aa = a [3];
       Numbers_Color3 .lerp (a, b, t, r);
@@ -17564,6 +17564,16 @@ const Color4_default_ = Color4;
 
 
 
+const {
+   equals,
+   set,
+   toStream,
+   toVRMLStream,
+   toXMLStream,
+   toJSONStream,
+   toJSONStreamValue
+} = Fields_SFColor .prototype;
+
 function SFColorRGBA (r = 0, g = 0, b = 0, a = 0)
 {
    Base_X3DField .call (this, new Numbers_Color4 (+r, +g, +b, +a));
@@ -17579,12 +17589,12 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, Base_X3DField .p
    {
       return SFColorRGBA .fromValue (this .getValue () .copy ());
    },
-   equals: Fields_SFColor .prototype .equals,
+   equals,
    isDefaultValue ()
    {
       return this .getValue () .equals (Numbers_Color4 .TRANSPARENT);
    },
-   set: Fields_SFColor .prototype .set,
+   set,
    getHSVA ()
    {
       return this .getValue () .getHSVA ([ ]);
@@ -17623,11 +17633,11 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, Base_X3DField .p
          return result;
       };
    })(),
-   toStream: Fields_SFColor .prototype .toStream,
-   toVRMLStream: Fields_SFColor .prototype .toVRMLStream,
-   toXMLStream: Fields_SFColor .prototype .toXMLStream,
-   toJSONStream: Fields_SFColor .prototype .toJSONStream,
-   toJSONStreamValue: Fields_SFColor .prototype .toJSONStreamValue,
+   toStream,
+   toVRMLStream,
+   toXMLStream,
+   toJSONStream,
+   toJSONStreamValue,
 });
 
 for (const key of Object .keys (SFColorRGBA .prototype))
@@ -17995,40 +18005,22 @@ Object .assign (Vector2 .prototype,
       this .y = 1 / this .y;
       return this;
    },
-   lerp ({ x: dX, y: dY }, t)
+   lerp ({ x, y }, t)
    {
-      const { x, y } = this;
-
-      this .x = x + t * (dX - x);
-      this .y = y + t * (dY - y);
+      this .x += t * (x - this .x);
+      this .y += t * (y - this .y);
       return this;
    },
-   max (... args)
+   max ({ x, y })
    {
-      let { x, y } = this;
-
-      for (const { x: argX, y: argY } of args)
-      {
-         x = Math .max (x, argX);
-         y = Math .max (y, argY);
-      }
-
-      this .x = x;
-      this .y = y;
+      this .x = Math .max (this .x, x);
+      this .y = Math .max (this .y, y);
       return this;
    },
-   min (... args)
+   min ({ x, y })
    {
-      let { x, y } = this;
-
-      for (const { x: argX, y: argY } of args)
-      {
-         x = Math .min (x, argX);
-         y = Math .min (y, argY);
-      }
-
-      this .x = x;
-      this .y = y;
+      this .x = Math .min (this .x, x);
+      this .y = Math .min (this .y, y);
       return this;
    },
    multiply (value)
@@ -18241,45 +18233,25 @@ Object .assign (Vector3 .prototype,
       this .z = 1 / this .z;
       return this;
    },
-   lerp ({ x: dX, y: dY, z: dZ }, t)
+   lerp ({ x, y, z }, t)
    {
-      const { x, y, z } = this;
-
-      this .x = x + t * (dX - x);
-      this .y = y + t * (dY - y);
-      this .z = z + t * (dZ - z);
+      this .x += t * (x - this .x);
+      this .y += t * (y - this .y);
+      this .z += t * (z - this .z);
       return this;
    },
-   max (... args)
+   max ({ x, y, z })
    {
-      let { x, y, z } = this;
-
-      for (const { x: argX, y: argY, z: argZ } of args)
-      {
-         x = Math .max (x, argX);
-         y = Math .max (y, argY);
-         z = Math .max (z, argZ);
-      }
-
-      this .x = x;
-      this .y = y;
-      this .z = z;
+      this .x = Math .max (this .x, x);
+      this .y = Math .max (this .y, y);
+      this .z = Math .max (this .z, z);
       return this;
    },
-   min (... args)
+   min ({ x, y, z })
    {
-      let { x, y, z } = this;
-
-      for (const { x: argX, y: argY, z: argZ } of args)
-      {
-         x = Math .min (x, argX);
-         y = Math .min (y, argY);
-         z = Math .min (z, argZ);
-      }
-
-      this .x = x;
-      this .y = y;
-      this .z = z;
+      this .x = Math .min (this .x, x);
+      this .y = Math .min (this .y, y);
+      this .z = Math .min (this .z, z);
       return this;
    },
    multiply (value)
@@ -18505,12 +18477,12 @@ Object .assign (Matrix2 .prototype,
    {
       const { 0: a0, 1: a1, 2: a2, 3: a3 } = this;
 
-      var { 0: b0, 1: b1 } = matrix;
+      let { 0: b0, 1: b1 } = matrix;
 
       this [0] = a0 * b0 + a2 * b1;
       this [1] = a1 * b0 + a3 * b1;
 
-      var { 2: b0, 3: b1 } = matrix;
+      ({ 2: b0, 3: b1 } = matrix);
 
       this [2] = a0 * b0 + a2 * b1;
       this [3] = a1 * b0 + a3 * b1;
@@ -18521,12 +18493,12 @@ Object .assign (Matrix2 .prototype,
    {
       const { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
 
-      var { 0: a0, 1: a1 } = this;
+      let { 0: a0, 1: a1 } = this;
 
       this [0] = b0 * a0 + b2 * a1;
       this [1] = b1 * a0 + b3 * a1;
 
-      var { 2: a0, 3: a1 } = this;
+      ({ 2: a0, 3: a1 } = this);
 
       this [2] = b0 * a0 + b2 * a1;
       this [3] = b1 * a0 + b3 * a1;
@@ -19049,19 +19021,19 @@ Object .assign (Matrix3 .prototype,
 
       const { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this;
 
-      var { 0: b0, 1: b1, 2: b2 } = matrix;
+      let { 0: b0, 1: b1, 2: b2 } = matrix;
 
       this [0] = a0 * b0 + a3 * b1 + a6 * b2;
       this [1] = a1 * b0 + a4 * b1 + a7 * b2;
       this [2] = a2 * b0 + a5 * b1 + a8 * b2;
 
-      var { 3: b0, 4: b1, 5: b2 } = matrix;
+      ({ 3: b0, 4: b1, 5: b2 } = matrix);
 
       this [3] = a0 * b0 + a3 * b1 + a6 * b2;
       this [4] = a1 * b0 + a4 * b1 + a7 * b2;
       this [5] = a2 * b0 + a5 * b1 + a8 * b2;
 
-      var { 6: b0, 7: b1, 8: b2 } = matrix;
+      ({ 6: b0, 7: b1, 8: b2 } = matrix);
 
       this [6] = a0 * b0 + a3 * b1 + a6 * b2;
       this [7] = a1 * b0 + a4 * b1 + a7 * b2;
@@ -19075,19 +19047,19 @@ Object .assign (Matrix3 .prototype,
 
       const { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
 
-      var { 0: a0, 1: a1, 2: a2 } = this;
+      let { 0: a0, 1: a1, 2: a2 } = this;
 
       this [0] = a0 * b0 + a1 * b3 + a2 * b6;
       this [1] = a0 * b1 + a1 * b4 + a2 * b7;
       this [2] = a0 * b2 + a1 * b5 + a2 * b8;
 
-      var { 3: a0, 4: a1, 5: a2 } = this;
+      ({ 3: a0, 4: a1, 5: a2 } = this);
 
       this [3] = a0 * b0 + a1 * b3 + a2 * b6;
       this [4] = a0 * b1 + a1 * b4 + a2 * b7;
       this [5] = a0 * b2 + a1 * b5 + a2 * b8;
 
-      var { 6: a0, 7: a1, 8: a2 } = this;
+      ({ 6: a0, 7: a1, 8: a2 } = this);
 
       this [6] = a0 * b0 + a1 * b3 + a2 * b6;
       this [7] = a0 * b1 + a1 * b4 + a2 * b7;
@@ -19108,7 +19080,7 @@ Object .assign (Matrix3 .prototype,
 
          return vector;
       }
-      else
+      else // vector .length === 3
       {
          const { x, y, z } = vector;
 
@@ -19132,7 +19104,7 @@ Object .assign (Matrix3 .prototype,
 
          return vector;
       }
-      else
+      else // vector .length === 3
       {
          const { x, y, z } = vector;
 
@@ -19293,9 +19265,11 @@ Object .assign (Matrix3,
 {
    ZERO: Object .freeze (new Matrix3 (0)),
    IDENTITY: Object .freeze (new Matrix3 ()),
-   fromTransform (translation, rotation, scale, scaleOrientation, center)
+   fromMatrix2 (matrix)
    {
-      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
+      return new Matrix3 (matrix [0], matrix [1], 0,
+                          matrix [2], matrix [3], 0,
+                          0, 0, 1);
    },
    fromRotation (rotation)
    {
@@ -19307,11 +19281,9 @@ Object .assign (Matrix3,
                           -sinAngle, cosAngle, 0,
                            0, 0, 1);
    },
-   fromMatrix2 (matrix)
+   fromTransform (translation, rotation, scale, scaleOrientation, center)
    {
-      return new Matrix3 (matrix [0], matrix [1], 0,
-                          matrix [2], matrix [3], 0,
-                          0, 0, 1);
+      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
    },
 });
 
@@ -19488,50 +19460,28 @@ Object .assign (Vector4 .prototype,
       this .w = 1 / this .w;
       return this;
    },
-   lerp ({ x: dX, y: dY, z: dZ, w: dW }, t)
+   lerp ({ x, y, z, w }, t)
    {
-      const { x, y, z, w } = this;
-
-      this .x = x + t * (dX - x);
-      this .y = y + t * (dY - y);
-      this .z = z + t * (dZ - z);
-      this .w = w + t * (dW - w);
+      this .x += t * (x - this .x);
+      this .y += t * (y - this .y);
+      this .z += t * (z - this .z);
+      this .w += t * (w - this .w);
       return this;
    },
-   max (... args)
+   max ({ x, y, z, w })
    {
-      let { x, y, z, w } = this;
-
-      for (const { x: argX, y: argY, z: argZ, w: argW } of args)
-      {
-         x = Math .max (x, argX);
-         y = Math .max (y, argY);
-         z = Math .max (z, argZ);
-         w = Math .max (w, argW);
-      }
-
-      this .x = x;
-      this .y = y;
-      this .z = z;
-      this .w = w;
+      this .x = Math .max (this .x, x);
+      this .y = Math .max (this .y, y);
+      this .z = Math .max (this .z, z);
+      this .w = Math .max (this .w, w);
       return this;
    },
-   min (... args)
+   min ({ x, y, z, w })
    {
-      let { x, y, z, w } = this;
-
-      for (const { x: argX, y: argY, z: argZ, w: argW } of args)
-      {
-         x = Math .min (x, argX);
-         y = Math .min (y, argY);
-         z = Math .min (z, argZ);
-         w = Math .min (w, argW);
-      }
-
-      this .x = x;
-      this .y = y;
-      this .z = z;
-      this .w = w;
+      this .x = Math .min (this .x, x);
+      this .y = Math .min (this .y, y);
+      this .z = Math .min (this .z, z);
+      this .w = Math .min (this .w, w);
       return this;
    },
    multiply (value)
@@ -19667,6 +19617,21 @@ const Vector4_default_ = Vector4;
 
 
 
+const {
+   assign: Quaternion_assign,
+   equals: Quaternion_equals,
+   add,
+   divide,
+   dot,
+   multiply,
+   negate,
+   norm,
+   normalize,
+   squaredNorm,
+   subtract,
+   toString: Quaternion_toString
+} = Numbers_Vector4 .prototype;
+
 function Quaternion (x = 0, y = 0, z = 0, w = 1)
 {
    this .x = x;
@@ -19677,12 +19642,15 @@ function Quaternion (x = 0, y = 0, z = 0, w = 1)
 
 Object .assign (Quaternion .prototype,
 {
-   *[Symbol .iterator] ()
+   [Symbol .iterator]: Numbers_Vector4 .prototype [Symbol .iterator],
+   add,
+   assign: Quaternion_assign,
+   conjugate ()
    {
-      yield this .x;
-      yield this .y;
-      yield this .z;
-      yield this .w;
+      this .x = -this .x;
+      this .y = -this .y;
+      this .z = -this .z;
+      return this;
    },
    copy ()
    {
@@ -19692,159 +19660,22 @@ Object .assign (Quaternion .prototype,
       copy .z = this .z;
       copy .w = this .w;
       return copy;
-   },
-   assign ({ x, y, z, w })
-   {
-      this .x = x;
-      this .y = y;
-      this .z = z;
-      this .w = w;
-      return this;
-   },
-   set (x = 0, y = 0, z = 0, w = 1)
-   {
-      this .x = x;
-      this .y = y;
-      this .z = z;
-      this .w = w;
-      return this;
-   },
-   setMatrix (matrix)
-   {
-      // First, find largest diagonal in matrix:
-
-      const i = matrix [0] > matrix [4]
-         ? matrix [0] > matrix [8] ? 0 : 2
-         : matrix [4] > matrix [8] ? 1 : 2;
-
-      const scaleRow = matrix [0] + matrix [4] + matrix [8];
-
-      if (scaleRow > matrix [i * 3 + i])
-      {
-         // Compute w first:
-         this [3] = Math .sqrt (scaleRow + 1) / 2;
-
-         // And compute other values:
-         const d = 4 * this [3];
-         this [0] = (matrix [5] - matrix [7]) / d;
-         this [1] = (matrix [6] - matrix [2]) / d;
-         this [2] = (matrix [1] - matrix [3]) / d;
-      }
-      else
-      {
-         // Compute x, y, or z first:
-         const j = (i + 1) % 3;
-         const k = (i + 2) % 3;
-
-         // Compute first value:
-         this [i] = Math .sqrt (matrix [i * 3 + i] - matrix [j * 3 + j] - matrix [k * 3 + k] + 1) / 2;
-
-         // And the others:
-         const d = 4 * this [i];
-         this [j] = (matrix [i * 3 + j] + matrix [j * 3 + i]) / d;
-         this [k] = (matrix [i * 3 + k] + matrix [k * 3 + i]) / d;
-         this [3] = (matrix [j * 3 + k] - matrix [k * 3 + j]) / d;
-      }
-
-      return this;
-   },
-   getMatrix (matrix = new Numbers_Matrix3 ())
+   },   equals: Quaternion_equals,
+   divide,
+   dot,
+   exp ()
    {
       const { x, y, z, w } = this;
 
       const
-         a = x * x,
-         b = x * y,
-         c = y * y,
-         d = y * z,
-         e = z * x,
-         f = z * z,
-         g = w * x,
-         h = w * y,
-         i = w * z;
+         r  = Math .hypot (x, y, z),
+         et = Math .exp (w),
+         s  = r > 0 ? (et * Math .sin (r)) / r : 0;
 
-      matrix [0] = 1 - 2 * (c + f);
-      matrix [1] =     2 * (b + i);
-      matrix [2] =     2 * (e - h);
-
-      matrix [3] =     2 * (b - i);
-      matrix [4] = 1 - 2 * (f + a);
-      matrix [5] =     2 * (d + g);
-
-      matrix [6] =     2 * (e + h);
-      matrix [7] =     2 * (d - g);
-      matrix [8] = 1 - 2 * (c + a);
-
-      return matrix;
-   },
-   /**
-    * Sets the Euler components.
-    * @param {number} x - The angle of the x axis in radians.
-    * @param {number} y - The angle of the y axis in radians.
-    * @param {number} z - The angle of the z axis in radians.
-    * @param {string} order - A string representing the order that the rotations are applied.
-    * @returns {Quaternion} A reference to this quaternion.
-    */
-   setEuler (x, y, z, order = "XYZ")
-   {
-      // https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
-
-      x /= 2;
-      y /= 2;
-      z /= 2;
-
-      const
-         sx = Math .sin (x),
-         sy = Math .sin (y),
-         sz = Math .sin (z),
-         cx = Math .cos (x),
-         cy = Math .cos (y),
-         cz = Math .cos (z);
-
-      switch (order)
-      {
-         case "XYZ":
-            this .x = sx * cy * cz + cx * sy * sz;
-            this .y = cx * sy * cz - sx * cy * sz;
-            this .z = cx * cy * sz + sx * sy * cz;
-            this .w = cx * cy * cz - sx * sy * sz;
-            break;
-
-         case "ZYX":
-            this .x = sx * cy * cz - cx * sy * sz;
-            this .y = cx * sy * cz + sx * cy * sz;
-            this .z = cx * cy * sz - sx * sy * cz;
-            this .w = cx * cy * cz + sx * sy * sz;
-            break;
-
-         case "YXZ":
-            this .x = sx * cy * cz + cx * sy * sz;
-            this .y = cx * sy * cz - sx * cy * sz;
-            this .z = cx * cy * sz - sx * sy * cz;
-            this .w = cx * cy * cz + sx * sy * sz;
-            break;
-
-         case "ZXY":
-            this .x = sx * cy * cz - cx * sy * sz;
-            this .y = cx * sy * cz + sx * cy * sz;
-            this .z = cx * cy * sz + sx * sy * cz;
-            this .w = cx * cy * cz - sx * sy * sz;
-            break;
-
-         case "YZX":
-            this .x = sx * cy * cz + cx * sy * sz;
-            this .y = cx * sy * cz + sx * cy * sz;
-            this .z = cx * cy * sz - sx * sy * cz;
-            this .w = cx * cy * cz - sx * sy * sz;
-            break;
-
-         case "XZY":
-            this .x = sx * cy * cz - cx * sy * sz;
-            this .y = cx * sy * cz - sx * cy * sz;
-            this .z = cx * cy * sz + sx * sy * cz;
-            this .w = cx * cy * cz + sx * sy * sz;
-            break;
-      }
+      this .x = x * s;
+      this .y = y * s;
+      this .z = z * s;
+      this .w = et * Math .cos (r);
 
       return this;
    },
@@ -19970,60 +19801,102 @@ Object .assign (Quaternion .prototype,
 
       return euler;
    },
-   isReal ()
+   getMatrix (matrix = new Numbers_Matrix3 ())
    {
-      return !(this .x || this .y || this .z);
-   },
-   isImag ()
-   {
-      return !this .w;
-   },
-   equals ({ x, y, z, w })
-   {
-      return this .x === x &&
-             this .y === y &&
-             this .z === z &&
-             this .w === w;
-   },
-   negate ()
-   {
-      this .x = -this .x;
-      this .y = -this .y;
-      this .z = -this .z;
-      this .w = -this .w;
-      return this;
+      const { x, y, z, w } = this;
+
+      const
+         xx = x * x,
+         xy = x * y,
+         xw = x * w,
+         xz = x * z,
+         yy = y * y,
+         yw = y * w,
+         yz = y * z,
+         zz = z * z,
+         zw = z * w;
+
+      const
+         e0 = 1 - 2 * (yy + zz),
+         e1 =     2 * (xy + zw),
+         e2 =     2 * (xz - yw),
+         e3 =     2 * (xy - zw),
+         e4 = 1 - 2 * (xx + zz),
+         e5 =     2 * (xw + yz),
+         e6 =     2 * (xz + yw),
+         e7 =     2 * (yz - xw),
+         e8 = 1 - 2 * (xx + yy);
+
+      if (matrix .length === 9)
+      {
+         matrix [0] = e0;
+         matrix [1] = e1;
+         matrix [2] = e2;
+
+         matrix [3] = e3;
+         matrix [4] = e4;
+         matrix [5] = e5;
+
+         matrix [6] = e6;
+         matrix [7] = e7;
+         matrix [8] = e8;
+      }
+      else // matrix .length === 16
+      {
+         matrix [0]  = e0;
+         matrix [1]  = e1;
+         matrix [2]  = e2;
+         matrix [3]  = 0;
+         matrix [4]  = e3;
+         matrix [5]  = e4;
+         matrix [6]  = e5;
+         matrix [7]  = 0;
+         matrix [8]  = e6;
+         matrix [9]  = e7;
+         matrix [10] = e8;
+         matrix [11] = 0;
+         matrix [12] = 0;
+         matrix [13] = 0;
+         matrix [14] = 0;
+         matrix [15] = 1;
+      }
+
+      return matrix;
    },
    inverse ()
    {
       this .x = -this .x;
       this .y = -this .y;
       this .z = -this .z;
+
+      const squaredNorm = this .squaredNorm ();
+
+      if (squaredNorm)
+      {
+         this .x /= squaredNorm;
+         this .y /= squaredNorm;
+         this .z /= squaredNorm;
+         this .w /= squaredNorm;
+      }
+
       return this;
    },
-   add ({ x, y, z, w })
+   log ()
    {
-      this .x += x;
-      this .y += y;
-      this .z += z;
-      this .w += w;
+      const { x, y, z, w } = this;
+
+      const
+         r = Math .hypot (x, y, z),
+         t = r > 0 ? Math .atan2 (r, w) / r : 0;
+
+      this .x = x * t;
+      this .y = y * t;
+      this .z = z * t;
+      this .w = 0.5 * Math .log (x * x + y * y + z * z + w * w);
+
       return this;
    },
-   subtract ({ x, y, z, w })
-   {
-      this .x -= x;
-      this .y -= y;
-      this .z -= z;
-      this .w -= w;
-      return this;
-   },
-   multiply (value)
-   {
-      this .x *= value;
-      this .y *= value;
-      this .z *= value;
-      this .w *= value;
-      return this;
-   },
+   multiply,
    multLeft (quat)
    {
       const
@@ -20037,6 +19910,23 @@ Object .assign (Quaternion .prototype,
 
       return this;
    },
+   multQuatVec (vector)
+   {
+      // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Vector_rotation
+
+      const
+         { x: qx, y: qy, z: qz, w: qw } = this,
+         { x: vx, y: vy, z: vz } = vector,
+         tx = 2 * (qz * vy - qy * vz),
+         ty = 2 * (qx * vz - qz * vx),
+         tz = 2 * (qy * vx - qx * vy);
+
+      vector .x += qw * tx - qy * tz + qz * ty;
+      vector .y += qw * ty - qz * tx + qx * tz;
+      vector .z += qw * tz - qx * ty + qy * tx;
+
+      return vector;
+   },
    multRight (quat)
    {
       const
@@ -20048,14 +19938,6 @@ Object .assign (Quaternion .prototype,
       this .z = bw * az + bz * aw + bx * ay - by * ax;
       this .w = bw * aw - bx * ax - by * ay - bz * az;
 
-      return this;
-   },
-   divide (value)
-   {
-      this .x /= value;
-      this .y /= value;
-      this .z /= value;
-      this .w /= value;
       return this;
    },
    multVecQuat (vector)
@@ -20075,117 +19957,133 @@ Object .assign (Quaternion .prototype,
 
       return vector;
    },
-   multQuatVec (vector)
-   {
-      // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Vector_rotation
-
-      const
-         { x: qx, y: qy, z: qz, w: qw } = this,
-         { x: vx, y: vy, z: vz } = vector,
-         tx = 2 * (qz * vy - qy * vz),
-         ty = 2 * (qx * vz - qz * vx),
-         tz = 2 * (qy * vx - qx * vy);
-
-      vector .x += qw * tx - qy * tz + qz * ty;
-      vector .y += qw * ty - qz * tx + qx * tz;
-      vector .z += qw * tz - qx * ty + qy * tx;
-
-      return vector;
-   },
-   normalize ()
-   {
-      const length = Math .hypot (this .x, this .y, this .z, this .w);
-
-      if (length)
-      {
-         this .x /= length;
-         this .y /= length;
-         this .z /= length;
-         this .w /= length;
-      }
-
-      return this;
-   },
-   dot (quat)
-   {
-      return this .x * quat .x +
-             this .y * quat .y +
-             this .z * quat .z +
-             this .w * quat .w;
-   },
-   squaredNorm ()
-   {
-      const { x, y, z, w } = this;
-
-      return x * x +
-             y * y +
-             z * z +
-             w * w;
-   },
-   norm ()
-   {
-      return Math .hypot (this .x, this .y, this .z, this .w);
-   },
+   negate,
+   norm,
+   normalize,
    pow (exponent)
    {
-      if (exponent instanceof Quaternion)
-         return this .assign (e .assign (exponent) .multRight (this .log ()) .exp ());
+      if (typeof exponent === "number")
+         return this .log () .multiply (exponent) .exp ();
 
-      if (this .isReal ())
-         return this .set (0, 0, 0, this .w ** exponent);
-
-      const
-         l     = this .norm (),
-         theta = Math .acos (this .w / l),
-         li    = this .imag .norm (),
-         ltoe  = l ** exponent,
-         et    = exponent * theta,
-         scale = ltoe / li * Math .sin (et);
-
-      this .x *= scale;
-      this .y *= scale;
-      this .z *= scale;
-      this .w  = ltoe * Math .cos (et);
+      return this .log () .multLeft (exponent) .exp ();
+   },
+   set (x = 0, y = 0, z = 0, w = 1)
+   {
+      this .x = x;
+      this .y = y;
+      this .z = z;
+      this .w = w;
       return this;
    },
-   log ()
+   /**
+    * Sets the Euler components.
+    * @param {number} x - The angle of the x axis in radians.
+    * @param {number} y - The angle of the y axis in radians.
+    * @param {number} z - The angle of the z axis in radians.
+    * @param {string} order - A string representing the order that the rotations are applied.
+    * @returns {Quaternion} A reference to this quaternion.
+    */
+   setEuler (x, y, z, order = "XYZ")
    {
-      if (this .isReal ())
-      {
-         if (this .w > 0)
-            return this .set (0, 0, 0, Math .log (this .w));
+      // https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
 
-         else
-            return this .set (Math .PI, 0, 0, Math .log (-this .w));
+      x /= 2;
+      y /= 2;
+      z /= 2;
+
+      const
+         sx = Math .sin (x),
+         sy = Math .sin (y),
+         sz = Math .sin (z),
+         cx = Math .cos (x),
+         cy = Math .cos (y),
+         cz = Math .cos (z);
+
+      switch (order)
+      {
+         case "XYZ":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
+
+         case "ZYX":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
+
+         case "YXZ":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
+
+         case "ZXY":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
+
+         case "YZX":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
+
+         case "XZY":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
       }
 
-      const
-         l = this .norm (),
-         v = this .imag .normalize () .multiply (Math .acos (this .w / l)),
-         w = Math .log (l);
-
-      this .x = v .x;
-      this .y = v .y;
-      this .z = v .z;
-      this .w = w;
       return this;
    },
-   exp ()
+   setMatrix (matrix)
    {
-      if (this .isReal ())
-         return this .set (0, 0, 0, Math .exp (this .w));
+      // First, find largest diagonal in matrix:
 
-      const
-         i  = this .imag,
-         li = i .norm (),
-         ew = Math .exp (this .w),
-         w  = ew * Math .cos (li),
-         v  = i .multiply (ew * Math .sin (li) / li);
+      const i = matrix [0] > matrix [4]
+         ? matrix [0] > matrix [8] ? 0 : 2
+         : matrix [4] > matrix [8] ? 1 : 2;
 
-      this .x = v .x;
-      this .y = v .y;
-      this .z = v .z;
-      this .w = w;
+      const scaleRow = matrix [0] + matrix [4] + matrix [8];
+
+      if (scaleRow > matrix [i * 3 + i])
+      {
+         // Compute w first:
+         this [3] = Math .sqrt (scaleRow + 1) / 2;
+
+         // And compute other values:
+         const d = 4 * this [3];
+         this [0] = (matrix [5] - matrix [7]) / d;
+         this [1] = (matrix [6] - matrix [2]) / d;
+         this [2] = (matrix [1] - matrix [3]) / d;
+      }
+      else
+      {
+         // Compute x, y, or z first:
+         const
+            j = (i + 1) % 3,
+            k = (i + 2) % 3;
+
+         // Compute first value:
+         this [i] = Math .sqrt (matrix [i * 3 + i] - matrix [j * 3 + j] - matrix [k * 3 + k] + 1) / 2;
+
+         // And the others:
+         const d = 4 * this [i];
+         this [j] = (matrix [i * 3 + j] + matrix [j * 3 + i]) / d;
+         this [k] = (matrix [i * 3 + k] + matrix [k * 3 + i]) / d;
+         this [3] = (matrix [j * 3 + k] - matrix [k * 3 + j]) / d;
+      }
+
       return this;
    },
    slerp (destination, t)
@@ -20202,13 +20100,9 @@ Object .assign (Quaternion .prototype,
                                Math_Algorithm .slerp (t2 .assign (a), t3 .assign (b), t),
                                2 * t * (1 - t));
    },
-   toString ()
-   {
-      return this .x + " " +
-             this .y + " " +
-             this .z + " " +
-             this .w;
-   },
+   squaredNorm,
+   subtract,
+   toString: Quaternion_toString,
 });
 
 for (const key of Object .keys (Quaternion .prototype))
@@ -20236,24 +20130,6 @@ Object .defineProperties (Quaternion .prototype,
    {
       get () { return this .w; },
       set (value) { this .w = value; },
-   },
-   real:
-   {
-      get () { return this .w; },
-   },
-   imag:
-   {
-      get: (() =>
-      {
-         const result = new Numbers_Vector3 ();
-
-         return function ()
-         {
-            return result .set (this .x,
-                                this .y,
-                                this .z);
-         };
-      })(),
    },
 });
 
@@ -20300,7 +20176,6 @@ const
    t1 = new Quaternion (),
    t2 = new Quaternion (),
    t3 = new Quaternion (),
-   e  = new Quaternion (),
    Quaternion_m  = new Numbers_Matrix3 ();
 
 const Quaternion_default_ = Quaternion;
@@ -20319,15 +20194,11 @@ const
    _y          = Symbol (),
    _z          = Symbol (),
    _angle      = Symbol (),
+   Rotation4_tainted    = Symbol (),
    _quaternion = Symbol ();
 
 function Rotation4 (x = 0, y = 0, z = 1, angle = 0)
 {
-   this [_x]     = 0;
-   this [_y]     = 0;
-   this [_z]     = 1;
-   this [_angle] = 0;
-
    this [_quaternion] = new Numbers_Quaternion ();
 
    this .set (x, y, z, angle);
@@ -20337,34 +20208,53 @@ Object .assign (Rotation4 .prototype,
 {
    *[Symbol .iterator] ()
    {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
       yield this [_x];
       yield this [_y];
       yield this [_z];
       yield this [_angle];
    },
-   copy ()
-   {
-      const copy = Object .create (Rotation4 .prototype);
-
-      copy [_x]     = this [_x];
-      copy [_y]     = this [_y];
-      copy [_z]     = this [_z];
-      copy [_angle] = this [_angle];
-
-      copy [_quaternion] = this [_quaternion] .copy ();
-
-      return copy;
-   },
    assign (rotation)
    {
-      this [_x]     = rotation [_x];
-      this [_y]     = rotation [_y];
-      this [_z]     = rotation [_z];
-      this [_angle] = rotation [_angle];
+      if (rotation [Rotation4_tainted])
+      {
+         this [Rotation4_tainted] = true;
+      }
+      else
+      {
+         this [_x]       = rotation [_x];
+         this [_y]       = rotation [_y];
+         this [_z]       = rotation [_z];
+         this [_angle]   = rotation [_angle];
+         this [Rotation4_tainted] = false;
+      }
 
       this [_quaternion] .assign (rotation [_quaternion]);
 
       return this;
+   },
+   copy ()
+   {
+      const copy = Object .create (Rotation4 .prototype);
+
+      if (this [Rotation4_tainted])
+      {
+         copy [Rotation4_tainted] = true;
+      }
+      else
+      {
+         copy [_x]       = this [_x];
+         copy [_y]       = this [_y];
+         copy [_z]       = this [_z];
+         copy [_angle]   = this [_angle];
+         copy [Rotation4_tainted] = false;
+      }
+
+      copy [_quaternion] = this [_quaternion] .copy ();
+
+      return copy;
    },
    equals (rotation)
    {
@@ -20378,7 +20268,7 @@ Object .assign (Rotation4 .prototype,
       {
          const quaternion = this [_quaternion];
 
-         if (Math .abs (quaternion .w) > 1)
+         if (Math .abs (quaternion .w) >= 1)
          {
             return Numbers_Vector4 .Z_AXIS;
          }
@@ -20394,22 +20284,84 @@ Object .assign (Rotation4 .prototype,
             }
             else
             {
-               const axis = quaternion .imag .divide (scale);
-
-               return result .set (axis .x,
-                                   axis .y,
-                                   axis .z,
+               return result .set (quaternion .x / scale,
+                                   quaternion .y / scale,
+                                   quaternion .z / scale,
                                    angle);
             }
          }
       };
    })(),
+   getAxis (axis = new Numbers_Vector3 ())
+   {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
+      return axis .set (this [_x], this [_y], this [_z]);
+   },
+   getEuler (euler = [ ], order = "XYZ")
+   {
+      return this [_quaternion] .getEuler (euler, order);
+   },
+   getMatrix (matrix = new Numbers_Matrix3 ())
+   {
+      return this [_quaternion] .getMatrix (matrix);
+   },
+   getQuaternion (quaternion = new Numbers_Quaternion ())
+   {
+      return quaternion .assign (this [_quaternion]);
+   },
+   inverse ()
+   {
+      this [_quaternion] .conjugate ();
+
+      this [Rotation4_tainted] = true;
+
+      return this;
+   },
+   multLeft (rotation)
+   {
+      this [_quaternion] .multLeft (rotation [_quaternion]) .normalize ();
+
+      this [Rotation4_tainted] = true;
+
+      return this;
+   },
+   multRight (rotation)
+   {
+      this [_quaternion] .multRight (rotation [_quaternion]) .normalize ();
+
+      this [Rotation4_tainted] = true;
+
+      return this;
+   },
+   multRotVec (vector)
+   {
+      return this [_quaternion] .multQuatVec (vector);
+   },
+   multVecRot (vector)
+   {
+      return this [_quaternion] .multVecQuat (vector);
+   },
+   normalize ()
+   {
+      const rotation = this .get ();
+
+      this [_x]       = rotation .x;
+      this [_y]       = rotation .y;
+      this [_z]       = rotation .z;
+      this [_angle]   = rotation .w;
+      this [Rotation4_tainted] = false;
+
+      return this;
+   },
    set (x = 0, y = 0, z = 1, angle = 0)
    {
-      this [_x]     = x;
-      this [_y]     = y;
-      this [_z]     = z;
-      this [_angle] = angle;
+      this [_x]       = x;
+      this [_y]       = y;
+      this [_z]       = z;
+      this [_angle]   = angle;
+      this [Rotation4_tainted] = false;
 
       const scale = Math .hypot (x, y, z);
 
@@ -20431,9 +20383,41 @@ Object .assign (Rotation4 .prototype,
                                Math .cos (halfTheta));
       return this;
    },
+   setAxis (vector)
+   {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
+      this .set (vector .x, vector .y, vector .z, this [_angle]);
+   },
    setAxisAngle (axis, angle)
    {
       return this .set (axis .x, axis .y, axis .z, angle);
+   },
+   setEuler (x, y, z, order = "XYZ")
+   {
+      // Quaternion is then already normalized.
+      this [_quaternion] .setEuler (x, y, z, order);
+
+      this [Rotation4_tainted] = true;
+
+      return this;
+   },
+   setMatrix (matrix)
+   {
+      this [_quaternion] .setMatrix (matrix) .normalize ();
+
+      this [Rotation4_tainted] = true;
+
+      return this;
+   },
+   setQuaternion (quaternion)
+   {
+      this [_quaternion] .assign (quaternion) .normalize ();
+
+      this [Rotation4_tainted] = true;
+
+      return this;
    },
    setVectors: (() =>
    {
@@ -20460,8 +20444,9 @@ Object .assign (Rotation4 .prototype,
             // Parallel vectors
             // Check if they are pointing in the same direction.
             if (cos_angle > 0)
+            {
                this [_quaternion] .set (0, 0, 0, 1); // standard rotation
-
+            }
             // Ok, so they are parallel and pointing in the opposite direction
             // of each other.
             else
@@ -20491,97 +20476,25 @@ Object .assign (Rotation4 .prototype,
                                      Math .sqrt (Math .abs (1 + cos_angle) / 2));
          }
 
-         this .normalize ();
+         this [Rotation4_tainted] = true;
 
          return this;
       };
    })(),
-   getAxis (axis = new Numbers_Vector3 ())
-   {
-      return axis .set (this [_x], this [_y], this [_z]);
-   },
-   setAxis (vector)
-   {
-      this .set (vector .x, vector .y, vector .z, this [_angle]);
-   },
-   getEuler (euler = [ ], order = "XYZ")
-   {
-      return this [_quaternion] .getEuler (euler, order);
-   },
-   setEuler (x, y, z, order = "XYZ")
-   {
-      // Quaternion is then already normalized.
-      this [_quaternion] .setEuler (x, y, z, order);
-      this .normalize ();
-      return this;
-   },
-   getMatrix (matrix = new Numbers_Matrix3 ())
-   {
-      return this [_quaternion] .getMatrix (matrix);
-   },
-   setMatrix (matrix)
-   {
-      this [_quaternion] .setMatrix (matrix) .normalize ();
-      this .normalize ();
-      return this;
-   },
-   getQuaternion (quaternion = new Numbers_Quaternion ())
-   {
-      return quaternion .assign (this [_quaternion]);
-   },
-   setQuaternion (quaternion)
-   {
-      this [_quaternion] .assign (quaternion) .normalize ();
-      this .normalize ();
-      return this;
-   },
-   inverse ()
-   {
-      this [_quaternion] .inverse ();
-      this .normalize ();
-      return this;
-   },
-   multLeft (rotation)
-   {
-      this [_quaternion] .multLeft (rotation [_quaternion]) .normalize ();
-      this .normalize ();
-      return this;
-   },
-   multRight (rotation)
-   {
-      this [_quaternion] .multRight (rotation [_quaternion]) .normalize ();
-      this .normalize ();
-      return this;
-   },
-   multVecRot (vector)
-   {
-      return this [_quaternion] .multVecQuat (vector);
-   },
-   multRotVec (vector)
-   {
-      return this [_quaternion] .multQuatVec (vector);
-   },
-   normalize ()
-   {
-      const rotation = this .get ();
-
-      this [_x]     = rotation .x;
-      this [_y]     = rotation .y;
-      this [_z]     = rotation .z;
-      this [_angle] = rotation .w;
-
-      return this;
-   },
    slerp (dest, t)
    {
       this [_quaternion] .slerp (dest [_quaternion], t);
-      this .normalize ();
+
+      this [Rotation4_tainted] = true;
+
       return this;
    },
    squad (a, b, dest, t)
    {
       this [_quaternion] .squad (a [_quaternion], b [_quaternion], dest [_quaternion], t);
-      this .normalize ();
+
+      this [Rotation4_tainted] = true;
+
       return this;
    },
    /**
@@ -20623,6 +20536,9 @@ Object .assign (Rotation4 .prototype,
    })(),
    toString ()
    {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
       return this [_x] + " " +
              this [_y] + " " +
              this [_z] + " " +
@@ -20636,91 +20552,102 @@ for (const key of Object .keys (Rotation4 .prototype))
 const x = {
    get ()
    {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
       return this [_x];
    },
    set (x)
    {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
       this .set (x, this [_y], this [_z], this [_angle]);
    },
-   enumerable: true,
 };
 
 const y = {
    get ()
    {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
       return this [_y];
    },
    set (y)
    {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
       this .set (this [_x], y, this [_z], this [_angle]);
    },
-   enumerable: true,
 };
 
 const Rotation4_z = {
    get ()
    {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
       return this [_z];
    },
    set (z)
    {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
       this .set (this [_x], this [_y], z, this [_angle]);
    },
-   enumerable: true,
 };
 
 const angle = {
    get ()
    {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
       return this [_angle];
    },
    set (angle)
    {
+      if (this [Rotation4_tainted])
+         this .normalize ();
+
       this .set (this [_x], this [_y], this [_z], angle);
    },
-   enumerable: true,
 };
 
 Object .defineProperties (Rotation4 .prototype,
 {
    length: { value: 4 },
-   x: x,
-   y: y,
-   z: Rotation4_z,
-   angle: angle,
-});
-
-x     .enumerable = false;
-y     .enumerable = false;
-Rotation4_z     .enumerable = false;
-angle .enumerable = false;
-
-Object .defineProperties (Rotation4 .prototype,
-{
    0: x,
    1: y,
    2: Rotation4_z,
    3: angle,
+   x: Object .assign ({ enumerable: true }, x),
+   y: Object .assign ({ enumerable: true }, y),
+   z: Object .assign ({ enumerable: true }, Rotation4_z),
+   angle: Object .assign ({ enumerable: true }, angle),
 });
 
 Object .assign (Rotation4,
 {
    IDENTITY: Object .freeze (new Rotation4 ()),
-   fromVectors (fromVec, toVec)
+   fromEuler (x, y, z, order = "XYZ")
    {
-      return new Rotation4 () .setVectors (fromVec, toVec);
-   },
-   fromQuaternion (quaternion)
-   {
-      return new Rotation4 () .setQuaternion (quaternion);
+      return new Rotation4 () .setEuler (x, y, z, order);
    },
    fromMatrix (matrix)
    {
       return new Rotation4 () .setMatrix (matrix);
    },
-   fromEuler (x, y, z, order = "XYZ")
+   fromQuaternion (quaternion)
    {
-      return new Rotation4 () .setEuler (x, y, z, order);
+      return new Rotation4 () .setQuaternion (quaternion);
+   },
+   fromVectors (fromVec, toVec)
+   {
+      return new Rotation4 () .setVectors (fromVec, toVec);
    },
    spline (r0, r1, r2)
    {
@@ -20898,43 +20825,6 @@ Object .assign (Matrix4_Matrix4 .prototype,
          return this;
       };
    })(),
-   setRotation (rotation)
-   {
-      return this .setQuaternion (rotation .getQuaternion (q));
-   },
-   setQuaternion (quaternion)
-   {
-      const
-         { x, y, z, w } = quaternion,
-         yy = y * y,
-         zz = z * z,
-         xy = x * y,
-         zw = z * w,
-         xz = x * z,
-         yw = y * w,
-         xx = x * x,
-         yz = y * z,
-         xw = x * w;
-
-      this [0]  = 1 - 2 * (yy + zz);
-      this [1]  = 2 * (xy + zw);
-      this [2]  = 2 * (xz - yw);
-      this [3]  = 0;
-      this [4]  = 2 * (xy - zw);
-      this [5]  = 1 - 2 * (zz + xx);
-      this [6]  = 2 * (yz + xw);
-      this [7]  = 0;
-      this [8]  = 2 * (xz + yw);
-      this [9]  = 2 * (yz - xw);
-      this [10] = 1 - 2 * (yy + xx);
-      this [11] = 0;
-      this [12] = 0;
-      this [13] = 0;
-      this [14] = 0;
-      this [15] = 1;
-
-      return this;
-   },
    factor: (() =>
    {
       const
@@ -21093,28 +20983,28 @@ Object .assign (Matrix4_Matrix4 .prototype,
          12: a12, 13: a13, 14: a14, 15: a15
       } = this;
 
-      var { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
+      let { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
 
       this [ 0] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
       this [ 1] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
       this [ 2] = a02 * b0 + a06 * b1 + a10 * b2 + a14 * b3;
       this [ 3] = a03 * b0 + a07 * b1 + a11 * b2 + a15 * b3;
 
-      var { 4: b0, 5: b1, 6: b2, 7: b3 } = matrix;
+      ({ 4: b0, 5: b1, 6: b2, 7: b3 } = matrix);
 
       this [ 4] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
       this [ 5] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
       this [ 6] = a02 * b0 + a06 * b1 + a10 * b2 + a14 * b3;
       this [ 7] = a03 * b0 + a07 * b1 + a11 * b2 + a15 * b3;
 
-      var { 8: b0, 9: b1, 10: b2, 11: b3 } = matrix;
+      ({ 8: b0, 9: b1, 10: b2, 11: b3 } = matrix);
 
       this [ 8] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
       this [ 9] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
       this [10] = a02 * b0 + a06 * b1 + a10 * b2 + a14 * b3;
       this [11] = a03 * b0 + a07 * b1 + a11 * b2 + a15 * b3;
 
-      var { 12: b0, 13: b1, 14: b2, 15: b3 } = matrix;
+      ({ 12: b0, 13: b1, 14: b2, 15: b3 } = matrix);
 
       this [12] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
       this [13] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
@@ -21134,28 +21024,28 @@ Object .assign (Matrix4_Matrix4 .prototype,
          12: b12, 13: b13, 14: b14, 15: b15
       } = matrix;
 
-      var { 0: a0, 1: a1, 2: a2, 3: a3 } = this;
+      let { 0: a0, 1: a1, 2: a2, 3: a3 } = this;
 
       this [ 0] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
       this [ 1] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
       this [ 2] = a0 * b02 + a1 * b06 + a2 * b10 + a3 * b14;
       this [ 3] = a0 * b03 + a1 * b07 + a2 * b11 + a3 * b15;
 
-      var { 4: a0, 5: a1, 6: a2, 7: a3 } = this;
+      ({ 4: a0, 5: a1, 6: a2, 7: a3 } = this);
 
       this [ 4] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
       this [ 5] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
       this [ 6] = a0 * b02 + a1 * b06 + a2 * b10 + a3 * b14;
       this [ 7] = a0 * b03 + a1 * b07 + a2 * b11 + a3 * b15;
 
-      var { 8: a0, 9: a1, 10: a2, 11: a3 } = this;
+      ({ 8: a0, 9: a1, 10: a2, 11: a3 } = this);
 
       this [ 8] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
       this [ 9] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
       this [10] = a0 * b02 + a1 * b06 + a2 * b10 + a3 * b14;
       this [11] = a0 * b03 + a1 * b07 + a2 * b11 + a3 * b15;
 
-      var { 12: a0, 13: a1, 14: a2, 15: a3 } = this;
+      ({ 12: a0, 13: a1, 14: a2, 15: a3 } = this);
 
       this [12] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
       this [13] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
@@ -21178,7 +21068,7 @@ Object .assign (Matrix4_Matrix4 .prototype,
 
          return vector;
       }
-      else
+      else // vector .length === 4
       {
          const { x, y, z, w } = vector;
 
@@ -21204,7 +21094,7 @@ Object .assign (Matrix4_Matrix4 .prototype,
 
          return vector;
       }
-      else
+      else // vector .length === 4
       {
          const { x, y, z, w } = vector;
 
@@ -21248,7 +21138,7 @@ Object .assign (Matrix4_Matrix4 .prototype,
    },
    rotate (rotation)
    {
-      return this .multLeft (Matrix4_m .setQuaternion (rotation .getQuaternion (q)));
+      return this .multLeft (rotation .getMatrix (Matrix4_m));
    },
    scale (scale)
    {
@@ -21374,24 +21264,16 @@ Object .assign (Matrix4_Matrix4,
 {
    ZERO: Object .freeze (new Matrix4_Matrix4 (0)),
    IDENTITY: Object .freeze (new Matrix4_Matrix4 ()),
-   fromTransform (translation, rotation, scale, scaleOrientation, center)
-   {
-      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
-   },
-   fromRotation (rotation)
-   {
-      return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));
-   },
-   fromQuaternion (quaternion)
-   {
-      return Object .create (this .prototype) .setQuaternion (quaternion);
-   },
    fromMatrix3 (matrix)
    {
       return new Matrix4_Matrix4 (matrix [0], matrix [1], 0, 0,
                           matrix [3], matrix [4], 0, 0,
                           0, 0, 1, 0,
                           matrix [6], matrix [7], 0, 1);
+   },
+   fromRotation (rotation)
+   {
+      return rotation .getMatrix (Object .create (this .prototype));
    },
    fromSubMatrix (matrix)
    {
@@ -21400,11 +21282,13 @@ Object .assign (Matrix4_Matrix4,
                           matrix [6], matrix [7], matrix [8], 0,
                           0, 0, 0, 1);
    },
+   fromTransform (translation, rotation, scale, scaleOrientation, center)
+   {
+      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
+   },
 });
 
-const
-   q = new Numbers_Quaternion (),
-   Matrix4_m = new Matrix4_Matrix4 ();
+const Matrix4_m = new Matrix4_Matrix4 ();
 
 const Matrix4_default_ = Matrix4_Matrix4;
 ;
@@ -21781,7 +21665,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, Base_X3DField .protot
          if (node)
             return node .getField (name);
 
-         throw new Error ("SFNode is disposed.")
+         throw new Error ("SFNode is disposed.");
       };
    })(),
    addFieldCallback (... args)
@@ -21975,9 +21859,13 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, Base_X3DField .
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .add (quaternion .getValue ()));
    },
+   conjugate ()
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .conjugate ());
+   },
    divide (value)
    {
-      return SFQuaternion .fromValue (this .getValue () .copy () .divide (value));
+      return SFQuaternion .fromValue (this .getValue () .copy () .divide (+value));
    },
    dot (quaternion)
    {
@@ -21997,13 +21885,21 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, Base_X3DField .
    },
    multiply (value)
    {
-      return SFQuaternion .fromValue (this .getValue () .copy () .multiply (value));
+      return SFQuaternion .fromValue (this .getValue () .copy () .multiply (+value));
    },
-   multQuat (quaternion)
+   multLeft (quaternion)
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .multLeft (quaternion .getValue ()));
+   },
+   multQuatVec (vector)
+   {
+      return vector .constructor .fromValue (this .getValue () .multQuatVec (vector .getValue () .copy ()));
+   },
+   multRight (quaternion)
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .multRight (quaternion .getValue ()));
    },
-   multVec (vector)
+   multVecQuat (vector)
    {
       return vector .constructor .fromValue (this .getValue () .multVecQuat (vector .getValue () .copy ()));
    },
@@ -22022,7 +21918,7 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, Base_X3DField .
    },
    slerp (quaternion, t)
    {
-      return SFQuaternion .fromValue (this .getValue () .copy () .slerp (quaternion .getValue (), t));
+      return SFQuaternion .fromValue (this .getValue () .copy () .slerp (quaternion .getValue (), +t));
    },
    subtract (quaternion)
    {
@@ -22132,6 +22028,10 @@ Object .defineProperties (SFQuaternion .prototype,
    1: SFQuaternion_y,
    2: SFQuaternion_z,
    3: w,
+   i: SFQuaternion_x,
+   j: SFQuaternion_y,
+   k: SFQuaternion_z,
+   real: w,
    x: Object .assign ({ enumerable: true }, SFQuaternion_x),
    y: Object .assign ({ enumerable: true }, SFQuaternion_y),
    z: Object .assign ({ enumerable: true }, SFQuaternion_z),
@@ -22553,7 +22453,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, Base_X3DField .pr
    },
    slerp (rotation, t)
    {
-      return SFRotation .fromValue (this .getValue () .copy () .slerp (rotation .getValue (), t));
+      return SFRotation .fromValue (this .getValue () .copy () .slerp (rotation .getValue (), +t));
    },
    straighten (upVector)
    {
@@ -22718,7 +22618,7 @@ function SFVec2Template (TypeName, double)
       Base_X3DField .call (this, new Numbers_Vector2 (+x, +y));
    }
 
-   Fields_SFVecPrototypeTemplate (SFVec2, TypeName, Numbers_Vector2, double)
+   Fields_SFVecPrototypeTemplate (SFVec2, TypeName, Numbers_Vector2, double);
 
    return SFVec2;
 }
@@ -25218,7 +25118,7 @@ const HTMLSupport =
       for (const { name, accessType } of fieldDefinitions)
       {
          if (accessType & Base_X3DConstants .initializeOnly)
-            this .addFieldName (name)
+            this .addFieldName (name);
       }
    },
    addNodeTypeName (typeName)
@@ -25307,7 +25207,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
    [_fieldDefinitions]: new Base_FieldDefinitionArray ([ ]),
    setName (value)
    {
-      Base_X3DChildObject .prototype .setName .call (this, value)
+      Base_X3DChildObject .prototype .setName .call (this, value);
 
       this ._name_changed = Date .now () / 1000;
    },
@@ -25870,7 +25770,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (Namespace/* default */.A .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(44).A;
+/* provided dependency */ var Legacy_$ = __webpack_require__(454).A;
 const Legacy =
 {
    elements (elements, X3DBrowser)
@@ -25932,7 +25832,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (Namespace/* default */.A .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "15.1.8";
+const BROWSER_VERSION_default_ = "15.1.9";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (Namespace/* default */.A .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -25974,7 +25874,7 @@ const Context =
 
       return gl;
    },
-}
+};
 
 // function check32BitTextures (gl)
 // {
@@ -26519,7 +26419,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (Namespace/* default */.A .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(44).A;
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(454).A;
 
 
 
@@ -26967,7 +26867,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (Namespace/* default */.A .add ("TextCompression", TextCompression_default_));
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(44).A;
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(454).A;
 
 
 
@@ -26991,7 +26891,7 @@ function BrowserOptions (executionContext)
    const browser = this .getBrowser ();
 
    this .localStorage     = browser .getLocalStorage () .addNameSpace ("BrowserOptions.");
-   this .textureQuality   = TextureQuality .MEDIUM
+   this .textureQuality   = TextureQuality .MEDIUM;
    this .primitiveQuality = Core_PrimitiveQuality .MEDIUM;
    this .shading          = Core_Shading .GOURAUD;
 }
@@ -27128,7 +27028,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
    },
    getQualityWhenMoving ()
    {
-      const qualityWhenMoving = this ._QualityWhenMoving .getValue () .toUpperCase ();
+      const qualityWhenMoving = this ._QualityWhenMoving .getValue ();
 
       return Core_PrimitiveQuality .get (qualityWhenMoving);
    },
@@ -27142,7 +27042,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
    },
    getTextCompression ()
    {
-      switch (this ._TextCompression .getValue () .toUpperCase ())
+      switch (this ._TextCompression .getValue ())
       {
          default: // CHAR_SPACING
             return Core_TextCompression .CHAR_SPACING;
@@ -27162,7 +27062,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
    {
       const
          browser          = this .getBrowser (),
-         primitiveQuality = value .getValue () .toUpperCase ();
+         primitiveQuality = value .getValue ();
 
       this .localStorage .PrimitiveQuality = primitiveQuality;
       this .primitiveQuality               = Core_PrimitiveQuality .get (primitiveQuality) ?? Core_PrimitiveQuality .MEDIUM;
@@ -27174,7 +27074,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
    {
       const
          browser        = this .getBrowser (),
-         textureQuality = value .getValue () .toUpperCase ();
+         textureQuality = value .getValue ();
 
       this .localStorage .TextureQuality = textureQuality;
       this .textureQuality               = TextureQuality .get (textureQuality) ?? TextureQuality .MEDIUM;
@@ -27189,7 +27089,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
       {
          const
             browser = this .getBrowser (),
-            shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
+            shading = value .getValue () .replace ("POINTSET", "POINT");
 
          this .shading = Core_Shading .get (shading) ?? Core_Shading .GOURAUD;
 
@@ -27449,7 +27349,7 @@ const BrowserProperties_default_ = BrowserProperties;
 
 /* harmony default export */ const Core_BrowserProperties = (Namespace/* default */.A .add ("BrowserProperties", BrowserProperties_default_));
 ;// ./src/x_ite/Browser/Core/RenderingProperties.js
-/* provided dependency */ var RenderingProperties_$ = __webpack_require__(44).A;
+/* provided dependency */ var RenderingProperties_$ = __webpack_require__(454).A;
 
 
 
@@ -27531,7 +27431,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (Namespace/* default */.A .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(44).A;
+/* provided dependency */ var Notification_$ = __webpack_require__(454).A;
 
 
 
@@ -27617,7 +27517,7 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (Namespace/* default */.A .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(44).A;
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(454).A;
 
 
 
@@ -28136,7 +28036,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
                   {
                      const email = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]{2,})/ig;
 
-                     const link = /(https?:\/\/[-a-zA-Z0-9@:%._\+~#=]+\.[a-zA-Z0-9]{2,}\b[-a-zA-Z0-9()@:%_\+.~#?&\/=]*\b\/?)/ig;
+                     const link = /(https?:\/\/[-a-zA-Z0-9@:%._+~#=]+\.[a-zA-Z0-9]{2,}\b[-a-zA-Z0-9()@:%_+.~#?&/=]*\b\/?)/ig;
 
                      const replaced_text = ContextMenu_$(this) .html ()
                         .replace (email, `<a href="mailto:$1" target="_blank">$1</a>`)
@@ -28722,7 +28622,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       if (this .hasRoutes ())
          return true;
 
-      const executionContext = this .getExecutionContext ()
+      const executionContext = this .getExecutionContext ();
 
       for (const importedNode of executionContext .getImportedNodes ())
       {
@@ -28828,6 +28728,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
             case Base_X3DConstants .SFMatrix3f:
             case Base_X3DConstants .SFMatrix4d:
             case Base_X3DConstants .SFMatrix4f:
+            case Base_X3DConstants .SFQuaternion:
             case Base_X3DConstants .SFRotation:
             case Base_X3DConstants .SFVec2d:
             case Base_X3DConstants .SFVec2f:
@@ -28887,6 +28788,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
             case Base_X3DConstants .MFMatrix3f:
             case Base_X3DConstants .MFMatrix4d:
             case Base_X3DConstants .MFMatrix4f:
+            case Base_X3DConstants .MFQuaternion:
             case Base_X3DConstants .MFRotation:
             case Base_X3DConstants .MFVec2d:
             case Base_X3DConstants .MFVec2f:
@@ -29435,7 +29337,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       if (cdata ?.length === 0)
          cdata = null;
 
-      if (!cdata ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript)\:/s)))
+      if (!cdata ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)))
          cdata = null;
 
       generator .IncIndent ();
@@ -29714,7 +29616,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       if (sourceText ?.length !== 1)
          sourceText = null;
 
-      if (!sourceText ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript)\:/s)))
+      if (!sourceText ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)))
          sourceText = null;
 
       // Predefined fields
@@ -29929,7 +29831,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       // Remove named node if any.
 
       if (this .getName ())
-         executionContext .removeNamedNode (this .getName ())
+         executionContext .removeNamedNode (this .getName ());
 
       if (executionContext .isScene)
       {
@@ -29964,7 +29866,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
             if (!(secondParent instanceof x_ite_Fields .MFNode))
                continue;
 
-            secondParent .setValue (Array .from (secondParent) .filter (node => node ?.getValue () !== this))
+            secondParent .setValue (Array .from (secondParent) .filter (node => node ?.getValue () !== this));
          }
       }
 
@@ -30023,7 +29925,7 @@ Object .defineProperties (X3DNode,
          };
       },
    },
-})
+});
 
 Object .defineProperties (X3DNode, X3DNode .getStaticProperties ("X3DNode", "Core", 1));
 
@@ -30377,16 +30279,16 @@ Object .assign (Box3 .prototype,
             p2 = r1 .subtract (x),
             p3 = r2 .subtract (x);
 
-         min .assign (p1) .min (p2, p3, p4);
-         max .assign (p1) .max (p2, p3, p4);
+         min .assign (p1) .min (p2) .min (p3) .min (p4);
+         max .assign (p1) .max (p2) .max (p3) .max (p4);
 
          p1 .negate ();
          p2 .negate ();
          p3 .negate ();
          p4 .negate ();
 
-         min .min (p1, p2, p3, p4);
-         max .max (p1, p2, p3, p4);
+         min .min (p1) .min (p2) .min (p3) .min (p4);
+         max .max (p1) .max (p2) .max (p3) .max (p4);
       };
    })(),
    setPoints: (() =>
@@ -31091,7 +30993,7 @@ const NamedNodesArray_default_ = NamedNodesArray;
 
 /* harmony default export */ const Execution_NamedNodesArray = (Namespace/* default */.A .add ("NamedNodesArray", NamedNodesArray_default_));
 ;// ./src/x_ite/Components/Core/X3DImportedNodeProxy.js
-/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(454).A;
 
 
 
@@ -31145,7 +31047,7 @@ const X3DImportedNodeProxy_handler =
    {
       return Object .getOwnPropertyDescriptor (target .getSharedNode () ?? { }, key);
    },
-}
+};
 
 function X3DImportedNodeProxy (executionContext, importedName, type)
 {
@@ -31711,7 +31613,7 @@ Object .assign (X3DUrlObject .prototype,
                   break;
                }
             }
-         }
+         };
 
          this ._loadState .addFieldCallback (_loading, test);
 
@@ -33040,7 +32942,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (Namespace/* default */.A .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3DParser_$ = __webpack_require__(454).A;
 
 
 function X3DParser (scene, name = "Parser")
@@ -33363,7 +33265,7 @@ const Placeholder_default_ = Placeholder;
 
 /* harmony default export */ const Parser_Placeholder = (Namespace/* default */.A .add ("Placeholder", Placeholder_default_));
 ;// ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(44).A;
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(454).A;
 
 
 
@@ -33424,7 +33326,7 @@ const Grammar = Parser_Expressions ({
    OpenBracket:  /\[/y,
    CloseBracket: /\]/y,
    Period:       /\./y,
-   Colon:        /\:/y,
+   Colon:        /:/y,
 
    Id: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/y,
    ComponentNameId: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*/y,
@@ -33448,7 +33350,7 @@ const Grammar = Parser_Expressions ({
    noDoubleQuotes: /[^"]+/y,
 
    CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI(?:2|1_4|2_4|3_4|4_4|5_4|6_4|7_4|8_4|1_2|2_2|3_2|4_2|1_3|2_3|3_3|4_3|5_3|6_3)?|SQRT(?:1_2|2))\b/iy,
-   HTMLColor: /0[xX][\da-fA-F]+|[a-zA-Z]+\([^\)]*\)|[a-zA-Z]+/y,
+   HTMLColor: /0[xX][\da-fA-F]+|[a-zA-Z]+\([^)]*\)|[a-zA-Z]+/y,
 });
 
 /*
@@ -34451,7 +34353,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
@@ -34477,7 +34379,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
@@ -34503,7 +34405,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
@@ -34529,7 +34431,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
@@ -36126,7 +36028,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (Namespace/* default */.A .add ("VRMLParser", VRMLParser_default_));
 ;// ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(44).A;
+/* provided dependency */ var XMLParser_$ = __webpack_require__(454).A;
 
 
 
@@ -36335,7 +36237,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
       // Process child nodes
 
       for (const childNode of xmlElement .childNodes)
-         this .x3dElementChildHead (childNode)
+         this .x3dElementChildHead (childNode);
 
       if (!this .xml)
          this .headElement (xmlElement);
@@ -36345,7 +36247,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
          browser .loadComponents (scene) .then (() =>
          {
             for (const childNode of xmlElement .childNodes)
-               this .x3dElementChildScene (childNode)
+               this .x3dElementChildScene (childNode);
 
             this .setupNodes ();
             this .resolve (scene);
@@ -36355,7 +36257,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
       else
       {
          for (const childNode of xmlElement .childNodes)
-            this .x3dElementChildScene (childNode)
+            this .x3dElementChildScene (childNode);
 
          this .setupNodes ();
       }
@@ -37414,7 +37316,7 @@ const XMLParser_default_ = XMLParser;
 
 /* harmony default export */ const Parser_XMLParser = (Namespace/* default */.A .add ("XMLParser", XMLParser_default_));
 ;// ./src/x_ite/Parser/JSONParser.js
-/* provided dependency */ var JSONParser_$ = __webpack_require__(44).A;
+/* provided dependency */ var JSONParser_$ = __webpack_require__(454).A;
 
 
 
@@ -38347,7 +38249,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (Namespace/* default */.A .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(872);
+/* provided dependency */ var libtess = __webpack_require__(384);
 
 
 const Triangle3 =
@@ -39568,7 +39470,7 @@ Object .assign (X3DRenderObject .prototype,
             break;
       }
 
-      switch (browser .getBrowserOption ("ToneMapping"))
+      switch (this .isIndependent () ? browser .getBrowserOption ("ToneMapping") : "NONE")
       {
          default: // NONE
             renderKey += 0;
@@ -39615,7 +39517,7 @@ Object .assign (X3DRenderObject .prototype,
             renderCount = 0;
 
          this .renderCount = ++ renderCount;
-      }
+      };
    })(),
    getFramebuffers ()
    {
@@ -41053,7 +40955,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, Base_X3DBaseNod
             changedNodes .push (node);
       }
 
-      if (!equals (collectedNodes, this .nodes))
+      if (!BindableList_equals (collectedNodes, this .nodes))
       {
          // Unbind nodes not in current list (collectedNodes);
 
@@ -41079,7 +40981,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, Base_X3DBaseNod
 
       // Update stack.
 
-      stack .update (layerNode, removedNodes, changedNodes)
+      stack .update (layerNode, removedNodes, changedNodes);
 
       changedNodes .length = 0;
       removedNodes .length = 0;
@@ -41095,7 +40997,7 @@ for (const key of Object .keys (BindableList .prototype))
 
 // Compares two arrays.
 
-function equals (lhs, rhs)
+function BindableList_equals (lhs, rhs)
 {
    const lhsLength = lhs .length;
 
@@ -42294,7 +42196,7 @@ Object .assign (VertexArray .prototype,
 
          const vertexArray = gl .createVertexArray ();
 
-         vertexArrays .set (program, vertexArray)
+         vertexArrays .set (program, vertexArray);
 
          gl .bindVertexArray (vertexArray);
 
@@ -42628,7 +42530,7 @@ Object .defineProperty (X3DGeometryNode, "createArray",
 
       return GeometryArray .create (Type);
    },
-})
+});
 
 Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode .prototype),
 {
@@ -43688,7 +43590,7 @@ function GeometryContext (options = { })
       textureCoordinateMapping: new Map (),
       textureCoordinateNode: null,
    },
-   options)
+   options);
 
    this .updateGeometryKey ();
 }
@@ -43715,128 +43617,100 @@ const GeometryContext_default_ = GeometryContext;
 
 /* harmony default export */ const Rendering_GeometryContext = (Namespace/* default */.A .add ("GeometryContext", GeometryContext_default_));
 ;// ./src/standard/Math/Numbers/Complex.js
+
+
+const {
+   assign: Complex_assign,
+   equals: Complex_equals,
+   add: Complex_add,
+   divide: Complex_divide,
+   multiply: Complex_multiply,
+   negate: Complex_negate,
+   set: Complex_set,
+   subtract: Complex_subtract,
+} = Numbers_Vector2 .prototype;
+
 function Complex (real = 0, imag = 0)
 {
-   this .real = real;
-   this .imag = imag;
+   this .x = real;
+   this .y = imag;
 }
 
 Object .assign (Complex .prototype,
 {
-   *[Symbol .iterator] ()
+   [Symbol .iterator]: Numbers_Vector2 .prototype [Symbol .iterator],
+   add: Complex_add,
+   assign: Complex_assign,
+   conjugate ()
    {
-      yield this .real;
-      yield this .imag;
+      this .y = -this .y;
+      return this;
    },
    copy ()
    {
       const copy = Object .create (Complex .prototype);
-      copy .real = this .real;
-      copy .imag = this .imag;
+      copy .x = this .x;
+      copy .y = this .y;
       return copy;
    },
-   assign (complex)
-   {
-      this .real = complex .real;
-      this .imag = complex .imag;
-      return this;
-   },
-   equals (complex)
-   {
-      return this .real === complex .real &&
-             this .imag === complex .imag;
-   },
-   set (real = 0, imag = 0)
-   {
-      this .real = real;
-      this .imag = imag;
-      return this;
-   },
-   setPolar (magnitude, angle)
-   {
-      this .real = magnitude * Math .cos (angle);
-      this .imag = magnitude * Math .sin (angle);
-      return this;
-   },
-   conjugate ()
-   {
-      this .imag = -this .imag;
-      return this;
-   },
-   negate ()
-   {
-      this .real = -this .real;
-      this .imag = -this .imag;
-      return this;
-   },
-   inverse ()
-   {
-      const d = this .real * this .real + this .imag * this .imag;
-
-      this .real /=  d;
-      this .imag /= -d;
-      return this;
-   },
-   add (value)
-   {
-      this .real += value .real;
-      this .imag += value .imag;
-      return this;
-   },
-   subtract (value)
-   {
-      this .real -= value .real;
-      this .imag -= value .imag;
-      return this;
-   },
-   multiply (value)
-   {
-      this .real *= value;
-      this .imag *= value;
-      return this;
-   },
-   multComp (value)
-   {
-      const
-         { real: ar, imag: ai } = this,
-         { real: br, imag: bi } = value;
-
-      this .real = ar * br - ai * bi;
-      this .imag = ar * bi + ai * br;
-      return this;
-   },
-   divide (value)
-   {
-      this .real /= value;
-      this .imag /= value;
-      return this;
-   },
+   divide: Complex_divide,
    divComp (value)
    {
       const
-         { real: ar, imag: ai } = this,
-         { real: br, imag: bi } = value,
+         { x: ar, y: ai } = this,
+         { x: br, y: bi } = value,
          d = br * br + bi * bi;
 
-      this .real = (ar * br + ai * bi) / d;
-      this .imag = (ai * br - ar * bi) / d;
+      this .x = (ar * br + ai * bi) / d;
+      this .y = (ai * br - ar * bi) / d;
       return this;
    },
+   equals: Complex_equals,
+   inverse ()
+   {
+      const
+         { x, y } = this,
+         d = x * x + y * y;
+
+      this .x /=  d;
+      this .y /= -d;
+      return this;
+   },
+   set: Complex_set,
+   setPolar (magnitude, angle)
+   {
+      this .x = magnitude * Math .cos (angle);
+      this .y = magnitude * Math .sin (angle);
+      return this;
+   },
+   negate: Complex_negate,
+   multiply: Complex_multiply,
+   multComp (value)
+   {
+      const
+         { x: ar, y: ai } = this,
+         { x: br, y: bi } = value;
+
+      this .x = ar * br - ai * bi;
+      this .y = ar * bi + ai * br;
+      return this;
+   },
+   subtract: Complex_subtract,
    toString ()
    {
+      const { x, y } = this;
+
       let string = "";
 
-      string += this .real;
+      if (x || !y)
+         string += x;
 
-      if (this .imag < 0)
-      {
-         string += this .imag;
-         string += "i";
-      }
-      else if (this .imag > 0)
-      {
+      if (x && y > 0)
          string += "+";
-         string += this .imag;
+
+      if (y)
+      {
+         string += y;
          string += "i";
       }
 
@@ -43847,44 +43721,38 @@ Object .assign (Complex .prototype,
 for (const key of Object .keys (Complex .prototype))
    Object .defineProperty (Complex .prototype, key, { enumerable: false });
 
+const real = {
+   get () { return this .x; },
+   set (value) { this .x = value; },
+};
+
+const imag = {
+   get () { return this .y; },
+   set (value) { this .y = value; },
+};
+
 Object .defineProperties (Complex .prototype,
 {
    length: { value: 2 },
-   0:
-   {
-      get ()
-      {
-         return this .real;
-      },
-      set (value)
-      {
-         this .real = value;
-      },
-   },
-   1:
-   {
-      get ()
-      {
-         return this .imag;
-      },
-      set (value)
-      {
-         this .imag = value;
-      },
-   },
+   0: real,
+   1: imag,
+   real,
+   imag,
    magnitude:
    {
       get ()
       {
-         if (this .real)
-         {
-            if (this .imag)
-               return Math .hypot (this .real, this .imag);
+         const { x, y } = this;
 
-            return Math .abs (this .real);
+         if (x)
+         {
+            if (y)
+               return Math .hypot (x, y);
+
+            return Math .abs (x);
          }
 
-         return Math .abs (this .imag);
+         return Math .abs (y);
       },
       set (magnitude)
       {
@@ -43893,14 +43761,8 @@ Object .defineProperties (Complex .prototype,
    },
    angle:
    {
-      get ()
-      {
-         return Math .atan2 (this .imag, this .real);
-      },
-      set (angle)
-      {
-         this .setPolar (this .magnitude, angle);
-      },
+      get () { return Math .atan2 (this .y, this .x); },
+      set (angle) { this .setPolar (this .magnitude, angle); },
    },
 });
 
@@ -44182,7 +44044,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
                vAngle .push (Math .PI);
 
             if (vAngle .length === 2)
-               vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
+               vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2);
 
             this .buildSphere (vAngle, this ._skyAngle, this ._skyColor, false);
          }
@@ -44511,8 +44373,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 
-      gl .uniform3f (shaderNode .x3d_EmissiveColor,                        1, 1, 1)
-      gl .uniform1f (shaderNode .x3d_Transparency,                         transparency)
+      gl .uniform3f (shaderNode .x3d_EmissiveColor,                        1, 1, 1);
+      gl .uniform1f (shaderNode .x3d_Transparency,                         transparency);
       gl .uniform1i (shaderNode .x3d_TextureCoordinateGenerator [0] .mode, 0);
 
       // Enable vertex attribute arrays.
@@ -44670,7 +44532,7 @@ function X3DSingleTextureNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DSingleTextureNode);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "linear", new x_ite_Fields .SFBool ())
+   this .addChildObjects (Base_X3DConstants .outputOnly, "linear", new x_ite_Fields .SFBool ());
 
    // Private properties
 
@@ -44879,8 +44741,6 @@ const X3DSingleTextureNode_default_ = X3DSingleTextureNode;
 
 
 
-const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
 function X3DTexture2DNode (executionContext)
 {
    Texturing_X3DSingleTextureNode .call (this, executionContext);
@@ -44892,8 +44752,8 @@ function X3DTexture2DNode (executionContext)
    const gl = this .getBrowser () .getContext ();
 
    this .target = gl .TEXTURE_2D;
-   this .width  = 0;
-   this .height = 0;
+
+   this .setFloat (false);
 }
 
 Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, Texturing_X3DSingleTextureNode .prototype),
@@ -44905,10 +44765,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, Texturing_X
       this ._repeatS .addInterest ("updateTextureParameters", this);
       this ._repeatT .addInterest ("updateTextureParameters", this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-      gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      this .clearTexture ();
    },
    getTarget ()
    {
@@ -44918,22 +44775,34 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, Texturing_X
    {
       return this .width;
    },
-   setWidth (value)
+   setWidth (width)
    {
-      this .width = value;
+      this .width = width;
    },
    getHeight ()
    {
       return this .height;
    },
-   setHeight (value)
+   setHeight (height)
    {
-      this .height = value;
+      this .height = height;
    },
-   clearTexture ()
+   setFloat (float)
    {
-      this .setTextureData (1, 1, false, false, defaultData);
+      const gl = this .getBrowser () .getContext ();
+
+      this .internalFormat = float ? gl .RGBA32F : gl .RGBA;
+      this .type           = float ? gl .FLOAT : gl .UNSIGNED_BYTE;
    },
+   clearTexture: (() =>
+   {
+      const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+
+      return function ()
+      {
+         this .setTextureData (1, 1, false, false, defaultData);
+      };
+   })(),
    getTextureData (texture = this .getTexture (), width = this .getWidth (), height = this .getHeight ())
    {
       const
@@ -44964,7 +44833,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, Texturing_X
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorSpaceConversion ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
-      gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+      gl .texImage2D  (gl .TEXTURE_2D, 0, this .internalFormat, width, height, 0, gl .RGBA, this .type, data);
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, gl .BROWSER_DEFAULT_WEBGL);
 
       this .setTransparent (transparent);
@@ -44973,10 +44842,10 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, Texturing_X
    },
    updateTextureData (data)
    {
-      const gl = this .getBrowser () .getContext ();
+      const gl = this .getBrowser () .getContext ()
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-      gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+      gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, this .type, data);
 
       if (this .texturePropertiesNode ._generateMipMaps .getValue ())
          gl .generateMipmap (gl .TEXTURE_2D);
@@ -45012,7 +44881,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (Namespace/* default */.A .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(44).A;
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(454).A;
 
 
 
@@ -47555,7 +47424,7 @@ const Layer_default_ = Layer;
 
 /* harmony default export */ const Layering_Layer = (Namespace/* default */.A .add ("Layer", Layer_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(44).A;
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(454).A;
 
 
 
@@ -48614,7 +48483,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    {
       const images = [ ];
 
-      this .textureImageExtensionsObject (texture .extensions, images)
+      this .textureImageExtensionsObject (texture .extensions, images);
 
       images .push (this .images [texture .source]);
 
@@ -49211,7 +49080,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          if (this .vectorValue (KHR_texture_transform .offset, translation))
             matrix .translate (vector .set (... translation, 0));
 
-         const angle = this .numberValue (KHR_texture_transform .rotation, 0)
+         const angle = this .numberValue (KHR_texture_transform .rotation, 0);
 
          matrix .rotate (rotation .set (0, 0, -1, angle));
 
@@ -50133,7 +50002,7 @@ function eventsProcessed ()
    },
    skinsHumanoid ()
    {
-      this .skins .forEach (skin => this .skinHumanoid (skin))
+      this .skins .forEach (skin => this .skinHumanoid (skin));
    },
    skinHumanoid: (() =>
    {
@@ -50184,7 +50053,7 @@ function eventsProcessed ()
    })(),
    skinsBBox ()
    {
-      this .skins .forEach (skin => this .skinBBox (skin .humanoidNode))
+      this .skins .forEach (skin => this .skinBBox (skin .humanoidNode));
    },
    skinBBox (humanoidNode)
    {
@@ -51678,7 +51547,7 @@ function eventsProcessed ()
 
             const
                length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
-               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1));
 
             for (const t of samples)
             {
@@ -51770,7 +51639,7 @@ function eventsProcessed ()
 
             const
                length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
-               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1));
 
             for (const t of samples)
             {
@@ -51863,7 +51732,7 @@ function eventsProcessed ()
 
             const
                length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
-               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1));
 
             // KeyValue
 
@@ -51997,7 +51866,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (Namespace/* default */.A .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(44).A;
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(454).A;
 
 
 
@@ -52103,7 +51972,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (Namespace/* default */.A .add ("GLB2Parser", GLB2Parser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(44).A;
+/* provided dependency */ var OBJParser_$ = __webpack_require__(454).A;
 
 
 
@@ -53409,7 +53278,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser 
    },
    facet (normals, vertices)
    {
-      this .comments ()
+      this .comments ();
 
       if (STLAParser_Grammar .facet .parse (this))
       {
@@ -53557,7 +53426,7 @@ const STLAParser_default_ = STLAParser;
 
 /* harmony default export */ const Parser_STLAParser = (Namespace/* default */.A .add ("STLAParser", STLAParser_default_));
 ;// ./src/x_ite/Parser/STLBParser.js
-/* provided dependency */ var STLBParser_$ = __webpack_require__(44).A;
+/* provided dependency */ var STLBParser_$ = __webpack_require__(454).A;
 
 
 
@@ -54445,7 +54314,7 @@ const PLYAParser_default_ = PLYAParser;
 
 /* harmony default export */ const Parser_PLYAParser = (Namespace/* default */.A .add ("PLYAParser", PLYAParser_default_));
 ;// ./src/x_ite/Parser/PLYBParser.js
-/* provided dependency */ var PLYBParser_$ = __webpack_require__(44).A;
+/* provided dependency */ var PLYBParser_$ = __webpack_require__(454).A;
 
 
 function PLYBParser (scene)
@@ -54748,8 +54617,8 @@ Object .assign (Box2 .prototype,
          p1 .negate ();
          p2 .negate ();
 
-         min .min (p1, p2);
-         max .max (p1, p2);
+         min .min (p1) .min (p2);
+         max .max (p1) .max (p2);
       };
    })(),
    containsPoint: (() =>
@@ -55021,8 +54890,8 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (Namespace/* default */.A .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(44).A;
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(872);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(454).A;
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(384);
 
 
 
@@ -55066,7 +54935,7 @@ const SVGParser_Grammar = Parser_Expressions ({
    scale: /scale/y,
    skewX: /skewX/y,
    skewY: /skewY/y,
-   color: /#[\da-fA-F]+|[a-zA-Z]+\([^\)]*\)|[a-zA-Z]+/y,
+   color: /#[\da-fA-F]+|[a-zA-Z]+\([^)]*\)|[a-zA-Z]+/y,
    url: /url\("?(.*?)"?\)/y,
    path: /[mMlLhHvVqQtTcCsSaAzZ]/y,
 });
@@ -55134,7 +55003,7 @@ function SVGParser (scene)
 
    // Constants
 
-   const browser = scene .getBrowser ()
+   const browser = scene .getBrowser ();
 
    switch (browser .getBrowserOption ("PrimitiveQuality"))
    {
@@ -57135,7 +57004,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
       this .styles .push (style);
 
       for (const attribute of xmlElement .attributes)
-         this .parseStyle (attribute .name, attribute .value)
+         this .parseStyle (attribute .name, attribute .value);
 
       // Style attribute has higher precedence.
 
@@ -57749,14 +57618,14 @@ Object .defineProperty (SVGParser .prototype, "style",
    {
       return this .styles .at (-1);
    },
-})
+});
 
 const SVGParser_default_ = SVGParser;
 ;
 
 /* harmony default export */ const Parser_SVGParser = (Namespace/* default */.A .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(44).A;
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(454).A;
 
 
 
@@ -58082,7 +57951,7 @@ function X3DWorld (executionContext)
 {
    Base_X3DBaseNode .call (this, executionContext);
 
-   this .addType (Base_X3DConstants .X3DWorld)
+   this .addType (Base_X3DConstants .X3DWorld);
 
    this .addChildObjects (Base_X3DConstants .outputOnly, "activeLayer", new Fields_SFNode (this .layer0));
 
@@ -58192,7 +58061,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (Namespace/* default */.A .add ("X3DWorld", X3DWorld_default_));
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(44).A;
+/* provided dependency */ var FileLoader_$ = __webpack_require__(454).A;
 
 
 
@@ -58203,7 +58072,7 @@ const X3DWorld_default_ = X3DWorld;
 const foreignMimeType = new Set ([
    "text/html",
    "application/xhtml+xml",
-])
+]);
 
 function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
@@ -58360,7 +58229,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       this .callback = callback;
 
       if (url .length === 0)
-         return this .loadDocumentError (new Error ("No URL given."));
+         return this .loadDocumentError ();
 
       this .loadDocumentAsync (String (this .url .shift ()))
          .catch (this .loadDocumentError .bind (this));
@@ -58368,11 +58237,11 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
    async loadDocumentAsync (url)
    {
       if (!url .length)
-         return this .loadDocumentError (new Error ("URL is empty."));
+         return this .loadDocumentError ();
 
       // Script:
       {
-         const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s);
+         const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript):/s);
 
          if (result)
             return await this .callback (url .substring (result [0] .length));
@@ -58535,6 +58404,9 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
    },
    printError (error)
    {
+      if (!error)
+         return;
+
       const typeName = this .node instanceof Execution_X3DWorld ? "" : ` for ${this .node .getTypeName ()}`;
 
       if (this .fileURL .protocol === "data:")
@@ -58949,7 +58821,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (Namespace/* default */.A .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(454).A;
 
 
 
@@ -59364,13 +59236,13 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
 {
    Base_X3DBaseNode .call (this, executionContext, browser);
 
-   this .addType (Base_X3DConstants .X3DExecutionContext)
+   this .addType (Base_X3DConstants .X3DExecutionContext);
 
    this .addChildObjects (Base_X3DConstants .initializeOnly, "rootNodes",          new x_ite_Fields .MFNode (),
                           Base_X3DConstants .inputOutput,    "countPrimitives",    new x_ite_Fields .SFBool (true),
                           Base_X3DConstants .outputOnly,     "worldInfos",         new x_ite_Fields .MFNode (),
                           Base_X3DConstants .outputOnly,     "sceneGraph_changed", new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly,     "bbox_changed",       new x_ite_Fields .SFTime ())
+                          Base_X3DConstants .outputOnly,     "bbox_changed",       new x_ite_Fields .SFTime ());
 
    this ._rootNodes .setPrivate (false);
    this ._rootNodes .collectCloneCount = () => 1;
@@ -60023,9 +59895,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
          importedDestinationNode = destinationNode instanceof Execution_X3DImportedNode ? destinationNode : null;
 
       sourceNode       = Base_X3DCast (Base_X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
-      sourceField      = String (sourceField)
+      sourceField      = String (sourceField);
       destinationNode  = Base_X3DCast (Base_X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
-      destinationField = String (destinationField)
+      destinationField = String (destinationField);
 
       // Check nodes.
 
@@ -60712,11 +60584,11 @@ function X3DScene (browser)
 {
    Execution_X3DExecutionContext .call (this, null, null, browser);
 
-   this .addType (Base_X3DConstants .X3DScene)
+   this .addType (Base_X3DConstants .X3DScene);
 
    this .addChildObjects (Base_X3DConstants .outputOnly, "profile_changed",  new x_ite_Fields .SFTime (),
                           Base_X3DConstants .outputOnly, "metadata_changed", new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "loadCount",        new x_ite_Fields .SFInt32 ())
+                          Base_X3DConstants .outputOnly, "loadCount",        new x_ite_Fields .SFInt32 ());
 
    this .getRootNodes () .setAccessType (Base_X3DConstants .inputOutput);
 
@@ -61568,7 +61440,7 @@ Object .assign (DataStorage .prototype,
       for (const key of Object .keys (storage))
       {
          if (key .startsWith (namespace))
-            storage .removeItem (key)
+            storage .removeItem (key);
       }
    },
 });
@@ -61580,7 +61452,7 @@ const DataStorage_default_ = DataStorage;
 ;// ./src/x_ite/Browser/Core/Fonts.js
 
 
-function add (path, bold, italic)
+function Fonts_add (path, bold, italic)
 {
    try
    {
@@ -61600,13 +61472,13 @@ function add (path, bold, italic)
    }
 }
 
-add ("PT_Sans/PTSans-Regular.woff2",    false, false);
-add ("PT_Sans/PTSans-Bold.woff2",       true,  false);
-add ("PT_Sans/PTSans-Italic.woff2",     false, true);
+Fonts_add ("PT_Sans/PTSans-Regular.woff2",    false, false);
+Fonts_add ("PT_Sans/PTSans-Bold.woff2",       true,  false);
+Fonts_add ("PT_Sans/PTSans-Italic.woff2",     false, true);
 // add ("PT_Sans/PTSans-BoldItalic.woff2", true,  true);
 
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(454).A;
 
 
 
@@ -61682,7 +61554,7 @@ function X3DCoreContext (element)
          X3DCoreContext_$("<link/>",
          {
             on: { load: resolve },
-            integrity: "sha384-BFmkXLuQVFyl+JqJdV3aNak/YYM3pDxzt6fMuj9MLpo8iA2BayN1DHMBVvo+JUAk",
+            integrity: "sha384-acHaU2N0HhDAcFRQLVFbHqliSP+aVO4HlToR6/yi6EPwe4hfj4CUIqaKtAGQl4Hd",
             crossorigin: "anonymous",
             rel: "stylesheet",
             href: new URL ("x_ite.css", Networking_URLs .getScriptURL ()),
@@ -63838,7 +63710,7 @@ function ConeOptions (executionContext)
 {
    Base_X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects (Base_X3DConstants .inputOutput, "dimension", new x_ite_Fields .SFInt32 (20))
+   this .addChildObjects (Base_X3DConstants .inputOutput, "dimension", new x_ite_Fields .SFInt32 (20));
 }
 
 Object .assign (Object .setPrototypeOf (ConeOptions .prototype, Base_X3DBaseNode .prototype),
@@ -64077,7 +63949,7 @@ function CylinderOptions (executionContext)
 {
    Base_X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects (Base_X3DConstants .inputOutput, "dimension", new x_ite_Fields .SFInt32 (20))
+   this .addChildObjects (Base_X3DConstants .inputOutput, "dimension", new x_ite_Fields .SFInt32 (20));
 }
 
 Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, Base_X3DBaseNode .prototype),
@@ -64370,7 +64242,7 @@ function QuadSphereOptions (executionContext)
    Base_X3DBaseNode .call (this, executionContext);
 
    this .addChildObjects (Base_X3DConstants .inputOutput, "xDimension", new x_ite_Fields .SFInt32 (32),
-                          Base_X3DConstants .inputOutput, "yDimension", new x_ite_Fields .SFInt32 (15))
+                          Base_X3DConstants .inputOutput, "yDimension", new x_ite_Fields .SFInt32 (15));
 }
 
 Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, Base_X3DBaseNode .prototype),
@@ -66655,7 +66527,7 @@ Object .assign (X3DLightingContext .prototype,
 
       texture .setup ();
 
-      this [_textures] .set (name, texture)
+      this [_textures] .set (name, texture);
 
       return texture;
    },
@@ -67583,14 +67455,14 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, Followers_X3DF
 
             for (let i = numBuffers - 1; i >= seconds; -- i)
             {
-               this .assign (buffer, i, buffer [i - seconds])
+               this .assign (buffer, i, buffer [i - seconds]);
             }
 
             for (let i = 0; i < seconds; ++ i)
             {
                const alpha = i / seconds;
 
-               this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha))
+               this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha));
             }
          }
          else
@@ -67737,8 +67609,8 @@ const OrientationChaser_default_ = OrientationChaser;
 
 /* harmony default export */ const Followers_OrientationChaser = (Namespace/* default */.A .add ("OrientationChaser", OrientationChaser_default_));
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(395);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(44).A;
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(83);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(454).A;
 
 
 
@@ -68817,8 +68689,8 @@ const ScreenLine_default_ = ScreenLine;
 
 /* harmony default export */ const Rendering_ScreenLine = (Namespace/* default */.A .add ("ScreenLine", ScreenLine_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(395);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(83);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(454).A;
 
 
 
@@ -68827,7 +68699,7 @@ const ScreenLine_default_ = ScreenLine;
 
 void (typeof X3DFlyViewer_jquery_mousewheel); // import plugin
 
-const X3DFlyViewer_macOS = /Mac OS X/i .test (navigator .userAgent)
+const X3DFlyViewer_macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const
    SPEED_FACTOR           = 0.007,
@@ -69555,14 +69427,14 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (Namespace/* default */.A .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(395);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(44).A;
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(83);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(454).A;
 
 
 
 void (typeof PlaneViewer_jquery_mousewheel); // import plugin
 
-const PlaneViewer_macOS = /Mac OS X/i .test (navigator .userAgent)
+const PlaneViewer_macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const PlaneViewer_SCROLL_FACTOR = PlaneViewer_macOS ? 1 / 160 : 1 / 20;
 
@@ -69769,8 +69641,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (Namespace/* default */.A .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(395);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(44).A;
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(83);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(454).A;
 
 
 
@@ -69780,7 +69652,7 @@ const NoneViewer_default_ = NoneViewer;
 
 void (typeof LookAtViewer_jquery_mousewheel); // import plugin
 
-const LookAtViewer_macOS = /Mac OS X/i .test (navigator .userAgent)
+const LookAtViewer_macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const
    LookAtViewer_SCROLL_FACTOR = LookAtViewer_macOS ? 1 / 120 : 1 / 20,
@@ -70212,8 +70084,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
    disconnect ()
    {
       this .orientationChaser      ._value_changed .removeInterest ("set_orientationOffset__", this);
-      this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this)
-      this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this)
+      this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this);
+      this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
    },
    dispose ()
    {
@@ -71139,8 +71011,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (Namespace/* default */.A .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(395);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(44).A;
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(83);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(454).A;
 
 
 
@@ -72399,7 +72271,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (Namespace/* default */.A .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(454).A;
 
 
 
@@ -72710,7 +72582,7 @@ Object .assign (X3DRenderingContext .prototype,
             this ._viewport .removeFieldCallback (key);
 
             resolve ();
-         }
+         };
 
          this .getElement () .css ({ "width": `${width}px`, "height": `${height}px` });
 
@@ -74619,7 +74491,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 /* harmony default export */ const Shaders_X3DShaderNode = (Namespace/* default */.A .add ("X3DShaderNode", X3DShaderNode_default_));
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(454).A;
 
 
 
@@ -74824,7 +74696,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             texture2D: gl .getUniformLocation (program, `x3d_Texture2D[${i}]`),
             texture3D: gl .getUniformLocation (program, `x3d_Texture3D[${i}]`),
             textureCube: this .getUniformLocation (gl, program, `x3d_TextureCube[${i}]`, `x3d_CubeMapTexture[${i}]`),
-         }
+         };
 
          this .x3d_MultiTexture [i] = {
             mode:      gl .getUniformLocation (program, `x3d_MultiTexture[${i}].mode`),
@@ -74840,7 +74712,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             params:    gl .getUniformLocation (program, `x3d_TextureProjector[${i}].params`),
             matrix:    gl .getUniformLocation (program, `x3d_TextureProjector[${i}].matrix`),
             texture:   gl .getUniformLocation (program, `x3d_TextureProjectorTexture[${i}]`),
-         }
+         };
       }
 
       for (let i = 0; i < maxTextureTransforms; ++ i)
@@ -75371,12 +75243,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                return;
             }
+            case Base_X3DConstants .MFColor:
+            case Base_X3DConstants .MFColorRGBA:
             case Base_X3DConstants .MFVec2d:
             case Base_X3DConstants .MFVec2f:
-            case Base_X3DConstants .MFColor:
             case Base_X3DConstants .MFVec3d:
             case Base_X3DConstants .MFVec3f:
-            case Base_X3DConstants .MFColorRGBA:
             case Base_X3DConstants .MFVec4d:
             case Base_X3DConstants .MFVec4f:
             {
@@ -75708,7 +75580,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
-      gl .vertexAttribDivisor (location, divisor)
+      gl .vertexAttribDivisor (location, divisor);
    },
    enableTexCoordAttribute (gl, buffers, stride, offset, divisor = 0)
    {
@@ -76546,8 +76418,8 @@ ${options .map (option => `#define ${option}`) .join ("\n")}
          precisionInt   = matchInt   ?.[1] ?? "mediump";
 
       const types = Types_glsl ()
-         .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, `${precisionFloat} \$1`)
-         .replace (/mediump\s+(int)/g,                       `${precisionInt} \$1`);
+         .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, `${precisionFloat} $1`)
+         .replace (/mediump\s+(int)/g,                       `${precisionInt} $1`);
 
       const lines = (match [1] .match (/\n/g) ?.length ?? 0) + 1;
 
@@ -76570,7 +76442,7 @@ const ShaderSource_default_ = ShaderSource;
 ;// ./src/x_ite/Browser/Shaders/ShaderCompiler.js
 
 
-const include = /^\s*#include\s*<([^\/]+)>\s*$/;
+const include = /^\s*#include\s*<([^/]+)>\s*$/;
 
 function ShaderCompiler (gl)
 {
@@ -76620,7 +76492,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (Namespace/* default */.A .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(44).A;
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(454).A;
 
 
 
@@ -77819,7 +77691,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
       if (browser .getRenderingProperty ("XRSession"))
          options .push ("X3D_XR_SESSION");
 
-      switch (browser .getBrowserOption ("ColorSpace") .toUpperCase ())
+      switch (browser .getBrowserOption ("ColorSpace"))
       {
          case "SRGB":
             options .push ("X3D_COLORSPACE_SRGB");
@@ -77829,18 +77701,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
             break;
          default: // LINEAR_WHEN_PHYSICAL_MATERIAL
             options .push (this .isPhysical () ? "X3D_COLORSPACE_LINEAR" : "X3D_COLORSPACE_SRGB");
-            break;
-      }
-
-      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
-      {
-         default: // NONE
-            break;
-         case "ACES_NARKOWICZ":
-         case "ACES_HILL":
-         case "ACES_HILL_EXPOSURE_BOOST":
-         case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
             break;
       }
 
@@ -77889,13 +77749,13 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
 
          if (numClipPlanes)
          {
-            options .push ("X3D_CLIP_PLANES")
+            options .push ("X3D_CLIP_PLANES");
             options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
          }
 
          if (numLights && geometryContext .hasNormals)
          {
-            options .push ("X3D_LIGHTING")
+            options .push ("X3D_LIGHTING");
             options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
 
             if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
@@ -77909,7 +77769,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
                lightNode = container .lightNode;
 
             // Although we count this kind of light here, only one is supported.
-            options .push ("X3D_USE_IBL")
+            options .push ("X3D_USE_IBL");
             options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxEnvironmentLights ())}`);
 
             if (lightNode .getDiffuseTexture () ?.isLinear ())
@@ -77926,7 +77786,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
          {
             const textureProjectors = lights .filter (c => c .lightNode .getLightKey () .toString () .startsWith ("[3."));
 
-            options .push ("X3D_TEXTURE_PROJECTION")
+            options .push ("X3D_TEXTURE_PROJECTION");
             options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (numTextureProjectors, browser .getMaxTextures ())}`);
 
             for (const [i, textureProjector] of textureProjectors .entries ())
@@ -78005,7 +77865,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
 
          if (numClipPlanes)
          {
-            options .push ("X3D_CLIP_PLANES")
+            options .push ("X3D_CLIP_PLANES");
             options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
          }
 
@@ -78026,6 +77886,20 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
    },
    addRenderOptions (options, renderObject, alphaMode)
    {
+      const browser = this .getBrowser ();
+
+      switch (renderObject .isIndependent () ? browser .getBrowserOption ("ToneMapping") : "NONE")
+      {
+         default: // NONE
+            break;
+         case "ACES_NARKOWICZ":
+         case "ACES_HILL":
+         case "ACES_HILL_EXPOSURE_BOOST":
+         case "KHR_PBR_NEUTRAL":
+            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping")}`);
+            break;
+      }
+
       switch (renderObject .getRenderPass ())
       {
          case Rendering_RenderPass .VOLUME_SCATTER_KEY:
@@ -78563,7 +78437,7 @@ const PeriodicWave_default_ = PeriodicWave;
 
 /* harmony default export */ const Sound_PeriodicWave = (Namespace/* default */.A .add ("PeriodicWave", PeriodicWave_default_));
 ;// ./src/x_ite/Browser/Sound/X3DSoundContext.js
-/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(454).A;
 
 
 
@@ -78870,7 +78744,7 @@ const TextureTransform_default_ = TextureTransform;
 
 /* harmony default export */ const Texturing_TextureTransform = (Namespace/* default */.A .add ("TextureTransform", TextureTransform_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(44).A;
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(454).A;
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -79147,7 +79021,7 @@ Object .assign (X3DTexturingContext .prototype,
    {
       const gl = this .getContext ();
 
-      return gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS)
+      return gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
    },
    popGlobalTextureUnit ()
    {
@@ -79793,7 +79667,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
 
       // Display
 
-      this [_displayTime] .start ()
+      this [_displayTime] .start ();
       this .addTaintedField (this ._displayEvents);
       this [X3DBrowserContext_processEvents] ();
 
@@ -79925,7 +79799,7 @@ const X3DBrowserContext_default_ = X3DBrowserContext;
 
 /* harmony default export */ const Browser_X3DBrowserContext = (Namespace/* default */.A .add ("X3DBrowserContext", X3DBrowserContext_default_));
 ;// ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(44).A;
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(454).A;
 /*******************************************************************************
  * MIT License
  *
@@ -79970,7 +79844,7 @@ class DOMIntegration
          childList: true,
       });
 
-      this .processCanvasMutation (browser)
+      this .processCanvasMutation (browser);
    }
 
    isPrivate ()
@@ -81962,7 +81836,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
                const
                   browser        = this .getBrowser (),
                   viewpointNode  = this .layerNode .getViewpoint (),
-                  invModelMatrix = this .modelMatrix .inverse ()
+                  invModelMatrix = this .modelMatrix .inverse ();
 
                centerOfRotationMatrix
                   .assign (viewpointNode .getModelMatrix ())
@@ -86204,12 +86078,17 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, T
          ["CAMERASPACENORMAL",           TextureCoordinateGeneratorModeType .CAMERASPACENORMAL],
          ["CAMERASPACEPOSITION",         TextureCoordinateGeneratorModeType .CAMERASPACEPOSITION],
          ["CAMERASPACEREFLECTIONVECTOR", TextureCoordinateGeneratorModeType .CAMERASPACEREFLECTIONVECTOR],
+         ["SPHERE_LOCAL",                TextureCoordinateGeneratorModeType .SPHERE_LOCAL],
          ["SPHERE-LOCAL",                TextureCoordinateGeneratorModeType .SPHERE_LOCAL],
          ["COORD",                       TextureCoordinateGeneratorModeType .COORD],
+         ["COORD_EYE",                   TextureCoordinateGeneratorModeType .COORD_EYE],
          ["COORD-EYE",                   TextureCoordinateGeneratorModeType .COORD_EYE],
          ["NOISE",                       TextureCoordinateGeneratorModeType .NOISE],
+         ["NOISE_EYE",                   TextureCoordinateGeneratorModeType .NOISE_EYE],
          ["NOISE-EYE",                   TextureCoordinateGeneratorModeType .NOISE_EYE],
+         ["SPHERE_REFLECT",              TextureCoordinateGeneratorModeType .SPHERE_REFLECT],
          ["SPHERE-REFLECT",              TextureCoordinateGeneratorModeType .SPHERE_REFLECT],
+         ["SPHERE_REFLECT-LOCAL",        TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL],
          ["SPHERE-REFLECT-LOCAL",        TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL],
       ]);
 
@@ -86223,7 +86102,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, T
    })(),
    set_parameter__ ()
    {
-      const length = Math .min (this .parameter .length, this ._parameter .length)
+      const length = Math .min (this .parameter .length, this ._parameter .length);
 
       for (let i = 0; i < length; ++ i)
          this .parameter [i] = this ._parameter [i];
@@ -88739,12 +88618,12 @@ const EnvironmentLight_default_ = EnvironmentLight;
 // yyYY      Case: Sign
 
 const orientationMatrices = [
-   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .X_AXIS,          Numbers_Vector3 .Z_AXIS)), // left
-   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .NEGATIVE_X_AXIS, Numbers_Vector3 .Z_AXIS)), // right
-   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .NEGATIVE_Z_AXIS, Numbers_Vector3 .Z_AXIS)), // front
-   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .Z_AXIS,          Numbers_Vector3 .Z_AXIS)), // back
-   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .Y_AXIS,          Numbers_Vector3 .Z_AXIS)), // bottom
-   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .NEGATIVE_Y_AXIS, Numbers_Vector3 .Z_AXIS)), // top
+   Numbers_Matrix4 .fromRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .X_AXIS,          Numbers_Vector3 .Z_AXIS)), // left
+   Numbers_Matrix4 .fromRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .NEGATIVE_X_AXIS, Numbers_Vector3 .Z_AXIS)), // right
+   Numbers_Matrix4 .fromRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .NEGATIVE_Z_AXIS, Numbers_Vector3 .Z_AXIS)), // front
+   Numbers_Matrix4 .fromRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .Z_AXIS,          Numbers_Vector3 .Z_AXIS)), // back
+   Numbers_Matrix4 .fromRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .Y_AXIS,          Numbers_Vector3 .Z_AXIS)), // bottom
+   Numbers_Matrix4 .fromRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .NEGATIVE_Y_AXIS, Numbers_Vector3 .Z_AXIS)), // top
 ];
 
 const viewports = [
@@ -89441,9 +89320,9 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, Grouping_X3DGroupi
          else
          {
             N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
-            N2 .assign (this ._axisOfRotation .getValue ()) .cross (Numbers_Vector3 .Z_AXIS);    // Normal vector of plane between axisOfRotation and zAxis
+            N2 .assign (this ._axisOfRotation .getValue ()) .cross (Numbers_Vector3 .Z_AXIS);   // Normal vector of plane between axisOfRotation and zAxis
 
-            this .matrix .setRotation (rotation .setVectors (N2, N1));                // Rotate zAxis in plane
+            rotation .setVectors (N2, N1) .getMatrix (this .matrix); // Rotate zAxis in plane
          }
 
          return this .matrix;
@@ -90105,7 +89984,7 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
       if (active === this ._isActive .getValue ())
          return;
 
-      this ._isActive = active
+      this ._isActive = active;
    },
    set_motion__ (hit)
    { },
@@ -90783,7 +90662,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
    {
       for (const node of nodes)
       {
-         const geometryNode = this .getGeometryFromNode (node ?.getValue ())
+         const geometryNode = this .getGeometryFromNode (node ?.getValue ());
 
          if (geometryNode)
             return geometryNode;
@@ -92584,7 +92463,7 @@ Object .assign (Object .setPrototypeOf (TriangleFanSet .prototype, Rendering_X3D
 
       for (const vertexCount of fanCount)
       {
-         const count = vertexCount - 1
+         const count = vertexCount - 1;
 
          for (let i = 1; i < count; ++ i)
          {
@@ -96505,7 +96384,7 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, Sound_X3
    {
       Sound_X3DSoundNode .prototype .initialize .call (this);
 
-      this ._enabled          .addInterest ("set_trackCurrentView__", this)
+      this ._enabled          .addInterest ("set_trackCurrentView__", this);
       this ._trackCurrentView .addInterest ("set_trackCurrentView__", this);
 
       this .set_trackCurrentView__ ();
@@ -98034,9 +97913,9 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (Namespace/* default */.A .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(44).A;
-/* provided dependency */ var SuperGif = __webpack_require__(894);
-/* provided dependency */ var APNG = __webpack_require__(364);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(454).A;
+/* provided dependency */ var SuperGif = __webpack_require__(310);
+/* provided dependency */ var APNG = __webpack_require__(4);
 
 
 
@@ -98402,7 +98281,7 @@ function MultiTexture (executionContext)
 
    const browser = this .getBrowser ();
 
-   this .maxTextures  = browser .getMaxTextures ()
+   this .maxTextures  = browser .getMaxTextures ();
    this .color        = new Float32Array (4);
    this .modes        = [ ];
    this .alphaModes   = [ ];
@@ -98869,9 +98748,9 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, Texturing_X3DTe
       try
       {
          const
-            comp        = this ._image .comp,
-            array       = this ._image .array,
-            transparent = !(comp % 2);
+            comp         = this ._image .comp,
+            array        = this ._image .array,
+            transparency = !(comp % 2);
 
          const
             width  = this ._image .width,
@@ -98890,7 +98769,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, Texturing_X3DTe
          const data = new Uint8Array (width * height * 4);
 
          this .convert (data, comp, array .getValue (), array .length);
-         this .setTextureData (width, height, true, transparent && this .isImageTransparent (data), data);
+         this .setTextureData (width, height, true, transparency && this .isImageTransparent (data), data);
 
          this ._loadState = Base_X3DConstants .COMPLETE_STATE;
       }
@@ -99053,12 +98932,11 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
       this ._singleFrame .addInterest ("set_singleFrame__", this);
       this ._width       .addInterest ("set_dimensions__",  this);
       this ._height      .addInterest ("set_dimensions__",  this);
-      this ._depthMap    .addInterest ("set_depthMap__",    this);
+      this ._depthMap    .addInterest ("set_dimensions__",  this);
       this ._children    .addInterest ("set_children__",    this);
 
       this .set_singleFrame__ ();
       this .set_dimensions__ ();
-      this .set_depthMap__ ();
       this .set_children__ ();
 
       this .groupNode .setup ();
@@ -99087,10 +98965,14 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
    {
       const browser = this .getBrowser ();
 
+      // Dispose old framebuffer.
+
+      this .frameBuffer ?.dispose ();
+
       // Create framebuffer.
 
       const
-         width  = Math .max (this ._width .getValue (), 0),
+         width  = Math .max (this ._width  .getValue (), 0),
          height = Math .max (this ._height .getValue (), 0);
 
       // const components = this ._colorDepth .getValue ();
@@ -99099,9 +98981,12 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
       {
          // Properties
 
-         this .viewport    = new Numbers_Vector4 (0, 0, width, height);
-         this .frameBuffer = new Rendering_TextureBuffer ({ browser, width, height });
+         const float = this ._depthMap .getValue ();
 
+         this .viewport    = new Numbers_Vector4 (0, 0, width, height);
+         this .frameBuffer = new Rendering_TextureBuffer ({ browser, width, height, float });
+
+         this .setFloat (float);
          this .setTextureData (width, height, false, false, null);
       }
       else
@@ -99110,11 +98995,11 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
 
          this .setWidth (0);
          this .setHeight (0);
+         this .setFloat (false);
+         this .clearTexture ();
       }
-   },
-   set_depthMap__ ()
-   {
-      this .type = this ._depthMap .getValue () ? Rendering_TraverseType .DEPTH : Rendering_TraverseType .DISPLAY;
+
+      this .traverseType = this ._depthMap .getValue () ? Rendering_TraverseType .DEPTH : Rendering_TraverseType .DISPLAY;
    },
    set_children__ ()
    {
@@ -99256,9 +99141,9 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
          }
 
          if (this .groupNode ._children .length)
-            dependentRenderer .render (this .type, this .groupNode .traverse, this .groupNode);
+            dependentRenderer .render (this .traverseType, this .groupNode .traverse, this .groupNode);
          else
-            layer .traverse (this .type, dependentRenderer);
+            layer .traverse (this .traverseType, dependentRenderer);
 
          if (headlight)
             headlightContainer .modelViewMatrix .pop ();
@@ -99447,7 +99332,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (Namespace/* default */.A .add ("Components", Components_default_));
 ;// ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(454).A;
 
 
 
@@ -99590,7 +99475,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
    },
    getDescription ()
    {
-      return this .getNotification () ._string .getValue ()
+      return this .getNotification () ._string .getValue ();
    },
    setDescription (value)
    {
@@ -99729,7 +99614,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
                component .push (arg);
 
             else if (typeof arg === "string")
-               component .push (this .getComponent (arg))
+               component .push (this .getComponent (arg));
          }
 
          // Load array of component names.
@@ -100031,7 +99916,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
             {
                reject (new Error ("Couldn't load X3D file."));
             }
-         })
+         });
       });
    },
    loadURL (url, parameter = new x_ite_Fields .MFString ())
@@ -100194,7 +100079,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
 
       const parser = new Parser_XMLParser (scene);
 
-      parser .setInput (dom)
+      parser .setInput (dom);
 
       await new Promise (parser .parseIntoScene .bind (parser));
 
@@ -100318,10 +100203,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
       viewpointNode = Base_X3DCast (Base_X3DConstants .X3DViewpointNode, viewpointNode);
 
       if (!layerNode)
-         throw new Error ("Browser.bindViewpoint: layerNode must be of type X3DLayerNode.")
+         throw new Error ("Browser.bindViewpoint: layerNode must be of type X3DLayerNode.");
 
       if (!viewpointNode)
-         throw new Error ("Browser.bindViewpoint: viewpointNode must be of type X3DViewpointNode.")
+         throw new Error ("Browser.bindViewpoint: viewpointNode must be of type X3DViewpointNode.");
 
       viewpointNode .setVRMLTransition (true);
 
@@ -100599,7 +100484,7 @@ const SUPPORTED_VERSIONS_default_ = [
 
 /* harmony default export */ const SUPPORTED_VERSIONS = (Namespace/* default */.A .add ("SUPPORTED_VERSIONS", SUPPORTED_VERSIONS_default_));
 ;// ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(454).A;
 
 
 class X3DCanvasElement extends HTMLElement
@@ -100608,10 +100493,10 @@ class X3DCanvasElement extends HTMLElement
 
    constructor ()
    {
+      super ();
+
       try
       {
-         super ();
-
          new Browser_X3DBrowser (this);
       }
       catch (error)
@@ -100764,7 +100649,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (Namespace/* default */.A .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(44).A;
+/* provided dependency */ var jquery_$ = __webpack_require__(454).A;
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -100854,13 +100739,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (Namespace/* default */.A .add ("jquery", jquery_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(872);
+/* provided dependency */ var libtess_libtess = __webpack_require__(384);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (Namespace/* default */.A .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(44).A;
+/* provided dependency */ var X3D_$ = __webpack_require__(454).A;
 
 
 
@@ -100977,7 +100862,7 @@ Namespace/* default */.A, Namespace/* default */.A .Fields,
    */
    require (path)
    {
-      return Namespace/* default */.A [path .match (/([^\/]{1,256})$/) ?.[1]];
+      return Namespace/* default */.A [path .match (/([^/]{1,256})$/) ?.[1]];
    },
    noConflict: (() =>
    {
