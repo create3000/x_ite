@@ -1,6 +1,5 @@
 import Vector3             from "./Vector3.js";
 import Vector4             from "./Vector4.js";
-import Quaternion          from "./Quaternion.js";
 import Rotation4           from "./Rotation4.js";
 import Matrix3             from "./Matrix3.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
