@@ -173,8 +173,14 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
 
          if (vertices .length)
          {
-            min .assign (vertices [0]) .min (... vertices);
-            max .assign (vertices [0]) .max (... vertices);
+            min .assign (vertices [0]);
+            max .assign (vertices [0]);
+
+            for (const vertex of vertices)
+            {
+               min .min (vertex);
+               max .max (vertex);
+            }
          }
          else
          {
