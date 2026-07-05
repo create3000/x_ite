@@ -653,8 +653,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                for (const value of field)
                   array [a ++] = value;
 
-               if (a < array .length)
-                  array .fill (0, a);
+               array .fill (0, a);
 
                uniform .call (gl, location, array);
                return;
@@ -675,8 +674,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                      array [a ++] = pixel;
                }
 
-               if (a < array .length)
-                  array .fill (0, a);
+               array .fill (0, a);
 
                uniform .call (gl, location, array);
                return;
@@ -696,8 +694,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                      array [a ++] = element;
                }
 
-               if (a < array .length)
-                  array .fill (0, a);
+               array .fill (0, a);
 
                uniform .call (gl, location, false, array);
                return;
@@ -743,8 +740,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                      array [a ++] = element;
                }
 
-               if (a < array .length)
-                  array .fill (0, a);
+               array .fill (0, a);
 
                uniform .call (gl, location, false, array);
                return;
@@ -772,8 +768,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                      array [a ++] = element;
                }
 
-               if (a < array .length)
-                  array .fill (0, a);
+               array .fill (0, a);
 
                uniform .call (gl, location, array);
                return;
