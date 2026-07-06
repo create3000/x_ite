@@ -139,24 +139,24 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       {
          switch (type [t])
          {
-            case X3DConstants .X3DBackgroundNode:
-            {
-               this .backgroundNode = childNode;
-               break;
-            }
             case X3DConstants .Fog:
             {
                this .fogNode = childNode;
                break;
             }
-            case X3DConstants .X3DViewpointNode:
+            case X3DConstants .X3DBackgroundNode:
             {
-               this .viewpointNode = childNode;
+               this .backgroundNode = childNode;
                break;
             }
             case X3DConstants .X3DChildNode:
             {
                this .groupNode ._children .push (childNode);
+               break;
+            }
+            case X3DConstants .X3DViewpointNode:
+            {
+               this .viewpointNode = childNode;
                break;
             }
             default:
