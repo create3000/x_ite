@@ -123,6 +123,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
       for (const child of this ._children)
          this .setChild (child);
+
+      this .update = true;
    },
    setChild (child)
    {
