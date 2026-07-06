@@ -144,6 +144,11 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
                this .fogNode = childNode;
                break;
             }
+            case X3DConstants .NavigationInfo:
+            {
+               this .navigationInfoNode = childNode;
+               break;
+            }
             case X3DConstants .X3DBackgroundNode:
             {
                this .backgroundNode = childNode;
@@ -208,21 +213,19 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          this .viewpointNode ?.update ();
 
          const
-            browser            = this .getBrowser (),
-            gl                 = browser .getContext (),
-            dependentRenderer  = this .dependentRenderers .get (renderObject),
-            layer              = renderObject .getLayer (),
-            viewport           = this .viewport,
-            navigationInfoNode = dependentRenderer .getNavigationInfo (),
-            viewpointNode      = this .viewpointNode ?? dependentRenderer .getViewpoint (),
-            projectionMatrix   = viewpointNode .getProjectionMatrix (dependentRenderer, viewport),
-            headlight          = navigationInfoNode ._headlight .getValue (),
-            headlightContainer = browser .getHeadlight (),
-            width              = this .getWidth (),
-            height             = this .getHeight ();
+            browser           = this .getBrowser (),
+            gl                = browser .getContext (),
+            dependentRenderer = this .dependentRenderers .get (renderObject),
+            layer             = renderObject .getLayer (),
+            viewport          = this .viewport,
+            viewpointNode     = this .viewpointNode ?? dependentRenderer .getViewpoint (),
+            projectionMatrix  = viewpointNode .getProjectionMatrix (dependentRenderer, viewport),
+            width             = this .getWidth (),
+            height            = this .getHeight ();
 
          dependentRenderer .setBackground (this .backgroundNode);
          dependentRenderer .setFog (this .fogNode);
+         dependentRenderer .setNavigationInfo (this .navigationInfoNode);
          dependentRenderer .setFramebuffer (this .frameBuffer);
 
          this .setTransparent (dependentRenderer .getBackground () .isTransparent ());
@@ -242,6 +245,12 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          dependentRenderer .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
          dependentRenderer .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
          dependentRenderer .getModelViewMatrix ()   .push (viewpointNode .getViewMatrix ());
+
+         const
+            navigationInfoNode = dependentRenderer .getNavigationInfo (),
+            depthMap           = this ._depthMap .getValue (),
+            headlight          = !depthMap && navigationInfoNode ._headlight .getValue (),
+            headlightContainer = browser .getHeadlight ();
 
          if (headlight)
          {
