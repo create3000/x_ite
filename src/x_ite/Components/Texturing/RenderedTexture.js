@@ -29,8 +29,8 @@ function RenderedTexture (executionContext)
    // Private properties
 
    this .groupNode          = new Group (executionContext);
-   this .lastUpdate         = -1;
    this .dependentRenderers = new WeakMap ();
+   this .lastUpdate         = -1;
 }
 
 Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2DNode .prototype),
@@ -177,12 +177,13 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          return;
 
       if (!this .update)
-         return;
-
-      if (Date .now () - this .lastUpdate < this ._updateInterval .getValue () * 1000)
-         return;
+      {
+         if (Date .now () - this .lastUpdate < this ._updateInterval .getValue () * 1000)
+            return;
+      }
 
       this .lastUpdate = Date .now ();
+      this .update     = false;
 
       renderObject .getRenderedTextures () .add (this);
    },
@@ -277,9 +278,6 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          // Finish.
 
          this .updateTextureParameters ();
-
-         if (this ._singleFrame .getValue ())
-            this .update = false;
       };
    })(),
    dispose ()
