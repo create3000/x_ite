@@ -111,6 +111,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       }
 
       this .traverseType = this ._depthMap .getValue () ? TraverseType .DEPTH : TraverseType .DISPLAY;
+      this .update       = true;
    },
    set_children__ ()
    {

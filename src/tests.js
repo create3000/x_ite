@@ -467,6 +467,7 @@ const X_ITE_TESTS = [
    { path: "TextureProjection/MovieTexture.x3d" },
    { path: "TextureProjection/Parallel.x3d" },
    { path: "TextureProjection/Perspective.x3d" },
+   { path: "TextureProjection/RenderedTexture.x3d" },
    { component: "Texturing" },
    { path: "Texturing/AnimatedGIF.x3d" },
    { path: "Texturing/AnimatedPNG.x3d" },
