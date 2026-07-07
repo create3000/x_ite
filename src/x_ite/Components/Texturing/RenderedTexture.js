@@ -183,6 +183,9 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
       if (!this .update)
       {
+         if (this ._singleFrame .getValue ())
+            return;
+
          if (Date .now () - this .lastUpdate < this ._updateInterval .getValue () * 1000)
             return;
       }
