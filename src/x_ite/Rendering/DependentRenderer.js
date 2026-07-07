@@ -48,11 +48,7 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    },
    getNavigationInfo ()
    {
-      return this .navigationInfoNode ?? this .renderObject .getNavigationInfo ();
-   },
-   setNavigationInfo (navigationInfoNode)
-   {
-      this .navigationInfoNode = navigationInfoNode;
+      return this .renderObject .getNavigationInfo ();
    },
    getViewpoint ()
    {
