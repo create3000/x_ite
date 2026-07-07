@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    },
    set_singleFrame__ ()
    {
-      this .update = true;
+      this .checkUpdate = false;
    },
    set_dimensions__ ()
    {
@@ -111,7 +111,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       }
 
       this .traverseType = this ._depthMap .getValue () ? TraverseType .DEPTH : TraverseType .DISPLAY;
-      this .update       = true;
+      this .checkUpdate  = false;
    },
    set_children__ ()
    {
@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       for (const child of this ._children)
          this .setChild (child);
 
-      this .update = true;
+      this .checkUpdate = false;
    },
    setChild (child)
    {
@@ -181,7 +181,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       if (!this .frameBuffer)
          return;
 
-      if (!this .update)
+      if (this .checkUpdate)
       {
          if (this ._singleFrame .getValue ())
             return;
@@ -190,8 +190,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             return;
       }
 
-      this .lastUpdate = Date .now ();
-      this .update     = false;
+      this .lastUpdate  = Date .now ();
+      this .checkUpdate = true;
 
       renderObject .getRenderedTextures () .add (this);
    },
