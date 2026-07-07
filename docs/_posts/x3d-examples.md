@@ -56,6 +56,12 @@ In X3D, you can create a clipped background by combining a [Background](/x_ite/c
 
 In X3D, scrolling text effects can be achieved by animating the position of text geometry while a [ClipPlane](/x_ite/components/rendering/clipplane/) hides the overflow outside a defined area. Combining [TimeSensor](/x_ite/components/time/timesensor/), [PositionInterpolator](/x_ite/components/interpolation/positioninterpolator/), and routing creates smooth, continuous text movement for banners, tickers, or credits.
 
+### Shadow Texture
+
+[![Shadow Texture](https://create3000.github.io/media/x_ite/examples/shadow-texture/screenshot.png)](/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/shadow-texture/shadow-texture.x3d){: .left .w-25 }
+
+This example demonstrates shadow mapping using a [RenderedTexture](/x_ite/components/texturing/renderedtexture/) and a [TextureProjector](/x_ite/components/textureprojection/textureprojector/) node. The RenderedTexture renders the scene from the light source's point of view and produces the shadow texture. The TextureProjector then projects this texture onto the scene, creating dynamic shadows that update as the light or objects move.
+
 ---
 {: .clear }
 
