@@ -207,7 +207,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
       }
 
       if (this .scene !== this .getBrowser () .getDefaultScene ())
-         this .scene ?.dispose ();
+         this .scene .dispose ();
 
       X3DBoundedObject .prototype .dispose .call (this);
       X3DUrlObject     .prototype .dispose .call (this);
