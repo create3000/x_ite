@@ -101,7 +101,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       {
          const
             browser = this .getBrowser (),
-            hash    = new URL (scene .getWorldURL ()) .hash .substring (1);
+            fileURL = new URL (scene .getWorldURL ()),
+            hash    = fileURL .protocol !== "data:" ? fileURL .hash .substring (1) : "";
 
          this .geometryNode = hash
             ? X3DCast (X3DConstants .X3DGeometryNode, scene .getNamedNode (hash))

@@ -102,7 +102,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       {
          const
             browser = this .getBrowser (),
-            hash    = new URL (scene .getWorldURL ()) .hash .substring (1),
+            fileURL = new URL (scene .getWorldURL ()),
+            hash    = fileURL .protocol !== "data:" ? fileURL .hash .substring (1) : "",
             proto   = hash ? scene .protos .get (hash) : scene .protos [0];
 
          if (!proto)
