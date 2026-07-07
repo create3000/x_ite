@@ -41,11 +41,18 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
       X3DUrlObject     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
+      this .getLive () .addInterest ("set_live__", this);
+
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
       this .connectChildNode (this .groupNode);
       this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_live__ ()
+   {
+      if (this .scene !== this .getBrowser () .getDefaultScene ())
+         this .scene .setLive (this .isLive ());
    },
    getBBox (bbox, shadows)
    {
@@ -71,10 +78,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    setInternalScene (scene)
    {
       if (this .scene !== this .getBrowser () .getDefaultScene ())
-      {
-         this .getLive () .removeFieldInterest (this .scene .getLive ());
          this .scene .dispose ();
-      }
 
       // Set new scene.
 
@@ -82,15 +86,13 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
 
       if (scene)
       {
-         if (this .scene !== this .getBrowser () .getDefaultScene ())
-            this .getLive () .addFieldInterest (this .scene .getLive ());
-
          this .scene .setExecutionContext (this .getExecutionContext ());
          this .scene .setLive (true);
          this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
 
          this .groupNode ._children = scene .rootNodes;
 
+         this .set_live__ ();
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       else
@@ -211,9 +213,6 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
          if (importedNode .getInlineNode () === this)
             executionContext .removeImportedNode (importedNode .getImportedName ());
       }
-
-      if (this .scene !== this .getBrowser () .getDefaultScene ())
-         this .scene .dispose ();
 
       X3DBoundedObject .prototype .dispose .call (this);
       X3DUrlObject     .prototype .dispose .call (this);

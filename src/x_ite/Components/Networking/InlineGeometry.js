@@ -30,10 +30,16 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       X3DGeometryNode .prototype .initialize .call (this);
       X3DUrlObject    .prototype .initialize .call (this);
 
+      this .getLive () .addInterest ("set_live__", this);
+
       this ._solid  .addInterest ("set_solid__",  this);
       this ._smooth .addInterest ("set_smooth__", this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_live__ ()
+   {
+      this .scene ?.setLive (this .isLive ());
    },
    set_solid__ ()
    {
@@ -116,10 +122,10 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          if (!this .geometryNode)
             throw new Error ("No X3DGeometryNode found.");
 
-         this .getLive () .addFieldInterest (this .scene .getLive ());
          this .scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
 
+         this .set_live__ ();
          this .set_solid__ ();
          this .set_smooth__ ();
 
@@ -197,8 +203,6 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    { },
    dispose ()
    {
-      this .scene ?.dispose ();
-
       X3DUrlObject    .prototype .dispose .call (this);
       X3DGeometryNode .prototype .dispose .call (this);
    },

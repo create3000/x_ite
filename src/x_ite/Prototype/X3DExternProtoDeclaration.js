@@ -31,6 +31,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       X3DProtoDeclarationNode .prototype .initialize .call (this);
       X3DUrlObject            .prototype .initialize .call (this);
+
+      this .getLive () .addInterest ("set_live__", this);
+   },
+   set_live__ ()
+   {
+      this [_scene] ?.setLive (this .isLive ());
    },
    getAppInfo ()
    {
@@ -293,6 +299,13 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       generator .endObject ();
       generator .endObject ();
    },
+   dispose ()
+   {
+      this [_scene] ?.dispose ();
+
+      X3DUrlObject            .prototype .dispose .call (this);
+      X3DProtoDeclarationNode .prototype .dispose .call (this);
+   }
 });
 
 for (const key of Object .keys (X3DExternProtoDeclaration .prototype))

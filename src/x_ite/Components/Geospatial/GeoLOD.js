@@ -50,6 +50,8 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       X3DBoundedObject    .prototype .initialize .call (this);
       X3DGeospatialObject .prototype .initialize .call (this);
 
+      this .getLive () .addInterest ("set_live__", this);
+
       this ._rootNode .addFieldInterest (this .rootGroupNode ._children);
 
       this .rootGroupNode ._children = this ._rootNode;
@@ -81,10 +83,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       this .rootInlineNode .setup ();
 
       for (const childInlineNode of this .childInlineNodes)
-      {
-         this .getLive () .addFieldInterest (childInlineNode .getLive ());
          childInlineNode .setup ();
-      }
    },
    getBBox (bbox, shadows)
    {
@@ -127,6 +126,11 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
             return shapes;
          }
       }
+   },
+   set_live__ ()
+   {
+      for (const childInlineNode of this .childInlineNodes)
+         childInlineNode .setLive (this .isLive ());
    },
    set_rootLoadState__ ()
    {
@@ -319,9 +323,6 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    },
    dispose ()
    {
-      for (const childInlineNode of this .childInlineNodes)
-         childInlineNode .dispose ();
-
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DBoundedObject    .prototype .dispose .call (this);
       X3DChildNode        .prototype .dispose .call (this);
