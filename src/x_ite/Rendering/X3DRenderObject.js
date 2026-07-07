@@ -85,7 +85,7 @@ Object .assign (X3DRenderObject .prototype,
       browser .getBrowserOptions () ._OrderIndependentTransparency .addInterest ("set_renderKey__", this);
       browser .getBrowserOptions () ._ToneMapping                  .addInterest ("set_renderKey__", this);
 
-      this .getViewpointStack ()  .addInterest ("set_renderKey__", this);
+      this .getViewpointStack () .addInterest ("set_renderKey__", this);
 
       this .set_renderKey__ ();
    },
