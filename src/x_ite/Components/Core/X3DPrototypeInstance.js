@@ -44,6 +44,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       X3DNode .prototype .initialize .call (this);
 
+      this .getLive () .addInterest ("set_live__", this);
+
       this .realize ();
    },
    realize ()
@@ -61,6 +63,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       // Copy proto.
 
+      this .set_live__ ();
+
       this .importExternProtos  (proto .getBody () .externprotos);
       this .importProtos        (proto .getBody () .protos);
       this .copyRootNodes       (proto .getBody () .rootNodes);
@@ -74,6 +78,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       this [_body] .setup ();
 
       X3DChildObject .prototype .addEvent .call (this);
+   },
+   set_live__ ()
+   {
+      this [_body] ?.setLive (this .isLive ());
    },
    set_rootNodes__ ()
    {
