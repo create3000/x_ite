@@ -190,6 +190,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    { },
    dispose ()
    {
+      this .scene ?.dispose ();
+
       X3DUrlObject    .prototype .dispose .call (this);
       X3DGeometryNode .prototype .dispose .call (this);
    },

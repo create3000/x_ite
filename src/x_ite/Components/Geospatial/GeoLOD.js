@@ -316,6 +316,9 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    },
    dispose ()
    {
+      for (const childInlineNode of this .childInlineNodes)
+         childInlineNode .dispose ();
+
       X3DGeospatialObject .prototype .dispose .call (this);
       X3DBoundedObject    .prototype .dispose .call (this);
       X3DChildNode        .prototype .dispose .call (this);
