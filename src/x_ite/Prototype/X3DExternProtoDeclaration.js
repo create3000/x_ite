@@ -301,8 +301,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    dispose ()
    {
-      this [_scene] ?.dispose ();
-
       X3DUrlObject            .prototype .dispose .call (this);
       X3DProtoDeclarationNode .prototype .dispose .call (this);
    }
