@@ -71,7 +71,10 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    setInternalScene (scene)
    {
       if (this .scene !== this .getBrowser () .getDefaultScene ())
+      {
+         this .getLive () .removeFieldInterest (this .scene .getLive ());
          this .scene .dispose ();
+      }
 
       // Set new scene.
 
@@ -79,6 +82,9 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
 
       if (scene)
       {
+         if (this .scene !== this .getBrowser () .getDefaultScene ())
+            this .getLive () .addFieldInterest (this .scene .getLive ());
+
          this .scene .setExecutionContext (this .getExecutionContext ());
          this .scene .setLive (true);
          this .scene .rootNodes .addFieldInterest (this .groupNode ._children);

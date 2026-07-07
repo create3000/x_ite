@@ -81,7 +81,10 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       this .rootInlineNode .setup ();
 
       for (const childInlineNode of this .childInlineNodes)
+      {
+         this .getLive () .addFieldInterest (childInlineNode .getLive ());
          childInlineNode .setup ();
+      }
    },
    getBBox (bbox, shadows)
    {

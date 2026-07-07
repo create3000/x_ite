@@ -90,8 +90,13 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    {
       // Remove old scene.
 
-      if (!this .scene ?.cache)
-         this .scene ?.dispose ();
+      if (this .scene)
+      {
+         this .getLive () .removeFieldInterest (this .scene .getLive ());
+
+         if (!this .scene .cache)
+            this .scene .dispose ();
+      }
 
       // Set new scene.
 
@@ -111,6 +116,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          if (!this .geometryNode)
             throw new Error ("No X3DGeometryNode found.");
 
+         this .getLive () .addFieldInterest (this .scene .getLive ());
          this .scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
 
