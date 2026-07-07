@@ -867,6 +867,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          this .deleteRoute (route);
 
       this [_outerNode] = null;
+
       this [_namedNodes]    .clear ();
       this [_importedNodes] .clear ();
       this [_protos]        .clear ();

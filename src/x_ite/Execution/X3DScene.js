@@ -654,6 +654,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       this .exportedNodes .clear ();
 
+      this .setExecutionContext (null);
+
       X3DExecutionContext .prototype .dispose .call (this);
    },
 },
