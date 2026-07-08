@@ -10,6 +10,8 @@ const foreignMimeType = new Set ([
    "application/xhtml+xml",
 ]);
 
+const _cache = Symbol .for ("X_ITE.cache");
+
 function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
    X3DObject .call (this);
@@ -124,7 +126,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          await this .browser .nextFrame ();
 
          if (this .cacheScene)
-            scene .cache = true;
+            scene [_cache] = true;
 
          this .resolve ?.(scene);
          resolve (scene);

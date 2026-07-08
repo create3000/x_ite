@@ -14,6 +14,8 @@ import FileLoader           from "../../InputOutput/FileLoader.js";
  * THIS NODE IS STILL EXPERIMENTAL.
  */
 
+const _cache = Symbol .for ("X_ITE.cache");
+
 function InlineGeometry (executionContext)
 {
    X3DLineGeometryNode .call (this, executionContext);
@@ -100,7 +102,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       {
          this .getLive () .removeFieldInterest (this .scene .getLive ());
 
-         if (!this .scene .cache)
+         if (!this .scene [_cache])
             this .scene .dispose ();
       }
 
@@ -122,7 +124,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          if (!this .geometryNode)
             throw new Error ("No X3DGeometryNode found.");
 
-         this .scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
+         this .scene .setExecutionContext (scene [_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
 
          this .set_live__ ();

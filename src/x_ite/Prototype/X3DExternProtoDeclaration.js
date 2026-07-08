@@ -9,7 +9,8 @@ import FileLoader              from "../InputOutput/FileLoader.js";
 const
    _proto      = Symbol (),
    _scene      = Symbol (),
-   _fileLoader = Symbol ();
+   _fileLoader = Symbol (),
+   _cache      = Symbol .for ("X_ITE.cache");
 
 function X3DExternProtoDeclaration (executionContext, url)
 {
@@ -97,7 +98,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       // Remove old scene.
 
-      if (!this [_scene] ?.cache)
+      if (!this [_scene] ?.[_cache])
          this [_scene] ?.dispose ();
 
       // Set new scene.
@@ -115,7 +116,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          if (!proto)
             throw new Error ("PROTO not found.");
 
-         scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
+         scene .setExecutionContext (scene [_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
          scene .setLive (true);
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
