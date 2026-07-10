@@ -126,6 +126,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    getShapes (shapes, modelMatrix)
    {
+      // This function is used by StaticGroup.
+
       if (this .isVisibleObject ())
          shapes .push ({ modelMatrix, shapeNode: this });
 
