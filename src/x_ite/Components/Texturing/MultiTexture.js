@@ -97,23 +97,23 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
       const modeTypes = new Map ([
          ["REPLACE",                   ModeType .REPLACE],
          ["MODULATE",                  ModeType .MODULATE],
-         ["MODULATE2X",                ModeType .MODULATE2X],
-         ["MODULATE4X",                ModeType .MODULATE4X],
+         ["MODULATE2X",                ModeType .MODULATE_2X],
+         ["MODULATE4X",                ModeType .MODULATE_4X],
          ["ADD",                       ModeType .ADD],
-         ["ADDSIGNED",                 ModeType .ADDSIGNED],
-         ["ADDSIGNED2X",               ModeType .ADDSIGNED2X],
-         ["ADDSMOOTH",                 ModeType .ADDSMOOTH],
+         ["ADDSIGNED",                 ModeType .ADD_SIGNED],
+         ["ADDSIGNED2X",               ModeType .ADD_SIGNED_2X],
+         ["ADDSMOOTH",                 ModeType .ADD_SMOOTH],
          ["SUBTRACT",                  ModeType .SUBTRACT],
-         ["BLENDDIFFUSEALPHA",         ModeType .BLENDDIFFUSEALPHA],
-         ["BLENDTEXTUREALPHA",         ModeType .BLENDTEXTUREALPHA],
-         ["BLENDFACTORALPHA",          ModeType .BLENDFACTORALPHA],
-         ["BLENDCURRENTALPHA",         ModeType .BLENDCURRENTALPHA],
-         ["MODULATEALPHA_ADDCOLOR",    ModeType .MODULATEALPHA_ADDCOLOR],
-         ["MODULATEINVALPHA_ADDCOLOR", ModeType .MODULATEINVALPHA_ADDCOLOR],
-         ["MODULATEINVCOLOR_ADDALPHA", ModeType .MODULATEINVCOLOR_ADDALPHA],
-         ["DOTPRODUCT3",               ModeType .DOTPRODUCT3],
-         ["SELECTARG1",                ModeType .SELECTARG1],
-         ["SELECTARG2",                ModeType .SELECTARG2],
+         ["BLENDDIFFUSEALPHA",         ModeType .BLEND_DIFFUSE_ALPHA],
+         ["BLENDTEXTUREALPHA",         ModeType .BLEND_TEXTURE_ALPHA],
+         ["BLENDFACTORALPHA",          ModeType .BLEND_FACTOR_ALPHA],
+         ["BLENDCURRENTALPHA",         ModeType .BLEND_CURRENT_ALPHA],
+         ["MODULATEALPHA_ADDCOLOR",    ModeType .MODULATE_ALPHA_ADD_COLOR],
+         ["MODULATEINVALPHA_ADDCOLOR", ModeType .MODULATE_INV_ALPHA_ADD_COLOR],
+         ["MODULATEINVCOLOR_ADDALPHA", ModeType .MODULATE_INV_COLOR_ADD_ALPHA],
+         ["DOTPRODUCT3",               ModeType .DOT_PRODUCT_3],
+         ["SELECTARG1",                ModeType .SELECT_ARG1],
+         ["SELECTARG2",                ModeType .SELECT_ARG2],
          ["OFF",                       ModeType .OFF],
       ]);
 
@@ -181,8 +181,10 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    set_function__: (() =>
    {
       const functionsTypes = new Map ([
-         ["COMPLEMENT",     FunctionType .COMPLEMENT],
-         ["ALPHAREPLICATE", FunctionType .ALPHAREPLICATE],
+         ["COMPLEMENT",      FunctionType .COMPLEMENT],
+         ["ALPHA_REPLICATE", FunctionType .ALPHA_REPLICATE],
+         // Legacy
+         ["ALPHAREPLICATE",  FunctionType .ALPHA_REPLICATE],
       ]);
 
       return function ()

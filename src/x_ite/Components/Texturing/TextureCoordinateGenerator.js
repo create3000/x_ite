@@ -33,40 +33,44 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X
    set_mode__: (() =>
    {
       const modes = new Map ([
-         ["SPHERE",                      ModeType .SPHERE],
-         ["CAMERASPACENORMAL",           ModeType .CAMERASPACENORMAL],
-         ["CAMERASPACEPOSITION",         ModeType .CAMERASPACEPOSITION],
-         ["CAMERASPACEREFLECTIONVECTOR", ModeType .CAMERASPACEREFLECTIONVECTOR],
-         ["SPHERE_LOCAL",                ModeType .SPHERE_LOCAL],
-         ["SPHERE-LOCAL",                ModeType .SPHERE_LOCAL],
-         ["COORD",                       ModeType .COORD],
-         ["COORD_EYE",                   ModeType .COORD_EYE],
-         ["COORD-EYE",                   ModeType .COORD_EYE],
-         ["NOISE",                       ModeType .NOISE],
-         ["NOISE_EYE",                   ModeType .NOISE_EYE],
-         ["NOISE-EYE",                   ModeType .NOISE_EYE],
-         ["SPHERE_REFLECT",              ModeType .SPHERE_REFLECT],
-         ["SPHERE-REFLECT",              ModeType .SPHERE_REFLECT],
-         ["SPHERE_REFLECT-LOCAL",        ModeType .SPHERE_REFLECT_LOCAL],
-         ["SPHERE-REFLECT-LOCAL",        ModeType .SPHERE_REFLECT_LOCAL],
+         ["SPHERE",                         ModeType .SPHERE],
+         ["CAMERA_SPACE_NORMAL",            ModeType .CAMERA_SPACE_NORMAL],
+         ["CAMERA_SPACE_POSITION",          ModeType .CAMERA_SPACE_POSITION],
+         ["CAMERA_SPACE_REFLECTION_VECTOR", ModeType .CAMERA_SPACE_REFLECTION_VECTOR],
+         ["SPHERE_LOCAL",                   ModeType .SPHERE_LOCAL],
+         ["COORD",                          ModeType .COORD],
+         ["COORD_EYE",                      ModeType .COORD_EYE],
+         ["NOISE",                          ModeType .NOISE],
+         ["NOISE_EYE",                      ModeType .NOISE_EYE],
+         ["SPHERE_REFLECT",                 ModeType .SPHERE_REFLECT],
+         ["SPHERE_REFLECT-LOCAL",           ModeType .SPHERE_REFLECT_LOCAL],
+         // Legacy Enums
+         ["CAMERASPACENORMAL",              ModeType .CAMERA_SPACE_NORMAL],
+         ["CAMERASPACEPOSITION",            ModeType .CAMERA_SPACE_POSITION],
+         ["CAMERASPACEREFLECTIONVECTOR",    ModeType .CAMERA_SPACE_REFLECTION_VECTOR],
+         ["SPHERE-LOCAL",                   ModeType .SPHERE_LOCAL],
+         ["COORD-EYE",                      ModeType .COORD_EYE],
+         ["NOISE-EYE",                      ModeType .NOISE_EYE],
+         ["SPHERE-REFLECT",                 ModeType .SPHERE_REFLECT],
+         ["SPHERE-REFLECT-LOCAL",           ModeType .SPHERE_REFLECT_LOCAL],
       ]);
 
       return function ()
       {
-         this .mode = modes .get (this ._mode .getValue ());
-
-         if (this .mode === undefined)
-            this .mode = ModeType .SPHERE;
+         this .mode = modes .get (this ._mode .getValue ())
+            ?? ModeType .SPHERE;
       };
    })(),
    set_parameter__ ()
    {
-      const length = Math .min (this .parameter .length, this ._parameter .length);
+      const
+         parameter = this .parameter,
+         length    = Math .min (parameter .length, this ._parameter .length);
 
       for (let i = 0; i < length; ++ i)
-         this .parameter [i] = this ._parameter [i];
+         parameter [i] = this ._parameter [i];
 
-      this .parameter .fill (0, length);
+      parameter .fill (0, length);
    },
    addPointToChannel (index, array)
    {

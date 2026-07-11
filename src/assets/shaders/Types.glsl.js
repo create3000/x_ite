@@ -38,23 +38,23 @@ export default () => /* glsl */ `
 
 #define x3d_Replace                   ${MultiTextureModeType .REPLACE}
 #define x3d_Modulate                  ${MultiTextureModeType .MODULATE}
-#define x3d_Modulate2X                ${MultiTextureModeType .MODULATE2X}
-#define x3d_Modulate4X                ${MultiTextureModeType .MODULATE4X}
+#define x3d_Modulate2X                ${MultiTextureModeType .MODULATE_2X}
+#define x3d_Modulate4X                ${MultiTextureModeType .MODULATE_4X}
 #define x3d_Add                       ${MultiTextureModeType .ADD}
-#define x3d_AddSigned                 ${MultiTextureModeType .ADDSIGNED}
-#define x3d_AddSigned2X               ${MultiTextureModeType .ADDSIGNED2X}
-#define x3d_AddSmooth                 ${MultiTextureModeType .ADDSMOOTH}
+#define x3d_AddSigned                 ${MultiTextureModeType .ADD_SIGNED}
+#define x3d_AddSigned2X               ${MultiTextureModeType .ADD_SIGNED_2X}
+#define x3d_AddSmooth                 ${MultiTextureModeType .ADD_SMOOTH}
 #define x3d_Subtract                  ${MultiTextureModeType .SUBTRACT}
-#define x3d_BlendDiffuseAlpha         ${MultiTextureModeType .BLENDDIFFUSEALPHA}
-#define x3d_BlendTextureAlpha         ${MultiTextureModeType .BLENDTEXTUREALPHA}
-#define x3d_BlendFactorAlpha          ${MultiTextureModeType .BLENDFACTORALPHA}
-#define x3d_BlendCurrentAlpha         ${MultiTextureModeType .BLENDCURRENTALPHA}
-#define x3d_ModulateAlphaAddColor     ${MultiTextureModeType .MODULATEALPHA_ADDCOLOR}
-#define x3d_ModulateInvAlphaAddColor  ${MultiTextureModeType .MODULATEINVALPHA_ADDCOLOR}
-#define x3d_ModulateInvColorAddAlpha  ${MultiTextureModeType .MODULATEINVCOLOR_ADDALPHA}
-#define x3d_DotProduct3               ${MultiTextureModeType .DOTPRODUCT3}
-#define x3d_SelectArg1                ${MultiTextureModeType .SELECTARG1}
-#define x3d_SelectArg2                ${MultiTextureModeType .SELECTARG2}
+#define x3d_BlendDiffuseAlpha         ${MultiTextureModeType .BLEND_DIFFUSE_ALPHA}
+#define x3d_BlendTextureAlpha         ${MultiTextureModeType .BLEND_TEXTURE_ALPHA}
+#define x3d_BlendFactorAlpha          ${MultiTextureModeType .BLEND_FACTOR_ALPHA}
+#define x3d_BlendCurrentAlpha         ${MultiTextureModeType .BLEND_CURRENT_ALPHA}
+#define x3d_ModulateAlphaAddColor     ${MultiTextureModeType .MODULATE_ALPHA_ADD_COLOR}
+#define x3d_ModulateInvAlphaAddColor  ${MultiTextureModeType .MODULATE_INV_ALPHA_ADD_COLOR}
+#define x3d_ModulateInvColorAddAlpha  ${MultiTextureModeType .MODULATE_INV_COLOR_ADD_ALPHA}
+#define x3d_DotProduct3               ${MultiTextureModeType .DOT_PRODUCT_3}
+#define x3d_SelectArg1                ${MultiTextureModeType .SELECT_ARG1}
+#define x3d_SelectArg2                ${MultiTextureModeType .SELECT_ARG2}
 #define x3d_Off                       ${MultiTextureModeType .OFF}
 
 #define x3d_Diffuse  ${MultiTextureSourceType .DIFFUSE}
@@ -62,12 +62,12 @@ export default () => /* glsl */ `
 #define x3d_Factor   ${MultiTextureSourceType .FACTOR}
 
 #define x3d_Complement     ${MultiTextureFunctionType .COMPLEMENT}
-#define x3d_AlphaReplicate ${MultiTextureFunctionType .ALPHAREPLICATE}
+#define x3d_AlphaReplicate ${MultiTextureFunctionType .ALPHA_REPLICATE}
 
 #define x3d_Sphere                      ${TextureCoordinateGeneratorModeType .SPHERE}
-#define x3d_CameraSpaceNormal           ${TextureCoordinateGeneratorModeType .CAMERASPACENORMAL}
-#define x3d_CameraSpacePosition         ${TextureCoordinateGeneratorModeType .CAMERASPACEPOSITION}
-#define x3d_CameraSpaceReflectionVector ${TextureCoordinateGeneratorModeType .CAMERASPACEREFLECTIONVECTOR}
+#define x3d_CameraSpaceNormal           ${TextureCoordinateGeneratorModeType .CAMERA_SPACE_NORMAL}
+#define x3d_CameraSpacePosition         ${TextureCoordinateGeneratorModeType .CAMERA_SPACE_POSITION}
+#define x3d_CameraSpaceReflectionVector ${TextureCoordinateGeneratorModeType .CAMERA_SPACE_REFLECTION_VECTOR}
 #define x3d_SphereLocal                 ${TextureCoordinateGeneratorModeType .SPHERE_LOCAL}
 #define x3d_Coord                       ${TextureCoordinateGeneratorModeType .COORD}
 #define x3d_CoordEye                    ${TextureCoordinateGeneratorModeType .COORD_EYE}
