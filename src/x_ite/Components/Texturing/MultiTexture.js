@@ -95,6 +95,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    set_mode__: (() =>
    {
       const modeTypes = new Map ([
+         // ... Object .entries (ModeType),
          ["REPLACE",                   ModeType .REPLACE],
          ["MODULATE",                  ModeType .MODULATE],
          ["MODULATE2X",                ModeType .MODULATE_2X],

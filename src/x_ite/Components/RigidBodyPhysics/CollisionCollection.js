@@ -59,17 +59,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
    },
    set_appliedParameters__: (() =>
    {
-      const appliedParametersIndex = new Map ([
-         ["BOUNCE",                 AppliedParametersType .BOUNCE],
-         ["USER_FRICTION",          AppliedParametersType .USER_FRICTION],
-         ["FRICTION_COEFFICIENT-2", AppliedParametersType .FRICTION_COEFFICIENT_2],
-         ["ERROR_REDUCTION",        AppliedParametersType .ERROR_REDUCTION],
-         ["CONSTANT_FORCE",         AppliedParametersType .CONSTANT_FORCE],
-         ["SPEED_1",                AppliedParametersType .SPEED_1],
-         ["SPEED_2",                AppliedParametersType .SPEED_2],
-         ["SLIP_1",                 AppliedParametersType .SLIP_1],
-         ["SLIP_2",                 AppliedParametersType .SLIP_2],
-      ]);
+      const appliedParametersIndex = new Map (Object .entries (AppliedParametersType));
 
       return function ()
       {

@@ -224,11 +224,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    },
    set_matchCriterion__: (() =>
    {
-      const matchCriterions = new Map ([
-         ["MATCH_ANY",      MatchCriterion .MATCH_ANY],
-         ["MATCH_EVERY",    MatchCriterion .MATCH_EVERY],
-         ["MATCH_ONLY_ONE", MatchCriterion .MATCH_ONLY_ONE],
-      ]);
+      const matchCriterions = new Map (Object .entries (MatchCriterion));
 
       return function ()
       {
@@ -238,10 +234,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    })(),
    set_intersectionType__: (() =>
    {
-      const intersectionTypes = new Map ([
-         ["BOUNDS",   IntersectionType .BOUNDS],
-         ["GEOMETRY", IntersectionType .GEOMETRY],
-      ]);
+      const intersectionTypes = new Map (Object .entries (IntersectionType));
 
       return function ()
       {
@@ -251,12 +244,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    })(),
    set_sortOrder__: (() =>
    {
-      const sortOrders = new Map ([
-         ["ANY",        SortOrder .ANY],
-         ["CLOSEST",    SortOrder .CLOSEST],
-         ["ALL",        SortOrder .ALL],
-         ["ALL_SORTED", SortOrder .ALL_SORTED],
-      ]);
+      const sortOrders = new Map (Object .entries (SortOrder));
 
       return function ()
       {
