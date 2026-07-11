@@ -294,7 +294,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "colorspace":
          {
-            this .setBrowserOption ("ColorSpace", newValue);
+            this .setBrowserOption ("ColorSpace", newValue || "LINEAR_WHEN_PHYSICAL_MATERIAL");
             break;
          }
          case "contentscale":
@@ -314,7 +314,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "displaycolorspace":
          {
-            this .setBrowserOption ("DisplayColorSpace", newValue);
+            this .setBrowserOption ("DisplayColorSpace", newValue || "SRGB");
             break;
          }
          case "exposure":
