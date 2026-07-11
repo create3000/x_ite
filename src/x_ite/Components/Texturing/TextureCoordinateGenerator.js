@@ -33,17 +33,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X
    set_mode__: (() =>
    {
       const modes = new Map ([
-         ["SPHERE",                         ModeType .SPHERE],
-         ["CAMERA_SPACE_NORMAL",            ModeType .CAMERA_SPACE_NORMAL],
-         ["CAMERA_SPACE_POSITION",          ModeType .CAMERA_SPACE_POSITION],
-         ["CAMERA_SPACE_REFLECTION_VECTOR", ModeType .CAMERA_SPACE_REFLECTION_VECTOR],
-         ["SPHERE_LOCAL",                   ModeType .SPHERE_LOCAL],
-         ["COORD",                          ModeType .COORD],
-         ["COORD_EYE",                      ModeType .COORD_EYE],
-         ["NOISE",                          ModeType .NOISE],
-         ["NOISE_EYE",                      ModeType .NOISE_EYE],
-         ["SPHERE_REFLECT",                 ModeType .SPHERE_REFLECT],
-         ["SPHERE_REFLECT-LOCAL",           ModeType .SPHERE_REFLECT_LOCAL],
+         ... Object .entries (ModeType),
          // Legacy Enums
          ["CAMERASPACENORMAL",              ModeType .CAMERA_SPACE_NORMAL],
          ["CAMERASPACEPOSITION",            ModeType .CAMERA_SPACE_POSITION],

@@ -181,8 +181,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    set_function__: (() =>
    {
       const functionsTypes = new Map ([
-         ["COMPLEMENT",      FunctionType .COMPLEMENT],
-         ["ALPHA_REPLICATE", FunctionType .ALPHA_REPLICATE],
+         ... Object .entries (FunctionType),
          // Legacy
          ["ALPHAREPLICATE",  FunctionType .ALPHA_REPLICATE],
       ]);

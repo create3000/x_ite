@@ -334,7 +334,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "multisampling":
          {
-            this .setBrowserOption ("Multisampling", samples);
+            this .setBrowserOption ("Multisampling", newValue);
             break;
          }
          case "notifications":
@@ -455,7 +455,7 @@ Object .assign (X3DCoreContext .prototype,
 
          return url;
       }
-      catch (error)
+      catch
       {
          throw new Error ("Couldn't parse url attribute.");
       }
