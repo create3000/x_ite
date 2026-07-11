@@ -388,7 +388,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "textcompression":
          {
-            this .setBrowserOption ("TextCompression", newValue || "CHAR_SPACINGS");
+            this .setBrowserOption ("TextCompression", newValue || "CHAR_SPACING");
             break;
          }
          case "timings":
