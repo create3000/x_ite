@@ -280,14 +280,14 @@ Object .assign (X3DRenderObject .prototype,
 
       return function (fogNode)
       {
+         // Index 0 in localFogs is reserved for the global fog.
+
          if (fogNode .getFogType ())
          {
-            const fogContainer = this .localFogs [0] || fogNode .getFogs () .pop ();
+            const fogContainer = this .localFogs [0] ??= fogNode .getFogs () .pop ();
 
             modelViewMatrix .assign (fogNode .getModelMatrix ()) .multRight (this .getViewMatrix () .get ());
             fogContainer .set (fogNode, modelViewMatrix);
-
-            this .localFogs [0] = fogContainer;
          }
          else
          {
