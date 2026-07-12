@@ -1,4 +1,4 @@
-/* X_ITE v15.1.10 */
+/* X_ITE v15.1.11 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -294,7 +294,7 @@ Object .assign (TextureProjectorContainer .prototype,
 
       const
          lightNode             = this .lightNode,
-         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
+         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 
@@ -503,7 +503,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
 
       const
          lightNode             = this .lightNode,
-         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
+         cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 

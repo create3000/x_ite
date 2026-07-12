@@ -1,4 +1,4 @@
-/* X_ITE v15.1.10 */
+/* X_ITE v15.1.11 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
@@ -1330,17 +1330,7 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (externa
    },
    set_appliedParameters__: (() =>
    {
-      const appliedParametersIndex = new Map ([
-         ["BOUNCE",                 RigidBodyPhysics_AppliedParametersType .BOUNCE],
-         ["USER_FRICTION",          RigidBodyPhysics_AppliedParametersType .USER_FRICTION],
-         ["FRICTION_COEFFICIENT-2", RigidBodyPhysics_AppliedParametersType .FRICTION_COEFFICIENT_2],
-         ["ERROR_REDUCTION",        RigidBodyPhysics_AppliedParametersType .ERROR_REDUCTION],
-         ["CONSTANT_FORCE",         RigidBodyPhysics_AppliedParametersType .CONSTANT_FORCE],
-         ["SPEED_1",                RigidBodyPhysics_AppliedParametersType .SPEED_1],
-         ["SPEED_2",                RigidBodyPhysics_AppliedParametersType .SPEED_2],
-         ["SLIP_1",                 RigidBodyPhysics_AppliedParametersType .SLIP_1],
-         ["SLIP_2",                 RigidBodyPhysics_AppliedParametersType .SLIP_2],
-      ]);
+      const appliedParametersIndex = new Map (Object .entries (RigidBodyPhysics_AppliedParametersType));
 
       return function ()
       {

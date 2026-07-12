@@ -1,4 +1,4 @@
-/* X_ITE v15.1.10 */
+/* X_ITE v15.1.11 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -356,11 +356,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    },
    set_matchCriterion__: (() =>
    {
-      const matchCriterions = new Map ([
-         ["MATCH_ANY",      Picking_MatchCriterion .MATCH_ANY],
-         ["MATCH_EVERY",    Picking_MatchCriterion .MATCH_EVERY],
-         ["MATCH_ONLY_ONE", Picking_MatchCriterion .MATCH_ONLY_ONE],
-      ]);
+      const matchCriterions = new Map (Object .entries (Picking_MatchCriterion));
 
       return function ()
       {
@@ -370,10 +366,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    })(),
    set_intersectionType__: (() =>
    {
-      const intersectionTypes = new Map ([
-         ["BOUNDS",   Picking_IntersectionType .BOUNDS],
-         ["GEOMETRY", Picking_IntersectionType .GEOMETRY],
-      ]);
+      const intersectionTypes = new Map (Object .entries (Picking_IntersectionType));
 
       return function ()
       {
@@ -383,12 +376,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    })(),
    set_sortOrder__: (() =>
    {
-      const sortOrders = new Map ([
-         ["ANY",        Picking_SortOrder .ANY],
-         ["CLOSEST",    Picking_SortOrder .CLOSEST],
-         ["ALL",        Picking_SortOrder .ALL],
-         ["ALL_SORTED", Picking_SortOrder .ALL_SORTED],
-      ]);
+      const sortOrders = new Map (Object .entries (Picking_SortOrder));
 
       return function ()
       {

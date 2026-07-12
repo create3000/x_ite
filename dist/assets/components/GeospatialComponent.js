@@ -1,4 +1,4 @@
-/* X_ITE v15.1.10 */
+/* X_ITE v15.1.11 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1500,6 +1500,8 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
       Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
+      this .getLive () .addInterest ("set_live__", this);
+
       this ._rootNode .addFieldInterest (this .rootGroupNode ._children);
 
       this .rootGroupNode ._children = this ._rootNode;
@@ -1574,6 +1576,11 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
             return shapes;
          }
       }
+   },
+   set_live__ ()
+   {
+      for (const childInlineNode of this .childInlineNodes)
+         childInlineNode .setLive (this .isLive ());
    },
    set_rootLoadState__ ()
    {

@@ -13,7 +13,7 @@ tags: [LoadSensor, Networking]
 
 ## Overview
 
-**LoadSensor** generates events as watchList child nodes are either loaded or fail to load. Changing watchlist child nodes restarts the **LoadSensor**.
+**LoadSensor** generates events as children (watchList in X3Dv3) child nodes are either loaded or fail to load. Changing any of the child nodes restarts the **LoadSensor**.
 
 The **LoadSensor** node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
@@ -82,7 +82,7 @@ Time in seconds of maximum load duration prior to declaring failure. Default val
 ### SFBool [out] **isLoaded**
 {: #fields-isLoaded }
 
-Notify when all watchList child nodes are loaded, or at least one has failed. Sends true on successfully loading all watchList child nodes. Sends false on timeOut of any watchList child nodes, failure of any watchList child nodes to load, or no local copies available and no network present.
+Notify when all children/watchList child nodes are loaded, or at least one has failed. Sends true on successfully loading all children/watchList child nodes. Sends false on timeOut of any children/watchList child nodes, failure of any children/watchList child nodes to load, or no local copies available and no network present.
 
 #### Hint
 
@@ -121,8 +121,8 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 #### Hints
 
-- If watchList contains multiple USE nodes, output events are only generated when all *children* have loaded successfully or at least one node has failed.
-- If individual load status information is desired for different nodes, multiple **LoadSensor** nodes may be used, each with a single watchList element.
+- If *children*/watchList array contains multiple USE nodes, output events are only generated when all *children* have loaded successfully or at least one node has failed.
+- If individual load status information is desired for different nodes, multiple **LoadSensor** nodes may be used, each with a single *children*/watchList element.
 - [Anchor](/x_ite/components/networking/anchor/) nodes can be monitored for binding a target [Viewpoint](/x_ite/components/navigation/viewpoint/), loading a new scene, or loading a new scene in a new window.
 
 #### Warning
@@ -134,7 +134,7 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 ### Hints
 
 - Use multiple **LoadSensor** nodes to track multiple loading nodes individually.
-- Eligible children nodes include [Anchor](/x_ite/components/networking/anchor/), [AudioClip](/x_ite/components/sound/audioclip/), [BufferAudioSource](/x_ite/components/sound/bufferaudiosource/), [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/), [FontLibrary](/x_ite/components/text/fontlibrary/), [GeoMetadata](/x_ite/components/geospatial/geometadata/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/), [ImageTexture](/x_ite/components/texturing/imagetexture/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [Inline](/x_ite/components/networking/inline/), [InlineGeometry](/x_ite/components/networking/inlinegeometry/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PackagedShader](/x_ite/components/shaders/packagedshader/), [Script](/x_ite/components/scripting/script/), [ShaderPart](/x_ite/components/shaders/shaderpart/), [ShaderProgram](/x_ite/components/shaders/shaderprogram/).
+- Eligible children nodes typically have an active url field, and such nodes include [Anchor](/x_ite/components/networking/anchor/), [AudioClip](/x_ite/components/sound/audioclip/), [BufferAudioSource](/x_ite/components/sound/bufferaudiosource/), [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/), [FontLibrary](/x_ite/components/text/fontlibrary/), [GeoMetadata](/x_ite/components/geospatial/geometadata/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/), [ImageTexture](/x_ite/components/texturing/imagetexture/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [Inline](/x_ite/components/networking/inline/), [InlineGeometry](/x_ite/components/networking/inlinegeometry/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PackagedShader](/x_ite/components/shaders/packagedshader/), [Script](/x_ite/components/scripting/script/), [ShaderPart](/x_ite/components/shaders/shaderpart/), [ShaderProgram](/x_ite/components/shaders/shaderprogram/).
 - Load completion of an IMPORT reference can be determined by including a reference to the corresponding parent [Inline](/x_ite/components/networking/inline/) node in the **LoadSensor** children field.
 - [Background](/x_ite/components/environmentaleffects/background/) node is not sensed by **LoadSensor** due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) node with multiple [ImageTexture](/x_ite/components/texturing/imagetexture/) nodes each referenced inside **LoadSensor**.
 - Use [Inline](/x_ite/components/networking/inline/) (or [InlineGeometry](/x_ite/components/networking/inlinegeometry/)) 'load' field to prompt or defer loading of external files.
@@ -142,8 +142,8 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 ### Warnings
 
-- Children (watchList) child nodes are not rendered, so normally USE copies of other nodes to sense load status.
-- New X3D node, not supported in VRML97.
+- Children (watchList in X3Dv3) child nodes are not rendered, so normally **LoadSensor** can USE copies of other nodes DEFined elsewhere in order to sense load status.
+- Not supported in VRML97.
 - ['children' field originally named 'watchList' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ## Example

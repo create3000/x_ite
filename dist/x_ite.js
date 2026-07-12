@@ -1,4 +1,4 @@
-/* X_ITE v15.1.10 */
+/* X_ITE v15.1.11 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 906
+/***/ 761
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 160
+/***/ 531
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 751
+/***/ 100
 (module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2027,7 +2027,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     if ( true ) {
 
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(998) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(565) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2258,7 +2258,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 388
+/***/ 887
 (module) {
 
 /**
@@ -7037,7 +7037,7 @@ if (true) {
 
 /***/ },
 
-/***/ 148
+/***/ 903
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7072,20 +7072,20 @@ Object .defineProperty (Namespace, "add",
 
 /***/ },
 
-/***/ 998
+/***/ 565
 (module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
 // Bundlers are able to synchronously require an ESM module from a CommonJS one.
-const { jQuery } = __webpack_require__( 766 );
+const { jQuery } = __webpack_require__( 379 );
 module.exports = jQuery;
 
 
 /***/ },
 
-/***/ 766
+/***/ 379
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7093,7 +7093,7 @@ module.exports = jQuery;
 /* harmony export */   jQuery: () => (/* binding */ jQuery)
 /* harmony export */ });
 /* unused harmony export $ */
-/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(148);
+/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(903);
 /*!
  * jQuery JavaScript Library v4.0.0+slim
  * https://jquery.com/
@@ -14035,7 +14035,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(148);
+var Namespace = __webpack_require__(903);
 ;// ./src/x_ite/Base/X3DConstants.js
 const X3DConstants =
 {
@@ -15262,7 +15262,7 @@ const Features_default_ = Features;
 
 /* harmony default export */ const x_ite_Features = (Namespace/* default */.A .add ("Features", Features_default_));
 ;// ./src/x_ite/Base/X3DObject.js
-/* provided dependency */ var $ = __webpack_require__(766).A;
+/* provided dependency */ var $ = __webpack_require__(379).A;
 
 
 
@@ -20671,7 +20671,6 @@ const Rotation4_default_ = Rotation4;
 
 
 
-
 function Matrix4_Matrix4 (m00 = 1, m01 = 0,   m02 = 0,   m03 = 0,
                   m10 = 0, m11 = m00, m12 = 0,   m13 = 0,
                   m20 = 0, m21 = 0,   m22 = m11, m23 = 0,
@@ -25770,7 +25769,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (Namespace/* default */.A .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(766).A;
+/* provided dependency */ var Legacy_$ = __webpack_require__(379).A;
 const Legacy =
 {
    elements (elements, X3DBrowser)
@@ -26419,7 +26418,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (Namespace/* default */.A .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(766).A;
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(379).A;
 
 
 
@@ -26867,7 +26866,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (Namespace/* default */.A .add ("TextCompression", TextCompression_default_));
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(766).A;
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(379).A;
 
 
 
@@ -27349,7 +27348,7 @@ const BrowserProperties_default_ = BrowserProperties;
 
 /* harmony default export */ const Core_BrowserProperties = (Namespace/* default */.A .add ("BrowserProperties", BrowserProperties_default_));
 ;// ./src/x_ite/Browser/Core/RenderingProperties.js
-/* provided dependency */ var RenderingProperties_$ = __webpack_require__(766).A;
+/* provided dependency */ var RenderingProperties_$ = __webpack_require__(379).A;
 
 
 
@@ -27431,7 +27430,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (Namespace/* default */.A .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(766).A;
+/* provided dependency */ var Notification_$ = __webpack_require__(379).A;
 
 
 
@@ -27517,7 +27516,7 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (Namespace/* default */.A .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(766).A;
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(379).A;
 
 
 
@@ -30301,8 +30300,11 @@ Object .assign (Box3 .prototype,
 
       return function  (points)
       {
-            min .set (Number .POSITIVE_INFINITY),
-            max .set (Number .NEGATIVE_INFINITY);
+         if (!points .length)
+            return this .set ();
+
+         min .set (Number .POSITIVE_INFINITY),
+         max .set (Number .NEGATIVE_INFINITY);
 
          for (const point of points)
          {
@@ -30995,7 +30997,7 @@ const NamedNodesArray_default_ = NamedNodesArray;
 
 /* harmony default export */ const Execution_NamedNodesArray = (Namespace/* default */.A .add ("NamedNodesArray", NamedNodesArray_default_));
 ;// ./src/x_ite/Components/Core/X3DImportedNodeProxy.js
-/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(379).A;
 
 
 
@@ -31763,6 +31765,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
    {
       Core_X3DNode .prototype .initialize .call (this);
 
+      this .getLive () .addInterest ("set_live__", this);
+
       this .realize ();
    },
    realize ()
@@ -31780,6 +31784,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
 
       // Copy proto.
 
+      this .set_live__ ();
+
       this .importExternProtos  (proto .getBody () .externprotos);
       this .importProtos        (proto .getBody () .protos);
       this .copyRootNodes       (proto .getBody () .rootNodes);
@@ -31793,6 +31799,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
       this [_body] .setup ();
 
       Base_X3DChildObject .prototype .addEvent .call (this);
+   },
+   set_live__ ()
+   {
+      this [_body] ?.setLive (this .isLive ());
    },
    set_rootNodes__ ()
    {
@@ -32944,7 +32954,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (Namespace/* default */.A .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3DParser_$ = __webpack_require__(379).A;
 
 
 function X3DParser (scene, name = "Parser")
@@ -33267,7 +33277,7 @@ const Placeholder_default_ = Placeholder;
 
 /* harmony default export */ const Parser_Placeholder = (Namespace/* default */.A .add ("Placeholder", Placeholder_default_));
 ;// ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(766).A;
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(379).A;
 
 
 
@@ -36030,7 +36040,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (Namespace/* default */.A .add ("VRMLParser", VRMLParser_default_));
 ;// ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(766).A;
+/* provided dependency */ var XMLParser_$ = __webpack_require__(379).A;
 
 
 
@@ -37318,7 +37328,7 @@ const XMLParser_default_ = XMLParser;
 
 /* harmony default export */ const Parser_XMLParser = (Namespace/* default */.A .add ("XMLParser", XMLParser_default_));
 ;// ./src/x_ite/Parser/JSONParser.js
-/* provided dependency */ var JSONParser_$ = __webpack_require__(766).A;
+/* provided dependency */ var JSONParser_$ = __webpack_require__(379).A;
 
 
 
@@ -38251,7 +38261,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (Namespace/* default */.A .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(388);
+/* provided dependency */ var libtess = __webpack_require__(887);
 
 
 const Triangle3 =
@@ -39436,7 +39446,7 @@ Object .assign (X3DRenderObject .prototype,
       browser .getBrowserOptions () ._OrderIndependentTransparency .addInterest ("set_renderKey__", this);
       browser .getBrowserOptions () ._ToneMapping                  .addInterest ("set_renderKey__", this);
 
-      this .getViewpointStack ()  .addInterest ("set_renderKey__", this);
+      this .getViewpointStack () .addInterest ("set_renderKey__", this);
 
       this .set_renderKey__ ();
    },
@@ -44883,7 +44893,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (Namespace/* default */.A .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(766).A;
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(379).A;
 
 
 
@@ -47426,7 +47436,7 @@ const Layer_default_ = Layer;
 
 /* harmony default export */ const Layering_Layer = (Namespace/* default */.A .add ("Layer", Layer_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(766).A;
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(379).A;
 
 
 
@@ -51868,7 +51878,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (Namespace/* default */.A .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(766).A;
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(379).A;
 
 
 
@@ -51974,7 +51984,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (Namespace/* default */.A .add ("GLB2Parser", GLB2Parser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(766).A;
+/* provided dependency */ var OBJParser_$ = __webpack_require__(379).A;
 
 
 
@@ -53428,7 +53438,7 @@ const STLAParser_default_ = STLAParser;
 
 /* harmony default export */ const Parser_STLAParser = (Namespace/* default */.A .add ("STLAParser", STLAParser_default_));
 ;// ./src/x_ite/Parser/STLBParser.js
-/* provided dependency */ var STLBParser_$ = __webpack_require__(766).A;
+/* provided dependency */ var STLBParser_$ = __webpack_require__(379).A;
 
 
 
@@ -54316,7 +54326,7 @@ const PLYAParser_default_ = PLYAParser;
 
 /* harmony default export */ const Parser_PLYAParser = (Namespace/* default */.A .add ("PLYAParser", PLYAParser_default_));
 ;// ./src/x_ite/Parser/PLYBParser.js
-/* provided dependency */ var PLYBParser_$ = __webpack_require__(766).A;
+/* provided dependency */ var PLYBParser_$ = __webpack_require__(379).A;
 
 
 function PLYBParser (scene)
@@ -54653,6 +54663,9 @@ Object .assign (Box2,
    },
    fromPoints (points)
    {
+      if (!points .length)
+         return new Box2 ();
+
       const
          min = new Numbers_Vector2 (Number .POSITIVE_INFINITY),
          max = new Numbers_Vector2 (Number .NEGATIVE_INFINITY);
@@ -54892,8 +54905,8 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (Namespace/* default */.A .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(766).A;
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(388);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(379).A;
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(887);
 
 
 
@@ -57627,7 +57640,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (Namespace/* default */.A .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(766).A;
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(379).A;
 
 
 
@@ -58063,7 +58076,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (Namespace/* default */.A .add ("X3DWorld", X3DWorld_default_));
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(766).A;
+/* provided dependency */ var FileLoader_$ = __webpack_require__(379).A;
 
 
 
@@ -58075,6 +58088,8 @@ const foreignMimeType = new Set ([
    "text/html",
    "application/xhtml+xml",
 ]);
+
+const FileLoader_cache = Symbol .for ("X_ITE.cache");
 
 function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
@@ -58190,7 +58205,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          await this .browser .nextFrame ();
 
          if (this .cacheScene)
-            scene .cache = true;
+            scene [FileLoader_cache] = true;
 
          this .resolve ?.(scene);
          resolve (scene);
@@ -58439,7 +58454,8 @@ const FileLoader_default_ = FileLoader;
 const
    _proto      = Symbol (),
    _scene      = Symbol (),
-   _fileLoader = Symbol ();
+   _fileLoader = Symbol (),
+   X3DExternProtoDeclaration_cache      = Symbol .for ("X_ITE.cache");
 
 function X3DExternProtoDeclaration (executionContext, url)
 {
@@ -58461,6 +58477,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, Pr
    {
       Prototype_X3DProtoDeclarationNode .prototype .initialize .call (this);
       Networking_X3DUrlObject            .prototype .initialize .call (this);
+
+      this .getLive () .addInterest ("set_live__", this);
+   },
+   set_live__ ()
+   {
+      this [_scene] ?.setLive (this .isLive ());
    },
    getAppInfo ()
    {
@@ -58521,7 +58543,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, Pr
    {
       // Remove old scene.
 
-      if (!this [_scene] ?.cache)
+      if (!this [_scene] ?.[X3DExternProtoDeclaration_cache])
          this [_scene] ?.dispose ();
 
       // Set new scene.
@@ -58532,13 +58554,14 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, Pr
       {
          const
             browser = this .getBrowser (),
-            hash    = new URL (scene .getWorldURL ()) .hash .substring (1),
+            fileURL = new URL (scene .getWorldURL ()),
+            hash    = fileURL .protocol !== "data:" ? fileURL .hash .substring (1) : "",
             proto   = hash ? scene .protos .get (hash) : scene .protos [0];
 
          if (!proto)
             throw new Error ("PROTO not found.");
 
-         scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
+         scene .setExecutionContext (scene [X3DExternProtoDeclaration_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
          scene .setLive (true);
 
          this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
@@ -58722,6 +58745,11 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, Pr
       generator .endObject ();
       generator .endObject ();
    },
+   dispose ()
+   {
+      Networking_X3DUrlObject            .prototype .dispose .call (this);
+      Prototype_X3DProtoDeclarationNode .prototype .dispose .call (this);
+   }
 });
 
 for (const key of Object .keys (X3DExternProtoDeclaration .prototype))
@@ -58823,7 +58851,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (Namespace/* default */.A .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(379).A;
 
 
 
@@ -60077,6 +60105,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
          this .deleteRoute (route);
 
       this [_outerNode] = null;
+
       this [_namedNodes]    .clear ();
       this [_importedNodes] .clear ();
       this [_protos]        .clear ();
@@ -61213,6 +61242,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, Execution_X3DExecut
    {
       this .exportedNodes .clear ();
 
+      this .setExecutionContext (null);
+
       Execution_X3DExecutionContext .prototype .dispose .call (this);
    },
 },
@@ -61480,7 +61511,7 @@ Fonts_add ("PT_Sans/PTSans-Italic.woff2",     false, true);
 // add ("PT_Sans/PTSans-BoldItalic.woff2", true,  true);
 
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(379).A;
 
 
 
@@ -61777,7 +61808,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "colorspace":
          {
-            this .setBrowserOption ("ColorSpace", newValue);
+            this .setBrowserOption ("ColorSpace", newValue || "LINEAR_WHEN_PHYSICAL_MATERIAL");
             break;
          }
          case "contentscale":
@@ -61797,7 +61828,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "displaycolorspace":
          {
-            this .setBrowserOption ("DisplayColorSpace", newValue);
+            this .setBrowserOption ("DisplayColorSpace", newValue || "SRGB");
             break;
          }
          case "exposure":
@@ -61817,7 +61848,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "multisampling":
          {
-            this .setBrowserOption ("Multisampling", samples);
+            this .setBrowserOption ("Multisampling", newValue);
             break;
          }
          case "notifications":
@@ -61871,7 +61902,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "textcompression":
          {
-            this .setBrowserOption ("TextCompression", newValue || "CHAR_SPACINGS");
+            this .setBrowserOption ("TextCompression", newValue || "CHAR_SPACING");
             break;
          }
          case "timings":
@@ -61938,7 +61969,7 @@ Object .assign (X3DCoreContext .prototype,
 
          return url;
       }
-      catch (error)
+      catch
       {
          throw new Error ("Couldn't parse url attribute.");
       }
@@ -64695,6 +64726,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
    },
    getShapes (shapes, modelMatrix)
    {
+      // This function is used by StaticGroup.
+
       if (this .isVisibleObject ())
          shapes .push ({ modelMatrix, shapeNode: this });
 
@@ -67611,8 +67644,8 @@ const OrientationChaser_default_ = OrientationChaser;
 
 /* harmony default export */ const Followers_OrientationChaser = (Namespace/* default */.A .add ("OrientationChaser", OrientationChaser_default_));
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(751);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(766).A;
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(100);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(379).A;
 
 
 
@@ -68691,8 +68724,8 @@ const ScreenLine_default_ = ScreenLine;
 
 /* harmony default export */ const Rendering_ScreenLine = (Namespace/* default */.A .add ("ScreenLine", ScreenLine_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(751);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(100);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(379).A;
 
 
 
@@ -69429,8 +69462,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (Namespace/* default */.A .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(751);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(766).A;
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(100);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(379).A;
 
 
 
@@ -69643,8 +69676,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (Namespace/* default */.A .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(751);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(766).A;
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(100);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(379).A;
 
 
 
@@ -71013,8 +71046,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (Namespace/* default */.A .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(751);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(766).A;
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(100);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(379).A;
 
 
 
@@ -72273,7 +72306,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (Namespace/* default */.A .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(379).A;
 
 
 
@@ -74493,7 +74526,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 /* harmony default export */ const Shaders_X3DShaderNode = (Namespace/* default */.A .add ("X3DShaderNode", X3DShaderNode_default_));
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(379).A;
 
 
 
@@ -76155,26 +76188,26 @@ let ModeType_i = 0;
 
 const ModeType =
 {
-   REPLACE:                   ModeType_i ++,
-   MODULATE:                  ModeType_i ++,
-   MODULATE2X:                ModeType_i ++,
-   MODULATE4X:                ModeType_i ++,
-   ADD:                       ModeType_i ++,
-   ADDSIGNED:                 ModeType_i ++,
-   ADDSIGNED2X:               ModeType_i ++,
-   ADDSMOOTH:                 ModeType_i ++,
-   SUBTRACT:                  ModeType_i ++,
-   BLENDDIFFUSEALPHA:         ModeType_i ++,
-   BLENDTEXTUREALPHA:         ModeType_i ++,
-   BLENDFACTORALPHA:          ModeType_i ++,
-   BLENDCURRENTALPHA:         ModeType_i ++,
-   MODULATEALPHA_ADDCOLOR:    ModeType_i ++,
-   MODULATEINVALPHA_ADDCOLOR: ModeType_i ++,
-   MODULATEINVCOLOR_ADDALPHA: ModeType_i ++,
-   DOTPRODUCT3:               ModeType_i ++,
-   SELECTARG1:                ModeType_i ++,
-   SELECTARG2:                ModeType_i ++,
-   OFF:                       ModeType_i ++,
+   REPLACE:                      ModeType_i ++,
+   MODULATE:                     ModeType_i ++,
+   MODULATE_2X:                  ModeType_i ++,
+   MODULATE_4X:                  ModeType_i ++,
+   ADD:                          ModeType_i ++,
+   ADD_SIGNED:                   ModeType_i ++,
+   ADD_SIGNED_2X:                ModeType_i ++,
+   ADD_SMOOTH:                   ModeType_i ++,
+   SUBTRACT:                     ModeType_i ++,
+   BLEND_DIFFUSE_ALPHA:          ModeType_i ++,
+   BLEND_TEXTURE_ALPHA:          ModeType_i ++,
+   BLEND_FACTOR_ALPHA:           ModeType_i ++,
+   BLEND_CURRENT_ALPHA:          ModeType_i ++,
+   MODULATE_ALPHA_ADD_COLOR:     ModeType_i ++,
+   MODULATE_INV_ALPHA_ADD_COLOR: ModeType_i ++,
+   MODULATE_INV_COLOR_ADD_ALPHA: ModeType_i ++,
+   DOT_PRODUCT_3:                ModeType_i ++,
+   SELECT_ARG1:                  ModeType_i ++,
+   SELECT_ARG2:                  ModeType_i ++,
+   OFF:                          ModeType_i ++,
 };
 
 const ModeType_default_ = ModeType;
@@ -76201,9 +76234,9 @@ let FunctionType_i = 0;
 
 const FunctionType =
 {
-   DEFAULT:        FunctionType_i ++,
-   COMPLEMENT:     FunctionType_i ++,
-   ALPHAREPLICATE: FunctionType_i ++,
+   DEFAULT:         FunctionType_i ++,
+   COMPLEMENT:      FunctionType_i ++,
+   ALPHA_REPLICATE: FunctionType_i ++,
 };
 
 const FunctionType_default_ = FunctionType;
@@ -76215,18 +76248,18 @@ let TextureCoordinateGeneratorModeType_i = 0;
 
 const TextureCoordinateGeneratorModeType_ModeType =
 {
-   NONE:                        TextureCoordinateGeneratorModeType_i ++,
-   SPHERE:                      TextureCoordinateGeneratorModeType_i ++,
-   CAMERASPACENORMAL:           TextureCoordinateGeneratorModeType_i ++,
-   CAMERASPACEPOSITION:         TextureCoordinateGeneratorModeType_i ++,
-   CAMERASPACEREFLECTIONVECTOR: TextureCoordinateGeneratorModeType_i ++,
-   SPHERE_LOCAL:                TextureCoordinateGeneratorModeType_i ++,
-   COORD:                       TextureCoordinateGeneratorModeType_i ++,
-   COORD_EYE:                   TextureCoordinateGeneratorModeType_i ++,
-   NOISE:                       TextureCoordinateGeneratorModeType_i ++,
-   NOISE_EYE:                   TextureCoordinateGeneratorModeType_i ++,
-   SPHERE_REFLECT:              TextureCoordinateGeneratorModeType_i ++,
-   SPHERE_REFLECT_LOCAL:        TextureCoordinateGeneratorModeType_i ++,
+   NONE:                           TextureCoordinateGeneratorModeType_i ++,
+   SPHERE:                         TextureCoordinateGeneratorModeType_i ++,
+   CAMERA_SPACE_NORMAL:            TextureCoordinateGeneratorModeType_i ++,
+   CAMERA_SPACE_POSITION:          TextureCoordinateGeneratorModeType_i ++,
+   CAMERA_SPACE_REFLECTION_VECTOR: TextureCoordinateGeneratorModeType_i ++,
+   SPHERE_LOCAL:                   TextureCoordinateGeneratorModeType_i ++,
+   COORD:                          TextureCoordinateGeneratorModeType_i ++,
+   COORD_EYE:                      TextureCoordinateGeneratorModeType_i ++,
+   NOISE:                          TextureCoordinateGeneratorModeType_i ++,
+   NOISE_EYE:                      TextureCoordinateGeneratorModeType_i ++,
+   SPHERE_REFLECT:                 TextureCoordinateGeneratorModeType_i ++,
+   SPHERE_REFLECT_LOCAL:           TextureCoordinateGeneratorModeType_i ++,
 };
 
 const TextureCoordinateGeneratorModeType_default_ = TextureCoordinateGeneratorModeType_ModeType;
@@ -76262,33 +76295,33 @@ const Types_glsl_default_ = () => /* glsl */ `
 #define x3d_TextureTypeCube 4
 #define x3d_Replace ${Texturing_ModeType .REPLACE}
 #define x3d_Modulate ${Texturing_ModeType .MODULATE}
-#define x3d_Modulate2X ${Texturing_ModeType .MODULATE2X}
-#define x3d_Modulate4X ${Texturing_ModeType .MODULATE4X}
+#define x3d_Modulate2X ${Texturing_ModeType .MODULATE_2X}
+#define x3d_Modulate4X ${Texturing_ModeType .MODULATE_4X}
 #define x3d_Add ${Texturing_ModeType .ADD}
-#define x3d_AddSigned ${Texturing_ModeType .ADDSIGNED}
-#define x3d_AddSigned2X ${Texturing_ModeType .ADDSIGNED2X}
-#define x3d_AddSmooth ${Texturing_ModeType .ADDSMOOTH}
+#define x3d_AddSigned ${Texturing_ModeType .ADD_SIGNED}
+#define x3d_AddSigned2X ${Texturing_ModeType .ADD_SIGNED_2X}
+#define x3d_AddSmooth ${Texturing_ModeType .ADD_SMOOTH}
 #define x3d_Subtract ${Texturing_ModeType .SUBTRACT}
-#define x3d_BlendDiffuseAlpha ${Texturing_ModeType .BLENDDIFFUSEALPHA}
-#define x3d_BlendTextureAlpha ${Texturing_ModeType .BLENDTEXTUREALPHA}
-#define x3d_BlendFactorAlpha ${Texturing_ModeType .BLENDFACTORALPHA}
-#define x3d_BlendCurrentAlpha ${Texturing_ModeType .BLENDCURRENTALPHA}
-#define x3d_ModulateAlphaAddColor ${Texturing_ModeType .MODULATEALPHA_ADDCOLOR}
-#define x3d_ModulateInvAlphaAddColor ${Texturing_ModeType .MODULATEINVALPHA_ADDCOLOR}
-#define x3d_ModulateInvColorAddAlpha ${Texturing_ModeType .MODULATEINVCOLOR_ADDALPHA}
-#define x3d_DotProduct3 ${Texturing_ModeType .DOTPRODUCT3}
-#define x3d_SelectArg1 ${Texturing_ModeType .SELECTARG1}
-#define x3d_SelectArg2 ${Texturing_ModeType .SELECTARG2}
+#define x3d_BlendDiffuseAlpha ${Texturing_ModeType .BLEND_DIFFUSE_ALPHA}
+#define x3d_BlendTextureAlpha ${Texturing_ModeType .BLEND_TEXTURE_ALPHA}
+#define x3d_BlendFactorAlpha ${Texturing_ModeType .BLEND_FACTOR_ALPHA}
+#define x3d_BlendCurrentAlpha ${Texturing_ModeType .BLEND_CURRENT_ALPHA}
+#define x3d_ModulateAlphaAddColor ${Texturing_ModeType .MODULATE_ALPHA_ADD_COLOR}
+#define x3d_ModulateInvAlphaAddColor ${Texturing_ModeType .MODULATE_INV_ALPHA_ADD_COLOR}
+#define x3d_ModulateInvColorAddAlpha ${Texturing_ModeType .MODULATE_INV_COLOR_ADD_ALPHA}
+#define x3d_DotProduct3 ${Texturing_ModeType .DOT_PRODUCT_3}
+#define x3d_SelectArg1 ${Texturing_ModeType .SELECT_ARG1}
+#define x3d_SelectArg2 ${Texturing_ModeType .SELECT_ARG2}
 #define x3d_Off ${Texturing_ModeType .OFF}
 #define x3d_Diffuse ${Texturing_SourceType .DIFFUSE}
 #define x3d_Specular ${Texturing_SourceType .SPECULAR}
 #define x3d_Factor ${Texturing_SourceType .FACTOR}
 #define x3d_Complement ${Texturing_FunctionType .COMPLEMENT}
-#define x3d_AlphaReplicate ${Texturing_FunctionType .ALPHAREPLICATE}
+#define x3d_AlphaReplicate ${Texturing_FunctionType .ALPHA_REPLICATE}
 #define x3d_Sphere ${TextureCoordinateGeneratorModeType .SPHERE}
-#define x3d_CameraSpaceNormal ${TextureCoordinateGeneratorModeType .CAMERASPACENORMAL}
-#define x3d_CameraSpacePosition ${TextureCoordinateGeneratorModeType .CAMERASPACEPOSITION}
-#define x3d_CameraSpaceReflectionVector ${TextureCoordinateGeneratorModeType .CAMERASPACEREFLECTIONVECTOR}
+#define x3d_CameraSpaceNormal ${TextureCoordinateGeneratorModeType .CAMERA_SPACE_NORMAL}
+#define x3d_CameraSpacePosition ${TextureCoordinateGeneratorModeType .CAMERA_SPACE_POSITION}
+#define x3d_CameraSpaceReflectionVector ${TextureCoordinateGeneratorModeType .CAMERA_SPACE_REFLECTION_VECTOR}
 #define x3d_SphereLocal ${TextureCoordinateGeneratorModeType .SPHERE_LOCAL}
 #define x3d_Coord ${TextureCoordinateGeneratorModeType .COORD}
 #define x3d_CoordEye ${TextureCoordinateGeneratorModeType .COORD_EYE}
@@ -76494,7 +76527,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (Namespace/* default */.A .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(766).A;
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(379).A;
 
 
 
@@ -78439,7 +78472,7 @@ const PeriodicWave_default_ = PeriodicWave;
 
 /* harmony default export */ const Sound_PeriodicWave = (Namespace/* default */.A .add ("PeriodicWave", PeriodicWave_default_));
 ;// ./src/x_ite/Browser/Sound/X3DSoundContext.js
-/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(379).A;
 
 
 
@@ -78746,7 +78779,7 @@ const TextureTransform_default_ = TextureTransform;
 
 /* harmony default export */ const Texturing_TextureTransform = (Namespace/* default */.A .add ("TextureTransform", TextureTransform_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(766).A;
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(379).A;
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -79801,7 +79834,7 @@ const X3DBrowserContext_default_ = X3DBrowserContext;
 
 /* harmony default export */ const Browser_X3DBrowserContext = (Namespace/* default */.A .add ("X3DBrowserContext", X3DBrowserContext_default_));
 ;// ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(766).A;
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(379).A;
 /*******************************************************************************
  * MIT License
  *
@@ -86076,40 +86109,34 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, T
    set_mode__: (() =>
    {
       const modes = new Map ([
-         ["SPHERE",                      TextureCoordinateGeneratorModeType .SPHERE],
-         ["CAMERASPACENORMAL",           TextureCoordinateGeneratorModeType .CAMERASPACENORMAL],
-         ["CAMERASPACEPOSITION",         TextureCoordinateGeneratorModeType .CAMERASPACEPOSITION],
-         ["CAMERASPACEREFLECTIONVECTOR", TextureCoordinateGeneratorModeType .CAMERASPACEREFLECTIONVECTOR],
-         ["SPHERE_LOCAL",                TextureCoordinateGeneratorModeType .SPHERE_LOCAL],
-         ["SPHERE-LOCAL",                TextureCoordinateGeneratorModeType .SPHERE_LOCAL],
-         ["COORD",                       TextureCoordinateGeneratorModeType .COORD],
-         ["COORD_EYE",                   TextureCoordinateGeneratorModeType .COORD_EYE],
-         ["COORD-EYE",                   TextureCoordinateGeneratorModeType .COORD_EYE],
-         ["NOISE",                       TextureCoordinateGeneratorModeType .NOISE],
-         ["NOISE_EYE",                   TextureCoordinateGeneratorModeType .NOISE_EYE],
-         ["NOISE-EYE",                   TextureCoordinateGeneratorModeType .NOISE_EYE],
-         ["SPHERE_REFLECT",              TextureCoordinateGeneratorModeType .SPHERE_REFLECT],
-         ["SPHERE-REFLECT",              TextureCoordinateGeneratorModeType .SPHERE_REFLECT],
-         ["SPHERE_REFLECT-LOCAL",        TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL],
-         ["SPHERE-REFLECT-LOCAL",        TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL],
+         ... Object .entries (TextureCoordinateGeneratorModeType),
+         // Legacy Enums
+         ["CAMERASPACENORMAL",              TextureCoordinateGeneratorModeType .CAMERA_SPACE_NORMAL],
+         ["CAMERASPACEPOSITION",            TextureCoordinateGeneratorModeType .CAMERA_SPACE_POSITION],
+         ["CAMERASPACEREFLECTIONVECTOR",    TextureCoordinateGeneratorModeType .CAMERA_SPACE_REFLECTION_VECTOR],
+         ["SPHERE-LOCAL",                   TextureCoordinateGeneratorModeType .SPHERE_LOCAL],
+         ["COORD-EYE",                      TextureCoordinateGeneratorModeType .COORD_EYE],
+         ["NOISE-EYE",                      TextureCoordinateGeneratorModeType .NOISE_EYE],
+         ["SPHERE-REFLECT",                 TextureCoordinateGeneratorModeType .SPHERE_REFLECT],
+         ["SPHERE-REFLECT-LOCAL",           TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL],
       ]);
 
       return function ()
       {
-         this .mode = modes .get (this ._mode .getValue ());
-
-         if (this .mode === undefined)
-            this .mode = TextureCoordinateGeneratorModeType .SPHERE;
+         this .mode = modes .get (this ._mode .getValue ())
+            ?? TextureCoordinateGeneratorModeType .SPHERE;
       };
    })(),
    set_parameter__ ()
    {
-      const length = Math .min (this .parameter .length, this ._parameter .length);
+      const
+         parameter = this .parameter,
+         length    = Math .min (parameter .length, this ._parameter .length);
 
       for (let i = 0; i < length; ++ i)
-         this .parameter [i] = this ._parameter [i];
+         parameter [i] = this ._parameter [i];
 
-      this .parameter .fill (0, length);
+      parameter .fill (0, length);
    },
    addPointToChannel (index, array)
    {
@@ -90319,11 +90346,18 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, Core_X3DChildNode .pr
       Networking_X3DUrlObject     .prototype .initialize .call (this);
       Grouping_X3DBoundedObject .prototype .initialize .call (this);
 
+      this .getLive () .addInterest ("set_live__", this);
+
       this .groupNode .setPrivate (true);
       this .groupNode .setup ();
 
       this .connectChildNode (this .groupNode);
       this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_live__ ()
+   {
+      if (this .scene !== this .getBrowser () .getDefaultScene ())
+         this .scene .setLive (this .isLive ());
    },
    getBBox (bbox, shadows)
    {
@@ -90363,6 +90397,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, Core_X3DChildNode .pr
 
          this .groupNode ._children = scene .rootNodes;
 
+         this .set_live__ ();
          this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
       }
       else
@@ -90533,6 +90568,8 @@ const Inline_default_ = Inline;
  * THIS NODE IS STILL EXPERIMENTAL.
  */
 
+const InlineGeometry_cache = Symbol .for ("X_ITE.cache");
+
 function InlineGeometry (executionContext)
 {
    Rendering_X3DLineGeometryNode .call (this, executionContext);
@@ -90549,10 +90586,16 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
       Rendering_X3DGeometryNode .prototype .initialize .call (this);
       Networking_X3DUrlObject    .prototype .initialize .call (this);
 
+      this .getLive () .addInterest ("set_live__", this);
+
       this ._solid  .addInterest ("set_solid__",  this);
       this ._smooth .addInterest ("set_smooth__", this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_live__ ()
+   {
+      this .scene ?.setLive (this .isLive ());
    },
    set_solid__ ()
    {
@@ -90609,8 +90652,13 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
    {
       // Remove old scene.
 
-      if (!this .scene ?.cache)
-         this .scene ?.dispose ();
+      if (this .scene)
+      {
+         this .getLive () .removeFieldInterest (this .scene .getLive ());
+
+         if (!this .scene [InlineGeometry_cache])
+            this .scene .dispose ();
+      }
 
       // Set new scene.
 
@@ -90620,7 +90668,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
       {
          const
             browser = this .getBrowser (),
-            hash    = new URL (scene .getWorldURL ()) .hash .substring (1);
+            fileURL = new URL (scene .getWorldURL ()),
+            hash    = fileURL .protocol !== "data:" ? fileURL .hash .substring (1) : "";
 
          this .geometryNode = hash
             ? Base_X3DCast (Base_X3DConstants .X3DGeometryNode, scene .getNamedNode (hash))
@@ -90629,9 +90678,10 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
          if (!this .geometryNode)
             throw new Error ("No X3DGeometryNode found.");
 
-         this .scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
+         this .scene .setExecutionContext (scene [InlineGeometry_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
 
+         this .set_live__ ();
          this .set_solid__ ();
          this .set_smooth__ ();
 
@@ -90741,18 +90791,15 @@ const InlineGeometry_default_ = InlineGeometry;
 
 
 
+
 function X3DUrlOutputObject (executionContext)
 {
+   Networking_X3DNetworkSensorNode .call (this, executionContext);
+
    this .addType (Base_X3DConstants .X3DUrlOutputObject);
 }
 
-Object .assign (X3DUrlOutputObject .prototype,
-{
-   initialize ()
-   { },
-   dispose ()
-   { },
-});
+Object .setPrototypeOf (X3DUrlOutputObject .prototype, Networking_X3DNetworkSensorNode .prototype);
 
 Object .defineProperties (X3DUrlOutputObject, Core_X3DNode .getStaticProperties ("X3DUrlOutputObject", "Networking", 4));
 
@@ -97915,9 +97962,9 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (Namespace/* default */.A .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(766).A;
-/* provided dependency */ var SuperGif = __webpack_require__(906);
-/* provided dependency */ var APNG = __webpack_require__(160);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(379).A;
+/* provided dependency */ var SuperGif = __webpack_require__(761);
+/* provided dependency */ var APNG = __webpack_require__(531);
 
 
 
@@ -98357,25 +98404,26 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
    set_mode__: (() =>
    {
       const modeTypes = new Map ([
+         // ... Object .entries (ModeType),
          ["REPLACE",                   Texturing_ModeType .REPLACE],
          ["MODULATE",                  Texturing_ModeType .MODULATE],
-         ["MODULATE2X",                Texturing_ModeType .MODULATE2X],
-         ["MODULATE4X",                Texturing_ModeType .MODULATE4X],
+         ["MODULATE2X",                Texturing_ModeType .MODULATE_2X],
+         ["MODULATE4X",                Texturing_ModeType .MODULATE_4X],
          ["ADD",                       Texturing_ModeType .ADD],
-         ["ADDSIGNED",                 Texturing_ModeType .ADDSIGNED],
-         ["ADDSIGNED2X",               Texturing_ModeType .ADDSIGNED2X],
-         ["ADDSMOOTH",                 Texturing_ModeType .ADDSMOOTH],
+         ["ADDSIGNED",                 Texturing_ModeType .ADD_SIGNED],
+         ["ADDSIGNED2X",               Texturing_ModeType .ADD_SIGNED_2X],
+         ["ADDSMOOTH",                 Texturing_ModeType .ADD_SMOOTH],
          ["SUBTRACT",                  Texturing_ModeType .SUBTRACT],
-         ["BLENDDIFFUSEALPHA",         Texturing_ModeType .BLENDDIFFUSEALPHA],
-         ["BLENDTEXTUREALPHA",         Texturing_ModeType .BLENDTEXTUREALPHA],
-         ["BLENDFACTORALPHA",          Texturing_ModeType .BLENDFACTORALPHA],
-         ["BLENDCURRENTALPHA",         Texturing_ModeType .BLENDCURRENTALPHA],
-         ["MODULATEALPHA_ADDCOLOR",    Texturing_ModeType .MODULATEALPHA_ADDCOLOR],
-         ["MODULATEINVALPHA_ADDCOLOR", Texturing_ModeType .MODULATEINVALPHA_ADDCOLOR],
-         ["MODULATEINVCOLOR_ADDALPHA", Texturing_ModeType .MODULATEINVCOLOR_ADDALPHA],
-         ["DOTPRODUCT3",               Texturing_ModeType .DOTPRODUCT3],
-         ["SELECTARG1",                Texturing_ModeType .SELECTARG1],
-         ["SELECTARG2",                Texturing_ModeType .SELECTARG2],
+         ["BLENDDIFFUSEALPHA",         Texturing_ModeType .BLEND_DIFFUSE_ALPHA],
+         ["BLENDTEXTUREALPHA",         Texturing_ModeType .BLEND_TEXTURE_ALPHA],
+         ["BLENDFACTORALPHA",          Texturing_ModeType .BLEND_FACTOR_ALPHA],
+         ["BLENDCURRENTALPHA",         Texturing_ModeType .BLEND_CURRENT_ALPHA],
+         ["MODULATEALPHA_ADDCOLOR",    Texturing_ModeType .MODULATE_ALPHA_ADD_COLOR],
+         ["MODULATEINVALPHA_ADDCOLOR", Texturing_ModeType .MODULATE_INV_ALPHA_ADD_COLOR],
+         ["MODULATEINVCOLOR_ADDALPHA", Texturing_ModeType .MODULATE_INV_COLOR_ADD_ALPHA],
+         ["DOTPRODUCT3",               Texturing_ModeType .DOT_PRODUCT_3],
+         ["SELECTARG1",                Texturing_ModeType .SELECT_ARG1],
+         ["SELECTARG2",                Texturing_ModeType .SELECT_ARG2],
          ["OFF",                       Texturing_ModeType .OFF],
       ]);
 
@@ -98443,8 +98491,9 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
    set_function__: (() =>
    {
       const functionsTypes = new Map ([
-         ["COMPLEMENT",     Texturing_FunctionType .COMPLEMENT],
-         ["ALPHAREPLICATE", Texturing_FunctionType .ALPHAREPLICATE],
+         ... Object .entries (Texturing_FunctionType),
+         // Legacy
+         ["ALPHAREPLICATE",  Texturing_FunctionType .ALPHA_REPLICATE],
       ]);
 
       return function ()
@@ -98920,8 +98969,8 @@ function RenderedTexture (executionContext)
    // Private properties
 
    this .groupNode          = new Grouping_Group (executionContext);
-   this .lastUpdate         = -1;
    this .dependentRenderers = new WeakMap ();
+   this .lastUpdate         = -1;
 }
 
 Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3DTexture2DNode .prototype),
@@ -98961,7 +99010,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
    },
    set_singleFrame__ ()
    {
-      this .update = true;
+      this .checkUpdate = false;
    },
    set_dimensions__ ()
    {
@@ -99002,6 +99051,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
       }
 
       this .traverseType = this ._depthMap .getValue () ? Rendering_TraverseType .DEPTH : Rendering_TraverseType .DISPLAY;
+      this .checkUpdate  = false;
    },
    set_children__ ()
    {
@@ -99013,6 +99063,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
 
       for (const child of this ._children)
          this .setChild (child);
+
+      this .checkUpdate = false;
    },
    setChild (child)
    {
@@ -99027,24 +99079,29 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
       {
          switch (type [t])
          {
-            case Base_X3DConstants .X3DBackgroundNode:
-            {
-               this .backgroundNode = childNode;
-               break;
-            }
             case Base_X3DConstants .Fog:
             {
                this .fogNode = childNode;
                break;
             }
-            case Base_X3DConstants .X3DViewpointNode:
+            case Base_X3DConstants .NavigationInfo:
             {
-               this .viewpointNode = childNode;
+               this .navigationInfoNode = childNode;
+               break;
+            }
+            case Base_X3DConstants .X3DBackgroundNode:
+            {
+               this .backgroundNode = childNode;
                break;
             }
             case Base_X3DConstants .X3DChildNode:
             {
                this .groupNode ._children .push (childNode);
+               break;
+            }
+            case Base_X3DConstants .X3DViewpointNode:
+            {
+               this .viewpointNode = childNode;
                break;
             }
             default:
@@ -99064,13 +99121,17 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
       if (!this .frameBuffer)
          return;
 
-      if (!this .update)
-         return;
+      if (this .checkUpdate)
+      {
+         if (this ._singleFrame .getValue ())
+            return;
 
-      if (Date .now () - this .lastUpdate < this ._updateInterval .getValue () * 1000)
-         return;
+         if (Date .now () - this .lastUpdate < this ._updateInterval .getValue () * 1000)
+            return;
+      }
 
-      this .lastUpdate = Date .now ();
+      this .lastUpdate  = Date .now ();
+      this .checkUpdate = true;
 
       renderObject .getRenderedTextures () .add (this);
    },
@@ -99086,8 +99147,9 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
          {
             const dependentRenderer = new Rendering_DependentRenderer (this .getExecutionContext (), renderObject);
 
-            this .dependentRenderers .set (renderObject, dependentRenderer);
             dependentRenderer .setDepthClearColor (1, 1, 1, 1);
+
+            this .dependentRenderers .set (renderObject, dependentRenderer);
          }
 
          // Prepare.
@@ -99100,11 +99162,12 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
             dependentRenderer  = this .dependentRenderers .get (renderObject),
             layer              = renderObject .getLayer (),
             viewport           = this .viewport,
-            navigationInfoNode = dependentRenderer .getNavigationInfo (),
+            navigationInfoNode = this .navigationInfoNode ?? dependentRenderer .getNavigationInfo (),
+            depthMap           = this ._depthMap .getValue (),
+            headlight          = !depthMap && navigationInfoNode ._headlight .getValue (),
+            headlightContainer = browser .getHeadlight (),
             viewpointNode      = this .viewpointNode ?? dependentRenderer .getViewpoint (),
             projectionMatrix   = viewpointNode .getProjectionMatrix (dependentRenderer, viewport),
-            headlight          = navigationInfoNode ._headlight .getValue (),
-            headlightContainer = browser .getHeadlight (),
             width              = this .getWidth (),
             height             = this .getHeight ();
 
@@ -99165,9 +99228,6 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
          // Finish.
 
          this .updateTextureParameters ();
-
-         if (this ._singleFrame .getValue ())
-            this .update = false;
       };
    })(),
    dispose ()
@@ -99334,7 +99394,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (Namespace/* default */.A .add ("Components", Components_default_));
 ;// ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(379).A;
 
 
 
@@ -100486,7 +100546,7 @@ const SUPPORTED_VERSIONS_default_ = [
 
 /* harmony default export */ const SUPPORTED_VERSIONS = (Namespace/* default */.A .add ("SUPPORTED_VERSIONS", SUPPORTED_VERSIONS_default_));
 ;// ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(379).A;
 
 
 class X3DCanvasElement extends HTMLElement
@@ -100651,7 +100711,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (Namespace/* default */.A .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(766).A;
+/* provided dependency */ var jquery_$ = __webpack_require__(379).A;
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -100741,13 +100801,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (Namespace/* default */.A .add ("jquery", jquery_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(388);
+/* provided dependency */ var libtess_libtess = __webpack_require__(887);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (Namespace/* default */.A .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(766).A;
+/* provided dependency */ var X3D_$ = __webpack_require__(379).A;
 
 
 
