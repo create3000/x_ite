@@ -10,6 +10,8 @@ function X3DBindableNode (executionContext)
 
    this .addType (X3DConstants .X3DBindableNode);
 
+   // Private properties
+
    this .modificationCount = 0;
 }
 

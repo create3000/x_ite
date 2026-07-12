@@ -14,6 +14,8 @@ function Fog (executionContext)
 
    this .addType (X3DConstants .Fog);
 
+   // Private properties
+
    this .modelMatrix = new Matrix4 ();
 }
 
