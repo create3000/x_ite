@@ -61,7 +61,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    {
       const
          browser = this .getBrowser (),
-         gl      = browser .getContext ();
+         size    = this ._size .getValue ();
 
       // Dispose old framebuffer.
 
@@ -69,13 +69,13 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
       // Transfer 6 textures of size x size pixels.
 
-      const size = this ._size .getValue ();
-
       if (size > 0)
       {
          // Upload default data.
 
-         const defaultData = new Uint8Array (size * size * 4);
+         const
+            gl          = browser .getContext (),
+            defaultData = new Uint8Array (size * size * 4);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       {
          this .frameBuffer = null;
 
-         this .setSize (0);
+         this .clearTexture ();
       }
    },
    traverse (type, renderObject)

@@ -74,19 +74,18 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    },
    set_dimensions__ ()
    {
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         width   = this ._width  .getValue (),
+         height  = this ._height .getValue ();
+
+      // const components = this ._colorDepth .getValue ();
 
       // Dispose old framebuffer.
 
       this .frameBuffer ?.dispose ();
 
       // Create framebuffer.
-
-      const
-         width  = this ._width  .getValue (),
-         height = this ._height .getValue ();
-
-      // const components = this ._colorDepth .getValue ();
 
       if (width > 0 && height > 0)
       {
