@@ -269,7 +269,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
-            case "KHR_materials_volume_scatter":
+            case "KHR_materials_scatter":
+            case "KHR_materials_volume_scatter": // Legacy
             case "KHR_materials_volume":
             {
                components .push (browser .getComponent ("X_ITE", 1));
@@ -494,7 +495,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             return this .pointLight (light);
       }
    },
-   directionalLight (light)
+   directionalLight ()
    {
       const
          scene     = this .getScene (),
@@ -1075,7 +1076,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          switch (key)
          {
             case "KHR_texture_basisu":
-            // case "EXT_texture_astc":
             case "EXT_texture_avif":
             case "EXT_texture_webp":
                images .push (this .images [extension ?.source]);
@@ -1346,8 +1346,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_volume":
                this .khrMaterialsVolumeObject (value, materialNode);
                break;
-            case "KHR_materials_volume_scatter":
-               this .khrMaterialsVolumeScatterObject (value, materialNode);
+            case "KHR_materials_scatter":
+            case "KHR_materials_volume_scatter": // Legacy
+               this .khrMaterialsScatterObject (value, materialNode);
                break;
          }
       }
@@ -1574,29 +1575,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       materialNode ._extensions .push (extension);
    },
-   khrMaterialsVolumeScatterObject (KHR_materials_volume_scatter, materialNode)
+   khrMaterialsScatterObject (KHR_materials_scatter, materialNode)
    {
-      if (!(KHR_materials_volume_scatter instanceof Object))
+      if (!(KHR_materials_scatter instanceof Object))
          return;
 
       const extension = this .getScene () .createNode ("VolumeScatterMaterialExtension", false);
 
-      extension ._scatterStrength        = this .numberValue (KHR_materials_volume_scatter .scatterStrengthFactor, 0);
-      extension ._scatterStrengthTexture = this .textureInfo (KHR_materials_volume_scatter .scatterStrengthTexture);
-      extension ._scatterTextureMapping  = this .textureMapping (KHR_materials_volume_scatter .scatterTexture);
+      extension ._scatterStrength        = this .numberValue (KHR_materials_scatter .scatterStrengthFactor, 0);
+      extension ._scatterStrengthTexture = this .textureInfo (KHR_materials_scatter .scatterStrengthTexture);
+      extension ._scatterTextureMapping  = this .textureMapping (KHR_materials_scatter .scatterTexture);
 
       const multiscatterColor = new Color3 ();
 
-      if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColorFactor, multiscatterColor))
+      if (this .vectorValue (KHR_materials_scatter .multiscatterColorFactor, multiscatterColor))
          extension ._multiscatterColor = multiscatterColor;
 
-      extension ._multiscatterColorTexture        = this .textureInfo (KHR_materials_volume_scatter .multiscatterColorTexture);
-      extension ._multiscatterColorTextureMapping = this .textureMapping (KHR_materials_volume_scatter .multiscatterColorTexture);
-      extension ._scatterAnisotropy               = this .numberValue (KHR_materials_volume_scatter .scatterAnisotropy, 0);
+      extension ._multiscatterColorTexture        = this .textureInfo (KHR_materials_scatter .multiscatterColorTexture);
+      extension ._multiscatterColorTextureMapping = this .textureMapping (KHR_materials_scatter .multiscatterColorTexture);
+      extension ._scatterAnisotropy               = this .numberValue (KHR_materials_scatter .scatterAnisotropy, 0);
 
       extension .setup ();
 
-      KHR_materials_volume_scatter .pointers = [extension];
+      KHR_materials_scatter .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -2244,8 +2245,8 @@ function eventsProcessed ()
       // 1. Replace skeleton nodes with humanoid.
       // 2. Add children.
 
-      this .nodes .forEach ((node, index) => this .nodeSkeleton (node, index));
-      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
+      this .nodes .forEach (node => this .nodeSkeleton (node));
+      this .nodes .forEach (node => this .nodeChildren (node));
    },
    nodeObject (node, index)
    {
@@ -2268,7 +2269,7 @@ function eventsProcessed ()
 
       return node;
    },
-   nodeSkeleton (node, index)
+   nodeSkeleton (node)
    {
       const skin = this .skins [node .skin];
 
@@ -2301,7 +2302,7 @@ function eventsProcessed ()
          quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();
 
-      return function (node, index)
+      return function (node)
       {
          const
             scene         = this .getScene (),
@@ -2482,7 +2483,7 @@ function eventsProcessed ()
          skeleton = skin .skeleton;
 
       skin .joints              = this .jointsArray (skin .joints, nodes .some (node => node .skin === index));
-      skin .skeleton            = skeleton !== undefined ? [skeleton] : this .skeleton (skin .joints, nodes);
+      skin .skeleton            = skeleton !== undefined ? [skeleton] : this .skeleton (skin .joints);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
       if (skeleton !== undefined && !skin .joints .includes (skeleton))
@@ -2531,7 +2532,7 @@ function eventsProcessed ()
 
       return joints;
    },
-   skeleton (joints, nodes)
+   skeleton (joints)
    {
       const children = new Set ();
 
@@ -4037,7 +4038,7 @@ function eventsProcessed ()
 
       return glTF ?.pointers
          ?.map (node => [node, $.try (() => node ?.getField (this .getAnimationPointerAlias (node, field) ?? field))])
-         ?.find (([node, field]) => field)
+         ?.find (([, field]) => field)
          ?? [ ];
    },
    addAnimationPointerAlias (node, field, alias)
