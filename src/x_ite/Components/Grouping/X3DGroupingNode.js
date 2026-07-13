@@ -491,8 +491,16 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
          case TraverseType .DEPTH:
          {
-            for (const visibleObject of this .visibleObjects)
+            const { clipPlaneNodes, visibleObjects } = this;
+
+            for (const clipPlaneNode of clipPlaneNodes)
+               clipPlaneNode .push (renderObject);
+
+            for (const visibleObject of visibleObjects)
                visibleObject .traverse (type, renderObject);
+
+            for (const clipPlaneNode of clipPlaneNodes)
+               clipPlaneNode .pop (renderObject);
 
             return;
          }
