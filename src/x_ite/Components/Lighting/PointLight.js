@@ -109,7 +109,7 @@ Object .assign (PointLightContainer .prototype,
             viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
             projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10_000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
-         renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+         renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport));
          renderObject .getProjectionMatrix () .push (this .projectionMatrix);
          renderObject .getModelViewMatrix  () .push (orientationMatrices [i]);
          renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
@@ -118,7 +118,7 @@ Object .assign (PointLightContainer .prototype,
 
          renderObject .getModelViewMatrix  () .pop ();
          renderObject .getProjectionMatrix () .pop ();
-         renderObject .getViewVolumes () .pop ();
+         renderObject .getViewVolumes      () .pop ();
       }
 
       if (!this .global)

@@ -158,7 +158,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
             dependentRenderer  = this .dependentRenderers .get (renderObject),
             browser            = this .getBrowser (),
             gl                 = browser .getContext (),
-            layer              = renderObject .getLayer (),
             viewport           = this .viewport,
             background         = dependentRenderer .getBackground (),
             navigationInfoNode = dependentRenderer .getNavigationInfo (),
@@ -174,7 +173,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          this .setTransparent (background .isTransparent ());
 
          dependentRenderer .setFramebuffer (this .frameBuffer);
-         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, viewport, viewport));
+         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
@@ -209,7 +208,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
             // Render layer's children.
 
-            layer .traverse (TraverseType .DISPLAY, dependentRenderer);
+            renderObject .getLayer () .traverse (TraverseType .DISPLAY, dependentRenderer);
 
             // Pop matrices.
 

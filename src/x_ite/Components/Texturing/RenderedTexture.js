@@ -219,7 +219,6 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             browser            = this .getBrowser (),
             gl                 = browser .getContext (),
             dependentRenderer  = this .dependentRenderers .get (renderObject),
-            layer              = renderObject .getLayer (),
             viewport           = this .viewport,
             navigationInfoNode = this .navigationInfoNode ?? dependentRenderer .getNavigationInfo (),
             depthMap           = this ._depthMap .getValue (),
@@ -245,7 +244,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          gl .clearColor (0, 0, 0, 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
 
-         dependentRenderer .getViewVolumes ()      .push (viewVolume .set (projectionMatrix, viewport, viewport));
+         dependentRenderer .getViewVolumes ()      .push (viewVolume .set (projectionMatrix, viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          dependentRenderer .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
@@ -267,7 +266,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          if (this .groupNode ._children .length)
             dependentRenderer .render (this .traverseType, this .groupNode .traverse, this .groupNode);
          else
-            layer .traverse (this .traverseType, dependentRenderer);
+            renderObject .getLayer () .traverse (this .traverseType, dependentRenderer);
 
          if (headlight)
             headlightContainer .modelViewMatrix .pop ();

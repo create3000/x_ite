@@ -96,7 +96,7 @@ Object .assign (SpotLightContainer .prototype,
 
       this .shadowBuffer .bind ();
 
-      renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+      renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport));
       renderObject .getProjectionMatrix () .push (projectionMatrix);
       renderObject .getModelViewMatrix  () .push (invLightSpaceMatrix);
 
