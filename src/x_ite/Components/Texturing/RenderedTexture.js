@@ -75,7 +75,6 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    set_dimensions__ ()
    {
       const
-         browser = this .getBrowser (),
          width   = this ._width  .getValue (),
          height  = this ._height .getValue ();
 
@@ -91,7 +90,9 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       {
          // Properties
 
-         const float = this ._depthMap .getValue ();
+         const
+            browser = this .getBrowser (),
+            float   = this ._depthMap .getValue ();
 
          this .viewport    = new Vector4 (0, 0, width, height);
          this .frameBuffer = new TextureBuffer ({ browser, width, height, float });

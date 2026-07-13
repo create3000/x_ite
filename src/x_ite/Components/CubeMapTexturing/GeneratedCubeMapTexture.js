@@ -59,9 +59,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    },
    set_size__ ()
    {
-      const
-         browser = this .getBrowser (),
-         size    = this ._size .getValue ();
+      const size = this ._size .getValue ();
 
       // Dispose old framebuffer.
 
@@ -74,6 +72,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          // Upload default data.
 
          const
+            browser     = this .getBrowser (),
             gl          = browser .getContext (),
             defaultData = new Uint8Array (size * size * 4);
 
