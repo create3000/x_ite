@@ -104,8 +104,6 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       {
          this .frameBuffer = null;
 
-         this .setWidth (0);
-         this .setHeight (0);
          this .setFloat (false);
          this .clearTexture ();
       }
