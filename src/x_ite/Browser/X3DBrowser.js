@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
-      this .getCanvas () .on ("webglcontextlost", event =>
+      this .getCanvas () .on ("webglcontextlost", () =>
       {
          this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
       });
@@ -667,11 +667,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          }
       });
    },
-   addBrowserListener (callback, object)
+   addBrowserListener (/* callback, object */)
    {
       // The string describes the name of the callback function to be called within the current ECMAScript context.
    },
-   removeBrowserListener (callback)
+   removeBrowserListener (/* callback */)
    {
       // The string describes the name of the callback function to be called within the current ECMAScript context.
    },
@@ -728,7 +728,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       if (arguments .length === 1)
          return this [_browserCallbacks] .get (event);
       else
-         return new Map ([... this [_browserCallbacks]] .flatMap (([event, map]) => [... map]));
+         return new Map ([... this [_browserCallbacks]] .flatMap (([, map]) => [... map]));
    },
    callBrowserCallbacks (event)
    {
