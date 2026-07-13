@@ -535,18 +535,19 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       // Load worker.
 
       const
+         browser = this .getBrowser (),
+         scene   = this .getScene (),
+         gl      = browser .getContext (),
          content = `import "${URLs .getLibraryURL ("mkkellogg-sort.worker.js")}";`,
          url     = URL .createObjectURL (new Blob ([content], { type: "text/javascript" }));
+
+      scene .addLoadingObject (this);
 
       this .sortWorker = new Worker (url, { type: "module" });
 
       URL .revokeObjectURL (url);
 
       // Connect events.
-
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
 
       this .sortWorker .onmessage = event =>
       {
@@ -559,6 +560,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             case "ready":
             {
                this .sortModelViewMatrix .fill (0);
+               scene .removeLoadingObject (this);
                browser .addBrowserEvent ();
                break;
             }
