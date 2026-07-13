@@ -115,9 +115,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    },
    set_children__ ()
    {
-      this .backgroundNode = null;
-      this .fogNode        = null;
-      this .viewpointNode  = null;
+      this .fogNode            = null;
+      this .navigationInfoNode = null;
+      this .backgroundNode     = null;
+      this .viewpointNode      = null;
 
       this .groupNode ._children .length = 0;
 
