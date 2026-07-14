@@ -456,11 +456,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          return;
 
       loadCount .removeInterest ("checkLoadCount", this);
+
       this .setBrowserLoading (false);
       this .initialized () .set (this .getCurrentTime ());
       this .initialized () .processInterests ();
       this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
       this .callBrowserEventHandler ("initialized load");
+
       resolve ();
    },
    createVrmlFromString (vrmlSyntax)
