@@ -30,6 +30,7 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
+import X3DCanvasElement            from "./X3DCanvasElement.js";
 
 import "./SUPPORTED_VERSIONS.js";
 import "./Features.js";
@@ -50,23 +51,28 @@ const X3D = Object .assign (function (onfulfilled, onrejected)
 {
    promise ??= new Promise ((resolve, reject) =>
    {
-      $(() =>
+      const ready = () =>
       {
          try
          {
-            Legacy .elements ($("X3DCanvas"), X3DBrowser);
+            Legacy .elements (document .querySelectorAll ("X3DCanvas"), X3DBrowser);
 
-            if (Array .from ($("x3d-canvas")) .every (canvas => canvas .browser))
+            if (Array .from (document .querySelectorAll ("x3d-canvas")) .every (canvas => canvas .browser))
                resolve ();
             else
                throw new Error ("Couldn't create browser.");
          }
          catch (error)
          {
-            Legacy .error ($("X3DCanvas"), error);
+            Legacy .error (document .querySelectorAll ("X3DCanvas"), error);
             reject (error);
          }
-      });
+      }
+
+      if (document .readyState === "complete")
+         ready ();
+      else
+         document .addEventListener ("DOMContentLoaded", ready, { once: true });
    });
 
    return promise .then (onfulfilled) .catch (onrejected);
@@ -137,7 +143,14 @@ Namespace, Namespace .Fields,
    })(),
    getBrowser (element)
    {
-      return $(element || "x3d-canvas, X3DCanvas") .filter ("x3d-canvas, X3DCanvas") .prop ("browser");
+      if (!element)
+         return document .querySelector ("x3d-canvas, X3DCanvas") ?.browser;
+
+      if (element instanceof X3DCanvasElement)
+         return element .browser;
+
+      return Array .from (document .querySelectorAll (String (element)))
+         .find (element => element .nodeName .match (/^(?:x3d-canvas|X3DCanvas)$/i)) ?.browser;
    },
    createBrowser (... args)
    {

@@ -7,7 +7,8 @@ const Legacy =
 
       console .warn ("Use of <X3DCanvas> element is deprecated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
 
-      $.map (elements, element => new X3DBrowser (element));
+      for (const element of elements)
+         new X3DBrowser (element);
    },
    properties (browser, properties)
    {
@@ -49,8 +50,17 @@ const Legacy =
       console .error (error);
 
       // <X3DCanvas>
-      elements .children (".x_ite-private-browser") .hide ();
-      elements .children (":not(.x_ite-private-browser)") .show ();
+      for (const element of elements)
+      {
+         for (const child of element .children)
+         {
+            if (child .matches (".x_ite-private-browser"))
+               child .style .display = "none";
+
+            if (child .matches (":not(.x_ite-private-browser)"))
+               child .style .display = "initial";
+         }
+      }
    },
 };
 
