@@ -10,15 +10,21 @@ class X3DCanvasElement extends HTMLElement
 
       try
       {
+         this .attachShadow ({ mode: "open", delegatesFocus: true });
+
          new X3DBrowser (this);
       }
       catch (error)
       {
          console .error (error);
 
-         $(this .shadowRoot)
-            .append ($("<slot></slot>"))
-            .children (".x_ite-private-browser") .remove ();
+         for (const child of Array .from (this .shadowRoot .children))
+         {
+            if (child .matches (".x_ite-private-browser"))
+               child .remove ();
+         }
+
+         this .shadowRoot .appendChild (document .createElement ("slot"));
       }
    }
 

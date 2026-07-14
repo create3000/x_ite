@@ -66,7 +66,7 @@ function X3DCoreContext (element)
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
-      const shadow = $(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
+      const shadow = $(element [0] .shadowRoot);
 
       const stylesheet = new Promise (resolve =>
       {
