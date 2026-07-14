@@ -176,7 +176,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       if (!(this .input instanceof XMLDocument))
          return false;
 
-      if ($(this .input) .children ("svg") .length)
+      if (Array .from (this .input .children) .find (child => child .matches ("svg")))
          return true;
 
       if (this .input .nodeName === "svg")
@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       {
          case "#document":
          {
-            const svg = $(xmlElement) .children ("svg");
+            const svg = Array .from (xmlElement .children) .filter (child => child .matches ("svg"))
 
             for (const xmlElement of svg)
                await this .svgElement (xmlElement);
