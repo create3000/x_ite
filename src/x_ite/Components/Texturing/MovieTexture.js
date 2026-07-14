@@ -23,12 +23,9 @@ function MovieTexture (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .urlStack               = new Fields .MFString ();
-   this .video                  = $("<video></video>");
-   this .sourceNode             = audioContext .createMediaElementSource (this .video [0]);
    this .mediaStreamDestination = audioContext .createMediaStreamDestination ();
 
-   this .sourceNode .connect (this .getAudioSource ()) .connect (this .mediaStreamDestination);
+   this .getAudioSource () .connect (this .mediaStreamDestination);
 
    this .getMatrix () .set ([1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1]); // flipY
 }
@@ -46,11 +43,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       this ._speed .addInterest ("set_speed__", this);
       this ._pitch .addInterest ("set_speed__", this);
 
-      this .video
-         .attr ("crossorigin", "anonymous")
-         .attr ("preload", "auto")
-         .attr ("playsinline", "");
-
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    set_live__ ()
@@ -67,185 +59,151 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       this .clearTexture ();
       this .setMediaElement (null);
    },
-   loadData ()
+   async loadData ()
    {
-      this .urlStack .assign (this ._url);
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      this .clearTimeout ();
+      this .sourceNode ?.disconnect ();
 
-      if (this .urlStack .length === 0)
+      for (const url of this ._url)
       {
-         this .video .off ("abort error suspend stalled loadeddata");
-         this .setMediaElement (null);
-         this .clearTexture ();
-         this .updateOutputs (0, 0, 0, -1);
-         this .setLoadState (X3DConstants .FAILED_STATE);
-         return;
-      }
+         const fileURL = new URL (url, this .getExecutionContext () .getBaseURL ());
 
-      // Get URL.
-
-      this .fileURL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .fileURL .pathname .endsWith (".gif") || this .fileURL .href .match (/^\s*data:image\/gif[;,]/s))
-      {
-         new FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
+         try
          {
-            if (data === null)
+            if (fileURL .pathname .endsWith (".gif") || fileURL .href .match (/^\s*data:image\/gif[;,]/s))
             {
-               this .loadNext ();
-            }
-            else if (data instanceof ArrayBuffer)
-            {
-               this .fileURL = new URL (fileURL);
-
                const
-                  img = $("<img></img>") .appendTo ($("<div></div>")),
-                  gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
+                  data = await this .loadDocument (fileURL),
+                  img  = $("<img></img>") .appendTo ($("<div></div>")),
+                  gif  = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
 
-               gif .load_raw (new Uint8Array (data), () => this .setGif (gif));
-            }
-            else
-            {
-               throw new Error (`${this .getTypeName ()}: No suitable file handler found.`);
-            }
-         });
-      }
-      else if (this .fileURL .pathname .endsWith (".png") || this .fileURL .href .match (/^\s*data:image\/png[;,]/s))
-      {
-         new FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
-         {
-            if (data === null)
-            {
-               this .loadNext ();
-            }
-            else if (data instanceof ArrayBuffer)
-            {
-               this .fileURL = new URL (fileURL);
+               await new Promise (resolve => gif .load_raw (new Uint8Array (data), resolve));
 
+               this .setGif (gif);
+               return;
+            }
+            else if (fileURL .pathname .endsWith (".png") || fileURL .href .match (/^\s*data:image\/png[;,]/s))
+            {
                const
+                  data      = await this .loadDocument (fileURL),
                   parseAPNG = DEVELOPMENT ? window ["apng-js"] .default : APNG .default,
                   apng      = await parseAPNG (data);
 
                this .setAPNG (apng);
+               return;
             }
             else
             {
-               throw new Error (`${this .getTypeName ()}: No suitable file handler found.`);
+               if (fileURL .protocol !== "data:")
+               {
+                  if (!this .getCache ())
+                     fileURL .searchParams .set ("_", Date .now ());
+               }
+
+               const
+                  audioContext = this .getBrowser () .getAudioContext (),
+                  video        = await this .loadVideo (fileURL);
+
+               video .loadeddata = null;
+               video .onerror    = null;
+               video .onabort    = null;
+
+               this .sourceNode = audioContext .createMediaElementSource (video);
+
+               this .sourceNode .connect (this .getAudioSource ());
+
+               this .setVideo (video, fileURL);
+               return;
             }
+         }
+         catch (error)
+         {
+            console .warn (`Error loading movie '${decodeURI (fileURL)}':`, error .message);
+         }
+      }
+
+      this .setMediaElement (null);
+      this .clearTexture ();
+      this .updateOutputs (0, 0, 0, -1);
+      this .setLoadState (X3DConstants .FAILED_STATE);
+   },
+   loadDocument (fileURL)
+   {
+      return new Promise ((resolve, reject) =>
+      {
+         new FileLoader (this, { dataAsString: false }) .loadDocument ([fileURL], async data =>
+         {
+            if (data === null)
+               reject ();
+            else if (data instanceof ArrayBuffer)
+               resolve (data);
+            else
+               reject (new Error (`${this .getTypeName ()}: No suitable file handler found.`));
          });
-      }
-      else
+      });
+   },
+   loadVideo (fileURL)
+   {
+      return new Promise ((resolve, reject) =>
       {
-         if (this .fileURL .protocol !== "data:")
-         {
-            if (!this .getCache ())
-               this .fileURL .searchParams .set ("_", Date .now ());
-         }
+         const video = document .createElement ("video");
 
-         this .video
-            .on ("abort error", this .setError .bind (this))
-            .on ("suspend stalled", this .setTimeout .bind (this))
-            .on ("loadeddata", this .setVideo .bind (this))
-            .attr ("src", this .fileURL)
-            .get (0) .load ();
-      }
-   },
-   setTimeout (event)
-   {
-      this .clearTimeout ();
+         video .onloadeddata = () => resolve (video);
 
-      this .timeoutId = setTimeout (() => this .setError (event), 30_000);
-   },
-   clearTimeout ()
-   {
-      clearTimeout (this .timeoutId);
-   },
-   setError (event)
-   {
-      if (this .fileURL .protocol !== "data:")
-         console .warn (`Error loading movie '${decodeURI (this .fileURL)}':`, event .type);
+         video .onerror =
+         video .onabort = event => reject (new Error (`Couldn't load video '${fileURL}': ${event .type}.`));
 
-      this .loadNext ();
-   },
-   setVideo ()
-   {
-      try
-      {
-         if (DEVELOPMENT)
-         {
-            if (this .fileURL .protocol !== "data:")
-               console .info (`Done loading ${this .getTypeName ()} '${decodeURI (this .fileURL)}'.`);
-         }
-
-         const
-            video  = this .video [0],
-            width  = video .videoWidth,
-            height = video .videoHeight;
-
-         this .video .off ("abort error suspend stalled loadeddata");
-
-         this .clearTimeout ();
-
-         video .currentFrame = video;
-
-         this .setMediaElement (video);
-         this .setTextureData (width, height, true, false, video);
-         this .updateOutputs (width, height, 3, video .duration);
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-
-         this .set_speed__ ();
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
+         video .crossOrigin = "anonymous";
+         video .preload     = "auto";
+         video .playsInline = true;
+         video .src         = fileURL;
+      });
    },
    setGif (gif)
    {
-      try
-      {
-         GifMedia (gif, this);
+      GifMedia (gif, this);
 
-         const { width, height } = gif .get_canvas ();
+      const { width, height } = gif .get_canvas ();
 
-         this .setMediaElement (gif);
-         this .setTextureData (width, height, true, false, gif .get_frames () [0] .data);
-         this .updateOutputs (width, height, 4, gif .duration);
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
+      this .setMediaElement (gif);
+      this .setTextureData (width, height, true, false, gif .get_frames () [0] .data);
+      this .updateOutputs (width, height, 4, gif .duration);
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
 
-         this .set_speed__ ();
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
+      this .set_speed__ ();
    },
    async setAPNG (apng)
    {
-      try
+      await PNGMedia (apng, this);
+
+      const { width, height, duration, currentFrame } = apng;
+
+      this .setMediaElement (apng);
+      this .setTextureData (width, height, true, false, currentFrame);
+      this .updateOutputs (width, height, 4, duration);
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
+
+      this .set_speed__ ();
+   },
+   setVideo (video, fileURL)
+   {
+      if (DEVELOPMENT)
       {
-         await PNGMedia (apng, this);
-
-         const { width, height, duration, currentFrame } = apng;
-
-         this .setMediaElement (apng);
-         this .setTextureData (width, height, true, false, currentFrame);
-         this .updateOutputs (width, height, 4, duration);
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-
-         this .set_speed__ ();
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
+
+      const
+         width  = video .videoWidth,
+         height = video .videoHeight;
+
+      video .currentFrame = video;
+
+      this .setMediaElement (video);
+      this .setTextureData (width, height, true, false, video);
+      this .updateOutputs (width, height, 3, video .duration);
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
+
+      this .set_speed__ ();
    },
    updateOutputs (width, height, colorDepth, duration)
    {
