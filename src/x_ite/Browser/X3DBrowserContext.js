@@ -176,6 +176,22 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this [_tainted]   = true;
       this [_animFrame] = this .getSession () .requestAnimationFrame (this [_renderCallback]);
    },
+   loading ()
+   {
+      return new Promise (resolve =>
+      {
+         const key = Symbol ();
+
+         this ._loadCount .addFieldCallback (key, () =>
+         {
+            if (this ._loadCount .getValue ())
+               return;
+
+            this ._loadCount .removeFieldCallback (key);
+            resolve ();
+         });
+      });
+   },
    nextFrame ()
    {
       return new Promise (resolve =>

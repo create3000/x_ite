@@ -564,16 +564,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
                this .sortModelViewMatrix .fill (0);
                scene .removeLoadingObject (this);
                browser .addBrowserEvent ();
-
-               browser ._loadCount .addFieldCallback (this, () =>
-               {
-                  if (browser ._loadCount .getValue ())
-                     return;
-
-                  browser ._loadCount .removeFieldCallback (this);
-                  scene .addLoadingObject (this);
-               });
-
+               browser .loading () .then (() => scene .addLoadingObject (this));
                break;
             }
             case "sorted":
