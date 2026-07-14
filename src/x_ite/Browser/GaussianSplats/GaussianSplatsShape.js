@@ -564,6 +564,16 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
                this .sortModelViewMatrix .fill (0);
                scene .removeLoadingObject (this);
                browser .addBrowserEvent ();
+
+               browser ._loadCount .addFieldCallback (this, () =>
+               {
+                  if (browser ._loadCount .getValue ())
+                     return;
+
+                  browser ._loadCount .removeFieldCallback (this);
+                  scene .addLoadingObject (this);
+               });
+
                break;
             }
             case "sorted":
@@ -571,6 +581,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
                gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, event .data .indices, gl .DYNAMIC_DRAW);
 
+               scene .removeLoadingObject (this);
                browser .addBrowserEvent ();
                break;
             }
