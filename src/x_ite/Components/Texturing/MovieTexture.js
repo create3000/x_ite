@@ -121,6 +121,9 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          catch (error)
          {
             console .warn (`Error loading movie '${decodeURI (fileURL)}':`, error .message);
+
+            if (DEVELOPMENT)
+               console .error (error);
          }
       }
 
