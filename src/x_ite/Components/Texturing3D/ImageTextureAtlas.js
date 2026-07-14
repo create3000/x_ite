@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
       if (DEVELOPMENT)
       {
          if (fileURL .protocol !== "data:")
-            console .info (`Done loading image '${decodeURI (fileURL)}'.`);
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
       const

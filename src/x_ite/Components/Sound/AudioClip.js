@@ -65,7 +65,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
             if (DEVELOPMENT)
             {
                if (fileURL .protocol !== "data:")
-                  console .info (`Done loading audio '${decodeURI (fileURL)}'.`);
+                  console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
             }
          }
          else

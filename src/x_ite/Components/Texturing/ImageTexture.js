@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (DEVELOPMENT)
       {
          if (fileURL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (fileURL)}'.`);
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
       const { baseWidth, baseHeight, numComponents } = texture;
@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (DEVELOPMENT)
       {
          if (fileURL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (fileURL)}'.`);
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
       const { width, height } = image;

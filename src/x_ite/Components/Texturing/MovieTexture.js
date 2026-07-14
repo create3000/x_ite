@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          if (DEVELOPMENT)
          {
             if (this .fileURL .protocol !== "data:")
-               console .info (`Done loading movie '${decodeURI (this .fileURL)}'.`);
+               console .info (`Done loading ${this .getTypeName ()} '${decodeURI (this .fileURL)}'.`);
          }
 
          const

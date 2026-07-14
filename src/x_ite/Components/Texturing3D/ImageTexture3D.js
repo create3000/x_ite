@@ -118,7 +118,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
       if (DEVELOPMENT)
       {
          if (fileURL .protocol !== "data:")
-            console .info (`Done loading image texture 3D '${decodeURI (fileURL)}'.`);
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
       const { baseWidth, baseHeight, baseDepth, numComponents } = texture;

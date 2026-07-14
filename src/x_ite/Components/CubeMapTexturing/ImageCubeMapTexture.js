@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       if (DEVELOPMENT)
       {
          if (fileURL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (fileURL)}'.`);
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
       this .setTexture (texture);
@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       if (DEVELOPMENT)
       {
          if (fileURL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (fileURL)}'.`);
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
       // Create texture.
