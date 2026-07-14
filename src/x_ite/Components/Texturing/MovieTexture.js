@@ -108,7 +108,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
                video .onabort    = null;
 
                this .sourceNode = audioContext .createMediaElementSource (video);
-
                this .sourceNode .connect (this .getAudioSource ());
 
                this .setVideo (video, fileURL);
