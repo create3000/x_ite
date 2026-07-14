@@ -46,7 +46,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       {
          const menu = $.try (() => this [_userMenu] (this .getBrowser ()), true);
 
-         if ($.isPlainObject (menu))
+         if (menu instanceof Object)
          {
             for (const key in menu)
                userMenu [`user-${key}`] = menu [key];
