@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    setKTXTexture (texture, fileURL)
    {
       if (texture .target !== this .getTarget ())
-         return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_2D'." });
+         throw new Error ("Invalid KTX texture target, must be 'TEXTURE_2D'.");
 
       if (DEVELOPMENT)
       {
@@ -111,7 +111,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
-   setImage (image, fileURL, objectURL)
+   setImage (image, fileURL)
    {
       if (DEVELOPMENT)
       {
