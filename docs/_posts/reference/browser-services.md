@@ -456,6 +456,17 @@ type ClosestObject = {
 
 Loses the WebGL context.
 
+#### **nextFrame** (): Promise\<void\>
+
+Returns a Promise that resolves when the next frame is rendered. This can be used to synchronize with the rendering loop.
+
+```js
+await browser .loadURL (new X3D .MFString (fileURL));
+await browser .nextFrame ();
+
+const image = await new Promise (resolve => canvas .toBlob (resolve, "image/png"));
+```
+
 #### **beginUpdate** (): void
 
 Start processing events.
