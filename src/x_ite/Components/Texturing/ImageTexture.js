@@ -17,9 +17,6 @@ function ImageTexture (executionContext)
 
    // Private properties
 
-   this .image    = $("<img></img>");
-   this .urlStack = new Fields .MFString ();
-
    this .getMatrix () .set ([1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1]); // flipY
 }
 
@@ -33,11 +30,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       this ._colorSpaceConversion .addInterest ("loadNow", this);
 
-      this .image
-         .on ("load", this .setImage .bind (this))
-         .on ("abort error", this .setError .bind (this))
-         .attr ("crossorigin", "anonymous");
-
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    getTextureType ()
@@ -47,50 +39,43 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    unloadData ()
    {
       this .clearTexture ();
+      this .updateOutputs (0, 0, 0);
    },
    loadData ()
    {
-      this .urlStack .setValue (this ._url);
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      if (this .urlStack .length === 0)
-      {
-         this .clearTexture ();
-         this .updateOutputs (0, 0, 0);
-         this .setLoadState (X3DConstants .FAILED_STATE);
-         return;
-      }
-
-      new FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
+      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
          if (data === null)
          {
-            this .loadNext ();
+            this .clearTexture ();
+            this .updateOutputs (0, 0, 0);
+            this .setLoadState (X3DConstants .FAILED_STATE);
          }
          else if (data instanceof ArrayBuffer)
          {
-            this .fileURL = new URL (fileURL);
+            fileURL = new URL (fileURL);
 
-            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
+            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
             {
                this .setLinear (true);
                this .setMipMaps (false);
 
-               this .getBrowser () .getKTXDecoder ()
-                  .then (decoder => decoder .loadKTXFromBuffer (data))
-                  .then (texture => this .setKTXTexture (texture))
-                  .catch (error => this .setError ({ type: error .message }));
+               const
+                  decoder = await this .getBrowser () .getKTXDecoder (),
+                  texture = await decoder .loadKTXFromBuffer (data);
+
+               this .setKTXTexture (texture, fileURL);
             }
             else
             {
                this .setLinear (false);
                this .setMipMaps (true);
 
-               this .objectURL = URL .createObjectURL (new Blob ([data]));
+               const
+                  objectURL = URL .createObjectURL (new Blob ([data])),
+                  image     = await this .loadImage (this .objectURL);
 
-               this .image .attr ("src", this .objectURL);
+               this .setImage (image, fileURL, objectURL);
             }
          }
          else
@@ -99,24 +84,15 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          }
       });
    },
-   setError (event)
-   {
-      if (this .fileURL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .fileURL)}:'`, event .type);
-
-      URL .revokeObjectURL (this .objectURL);
-
-      this .loadNext ();
-   },
-   setKTXTexture (texture)
+   setKTXTexture (texture, fileURL)
    {
       if (texture .target !== this .getTarget ())
          return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_2D'." });
 
       if (DEVELOPMENT)
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .fileURL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading image texture '${decodeURI (fileURL)}'.`);
       }
 
       try
@@ -138,19 +114,17 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setError ({ type: error .message });
       }
    },
-   setImage ()
+   setImage (image, fileURL, objectURL)
    {
       if (DEVELOPMENT)
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .fileURL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading image texture '${decodeURI (fileURL)}'.`);
       }
 
       try
       {
-         const
-            image             = this .image [0],
-            { width, height } = image;
+         const { width, height } = image;
 
          // Upload image to GPU.
 
@@ -158,17 +132,26 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
          this .updateOutputs (width, height, this .isTransparent () ? 4 : 3);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
-         this .addNodeEvent ();
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
       }
       finally
       {
-         URL .revokeObjectURL (this .objectURL);
+         URL .revokeObjectURL (objectURL);
       }
+   },
+   loadImage (fileURL)
+   {
+      return new Promise ((resolve, reject) =>
+      {
+         const image = new Image ();
+
+         image .onload = () => resolve (image);
+
+         image .onerror =
+         image .onabort = event => reject (new Error (`Couldn't load image '${fileURL}': ${event .type}.`));
+
+         image .crossOrigin = "anonymous";
+         image .src         = fileURL;
+      });
    },
    updateOutputs (width, height, colorDepth)
    {
