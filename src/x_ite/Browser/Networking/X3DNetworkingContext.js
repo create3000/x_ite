@@ -102,6 +102,24 @@ Object .assign (X3DNetworkingContext .prototype,
          }
       }
    },
+   loading ()
+   {
+      return new Promise (resolve =>
+      {
+         const key = Symbol ();
+
+         this ._loadCount .addEvent ();
+
+         this ._loadCount .addFieldCallback (key, () =>
+         {
+            if (this ._loadCount .getValue ())
+               return;
+
+            this ._loadCount .removeFieldCallback (key);
+            resolve ();
+         });
+      });
+   },
    getLoadingObjects ()
    {
       return this [_loadingObjects];
