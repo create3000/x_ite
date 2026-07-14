@@ -162,7 +162,11 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       try
       {
          if (typeof xmlElement === "string")
-            xmlElement = $.parseXML (xmlElement);
+         {
+            const parser = new DOMParser ();
+
+            xmlElement = parser .parseFromString (xmlElement, "application/xml");
+         }
 
          this .input = xmlElement;
       }

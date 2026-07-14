@@ -1,5 +1,15 @@
 Object .assign ($,
 {
+   isEmptyObject (object)
+   {
+      if (!(object instanceof Object))
+         return true;
+
+      for (const key in object)
+         return false;
+
+      return true;
+   },
    decodeText (input)
    {
       if (typeof input === "string")

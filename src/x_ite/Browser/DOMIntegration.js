@@ -28,6 +28,10 @@ import X3DConstants from "../Base/X3DConstants.js";
 import X3DScene     from "../Execution/X3DScene.js";
 import SFNodeCache  from "../Fields/SFNodeCache.js";
 
+const
+   _x3d  = Symbol .for ("X_ITE.X3DElement"),
+   _node = Symbol .for ("X_ITE.NodeElement");
+
 class DOMIntegration
 {
    constructor (browser)
@@ -145,7 +149,7 @@ class DOMIntegration
    {
       const
          parser = this .parser,
-         node   = $.data (element, "node");
+         node   = element [_node];
 
       if (node)
       {
@@ -159,7 +163,7 @@ class DOMIntegration
 
          const
             parentNode = element .parentNode,
-            node       = $.data (parentNode, "node");
+            node       = parentNode [_node];
 
          if (node)
          {
@@ -183,7 +187,7 @@ class DOMIntegration
       if (element .nodeName === "X3D")
          return;
 
-      if ($.data (element, "node"))
+      if (element [_node])
          return;
 
       const
@@ -194,19 +198,19 @@ class DOMIntegration
       {
          // Root scene or Inline scene.
 
-         const scene = $.data (parentNode, "node");
+         const scene = parentNode [_node];
 
          parser .pushExecutionContext (scene);
          parser .childElement (element);
          parser .setupNodes ();
          parser .popExecutionContext ();
       }
-      else if ($.data (parentNode, "node"))
+      else if (parentNode [_node])
       {
          // Use parent's scene if non-root, works for Inline.
 
          const
-            node             = $.data (parentNode, "node"),
+            node             = parentNode [_node],
             executionContext = node .getExecutionContext ();
 
          parser .pushExecutionContext (executionContext);
@@ -241,14 +245,14 @@ class DOMIntegration
       // Works also for root nodes, as it has to be, since scene .rootNodes is effectively a MFNode in x-ite.
       // Also removes ROUTE elements.
 
-      const node = $.data (element, "node");
+      const node = element [_node];
 
       if (!node)
          return;
 
       node .dispose ();
 
-      $.data (element, "node", null);
+      delete element [_node];
    }
 
    processInlineElements (element)
@@ -262,7 +266,7 @@ class DOMIntegration
 
    processInlineElement (element)
    {
-      const node = $.data (element, "node");
+      const node = element [_node];
 
       if (!node)
          return;
@@ -274,7 +278,7 @@ class DOMIntegration
 
    appendInlineChildElement (element)
    {
-      const node = $.data (element, "node");
+      const node = element [_node];
 
       switch (node .checkLoadState ())
       {
@@ -297,7 +301,7 @@ class DOMIntegration
 
             // Add scene as child node of Inline element.
 
-            const X3DElement = $.data (node .getInternalScene (), "X3D");
+            const X3DElement = node .getInternalScene () [_x3d];
 
             if (!X3DElement)
                break;
@@ -353,7 +357,7 @@ class DOMIntegration
       if (element .nodeName === "ROUTE")
          return;
 
-      const node = $.data (element, "node");
+      const node = element [_node];
 
       if (!node)
          return;
@@ -375,7 +379,7 @@ class DOMIntegration
 
    fieldCallback (element, field)
    {
-      const node = $.data (element, "node");
+      const node = element [_node];
 
       if (!node)
          return;

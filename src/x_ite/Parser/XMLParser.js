@@ -13,6 +13,10 @@ import X3DConstants              from "../Base/X3DConstants.js";
 import Placeholder               from "./Placeholder.js";
 import DEVELOPMENT               from "../DEVELOPMENT.js";
 
+const
+   _x3d  = Symbol .for ("X_ITE.X3DElement"),
+   _node = Symbol .for ("X_ITE.NodeElement");
+
 const AccessType =
 {
    initializeOnly: X3DConstants .initializeOnly,
@@ -46,7 +50,11 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       try
       {
          if (typeof xmlElement === "string")
-            xmlElement = $.parseXML (xmlElement);
+         {
+            const parser = new DOMParser ();
+
+            xmlElement = parser .parseFromString (xmlElement, "application/xml");
+         }
 
          this .input = xmlElement;
          this .xml   = this .isXML (xmlElement);
@@ -187,7 +195,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             profileNameId = xmlElement .getAttribute ("profile"),
             profile       = browser .getProfile (profileNameId || "Full");
 
-         $.data (this .scene, "X3D", xmlElement);
+         this .scene [_x3d] = xmlElement;
 
          scene .setProfile (profile);
       }
@@ -331,7 +339,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    sceneElement (xmlElement)
    {
-      $.data (xmlElement, "node", this .scene);
+      xmlElement [_node] = this .scene;
 
       this .childrenElements (xmlElement);
    },
@@ -663,7 +671,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                throw new Error (`Unknown proto or externproto type '${name}'.`);
 
             ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
-            $.data (xmlElement, "node", node);
+            xmlElement [_node] = node;
 
             this .defAttribute (xmlElement, node);
             this .addNode (xmlElement, node);
@@ -738,7 +746,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             throw new Error (`Unknown node type '${xmlElement .nodeName}'. You probably have insufficient component/profile statements and/or an inappropriate specification version.`);
 
          ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
-         $.data (xmlElement, "node", node);
+         xmlElement [_node] = node;
 
          //DOMIntegration: Script node support for HTML.
          if (xmlElement .nodeName === "SCRIPT")
@@ -774,7 +782,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    scriptElement (element)
    {
       const
-         scriptDocument = $.parseXML (element .outerHTML, "application/xml"),
+         parser         = new DOMParser (),
+         scriptDocument = parser .parseFromString (element .outerHTML, "application/xml"),
          childNodes     = scriptDocument .children [0] .childNodes;
 
       element .textContent = "// Content moved into childNodes.";
@@ -815,7 +824,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             route            = executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
 
          ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
-         $.data (xmlElement, "node", route);
+         xmlElement [_node] = node;
       }
       catch (error)
       {
