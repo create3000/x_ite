@@ -12,6 +12,7 @@ export default defineConfig ([
       globals: {
         ... globals .browser,
         ... globals .jquery,
+        libtess: "readonly",
         SuperGif: "readonly",
         APNG: "readonly",
       },

@@ -409,7 +409,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       switchNode .whichChoice = 0;
 
-      scene .addExportedNode (scene .getUniqueExportName (`Switch${++ this .numSwitchNodes}`), node);
+      scene .addExportedNode (scene .getUniqueExportName (`Switch${++ this .numSwitchNodes}`), switchNode);
 
       // Get child elements.
 
