@@ -562,6 +562,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             case "ready":
             {
                this .sortModelViewMatrix .fill (0);
+
                scene .removeLoadingObject (this);
                browser .addBrowserEvent ();
                browser .loading () .then (() => scene .addLoadingObject (this));
