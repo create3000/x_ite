@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
                const
                   objectURL = URL .createObjectURL (new Blob ([data])),
-                  image     = await this .loadImage (this .objectURL);
+                  image     = await this .loadImage (objectURL);
 
                this .setImage (image, fileURL, objectURL);
             }
@@ -137,21 +137,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       {
          URL .revokeObjectURL (objectURL);
       }
-   },
-   loadImage (fileURL)
-   {
-      return new Promise ((resolve, reject) =>
-      {
-         const image = new Image ();
-
-         image .onload = () => resolve (image);
-
-         image .onerror =
-         image .onabort = event => reject (new Error (`Couldn't load image '${fileURL}': ${event .type}.`));
-
-         image .crossOrigin = "anonymous";
-         image .src         = fileURL;
-      });
    },
    updateOutputs (width, height, colorDepth)
    {

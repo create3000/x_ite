@@ -18,9 +18,6 @@ function ImageTextureAtlas (executionContext)
    X3DUrlObject     .call (this, executionContext);
 
    this .addType (X3DConstants .ImageTextureAtlas);
-
-   this .image    = $("<img></img>");
-   this .urlStack = new Fields .MFString ();
 }
 
 Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture3DNode .prototype),
@@ -31,11 +28,6 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
       X3DTexture3DNode .prototype .initialize .call (this);
       X3DUrlObject     .prototype .initialize .call (this);
 
-      this .image
-         .on ("load", this .setImage .bind (this))
-         .on ("abort error", this .setError .bind (this))
-         .attr ("crossorigin", "anonymous");
-
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    unloadData ()
@@ -44,64 +36,45 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
    },
    loadData ()
    {
-      this .urlStack .setValue (this ._url);
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      if (this .urlStack .length === 0)
-      {
-         this .clearTexture ();
-         this .updateOutputs (0, 0, 0, 0);
-         this .setLoadState (X3DConstants .FAILED_STATE);
-         return;
-      }
-
-      new FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
+      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
          if (data === null)
          {
-            this .loadNext ();
+            this .clearTexture ();
+            this .updateOutputs (0, 0, 0, 0);
+            this .setLoadState (X3DConstants .FAILED_STATE);
          }
          else if (data instanceof ArrayBuffer)
          {
-            this .fileURL = new URL (fileURL);
+            fileURL = new URL (fileURL);
 
             this .setLinear (false);
             this .setMipMaps (true);
 
-            this .objectURL = URL .createObjectURL (new Blob ([data]));
+            const
+               objectURL = URL .createObjectURL (new Blob ([data])),
+               image     = await this .loadImage (objectURL);
 
-            this .image .attr ("src", this .objectURL);
+            this .setImage (image, fileURL, objectURL);
          }
          else
          {
-            throw new Error ("ImageTexture: no suitable file type handler found.");
+            throw new Error ("ImageTextureAtlas: no suitable file type handler found.");
          }
       });
    },
-   setError (event)
-   {
-      if (this .fileURL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
-
-      URL .revokeObjectURL (this .objectURL);
-
-      this .loadNext ();
-   },
-   setImage ()
+   setImage (image, fileURL, objectURL)
    {
       if (DEVELOPMENT)
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading image '${decodeURI (this .fileURL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading image '${decodeURI (fileURL)}'.`);
       }
 
       try
       {
          const
             gl          = this .getBrowser () .getContext (),
-            image       = this .image [0],
             w           = image .width,
             h           = image .height,
             texture     = gl .createTexture (),
@@ -159,17 +132,9 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
          this .updateOutputs (width, height, depth, transparent ? 4 : 3);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
-      catch (error)
-      {
-         if (DEVELOPMENT)
-            console .log (error);
-
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
       finally
       {
-         URL .revokeObjectURL (this .objectURL);
+         URL .revokeObjectURL (objectURL);
       }
    },
    updateOutputs (width, height, depth, colorDepth)

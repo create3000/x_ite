@@ -89,6 +89,21 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    },
    getRenderedTextures (renderedTextures)
    { },
+   loadImage (fileURL)
+   {
+      return new Promise ((resolve, reject) =>
+      {
+         const image = new Image ();
+
+         image .onload = () => resolve (image);
+
+         image .onerror =
+         image .onabort = event => reject (new Error (`Couldn't load image '${fileURL}': ${event .type}.`));
+
+         image .crossOrigin = "anonymous";
+         image .src         = fileURL;
+      });
+   },
    isImageTransparent (data)
    {
       const length = data .length;
