@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
          }
          else
          {
-            throw new Error ("AudioClip: no suitable file type handler found.");
+            throw new Error (`${this .getTypeName ()}: no suitable file type handler found.`);
          }
       });
    },

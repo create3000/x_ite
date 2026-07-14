@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
                return;
             }
 
-            throw new Error ("ImageTexture3D: no suitable file type handler found.");
+            throw new Error (`${this .getTypeName ()}: no suitable file type handler found.`);
          }
       });
    },

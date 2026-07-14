@@ -110,7 +110,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             }
             else
             {
-               throw new Error ("MovieTexture: no suitable file type handler found.");
+               throw new Error (`${this .getTypeName ()}: no suitable file type handler found.`);
             }
          });
       }
@@ -134,7 +134,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             }
             else
             {
-               throw new Error ("MovieTexture: no suitable file type handler found.");
+               throw new Error (`${this .getTypeName ()}: no suitable file type handler found.`);
             }
          });
       }

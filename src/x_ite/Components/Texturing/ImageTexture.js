@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          }
          else
          {
-            throw new Error ("ImageTexture: no suitable file type handler found.");
+            throw new Error (`${this .getTypeName ()}: no suitable file type handler found.`);
          }
       });
    },
@@ -95,24 +95,16 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             console .info (`Done loading image texture '${decodeURI (fileURL)}'.`);
       }
 
-      try
-      {
-         const { baseWidth, baseHeight, numComponents } = texture;
+      const { baseWidth, baseHeight, numComponents } = texture;
 
-         this .setTexture (texture);
-         this .setTransparent (false);
-         this .setWidth (baseWidth);
-         this .setHeight (baseHeight);
-         this .updateTextureParameters ();
-         this .updateOutputs (baseWidth, baseHeight, numComponents);
+      this .setTexture (texture);
+      this .setTransparent (false);
+      this .setWidth (baseWidth);
+      this .setHeight (baseHeight);
+      this .updateTextureParameters ();
+      this .updateOutputs (baseWidth, baseHeight, numComponents);
 
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
    setImage (image, fileURL, objectURL)
    {

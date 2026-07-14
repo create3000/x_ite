@@ -15,9 +15,6 @@ function ImageCubeMapTexture (executionContext)
    X3DUrlObject              .call (this, executionContext);
 
    this .addType (X3DConstants .ImageCubeMapTexture);
-
-   this .image    = $("<img></img>");
-   this .urlStack = new Fields .MFString ();
 }
 
 Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
@@ -28,13 +25,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
       X3DUrlObject              .prototype .initialize .call (this);
 
-      // Initialize.
-
-      this .image
-         .on ("load", this .setImage .bind (this))
-         .on ("abort error", this .setError .bind (this))
-         .attr ("crossorigin", "anonymous");
-
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    unloadData ()
@@ -43,97 +33,72 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    },
    loadData ()
    {
-      this .urlStack .setValue (this ._url);
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      if (this .urlStack .length === 0)
-      {
-         this .clearTexture ();
-         this .setLoadState (X3DConstants .FAILED_STATE);
-         this .addNodeEvent ();
-         return;
-      }
-
-      new FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
+      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
          if (data === null)
          {
-            this .loadNext ();
+            this .clearTexture ();
+            this .setLoadState (X3DConstants .FAILED_STATE);
+            this .addNodeEvent ();
          }
          else if (data instanceof ArrayBuffer)
          {
-            this .fileURL = new URL (fileURL);
+            fileURL = new URL (fileURL);
 
-            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
+            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
             {
                this .setLinear (true);
                this .setMipMaps (false);
 
-               this .getBrowser () .getKTXDecoder ()
-                  .then (decoder => decoder .loadKTXFromBuffer (data))
-                  .then (texture => this .setKTXTexture (texture))
-                  .catch (error => this .setError ({ type: error .message }));
+               const
+                  decoder = await this .getBrowser () .getKTXDecoder (),
+                  texture = await decoder .loadKTXFromBuffer (data);
+
+               this .setKTXTexture (texture, fileURL);
             }
             else
             {
                this .setLinear (false);
                this .setMipMaps (true);
 
-               this .objectURL = URL .createObjectURL (new Blob ([data]));
+               const
+                  objectURL = URL .createObjectURL (new Blob ([data])),
+                  image     = await this .loadImage (objectURL);
 
-               this .image .attr ("src", this .objectURL);
+               this .setImage (image, fileURL, objectURL);
             }
          }
          else
          {
-            throw new Error ("ImageTexture: no suitable file type handler found.");
+            throw new Error (`${this .getTypeName ()}: no suitable file type handler found.`);
          }
       });
    },
-   setError (event)
-   {
-      if (this .fileURL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
-
-      URL .revokeObjectURL (this .objectURL);
-
-      this .loadNext ();
-   },
-   setKTXTexture (texture)
+   setKTXTexture (texture, fileURL)
    {
       if (texture .target !== this .getTarget ())
          return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_CUBE_MAP'." });
 
       if (DEVELOPMENT)
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .fileURL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (fileURL)}'.`);
       }
 
-      try
-      {
-         this .setTexture (texture);
-         this .setTransparent (false);
-         this .setSize (texture .baseWidth);
-         this .updateTextureParameters ();
+      this .setTexture (texture);
+      this .setTransparent (false);
+      this .setSize (texture .baseWidth);
+      this .updateTextureParameters ();
 
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-         this .addNodeEvent ();
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
+      this .addNodeEvent ();
    },
-   setImage ()
+   setImage (image, fileURL, objectURL)
    {
       if (DEVELOPMENT)
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .fileURL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (fileURL)}'.`);
       }
 
       try
@@ -145,27 +110,22 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
             texture = gl .createTexture ();
 
          gl .bindTexture (gl .TEXTURE_2D, texture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, this .image [0]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, image);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .CLAMP_TO_EDGE);
 
-         this .imageToCubeMap (texture, this .image .prop ("width"), this .image .prop ("height"), false);
+         this .imageToCubeMap (texture, image .width, image .height, false);
 
          // Update load state.
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .addNodeEvent ();
       }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
       finally
       {
-         URL .revokeObjectURL (this .objectURL);
+         URL .revokeObjectURL (objectURL);
       }
    },
    imageToCubeMap (texture, width, height)
