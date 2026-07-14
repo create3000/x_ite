@@ -551,7 +551,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Connect events.
 
-      $(this .sortWorker) .on ("message", ({ originalEvent: event }) =>
+      this .sortWorker .onmessage = event =>
       {
          // console .log (event .data .type);
 
@@ -581,8 +581,16 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
                break;
             }
          }
-      })
-      .on ("message.loading", ({ target, originalEvent: event }) =>
+      };
+
+      this .sortWorker .onerror = error =>
+      {
+         console .error (error);
+
+         this .sortPending = false;
+      };
+
+      const loading = event =>
       {
          switch (event .data .type)
          {
@@ -590,7 +598,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             {
                browser .loading () .then (() =>
                {
-                  if ($(target) .data ("sorted"))
+                  if (event .target .sorted)
                      return;
 
                   scene .addLoadingObject (this);
@@ -600,17 +608,15 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             case "sorted":
             {
                scene .removeLoadingObject (this);
-               $(target) .off (".loading") .data ("sorted", true);
+               event .target .removeEventListener ("message", loading);
+
+               event .target .sorted = true;
                break;
             }
          }
-      })
-      .on ("error", error =>
-      {
-         console .error (error);
+      };
 
-         this .sortPending = false;
-      });
+      this .sortWorker .addEventListener ("message", loading);
 
       // Transfer positions buffer to the worker.
 
