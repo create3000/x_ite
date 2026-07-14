@@ -258,7 +258,12 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       X3DSoundSourceNode .prototype .set_gain__ .call (this);
 
-      this .video .prop ("muted", this ._gain .getValue () === 0);
+      const media = this .getMediaElement ();
+
+      if (!media)
+         return;
+
+      media .muted = this ._gain .getValue () === 0;
    },
    set_speed__ ()
    {
