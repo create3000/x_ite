@@ -66,18 +66,26 @@ Object .assign (X3DParser .prototype,
    },
    convertColor (value, defaultColor = "white")
    {
-      this .body ??= $("body");
-      this .wrap ??= $("<div></div>") .hide ();
-      this .div  ??= $("<div></div>") .appendTo (this .wrap);
+      if (!this .body)
+      {
+         this .body = document .querySelector ("body");
+         this .wrap = document .createElement ("div");
+         this .div  = document .createElement ("div");
 
-      this .wrap .css ("color", defaultColor) .appendTo (this .body);
-      this .div  .css ("color", value);
+         this .wrap .style .display = "none";
+
+         this .body .appendChild (this .wrap);
+         this .wrap .appendChild (this .div);
+      }
+
+      this .wrap .style .color = defaultColor;
+      this .div  .style .color = value;
 
       const
-         rgb    = window .getComputedStyle (this .div [0]) .color,
+         rgb    = window .getComputedStyle (this .div) .color,
          values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
 
-      this .wrap .detach ();
+      this .wrap .remove ();
 
       values [0] /= 255;
       values [1] /= 255;
