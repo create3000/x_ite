@@ -551,7 +551,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Connect events.
 
-      this .sortWorker .onmessage = event =>
+      $(this .sortWorker) .on ("message", ({ originalEvent: event }) =>
       {
          // console .log (event .data .type);
 
@@ -565,7 +565,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
                scene .removeLoadingObject (this);
                browser .addBrowserEvent ();
-               browser .loading () .then (() => scene .addLoadingObject (this));
                break;
             }
             case "sorted":
@@ -573,7 +572,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
                gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, event .data .indices, gl .DYNAMIC_DRAW);
 
-               scene .removeLoadingObject (this);
                browser .addBrowserEvent ();
                break;
             }
@@ -583,14 +581,36 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
                break;
             }
          }
-      };
+      })
+      .on ("message.loading", ({ target, originalEvent: event }) =>
+      {
+         switch (event .data .type)
+         {
+            case "ready":
+            {
+               browser .loading () .then (() =>
+               {
+                  if ($(target) .data ("sorted"))
+                     return;
 
-      this .sortWorker .onerror = error =>
+                  scene .addLoadingObject (this);
+               });
+               break;
+            }
+            case "sorted":
+            {
+               scene .removeLoadingObject (this);
+               $(target) .off (".loading") .data ("sorted", true);
+               break;
+            }
+         }
+      })
+      .on ("error", error =>
       {
          console .error (error);
 
          this .sortPending = false;
-      };
+      });
 
       // Transfer positions buffer to the worker.
 
