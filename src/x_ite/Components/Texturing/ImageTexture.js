@@ -71,11 +71,16 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
                this .setLinear (false);
                this .setMipMaps (true);
 
-               const
-                  objectURL = URL .createObjectURL (new Blob ([data])),
-                  image     = await this .loadImage (objectURL);
+               const objectURL = URL .createObjectURL (new Blob ([data]));
 
-               this .setImage (image, fileURL, objectURL);
+               try
+               {
+                  this .setImage (await this .loadImage (objectURL), fileURL);
+               }
+               finally
+               {
+                  URL .revokeObjectURL (objectURL);
+               }
             }
          }
          else
@@ -114,21 +119,14 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
             console .info (`Done loading image texture '${decodeURI (fileURL)}'.`);
       }
 
-      try
-      {
-         const { width, height } = image;
+      const { width, height } = image;
 
-         // Upload image to GPU.
+      // Upload image to GPU.
 
-         this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
-         this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
-         this .updateOutputs (width, height, this .isTransparent () ? 4 : 3);
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-      }
-      finally
-      {
-         URL .revokeObjectURL (objectURL);
-      }
+      this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
+      this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
+      this .updateOutputs (width, height, this .isTransparent () ? 4 : 3);
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
    updateOutputs (width, height, colorDepth)
    {

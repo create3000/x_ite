@@ -60,11 +60,16 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
                this .setLinear (false);
                this .setMipMaps (true);
 
-               const
-                  objectURL = URL .createObjectURL (new Blob ([data])),
-                  image     = await this .loadImage (objectURL);
+               const objectURL = URL .createObjectURL (new Blob ([data]));
 
-               this .setImage (image, fileURL, objectURL);
+               try
+               {
+                  this .setImage (await this .loadImage (objectURL), fileURL);
+               }
+               finally
+               {
+                  URL .revokeObjectURL (objectURL);
+               }
             }
          }
          else
@@ -91,7 +96,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
-   setImage (image, fileURL, objectURL)
+   setImage (image, fileURL)
    {
       if (DEVELOPMENT)
       {
@@ -99,32 +104,25 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
             console .info (`Done loading image cube map texture '${decodeURI (fileURL)}'.`);
       }
 
-      try
-      {
-         // Create texture.
+      // Create texture.
 
-         const
-            gl      = this .getBrowser () .getContext (),
-            texture = gl .createTexture ();
+      const
+         gl      = this .getBrowser () .getContext (),
+         texture = gl .createTexture ();
 
-         gl .bindTexture (gl .TEXTURE_2D, texture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, image);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .CLAMP_TO_EDGE);
+      gl .bindTexture (gl .TEXTURE_2D, texture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, image);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .CLAMP_TO_EDGE);
 
-         this .imageToCubeMap (texture, image .width, image .height, false);
+      this .imageToCubeMap (texture, image .width, image .height, false);
 
-         // Update load state.
+      // Update load state.
 
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-         this .addNodeEvent ();
-      }
-      finally
-      {
-         URL .revokeObjectURL (objectURL);
-      }
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
+      this .addNodeEvent ();
    },
    imageToCubeMap (texture, width, height)
    {

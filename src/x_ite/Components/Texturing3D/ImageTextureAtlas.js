@@ -51,11 +51,16 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             this .setLinear (false);
             this .setMipMaps (true);
 
-            const
-               objectURL = URL .createObjectURL (new Blob ([data])),
-               image     = await this .loadImage (objectURL);
+            const objectURL = URL .createObjectURL (new Blob ([data]));
 
-            this .setImage (image, fileURL, objectURL);
+            try
+            {
+               this .setImage (await this .loadImage (objectURL), fileURL);
+            }
+            finally
+            {
+               URL .revokeObjectURL (objectURL);
+            }
          }
          else
          {
@@ -63,7 +68,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
          }
       });
    },
-   setImage (image, fileURL, objectURL)
+   setImage (image, fileURL)
    {
       if (DEVELOPMENT)
       {
@@ -71,71 +76,64 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
             console .info (`Done loading image '${decodeURI (fileURL)}'.`);
       }
 
-      try
+      const
+         gl          = this .getBrowser () .getContext (),
+         w           = image .width,
+         h           = image .height,
+         texture     = gl .createTexture (),
+         frameBuffer = gl .createFramebuffer ();
+
+      // Slice me nice.
+
+      const
+         slicesOverX    = this ._slicesOverX .getValue (),
+         slicesOverY    = this ._slicesOverY .getValue (),
+         maxSlices      = slicesOverX * slicesOverY,
+         width          = Math .floor (w / slicesOverX),
+         height         = Math .floor (h / slicesOverY),
+         depth          = Math .min (this ._numberOfSlices .getValue (), maxSlices),
+         defaultData    = new Uint8Array (w * h * 4),
+         data           = defaultData .subarray (0, width * height * depth * 4);
+
+      gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+      gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
+      gl .bindTexture (gl .TEXTURE_2D, texture);
+      gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, w, h, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
+      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
+
+      let transparent = false;
+
+      for (let y = 0, i = 0; y < slicesOverY && i < depth; ++ y)
       {
-         const
-            gl          = this .getBrowser () .getContext (),
-            w           = image .width,
-            h           = image .height,
-            texture     = gl .createTexture (),
-            frameBuffer = gl .createFramebuffer ();
-
-         // Slice me nice.
-
-         const
-            slicesOverX    = this ._slicesOverX .getValue (),
-            slicesOverY    = this ._slicesOverY .getValue (),
-            maxSlices      = slicesOverX * slicesOverY,
-            width          = Math .floor (w / slicesOverX),
-            height         = Math .floor (h / slicesOverY),
-            depth          = Math .min (this ._numberOfSlices .getValue (), maxSlices),
-            defaultData    = new Uint8Array (w * h * 4),
-            data           = defaultData .subarray (0, width * height * depth * 4);
-
-         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-         gl .texImage3D (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-
-         gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
-         gl .bindTexture (gl .TEXTURE_2D, texture);
-         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, w, h, 0, gl .RGBA, gl .UNSIGNED_BYTE, image);
-         gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, texture, 0);
-
-         let transparent = false;
-
-         for (let y = 0, i = 0; y < slicesOverY && i < depth; ++ y)
+         for (let x = 0; x < slicesOverX && i < depth; ++ x, ++ i)
          {
-            for (let x = 0; x < slicesOverX && i < depth; ++ x, ++ i)
-            {
-               const
-                  sx = Math .floor (x * w / slicesOverX),
-                  sy = Math .floor (y * h / slicesOverY);
+            const
+               sx = Math .floor (x * w / slicesOverX),
+               sy = Math .floor (y * h / slicesOverY);
 
-               // gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, width, height);
+            // gl .copyTexSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, sx, sy, width, height);
 
-               gl .readPixels (sx, sy, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
-               gl .texSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, width, height, 1, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            gl .readPixels (sx, sy, width, height, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            gl .texSubImage3D (gl .TEXTURE_3D, 0, 0, 0, i, width, height, 1, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-               transparent ||= this .isImageTransparent (data);
-            }
+            transparent ||= this .isImageTransparent (data);
          }
-
-         gl .deleteFramebuffer (frameBuffer);
-         gl .deleteTexture (texture);
-
-         // Determine image alpha.
-
-         this .setTransparent (transparent);
-         this .setWidth (width);
-         this .setHeight (height);
-         this .setDepth (depth);
-         this .updateTextureParameters ();
-         this .updateOutputs (width, height, depth, transparent ? 4 : 3);
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
-      finally
-      {
-         URL .revokeObjectURL (objectURL);
-      }
+
+      gl .deleteFramebuffer (frameBuffer);
+      gl .deleteTexture (texture);
+
+      // Determine image alpha.
+
+      this .setTransparent (transparent);
+      this .setWidth (width);
+      this .setHeight (height);
+      this .setDepth (depth);
+      this .updateTextureParameters ();
+      this .updateOutputs (width, height, depth, transparent ? 4 : 3);
+      this .setLoadState (X3DConstants .COMPLETE_STATE);
    },
    updateOutputs (width, height, depth, colorDepth)
    {
