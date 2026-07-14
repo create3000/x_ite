@@ -79,6 +79,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
          this .setSize (1);
          this .setTransparent (false);
          this .updateTextureParameters ();
+         this .addNodeEvent ();
       };
    })(),
    updateTextureParameters ()

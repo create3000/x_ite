@@ -39,7 +39,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          {
             this .clearTexture ();
             this .setLoadState (X3DConstants .FAILED_STATE);
-            this .addNodeEvent ();
          }
          else if (data instanceof ArrayBuffer)
          {
@@ -91,7 +90,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       this .updateTextureParameters ();
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
-      this .addNodeEvent ();
    },
    setImage (image, fileURL, objectURL)
    {

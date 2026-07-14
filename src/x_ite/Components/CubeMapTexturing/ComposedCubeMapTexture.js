@@ -161,7 +161,6 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
       else
       {
          this .clearTexture ();
-         this .addNodeEvent ();
       }
    },
    getRenderedTextures (renderedTextures)
