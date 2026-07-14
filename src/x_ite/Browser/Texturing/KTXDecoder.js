@@ -77,15 +77,15 @@ export default class KTXDecoder
       };
    }
 
-   async loadKTXFromURL (url, cache = true)
-   {
-      const response = await fetch (url, { cache: cache ? "default" : "reload" });
+   // async loadKTXFromURL (url, cache = true)
+   // {
+   //    const response = await fetch (url, { cache: cache ? "default" : "reload" });
 
-      if (!response .ok)
-         throw new Error ("Couldn't fetch KTX image.");
+   //    if (!response .ok)
+   //       throw new Error ("Couldn't fetch KTX image.");
 
-      return this .loadKTXFromBuffer (await response .arrayBuffer ());
-   }
+   //    return this .loadKTXFromBuffer (await response .arrayBuffer ());
+   // }
 
    async loadKTXFromBuffer (arrayBuffer)
    {
