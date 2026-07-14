@@ -87,14 +87,11 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    {
       // Call shutdown.
 
-      const shutdown = this .context ?.get ("shutdown");
-
-      if (typeof shutdown === "function")
-         this .call__ (shutdown, "shutdown");
+      this .shutdown ?.();
 
       // Disconnect shutdown.
 
-      $(window) .off (`.Script-${this .getId ()}`);
+      window .removeEventListener ("unload", this .shutdown);
 
       // Disconnect prepareEvents.
 
@@ -326,7 +323,15 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       const shutdown = this .context .get ("shutdown");
 
       if (typeof shutdown === "function")
-         $(window) .on (`unload.Script-${this .getId ()}`, () => this .call__ (shutdown, "shutdown"));
+      {
+         this .shutdown = () => this .call__ (shutdown, "shutdown");
+
+         window .addEventListener ("unload", this .shutdown);
+      }
+      else
+      {
+         this .shutdown = null;
+      }
 
       // Connect prepareEvents.
 

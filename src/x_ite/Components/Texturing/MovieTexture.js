@@ -73,11 +73,14 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             {
                const
                   data = await this .loadDocument (fileURL),
-                  img  = $("<img></img>") .appendTo ($("<div></div>"));
+                  div  = document .createElement ("div"),
+                  img  = document .createElement ("img");
+
+               div .appendChild (img);
 
                const gif = await new Promise ((resolve, reject) =>
                {
-                  const gif = new SuperGif ({ gif: img [0], on_error: type => reject (new Error (type)) });
+                  const gif = new SuperGif ({ gif: img, on_error: type => reject (new Error (type)) });
 
                   gif .load_raw (new Uint8Array (data), () => resolve (gif));
                });
