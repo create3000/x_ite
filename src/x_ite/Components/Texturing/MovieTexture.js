@@ -135,9 +135,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       {
          new FileLoader (this, { dataAsString: false }) .loadDocument ([fileURL], async data =>
          {
-            if (data === null)
-               reject ();
-            else if (data instanceof ArrayBuffer)
+            if (data instanceof ArrayBuffer)
                resolve (data);
             else
                reject (new Error (`${this .getTypeName ()}: No suitable file handler found.`));
