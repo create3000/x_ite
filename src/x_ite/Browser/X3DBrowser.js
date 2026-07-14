@@ -27,6 +27,8 @@ import DEVELOPMENT          from "../DEVELOPMENT.js";
 
 import "../Components.js";
 
+/* eslint no-undef: "off", no-async-promise-executor: "off" */
+
 const
    _DOMIntegration      = Symbol (),
    _supportedProfiles   = Symbol (),
