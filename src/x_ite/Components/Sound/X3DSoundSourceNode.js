@@ -47,6 +47,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
 
       // Init mediaElement.
 
+      this .set_gain__ ();
       this .set_loop ();
 
       // Handle events.
@@ -75,6 +76,11 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
    set_gain__ ()
    {
       this .audioSource .gain .value = this ._gain .getValue ();
+
+      if (!this .mediaElement)
+         return;
+
+      this .mediaElement .muted = this ._gain .getValue () === 0;
    },
    set_loop ()
    {
