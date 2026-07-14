@@ -64,7 +64,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
          }
          else
          {
-            throw new Error (`${this .getTypeName ()}: no suitable file type handler found.`);
+            throw new Error (`${this .getTypeName ()}: No suitable file handler found.`);
          }
       });
    },

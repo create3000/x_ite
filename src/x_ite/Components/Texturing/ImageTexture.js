@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          }
          else
          {
-            throw new Error (`${this .getTypeName ()}: no suitable file type handler found.`);
+            throw new Error (`${this .getTypeName ()}: No suitable file handler found.`);
          }
       });
    },

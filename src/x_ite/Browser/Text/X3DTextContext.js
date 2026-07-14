@@ -69,7 +69,7 @@ Object .assign (X3DTextContext .prototype,
                }
                else
                {
-                  throw new Error (`${node .getTypeName ()}: no suitable file type handler found.`);
+                  throw new Error (`${node .getTypeName ()}: No suitable file handler found.`);
                }
             });
          });

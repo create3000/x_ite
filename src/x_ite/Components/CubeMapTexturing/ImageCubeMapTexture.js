@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          }
          else
          {
-            throw new Error (`${this .getTypeName ()}: no suitable file type handler found.`);
+            throw new Error (`${this .getTypeName ()}: No suitable file handler found.`);
          }
       });
    },
