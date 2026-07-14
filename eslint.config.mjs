@@ -14,6 +14,9 @@ export default defineConfig ([
         ... globals .jquery,
       },
     },
+    rules: {
+      "no-async-promise-executor": "off",
+    },
   },
   {
     files: ["build/**/*.{js,mjs,cjs}"],
