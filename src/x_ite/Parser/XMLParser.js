@@ -60,7 +60,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch
       {
-         this .input = undefined;
+         this .input = null;
       }
    },
    isValid ()
@@ -71,8 +71,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    {
       if (element instanceof HTMLElement)
          return false;
-      else
-         return true;
+
+      return true;
    },
    parseIntoScene (resolve, reject)
    {
