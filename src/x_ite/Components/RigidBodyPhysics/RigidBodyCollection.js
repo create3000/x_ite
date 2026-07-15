@@ -261,7 +261,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          if (jointNode .getCollection ())
          {
             jointNode ._collection .addInterest ("set_joints__", this);
-            this .otherJointNodes .push (bodyNode);
+            this .otherJointNodes .push (jointNode);
             continue;
          }
 

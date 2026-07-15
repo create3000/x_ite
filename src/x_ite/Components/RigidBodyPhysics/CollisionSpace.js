@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyColli
             continue;
          }
 
-         const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
          {

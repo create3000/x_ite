@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
       // TODO: update alias.
 
       if (!(value instanceof this [_valueType]))
-         throw new Error (`Couldn't update value of ${this .getTypeName ()}, value for key '${key}' has wrong type.`);
+         throw new Error (`Couldn't update value of ${this .getTypeName ()}, value for key '${newKey}' has wrong type.`);
 
       const oldValue = this [_index] .get (oldKey);
 

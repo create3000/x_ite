@@ -102,7 +102,7 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, X3DGroupingNod
                }
                case MatchCriterion .MATCH_EVERY:
                {
-                  if (intersection !== pickSensor .getObjectType () .size)
+                  if (intersection !== pickSensorNode .getObjectType () .size)
                      continue;
 
                   break;

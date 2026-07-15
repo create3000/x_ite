@@ -15,6 +15,10 @@ export default defineConfig ([
         libtess: "readonly",
         SuperGif: "readonly",
         APNG: "readonly",
+        OpenJPEG: "readonly",
+        CharLS: "readonly",
+        jpegDecode: "readonly",
+        dicomParser: "readonly",
       },
     },
     rules: {
