@@ -47,9 +47,7 @@ const
 
 function X3DBrowser (element)
 {
-   element = $(element);
-
-   if (element .prop ("browser"))
+   if (element .browser)
       throw new Error ("Couldn't create browser, element has already a browser.");
 
    X3DBrowserContext .call (this, element);

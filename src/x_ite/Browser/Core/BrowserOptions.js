@@ -240,18 +240,16 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          browser = this .getBrowser (),
          element = browser .getElement () [0];
 
-      const documentEvents = ["visibilitychange"]
-         .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
-         .join (" ");
-
-      $(document) .off (documentEvents);
+      document .removeEventListener ("visibilitychange", this .checkUpdateListener);
 
       this .intersectionObserver ?.disconnect ();
 
       if (!autoUpdate .getValue ())
          return;
 
-      $(document) .on (documentEvents, () => this .checkUpdate ());
+      this .checkUpdateListener = () => this .checkUpdate ();
+
+      document .addEventListener ("visibilitychange", this .checkUpdateListener);
 
       this .intersectionObserver ??= new IntersectionObserver (entries =>
       {

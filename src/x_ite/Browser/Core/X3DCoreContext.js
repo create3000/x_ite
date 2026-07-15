@@ -40,6 +40,8 @@ let instanceId = 0;
 
 function X3DCoreContext (element)
 {
+   element = $(element);
+   
    // Events
 
    this .addChildObjects (X3DConstants .outputOnly, "controlKey", new Fields .SFBool (),
