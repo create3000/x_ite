@@ -65,7 +65,16 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    isValid ()
    {
-      return (this .input instanceof XMLDocument) || (this .input instanceof HTMLElement) || (this .input === null);
+      if (this .input instanceof XMLDocument)
+         return true;
+
+      if (this .input instanceof HTMLElement)
+         return true;
+
+      if (this .input === null)
+         return true;
+
+      return false;
    },
    isXML (element)
    {
