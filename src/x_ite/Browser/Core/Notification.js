@@ -2,23 +2,6 @@ import Fields       from "../../Fields.js";
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
-function textWidth (element)
-{
-   const
-      children = Array .from (element .children),
-      span     = document .createElement ("span");
-
-   span .textContent = element .textContent;
-
-   element .replaceChildren (span);
-
-   const width = span .clientWidth;
-
-   element .replaceChildren (... children);
-
-   return width;
-}
-
 function Notification (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
@@ -56,7 +39,7 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
 
       this .element .css ({
          visibility: "visible",
-         width: textWidth (this .element [0]),
+         width: this .textWidth (this .element [0]),
          transition: "width 300ms ease-in-out",
       });
 
@@ -69,6 +52,22 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
          });
       },
       5000);
+   },
+   textWidth (element)
+   {
+      const
+         children = Array .from (element .children),
+         span     = document .createElement ("span");
+
+      span .textContent = element .textContent;
+
+      element .replaceChildren (span);
+
+      const width = span .clientWidth;
+
+      element .replaceChildren (... children);
+
+      return width;
    },
 });
 
