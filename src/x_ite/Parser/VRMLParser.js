@@ -449,7 +449,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   }
                   catch (error)
                   {
-                     console .warn (`Parser error at line ${this .lineNumber}:`, error);
+                     console .warn (`Parser error at line ${this .lineNumber}.`, error);
                      return true;
                   }
                }
@@ -1216,7 +1216,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                               }
                               catch (error)
                               {
-                                 console .warn (`Parser error at line ${this .lineNumber}:`, error);
+                                 console .warn (`Parser error at line ${this .lineNumber}.`, error);
 
                                  return true;
                               }
