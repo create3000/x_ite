@@ -67,7 +67,7 @@ const X3D = Object .assign (function (onfulfilled, onrejected)
             Legacy .error (document .querySelectorAll ("X3DCanvas"), error);
             reject (error);
          }
-      }
+      };
 
       if (document .readyState === "complete")
          ready ();
@@ -125,7 +125,7 @@ Namespace, Namespace .Fields,
    noConflict: (() =>
    {
       const
-         _had = window .hasOwnProperty ("X3D"),
+         _had = "X3D" in window,
          _X3D = window .X3D;
 
       return function ()
