@@ -16,7 +16,7 @@ Object .assign ($,
          parser   = new DOMParser (),
          errorDoc = parser .parseFromString ("INVALID", "application/xml"),
          errorNS  = errorDoc .getElementsByTagName ("parsererror") [0] .namespaceURI,
-         xml      = parser .parseFromString (xmlString, 'application/xml');
+         xml      = parser .parseFromString (xmlString, "application/xml");
 
       if (xml .getElementsByTagNameNS (errorNS, "parsererror") .length > 0)
          throw new Error ("Invalid XML.");
