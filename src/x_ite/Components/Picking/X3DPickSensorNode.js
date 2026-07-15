@@ -202,7 +202,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
    },
    set_live__ ()
    {
-      if (this .getLive () .getValue () && this ._enabled .getValue () && ! this .objectType .has ("NONE"))
+      if (this .getLive () .getValue () && this ._enabled .getValue () && !this .objectType .has ("NONE"))
       {
          this .getBrowser () .addPickSensor (this);
          this .setPickableObject (true);

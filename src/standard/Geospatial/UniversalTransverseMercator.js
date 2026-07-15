@@ -61,7 +61,7 @@ Object .assign (UniversalTransverseMercator .prototype,
 
       if (northing < 0)
       {
-         S        = ! this .southernHemisphere;
+         S        = !this .southernHemisphere;
          northing = -northing;
       }
 
@@ -138,7 +138,7 @@ Object .assign (UniversalTransverseMercator .prototype,
       {
          northing += N0;
 
-         if (! this .southernHemisphere)
+         if (!this .southernHemisphere)
             northing = -northing;
       }
       else

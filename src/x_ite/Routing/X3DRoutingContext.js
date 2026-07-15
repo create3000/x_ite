@@ -67,7 +67,7 @@ Object .assign (X3DRoutingContext .prototype,
             // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
             this [_taintedNodesTemp] = taintedNodes;
          }
-         while (! this [_taintedFields] .length && this [_taintedNodes] .length);
+         while (!this [_taintedFields] .length && this [_taintedNodes] .length);
       }
       while (this [_taintedFields] .length);
 

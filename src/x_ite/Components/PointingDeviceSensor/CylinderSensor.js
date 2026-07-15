@@ -226,7 +226,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          else
             rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
 
-         if (! this ._rotation_changed .getValue () .equals (rotation))
+         if (!this ._rotation_changed .getValue () .equals (rotation))
             this ._rotation_changed = rotation;
       }
    },

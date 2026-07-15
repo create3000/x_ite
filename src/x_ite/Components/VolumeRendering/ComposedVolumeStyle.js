@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, X3DCompo
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       for (const renderStyleNode of this .renderStyleNodes)
@@ -84,7 +84,7 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, X3DCompo
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -108,7 +108,7 @@ Object .assign (Object .setPrototypeOf (ComposedVolumeStyle .prototype, X3DCompo
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";

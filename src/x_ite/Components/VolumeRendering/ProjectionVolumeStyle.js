@@ -16,7 +16,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
 {
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "intensityThreshold_" + this .getId (), this ._intensityThreshold .copy ());
@@ -27,7 +27,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -134,7 +134,7 @@ Object .assign (Object .setPrototypeOf (ProjectionVolumeStyle .prototype, X3DVol
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";

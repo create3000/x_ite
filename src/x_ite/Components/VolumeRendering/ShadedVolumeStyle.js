@@ -41,7 +41,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       if (this .materialNode)
@@ -63,7 +63,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";

@@ -51,13 +51,13 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
 
       return function ()
       {
-         if (! this .getCollection ())
+         if (!this .getCollection ())
             return;
 
-         if (! this .getBody1 ())
+         if (!this .getBody1 ())
             return;
 
-         if (! this .getBody2 ())
+         if (!this .getBody2 ())
             return;
 
          if (this .getBody1 () .getCollection () !== this .getCollection ())
@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
    })(),
    removeJoint ()
    {
-      if (! this .joint)
+      if (!this .joint)
          return;
 
       this .getCollection () ?.getDynamicsWorld () .removeConstraint (this .joint);
@@ -132,7 +132,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
    },
    set_separation__ ()
    {
-      if (! this .joint)
+      if (!this .joint)
          return;
 
       this .joint .setLowerLinLimit (this ._minSeparation .getValue ());

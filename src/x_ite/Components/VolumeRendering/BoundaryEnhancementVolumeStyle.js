@@ -16,7 +16,7 @@ Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototyp
 {
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "retainedOpacity_" + this .getId (), this ._retainedOpacity .copy ());
@@ -25,7 +25,7 @@ Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototyp
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -56,7 +56,7 @@ Object .assign (Object .setPrototypeOf (BoundaryEnhancementVolumeStyle .prototyp
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";

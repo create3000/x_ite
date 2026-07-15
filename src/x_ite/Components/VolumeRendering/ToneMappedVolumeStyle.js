@@ -29,7 +29,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, X3DCom
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "coolColor_" + this .getId (), this ._coolColor .copy ());
@@ -40,7 +40,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, X3DCom
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, X3DCom
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";

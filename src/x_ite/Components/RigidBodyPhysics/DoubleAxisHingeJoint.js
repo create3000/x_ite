@@ -67,13 +67,13 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
 
       return function ()
       {
-         if (! this .getCollection ())
+         if (!this .getCollection ())
             return;
 
-         if (! this .getBody1 ())
+         if (!this .getBody1 ())
             return;
 
-         if (! this .getBody2 ())
+         if (!this .getBody2 ())
             return;
 
          if (this .getBody1 () .getCollection () !== this .getCollection ())
@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, X3DRigi
    })(),
    removeJoint ()
    {
-      if (! this .joint)
+      if (!this .joint)
          return;
 
       this .getCollection () ?.getDynamicsWorld () .removeConstraint (this .joint);

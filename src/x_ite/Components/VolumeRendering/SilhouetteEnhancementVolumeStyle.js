@@ -29,7 +29,7 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "silhouetteRetainedOpacity_" + this .getId (), this ._silhouetteRetainedOpacity .copy ());
@@ -41,7 +41,7 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (SilhouetteEnhancementVolumeStyle .protot
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";

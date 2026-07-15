@@ -105,7 +105,7 @@ Object .assign (X3DSoundContext .prototype,
             .appendTo (this .getSurface () .find (".x_ite-private-buttons"));
 
          const
-            count = !!this [_audioElements] .size,
+            count = !! this [_audioElements] .size,
             fade  = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300";
 
          if (count)
@@ -117,7 +117,7 @@ Object .assign (X3DSoundContext .prototype,
 
          this [_noSoundButton] .removeClass (fade);
 
-         if (count !== !!this [_audioElements] .size)
+         if (count !== !! this [_audioElements] .size)
             return;
 
          if (!count)

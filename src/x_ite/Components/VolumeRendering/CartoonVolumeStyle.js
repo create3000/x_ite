@@ -29,7 +29,7 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, X3DCompos
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "colorSteps_"      + this .getId (), this ._colorSteps      .copy ());
@@ -45,7 +45,7 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, X3DCompos
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (CartoonVolumeStyle .prototype, X3DCompos
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";

@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, X3DCompos
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant1_" + this .getId (), this ._weightConstant1 .copy ());
@@ -102,10 +102,10 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, X3DCompos
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
-      if (! this .voxelsNode)
+      if (!this .voxelsNode)
          return "";
 
       let string = "";
@@ -245,10 +245,10 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, X3DCompos
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
-      if (! this .voxelsNode)
+      if (!this .voxelsNode)
          return "";
 
       let string = "";

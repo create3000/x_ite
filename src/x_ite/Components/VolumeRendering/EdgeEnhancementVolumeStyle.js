@@ -29,7 +29,7 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, X
    },
    addShaderFields (shaderNode)
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       shaderNode .addUserDefinedField (X3DConstants .inputOutput, "edgeColor_"         + this .getId (), this ._edgeColor         .copy ());
@@ -40,7 +40,7 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, X
    },
    getUniformsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";
@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (EdgeEnhancementVolumeStyle .prototype, X
    },
    getFunctionsText ()
    {
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return "";
 
       let string = "";

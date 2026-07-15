@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
    createNormals (points, coordIndex, creaseAngle)
    {
       const
-         cw          = ! this ._ccw .getValue (),
+         cw          = !this ._ccw .getValue (),
          normalIndex = new Map (),
          normals     = [ ];
 

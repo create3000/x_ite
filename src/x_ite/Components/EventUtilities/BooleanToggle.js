@@ -23,7 +23,7 @@ Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, X3DChildNode .
    set_boolean__ ()
    {
       if (this ._set_boolean .getValue ())
-         this ._toggle = ! this ._toggle .getValue ();
+         this ._toggle = !this ._toggle .getValue ();
    },
 });
 
