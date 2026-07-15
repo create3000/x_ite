@@ -14,8 +14,8 @@ Object .assign ($,
    {
       const
          parser   = new DOMParser (),
-         errorDoc = parser .parseFromString ("INVALID", "application/xml"),
-         errorNS  = errorDoc .getElementsByTagName ("parsererror") [0] .namespaceURI,
+         errorXML = parser .parseFromString ("INVALID", "application/xml"),
+         errorNS  = errorXML .getElementsByTagName ("parsererror") [0] .namespaceURI,
          xml      = parser .parseFromString (xmlString, "application/xml");
 
       if (xml .getElementsByTagNameNS (errorNS, "parsererror") .length)
