@@ -10,6 +10,19 @@ Object .assign ($,
 
       return true;
    },
+   parseXML (xmlString)
+   {
+      const
+         parser        = new DOMParser (),
+         errorDoc      = parser .parseFromString ("INVALID", "application/xml"),
+         parsererrorNS = errorDoc .getElementsByTagName ("parsererror") [0] .namespaceURI,
+         xml           = parser .parseFromString (xmlString, 'application/xml');
+
+      if (xml .getElementsByTagNameNS (parsererrorNS, "parsererror") .length > 0)
+         throw new Error ("Invalid XML.");
+
+      return xml;
+   },
    decodeText (input)
    {
       if (typeof input === "string")

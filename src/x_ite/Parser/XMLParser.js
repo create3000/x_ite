@@ -50,11 +50,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       try
       {
          if (typeof xmlElement === "string")
-         {
-            const parser = new DOMParser ();
-
-            xmlElement = parser .parseFromString (xmlElement, "application/xml");
-         }
+            xmlElement = $.parseXML (xmlElement);
 
          this .input = xmlElement;
          this .xml   = this .isXML (xmlElement);
@@ -782,8 +778,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    scriptElement (element)
    {
       const
-         parser         = new DOMParser (),
-         scriptDocument = parser .parseFromString (element .outerHTML, "application/xml"),
+         scriptDocument = $.parseXML (element .outerHTML),
          childNodes     = scriptDocument .children [0] .childNodes;
 
       element .textContent = "// Content moved into childNodes.";
@@ -824,7 +819,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             route            = executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
 
          ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
-         xmlElement [_node] = node;
+         xmlElement [_node] = route;
       }
       catch (error)
       {

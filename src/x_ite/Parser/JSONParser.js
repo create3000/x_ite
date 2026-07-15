@@ -136,9 +136,8 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
    createCDATA (document, element, str)
    {
       const
-         parser = new DOMParser (),
-         docu   = parser .parseFromString ("<xml></xml>", "application/xml"),
-         cdata  = docu .createCDATASection (str);
+         docu  = $.parseXML ("<xml></xml>",),
+         cdata = docu .createCDATASection (str);
 
       element .appendChild (cdata);
    },

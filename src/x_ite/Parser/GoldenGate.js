@@ -120,7 +120,7 @@ class GoldenGate extends X3DParser
                if (x3dSyntax instanceof ArrayBuffer)
                {
                   if (x3dSyntax .byteLength && !string .length)
-                     return undefined;
+                     return;
                }
 
                return string;
@@ -132,9 +132,7 @@ class GoldenGate extends X3DParser
                if (string === undefined)
                   return;
 
-               const parser = new DOMParser ();
-
-               return parser .parseFromString (string, "application/xml");
+               return $.parseXML (string);
             }
             case "JSON":
             {
@@ -147,13 +145,16 @@ class GoldenGate extends X3DParser
             }
             case "ARRAY_BUFFER":
             {
-               return x3dSyntax instanceof ArrayBuffer ? x3dSyntax : undefined;
+               if (x3dSyntax instanceof ArrayBuffer)
+                  return x3dSyntax;
+
+               return;
             }
          }
       }
       catch
       {
-         return undefined;
+         return;
       }
    }
 }
