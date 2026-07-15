@@ -406,7 +406,7 @@ Object .assign (NRRDParser .prototype,
       }
       catch (error)
       {
-         throw new Error (`Invalid NRRD data: ${error}.`);
+         throw new Error (`Invalid NRRD data.`, { cause: error });
       }
    },
 });

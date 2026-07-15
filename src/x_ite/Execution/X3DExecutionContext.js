@@ -659,7 +659,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       }
       catch (error)
       {
-         throw new Error (`Bad ROUTE specification: ${error .message}`);
+         throw new Error (`Bad ROUTE specification.`, { cause: error });
       }
    },
    deleteRoute (route)
