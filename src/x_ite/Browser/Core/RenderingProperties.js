@@ -38,14 +38,15 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
          body   = document .querySelector ("body"),
          inches = document .createElement ("div");
 
-      inches .style .display = "none";
-      inches .style .height  = "10in";
+      inches .style .height = "10in";
 
       body .appendChild (inches);
 
       this ._PixelsPerPoint = inches .clientHeight / 720 || 1;
 
       inches .remove ();
+
+      this .set_pixelsPerPoint__O ();
    },
 });
 
