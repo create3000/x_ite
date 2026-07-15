@@ -19,6 +19,8 @@ export default defineConfig ([
     },
     rules: {
       "no-async-promise-executor": "off",
+      "preserve-caught-error": "off",
+      "allowEmptyCatch": true,
     },
   },
   {

@@ -16,7 +16,6 @@ import Rotation4                 from "../../standard/Math/Numbers/Rotation4.js"
 import Vector2                   from "../../standard/Math/Numbers/Vector2.js";
 import Vector3                   from "../../standard/Math/Numbers/Vector3.js";
 import Vector4                   from "../../standard/Math/Numbers/Vector4.js";
-import DEVELOPMENT               from "../DEVELOPMENT.js";
 
 /*
  *  Grammar
@@ -184,9 +183,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    getError (error)
    {
-      if (DEVELOPMENT)
-         console .error (error);
-
       const
          string     = error .message,
          unexpected = this .lastIndex === this .input .length ? "Unexpected end of file. " : "";
@@ -383,7 +379,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       let component;
 
-      while (component = this .componentStatement ())
+      while ((component = this .componentStatement ()))
          this .getScene () .updateComponent (component);
    },
    componentStatement ()
@@ -855,7 +851,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       let field;
 
-      while (field = this .interfaceDeclaration ())
+      while ((field = this .interfaceDeclaration ()))
          interfaceDeclarations .push (field);
 
       return interfaceDeclarations;
@@ -1055,7 +1051,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       let field;
 
-      while (field = this .externInterfaceDeclaration ())
+      while ((field = this .externInterfaceDeclaration ()))
          externInterfaceDeclarations .push (field);
 
       return externInterfaceDeclarations;
