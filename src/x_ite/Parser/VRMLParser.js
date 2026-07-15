@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       }
       catch (error)
       {
-         throw new Error (this .getError (error));
+         throw new Error (this .getError (error), { cause: error });
       }
    },
    getError (error)
@@ -331,7 +331,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                }
                catch (error)
                {
-                  throw new Error (this .getError (error));
+                  throw new Error (this .getError (error), { cause: error });
                }
             })
             .catch (this .reject);
