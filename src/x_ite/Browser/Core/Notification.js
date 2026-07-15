@@ -27,7 +27,7 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
    },
    set_string__ ()
    {
-      if (! this .getBrowser () .getBrowserOption ("Notifications"))
+      if (!this .getBrowser () .getBrowserOption ("Notifications"))
          return;
 
       if (this ._string .length === 0)
