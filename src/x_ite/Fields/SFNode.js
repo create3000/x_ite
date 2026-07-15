@@ -53,7 +53,7 @@ const handler =
    },
    has (target, key)
    {
-      return Boolean (target .getValue () .getField (key, false))
+      return Boolean (target .getValue () ?.getField (key, false))
          || Reflect .has (target, key);
    },
    ownKeys (target)
