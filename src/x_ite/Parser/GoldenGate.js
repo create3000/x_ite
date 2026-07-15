@@ -132,8 +132,8 @@ class GoldenGate extends X3DParser
                if (string === undefined)
                   return;
 
-               if (!string)
-                  return string;
+               if (string .match (/^\s*$/s))
+                  return "";
 
                return $.parseXML (string);
             }
