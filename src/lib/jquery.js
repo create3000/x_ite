@@ -1,28 +1,23 @@
 Object .assign ($,
 {
-   // isEmptyObject (object)
-   // {
-   //    if (!(object instanceof Object))
-   //       return true;
+   isEmptyObject (object)
+   {
+      for (const key in object)
+         return false;
 
-   //    for (const key in object)
-   //       return false;
+      return true;
+   },
+   parseXML (xmlString)
+   {
+      const
+         parser = new DOMParser (),
+         xml    = parser .parseFromString (xmlString, "application/xml");
 
-   //    return true;
-   // },
-   // parseXML (xmlString)
-   // {
-   //    const
-   //       parser   = new DOMParser (),
-   //       errorXML = parser .parseFromString ("INVALID", "application/xml"),
-   //       errorNS  = errorXML .getElementsByTagName ("parsererror") [0] .namespaceURI,
-   //       xml      = parser .parseFromString (xmlString, "application/xml");
+      if (xml .getElementsByTagName ("parsererror") .length)
+         throw new Error ("Invalid XML.");
 
-   //    if (xml .getElementsByTagNameNS (errorNS, "parsererror") .length)
-   //       throw new Error ("Invalid XML.");
-
-   //    return xml;
-   // },
+      return xml;
+   },
    decodeText (input)
    {
       if (typeof input === "string")
