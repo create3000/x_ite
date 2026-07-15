@@ -35,12 +35,17 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
    set_pixelsPerPoint__ ()
    {
       const
-         inches         = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body")),
-         pixelsPerPoint = inches .height () / 720 || 1;
+         body   = document .querySelector ("body"),
+         inches = document .createElement ("div");
+
+      inches .style .display = "none";
+      inches .style .height  = "10in";
+
+      body .appendChild (inches);
+
+      this ._PixelsPerPoint = inches .clientHeight / 720 || 1;
 
       inches .remove ();
-
-      this ._PixelsPerPoint = pixelsPerPoint;
    },
 });
 
