@@ -2,19 +2,22 @@ import Fields       from "../../Fields.js";
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
-$.fn.textWidth = function (string)
+function textWidth (element)
 {
    const
-      self     = $(this),
-      children = self .children (),
-      html     = self .html (),
-      span     = $("<span></span>") .html (html);
+      children = Array .from (element .children),
+      span     = document .createElement ("span");
 
-   self .html (span);
-   const width = span .width ();
-   self .empty () .append (children);
+   span .textContent = element .textContent;
+
+   element .replaceChildren (span);
+
+   const width = span .clientWidth;
+
+   element .replaceChildren (... children);
+
    return width;
-};
+}
 
 function Notification (executionContext)
 {
@@ -53,7 +56,7 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
 
       this .element .css ({
          visibility: "visible",
-         width: this .element .textWidth (),
+         width: textWidth (this .element [0]),
          transition: "width 300ms ease-in-out",
       });
 
