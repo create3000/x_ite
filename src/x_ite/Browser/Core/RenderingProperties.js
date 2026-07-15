@@ -45,8 +45,6 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
       this ._PixelsPerPoint = inches .clientHeight / 720 || 1;
 
       inches .remove ();
-
-      this .set_pixelsPerPoint__O ();
    },
 });
 
