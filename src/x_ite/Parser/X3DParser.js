@@ -74,9 +74,10 @@ Object .assign (X3DParser .prototype,
 
          this .wrap .style .display = "none";
 
-         this .body .appendChild (this .wrap);
          this .wrap .appendChild (this .div);
       }
+
+      this .body .appendChild (this .wrap);
 
       this .wrap .style .color = defaultColor;
       this .div  .style .color = value;
