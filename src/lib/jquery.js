@@ -13,12 +13,12 @@ Object .assign ($,
    parseXML (xmlString)
    {
       const
-         parser        = new DOMParser (),
-         errorDoc      = parser .parseFromString ("INVALID", "application/xml"),
-         parsererrorNS = errorDoc .getElementsByTagName ("parsererror") [0] .namespaceURI,
-         xml           = parser .parseFromString (xmlString, 'application/xml');
+         parser   = new DOMParser (),
+         errorDoc = parser .parseFromString ("INVALID", "application/xml"),
+         errorNS  = errorDoc .getElementsByTagName ("parsererror") [0] .namespaceURI,
+         xml      = parser .parseFromString (xmlString, 'application/xml');
 
-      if (xml .getElementsByTagNameNS (parsererrorNS, "parsererror") .length > 0)
+      if (xml .getElementsByTagNameNS (errorNS, "parsererror") .length > 0)
          throw new Error ("Invalid XML.");
 
       return xml;
