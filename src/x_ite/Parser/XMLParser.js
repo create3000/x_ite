@@ -1125,9 +1125,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
    },
    // Overloaded by HTMLParser.
-   addProtoName (name)
+   addProtoName ()
    { },
-   addProtoFieldNames (protoNode)
+   addProtoFieldNames ()
    { },
    protoNameToCamelCase (typeName)
    {

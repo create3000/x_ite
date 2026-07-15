@@ -255,7 +255,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          width          = this .lengthAttribute (xmlElement .getAttribute ("width"),  viewBox [2], "width"),
          height         = this .lengthAttribute (xmlElement .getAttribute ("height"), viewBox [3], "height");
 
-      if (true) // default
+      // if (true) // default
       {
          // preserveAspectRatio = "xMidYMid meet"
 
