@@ -23,6 +23,7 @@
   ],
   "scripts": {
     "test": "cd ../x_ite-tests && npm test",
+    "test:run": "cd ../x_ite-tests && npm run test:run",
     "lint": "eslint src",
     "dist": "node build/bin/dist.js",
     "release": "node build/bin/release.js",

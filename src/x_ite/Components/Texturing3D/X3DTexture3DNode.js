@@ -9,7 +9,7 @@ function X3DTexture3DNode (executionContext)
    this .addType (X3DConstants .X3DTexture3DNode);
 
    // Private properties
-   
+
    const gl = this .getBrowser () .getContext ();
 
    this .target = gl .TEXTURE_3D;
@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
          gl  = this .getBrowser () .getContext (),
          max = gl .getParameter (gl .MAX_3D_TEXTURE_SIZE);
 
-      if (width > max || height > max || depth > max)
+      if (max && (width > max || height > max || depth > max))
       {
          throw new Error (`At least one dimension (${width} × ${height} × ${depth}) is greater than the maximum texture size (${max} px).`);
       }

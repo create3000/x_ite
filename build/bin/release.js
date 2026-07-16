@@ -38,7 +38,7 @@ function readme (version)
 {
    let readme = sh (`cat 'README.md'`);
 
-   readme = readme .replace (/x_ite@[\d\.]+/sg, `x_ite@${version}`);
+   readme = readme .replace (/x_ite@[\d.]+/sg, `x_ite@${version}`);
 
    fs .writeFileSync ("README.md", readme);
 }
@@ -50,8 +50,8 @@ function docs (version)
 
    let config = sh (`cat 'docs/_config.yml'`);
 
-   config = config .replace (/\x_ite_latest_version:\s*[\d\.]+/sg, `x_ite_latest_version: ${version}`);
-   config = config .replace (/\x_ite_compressed_size:\s*[\d\.]+/sg, `x_ite_compressed_size: ${size}`);
+   config = config .replace (/\x_ite_latest_version:\s*[\d.]+/sg, `x_ite_latest_version: ${version}`);
+   config = config .replace (/\x_ite_compressed_size:\s*[\d.]+/sg, `x_ite_compressed_size: ${size}`);
 
    fs .writeFileSync ("docs/_config.yml", config);
 }
@@ -265,7 +265,7 @@ function main ()
 
    bump ();
    systemSync ("npm run dist");
-   systemSync (`npm test`);
+   systemSync (`npm run test:run`);
    zip ();
 
    release ();

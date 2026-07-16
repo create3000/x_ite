@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
          gl  = this .getBrowser () .getContext (),
          max = gl .getParameter (gl .MAX_TEXTURE_SIZE);
 
-      if (width > max || height > max)
+      if (max && (width > max || height > max))
       {
          throw new Error (`At least one dimension (${width} × ${height}) is greater than the maximum texture size (${max} px).`);
       }
