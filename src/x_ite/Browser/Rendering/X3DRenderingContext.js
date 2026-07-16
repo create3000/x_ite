@@ -58,11 +58,6 @@ Object .assign (X3DRenderingContext .prototype,
       {
          this .reshape ();
 
-         // Unfortunately jest environment doesn't like a traverse here.
-         // TODO: figure out why.
-         if (typeof jest !== "undefined")
-            return;
-
          this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
       });
 
