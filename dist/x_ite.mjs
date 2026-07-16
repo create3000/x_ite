@@ -1,7 +1,41 @@
-/* X_ITE v15.1.12 */
+/* X_ITE v15.2.0 */
 var __webpack_modules__ = ({
 
-/***/ 929
+/***/ 958
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+const Namespace = { };
+
+Object .defineProperty (Namespace, "add",
+{
+   value (name, module)
+   {
+      if (Namespace .hasOwnProperty (name))
+      {
+         console .error (new Error (`Namespace: "${name}" already exists.`));
+         return module;
+      }
+
+      const X3D = window [Symbol .for ("X_ITE.X3D")];
+
+      if (X3D)
+         X3D [name] = module;
+
+      // For x_ite.js:
+      return Namespace [name] = module;
+   },
+});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Namespace .add ("Namespace", Namespace));
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 301
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1040,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 907
+/***/ 991
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 708
+/***/ 368
 (module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2016,7 +2050,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     if ( true ) {
 
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(959) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(351) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2247,7 +2281,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 591
+/***/ 387
 (module) {
 
 /**
@@ -7026,60 +7060,26 @@ if (true) {
 
 /***/ },
 
-/***/ 666
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-const Namespace = { };
-
-Object .defineProperty (Namespace, "add",
-{
-   value (name, module)
-   {
-      if (Namespace .hasOwnProperty (name))
-      {
-         console .error (new Error (`Namespace: "${name}" already exists.`));
-         return module;
-      }
-
-      const X3D = window [Symbol .for ("X_ITE.X3D")];
-
-      if (X3D)
-         X3D [name] = module;
-
-      // For x_ite.js:
-      return Namespace [name] = module;
-   },
-});
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Namespace .add ("Namespace", Namespace));
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
-
-/***/ },
-
-/***/ 959
+/***/ 351
 (module, __unused_webpack_exports, __webpack_require__) {
 
 
 
 // Bundlers are able to synchronously require an ESM module from a CommonJS one.
-const { jQuery } = __webpack_require__( 793 );
+const { jQuery } = __webpack_require__( 421 );
 module.exports = jQuery;
 
 
 /***/ },
 
-/***/ 793
+/***/ 421
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   jQuery: () => (/* binding */ jQuery)
 /* harmony export */ });
 /* unused harmony export $ */
-/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(666);
+/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(958);
 /*!
  * jQuery JavaScript Library v4.0.0+slim
  * https://jquery.com/
@@ -14012,7 +14012,7 @@ const __default__ = jQuery;
 /************************************************************************/
 
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(666);
+var Namespace = __webpack_require__(958);
 ;// ./src/x_ite/Base/X3DConstants.js
 const X3DConstants =
 {
@@ -15239,7 +15239,7 @@ const Features_default_ = Features;
 
 /* harmony default export */ const x_ite_Features = (Namespace/* default */.A .add ("Features", Features_default_));
 ;// ./src/x_ite/Base/X3DObject.js
-/* provided dependency */ var $ = __webpack_require__(793).A;
+/* provided dependency */ var $ = __webpack_require__(421).A;
 
 
 
@@ -15430,12 +15430,15 @@ Object .defineProperties (X3DObject .prototype,
    {
       get () { return this .getTypeName (); },
    },
-   // using and Symbol.dispose are not yet supported by Safari.
+   // using keyword and Symbol.dispose are not yet supported by Safari.
    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/using
-   // [Symbol .dispose]:
-   // {
-   //    get () { this .dispose (); },
-   // },
+   ... (Symbol .dispose &&
+   {
+      [Symbol .dispose]:
+      {
+         value () { this .dispose (); },
+      },
+   }),
 });
 
 Object .assign (X3DObject,
@@ -15903,7 +15906,7 @@ const handler =
    },
    ownKeys (target)
    {
-      return Object .keys (target [_array]) .concat (Reflect .ownKeys (target));
+      return Object .keys (target [_array]) .concat (Object .keys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
@@ -16029,7 +16032,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, Base_X3DChildOb
       // TODO: update alias.
 
       if (!(value instanceof this [_valueType]))
-         throw new Error (`Couldn't update value of ${this .getTypeName ()}, value for key '${key}' has wrong type.`);
+         throw new Error (`Couldn't update value of ${this .getTypeName ()}, value for key '${newKey}' has wrong type.`);
 
       const oldValue = this [_index] .get (oldKey);
 
@@ -20648,7 +20651,7 @@ const Rotation4_default_ = Rotation4;
 
 
 
-function Matrix4_Matrix4 (m00 = 1, m01 = 0,   m02 = 0,   m03 = 0,
+function Matrix4 (m00 = 1, m01 = 0,   m02 = 0,   m03 = 0,
                   m10 = 0, m11 = m00, m12 = 0,   m13 = 0,
                   m20 = 0, m21 = 0,   m22 = m11, m23 = 0,
                   m30 = 0, m31 = 0,   m32 = 0,   m33 = m22)
@@ -20671,7 +20674,7 @@ function Matrix4_Matrix4 (m00 = 1, m01 = 0,   m02 = 0,   m03 = 0,
    this [15] = m33;
 }
 
-Object .assign (Matrix4_Matrix4 .prototype,
+Object .assign (Matrix4 .prototype,
 {
    *[Symbol .iterator] ()
    {
@@ -20680,7 +20683,7 @@ Object .assign (Matrix4_Matrix4 .prototype,
    },
    copy ()
    {
-      const copy = Object .create (Matrix4_Matrix4 .prototype);
+      const copy = Object .create (Matrix4 .prototype);
 
       for (let i = 0; i < 16; ++ i)
          copy [i] = this [i];
@@ -20925,7 +20928,7 @@ Object .assign (Matrix4_Matrix4 .prototype,
       let d = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
       if (!d)
-         return this .assign (Matrix4_Matrix4 .ZERO);
+         return this .assign (Matrix4 .ZERO);
 
       d = 1 / d;
 
@@ -21140,10 +21143,10 @@ Object .assign (Matrix4_Matrix4 .prototype,
    },
 });
 
-for (const key of Object .keys (Matrix4_Matrix4 .prototype))
-   Object .defineProperty (Matrix4_Matrix4 .prototype, key, { enumerable: false });
+for (const key of Object .keys (Matrix4 .prototype))
+   Object .defineProperty (Matrix4 .prototype, key, { enumerable: false });
 
-Object .defineProperties (Matrix4_Matrix4 .prototype,
+Object .defineProperties (Matrix4 .prototype,
 {
    order: { value: 4 },
    length: { value: 16 },
@@ -21236,13 +21239,13 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
    },
 });
 
-Object .assign (Matrix4_Matrix4,
+Object .assign (Matrix4,
 {
-   ZERO: Object .freeze (new Matrix4_Matrix4 (0)),
-   IDENTITY: Object .freeze (new Matrix4_Matrix4 ()),
+   ZERO: Object .freeze (new Matrix4 (0)),
+   IDENTITY: Object .freeze (new Matrix4 ()),
    fromMatrix3 (matrix)
    {
-      return new Matrix4_Matrix4 (matrix [0], matrix [1], 0, 0,
+      return new Matrix4 (matrix [0], matrix [1], 0, 0,
                           matrix [3], matrix [4], 0, 0,
                           0, 0, 1, 0,
                           matrix [6], matrix [7], 0, 1);
@@ -21253,7 +21256,7 @@ Object .assign (Matrix4_Matrix4,
    },
    fromSubMatrix (matrix)
    {
-      return new Matrix4_Matrix4 (matrix [0], matrix [1], matrix [2], 0,
+      return new Matrix4 (matrix [0], matrix [1], matrix [2], 0,
                           matrix [3], matrix [4], matrix [5], 0,
                           matrix [6], matrix [7], matrix [8], 0,
                           0, 0, 0, 1);
@@ -21264,9 +21267,9 @@ Object .assign (Matrix4_Matrix4,
    },
 });
 
-const Matrix4_m = new Matrix4_Matrix4 ();
+const Matrix4_m = new Matrix4 ();
 
-const Matrix4_default_ = Matrix4_Matrix4;
+const Matrix4_default_ = Matrix4;
 ;
 
 /* harmony default export */ const Numbers_Matrix4 = (Namespace/* default */.A .add ("Matrix4", Matrix4_default_));
@@ -21424,7 +21427,7 @@ const SFNode_handler =
    },
    has (target, key)
    {
-      return Boolean (target .getValue () .getField (key, false))
+      return Boolean (target .getValue () ?.getField (key, false))
          || Reflect .has (target, key);
    },
    ownKeys (target)
@@ -21439,7 +21442,7 @@ const SFNode_handler =
             ownKeys .push (name);
       }
 
-      return ownKeys .concat (Reflect .ownKeys (target));
+      return ownKeys .concat (Object .keys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
@@ -22803,7 +22806,7 @@ const X3DObjectArrayField_handler =
    },
    ownKeys (target)
    {
-      return Object .keys (target .getValue ()) .concat (Reflect .ownKeys (target));
+      return Object .keys (target .getValue ()) .concat (Object .keys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
@@ -23361,7 +23364,7 @@ const X3DTypedArrayField_handler =
       for (let i = 0; i < length; ++ i)
          ownKeys .push (String (i));
 
-      return ownKeys .concat (Reflect .ownKeys (target));
+      return ownKeys .concat (Object .keys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
@@ -24755,7 +24758,7 @@ const { MFInt32 } = Fields_ArrayFields;
  *  Image
  */
 
-function Image (width, height, comp, array)
+function SFImage_Image (width, height, comp, array)
 {
    this .width  = Math .max (width|0, 0);
    this .height = Math .max (height|0, 0);
@@ -24768,7 +24771,7 @@ function Image (width, height, comp, array)
    this .array .length = this .width * this .height;
 }
 
-Object .assign (Image .prototype,
+Object .assign (SFImage_Image .prototype,
 {
    equals (image)
    {
@@ -24825,7 +24828,7 @@ Object .assign (Image .prototype,
 
 function SFImage (width = 0, height = 0, comp = 0, array)
 {
-   Base_X3DField .call (this, new Image (width, height, comp, array));
+   Base_X3DField .call (this, new SFImage_Image (width, height, comp, array));
 
    this .getValue () .getArray () .addParent (this);
 }
@@ -25746,7 +25749,6 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (Namespace/* default */.A .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(793).A;
 const Legacy =
 {
    elements (elements, X3DBrowser)
@@ -25756,7 +25758,8 @@ const Legacy =
 
       console .warn ("Use of <X3DCanvas> element is deprecated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
 
-      Legacy_$.map (elements, element => new X3DBrowser (element));
+      for (const element of elements)
+         new X3DBrowser (element);
    },
    properties (browser, properties)
    {
@@ -25798,8 +25801,17 @@ const Legacy =
       console .error (error);
 
       // <X3DCanvas>
-      elements .children (".x_ite-private-browser") .hide ();
-      elements .children (":not(.x_ite-private-browser)") .show ();
+      for (const element of elements)
+      {
+         for (const child of element .children)
+         {
+            if (child .matches (".x_ite-private-browser"))
+               child .style .display = "none";
+
+            if (child .matches (":not(.x_ite-private-browser)"))
+               child .style .display = "initial";
+         }
+      }
    },
 };
 
@@ -25808,7 +25820,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (Namespace/* default */.A .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "15.1.12";
+const BROWSER_VERSION_default_ = "15.2.0";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (Namespace/* default */.A .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -25833,158 +25845,9 @@ const Context =
       for (const extension of gl .getSupportedExtensions () .filter (extension => !this .excludes .has (extension)))
          gl .getExtension (extension);
 
-      // // Feature detection:
-
-      // // console .log (check32BitTextures (gl));
-
-      // if (!check32BitTextures (gl))
-      // {
-      //    // Use defineProperty to overwrite property.
-      //    Object .defineProperty (gl, "RGBA32F",
-      //    {
-      //       value: gl .RGBA16F,
-      //       configurable: true,
-      //       enumerable: true,
-      //    });
-      // }
-
       return gl;
    },
 };
-
-// function check32BitTextures (gl)
-// {
-//    // Create framebuffer.
-//    const colorTexture = gl .createTexture ();
-//    const framebuffer  = gl .createFramebuffer ();
-
-//    gl .bindTexture (gl .TEXTURE_2D, colorTexture);
-
-//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-
-//    gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (4));
-
-//    gl .bindFramebuffer (gl.FRAMEBUFFER, framebuffer);
-//    gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, colorTexture, 0);
-
-//    if (gl .checkFramebufferStatus (gl .FRAMEBUFFER) !== gl .FRAMEBUFFER_COMPLETE)
-//       return false;
-
-//    // Vertex shader (pass through)
-//    const vsSource = `#version 300 es
-// precision highp float;
-// in vec2 x3d_Vertex;
-// void
-// main ()
-// {
-//    gl_Position = vec4 (x3d_Vertex, 0.0, 1.0);
-// }
-//   `;
-
-//   // Fragment shader
-//   const fsSource = `#version 300 es
-// precision highp float;
-// precision highp sampler2D;
-// uniform sampler2D x3d_Texture;
-// out vec4 x3d_FragColor;
-// void
-// main ()
-// {
-//    vec4 pixel = texture (x3d_Texture, vec2 (0.5, 0.5));
-
-//    float r = pixel .r == 0.0        ? 1.0 : 0.0;
-//    float g = pixel .g == 1.0        ? 1.0 : 0.0;
-//    float b = pixel .b == 16777216.0 ? 1.0 : 0.0;
-//    float a = pixel .a == 16777216.0 ? 1.0 : 0.0;
-
-//    x3d_FragColor = vec4 (r, g, b, a);
-// }
-//   `;
-
-//    // Create program.
-//    const program = createProgram (gl, vsSource, fsSource);
-//    gl .useProgram (program);
-
-//    // Quad covering the whole clip space.
-//    const quadVertices = new Float32Array ([
-//       -1, -1,
-//        1, -1,
-//       -1,  1,
-//       -1,  1,
-//        1, -1,
-//        1,  1,
-//    ]);
-
-//    // Create buffer for vertices.
-//    const buffer = gl .createBuffer ();
-//    gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
-//    gl .bufferData (gl .ARRAY_BUFFER, quadVertices, gl .STATIC_DRAW);
-
-//    // Bind vertex attrib.
-//    const vertexLocation = gl .getAttribLocation (program, "x3d_Vertex");
-//    gl .enableVertexAttribArray (vertexLocation);
-//    gl .vertexAttribPointer (vertexLocation, 2, gl .FLOAT, false, 0, 0);
-
-//    // Create texture.
-//    const pixelData = new Float32Array ([0, 1, 2**24, 2**24+1]);
-//    const texture   = gl .createTexture ();
-//    const sampler   = gl .getUniformLocation (program, "x3d_Texture");
-
-//    gl .activeTexture (gl .TEXTURE0);
-//    gl .bindTexture (gl .TEXTURE_2D, texture);
-
-//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-//    gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-
-//    gl .uniform1i (sampler, 0);
-//    gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 1, 1, 0, gl .RGBA, gl .FLOAT, pixelData);
-
-//    gl .clearColor (0, 0, 0, 0);
-//    gl .clear (gl .COLOR_BUFFER_BIT);
-//    gl .drawArrays (gl .TRIANGLES, 0, 6);
-
-//    const readData = new Uint8Array (4);
-//    gl .readPixels (0, 0, 1, 1, gl .RGBA, gl .UNSIGNED_BYTE, readData);
-
-//    // console .log ("Original data:",  ... pixelData);
-//    // console .log ("Read-back data:", ... readData);
-//    // $(".x_ite-console") .append (document .createTextNode (readData + "\n"))
-
-//    // Cleanup
-//    gl .deleteFramebuffer (framebuffer);
-//    gl .deleteTexture (colorTexture);
-//    gl .deleteTexture (texture);
-//    gl .deleteBuffer (buffer);
-//    gl .deleteProgram (program);
-
-//    return readData .every (p => p === 255);
-// }
-
-// // Shader compile helper
-// function createShader (gl, type, source)
-// {
-//    const shader = gl.createShader (type);
-//    gl .shaderSource (shader, source);
-//    gl .compileShader(shader);
-//    return shader;
-// }
-
-// // Program link helper
-// function createProgram (gl, vsSource, fsSource)
-// {
-//    const vs = createShader (gl, gl.VERTEX_SHADER, vsSource);
-//    const fs = createShader (gl, gl.FRAGMENT_SHADER, fsSource);
-//    const program = gl .createProgram ();
-//    gl .attachShader (program, vs);
-//    gl .attachShader (program, fs);
-//    gl .linkProgram (program);
-//    return program;
-// }
 
 const Context_default_ = Context;
 ;
@@ -26395,7 +26258,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (Namespace/* default */.A .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(793).A;
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(421).A;
 
 
 
@@ -26843,7 +26706,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (Namespace/* default */.A .add ("TextCompression", TextCompression_default_));
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(793).A;
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(421).A;
 
 
 
@@ -27086,18 +26949,16 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
          browser = this .getBrowser (),
          element = browser .getElement () [0];
 
-      const documentEvents = ["visibilitychange"]
-         .map (event => `${event}.${this .getTypeName ()}${this .getId ()}`)
-         .join (" ");
-
-      BrowserOptions_$(document) .off (documentEvents);
+      document .removeEventListener ("visibilitychange", this .checkUpdateListener);
 
       this .intersectionObserver ?.disconnect ();
 
       if (!autoUpdate .getValue ())
          return;
 
-      BrowserOptions_$(document) .on (documentEvents, () => this .checkUpdate ());
+      this .checkUpdateListener = () => this .checkUpdate ();
+
+      document .addEventListener ("visibilitychange", this .checkUpdateListener);
 
       this .intersectionObserver ??= new IntersectionObserver (entries =>
       {
@@ -27325,7 +27186,6 @@ const BrowserProperties_default_ = BrowserProperties;
 
 /* harmony default export */ const Core_BrowserProperties = (Namespace/* default */.A .add ("BrowserProperties", BrowserProperties_default_));
 ;// ./src/x_ite/Browser/Core/RenderingProperties.js
-/* provided dependency */ var RenderingProperties_$ = __webpack_require__(793).A;
 
 
 
@@ -27363,12 +27223,16 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, Base_X3D
    set_pixelsPerPoint__ ()
    {
       const
-         inches         = RenderingProperties_$("<div></div>") .hide () .css ("height", "10in") .appendTo (RenderingProperties_$("body")),
-         pixelsPerPoint = inches .height () / 720 || 1;
+         body   = document .querySelector ("body"),
+         inches = document .createElement ("div");
+
+      inches .style .height = "10in";
+
+      body .appendChild (inches);
+
+      this ._PixelsPerPoint = inches .clientHeight / 720 || 1;
 
       inches .remove ();
-
-      this ._PixelsPerPoint = pixelsPerPoint;
    },
 });
 
@@ -27407,24 +27271,10 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (Namespace/* default */.A .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(793).A;
+/* provided dependency */ var Notification_$ = __webpack_require__(421).A;
 
 
 
-
-Notification_$.fn.textWidth = function (string)
-{
-   const
-      self     = Notification_$(this),
-      children = self .children (),
-      html     = self .html (),
-      span     = Notification_$("<span></span>") .html (html);
-
-   self .html (span);
-   const width = span .width ();
-   self .empty () .append (children);
-   return width;
-};
 
 function Notification (executionContext)
 {
@@ -27451,7 +27301,7 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, Base_X3DBaseNod
    },
    set_string__ ()
    {
-      if (! this .getBrowser () .getBrowserOption ("Notifications"))
+      if (!this .getBrowser () .getBrowserOption ("Notifications"))
          return;
 
       if (this ._string .length === 0)
@@ -27463,7 +27313,7 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, Base_X3DBaseNod
 
       this .element .css ({
          visibility: "visible",
-         width: this .element .textWidth (),
+         width: this .textWidth (this .element [0]),
          transition: "width 300ms ease-in-out",
       });
 
@@ -27476,6 +27326,22 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, Base_X3DBaseNod
          });
       },
       5000);
+   },
+   textWidth (element)
+   {
+      const
+         children = Array .from (element .children),
+         span     = document .createElement ("span");
+
+      span .textContent = element .textContent;
+
+      element .replaceChildren (span);
+
+      const width = span .clientWidth;
+
+      element .replaceChildren (... children);
+
+      return width;
    },
 });
 
@@ -27493,7 +27359,7 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (Namespace/* default */.A .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(793).A;
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(421).A;
 
 
 
@@ -27542,7 +27408,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
       {
          const menu = ContextMenu_$.try (() => this [_userMenu] (this .getBrowser ()), true);
 
-         if (ContextMenu_$.isPlainObject (menu))
+         if (menu instanceof Object)
          {
             for (const key in menu)
                userMenu [`user-${key}`] = menu [key];
@@ -30974,7 +30840,7 @@ const NamedNodesArray_default_ = NamedNodesArray;
 
 /* harmony default export */ const Execution_NamedNodesArray = (Namespace/* default */.A .add ("NamedNodesArray", NamedNodesArray_default_));
 ;// ./src/x_ite/Components/Core/X3DImportedNodeProxy.js
-/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(793).A;
+/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(421).A;
 
 
 
@@ -32931,7 +32797,6 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (Namespace/* default */.A .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(793).A;
 
 
 function X3DParser (scene, name = "Parser")
@@ -33000,18 +32865,27 @@ Object .assign (X3DParser .prototype,
    },
    convertColor (value, defaultColor = "white")
    {
-      this .body ??= X3DParser_$("body");
-      this .wrap ??= X3DParser_$("<div></div>") .hide ();
-      this .div  ??= X3DParser_$("<div></div>") .appendTo (this .wrap);
+      if (!this .body)
+      {
+         this .body = document .querySelector ("body");
+         this .wrap = document .createElement ("div");
+         this .div  = document .createElement ("div");
 
-      this .wrap .css ("color", defaultColor) .appendTo (this .body);
-      this .div  .css ("color", value);
+         this .wrap .style .display = "none";
+
+         this .wrap .appendChild (this .div);
+      }
+
+      this .body .appendChild (this .wrap);
+
+      this .wrap .style .color = defaultColor;
+      this .div  .style .color = value;
 
       const
-         rgb    = window .getComputedStyle (this .div [0]) .color,
+         rgb    = window .getComputedStyle (this .div) .color,
          values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
 
-      this .wrap .detach ();
+      this .wrap .remove ();
 
       values [0] /= 255;
       values [1] /= 255;
@@ -33024,6 +32898,8 @@ Object .assign (X3DParser .prototype,
    },
    sanitizeName (name = "")
    {
+      /* eslint-disable no-control-regex */
+
       // NonIdFirstChar
       name = name .replace (/^[\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, "");
 
@@ -33037,6 +32913,8 @@ Object .assign (X3DParser .prototype,
       name = name .replace (/^-+|-+$/g, "");
 
       return name;
+
+      /* eslint-enable no-control-regex */
    },
    renameExistingNode (name)
    {
@@ -33254,8 +33132,7 @@ const Placeholder_default_ = Placeholder;
 
 /* harmony default export */ const Parser_Placeholder = (Namespace/* default */.A .add ("Placeholder", Placeholder_default_));
 ;// ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(793).A;
-
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(421).A;
 
 
 
@@ -33317,8 +33194,10 @@ const Grammar = Parser_Expressions ({
    Period:       /\./y,
    Colon:        /:/y,
 
+   /* eslint-disable no-control-regex */
    Id: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/y,
    ComponentNameId: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*/y,
+   /* eslint-enable no-control-regex */
 
    initializeOnly: /initializeOnly/y,
    inputOnly:      /inputOnly/y,
@@ -33436,14 +33315,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
       }
       catch (error)
       {
-         throw new Error (this .getError (error));
+         throw new Error (this .getError (error), { cause: error });
       }
    },
    getError (error)
    {
-      if (DEVELOPMENT)
-         console .error (error);
-
       const
          string     = error .message,
          unexpected = this .lastIndex === this .input .length ? "Unexpected end of file. " : "";
@@ -33592,7 +33468,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
                }
                catch (error)
                {
-                  throw new Error (this .getError (error));
+                  throw new Error (this .getError (error), { cause: error });
                }
             })
             .catch (this .reject);
@@ -33640,7 +33516,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
    {
       let component;
 
-      while (component = this .componentStatement ())
+      while ((component = this .componentStatement ()))
          this .getScene () .updateComponent (component);
    },
    componentStatement ()
@@ -33709,7 +33585,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
                   }
                   catch (error)
                   {
-                     console .warn (`Parser error at line ${this .lineNumber}: ${error .message}`);
+                     console .warn (`Parser error at line ${this .lineNumber}.`, error);
                      return true;
                   }
                }
@@ -34112,7 +33988,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
 
       let field;
 
-      while (field = this .interfaceDeclaration ())
+      while ((field = this .interfaceDeclaration ()))
          interfaceDeclarations .push (field);
 
       return interfaceDeclarations;
@@ -34312,7 +34188,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
 
       let field;
 
-      while (field = this .externInterfaceDeclaration ())
+      while ((field = this .externInterfaceDeclaration ()))
          externInterfaceDeclarations .push (field);
 
       return externInterfaceDeclarations;
@@ -34476,7 +34352,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
                               }
                               catch (error)
                               {
-                                 console .warn (`Parser error at line ${this .lineNumber}: ${error .message}`);
+                                 console .warn (`Parser error at line ${this .lineNumber}.`, error);
 
                                  return true;
                               }
@@ -36017,7 +35893,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (Namespace/* default */.A .add ("VRMLParser", VRMLParser_default_));
 ;// ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(793).A;
+/* provided dependency */ var XMLParser_$ = __webpack_require__(421).A;
 
 
 
@@ -36032,6 +35908,10 @@ const VRMLParser_default_ = VRMLParser;
 
 
 
+
+const
+   _x3d  = Symbol .for ("X_ITE.X3DElement"),
+   _node = Symbol .for ("X_ITE.NodeElement");
 
 const AccessType =
 {
@@ -36076,19 +35956,30 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
       }
       catch
       {
-         this .input = undefined;
+         this .input = null;
       }
    },
    isValid ()
    {
-      return (this .input instanceof XMLDocument) || (this .input instanceof HTMLElement) || (this .input === null);
+      const { input } = this;
+
+      if (input instanceof XMLDocument)
+         return true;
+
+      if (input instanceof HTMLElement)
+         return true;
+
+      if (input === null)
+         return true;
+
+      return false;
    },
    isXML (element)
    {
       if (element instanceof HTMLElement)
          return false;
-      else
-         return true;
+
+      return true;
    },
    parseIntoScene (resolve, reject)
    {
@@ -36111,13 +36002,22 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
          scene   = this .getScene ();
 
       if (xmlElement === null)
-         return this .resolve ?.(scene);
+      {
+         if (this .resolve)
+         {
+            browser .loadComponents (scene)
+               .then (() => this .resolve (scene))
+               .catch (this .reject);
+         }
+
+         return;
+      }
 
       switch (xmlElement .nodeName)
       {
          case "#document":
          {
-            const X3D = XMLParser_$(xmlElement) .children ("X3D");
+            const X3D = Array .from (xmlElement .children) .filter (child => child .matches ("X3D"));
 
             if (X3D .length)
             {
@@ -36207,7 +36107,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
             profileNameId = xmlElement .getAttribute ("profile"),
             profile       = browser .getProfile (profileNameId || "Full");
 
-         XMLParser_$.data (this .scene, "X3D", xmlElement);
+         this .scene [_x3d] = xmlElement;
 
          scene .setProfile (profile);
       }
@@ -36351,7 +36251,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
    },
    sceneElement (xmlElement)
    {
-      XMLParser_$.data (xmlElement, "node", this .scene);
+      xmlElement [_node] = this .scene;
 
       this .childrenElements (xmlElement);
    },
@@ -36683,7 +36583,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
                throw new Error (`Unknown proto or externproto type '${name}'.`);
 
             ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
-            XMLParser_$.data (xmlElement, "node", node);
+            xmlElement [_node] = node;
 
             this .defAttribute (xmlElement, node);
             this .addNode (xmlElement, node);
@@ -36758,7 +36658,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
             throw new Error (`Unknown node type '${xmlElement .nodeName}'. You probably have insufficient component/profile statements and/or an inappropriate specification version.`);
 
          ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
-         XMLParser_$.data (xmlElement, "node", node);
+         xmlElement [_node] = node;
 
          //DOMIntegration: Script node support for HTML.
          if (xmlElement .nodeName === "SCRIPT")
@@ -36794,7 +36694,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
    scriptElement (element)
    {
       const
-         scriptDocument = XMLParser_$.parseXML (element .outerHTML, "application/xml"),
+         scriptDocument = XMLParser_$.parseXML (element .outerHTML),
          childNodes     = scriptDocument .children [0] .childNodes;
 
       element .textContent = "// Content moved into childNodes.";
@@ -36835,7 +36735,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
             route            = executionContext .addRoute (sourceNode, sourceField, destinationNode, destinationField);
 
          ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
-         XMLParser_$.data (xmlElement, "node", route);
+         xmlElement [_node] = route;
       }
       catch (error)
       {
@@ -37130,9 +37030,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
       }
    },
    // Overloaded by HTMLParser.
-   addProtoName (name)
+   addProtoName ()
    { },
-   addProtoFieldNames (protoNode)
+   addProtoFieldNames ()
    { },
    protoNameToCamelCase (typeName)
    {
@@ -37305,7 +37205,7 @@ const XMLParser_default_ = XMLParser;
 
 /* harmony default export */ const Parser_XMLParser = (Namespace/* default */.A .add ("XMLParser", XMLParser_default_));
 ;// ./src/x_ite/Parser/JSONParser.js
-/* provided dependency */ var JSONParser_$ = __webpack_require__(793).A;
+/* provided dependency */ var JSONParser_$ = __webpack_require__(421).A;
 
 
 
@@ -37444,7 +37344,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
    createCDATA (document, element, str)
    {
       const
-         docu  = JSONParser_$.parseXML ("<xml></xml>", "application/xml"),
+         docu  = JSONParser_$.parseXML ("<xml></xml>",),
          cdata = docu .createCDATASection (str);
 
       element .appendChild (cdata);
@@ -38238,7 +38138,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (Namespace/* default */.A .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(591);
+/* provided dependency */ var libtess = __webpack_require__(387);
 
 
 const Triangle3 =
@@ -39618,14 +39518,14 @@ Object .assign (X3DRenderObject .prototype,
 
       return function (fogNode)
       {
+         // Index 0 in localFogs is reserved for the global fog.
+
          if (fogNode .getFogType ())
          {
-            const fogContainer = this .localFogs [0] || fogNode .getFogs () .pop ();
+            const fogContainer = this .localFogs [0] ??= fogNode .getFogs () .pop ();
 
             modelViewMatrix .assign (fogNode .getModelMatrix ()) .multRight (this .getViewMatrix () .get ());
             fogContainer .set (fogNode, modelViewMatrix);
-
-            this .localFogs [0] = fogContainer;
          }
          else
          {
@@ -40803,6 +40703,8 @@ function X3DBindableNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DBindableNode);
 
+   // Private properties
+
    this .modificationCount = 0;
 }
 
@@ -41538,8 +41440,16 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
          }
          case Rendering_TraverseType .DEPTH:
          {
-            for (const visibleObject of this .visibleObjects)
+            const { clipPlaneNodes, visibleObjects } = this;
+
+            for (const clipPlaneNode of clipPlaneNodes)
+               clipPlaneNode .push (renderObject);
+
+            for (const visibleObject of visibleObjects)
                visibleObject .traverse (type, renderObject);
+
+            for (const clipPlaneNode of clipPlaneNodes)
+               clipPlaneNode .pop (renderObject);
 
             return;
          }
@@ -42097,6 +42007,8 @@ function Fog (executionContext)
    EnvironmentalEffects_X3DFogObject    .call (this, executionContext);
 
    this .addType (Base_X3DConstants .Fog);
+
+   // Private properties
 
    this .modelMatrix = new Numbers_Matrix4 ();
 }
@@ -44598,6 +44510,21 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, Texturi
    },
    getRenderedTextures (renderedTextures)
    { },
+   loadImage (fileURL)
+   {
+      return new Promise ((resolve, reject) =>
+      {
+         const image = new Image ();
+
+         image .onload = () => resolve (image);
+
+         image .onerror =
+         image .onabort = event => reject (new Error (`Couldn't load image '${fileURL}': ${event .type}.`));
+
+         image .crossOrigin = "anonymous";
+         image .src         = fileURL;
+      });
+   },
    isImageTransparent (data)
    {
       const length = data .length;
@@ -44815,7 +44742,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, Texturing_X
          gl  = this .getBrowser () .getContext (),
          max = gl .getParameter (gl .MAX_TEXTURE_SIZE);
 
-      if (width > max || height > max)
+      if (max && (width > max || height > max))
       {
          throw new Error (`At least one dimension (${width} × ${height}) is greater than the maximum texture size (${max} px).`);
       }
@@ -44831,7 +44758,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, Texturing_X
    },
    updateTextureData (data)
    {
-      const gl = this .getBrowser () .getContext ()
+      const gl = this .getBrowser () .getContext ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, this .type, data);
@@ -44870,7 +44797,6 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (Namespace/* default */.A .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(793).A;
 
 
 
@@ -44890,9 +44816,6 @@ function ImageTexture (executionContext)
 
    // Private properties
 
-   this .image    = ImageTexture_$("<img></img>");
-   this .urlStack = new x_ite_Fields .MFString ();
-
    this .getMatrix () .set ([1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1]); // flipY
 }
 
@@ -44906,11 +44829,6 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
 
       this ._colorSpaceConversion .addInterest ("loadNow", this);
 
-      this .image
-         .on ("load", this .setImage .bind (this))
-         .on ("abort error", this .setError .bind (this))
-         .attr ("crossorigin", "anonymous");
-
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    getTextureType ()
@@ -44920,128 +44838,94 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
    unloadData ()
    {
       this .clearTexture ();
+      this .updateOutputs (0, 0, 0);
    },
    loadData ()
    {
-      this .urlStack .setValue (this ._url);
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      if (this .urlStack .length === 0)
-      {
-         this .clearTexture ();
-         this .updateOutputs (0, 0, 0);
-         this .setLoadState (Base_X3DConstants .FAILED_STATE);
-         return;
-      }
-
-      new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
+      new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
          if (data === null)
          {
-            this .loadNext ();
+            this .clearTexture ();
+            this .updateOutputs (0, 0, 0);
+            this .setLoadState (Base_X3DConstants .FAILED_STATE);
          }
          else if (data instanceof ArrayBuffer)
          {
-            this .fileURL = new URL (fileURL);
+            fileURL = new URL (fileURL);
 
-            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
+            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
             {
                this .setLinear (true);
                this .setMipMaps (false);
 
-               this .getBrowser () .getKTXDecoder ()
-                  .then (decoder => decoder .loadKTXFromBuffer (data))
-                  .then (texture => this .setKTXTexture (texture))
-                  .catch (error => this .setError ({ type: error .message }));
+               const
+                  decoder = await this .getBrowser () .getKTXDecoder (),
+                  texture = await decoder .loadKTXFromBuffer (data);
+
+               this .setKTXTexture (texture, fileURL);
             }
             else
             {
                this .setLinear (false);
                this .setMipMaps (true);
 
-               this .objectURL = URL .createObjectURL (new Blob ([data]));
+               const objectURL = URL .createObjectURL (new Blob ([data]));
 
-               this .image .attr ("src", this .objectURL);
+               try
+               {
+                  this .setImage (await this .loadImage (objectURL), fileURL);
+               }
+               finally
+               {
+                  URL .revokeObjectURL (objectURL);
+               }
             }
          }
          else
          {
-            throw new Error ("ImageTexture: no suitable file type handler found.");
+            throw new Error (`${this .getTypeName ()}: No suitable file handler found.`);
          }
       });
    },
-   setError (event)
-   {
-      if (this .fileURL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .fileURL)}:'`, event .type);
-
-      URL .revokeObjectURL (this .objectURL);
-
-      this .loadNext ();
-   },
-   setKTXTexture (texture)
+   setKTXTexture (texture, fileURL)
    {
       if (texture .target !== this .getTarget ())
-         return this .setError ({ type: "Invalid KTX texture target, must be 'TEXTURE_2D'." });
+         throw new Error ("Invalid KTX texture target, must be 'TEXTURE_2D'.");
 
       if (DEVELOPMENT)
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .fileURL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
-      try
-      {
-         const { baseWidth, baseHeight, numComponents } = texture;
+      const { baseWidth, baseHeight, numComponents } = texture;
 
-         this .setTexture (texture);
-         this .setTransparent (false);
-         this .setWidth (baseWidth);
-         this .setHeight (baseHeight);
-         this .updateTextureParameters ();
-         this .updateOutputs (baseWidth, baseHeight, numComponents);
+      this .setTexture (texture);
+      this .setTransparent (false);
+      this .setWidth (baseWidth);
+      this .setHeight (baseHeight);
+      this .updateTextureParameters ();
+      this .updateOutputs (baseWidth, baseHeight, numComponents);
 
-         this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
+      this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
    },
-   setImage ()
+   setImage (image, fileURL)
    {
       if (DEVELOPMENT)
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .fileURL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
 
-      try
-      {
-         const
-            image             = this .image [0],
-            { width, height } = image;
+      const { width, height } = image;
 
-         // Upload image to GPU.
+      // Upload image to GPU.
 
-         this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
-         this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
-         this .updateOutputs (width, height, this .isTransparent () ? 4 : 3);
-         this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
-         this .addNodeEvent ();
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
-      finally
-      {
-         URL .revokeObjectURL (this .objectURL);
-      }
+      this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
+      this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
+      this .updateOutputs (width, height, this .isTransparent () ? 4 : 3);
+      this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
    },
    updateOutputs (width, height, colorDepth)
    {
@@ -47413,7 +47297,7 @@ const Layer_default_ = Layer;
 
 /* harmony default export */ const Layering_Layer = (Namespace/* default */.A .add ("Layer", Layer_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(793).A;
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(421).A;
 
 
 
@@ -47685,7 +47569,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
-            case "KHR_materials_volume_scatter":
+            case "KHR_materials_scatter":
+            case "KHR_materials_volume_scatter": // Legacy
             case "KHR_materials_volume":
             {
                components .push (browser .getComponent ("X_ITE", 1));
@@ -47910,7 +47795,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             return this .pointLight (light);
       }
    },
-   directionalLight (light)
+   directionalLight ()
    {
       const
          scene     = this .getScene (),
@@ -48491,7 +48376,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          switch (key)
          {
             case "KHR_texture_basisu":
-            // case "EXT_texture_astc":
             case "EXT_texture_avif":
             case "EXT_texture_webp":
                images .push (this .images [extension ?.source]);
@@ -48762,8 +48646,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_volume":
                this .khrMaterialsVolumeObject (value, materialNode);
                break;
-            case "KHR_materials_volume_scatter":
-               this .khrMaterialsVolumeScatterObject (value, materialNode);
+            case "KHR_materials_scatter":
+            case "KHR_materials_volume_scatter": // Legacy
+               this .khrMaterialsScatterObject (value, materialNode);
                break;
          }
       }
@@ -48990,29 +48875,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       materialNode ._extensions .push (extension);
    },
-   khrMaterialsVolumeScatterObject (KHR_materials_volume_scatter, materialNode)
+   khrMaterialsScatterObject (KHR_materials_scatter, materialNode)
    {
-      if (!(KHR_materials_volume_scatter instanceof Object))
+      if (!(KHR_materials_scatter instanceof Object))
          return;
 
       const extension = this .getScene () .createNode ("VolumeScatterMaterialExtension", false);
 
-      extension ._scatterStrength        = this .numberValue (KHR_materials_volume_scatter .scatterStrengthFactor, 0);
-      extension ._scatterStrengthTexture = this .textureInfo (KHR_materials_volume_scatter .scatterStrengthTexture);
-      extension ._scatterTextureMapping  = this .textureMapping (KHR_materials_volume_scatter .scatterTexture);
+      extension ._scatterStrength        = this .numberValue (KHR_materials_scatter .scatterStrengthFactor, 0);
+      extension ._scatterStrengthTexture = this .textureInfo (KHR_materials_scatter .scatterStrengthTexture);
+      extension ._scatterTextureMapping  = this .textureMapping (KHR_materials_scatter .scatterTexture);
 
       const multiscatterColor = new Numbers_Color3 ();
 
-      if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColorFactor, multiscatterColor))
+      if (this .vectorValue (KHR_materials_scatter .multiscatterColorFactor, multiscatterColor))
          extension ._multiscatterColor = multiscatterColor;
 
-      extension ._multiscatterColorTexture        = this .textureInfo (KHR_materials_volume_scatter .multiscatterColorTexture);
-      extension ._multiscatterColorTextureMapping = this .textureMapping (KHR_materials_volume_scatter .multiscatterColorTexture);
-      extension ._scatterAnisotropy               = this .numberValue (KHR_materials_volume_scatter .scatterAnisotropy, 0);
+      extension ._multiscatterColorTexture        = this .textureInfo (KHR_materials_scatter .multiscatterColorTexture);
+      extension ._multiscatterColorTextureMapping = this .textureMapping (KHR_materials_scatter .multiscatterColorTexture);
+      extension ._scatterAnisotropy               = this .numberValue (KHR_materials_scatter .scatterAnisotropy, 0);
 
       extension .setup ();
 
-      KHR_materials_volume_scatter .pointers = [extension];
+      KHR_materials_scatter .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -49660,8 +49545,8 @@ function eventsProcessed ()
       // 1. Replace skeleton nodes with humanoid.
       // 2. Add children.
 
-      this .nodes .forEach ((node, index) => this .nodeSkeleton (node, index));
-      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
+      this .nodes .forEach (node => this .nodeSkeleton (node));
+      this .nodes .forEach (node => this .nodeChildren (node));
    },
    nodeObject (node, index)
    {
@@ -49684,7 +49569,7 @@ function eventsProcessed ()
 
       return node;
    },
-   nodeSkeleton (node, index)
+   nodeSkeleton (node)
    {
       const skin = this .skins [node .skin];
 
@@ -49717,7 +49602,7 @@ function eventsProcessed ()
          quaternion       = new Numbers_Quaternion (),
          matrix           = new Numbers_Matrix4 ();
 
-      return function (node, index)
+      return function (node)
       {
          const
             scene         = this .getScene (),
@@ -49898,7 +49783,7 @@ function eventsProcessed ()
          skeleton = skin .skeleton;
 
       skin .joints              = this .jointsArray (skin .joints, nodes .some (node => node .skin === index));
-      skin .skeleton            = skeleton !== undefined ? [skeleton] : this .skeleton (skin .joints, nodes);
+      skin .skeleton            = skeleton !== undefined ? [skeleton] : this .skeleton (skin .joints);
       skin .inverseBindMatrices = this .inverseBindMatricesAccessors (this .accessors [skin .inverseBindMatrices]);
 
       if (skeleton !== undefined && !skin .joints .includes (skeleton))
@@ -49947,7 +49832,7 @@ function eventsProcessed ()
 
       return joints;
    },
-   skeleton (joints, nodes)
+   skeleton (joints)
    {
       const children = new Set ();
 
@@ -51453,7 +51338,7 @@ function eventsProcessed ()
 
       return glTF ?.pointers
          ?.map (node => [node, GLTF2Parser_$.try (() => node ?.getField (this .getAnimationPointerAlias (node, field) ?? field))])
-         ?.find (([node, field]) => field)
+         ?.find (([, field]) => field)
          ?? [ ];
    },
    addAnimationPointerAlias (node, field, alias)
@@ -51855,7 +51740,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (Namespace/* default */.A .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(793).A;
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(421).A;
 
 
 
@@ -51961,7 +51846,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (Namespace/* default */.A .add ("GLB2Parser", GLB2Parser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(793).A;
+/* provided dependency */ var OBJParser_$ = __webpack_require__(421).A;
 
 
 
@@ -53415,7 +53300,7 @@ const STLAParser_default_ = STLAParser;
 
 /* harmony default export */ const Parser_STLAParser = (Namespace/* default */.A .add ("STLAParser", STLAParser_default_));
 ;// ./src/x_ite/Parser/STLBParser.js
-/* provided dependency */ var STLBParser_$ = __webpack_require__(793).A;
+/* provided dependency */ var STLBParser_$ = __webpack_require__(421).A;
 
 
 
@@ -54303,7 +54188,7 @@ const PLYAParser_default_ = PLYAParser;
 
 /* harmony default export */ const Parser_PLYAParser = (Namespace/* default */.A .add ("PLYAParser", PLYAParser_default_));
 ;// ./src/x_ite/Parser/PLYBParser.js
-/* provided dependency */ var PLYBParser_$ = __webpack_require__(793).A;
+/* provided dependency */ var PLYBParser_$ = __webpack_require__(421).A;
 
 
 function PLYBParser (scene)
@@ -54882,8 +54767,8 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (Namespace/* default */.A .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(793).A;
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(591);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(421).A;
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(387);
 
 
 
@@ -55062,7 +54947,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
       if (!(this .input instanceof XMLDocument))
          return false;
 
-      if (SVGParser_$(this .input) .children ("svg") .length)
+      if (Array .from (this .input .children) .find (child => child .matches ("svg")))
          return true;
 
       if (this .input .nodeName === "svg")
@@ -55082,7 +54967,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
       {
          case "#document":
          {
-            const svg = SVGParser_$(xmlElement) .children ("svg");
+            const svg = Array .from (xmlElement .children) .filter (child => child .matches ("svg"));
 
             for (const xmlElement of svg)
                await this .svgElement (xmlElement);
@@ -55141,7 +55026,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
          width          = this .lengthAttribute (xmlElement .getAttribute ("width"),  viewBox [2], "width"),
          height         = this .lengthAttribute (xmlElement .getAttribute ("height"), viewBox [3], "height");
 
-      if (true) // default
+      // if (true) // default
       {
          // preserveAspectRatio = "xMidYMid meet"
 
@@ -55295,7 +55180,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
 
       switchNode .whichChoice = 0;
 
-      scene .addExportedNode (scene .getUniqueExportName (`Switch${++ this .numSwitchNodes}`), node);
+      scene .addExportedNode (scene .getUniqueExportName (`Switch${++ this .numSwitchNodes}`), switchNode);
 
       // Get child elements.
 
@@ -57617,7 +57502,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (Namespace/* default */.A .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(793).A;
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(421).A;
 
 
 
@@ -57740,7 +57625,7 @@ class GoldenGate extends Parser_X3DParser
                if (x3dSyntax instanceof ArrayBuffer)
                {
                   if (x3dSyntax .byteLength && !string .length)
-                     return undefined;
+                     return;
                }
 
                return string;
@@ -57749,23 +57634,35 @@ class GoldenGate extends Parser_X3DParser
             {
                const string = this .getInput ("STRING", x3dSyntax);
 
-               return string === undefined ? undefined : GoldenGate_$.parseXML (string);
+               if (string === undefined)
+                  return;
+
+               if (string .match (/^\s*$/s))
+                  return "";
+
+               return GoldenGate_$.parseXML (string);
             }
             case "JSON":
             {
                const string = this .getInput ("STRING", x3dSyntax);
 
-               return string === undefined ? undefined : JSON .parse (string);
+               if (string === undefined)
+                  return;
+
+               return JSON .parse (string);
             }
             case "ARRAY_BUFFER":
             {
-               return x3dSyntax instanceof ArrayBuffer ? x3dSyntax : undefined;
+               if (x3dSyntax instanceof ArrayBuffer)
+                  return x3dSyntax;
+
+               return;
             }
          }
       }
       catch
       {
-         return undefined;
+         return;
       }
    }
 }
@@ -58053,7 +57950,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (Namespace/* default */.A .add ("X3DWorld", X3DWorld_default_));
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(793).A;
+/* provided dependency */ var FileLoader_$ = __webpack_require__(421).A;
 
 
 
@@ -58404,11 +58301,9 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       const typeName = this .node instanceof Execution_X3DWorld ? "" : ` for ${this .node .getTypeName ()}`;
 
       if (this .fileURL .protocol === "data:")
-         console .error (`Couldn't load data URL${typeName}.`);
+         console .error (`Couldn't load data URL${typeName}.`, error);
       else
          console .error (`Couldn't load URL '${FileLoader_$.try (() => decodeURI (this .fileURL)) ?? this .fileURL}'${typeName}.`, error);
-
-      console .error (error);
    },
 });
 
@@ -58828,7 +58723,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (Namespace/* default */.A .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(793).A;
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(421).A;
 
 
 
@@ -59874,7 +59769,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
       }
       catch (error)
       {
-         throw new Error (`Bad ROUTE specification: ${error .message}`);
+         throw new Error (`Bad ROUTE specification.`, { cause: error });
       }
    },
    deleteRoute (route)
@@ -61488,7 +61383,7 @@ Fonts_add ("PT_Sans/PTSans-Italic.woff2",     false, true);
 // add ("PT_Sans/PTSans-BoldItalic.woff2", true,  true);
 
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(793).A;
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(421).A;
 
 
 
@@ -61531,6 +61426,8 @@ let instanceId = 0;
 
 function X3DCoreContext (element)
 {
+   element = X3DCoreContext_$(element);
+   
    // Events
 
    this .addChildObjects (Base_X3DConstants .outputOnly, "controlKey", new x_ite_Fields .SFBool (),
@@ -61557,7 +61454,7 @@ function X3DCoreContext (element)
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
-      const shadow = X3DCoreContext_$(element [0] .attachShadow ({ mode: "open", delegatesFocus: true }));
+      const shadow = X3DCoreContext_$(element [0] .shadowRoot);
 
       const stylesheet = new Promise (resolve =>
       {
@@ -67621,8 +67518,8 @@ const OrientationChaser_default_ = OrientationChaser;
 
 /* harmony default export */ const Followers_OrientationChaser = (Namespace/* default */.A .add ("OrientationChaser", OrientationChaser_default_));
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(708);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(793).A;
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(368);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(421).A;
 
 
 
@@ -68701,8 +68598,8 @@ const ScreenLine_default_ = ScreenLine;
 
 /* harmony default export */ const Rendering_ScreenLine = (Namespace/* default */.A .add ("ScreenLine", ScreenLine_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(708);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(793).A;
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(368);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(421).A;
 
 
 
@@ -69439,8 +69336,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (Namespace/* default */.A .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(708);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(793).A;
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(368);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(421).A;
 
 
 
@@ -69653,8 +69550,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (Namespace/* default */.A .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(708);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(793).A;
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(368);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(421).A;
 
 
 
@@ -70390,7 +70287,7 @@ Object .assign (DirectionalLightContainer .prototype,
 
       this .shadowBuffer .bind ();
 
-      renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+      renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport));
       renderObject .getProjectionMatrix () .push (projectionMatrix);
       renderObject .getModelViewMatrix  () .push (invLightSpaceMatrix);
 
@@ -70830,6 +70727,24 @@ Object .assign (X3DNetworkingContext .prototype,
          }
       }
    },
+   loading ()
+   {
+      return new Promise (resolve =>
+      {
+         const key = Symbol ();
+
+         this ._loadCount .addEvent ();
+
+         this ._loadCount .addFieldCallback (key, () =>
+         {
+            if (this ._loadCount .getValue ())
+               return;
+
+            this ._loadCount .removeFieldCallback (key);
+            resolve ();
+         });
+      });
+   },
    getLoadingObjects ()
    {
       return this [X3DNetworkingContext_loadingObjects];
@@ -71023,8 +70938,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (Namespace/* default */.A .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(708);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(793).A;
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(368);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(421).A;
 
 
 
@@ -72283,7 +72198,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (Namespace/* default */.A .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(793).A;
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(421).A;
 
 
 
@@ -72343,11 +72258,6 @@ Object .assign (X3DRenderingContext .prototype,
       this [_resizer] = new ResizeObserver (() =>
       {
          this .reshape ();
-
-         // Unfortunately jest environment doesn't like a traverse here.
-         // TODO: figure out why.
-         if (typeof jest !== "undefined")
-            return;
 
          this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
       });
@@ -74503,7 +74413,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 /* harmony default export */ const Shaders_X3DShaderNode = (Namespace/* default */.A .add ("X3DShaderNode", X3DShaderNode_default_));
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(793).A;
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(421).A;
 
 
 
@@ -76504,7 +76414,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (Namespace/* default */.A .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(793).A;
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(421).A;
 
 
 
@@ -78449,7 +78359,7 @@ const PeriodicWave_default_ = PeriodicWave;
 
 /* harmony default export */ const Sound_PeriodicWave = (Namespace/* default */.A .add ("PeriodicWave", PeriodicWave_default_));
 ;// ./src/x_ite/Browser/Sound/X3DSoundContext.js
-/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(793).A;
+/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(421).A;
 
 
 
@@ -78557,7 +78467,7 @@ Object .assign (X3DSoundContext .prototype,
             .appendTo (this .getSurface () .find (".x_ite-private-buttons"));
 
          const
-            count = !!this [_audioElements] .size,
+            count = !! this [_audioElements] .size,
             fade  = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300";
 
          if (count)
@@ -78569,7 +78479,7 @@ Object .assign (X3DSoundContext .prototype,
 
          this [_noSoundButton] .removeClass (fade);
 
-         if (count !== !!this [_audioElements] .size)
+         if (count !== !! this [_audioElements] .size)
             return;
 
          if (!count)
@@ -78756,7 +78666,7 @@ const TextureTransform_default_ = TextureTransform;
 
 /* harmony default export */ const Texturing_TextureTransform = (Namespace/* default */.A .add ("TextureTransform", TextureTransform_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(793).A;
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(421).A;
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -78836,15 +78746,15 @@ const KTXDecoder_default_ = class KTXDecoder
       };
    }
 
-   async loadKTXFromURL (url, cache = true)
-   {
-      const response = await fetch (url, { cache: cache ? "default" : "reload" });
+   // async loadKTXFromURL (url, cache = true)
+   // {
+   //    const response = await fetch (url, { cache: cache ? "default" : "reload" });
 
-      if (!response .ok)
-         throw new Error ("Couldn't fetch KTX image.");
+   //    if (!response .ok)
+   //       throw new Error ("Couldn't fetch KTX image.");
 
-      return this .loadKTXFromBuffer (await response .arrayBuffer ());
-   }
+   //    return this .loadKTXFromBuffer (await response .arrayBuffer ());
+   // }
 
    async loadKTXFromBuffer (arrayBuffer)
    {
@@ -79324,7 +79234,7 @@ Object .assign (X3DRoutingContext .prototype,
             // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
             this [_taintedNodesTemp] = taintedNodes;
          }
-         while (! this [_taintedFields] .length && this [_taintedNodes] .length);
+         while (!this [_taintedFields] .length && this [_taintedNodes] .length);
       }
       while (this [_taintedFields] .length);
 
@@ -79811,7 +79721,6 @@ const X3DBrowserContext_default_ = X3DBrowserContext;
 
 /* harmony default export */ const Browser_X3DBrowserContext = (Namespace/* default */.A .add ("X3DBrowserContext", X3DBrowserContext_default_));
 ;// ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(793).A;
 /*******************************************************************************
  * MIT License
  *
@@ -79841,6 +79750,10 @@ const X3DBrowserContext_default_ = X3DBrowserContext;
 
 
 
+
+const
+   DOMIntegration_x3d  = Symbol .for ("X_ITE.X3DElement"),
+   DOMIntegration_node = Symbol .for ("X_ITE.NodeElement");
 
 class DOMIntegration
 {
@@ -79959,7 +79872,7 @@ class DOMIntegration
    {
       const
          parser = this .parser,
-         node   = DOMIntegration_$.data (element, "node");
+         node   = element [DOMIntegration_node];
 
       if (node)
       {
@@ -79973,7 +79886,7 @@ class DOMIntegration
 
          const
             parentNode = element .parentNode,
-            node       = DOMIntegration_$.data (parentNode, "node");
+            node       = parentNode [DOMIntegration_node];
 
          if (node)
          {
@@ -79997,7 +79910,7 @@ class DOMIntegration
       if (element .nodeName === "X3D")
          return;
 
-      if (DOMIntegration_$.data (element, "node"))
+      if (element [DOMIntegration_node])
          return;
 
       const
@@ -80008,19 +79921,19 @@ class DOMIntegration
       {
          // Root scene or Inline scene.
 
-         const scene = DOMIntegration_$.data (parentNode, "node");
+         const scene = parentNode [DOMIntegration_node];
 
          parser .pushExecutionContext (scene);
          parser .childElement (element);
          parser .setupNodes ();
          parser .popExecutionContext ();
       }
-      else if (DOMIntegration_$.data (parentNode, "node"))
+      else if (parentNode [DOMIntegration_node])
       {
          // Use parent's scene if non-root, works for Inline.
 
          const
-            node             = DOMIntegration_$.data (parentNode, "node"),
+            node             = parentNode [DOMIntegration_node],
             executionContext = node .getExecutionContext ();
 
          parser .pushExecutionContext (executionContext);
@@ -80055,14 +79968,14 @@ class DOMIntegration
       // Works also for root nodes, as it has to be, since scene .rootNodes is effectively a MFNode in x-ite.
       // Also removes ROUTE elements.
 
-      const node = DOMIntegration_$.data (element, "node");
+      const node = element [DOMIntegration_node];
 
       if (!node)
          return;
 
       node .dispose ();
 
-      DOMIntegration_$.data (element, "node", null);
+      delete element [DOMIntegration_node];
    }
 
    processInlineElements (element)
@@ -80076,7 +79989,7 @@ class DOMIntegration
 
    processInlineElement (element)
    {
-      const node = DOMIntegration_$.data (element, "node");
+      const node = element [DOMIntegration_node];
 
       if (!node)
          return;
@@ -80088,7 +80001,7 @@ class DOMIntegration
 
    appendInlineChildElement (element)
    {
-      const node = DOMIntegration_$.data (element, "node");
+      const node = element [DOMIntegration_node];
 
       switch (node .checkLoadState ())
       {
@@ -80111,7 +80024,7 @@ class DOMIntegration
 
             // Add scene as child node of Inline element.
 
-            const X3DElement = DOMIntegration_$.data (node .getInternalScene (), "X3D");
+            const X3DElement = node .getInternalScene () [DOMIntegration_x3d];
 
             if (!X3DElement)
                break;
@@ -80167,7 +80080,7 @@ class DOMIntegration
       if (element .nodeName === "ROUTE")
          return;
 
-      const node = DOMIntegration_$.data (element, "node");
+      const node = element [DOMIntegration_node];
 
       if (!node)
          return;
@@ -80189,7 +80102,7 @@ class DOMIntegration
 
    fieldCallback (element, field)
    {
-      const node = DOMIntegration_$.data (element, "node");
+      const node = element [DOMIntegration_node];
 
       if (!node)
          return;
@@ -83886,7 +83799,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, Rendering_X3DG
    createNormals (points, coordIndex, creaseAngle)
    {
       const
-         cw          = ! this ._ccw .getValue (),
+         cw          = !this ._ccw .getValue (),
          normalIndex = new Map (),
          normals     = [ ];
 
@@ -88711,7 +88624,7 @@ Object .assign (PointLightContainer .prototype,
             viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
             projectionMatrix = Geometry_Camera .perspective2 (Math_Algorithm .radians (90), 0.125, 10_000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
-         renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+         renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport));
          renderObject .getProjectionMatrix () .push (this .projectionMatrix);
          renderObject .getModelViewMatrix  () .push (orientationMatrices [i]);
          renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
@@ -88720,7 +88633,7 @@ Object .assign (PointLightContainer .prototype,
 
          renderObject .getModelViewMatrix  () .pop ();
          renderObject .getProjectionMatrix () .pop ();
-         renderObject .getViewVolumes () .pop ();
+         renderObject .getViewVolumes      () .pop ();
       }
 
       if (!this .global)
@@ -88999,7 +88912,7 @@ Object .assign (SpotLightContainer .prototype,
 
       this .shadowBuffer .bind ();
 
-      renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
+      renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport));
       renderObject .getProjectionMatrix () .push (projectionMatrix);
       renderObject .getModelViewMatrix  () .push (invLightSpaceMatrix);
 
@@ -91207,7 +91120,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
          else
             rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
 
-         if (! this ._rotation_changed .getValue () .equals (rotation))
+         if (!this ._rotation_changed .getValue () .equals (rotation))
             this ._rotation_changed = rotation;
       }
    },
@@ -92060,7 +91973,7 @@ Object .assign (Object .setPrototypeOf (ClipPlane .prototype, Core_X3DChildNode 
    {
       this .plane .assign (this ._plane .getValue ());
 
-      this .enabled = this ._enabled .getValue () && ! this .plane .equals (Numbers_Vector4 .ZERO);
+      this .enabled = this ._enabled .getValue () && !this .plane .equals (Numbers_Vector4 .ZERO);
    },
    push (renderObject)
    {
@@ -92922,6 +92835,7 @@ const Matrix3VertexAttribute_default_ = Matrix3VertexAttribute;
 
 
 
+
 function Matrix4VertexAttribute (executionContext)
 {
    Shaders_X3DVertexAttributeNode .call (this, executionContext);
@@ -92964,7 +92878,7 @@ Object .assign (Object .setPrototypeOf (Matrix4VertexAttribute .prototype, Shade
       }
       else
       {
-         const value = Matrix4 .IDENTITY;
+         const value = Numbers_Matrix4 .IDENTITY;
 
          for (let i = 0; i < 16; ++ i)
             array .push (value [i]);
@@ -94592,6 +94506,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, Sound_X3D
 
       // Init mediaElement.
 
+      this .set_gain__ ();
       this .set_loop ();
 
       // Handle events.
@@ -94620,6 +94535,11 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, Sound_X3D
    set_gain__ ()
    {
       this .audioSource .gain .value = this ._gain .getValue ();
+
+      if (!this .mediaElement)
+         return;
+
+      this .mediaElement .muted = this ._gain .getValue () === 0;
    },
    set_loop ()
    {
@@ -94917,12 +94837,12 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, Sound_X3DSoundSour
             if (DEVELOPMENT)
             {
                if (fileURL .protocol !== "data:")
-                  console .info (`Done loading audio '${decodeURI (fileURL)}'.`);
+                  console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
             }
          }
          else
          {
-            throw new Error ("AudioClip: no suitable file type handler found.");
+            throw new Error (`${this .getTypeName ()}: No suitable file handler found.`);
          }
       });
    },
@@ -95459,7 +95379,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, Sound_X3DS
             if (DEVELOPMENT)
             {
                if (URL .protocol !== "data:")
-                  console .info (`Done loading audio '${decodeURI (URL)}'.`);
+                  console .info (`Done loading ${this .getTypeName ()} '${decodeURI (URL)}'.`);
             }
          }
       });
@@ -97939,9 +97859,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (Namespace/* default */.A .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(793).A;
-/* provided dependency */ var SuperGif = __webpack_require__(929);
-/* provided dependency */ var APNG = __webpack_require__(907);
+/* provided dependency */ var SuperGif = __webpack_require__(301);
+/* provided dependency */ var APNG = __webpack_require__(991);
 
 
 
@@ -97967,12 +97886,9 @@ function MovieTexture (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
-   this .urlStack               = new x_ite_Fields .MFString ();
-   this .video                  = MovieTexture_$("<video></video>");
-   this .sourceNode             = audioContext .createMediaElementSource (this .video [0]);
    this .mediaStreamDestination = audioContext .createMediaStreamDestination ();
 
-   this .sourceNode .connect (this .getAudioSource ()) .connect (this .mediaStreamDestination);
+   this .getAudioSource () .connect (this .mediaStreamDestination);
 
    this .getMatrix () .set ([1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1]); // flipY
 }
@@ -97990,11 +97906,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       this ._speed .addInterest ("set_speed__", this);
       this ._pitch .addInterest ("set_speed__", this);
 
-      this .video
-         .attr ("crossorigin", "anonymous")
-         .attr ("preload", "auto")
-         .attr ("playsinline", "");
-
       this .requestImmediateLoad () .catch (Function .prototype);
    },
    set_live__ ()
@@ -98011,185 +97922,158 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       this .clearTexture ();
       this .setMediaElement (null);
    },
-   loadData ()
+   async loadData ()
    {
-      this .urlStack .assign (this ._url);
-      this .loadNext ();
-   },
-   loadNext ()
-   {
-      this .clearTimeout ();
+      this .sourceNode ?.disconnect ();
 
-      if (this .urlStack .length === 0)
+      for (const url of this ._url)
       {
-         this .video .off ("abort error suspend stalled loadeddata");
-         this .setMediaElement (null);
-         this .clearTexture ();
-         this .updateOutputs (0, 0, 0, -1);
-         this .setLoadState (Base_X3DConstants .FAILED_STATE);
-         return;
-      }
+         const fileURL = new URL (url, this .getExecutionContext () .getBaseURL ());
 
-      // Get URL.
-
-      this .fileURL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .fileURL .pathname .endsWith (".gif") || this .fileURL .href .match (/^\s*data:image\/gif[;,]/s))
-      {
-         new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
+         try
          {
-            if (data === null)
+            if (fileURL .pathname .endsWith (".gif") || fileURL .href .match (/^\s*data:image\/gif[;,]/s))
             {
-               this .loadNext ();
-            }
-            else if (data instanceof ArrayBuffer)
-            {
-               this .fileURL = new URL (fileURL);
-
                const
-                  img = MovieTexture_$("<img></img>") .appendTo (MovieTexture_$("<div></div>")),
-                  gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
+                  data = await this .loadDocument (fileURL),
+                  div  = document .createElement ("div"),
+                  img  = document .createElement ("img");
 
-               gif .load_raw (new Uint8Array (data), () => this .setGif (gif));
-            }
-            else
-            {
-               throw new Error ("MovieTexture: no suitable file type handler found.");
-            }
-         });
-      }
-      else if (this .fileURL .pathname .endsWith (".png") || this .fileURL .href .match (/^\s*data:image\/png[;,]/s))
-      {
-         new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
-         {
-            if (data === null)
-            {
-               this .loadNext ();
-            }
-            else if (data instanceof ArrayBuffer)
-            {
-               this .fileURL = new URL (fileURL);
+               div .appendChild (img);
 
+               const gif = await new Promise ((resolve, reject) =>
+               {
+                  const gif = new SuperGif ({ gif: img, on_error: type => reject (new Error (type)) });
+
+                  gif .load_raw (new Uint8Array (data), () => resolve (gif));
+               });
+
+               this .setGif (gif);
+               return;
+            }
+            else if (fileURL .pathname .endsWith (".png") || fileURL .href .match (/^\s*data:image\/png[;,]/s))
+            {
                const
+                  data      = await this .loadDocument (fileURL),
                   parseAPNG = DEVELOPMENT ? window ["apng-js"] .default : APNG .default,
                   apng      = await parseAPNG (data);
 
                this .setAPNG (apng);
+               return;
             }
             else
             {
-               throw new Error ("MovieTexture: no suitable file type handler found.");
+               if (fileURL .protocol !== "data:")
+               {
+                  if (!this .getCache ())
+                     fileURL .searchParams .set ("_", Date .now ());
+               }
+
+               const
+                  audioContext = this .getBrowser () .getAudioContext (),
+                  video        = await this .loadVideo (fileURL);
+
+               video .loadeddata = null;
+               video .onerror    = null;
+               video .onabort    = null;
+
+               this .sourceNode = audioContext .createMediaElementSource (video);
+               this .sourceNode .connect (this .getAudioSource ());
+
+               this .setVideo (video, fileURL);
+               return;
             }
+         }
+         catch (error)
+         {
+            console .warn (`Error loading movie '${decodeURI (fileURL)}':`, error .message);
+
+            if (DEVELOPMENT)
+               console .error (error);
+         }
+      }
+
+      this .setMediaElement (null);
+      this .clearTexture ();
+      this .updateOutputs (0, 0, 0, -1);
+      this .setLoadState (Base_X3DConstants .FAILED_STATE);
+   },
+   loadDocument (fileURL)
+   {
+      return new Promise ((resolve, reject) =>
+      {
+         new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument ([fileURL], async data =>
+         {
+            if (data instanceof ArrayBuffer)
+               resolve (data);
+            else
+               reject (new Error (`${this .getTypeName ()}: No suitable file handler found.`));
          });
-      }
-      else
+      });
+   },
+   loadVideo (fileURL)
+   {
+      return new Promise ((resolve, reject) =>
       {
-         if (this .fileURL .protocol !== "data:")
-         {
-            if (!this .getCache ())
-               this .fileURL .searchParams .set ("_", Date .now ());
-         }
+         const video = document .createElement ("video");
 
-         this .video
-            .on ("abort error", this .setError .bind (this))
-            .on ("suspend stalled", this .setTimeout .bind (this))
-            .on ("loadeddata", this .setVideo .bind (this))
-            .attr ("src", this .fileURL)
-            .get (0) .load ();
-      }
-   },
-   setTimeout (event)
-   {
-      this .clearTimeout ();
+         video .onloadeddata = () => resolve (video);
 
-      this .timeoutId = setTimeout (() => this .setError (event), 30_000);
-   },
-   clearTimeout ()
-   {
-      clearTimeout (this .timeoutId);
-   },
-   setError (event)
-   {
-      if (this .fileURL .protocol !== "data:")
-         console .warn (`Error loading movie '${decodeURI (this .fileURL)}':`, event .type);
+         video .onerror =
+         video .onabort = event => reject (new Error (`Couldn't load video '${fileURL}': ${event .type}.`));
 
-      this .loadNext ();
-   },
-   setVideo ()
-   {
-      try
-      {
-         if (DEVELOPMENT)
-         {
-            if (this .fileURL .protocol !== "data:")
-               console .info (`Done loading movie '${decodeURI (this .fileURL)}'.`);
-         }
-
-         const
-            video  = this .video [0],
-            width  = video .videoWidth,
-            height = video .videoHeight;
-
-         this .video .off ("abort error suspend stalled loadeddata");
-
-         this .clearTimeout ();
-
-         video .currentFrame = video;
-
-         this .setMediaElement (video);
-         this .setTextureData (width, height, true, false, video);
-         this .updateOutputs (width, height, 3, video .duration);
-         this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
-
-         this .set_speed__ ();
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
+         video .crossOrigin = "anonymous";
+         video .preload     = "auto";
+         video .playsInline = true;
+         video .src         = fileURL;
+      });
    },
    setGif (gif)
    {
-      try
-      {
-         Texturing_GifMedia (gif, this);
+      Texturing_GifMedia (gif, this);
 
-         const { width, height } = gif .get_canvas ();
+      const { width, height } = gif .get_canvas ();
 
-         this .setMediaElement (gif);
-         this .setTextureData (width, height, true, false, gif .get_frames () [0] .data);
-         this .updateOutputs (width, height, 4, gif .duration);
-         this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
+      this .setMediaElement (gif);
+      this .setTextureData (width, height, true, false, gif .get_frames () [0] .data);
+      this .updateOutputs (width, height, 4, gif .duration);
+      this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
 
-         this .set_speed__ ();
-      }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
+      this .set_speed__ ();
    },
    async setAPNG (apng)
    {
-      try
+      await Texturing_PNGMedia (apng, this);
+
+      const { width, height, duration, currentFrame } = apng;
+
+      this .setMediaElement (apng);
+      this .setTextureData (width, height, true, false, currentFrame);
+      this .updateOutputs (width, height, 4, duration);
+      this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
+
+      this .set_speed__ ();
+   },
+   setVideo (video, fileURL)
+   {
+      if (DEVELOPMENT)
       {
-         await Texturing_PNGMedia (apng, this);
-
-         const { width, height, duration, currentFrame } = apng;
-
-         this .setMediaElement (apng);
-         this .setTextureData (width, height, true, false, currentFrame);
-         this .updateOutputs (width, height, 4, duration);
-         this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
-
-         this .set_speed__ ();
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading ${this .getTypeName ()} '${decodeURI (fileURL)}'.`);
       }
-      catch (error)
-      {
-         // Catch security error from cross origin requests.
-         this .setError ({ type: error .message });
-      }
+
+      const
+         width  = video .videoWidth,
+         height = video .videoHeight;
+
+      video .currentFrame = video;
+
+      this .setMediaElement (video);
+      this .setTextureData (width, height, true, false, video);
+      this .updateOutputs (width, height, 3, video .duration);
+      this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
+
+      this .set_speed__ ();
    },
    updateOutputs (width, height, colorDepth, duration)
    {
@@ -98197,12 +98081,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       this ._height           = height;
       this ._colorDepth       = colorDepth;
       this ._duration_changed = duration;
-   },
-   set_gain__ ()
-   {
-      Sound_X3DSoundSourceNode .prototype .set_gain__ .call (this);
-
-      this .video .prop ("muted", this ._gain .getValue () === 0);
    },
    set_speed__ ()
    {
@@ -98991,7 +98869,11 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
    },
    set_dimensions__ ()
    {
-      const browser = this .getBrowser ();
+      const
+         width   = this ._width  .getValue (),
+         height  = this ._height .getValue ();
+
+      // const components = this ._colorDepth .getValue ();
 
       // Dispose old framebuffer.
 
@@ -98999,17 +98881,13 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
 
       // Create framebuffer.
 
-      const
-         width  = Math .max (this ._width  .getValue (), 0),
-         height = Math .max (this ._height .getValue (), 0);
-
-      // const components = this ._colorDepth .getValue ();
-
       if (width > 0 && height > 0)
       {
          // Properties
 
-         const float = this ._depthMap .getValue ();
+         const
+            browser = this .getBrowser (),
+            float   = this ._depthMap .getValue ();
 
          this .viewport    = new Numbers_Vector4 (0, 0, width, height);
          this .frameBuffer = new Rendering_TextureBuffer ({ browser, width, height, float });
@@ -99021,8 +98899,6 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
       {
          this .frameBuffer = null;
 
-         this .setWidth (0);
-         this .setHeight (0);
          this .setFloat (false);
          this .clearTexture ();
       }
@@ -99032,9 +98908,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
    },
    set_children__ ()
    {
-      this .backgroundNode = null;
-      this .fogNode        = null;
-      this .viewpointNode  = null;
+      this .fogNode            = null;
+      this .navigationInfoNode = null;
+      this .backgroundNode     = null;
+      this .viewpointNode      = null;
 
       this .groupNode ._children .length = 0;
 
@@ -99137,7 +99014,6 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
             browser            = this .getBrowser (),
             gl                 = browser .getContext (),
             dependentRenderer  = this .dependentRenderers .get (renderObject),
-            layer              = renderObject .getLayer (),
             viewport           = this .viewport,
             navigationInfoNode = this .navigationInfoNode ?? dependentRenderer .getNavigationInfo (),
             depthMap           = this ._depthMap .getValue (),
@@ -99163,7 +99039,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
          gl .clearColor (0, 0, 0, 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
 
-         dependentRenderer .getViewVolumes ()      .push (viewVolume .set (projectionMatrix, viewport, viewport));
+         dependentRenderer .getViewVolumes ()      .push (viewVolume .set (projectionMatrix, viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          dependentRenderer .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
@@ -99185,7 +99061,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
          if (this .groupNode ._children .length)
             dependentRenderer .render (this .traverseType, this .groupNode .traverse, this .groupNode);
          else
-            layer .traverse (this .traverseType, dependentRenderer);
+            renderObject .getLayer () .traverse (this .traverseType, dependentRenderer);
 
          if (headlight)
             headlightContainer .modelViewMatrix .pop ();
@@ -99371,7 +99247,6 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (Namespace/* default */.A .add ("Components", Components_default_));
 ;// ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(793).A;
 
 
 
@@ -99400,6 +99275,11 @@ const Components_default_ = Components;
 
 
 
+
+/* eslint no-undef: "off"
+   --------
+   no-undef: global variable is used here for use in node projects.
+ */
 
 const
    _DOMIntegration      = Symbol (),
@@ -99416,9 +99296,7 @@ const
 
 function X3DBrowser (element)
 {
-   element = X3DBrowser_$(element);
-
-   if (element .prop ("browser"))
+   if (element .browser)
       throw new Error ("Couldn't create browser, element has already a browser.");
 
    Browser_X3DBrowserContext .call (this, element);
@@ -99449,7 +99327,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
    {
       Browser_X3DBrowserContext .prototype .initialize .call (this);
 
-      this .getCanvas () .on ("webglcontextlost", event =>
+      this .getCanvas () .on ("webglcontextlost", () =>
       {
          this .callBrowserCallbacks (Base_X3DConstants .CONNECTION_ERROR);
       });
@@ -99830,11 +99708,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
          return;
 
       loadCount .removeInterest ("checkLoadCount", this);
+
       this .setBrowserLoading (false);
       this .initialized () .set (this .getCurrentTime ());
       this .initialized () .processInterests ();
       this .callBrowserCallbacks (Base_X3DConstants .INITIALIZED_EVENT);
       this .callBrowserEventHandler ("initialized load");
+
       resolve ();
    },
    createVrmlFromString (vrmlSyntax)
@@ -100041,11 +99921,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
          }
       });
    },
-   addBrowserListener (callback, object)
+   addBrowserListener (/* callback, object */)
    {
       // The string describes the name of the callback function to be called within the current ECMAScript context.
    },
-   removeBrowserListener (callback)
+   removeBrowserListener (/* callback */)
    {
       // The string describes the name of the callback function to be called within the current ECMAScript context.
    },
@@ -100102,7 +99982,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
       if (arguments .length === 1)
          return this [_browserCallbacks] .get (event);
       else
-         return new Map ([... this [_browserCallbacks]] .flatMap (([event, map]) => [... map]));
+         return new Map ([... this [_browserCallbacks]] .flatMap (([, map]) => [... map]));
    },
    callBrowserCallbacks (event)
    {
@@ -100507,23 +100387,7 @@ const X3DBrowser_default_ = X3DBrowser;
 ;
 
 /* harmony default export */ const Browser_X3DBrowser = (Namespace/* default */.A .add ("X3DBrowser", X3DBrowser_default_));
-;// ./src/x_ite/SUPPORTED_VERSIONS.js
-// All supported X3D specification version:
-
-const SUPPORTED_VERSIONS_default_ = [
-   "2.0",
-   "3.0",
-   "3.1",
-   "3.2",
-   "3.3",
-   "4.0",
-   "4.1",
-];
-;
-
-/* harmony default export */ const SUPPORTED_VERSIONS = (Namespace/* default */.A .add ("SUPPORTED_VERSIONS", SUPPORTED_VERSIONS_default_));
 ;// ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(793).A;
 
 
 class X3DCanvasElement extends HTMLElement
@@ -100536,15 +100400,21 @@ class X3DCanvasElement extends HTMLElement
 
       try
       {
+         this .attachShadow ({ mode: "open", delegatesFocus: true });
+
          new Browser_X3DBrowser (this);
       }
       catch (error)
       {
          console .error (error);
 
-         X3DCanvasElement_$(this .shadowRoot)
-            .append (X3DCanvasElement_$("<slot></slot>"))
-            .children (".x_ite-private-browser") .remove ();
+         for (const child of Array .from (this .shadowRoot .children))
+         {
+            if (child .matches (".x_ite-private-browser"))
+               child .remove ();
+         }
+
+         this .shadowRoot .appendChild (document .createElement ("slot"));
       }
    }
 
@@ -100624,6 +100494,21 @@ const X3DCanvasElement_default_ = X3DCanvasElement;
 ;
 
 /* harmony default export */ const x_ite_X3DCanvasElement = (Namespace/* default */.A .add ("X3DCanvasElement", X3DCanvasElement_default_));
+;// ./src/x_ite/SUPPORTED_VERSIONS.js
+// All supported X3D specification version:
+
+const SUPPORTED_VERSIONS_default_ = [
+   "2.0",
+   "3.0",
+   "3.1",
+   "3.2",
+   "3.3",
+   "4.0",
+   "4.1",
+];
+;
+
+/* harmony default export */ const SUPPORTED_VERSIONS = (Namespace/* default */.A .add ("SUPPORTED_VERSIONS", SUPPORTED_VERSIONS_default_));
 ;// ./src/standard/Math/Algorithms/QuickSort.js
 function QuickSort (array, compare)
 {
@@ -100688,9 +100573,27 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (Namespace/* default */.A .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(793).A;
+/* provided dependency */ var jquery_$ = __webpack_require__(421).A;
 Object .assign (jquery_$,
 {
+   isEmptyObject (object)
+   {
+      for (const key in object)
+         return false;
+
+      return true;
+   },
+   parseXML (xmlString)
+   {
+      const
+         parser = new DOMParser (),
+         xml    = parser .parseFromString (xmlString, "application/xml");
+
+      if (xml .getElementsByTagName ("parsererror") .length)
+         throw new Error ("Invalid XML.");
+
+      return xml;
+   },
    decodeText (input)
    {
       if (typeof input === "string")
@@ -100778,13 +100681,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (Namespace/* default */.A .add ("jquery", jquery_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(591);
+/* provided dependency */ var libtess_libtess = __webpack_require__(387);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (Namespace/* default */.A .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(793).A;
+
 
 
 
@@ -100837,23 +100740,28 @@ const X3D = Object .assign (function (onfulfilled, onrejected)
 {
    promise ??= new Promise ((resolve, reject) =>
    {
-      X3D_$(() =>
+      const ready = () =>
       {
          try
          {
-            Browser_Legacy .elements (X3D_$("X3DCanvas"), Browser_X3DBrowser);
+            Browser_Legacy .elements (document .querySelectorAll ("X3DCanvas"), Browser_X3DBrowser);
 
-            if (Array .from (X3D_$("x3d-canvas")) .every (canvas => canvas .browser))
+            if (Array .from (document .querySelectorAll ("x3d-canvas")) .every (canvas => canvas .browser))
                resolve ();
             else
                throw new Error ("Couldn't create browser.");
          }
          catch (error)
          {
-            Browser_Legacy .error (X3D_$("X3DCanvas"), error);
+            Browser_Legacy .error (document .querySelectorAll ("X3DCanvas"), error);
             reject (error);
          }
-      });
+      };
+
+      if (document .readyState === "complete")
+         ready ();
+      else
+         document .addEventListener ("DOMContentLoaded", ready, { once: true });
    });
 
    return promise .then (onfulfilled) .catch (onrejected);
@@ -100906,7 +100814,7 @@ Namespace/* default */.A, Namespace/* default */.A .Fields,
    noConflict: (() =>
    {
       const
-         _had = window .hasOwnProperty ("X3D"),
+         _had = "X3D" in window,
          _X3D = window .X3D;
 
       return function ()
@@ -100924,7 +100832,14 @@ Namespace/* default */.A, Namespace/* default */.A .Fields,
    })(),
    getBrowser (element)
    {
-      return X3D_$(element || "x3d-canvas, X3DCanvas") .filter ("x3d-canvas, X3DCanvas") .prop ("browser");
+      if (!element)
+         return document .querySelector ("x3d-canvas, X3DCanvas") ?.browser;
+
+      if (element instanceof x_ite_X3DCanvasElement)
+         return element .browser;
+
+      return Array .from (document .querySelectorAll (String (element)))
+         .find (element => element .nodeName .match (/^(?:x3d-canvas|X3DCanvas)$/i)) ?.browser;
    },
    createBrowser (... args)
    {

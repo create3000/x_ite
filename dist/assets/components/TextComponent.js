@@ -1,4 +1,4 @@
-/* X_ITE v15.1.12 */
+/* X_ITE v15.2.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -17949,7 +17949,7 @@ Object .assign (X3DTextContext .prototype,
                }
                else
                {
-                  throw new Error (`${node .getTypeName ()}: no suitable file type handler found.`);
+                  throw new Error (`${node .getTypeName ()}: No suitable file handler found.`);
                }
             });
          });

@@ -1,4 +1,4 @@
-/* X_ITE v15.1.12 */
+/* X_ITE v15.2.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
@@ -1249,19 +1249,19 @@ const CollidableShape_default_ = CollidableShape;
 
 /* harmony default export */ const RigidBodyPhysics_CollidableShape = (external_X_ITE_X3D_Namespace_default().add ("CollidableShape", CollidableShape_default_));
 ;// ./src/x_ite/Browser/RigidBodyPhysics/AppliedParametersType.js
-let AppliedParametersType_i = 0;
+let i = 0;
 
 const AppliedParametersType =
 {
-   BOUNCE:                 AppliedParametersType_i ++,
-   USER_FRICTION:          AppliedParametersType_i ++,
-   FRICTION_COEFFICIENT_2: AppliedParametersType_i ++,
-   ERROR_REDUCTION:        AppliedParametersType_i ++,
-   CONSTANT_FORCE:         AppliedParametersType_i ++,
-   SPEED_1:                AppliedParametersType_i ++,
-   SPEED_2:                AppliedParametersType_i ++,
-   SLIP_1:                 AppliedParametersType_i ++,
-   SLIP_2:                 AppliedParametersType_i ++,
+   BOUNCE:                 i ++,
+   USER_FRICTION:          i ++,
+   FRICTION_COEFFICIENT_2: i ++,
+   ERROR_REDUCTION:        i ++,
+   CONSTANT_FORCE:         i ++,
+   SPEED_1:                i ++,
+   SPEED_2:                i ++,
+   SLIP_1:                 i ++,
+   SLIP_2:                 i ++,
 };
 
 const AppliedParametersType_default_ = AppliedParametersType;
@@ -1773,7 +1773,7 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, RigidBodyPhys
             continue;
          }
 
-         const collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, this ._collidables [i]);
+         const collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
          {
@@ -1938,13 +1938,13 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
 
       return function ()
       {
-         if (! this .getCollection ())
+         if (!this .getCollection ())
             return;
 
-         if (! this .getBody1 ())
+         if (!this .getBody1 ())
             return;
 
-         if (! this .getBody2 ())
+         if (!this .getBody2 ())
             return;
 
          if (this .getBody1 () .getCollection () !== this .getCollection ())
@@ -1976,7 +1976,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
    })(),
    removeJoint ()
    {
-      if (! this .joint)
+      if (!this .joint)
          return;
 
       this .getCollection () ?.getDynamicsWorld () .removeConstraint (this .joint);
@@ -2936,7 +2936,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
          if (jointNode .getCollection ())
          {
             jointNode ._collection .addInterest ("set_joints__", this);
-            this .otherJointNodes .push (bodyNode);
+            this .otherJointNodes .push (jointNode);
             continue;
          }
 
@@ -3086,13 +3086,13 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
 
       return function ()
       {
-         if (! this .getCollection ())
+         if (!this .getCollection ())
             return;
 
-         if (! this .getBody1 ())
+         if (!this .getBody1 ())
             return;
 
-         if (! this .getBody2 ())
+         if (!this .getBody2 ())
             return;
 
          if (this .getBody1 () .getCollection () !== this .getCollection ())
@@ -3278,13 +3278,13 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
 
       return function ()
       {
-         if (! this .getCollection ())
+         if (!this .getCollection ())
             return;
 
-         if (! this .getBody1 ())
+         if (!this .getBody1 ())
             return;
 
-         if (! this .getBody2 ())
+         if (!this .getBody2 ())
             return;
 
          if (this .getBody1 () .getCollection () !== this .getCollection ())
@@ -3330,7 +3330,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
    })(),
    removeJoint ()
    {
-      if (! this .joint)
+      if (!this .joint)
          return;
 
       this .getCollection () ?.getDynamicsWorld () .removeConstraint (this .joint);
@@ -3359,7 +3359,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
    },
    set_separation__ ()
    {
-      if (! this .joint)
+      if (!this .joint)
          return;
 
       this .joint .setLowerLinLimit (this ._minSeparation .getValue ());

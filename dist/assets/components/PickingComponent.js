@@ -1,4 +1,4 @@
-/* X_ITE v15.1.12 */
+/* X_ITE v15.2.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -334,7 +334,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
    },
    set_live__ ()
    {
-      if (this .getLive () .getValue () && this ._enabled .getValue () && ! this .objectType .has ("NONE"))
+      if (this .getLive () .getValue () && this ._enabled .getValue () && !this .objectType .has ("NONE"))
       {
          this .getBrowser () .addPickSensor (this);
          this .setPickableObject (true);
@@ -1011,7 +1011,7 @@ Object .assign (Object .setPrototypeOf (PickableGroup .prototype, (external_X_IT
                }
                case Picking_MatchCriterion .MATCH_EVERY:
                {
-                  if (intersection !== pickSensor .getObjectType () .size)
+                  if (intersection !== pickSensorNode .getObjectType () .size)
                      continue;
 
                   break;

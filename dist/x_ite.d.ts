@@ -272,6 +272,10 @@ declare namespace X3D
        * Loses the WebGL context.
        */
       loseContext (): void;
+      /**
+       * Returns a Promise that resolves when the next frame is rendered. This can be used to synchronize with the rendering loop.
+       */
+      nextFrame (): Promise <void>;
 
       /**
        * Start processing events.

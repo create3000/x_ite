@@ -1,4 +1,4 @@
-/* X_ITE v15.1.12 */
+/* X_ITE v15.2.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -348,14 +348,11 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    {
       // Call shutdown.
 
-      const shutdown = this .context ?.get ("shutdown");
-
-      if (typeof shutdown === "function")
-         this .call__ (shutdown, "shutdown");
+      this .shutdown ?.();
 
       // Disconnect shutdown.
 
-      $(window) .off (`.Script-${this .getId ()}`);
+      window .removeEventListener ("unload", this .shutdown);
 
       // Disconnect prepareEvents.
 
@@ -587,7 +584,15 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
       const shutdown = this .context .get ("shutdown");
 
       if (typeof shutdown === "function")
-         $(window) .on (`unload.Script-${this .getId ()}`, () => this .call__ (shutdown, "shutdown"));
+      {
+         this .shutdown = () => this .call__ (shutdown, "shutdown");
+
+         window .addEventListener ("unload", this .shutdown);
+      }
+      else
+      {
+         this .shutdown = null;
+      }
 
       // Connect prepareEvents.
 

@@ -1,4 +1,4 @@
-/* X_ITE v15.1.12 */
+/* X_ITE v15.2.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -340,6 +340,8 @@ function GaussianSplatsShape (executionContext, node)
    external_X_ITE_X3D_X3DShapeNode_default().call (this, executionContext);
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "rebuild", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+
+   this .setPrivate (true);
 
    // Private Properties
 
@@ -826,18 +828,19 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       // Load worker.
 
       const
+         browser = this .getBrowser (),
+         scene   = this .getScene (),
+         gl      = browser .getContext (),
          content = `import "${external_X_ITE_X3D_URLs_default().getLibraryURL ("mkkellogg-sort.worker.js")}";`,
          url     = URL .createObjectURL (new Blob ([content], { type: "text/javascript" }));
+
+      scene .addLoadingObject (this);
 
       this .sortWorker = new Worker (url, { type: "module" });
 
       URL .revokeObjectURL (url);
 
       // Connect events.
-
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
 
       this .sortWorker .onmessage = event =>
       {
@@ -850,6 +853,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             case "ready":
             {
                this .sortModelViewMatrix .fill (0);
+
+               scene .removeLoadingObject (this);
                browser .addBrowserEvent ();
                break;
             }
@@ -875,6 +880,34 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
          this .sortPending = false;
       };
+
+      const loading = event =>
+      {
+         switch (event .data .type)
+         {
+            case "ready":
+            {
+               browser .loading () .then (() =>
+               {
+                  if (event .target .sorted)
+                     return;
+
+                  scene .addLoadingObject (this);
+               });
+               break;
+            }
+            case "sorted":
+            {
+               scene .removeLoadingObject (this);
+               event .target .removeEventListener ("message", loading);
+
+               event .target .sorted = true;
+               break;
+            }
+         }
+      };
+
+      this .sortWorker .addEventListener ("message", loading);
 
       // Transfer positions buffer to the worker.
 

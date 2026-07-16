@@ -1,4 +1,4 @@
-/* X_ITE v15.1.12 */
+/* X_ITE v15.2.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -318,7 +318,7 @@ Object .assign (Object .setPrototypeOf (BooleanToggle .prototype, (external_X_IT
    set_boolean__ ()
    {
       if (this ._set_boolean .getValue ())
-         this ._toggle = ! this ._toggle .getValue ();
+         this ._toggle = !this ._toggle .getValue ();
    },
 });
 

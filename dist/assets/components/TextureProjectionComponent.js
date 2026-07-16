@@ -1,4 +1,4 @@
-/* X_ITE v15.1.12 */
+/* X_ITE v15.2.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -198,7 +198,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (ext
 
       this .textureNode ?.addInterest ("set_textureNode__", this);
 
-      this .setEnabled (!!this .textureNode);
+      this .setEnabled (!! this .textureNode);
 
       this .set_textureNode__ ();
       this .set_on__ ();

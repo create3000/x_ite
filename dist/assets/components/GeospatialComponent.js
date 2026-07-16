@@ -1,4 +1,4 @@
-/* X_ITE v15.1.12 */
+/* X_ITE v15.2.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -389,7 +389,7 @@ Object .assign (UniversalTransverseMercator .prototype,
 
       if (northing < 0)
       {
-         S        = ! this .southernHemisphere;
+         S        = !this .southernHemisphere;
          northing = -northing;
       }
 
@@ -466,7 +466,7 @@ Object .assign (UniversalTransverseMercator .prototype,
       {
          northing += N0;
 
-         if (! this .southernHemisphere)
+         if (!this .southernHemisphere)
             northing = -northing;
       }
       else
