@@ -104,7 +104,7 @@ const handler =
       for (let i = 0; i < length; ++ i)
          ownKeys .push (String (i));
 
-      return ownKeys .concat (Reflect .ownKeys (target));
+      return ownKeys .concat (Object .keys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {

@@ -45,7 +45,7 @@ const handler =
    },
    ownKeys (target)
    {
-      return Object .keys (target [_array]) .concat (Reflect .ownKeys (target));
+      return Object .keys (target [_array]) .concat (Object .keys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
