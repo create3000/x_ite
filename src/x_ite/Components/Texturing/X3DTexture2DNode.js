@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
          gl  = this .getBrowser () .getContext (),
          max = gl .getParameter (gl .MAX_TEXTURE_SIZE);
 
-      if (max && (width > max || height > max))
+      if (width > max || height > max)
       {
          throw new Error (`At least one dimension (${width} × ${height}) is greater than the maximum texture size (${max} px).`);
       }
@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    },
    updateTextureData (data)
    {
-      const gl = this .getBrowser () .getContext ()
+      const gl = this .getBrowser () .getContext ();
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, this .type, data);
