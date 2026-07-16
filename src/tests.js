@@ -474,6 +474,7 @@ const X_ITE_TESTS = [
    { path: "Texturing/ColorManagement.x3d" },
    { path: "Texturing/ColorMaterial.x3d" },
    { path: "Texturing/DataURL.x3d" },
+   { path: "Texturing/FailedLoad.x3dv" },
    { path: "Texturing/Felulet.x3d" },
    { path: "Texturing/KTX2D.x3d" },
    { path: "Texturing/KTX3D.x3d" },
