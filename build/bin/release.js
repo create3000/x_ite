@@ -266,7 +266,7 @@ function main ()
    bump ();
    systemSync ("npm run dist");
    if (systemSync (`npm run test:run`))
-      proc;
+      process .exit (1);
    zip ();
 
    release ();
