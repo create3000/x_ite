@@ -106,7 +106,16 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          scene   = this .getScene ();
 
       if (xmlElement === null)
-         return this .resolve ?.(scene);
+      {
+         if (this .resolve)
+         {
+            browser .loadComponents (scene)
+               .then (() => this .resolve (scene))
+               .catch (this .reject);
+         }
+
+         return;
+      }
 
       switch (xmlElement .nodeName)
       {
