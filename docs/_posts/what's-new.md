@@ -7,6 +7,10 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v15.2 Series
+
+*Leipzig, 19th July 2026:* The 15.2 release of X_ITE introduces a comprehensive test suite based on [Vitest](https://vitest.dev), significantly improving automated testing across both Node.js and browser environments. The new testing infrastructure has already helped uncover and resolve a number of subtle bugs, increasing the overall stability and reliability of the library. This investment in automated testing provides a solid foundation for future development and helps ensure that new features and changes can be integrated with greater confidence.
+
 ## X_ITE v15.1 Series
 
 *Leipzig, 31st May 2026:* The 15.1 release of X_ITE comes now with basic support for 3D Gaussian Splatting, bringing a modern point-based rendering technique to the X3D ecosystem. To make working with Gaussian Splats straightforward and fully integrated into X3D scenes, this release introduces the new [GaussianSplats](/x_ite/components/gaussiansplats/gaussiansplats/) node. It enables the loading and rendering of Gaussian Splat datasets while leveraging X_ITE's existing scene graph architecture.
