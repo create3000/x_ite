@@ -78,17 +78,17 @@ class X3DCanvasElement extends HTMLElement
 
    captureStream (... args)
    {
-      return this .browser ?.getCanvas () [0] .captureStream (... args);
+      return this .browser ?.getCanvas () .captureStream (... args);
    }
 
    toBlob (... args)
    {
-      return this .browser ?.getCanvas () [0] .toBlob (... args);
+      return this .browser ?.getCanvas () .toBlob (... args);
    }
 
    toDataURL (... args)
    {
-      return this .browser ?.getCanvas () [0] .toDataURL (... args);
+      return this .browser ?.getCanvas () .toDataURL (... args);
    }
 
    get [Symbol .toStringTag] ()

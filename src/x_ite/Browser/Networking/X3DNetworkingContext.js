@@ -81,7 +81,7 @@ Object .assign (X3DNetworkingContext .prototype,
          if (this .getBrowserOption ("SplashScreen"))
          {
             this .getContextMenu () .hide ();
-            this .getCanvas () .hide ();
+            this .getCanvas () .style .display = "none";
             this .getSplashScreen () .classList .remove ("x_ite-private-fade-out-splash-screen", "x_ite-private-hidden");
          }
       }
@@ -91,7 +91,7 @@ Object .assign (X3DNetworkingContext .prototype,
 
          if (this .getBrowserOption ("SplashScreen"))
          {
-            this .getCanvas () .show ();
+            this .getCanvas () .style .display = "block";
 
             // Defer until promises are resolved.
             setTimeout (() =>

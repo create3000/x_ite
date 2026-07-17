@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
-      this .getCanvas () .on ("webglcontextlost", () =>
+      this .getCanvas () .addEventListener ("webglcontextlost", () =>
       {
          this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
       });
@@ -615,7 +615,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             else
             {
                if (!this .getBrowserOption ("SplashScreen"))
-                  this .getCanvas () .show ();
+                  this .getCanvas () .style .display = "block";
 
                if (scene)
                {

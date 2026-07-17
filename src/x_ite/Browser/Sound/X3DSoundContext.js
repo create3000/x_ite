@@ -17,8 +17,6 @@ Object .assign (X3DSoundContext .prototype,
 {
    initialize ()
    {
-      const id = `X3DSoundContext-${this .getId ()}`;
-
       const events = [
          "blur",
          "click",
@@ -32,12 +30,11 @@ Object .assign (X3DSoundContext .prototype,
          "mousewheel",
          "pointerup",
          "touchend",
-         "touchmove",
          "touchstart",
-      ]
-      .map (event => `${event}.${id}`);
+      ];
 
-      this .getCanvas () .on (events .join (" "), () => this .startAudioElements ());
+      for (const event of events)
+         this .getCanvas () .addEventListener (event, () => this .startAudioElements ());
    },
    getAudioContext ()
    {
