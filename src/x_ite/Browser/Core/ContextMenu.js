@@ -24,7 +24,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       this [_options] = {
          element: $(browser .getElement ()),
-         appendTo: browser .getShadow (),
+         appendTo: $(browser .getShadow ()),
          build: this .build .bind (this),
       };
 
@@ -501,10 +501,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                className: "context-menu-icon x_ite-private-icon-world-info",
                callback ()
                {
-                  browser .getShadow () .find (".x_ite-private-world-info") .remove ();
+                  $(browser .getShadow ()) .find (".x_ite-private-world-info") .remove ();
 
                   const
-                     priv         = browser .getShadow () .find (".x_ite-private-browser"),
+                     priv         = $(browser .getShadow ()) .find (".x_ite-private-browser"),
                      overlay      = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
                      div          = $("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
                      content      = $("<div></div>"),

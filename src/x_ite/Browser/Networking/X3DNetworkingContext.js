@@ -76,7 +76,7 @@ Object .assign (X3DNetworkingContext .prototype,
          if (!this [_loadingObjects] .has (this))
             this .resetLoadCount ();
 
-         this .getShadow () .find (".x_ite-private-world-info") .remove ();
+         this .getShadow () .querySelector (".x_ite-private-world-info") ?.remove ();
 
          if (this .getBrowserOption ("SplashScreen"))
          {

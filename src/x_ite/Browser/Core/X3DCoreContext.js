@@ -201,7 +201,7 @@ Object .assign (X3DCoreContext .prototype,
    },
    getShadow ()
    {
-      return this [_shadow];
+      return this [_shadow] [0];
    },
    getSurface ()
    {
@@ -798,7 +798,7 @@ Object .assign (X3DCoreContext .prototype,
       {
          // The textarea must be visible to make copy work.
          const tmp = $("<textarea></textarea>");
-         this .getShadow () .find (".x_ite-private-browser") .prepend (tmp);
+         this [_shadow] .find (".x_ite-private-browser") .prepend (tmp);
          tmp .text (text) .trigger ("select");
          document .execCommand ("copy");
          tmp .remove ();
