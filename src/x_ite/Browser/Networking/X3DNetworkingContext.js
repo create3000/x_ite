@@ -82,7 +82,7 @@ Object .assign (X3DNetworkingContext .prototype,
          {
             this .getContextMenu () .hide ();
             this .getCanvas () .hide ();
-            this .getSplashScreen () .removeClass (["x_ite-private-fade-out-splash-screen", "x_ite-private-hidden"]);
+            this .getSplashScreen () .classList .remove ("x_ite-private-fade-out-splash-screen", "x_ite-private-hidden");
          }
       }
       else
@@ -97,7 +97,7 @@ Object .assign (X3DNetworkingContext .prototype,
             setTimeout (() =>
             {
                if (!this [_browserLoading])
-                  this .getSplashScreen () .addClass ("x_ite-private-fade-out-splash-screen");
+                  this .getSplashScreen () .classList .add ("x_ite-private-fade-out-splash-screen");
             });
          }
       }
@@ -191,9 +191,8 @@ Object .assign (X3DNetworkingContext .prototype,
          const fractions = 1 - (this ._loadCount .getValue () + loadFractions)
             / (this [_loadingTotal] + this [_loadFractions] .size);
 
-         this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
-         this .getSplashScreen () .find (".x_ite-private-progressbar div")
-            .css ("width", `${100 * fractions}%`);
+         this .getSplashScreen () .querySelector (".x_ite-private-spinner-text") .textContent     = string;
+         this .getSplashScreen () .querySelector (".x_ite-private-progressbar div") .style .width = `${100 * fractions}%`;
       }
       else
       {

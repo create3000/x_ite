@@ -631,9 +631,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
                   setTimeout (() =>
                   {
-                     this .getSplashScreen ()
-                        .find (".x_ite-private-spinner-text")
-                        .text (_ ("Failed loading world."));
+                     const spinnerText = this .getSplashScreen () .querySelector (".x_ite-private-spinner-text");
+
+                     spinnerText .textContent = _ ("Failed loading world.");
                   });
 
                   reject (new Error ("Couldn't load X3D file."));
