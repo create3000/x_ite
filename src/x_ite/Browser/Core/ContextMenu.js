@@ -23,7 +23,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       const browser = this .getBrowser ();
 
       this [_options] = {
-         element: browser .getElement (),
+         element: $(browser .getElement ()),
          appendTo: browser .getShadow (),
          build: this .build .bind (this),
       };
@@ -265,12 +265,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          }
       }
    },
-   build (event)
+   build ()
    {
       const
          browser    = this .getBrowser (),
          element    = browser .getElement (),
-         fullscreen = document .fullscreenElement === element [0];
+         fullscreen = document .fullscreenElement === element;
 
       if (!browser .getBrowserOption ("ContextMenu"))
          return;
@@ -492,7 +492,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   if (fullscreen)
                      document .exitFullscreen () .catch (Function .prototype);
                   else
-                     element [0] .requestFullscreen ({ navigationUI: "hide" }) .catch (Function .prototype);
+                     element .requestFullscreen ({ navigationUI: "hide" }) .catch (Function .prototype);
                },
             },
             "separator4": "--------",

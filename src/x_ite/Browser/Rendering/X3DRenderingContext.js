@@ -305,7 +305,11 @@ Object .assign (X3DRenderingContext .prototype,
             resolve ();
          };
 
-         this .getElement () .css ({ "width": `${width}px`, "height": `${height}px` });
+         Object .assign (this .getElement () .style,
+         {
+            width: `${width}px`,
+            height: `${height}px`,
+         });
 
          this ._viewport .addFieldCallback (key, test);
 
@@ -421,10 +425,10 @@ Object .assign (X3DRenderingContext .prototype,
    {
       const element = this .getElement ();
 
-      if (document .fullscreenElement === element [0])
-         element .addClass ("x_ite-fullscreen");
+      if (document .fullscreenElement === element)
+         element .classList .add ("x_ite-fullscreen");
       else
-         element .removeClass ("x_ite-fullscreen");
+         element .classList .remove ("x_ite-fullscreen");
    },
    async xrCheckSupport ()
    {

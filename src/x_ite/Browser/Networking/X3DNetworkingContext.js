@@ -16,7 +16,7 @@ const
 
 function getBaseURI (element)
 {
-   const baseURI = element .prop ("baseURI");
+   const { baseURI } = element;
 
    // Fix for Edge.
    if (baseURI .startsWith ("about:"))

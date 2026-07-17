@@ -41,7 +41,7 @@ let instanceId = 0;
 function X3DCoreContext (element)
 {
    element = $(element);
-   
+
    // Events
 
    this .addChildObjects (X3DConstants .outputOnly, "controlKey", new Fields .SFBool (),
@@ -129,7 +129,7 @@ Object .assign (X3DCoreContext .prototype,
 
       // Define properties of X3DCanvasElement.
 
-      Object .defineProperties (element [0],
+      Object .defineProperties (element,
       {
          browser:
          {
@@ -142,11 +142,11 @@ Object .assign (X3DCoreContext .prototype,
             {
                get: () =>
                {
-                  return element .attr ("src");
+                  return element .getAttribute ("src");
                },
                set: (value) =>
                {
-                  element .attr ("src", value);
+                  element .setAttribute ("src", value);
                },
                enumerable: true,
             },
@@ -154,11 +154,11 @@ Object .assign (X3DCoreContext .prototype,
             {
                get: () =>
                {
-                  return this .parseUrlAttribute (element .attr ("url"));
+                  return this .parseUrlAttribute (element .getAttribute ("url"));
                },
                set: (value) =>
                {
-                  element .attr ("url", [... value] .map (src => `"${src}"`) .join (", "));
+                  element .setAttribute ("url", [... value] .map (src => `"${src}"`) .join (", "));
                },
                enumerable: true,
             },
@@ -167,16 +167,15 @@ Object .assign (X3DCoreContext .prototype,
 
       // Configure browser event handlers.
 
-      element
-         .on ("keydown.X3DCoreContext", this [_keydown] .bind (this))
-         .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
+      element .addEventListener ("keydown", this [_keydown] .bind (this));
+      element .addEventListener ("keyup",   this [_keyup]   .bind (this));
 
       // Workaround for a bug in Chrome (v135) where attributeChangedCallback is not
       // initially called for attributes set in XHTML.
 
       (() =>
       {
-         if (element .prop ("nodeName") .toUpperCase () !== "X3D-CANVAS")
+         if (element .nodeName .toUpperCase () !== "X3D-CANVAS")
             return;
 
          if (document .contentType !== "application/xhtml+xml")
@@ -187,7 +186,7 @@ Object .assign (X3DCoreContext .prototype,
 
          setTimeout (() =>
          {
-            for (const { name, value } of element [0] .attributes)
+            for (const { name, value } of element .attributes)
                this .attributeChangedCallback (name, undefined, value);
          });
       })();
@@ -198,7 +197,7 @@ Object .assign (X3DCoreContext .prototype,
    },
    getElement ()
    {
-      return this [_element];
+      return this [_element] [0];
    },
    getShadow ()
    {
@@ -349,7 +348,7 @@ Object .assign (X3DCoreContext .prototype,
          {
             try
             {
-               this .getElement () [0] [name] = new Function ("event", newValue);
+               this .getElement () [name] = new Function ("event", newValue);
             }
             catch (error)
             {
@@ -468,7 +467,7 @@ Object .assign (X3DCoreContext .prototype,
 
       return function (events)
       {
-         const element = this .getElement () [0];
+         const element = this .getElement ();
 
          for (const name of events .split (" "))
          {
@@ -807,10 +806,9 @@ Object .assign (X3DCoreContext .prototype,
    },
    dispose ()
    {
-      this .getElement () .off (".X3DCoreContext .ContextMenu");
-
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ?.();
       this [_shadow] .find ("*") .remove ();
+      this [_element] .remove ();
    },
 });
 

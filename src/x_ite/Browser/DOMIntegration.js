@@ -40,7 +40,7 @@ class DOMIntegration
       this .rootElement    = undefined;
       this .canvasObserver = new MutationObserver (() => this .processCanvasMutation (browser));
 
-      this .canvasObserver .observe (browser .getElement () [0],
+      this .canvasObserver .observe (browser .getElement (),
       {
          attributes: false,
          childList: true,
@@ -57,7 +57,10 @@ class DOMIntegration
 
    processCanvasMutation (browser)
    {
-      this .processRootElement (browser, browser .getElement () .children ("X3D") .get (-1));
+      const X3D = Array .from (browser .getElement () .children)
+         .filter (child => child .matches ("X3D"));
+
+      this .processRootElement (browser, X3D .at (-1));
    }
 
    async processRootElement (browser, rootElement)

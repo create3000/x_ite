@@ -14,7 +14,7 @@ const Legacy =
    {
       const element = browser .getElement ();
 
-      if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
+      if (element .nodeName .toUpperCase () !== "X3DCANVAS")
          return properties;
 
       for (const [name, property] of Object .entries (properties))
@@ -23,7 +23,7 @@ const Legacy =
 
          property .set = function (value)
          {
-            set (value);
+            set .call (this, value);
 
             browser .attributeChangedCallback (name, undefined, value);
          };
@@ -35,14 +35,14 @@ const Legacy =
    {
       const element = browser .getElement ();
 
-      if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
+      if (element .nodeName .toUpperCase () !== "X3DCANVAS")
          return;
 
       // Make element focusable.
-      element .attr ("tabindex", element .attr ("tabindex") ?? 0);
+      element .setAttribute ("tabindex", element .getAttribute ("tabindex") ?? 0);
 
       // Process initial attributes.
-      for (const { name, value } of element [0] .attributes)
+      for (const { name, value } of element .attributes)
          browser .attributeChangedCallback (name, undefined, value);
    },
    error (elements, error)

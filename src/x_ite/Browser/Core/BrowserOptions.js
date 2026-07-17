@@ -122,9 +122,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
             {
                const
                   attribute = mappings .get (name) ?? $.toLowerCaseFirst (name),
-                  value     = browser .getElement () .attr (attribute);
+                  value     = browser .getElement () .getAttribute (attribute);
 
-               if (value !== undefined)
+               if (value !== null)
                {
                   browser .attributeChangedCallback (attribute, null, value);
                   continue;
@@ -236,16 +236,16 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_AutoUpdate__ (autoUpdate)
    {
-      const
-         browser = this .getBrowser (),
-         element = browser .getElement () [0];
-
       document .removeEventListener ("visibilitychange", this .checkUpdateListener);
 
       this .intersectionObserver ?.disconnect ();
 
       if (!autoUpdate .getValue ())
          return;
+
+      const
+         browser = this .getBrowser (),
+         element = browser .getElement ();
 
       this .checkUpdateListener = () => this .checkUpdate ();
 
