@@ -111,12 +111,14 @@ function X3DCoreContext (element)
    this [_context]      = Context .create (this [_canvas], element .getAttribute ("preserveDrawingBuffer") === "true");
    this [_splashScreen] = this [_shadow] .querySelector (".x_ite-private-splash-screen");
 
-   this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
-   this [_browserOptions]      = new BrowserOptions      (this .getPrivateScene ());
-   this [_browserProperties]   = new BrowserProperties   (this .getPrivateScene ());
-   this [_browserTimings]      = new BrowserTimings      (this .getPrivateScene ());
-   this [_notification]        = new Notification        (this .getPrivateScene ());
-   this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
+   const privateScene = this .getPrivateScene ();
+
+   this [_renderingProperties] = new RenderingProperties (privateScene);
+   this [_browserOptions]      = new BrowserOptions      (privateScene);
+   this [_browserProperties]   = new BrowserProperties   (privateScene);
+   this [_browserTimings]      = new BrowserTimings      (privateScene);
+   this [_notification]        = new Notification        (privateScene);
+   this [_contextMenu]         = new ContextMenu         (privateScene);
 }
 
 Object .assign (X3DCoreContext .prototype,
