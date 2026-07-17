@@ -808,7 +808,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          // Add elements and cdata.
          if (childNode .nodeType === 1 || childNode .nodeType === 4)
-            element .appendChild (childNode);
+            element .append (childNode);
       }
    },
    routeElement (xmlElement)

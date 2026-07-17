@@ -139,7 +139,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
          docu  = $.parseXML ("<xml></xml>",),
          cdata = docu .createCDATASection (str);
 
-      element .appendChild (cdata);
+      element .append (cdata);
    },
    convertObject (key, object, element, containerField)
    {
@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
             {
                const child = document .createComment (this .commentStringToXML (object [key] [c]));
 
-               element .appendChild (child);
+               element .append (child);
             }
          }
          else if (key === "#sourceCode" || key === "@sourceCode" || key === "#sourceText")
@@ -181,8 +181,8 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
 
                   this .convertToDOM (object [key] [childkey], childkey, child);
 
-                  element .appendChild (child);
-                  element .appendChild (document .createTextNode ("\n"));
+                  element .append (child);
+                  element .append (document .createTextNode ("\n"));
                }
             }
          }
@@ -192,8 +192,8 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
 
             this .convertToDOM (object [key], key, child);
 
-            element .appendChild (child);
-            element .appendChild (document .createTextNode ("\n"));
+            element .append (child);
+            element .append (document .createTextNode ("\n"));
          }
       }
    },
@@ -242,7 +242,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
          {
             const child = this .createElement ("NULL", containerField);
 
-            element .appendChild (child);
+            element .append (child);
          }
          else
          {
@@ -334,7 +334,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
                   {
                      const child = document .createComment (this .commentStringToXML (object [key]));
 
-                     element .appendChild (child);
+                     element .append (child);
                   }
 
                   break;

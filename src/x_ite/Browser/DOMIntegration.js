@@ -307,7 +307,7 @@ class DOMIntegration
             if (!X3DElement)
                break;
 
-            element .appendChild (X3DElement);
+            element .append (X3DElement);
 
             // Add Inline elements, and connect to node events.
 

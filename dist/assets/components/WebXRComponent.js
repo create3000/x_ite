@@ -491,7 +491,7 @@ Object .assign (X3DWebXRContext .prototype,
             else
                this .xrStopSession ();
          })
-         .appendTo (this .getSurface () .find (".x_ite-private-buttons"));
+         .appendTo (this .getSurface () .querySelector (".x_ite-private-buttons"));
    },
    async xrStartSession ()
    {
@@ -645,7 +645,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .getSession () .updateRenderState (nearFarPlanes);
       };
    })(),
-   xrUpdateVisibility (event)
+   xrUpdateVisibility ()
    {
       switch (this .getSession () .visibilityState)
       {

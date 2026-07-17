@@ -1,7 +1,7 @@
 /* X_ITE v15.2.0 */
 var __webpack_modules__ = ({
 
-/***/ 286
+/***/ 464
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 const Namespace = { };
@@ -35,7 +35,7 @@ Object .defineProperty (Namespace, "add",
 
 /***/ },
 
-/***/ 910
+/***/ 938
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1040,7 +1040,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 948
+/***/ 112
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2036,7 +2036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 67
+/***/ 927
 (module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2050,7 +2050,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     if ( true ) {
 
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(808) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(284) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2281,7 +2281,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 888
+/***/ 44
 (module) {
 
 /**
@@ -7060,26 +7060,26 @@ if (true) {
 
 /***/ },
 
-/***/ 808
+/***/ 284
 (module, __unused_webpack_exports, __webpack_require__) {
 
 
 
 // Bundlers are able to synchronously require an ESM module from a CommonJS one.
-const { jQuery } = __webpack_require__( 68 );
+const { jQuery } = __webpack_require__( 184 );
 module.exports = jQuery;
 
 
 /***/ },
 
-/***/ 68
+/***/ 184
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   jQuery: () => (/* binding */ jQuery)
 /* harmony export */ });
 /* unused harmony export $ */
-/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(286);
+/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(464);
 /*!
  * jQuery JavaScript Library v4.0.0+slim
  * https://jquery.com/
@@ -14012,7 +14012,7 @@ const __default__ = jQuery;
 /************************************************************************/
 
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(286);
+var Namespace = __webpack_require__(464);
 ;// ./src/x_ite/Base/X3DConstants.js
 const X3DConstants =
 {
@@ -15239,7 +15239,7 @@ const Features_default_ = Features;
 
 /* harmony default export */ const x_ite_Features = (Namespace/* default */.A .add ("Features", Features_default_));
 ;// ./src/x_ite/Base/X3DObject.js
-/* provided dependency */ var $ = __webpack_require__(68).A;
+/* provided dependency */ var $ = __webpack_require__(184).A;
 
 
 
@@ -25765,7 +25765,7 @@ const Legacy =
    {
       const element = browser .getElement ();
 
-      if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
+      if (element .nodeName .toUpperCase () !== "X3DCANVAS")
          return properties;
 
       for (const [name, property] of Object .entries (properties))
@@ -25774,7 +25774,7 @@ const Legacy =
 
          property .set = function (value)
          {
-            set (value);
+            set .call (this, value);
 
             browser .attributeChangedCallback (name, undefined, value);
          };
@@ -25786,14 +25786,14 @@ const Legacy =
    {
       const element = browser .getElement ();
 
-      if (element .prop ("nodeName") .toUpperCase () !== "X3DCANVAS")
+      if (element .nodeName .toUpperCase () !== "X3DCANVAS")
          return;
 
       // Make element focusable.
-      element .attr ("tabindex", element .attr ("tabindex") ?? 0);
+      element .setAttribute ("tabindex", element .getAttribute ("tabindex") ?? 0);
 
       // Process initial attributes.
-      for (const { name, value } of element [0] .attributes)
+      for (const { name, value } of element .attributes)
          browser .attributeChangedCallback (name, undefined, value);
    },
    error (elements, error)
@@ -26258,7 +26258,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (Namespace/* default */.A .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(68).A;
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(184).A;
 
 
 
@@ -26706,7 +26706,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (Namespace/* default */.A .add ("TextCompression", TextCompression_default_));
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(68).A;
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(184).A;
 
 
 
@@ -26831,9 +26831,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
             {
                const
                   attribute = mappings .get (name) ?? BrowserOptions_$.toLowerCaseFirst (name),
-                  value     = browser .getElement () .attr (attribute);
+                  value     = browser .getElement () .getAttribute (attribute);
 
-               if (value !== undefined)
+               if (value !== null)
                {
                   browser .attributeChangedCallback (attribute, null, value);
                   continue;
@@ -26945,16 +26945,16 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
    },
    set_AutoUpdate__ (autoUpdate)
    {
-      const
-         browser = this .getBrowser (),
-         element = browser .getElement () [0];
-
       document .removeEventListener ("visibilitychange", this .checkUpdateListener);
 
       this .intersectionObserver ?.disconnect ();
 
       if (!autoUpdate .getValue ())
          return;
+
+      const
+         browser = this .getBrowser (),
+         element = browser .getElement ();
 
       this .checkUpdateListener = () => this .checkUpdate ();
 
@@ -27228,7 +27228,7 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, Base_X3D
 
       inches .style .height = "10in";
 
-      body .appendChild (inches);
+      body .append (inches);
 
       this ._PixelsPerPoint = inches .clientHeight / 720 || 1;
 
@@ -27271,7 +27271,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (Namespace/* default */.A .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(68).A;
+/* provided dependency */ var Notification_$ = __webpack_require__(184).A;
 
 
 
@@ -27359,13 +27359,12 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (Namespace/* default */.A .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(68).A;
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(184).A;
 
 
 
 
 const
-   _options  = Symbol (),
    _userMenu = Symbol (),
    _hide     = Symbol ();
 
@@ -27384,13 +27383,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
 
       const browser = this .getBrowser ();
 
-      this [_options] = {
-         element: browser .getElement (),
-         appendTo: browser .getShadow (),
-         build: this .build .bind (this),
-      };
-
-      this [_options] .element .on ("contextmenu.ContextMenu", event => this .show (event));
+      browser .getElement () .addEventListener ("contextmenu", event => this .show (event));
    },
    getUserMenu ()
    {
@@ -27424,19 +27417,21 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
    show (event)
    {
       const
-         options = this [_options],
-         menu    = options .build (event),
-         level   = 1;
+         root  = this .getBrowser () .getShadow (),
+         menu  = this .build (),
+         level = 1;
 
+      event .preventDefault ();
       this .hide ();
 
-      if (!menu) return;
+      if (!menu)
+         return;
 
       // Layer
 
       const layer = ContextMenu_$("<div></div>")
          .addClass (["context-menu-layer", menu .className])
-         .appendTo (options .appendTo);
+         .appendTo (root);
 
       this [_hide] = () =>
       {
@@ -27458,7 +27453,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
          .hide ()
          .addClass (["context-menu-root", "context-menu-list", menu .className])
          .offset ({ "left": event .pageX, "top": event .pageY })
-         .appendTo (options .appendTo);
+         .appendTo (root);
 
       ContextMenu_$("<div></div>")
          .addClass ("context-menu-background")
@@ -27627,12 +27622,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
          }
       }
    },
-   build (event)
+   build ()
    {
       const
          browser    = this .getBrowser (),
          element    = browser .getElement (),
-         fullscreen = document .fullscreenElement === element [0];
+         fullscreen = document .fullscreenElement === element;
 
       if (!browser .getBrowserOption ("ContextMenu"))
          return;
@@ -27854,7 +27849,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
                   if (fullscreen)
                      document .exitFullscreen () .catch (Function .prototype);
                   else
-                     element [0] .requestFullscreen ({ navigationUI: "hide" }) .catch (Function .prototype);
+                     element .requestFullscreen ({ navigationUI: "hide" }) .catch (Function .prototype);
                },
             },
             "separator4": "--------",
@@ -27863,10 +27858,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
                className: "context-menu-icon x_ite-private-icon-world-info",
                callback ()
                {
-                  browser .getShadow () .find (".x_ite-private-world-info") .remove ();
+                  ContextMenu_$(browser .getShadow ()) .find (".x_ite-private-world-info") .remove ();
 
                   const
-                     priv         = browser .getShadow () .find (".x_ite-private-browser"),
+                     priv         = ContextMenu_$(browser .getShadow ()) .find (".x_ite-private-browser"),
                      overlay      = ContextMenu_$("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
                      div          = ContextMenu_$("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
                      content      = ContextMenu_$("<div></div>"),
@@ -30840,7 +30835,7 @@ const NamedNodesArray_default_ = NamedNodesArray;
 
 /* harmony default export */ const Execution_NamedNodesArray = (Namespace/* default */.A .add ("NamedNodesArray", NamedNodesArray_default_));
 ;// ./src/x_ite/Components/Core/X3DImportedNodeProxy.js
-/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(68).A;
+/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(184).A;
 
 
 
@@ -32873,10 +32868,10 @@ Object .assign (X3DParser .prototype,
 
          this .wrap .style .display = "none";
 
-         this .wrap .appendChild (this .div);
+         this .wrap .append (this .div);
       }
 
-      this .body .appendChild (this .wrap);
+      this .body .append (this .wrap);
 
       this .wrap .style .color = defaultColor;
       this .div  .style .color = value;
@@ -33132,7 +33127,7 @@ const Placeholder_default_ = Placeholder;
 
 /* harmony default export */ const Parser_Placeholder = (Namespace/* default */.A .add ("Placeholder", Placeholder_default_));
 ;// ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(68).A;
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(184).A;
 
 
 
@@ -35893,7 +35888,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (Namespace/* default */.A .add ("VRMLParser", VRMLParser_default_));
 ;// ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(68).A;
+/* provided dependency */ var XMLParser_$ = __webpack_require__(184).A;
 
 
 
@@ -36017,7 +36012,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
       {
          case "#document":
          {
-            const X3D = Array .from (xmlElement .children) .filter (child => child .matches ("X3D"));
+            const X3D = Array .from (xmlElement .children)
+               .filter (child => child .matches ("X3D"));
 
             if (X3D .length)
             {
@@ -36703,7 +36699,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
       {
          // Add elements and cdata.
          if (childNode .nodeType === 1 || childNode .nodeType === 4)
-            element .appendChild (childNode);
+            element .append (childNode);
       }
    },
    routeElement (xmlElement)
@@ -37205,7 +37201,7 @@ const XMLParser_default_ = XMLParser;
 
 /* harmony default export */ const Parser_XMLParser = (Namespace/* default */.A .add ("XMLParser", XMLParser_default_));
 ;// ./src/x_ite/Parser/JSONParser.js
-/* provided dependency */ var JSONParser_$ = __webpack_require__(68).A;
+/* provided dependency */ var JSONParser_$ = __webpack_require__(184).A;
 
 
 
@@ -37347,7 +37343,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
          docu  = JSONParser_$.parseXML ("<xml></xml>",),
          cdata = docu .createCDATASection (str);
 
-      element .appendChild (cdata);
+      element .append (cdata);
    },
    convertObject (key, object, element, containerField)
    {
@@ -37371,7 +37367,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
             {
                const child = document .createComment (this .commentStringToXML (object [key] [c]));
 
-               element .appendChild (child);
+               element .append (child);
             }
          }
          else if (key === "#sourceCode" || key === "@sourceCode" || key === "#sourceText")
@@ -37389,8 +37385,8 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
 
                   this .convertToDOM (object [key] [childkey], childkey, child);
 
-                  element .appendChild (child);
-                  element .appendChild (document .createTextNode ("\n"));
+                  element .append (child);
+                  element .append (document .createTextNode ("\n"));
                }
             }
          }
@@ -37400,8 +37396,8 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
 
             this .convertToDOM (object [key], key, child);
 
-            element .appendChild (child);
-            element .appendChild (document .createTextNode ("\n"));
+            element .append (child);
+            element .append (document .createTextNode ("\n"));
          }
       }
    },
@@ -37450,7 +37446,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
          {
             const child = this .createElement ("NULL", containerField);
 
-            element .appendChild (child);
+            element .append (child);
          }
          else
          {
@@ -37542,7 +37538,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
                   {
                      const child = document .createComment (this .commentStringToXML (object [key]));
 
-                     element .appendChild (child);
+                     element .append (child);
                   }
 
                   break;
@@ -38138,7 +38134,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (Namespace/* default */.A .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(888);
+/* provided dependency */ var libtess = __webpack_require__(44);
 
 
 const Triangle3 =
@@ -47297,7 +47293,7 @@ const Layer_default_ = Layer;
 
 /* harmony default export */ const Layering_Layer = (Namespace/* default */.A .add ("Layer", Layer_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(68).A;
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(184).A;
 
 
 
@@ -51740,7 +51736,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (Namespace/* default */.A .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(68).A;
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(184).A;
 
 
 
@@ -51846,7 +51842,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (Namespace/* default */.A .add ("GLB2Parser", GLB2Parser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(68).A;
+/* provided dependency */ var OBJParser_$ = __webpack_require__(184).A;
 
 
 
@@ -53300,7 +53296,7 @@ const STLAParser_default_ = STLAParser;
 
 /* harmony default export */ const Parser_STLAParser = (Namespace/* default */.A .add ("STLAParser", STLAParser_default_));
 ;// ./src/x_ite/Parser/STLBParser.js
-/* provided dependency */ var STLBParser_$ = __webpack_require__(68).A;
+/* provided dependency */ var STLBParser_$ = __webpack_require__(184).A;
 
 
 
@@ -54188,7 +54184,7 @@ const PLYAParser_default_ = PLYAParser;
 
 /* harmony default export */ const Parser_PLYAParser = (Namespace/* default */.A .add ("PLYAParser", PLYAParser_default_));
 ;// ./src/x_ite/Parser/PLYBParser.js
-/* provided dependency */ var PLYBParser_$ = __webpack_require__(68).A;
+/* provided dependency */ var PLYBParser_$ = __webpack_require__(184).A;
 
 
 function PLYBParser (scene)
@@ -54767,8 +54763,8 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (Namespace/* default */.A .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(68).A;
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(888);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(184).A;
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(44);
 
 
 
@@ -57502,7 +57498,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (Namespace/* default */.A .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(68).A;
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(184).A;
 
 
 
@@ -57950,7 +57946,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (Namespace/* default */.A .add ("X3DWorld", X3DWorld_default_));
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(68).A;
+/* provided dependency */ var FileLoader_$ = __webpack_require__(184).A;
 
 
 
@@ -58723,7 +58719,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (Namespace/* default */.A .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(68).A;
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(184).A;
 
 
 
@@ -61383,7 +61379,6 @@ Fonts_add ("PT_Sans/PTSans-Italic.woff2",     false, true);
 // add ("PT_Sans/PTSans-BoldItalic.woff2", true,  true);
 
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(68).A;
 
 
 
@@ -61426,8 +61421,6 @@ let instanceId = 0;
 
 function X3DCoreContext (element)
 {
-   element = X3DCoreContext_$(element);
-   
    // Events
 
    this .addChildObjects (Base_X3DConstants .outputOnly, "controlKey", new x_ite_Fields .SFBool (),
@@ -61438,71 +61431,82 @@ function X3DCoreContext (element)
 
    // Get canvas & context.
 
-   const
-      browser      = X3DCoreContext_$("<div></div>", { class: "x_ite-private-browser", part: "browser", tabindex: 0 }),
-      surface      = X3DCoreContext_$("<div></div>", { class: "x_ite-private-surface", part: "surface" }),
-      splashScreen = X3DCoreContext_$("<div></div>", { class: "x_ite-private-splash-screen x_ite-private-hidden" }),
-      spinner      = X3DCoreContext_$("<div></div>", { class: "x_ite-private-spinner" }),
-      progress     = X3DCoreContext_$("<div></div>", { class: "x_ite-private-progress" }),
-      buttons      = X3DCoreContext_$("<div></div>", { class: "x_ite-private-buttons", part: "buttons" });
+   const html = /* html */ `
+<div class="x_ite-private-browser" part="browser" tabindex="0">
+   <div class="x_ite-private-surface" part="surface">
+      <canvas class="x_ite-private-canvas" part="canvas"></canvas>
+      <div class="x_ite-private-buttons" part="buttons"></div>
+   </div>
+   <div class="x_ite-private-splash-screen x_ite-private-hidden">
+      <div class="x_ite-private-spinner"></div>
+      <div class="x_ite-private-progress">
+         <div class="x_ite-private-x_ite">
+            ${this .getName ()}<b>X3D</b>
+         </div>
+         <div class="x_ite-private-progressbar">
+            <div></div>
+         </div>
+         <div class="x_ite-private-spinner-text"></div>
+      </div>
+   </div>
+</div>`;
 
-   surface      .appendTo (browser);
-   splashScreen .appendTo (browser);
-   spinner      .appendTo (splashScreen);
-   progress     .appendTo (splashScreen);
-   buttons      .appendTo (surface);
-
-   if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
+   if (element .nodeName .toLowerCase () === "x3d-canvas")
    {
-      const shadow = X3DCoreContext_$(element [0] .shadowRoot);
+      this [_shadow] = element .shadowRoot;
 
-      const stylesheet = new Promise (resolve =>
+      this [_shadow] .innerHTML = html;
+
+      const stylesheet = new Promise ((resolve, reject) =>
       {
-         X3DCoreContext_$("<link/>",
-         {
-            on: { load: resolve },
-            integrity: "sha384-HjpfKEIFpPTX+QkdKzwREj7tezaYlLY3xPOLCa6kegsBtOfwnOxtfsokvQ8qyl8T",
-            crossorigin: "anonymous",
-            rel: "stylesheet",
-            href: new URL ("x_ite.css", Networking_URLs .getScriptURL ()),
-         })
-         .appendTo (shadow);
+         const link = document .createElement ("link");
+
+         link .integrity   = "sha384-HjpfKEIFpPTX+QkdKzwREj7tezaYlLY3xPOLCa6kegsBtOfwnOxtfsokvQ8qyl8T";
+         link .rel         = "stylesheet";
+         link .crossOrigin = "anonymous";
+         link .onload      = resolve;
+         link .onerror     = reject;
+         link .href        = new URL ("x_ite.css", Networking_URLs .getScriptURL ());
+
+         this [_shadow] .prepend (link);
       });
 
-      this [_shadow] = shadow .append (browser .hide ());
+      const browser = this [_shadow] .querySelector (".x_ite-private-browser");
 
-      stylesheet .then (() => browser .show ());
+      browser .style .visibility = "hidden";
+
+      stylesheet .then (() => browser .style .visibility = "");
    }
    else
    {
-      this [_shadow] = element .prepend (browser);
-   }
+      element .insertAdjacentHTML ("afterbegin", html);
 
-   X3DCoreContext_$("<div></div>", { class: "x_ite-private-x_ite" }) .html (`${this .getName ()}<b>X3D</b>`) .appendTo (progress);
-   X3DCoreContext_$("<div></div>", { class: "x_ite-private-progressbar" })  .appendTo (progress) .append (X3DCoreContext_$("<div></div>"));
-   X3DCoreContext_$("<div></div>", { class: "x_ite-private-spinner-text" }) .appendTo (progress);
+      this [_shadow] = element;
+   }
 
    this [_instanceId]   = ++ instanceId;
    this [_localStorage] = new Utility_DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
    this [_element]      = element;
-   this [_surface]      = surface;
-   this [_canvas]       = X3DCoreContext_$("<canvas></canvas>", { part: "canvas", class: "x_ite-private-canvas" }) .prependTo (surface);
-   this [_context]      = Core_Context .create (this [_canvas] [0], element .attr ("preserveDrawingBuffer") === "true");
-   this [_splashScreen] = splashScreen;
+   this [_surface]      = this [_shadow] .querySelector (".x_ite-private-surface");
+   this [_splashScreen] = this [_shadow] .querySelector (".x_ite-private-splash-screen");
+   this [_canvas]       = this [_shadow] .querySelector ("canvas");
+   this [_context]      = Core_Context .create (this [_canvas], element .getAttribute ("preserveDrawingBuffer") === "true");
 
-   this [_renderingProperties] = new Core_RenderingProperties (this .getPrivateScene ());
-   this [_browserOptions]      = new Core_BrowserOptions      (this .getPrivateScene ());
-   this [_browserProperties]   = new Core_BrowserProperties   (this .getPrivateScene ());
-   this [_browserTimings]      = new Core_BrowserTimings      (this .getPrivateScene ());
-   this [_notification]        = new Core_Notification        (this .getPrivateScene ());
-   this [_contextMenu]         = new Core_ContextMenu         (this .getPrivateScene ());
+   const privateScene = this .getPrivateScene ();
+
+   this [_renderingProperties] = new Core_RenderingProperties (privateScene);
+   this [_browserOptions]      = new Core_BrowserOptions      (privateScene);
+   this [_browserProperties]   = new Core_BrowserProperties   (privateScene);
+   this [_browserTimings]      = new Core_BrowserTimings      (privateScene);
+   this [_notification]        = new Core_Notification        (privateScene);
+   this [_contextMenu]         = new Core_ContextMenu         (privateScene);
 }
 
 Object .assign (X3DCoreContext .prototype,
 {
    initialize ()
    {
-      const element = this .getElement ();
+      const element = this [_element];
 
       // Setup browser nodes.
 
@@ -61515,7 +61519,7 @@ Object .assign (X3DCoreContext .prototype,
 
       // Define properties of X3DCanvasElement.
 
-      Object .defineProperties (element [0],
+      Object .defineProperties (element,
       {
          browser:
          {
@@ -61528,11 +61532,11 @@ Object .assign (X3DCoreContext .prototype,
             {
                get: () =>
                {
-                  return element .attr ("src");
+                  return element .getAttribute ("src");
                },
                set: (value) =>
                {
-                  element .attr ("src", value);
+                  element .setAttribute ("src", value);
                },
                enumerable: true,
             },
@@ -61540,11 +61544,11 @@ Object .assign (X3DCoreContext .prototype,
             {
                get: () =>
                {
-                  return this .parseUrlAttribute (element .attr ("url"));
+                  return this .parseUrlAttribute (element .getAttribute ("url"));
                },
                set: (value) =>
                {
-                  element .attr ("url", [... value] .map (src => `"${src}"`) .join (", "));
+                  element .setAttribute ("url", [... value] .map (src => `"${src}"`) .join (", "));
                },
                enumerable: true,
             },
@@ -61553,16 +61557,15 @@ Object .assign (X3DCoreContext .prototype,
 
       // Configure browser event handlers.
 
-      element
-         .on ("keydown.X3DCoreContext", this [_keydown] .bind (this))
-         .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
+      element .addEventListener ("keydown", this [_keydown] .bind (this));
+      element .addEventListener ("keyup",   this [_keyup]   .bind (this));
 
       // Workaround for a bug in Chrome (v135) where attributeChangedCallback is not
       // initially called for attributes set in XHTML.
 
       (() =>
       {
-         if (element .prop ("nodeName") .toUpperCase () !== "X3D-CANVAS")
+         if (element .nodeName .toUpperCase () !== "X3D-CANVAS")
             return;
 
          if (document .contentType !== "application/xhtml+xml")
@@ -61573,7 +61576,7 @@ Object .assign (X3DCoreContext .prototype,
 
          setTimeout (() =>
          {
-            for (const { name, value } of element [0] .attributes)
+            for (const { name, value } of element .attributes)
                this .attributeChangedCallback (name, undefined, value);
          });
       })();
@@ -61735,7 +61738,7 @@ Object .assign (X3DCoreContext .prototype,
          {
             try
             {
-               this .getElement () [0] [name] = new Function ("event", newValue);
+               this [_element] [name] = new Function ("event", newValue);
             }
             catch (error)
             {
@@ -61755,11 +61758,10 @@ Object .assign (X3DCoreContext .prototype,
 
             if (!this .getBrowserOption ("SplashScreen"))
             {
-               this .getCanvas () .show ();
+               this .getCanvas () .style .display = "block";
 
-               this .getSplashScreen ()
-                  .removeClass ("x_ite-private-fade-out-splash-screen")
-                  .addClass ("x_ite-private-hidden");
+               this .getSplashScreen () .classList .remove ("x_ite-private-fade-out-splash-screen");
+               this .getSplashScreen () .classList .add ("x_ite-private-hidden");
             }
 
             break;
@@ -61854,7 +61856,7 @@ Object .assign (X3DCoreContext .prototype,
 
       return function (events)
       {
-         const element = this .getElement () [0];
+         const element = this [_element];
 
          for (const name of events .split (" "))
          {
@@ -62129,11 +62131,11 @@ Object .assign (X3DCoreContext .prototype,
 
                // Copy to clipboard.
 
-               this .copyToClipboard (text) .then (() =>
+               navigator .clipboard .writeText (text) .then (() =>
                {
                   this .setDescription (gettext("Viewpoint copied to clipboard."));
 
-                  console .log ("Viewpoint copied to clipboard.");
+                  console .info ("Viewpoint copied to clipboard.");
                   console .debug (text);
                });
             }
@@ -62175,28 +62177,10 @@ Object .assign (X3DCoreContext .prototype,
          }
       }
    },
-   async copyToClipboard (text)
-   {
-      try
-      {
-         await navigator .clipboard .writeText (text);
-      }
-      catch
-      {
-         // The textarea must be visible to make copy work.
-         const tmp = X3DCoreContext_$("<textarea></textarea>");
-         this .getShadow () .find (".x_ite-private-browser") .prepend (tmp);
-         tmp .text (text) .trigger ("select");
-         document .execCommand ("copy");
-         tmp .remove ();
-      }
-   },
    dispose ()
    {
-      this .getElement () .off (".X3DCoreContext .ContextMenu");
-
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ?.();
-      this [_shadow] .find ("*") .remove ();
+      this [_element] .remove ();
    },
 });
 
@@ -67518,8 +67502,8 @@ const OrientationChaser_default_ = OrientationChaser;
 
 /* harmony default export */ const Followers_OrientationChaser = (Namespace/* default */.A .add ("OrientationChaser", OrientationChaser_default_));
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(67);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(68).A;
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(927);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(184).A;
 
 
 
@@ -67584,7 +67568,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = ExamineViewer_$(browser .getSurface ());
 
       // Disconnect from spin.
 
@@ -67594,13 +67578,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
       // Bind pointing device events.
 
-      element .on ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
-      element .on ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
-      element .on ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
-      element .on ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+      surface .on ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
+      surface .on ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
+      surface .on ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
+      surface .on ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
 
-      element .on ("touchstart.ExamineViewer",  this .touchstart .bind (this));
-      element .on ("touchend.ExamineViewer",    this .touchend   .bind (this));
+      surface .on ("touchstart.ExamineViewer",  this .touchstart .bind (this));
+      surface .on ("touchend.ExamineViewer",    this .touchend   .bind (this));
 
       // Setup scroll chaser.
 
@@ -68068,7 +68052,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
          this .addRotate (this .roll, this .rotation, this .deltaRotation);
       };
    })(),
-   addRotate (roll, rotation, deltaRotation)
+   addRotate (roll, rotation)
    {
       const viewpoint = this .getActiveViewpoint ();
 
@@ -68384,7 +68368,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
       browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);
 
-      browser .getSurface () .off (".ExamineViewer");
+      ExamineViewer_$(browser .getSurface ()) .off (".ExamineViewer");
       ExamineViewer_$(document) .off (".ExamineViewer" + this .getId ());
    },
 });
@@ -68598,8 +68582,8 @@ const ScreenLine_default_ = ScreenLine;
 
 /* harmony default export */ const Rendering_ScreenLine = (Namespace/* default */.A .add ("ScreenLine", ScreenLine_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(67);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(68).A;
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(927);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(184).A;
 
 
 
@@ -68649,16 +68633,16 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
 
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = X3DFlyViewer_$(browser .getSurface ());
 
       // Bind pointing device events.
 
-      element .on ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
-      element .on ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
-      element .on ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
+      surface .on ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
+      surface .on ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
+      surface .on ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-      element .on ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
-      element .on ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
+      surface .on ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
+      surface .on ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
       browser ._controlKey .addInterest ("set_controlKey__", this);
 
@@ -69217,7 +69201,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
 
       this .disconnect ();
       this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
-      this .getBrowser () .getSurface () .off (".X3DFlyViewer");
+      X3DFlyViewer_$(this .getBrowser () .getSurface ()) .off (".X3DFlyViewer");
       X3DFlyViewer_$(document) .off (".X3DFlyViewer" + this .getId ());
    },
 });
@@ -69336,8 +69320,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (Namespace/* default */.A .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(67);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(68).A;
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(927);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(184).A;
 
 
 
@@ -69369,12 +69353,12 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
 
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = PlaneViewer_$(browser .getSurface ());
 
-      element .on ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
-      element .on ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
-      element .on ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
-      element .on ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
+      surface .on ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
+      surface .on ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
+      surface .on ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
+      surface .on ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
    },
    mousedown (event)
    {
@@ -69398,7 +69382,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
 
             this .button = event .button;
 
-            this .getBrowser () .getSurface () .off ("mousemove.PlaneViewer");
+            PlaneViewer_$(this .getBrowser () .getSurface ()) .off ("mousemove.PlaneViewer");
             PlaneViewer_$(document) .on ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
             PlaneViewer_$(document) .on ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
 
@@ -69426,7 +69410,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
       this .button = -1;
 
       PlaneViewer_$(document) .off (".PlaneViewer" + this .getId ());
-      this .getBrowser () .getSurface () .on ("mousemove.PlaneViewer", this .mousemove .bind (this));
+      PlaneViewer_$(this .getBrowser () .getSurface ()) .on ("mousemove.PlaneViewer", this .mousemove .bind (this));
 
       this .getBrowser () .setCursor ("DEFAULT");
 
@@ -69508,7 +69492,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
    },
    dispose ()
    {
-      this .getBrowser () .getSurface () .off (".PlaneViewer");
+      PlaneViewer_$(this .getBrowser () .getSurface ()) .off (".PlaneViewer");
       PlaneViewer_$(document) .off (".PlaneViewer" + this .getId ());
    },
 });
@@ -69550,8 +69534,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (Namespace/* default */.A .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(67);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(68).A;
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(927);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(184).A;
 
 
 
@@ -69594,17 +69578,17 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
 
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = LookAtViewer_$(browser .getSurface ());
 
       // Bind pointing device events.
 
-      element .on ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
-      element .on ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
-      element .on ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
-      element .on ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
+      surface .on ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
+      surface .on ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
+      surface .on ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
+      surface .on ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
 
-      element .on ("touchstart.LookAtViewer", this .touchstart .bind (this));
-      element .on ("touchend.LookAtViewer",   this .touchend   .bind (this));
+      surface .on ("touchstart.LookAtViewer", this .touchstart .bind (this));
+      surface .on ("touchend.LookAtViewer",   this .touchend   .bind (this));
 
       // Setup chaser.
 
@@ -69998,7 +69982,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
    },
    dispose ()
    {
-      this .getBrowser () .getSurface () .off (".LookAtViewer");
+      LookAtViewer_$(this .getBrowser () .getSurface ()) .off (".LookAtViewer");
       LookAtViewer_$(document) .off (".LookAtViewer" + this .getId ());
    },
 });
@@ -70641,7 +70625,7 @@ const
 
 function getBaseURI (element)
 {
-   const baseURI = element .prop ("baseURI");
+   const { baseURI } = element;
 
    // Fix for Edge.
    if (baseURI .startsWith ("about:"))
@@ -70701,13 +70685,13 @@ Object .assign (X3DNetworkingContext .prototype,
          if (!this [X3DNetworkingContext_loadingObjects] .has (this))
             this .resetLoadCount ();
 
-         this .getShadow () .find (".x_ite-private-world-info") .remove ();
+         this .getShadow () .querySelector (".x_ite-private-world-info") ?.remove ();
 
          if (this .getBrowserOption ("SplashScreen"))
          {
             this .getContextMenu () .hide ();
-            this .getCanvas () .hide ();
-            this .getSplashScreen () .removeClass (["x_ite-private-fade-out-splash-screen", "x_ite-private-hidden"]);
+            this .getCanvas () .style .display = "none";
+            this .getSplashScreen () .classList .remove ("x_ite-private-fade-out-splash-screen", "x_ite-private-hidden");
          }
       }
       else
@@ -70716,13 +70700,13 @@ Object .assign (X3DNetworkingContext .prototype,
 
          if (this .getBrowserOption ("SplashScreen"))
          {
-            this .getCanvas () .show ();
+            this .getCanvas () .style .display = "block";
 
             // Defer until promises are resolved.
             setTimeout (() =>
             {
                if (!this [_browserLoading])
-                  this .getSplashScreen () .addClass ("x_ite-private-fade-out-splash-screen");
+                  this .getSplashScreen () .classList .add ("x_ite-private-fade-out-splash-screen");
             });
          }
       }
@@ -70816,9 +70800,8 @@ Object .assign (X3DNetworkingContext .prototype,
          const fractions = 1 - (this ._loadCount .getValue () + loadFractions)
             / (this [_loadingTotal] + this [_loadFractions] .size);
 
-         this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
-         this .getSplashScreen () .find (".x_ite-private-progressbar div")
-            .css ("width", `${100 * fractions}%`);
+         this .getSplashScreen () .querySelector (".x_ite-private-spinner-text") .textContent     = string;
+         this .getSplashScreen () .querySelector (".x_ite-private-progressbar div") .style .width = `${100 * fractions}%`;
       }
       else
       {
@@ -70938,8 +70921,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (Namespace/* default */.A .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(67);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(68).A;
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(927);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(184).A;
 
 
 
@@ -70959,17 +70942,17 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
 {
    initialize ()
    {
-      const element = this .getBrowser () .getSurface ();
+      const surface = PointingDevice_$(this .getBrowser () .getSurface ());
 
-      //element .on ("mousewheel.PointingDevice", this .mousewheel .bind (this));
-      element .on ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
-      element .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
-      element .on ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
-      element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
-      element .on ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
+      //surface .on ("mousewheel.PointingDevice", this .mousewheel .bind (this));
+      surface .on ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
+      surface .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
+      surface .on ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
+      surface .on ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
+      surface .on ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
 
-      element .on ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
-      element .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
+      surface .on ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
+      surface .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
    },
    mousewheel (event)
    { },
@@ -70977,7 +70960,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
    {
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = PointingDevice_$(browser .getSurface ());
 
       browser .getElement () .focus ();
 
@@ -70988,7 +70971,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
       {
          const { x, y } = browser .getPointerFromEvent (event);
 
-         element .off ("mousemove.PointingDevice" + this .getId ());
+         surface .off ("mousemove.PointingDevice" + this .getId ());
 
          PointingDevice_$(document)
             .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this))
@@ -71021,12 +71004,12 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
 
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = PointingDevice_$(browser .getSurface ());
 
       const { x, y } = browser .getPointerFromEvent (event);
 
       PointingDevice_$(document) .off (".PointingDevice" + this .getId ());
-      element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+      surface .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
       this .grabbing = false;
 
@@ -71427,7 +71410,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          cursorType = this .getDisplayLoadCount () ? "WAIT" : this [_cursorType],
          css        = this [_cursorTypes] ?.[cursorType] ?? cursorType .toLowerCase ();
 
-      this .getSurface () .css ("cursor", css);
+      this .getSurface () .style .cursor = css;
    },
    getPointer ()
    {
@@ -71436,11 +71419,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    getPointerFromEvent ({ pageX, pageY })
    {
       const
-         offset   = this .getSurface () .offset (),
-         rect     = this .getSurface () [0] .getBoundingClientRect (),
+         rect     = this .getSurface () .getBoundingClientRect (),
          viewport = this .getViewport (),
-         x        =      (pageX - offset .left) / rect .width   * viewport [2],
-         y        = (1 - (pageY - offset .top)  / rect .height) * viewport [3];
+         x        =      (pageX - (rect .left + window .scrollX)) / rect .width   * viewport [2],
+         y        = (1 - (pageY - (rect .top  + window .scrollY)) / rect .height) * viewport [3];
 
       return new Numbers_Vector2 (x, y);
    },
@@ -72198,7 +72180,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (Namespace/* default */.A .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(68).A;
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(184).A;
 
 
 
@@ -72262,7 +72244,7 @@ Object .assign (X3DRenderingContext .prototype,
          this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
       });
 
-      this [_resizer] .observe (this .getSurface () [0]);
+      this [_resizer] .observe (this .getSurface ());
 
       this .reshape ();
 
@@ -72506,7 +72488,11 @@ Object .assign (X3DRenderingContext .prototype,
             resolve ();
          };
 
-         this .getElement () .css ({ "width": `${width}px`, "height": `${height}px` });
+         Object .assign (this .getElement () .style,
+         {
+            width: `${width}px`,
+            height: `${height}px`,
+         });
 
          this ._viewport .addFieldCallback (key, test);
 
@@ -72520,16 +72506,15 @@ Object .assign (X3DRenderingContext .prototype,
 
       const
          canvas = this .getCanvas (),
-         parent = canvas .parent (),
-         [width, height, contentScale] = this .limitFramebufferSize (parent .width (), parent .height ());
+         parent = canvas .parentElement,
+         [width, height, contentScale] = this .limitFramebufferSize (parent ?.offsetWidth, parent ?.offsetHeight);
 
-      this .getRenderingProperties () ._ContentScale = parent .width () ? width / parent .width () : contentScale;
+      this .getRenderingProperties () ._ContentScale = parent ?.offsetWidth ? width / parent ?.offsetWidth : contentScale;
 
       // this .println (this .getRenderingProperty ("ContentScale"), devicePixelRatio)
 
-      canvas
-         .prop ("width",  width)
-         .prop ("height", height);
+      canvas .width  = width;
+      canvas .height = height;
 
       this .reshapeFramebuffer (0, 0, 0, width, height);
 
@@ -72622,10 +72607,10 @@ Object .assign (X3DRenderingContext .prototype,
    {
       const element = this .getElement ();
 
-      if (document .fullscreenElement === element [0])
-         element .addClass ("x_ite-fullscreen");
+      if (document .fullscreenElement === element)
+         element .classList .add ("x_ite-fullscreen");
       else
-         element .removeClass ("x_ite-fullscreen");
+         element .classList .remove ("x_ite-fullscreen");
    },
    async xrCheckSupport ()
    {
@@ -72647,7 +72632,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return Utility_Lock .acquire (this [_buttonLock], async () =>
       {
-         this .getSurface () .find (".x_ite-private-xr-button") .remove ();
+         this .getSurface () .querySelector (".x_ite-private-xr-button") ?.remove ();
 
          if (!await this .xrCheckSupport ())
             return;
@@ -72679,6 +72664,8 @@ Object .assign (X3DRenderingContext .prototype,
 
       X3DRenderingContext_$(window)   .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
       X3DRenderingContext_$(document) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
+
+      // TODO: navigator .xr ?.removeEventListener ("devicechange", ...);
    },
 });
 
@@ -74413,7 +74400,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 /* harmony default export */ const Shaders_X3DShaderNode = (Namespace/* default */.A .add ("X3DShaderNode", X3DShaderNode_default_));
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(68).A;
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(184).A;
 
 
 
@@ -76414,7 +76401,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (Namespace/* default */.A .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(68).A;
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(184).A;
 
 
 
@@ -78359,7 +78346,7 @@ const PeriodicWave_default_ = PeriodicWave;
 
 /* harmony default export */ const Sound_PeriodicWave = (Namespace/* default */.A .add ("PeriodicWave", PeriodicWave_default_));
 ;// ./src/x_ite/Browser/Sound/X3DSoundContext.js
-/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(68).A;
+/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(184).A;
 
 
 
@@ -78379,8 +78366,6 @@ Object .assign (X3DSoundContext .prototype,
 {
    initialize ()
    {
-      const id = `X3DSoundContext-${this .getId ()}`;
-
       const events = [
          "blur",
          "click",
@@ -78394,12 +78379,11 @@ Object .assign (X3DSoundContext .prototype,
          "mousewheel",
          "pointerup",
          "touchend",
-         "touchmove",
          "touchstart",
-      ]
-      .map (event => `${event}.${id}`);
+      ];
 
-      this .getCanvas () .on (events .join (" "), () => this .startAudioElements ());
+      for (const event of events)
+         this .getCanvas () .addEventListener (event, () => this .startAudioElements ());
    },
    getAudioContext ()
    {
@@ -78423,7 +78407,7 @@ Object .assign (X3DSoundContext .prototype,
          return defaultPeriodicWave;
       })();
    },
-   startAudioElement (audioElement, functionName = "play", sound = true)
+   startAudioElement (audioElement, functionName = "play")
    {
       if (!audioElement)
          return;
@@ -78464,7 +78448,7 @@ Object .assign (X3DSoundContext .prototype,
             .attr ("title", gettext("Activate sound."))
             .addClass (["x_ite-private-no-sound-button", "x_ite-private-button"])
             .on ("mouseup touchend", () => this .startAudioElements ())
-            .appendTo (this .getSurface () .find (".x_ite-private-buttons"));
+            .appendTo (this .getSurface () .querySelector (".x_ite-private-buttons"));
 
          const
             count = !! this [_audioElements] .size,
@@ -78666,7 +78650,7 @@ const TextureTransform_default_ = TextureTransform;
 
 /* harmony default export */ const Texturing_TextureTransform = (Namespace/* default */.A .add ("TextureTransform", TextureTransform_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(68).A;
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(184).A;
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -79760,10 +79744,9 @@ class DOMIntegration
    constructor (browser)
    {
       this .browser        = browser;
-      this .rootElement    = undefined;
       this .canvasObserver = new MutationObserver (() => this .processCanvasMutation (browser));
 
-      this .canvasObserver .observe (browser .getElement () [0],
+      this .canvasObserver .observe (browser .getElement (),
       {
          attributes: false,
          childList: true,
@@ -79780,7 +79763,10 @@ class DOMIntegration
 
    processCanvasMutation (browser)
    {
-      this .processRootElement (browser, browser .getElement () .children ("X3D") .get (-1));
+      const X3D = Array .from (browser .getElement () .children)
+         .filter (child => child .matches ("X3D"));
+
+      this .processRootElement (browser, X3D .at (-1));
    }
 
    async processRootElement (browser, rootElement)
@@ -79792,53 +79778,52 @@ class DOMIntegration
 
          this .rootElement = rootElement;
 
-         if (rootElement)
-         {
-            // Display splash screen.
-
-            browser .setBrowserLoading (true);
-            browser .addLoadingObject (this);
-
-            // Now also attached node property to each node element.
-
-            const scene = new Execution_X3DScene (browser);
-
-            this .parser = new Parser_XMLParser (scene);
-
-            this .parser .setInput (rootElement);
-
-            await new Promise (this .parser .parseIntoScene .bind (this .parser));
-
-            browser .replaceWorld (scene);
-
-            // Create an observer instance.
-
-            this .observer = new MutationObserver (mutations =>
-            {
-               for (const mutation of mutations)
-                  this .processMutation (mutation);
-            });
-
-            // Start observing, also catches inlined Inline elements.
-
-            this .observer .observe (rootElement,
-            {
-               attributes: true,
-               childList: true,
-               subtree: true,
-            });
-
-            // Add Inline elements from initial scene, and connect to node events.
-
-            this .processInlineElements (rootElement);
-            this .addEventDispatchersAll (rootElement);
-
-            browser .removeLoadingObject (this);
-         }
-         else
+         if (!rootElement)
          {
             browser .replaceWorld (null);
+            return;
          }
+
+         // Display splash screen.
+
+         browser .setBrowserLoading (true);
+         browser .addLoadingObject (this);
+
+         // Now also attached node property to each node element.
+
+         const scene = new Execution_X3DScene (browser);
+
+         this .parser = new Parser_XMLParser (scene);
+
+         this .parser .setInput (rootElement);
+
+         await new Promise (this .parser .parseIntoScene .bind (this .parser));
+
+         browser .replaceWorld (scene);
+
+         // Create an observer instance.
+
+         this .observer = new MutationObserver (mutations =>
+         {
+            for (const mutation of mutations)
+               this .processMutation (mutation);
+         });
+
+         // Start observing, also catches inlined Inline elements.
+
+         this .observer .observe (rootElement,
+         {
+            attributes: true,
+            childList: true,
+            subtree: true,
+         });
+
+         // Add Inline elements from initial scene, and connect to node events.
+
+         this .processInlineElements (rootElement);
+         this .addEventDispatchersAll (rootElement);
+
+         browser .removeLoadingObject (this);
       }
       catch (error)
       {
@@ -80029,7 +80014,7 @@ class DOMIntegration
             if (!X3DElement)
                break;
 
-            element .appendChild (X3DElement);
+            element .append (X3DElement);
 
             // Add Inline elements, and connect to node events.
 
@@ -97859,8 +97844,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (Namespace/* default */.A .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(910);
-/* provided dependency */ var APNG = __webpack_require__(948);
+/* provided dependency */ var SuperGif = __webpack_require__(938);
+/* provided dependency */ var APNG = __webpack_require__(112);
 
 
 
@@ -97939,7 +97924,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
                   div  = document .createElement ("div"),
                   img  = document .createElement ("img");
 
-               div .appendChild (img);
+               div .append (img);
 
                const gif = await new Promise ((resolve, reject) =>
                {
@@ -98654,13 +98639,8 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, Texturing_X3DTe
       try
       {
          const
-            comp         = this ._image .comp,
-            array        = this ._image .array,
-            transparency = !(comp % 2);
-
-         const
-            width  = this ._image .width,
-            height = this ._image .height;
+            { width, height, comp, array } = this ._image,
+            transparency                   = !(comp % 2);
 
          if (width < 0 || height < 0 || comp < 0 || comp > 4)
             throw new Error (`At least one dimension (${width} × ${height} or components ${comp}) is invalid.`);
@@ -99327,7 +99307,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
    {
       Browser_X3DBrowserContext .prototype .initialize .call (this);
 
-      this .getCanvas () .on ("webglcontextlost", () =>
+      this .getCanvas () .addEventListener ("webglcontextlost", () =>
       {
          this .callBrowserCallbacks (Base_X3DConstants .CONNECTION_ERROR);
       });
@@ -99864,7 +99844,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
             else
             {
                if (!this .getBrowserOption ("SplashScreen"))
-                  this .getCanvas () .show ();
+                  this .getCanvas () .style .display = "block";
 
                if (scene)
                {
@@ -99880,9 +99860,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
 
                   setTimeout (() =>
                   {
-                     this .getSplashScreen ()
-                        .find (".x_ite-private-spinner-text")
-                        .text (gettext ("Failed loading world."));
+                     const spinnerText = this .getSplashScreen () .querySelector (".x_ite-private-spinner-text");
+
+                     spinnerText .textContent = gettext ("Failed loading world.");
                   });
 
                   reject (new Error ("Couldn't load X3D file."));
@@ -100355,10 +100335,7 @@ Object .defineProperties (X3DBrowser .prototype,
    },
    element:
    {
-      get ()
-      {
-         return this .getElement () [0];
-      },
+      get: X3DBrowser .prototype .getElement,
       enumerable: true,
    },
 });
@@ -100414,7 +100391,7 @@ class X3DCanvasElement extends HTMLElement
                child .remove ();
          }
 
-         this .shadowRoot .appendChild (document .createElement ("slot"));
+         this .shadowRoot .append (document .createElement ("slot"));
       }
    }
 
@@ -100468,17 +100445,17 @@ class X3DCanvasElement extends HTMLElement
 
    captureStream (... args)
    {
-      return this .browser ?.getCanvas () [0] .captureStream (... args);
+      return this .browser ?.getCanvas () .captureStream (... args);
    }
 
    toBlob (... args)
    {
-      return this .browser ?.getCanvas () [0] .toBlob (... args);
+      return this .browser ?.getCanvas () .toBlob (... args);
    }
 
    toDataURL (... args)
    {
-      return this .browser ?.getCanvas () [0] .toDataURL (... args);
+      return this .browser ?.getCanvas () .toDataURL (... args);
    }
 
    get [Symbol .toStringTag] ()
@@ -100573,7 +100550,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (Namespace/* default */.A .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(68).A;
+/* provided dependency */ var jquery_$ = __webpack_require__(184).A;
 Object .assign (jquery_$,
 {
    isEmptyObject (object)
@@ -100681,7 +100658,7 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (Namespace/* default */.A .add ("jquery", jquery_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(888);
+/* provided dependency */ var libtess_libtess = __webpack_require__(44);
 const libtess_default_ = libtess_libtess;
 ;
 

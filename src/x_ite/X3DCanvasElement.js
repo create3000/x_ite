@@ -24,7 +24,7 @@ class X3DCanvasElement extends HTMLElement
                child .remove ();
          }
 
-         this .shadowRoot .appendChild (document .createElement ("slot"));
+         this .shadowRoot .append (document .createElement ("slot"));
       }
    }
 

@@ -40,7 +40,7 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
 
       inches .style .height = "10in";
 
-      body .appendChild (inches);
+      body .append (inches);
 
       this ._PixelsPerPoint = inches .clientHeight / 720 || 1;
 

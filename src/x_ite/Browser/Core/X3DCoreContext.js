@@ -87,7 +87,7 @@ function X3DCoreContext (element)
          link .onerror     = reject;
          link .href        = new URL ("x_ite.css", URLs .getScriptURL ());
 
-         this [_shadow] .appendChild (link);
+         this [_shadow] .prepend (link);
       });
 
       const browser = this [_shadow] .querySelector (".x_ite-private-browser");

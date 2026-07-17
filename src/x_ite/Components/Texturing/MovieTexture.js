@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
                   div  = document .createElement ("div"),
                   img  = document .createElement ("img");
 
-               div .appendChild (img);
+               div .append (img);
 
                const gif = await new Promise ((resolve, reject) =>
                {
