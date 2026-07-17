@@ -52,7 +52,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Observe resize and parent changes of <canvas> and configure viewport.
 
-      $(window) .on (`orientationchange.X3DRenderingContext-${this .getInstanceId ()}`, () => this .reshape ());
+      $.on (this, window, "orientationchange", () => this .reshape ());
 
       this [_resizer] = new ResizeObserver (() =>
       {
@@ -67,18 +67,19 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Observe fullscreen changes of <x3d-canvas>.
 
-      $(document) .on ([
+      const fullscreenchange = [
          "fullscreenchange",
          "webkitfullscreenchange",
          "mozfullscreenchange",
          "MSFullscreenChange",
-      ]
-      .map (event => `${event}.X3DRenderingContext-${this .getInstanceId ()}`)
-      .join (" "), () => this .onfullscreen ());
+      ];
+
+      for (const event of fullscreenchange)
+         $.on (this, document, event, () => this .onfullscreen ());
 
       // Check for WebXR support.
 
-      navigator .xr ?.addEventListener ("devicechange", () => this .xrUpdateButton ());
+      $.on (this, navigator .xr, "devicechange", () => this .xrUpdateButton ());
 
       this .xrUpdateButton ();
    },
@@ -479,10 +480,9 @@ Object .assign (X3DRenderingContext .prototype,
 
       this [_resizer] .disconnect ();
 
-      $(window)   .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
-      $(document) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
-
-      // TODO: navigator .xr ?.removeEventListener ("devicechange", ...);
+      $.off (this, window);
+      $.off (this, document);
+      $.off (this, navigator .xr);
    },
 });
 

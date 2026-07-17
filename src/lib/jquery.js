@@ -1,5 +1,39 @@
+const events = new WeakMap ();
+
 Object .assign ($,
 {
+   on (requester, object, event, callback)
+   {
+      if (!object)
+         return;
+
+      events
+         .getOrInsertComputed (requester, () => new WeakMap ())
+         .getOrInsertComputed (object, () => new Map ())
+         .set (event, callback);
+
+      object .addEventListener (event, callback);
+   },
+   off (requester, object, event)
+   {
+      const callbacks = events .get (requester) ?.get (object);
+
+      if (!callbacks)
+         return;
+
+      if (event)
+      {
+         object .removeEventListener (event, callbacks .get (event));
+         callbacks .delete (event);
+      }
+      else
+      {
+         for (const [event, callback] of callbacks)
+            object .removeEventListener (event, callback);
+
+         callbacks .clear ();
+      }
+   },
    isEmptyObject (object)
    {
       for (const key in object)
