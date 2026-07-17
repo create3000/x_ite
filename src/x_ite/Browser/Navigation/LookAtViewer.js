@@ -40,17 +40,17 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = $(browser .getSurface ());
 
       // Bind pointing device events.
 
-      element .on ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
-      element .on ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
-      element .on ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
-      element .on ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
+      surface .on ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
+      surface .on ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
+      surface .on ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
+      surface .on ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
 
-      element .on ("touchstart.LookAtViewer", this .touchstart .bind (this));
-      element .on ("touchend.LookAtViewer",   this .touchend   .bind (this));
+      surface .on ("touchstart.LookAtViewer", this .touchstart .bind (this));
+      surface .on ("touchend.LookAtViewer",   this .touchend   .bind (this));
 
       // Setup chaser.
 
@@ -444,7 +444,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    },
    dispose ()
    {
-      this .getBrowser () .getSurface () .off (".LookAtViewer");
+      $(this .getBrowser () .getSurface ()) .off (".LookAtViewer");
       $(document) .off (".LookAtViewer" + this .getId ());
    },
 });

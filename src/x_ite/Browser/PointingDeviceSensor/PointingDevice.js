@@ -17,17 +17,17 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 {
    initialize ()
    {
-      const element = this .getBrowser () .getSurface ();
+      const surface = $(this .getBrowser () .getSurface ());
 
-      //element .on ("mousewheel.PointingDevice", this .mousewheel .bind (this));
-      element .on ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
-      element .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
-      element .on ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
-      element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
-      element .on ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
+      //surface .on ("mousewheel.PointingDevice", this .mousewheel .bind (this));
+      surface .on ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
+      surface .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup    .bind (this));
+      surface .on ("dblclick.PointingDevice"  + this .getId (), this .dblclick   .bind (this));
+      surface .on ("mousemove.PointingDevice" + this .getId (), this .mousemove  .bind (this));
+      surface .on ("mouseout.PointingDevice"  + this .getId (), this .onmouseout .bind (this));
 
-      element .on ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
-      element .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
+      surface .on ("touchstart.PointingDevice" + this .getId (), this .touchstart .bind (this));
+      surface .on ("touchend.PointingDevice"   + this .getId (), this .touchend   .bind (this));
    },
    mousewheel (event)
    { },
@@ -35,7 +35,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    {
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = $(browser .getSurface ());
 
       browser .getElement () .focus ();
 
@@ -46,7 +46,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       {
          const { x, y } = browser .getPointerFromEvent (event);
 
-         element .off ("mousemove.PointingDevice" + this .getId ());
+         surface .off ("mousemove.PointingDevice" + this .getId ());
 
          $(document)
             .on ("mouseup.PointingDevice"   + this .getId (), this .mouseup   .bind (this))
@@ -79,12 +79,12 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = $(browser .getSurface ());
 
       const { x, y } = browser .getPointerFromEvent (event);
 
       $(document) .off (".PointingDevice" + this .getId ());
-      element .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
+      surface .on ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
       this .grabbing = false;
 

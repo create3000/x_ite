@@ -115,7 +115,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          cursorType = this .getDisplayLoadCount () ? "WAIT" : this [_cursorType],
          css        = this [_cursorTypes] ?.[cursorType] ?? cursorType .toLowerCase ();
 
-      this .getSurface () .css ("cursor", css);
+      this .getSurface () .style .cursor = css;
    },
    getPointer ()
    {
@@ -124,11 +124,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    getPointerFromEvent ({ pageX, pageY })
    {
       const
-         offset   = this .getSurface () .offset (),
-         rect     = this .getSurface () [0] .getBoundingClientRect (),
+         rect     = this .getSurface () .getBoundingClientRect (),
          viewport = this .getViewport (),
-         x        =      (pageX - offset .left) / rect .width   * viewport [2],
-         y        = (1 - (pageY - offset .top)  / rect .height) * viewport [3];
+         x        =      (pageX - (rect .left + window .scrollX)) / rect .width   * viewport [2],
+         y        = (1 - (pageY - (rect .top  + window .scrollY)) / rect .height) * viewport [3];
 
       return new Vector2 (x, y);
    },

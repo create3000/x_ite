@@ -29,12 +29,12 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = $(browser .getSurface ());
 
-      element .on ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
-      element .on ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
-      element .on ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
-      element .on ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
+      surface .on ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
+      surface .on ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
+      surface .on ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
+      surface .on ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
    },
    mousedown (event)
    {
@@ -58,7 +58,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
             this .button = event .button;
 
-            this .getBrowser () .getSurface () .off ("mousemove.PlaneViewer");
+            $(this .getBrowser () .getSurface ()) .off ("mousemove.PlaneViewer");
             $(document) .on ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
             $(document) .on ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
 
@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       this .button = -1;
 
       $(document) .off (".PlaneViewer" + this .getId ());
-      this .getBrowser () .getSurface () .on ("mousemove.PlaneViewer", this .mousemove .bind (this));
+      $(this .getBrowser () .getSurface ()) .on ("mousemove.PlaneViewer", this .mousemove .bind (this));
 
       this .getBrowser () .setCursor ("DEFAULT");
 
@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    },
    dispose ()
    {
-      this .getBrowser () .getSurface () .off (".PlaneViewer");
+      $(this .getBrowser () .getSurface ()) .off (".PlaneViewer");
       $(document) .off (".PlaneViewer" + this .getId ());
    },
 });

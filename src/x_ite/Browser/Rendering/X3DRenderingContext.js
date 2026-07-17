@@ -61,7 +61,7 @@ Object .assign (X3DRenderingContext .prototype,
          this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
       });
 
-      this [_resizer] .observe (this .getSurface () [0]);
+      this [_resizer] .observe (this .getSurface ());
 
       this .reshape ();
 
@@ -450,7 +450,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return Lock .acquire (this [_buttonLock], async () =>
       {
-         this .getSurface () .find (".x_ite-private-xr-button") .remove ();
+         this .getSurface () .querySelector (".x_ite-private-xr-button") ?.remove ();
 
          if (!await this .xrCheckSupport ())
             return;

@@ -47,16 +47,16 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = $(browser .getSurface ());
 
       // Bind pointing device events.
 
-      element .on ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
-      element .on ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
-      element .on ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
+      surface .on ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
+      surface .on ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
+      surface .on ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
 
-      element .on ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
-      element .on ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
+      surface .on ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
+      surface .on ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
       browser ._controlKey .addInterest ("set_controlKey__", this);
 
@@ -615,7 +615,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .disconnect ();
       this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
-      this .getBrowser () .getSurface () .off (".X3DFlyViewer");
+      $(this .getBrowser () .getSurface ()) .off (".X3DFlyViewer");
       $(document) .off (".X3DFlyViewer" + this .getId ());
    },
 });

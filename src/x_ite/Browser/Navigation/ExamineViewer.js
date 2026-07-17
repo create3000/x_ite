@@ -62,7 +62,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       const
          browser = this .getBrowser (),
-         element = browser .getSurface ();
+         surface = $(browser .getSurface ());
 
       // Disconnect from spin.
 
@@ -72,13 +72,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       // Bind pointing device events.
 
-      element .on ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
-      element .on ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
-      element .on ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
-      element .on ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+      surface .on ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
+      surface .on ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
+      surface .on ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
+      surface .on ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
 
-      element .on ("touchstart.ExamineViewer",  this .touchstart .bind (this));
-      element .on ("touchend.ExamineViewer",    this .touchend   .bind (this));
+      surface .on ("touchstart.ExamineViewer",  this .touchstart .bind (this));
+      surface .on ("touchend.ExamineViewer",    this .touchend   .bind (this));
 
       // Setup scroll chaser.
 
@@ -862,7 +862,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);
 
-      browser .getSurface () .off (".ExamineViewer");
+      $(browser .getSurface ()) .off (".ExamineViewer");
       $(document) .off (".ExamineViewer" + this .getId ());
    },
 });

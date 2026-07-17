@@ -205,7 +205,7 @@ Object .assign (X3DCoreContext .prototype,
    },
    getSurface ()
    {
-      return this [_surface];
+      return this [_surface] [0];
    },
    getSplashScreen ()
    {
