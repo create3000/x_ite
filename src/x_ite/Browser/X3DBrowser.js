@@ -47,9 +47,6 @@ const
 
 function X3DBrowser (element)
 {
-   if (element .browser)
-      throw new Error ("Couldn't create browser, element has already a browser.");
-
    X3DBrowserContext .call (this, element);
 
    this .addType (X3DConstants .X3DBrowser);
