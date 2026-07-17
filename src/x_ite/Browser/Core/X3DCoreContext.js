@@ -98,6 +98,8 @@ function X3DCoreContext (element)
    }
    else
    {
+      // Legacy
+
       element .insertAdjacentHTML ("afterbegin", html);
 
       this [_shadow] = element;
