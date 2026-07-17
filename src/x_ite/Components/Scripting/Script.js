@@ -85,13 +85,13 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    },
    async unloadData ()
    {
-      // Call shutdown.
+      // Call shutdown and disconnect.
 
       this .shutdown ?.();
 
-      // Disconnect shutdown.
-
       window .removeEventListener ("unload", this .shutdown);
+
+      this .shutdown = null;
 
       // Disconnect prepareEvents.
 
@@ -326,7 +326,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
       {
          this .shutdown = () => this .call__ (shutdown, "shutdown");
 
-         window .addEventListener ("unload", this .shutdown);
+         window .addEventListener ("unload", this .shutdown, { once: true });
       }
       else
       {
