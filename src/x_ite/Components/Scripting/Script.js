@@ -328,10 +328,6 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
          window .addEventListener ("unload", this .shutdown, { once: true });
       }
-      else
-      {
-         this .shutdown = null;
-      }
 
       // Connect prepareEvents.
 
