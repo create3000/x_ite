@@ -99,13 +99,8 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
       try
       {
          const
-            comp         = this ._image .comp,
-            array        = this ._image .array,
-            transparency = !(comp % 2);
-
-         const
-            width  = this ._image .width,
-            height = this ._image .height;
+            { width, height, comp, array } = this ._image,
+            transparency                   = !(comp % 2);
 
          if (width < 0 || height < 0 || comp < 0 || comp > 4)
             throw new Error (`At least one dimension (${width} × ${height} or components ${comp}) is invalid.`);
