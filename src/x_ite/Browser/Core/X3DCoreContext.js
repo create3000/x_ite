@@ -741,7 +741,7 @@ Object .assign (X3DCoreContext .prototype,
 
                // Copy to clipboard.
 
-               this .copyToClipboard (text) .then (() =>
+               navigator .clipboard .writeText (text) .then (() =>
                {
                   this .setDescription (_("Viewpoint copied to clipboard."));
 
@@ -785,22 +785,6 @@ Object .assign (X3DCoreContext .prototype,
             this ._altGrKey = false;
             break;
          }
-      }
-   },
-   async copyToClipboard (text)
-   {
-      try
-      {
-         await navigator .clipboard .writeText (text);
-      }
-      catch
-      {
-         // The textarea must be visible to make copy work.
-         const tmp = $("<textarea></textarea>");
-         this [_shadow] .find (".x_ite-private-browser") .prepend (tmp);
-         tmp .text (text) .trigger ("select");
-         document .execCommand ("copy");
-         tmp .remove ();
       }
    },
    dispose ()
