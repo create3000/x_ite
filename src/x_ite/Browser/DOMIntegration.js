@@ -72,53 +72,52 @@ class DOMIntegration
 
          this .rootElement = rootElement;
 
-         if (rootElement)
-         {
-            // Display splash screen.
-
-            browser .setBrowserLoading (true);
-            browser .addLoadingObject (this);
-
-            // Now also attached node property to each node element.
-
-            const scene = new X3DScene (browser);
-
-            this .parser = new XMLParser (scene);
-
-            this .parser .setInput (rootElement);
-
-            await new Promise (this .parser .parseIntoScene .bind (this .parser));
-
-            browser .replaceWorld (scene);
-
-            // Create an observer instance.
-
-            this .observer = new MutationObserver (mutations =>
-            {
-               for (const mutation of mutations)
-                  this .processMutation (mutation);
-            });
-
-            // Start observing, also catches inlined Inline elements.
-
-            this .observer .observe (rootElement,
-            {
-               attributes: true,
-               childList: true,
-               subtree: true,
-            });
-
-            // Add Inline elements from initial scene, and connect to node events.
-
-            this .processInlineElements (rootElement);
-            this .addEventDispatchersAll (rootElement);
-
-            browser .removeLoadingObject (this);
-         }
-         else
+         if (!rootElement)
          {
             browser .replaceWorld (null);
+            return;
          }
+
+         // Display splash screen.
+
+         browser .setBrowserLoading (true);
+         browser .addLoadingObject (this);
+
+         // Now also attached node property to each node element.
+
+         const scene = new X3DScene (browser);
+
+         this .parser = new XMLParser (scene);
+
+         this .parser .setInput (rootElement);
+
+         await new Promise (this .parser .parseIntoScene .bind (this .parser));
+
+         browser .replaceWorld (scene);
+
+         // Create an observer instance.
+
+         this .observer = new MutationObserver (mutations =>
+         {
+            for (const mutation of mutations)
+               this .processMutation (mutation);
+         });
+
+         // Start observing, also catches inlined Inline elements.
+
+         this .observer .observe (rootElement,
+         {
+            attributes: true,
+            childList: true,
+            subtree: true,
+         });
+
+         // Add Inline elements from initial scene, and connect to node events.
+
+         this .processInlineElements (rootElement);
+         this .addEventDispatchersAll (rootElement);
+
+         browser .removeLoadingObject (this);
       }
       catch (error)
       {

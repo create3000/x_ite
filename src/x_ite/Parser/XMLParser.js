@@ -121,7 +121,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          case "#document":
          {
-            const X3D = Array .from (xmlElement .children) .filter (child => child .matches ("X3D"));
+            const X3D = Array .from (xmlElement .children)
+               .filter (child => child .matches ("X3D"));
 
             if (X3D .length)
             {
