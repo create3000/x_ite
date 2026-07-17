@@ -27,10 +27,10 @@ x3d_latest_version: 4.1 # x3d latest version
 x_ite_teaser: stars-dance-in-galaxy
 x_ite_latest_version: 15.2.0 # x_ite latest version
 x_ite_compressed_size: 293 # size in kb
-x_ite_js_integrity: sha384-kZgYPSWyR5M7NJZ7m0dDOJGEeD5WP7CWbhY317QJJWI8EhKQ7+hjOYIOmahjv5Z7
-x_ite_min_js_integrity: sha384-D4txzNRul/o53M4nSXYlJoy9uSwIA0D5w8BZjXpgCMNh57jJsWObDgNNX3QLm+dn
-x_ite_mjs_integrity: sha384-9nY5bEZtKrUH3bgliAXmbEmQKot5/ehykNaKGJBXUG1mxtMLVt9pLpgg9PvIYb8x
-x_ite_min_mjs_integrity: sha384-oVBHB0Bzw55XgA4kNPdaBMWEQhl6+JgOoY91MCvqyAbFbPs9Pq1KdaCcPYo+QeEC
+x_ite_js_integrity: sha384-mV3ss7Z+u0NSvWX+ivecKTEbLPU//dwp4Dstphf9WO0NIiy5Qr6r773jZPl0ykOQ
+x_ite_min_js_integrity: sha384-qGa9YtAxncTuzkwLIwtj2k5il2vD6o/upaF3ZVR/saiKgWBjf0Z6Q1ez80jLy44p
+x_ite_mjs_integrity: sha384-m7y0J/UYnWSDd1+jALrzugEuiKmiGE8oz0IDdEqwNyghZ1jelfrpN9AwCgIaSM7s
+x_ite_min_mjs_integrity: sha384-KuMuiUmVdtz9N2t4OqRVv4ocPYcDIyHjJTmzRbVn8sNyuv6RCnZH5fSVfO00Zz+K
 x_ite_css_integrity: sha384-HjpfKEIFpPTX+QkdKzwREj7tezaYlLY3xPOLCa6kegsBtOfwnOxtfsokvQ8qyl8T
 
 # Fill in the protocol & hostname for your site.
