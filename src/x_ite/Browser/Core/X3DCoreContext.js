@@ -745,7 +745,7 @@ Object .assign (X3DCoreContext .prototype,
                {
                   this .setDescription (_("Viewpoint copied to clipboard."));
 
-                  console .log ("Viewpoint copied to clipboard.");
+                  console .info ("Viewpoint copied to clipboard.");
                   console .debug (text);
                });
             }
