@@ -80,7 +80,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "integrity-x_ite-css";
+         link .integrity   = "integrity:x_ite.css";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
