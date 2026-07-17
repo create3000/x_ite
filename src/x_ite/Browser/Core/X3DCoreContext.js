@@ -48,7 +48,7 @@ function X3DCoreContext (element)
                           X3DConstants .outputOnly, "commandKey", new Fields .SFBool (),
                           X3DConstants .outputOnly, "altGrKey",   new Fields .SFBool ());
 
-   // Get canvas & context.
+   // Create html, canvas & context.
 
    const html = /* html */ `
 <div class="x_ite-private-browser" part="browser" tabindex="0">
