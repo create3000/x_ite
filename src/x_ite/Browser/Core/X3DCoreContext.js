@@ -92,9 +92,9 @@ function X3DCoreContext (element)
 
       const browser = this [_shadow] .querySelector (".x_ite-private-browser");
 
-      browser .style .display = "none";
+      browser .style .visibility = "hidden";
 
-      stylesheet .then (() => browser .style .display = "");
+      stylesheet .then (() => browser .style .visibility = "");
    }
    else
    {
