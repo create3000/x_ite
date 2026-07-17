@@ -37,7 +37,6 @@ class DOMIntegration
    constructor (browser)
    {
       this .browser        = browser;
-      this .rootElement    = undefined;
       this .canvasObserver = new MutationObserver (() => this .processCanvasMutation (browser));
 
       this .canvasObserver .observe (browser .getElement (),
