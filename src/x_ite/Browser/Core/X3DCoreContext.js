@@ -104,12 +104,12 @@ function X3DCoreContext (element)
    }
 
    this [_instanceId]   = ++ instanceId;
-   this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
    this [_element]      = element;
    this [_surface]      = this [_shadow] .querySelector (".x_ite-private-surface");
    this [_splashScreen] = this [_shadow] .querySelector (".x_ite-private-splash-screen");
    this [_canvas]       = this [_shadow] .querySelector ("canvas");
    this [_context]      = Context .create (this [_canvas], element .getAttribute ("preserveDrawingBuffer") === "true");
+   this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
 
    const privateScene = this .getPrivateScene ();
 
