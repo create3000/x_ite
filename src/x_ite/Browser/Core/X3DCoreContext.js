@@ -68,7 +68,7 @@ function X3DCoreContext (element)
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
-      const shadow = $(element [0] .shadowRoot);
+      this [_shadow] = element [0] .shadowRoot;
 
       const stylesheet = new Promise (resolve =>
       {
@@ -80,16 +80,18 @@ function X3DCoreContext (element)
             rel: "stylesheet",
             href: new URL ("x_ite.css", URLs .getScriptURL ()),
          })
-         .appendTo (shadow);
+         .appendTo (this [_shadow]);
       });
 
-      this [_shadow] = shadow .append (browser .hide ());
+      this [_shadow] .appendChild (browser [0]);
+
+      browser .hide ();
 
       stylesheet .then (() => browser .show ());
    }
    else
    {
-      this [_shadow] = element .prepend (browser);
+      this [_shadow] = element .prepend (browser) [0];
    }
 
    $("<div></div>", { class: "x_ite-private-x_ite" }) .html (`${this .getName ()}<b>X3D</b>`) .appendTo (progress);
@@ -201,7 +203,7 @@ Object .assign (X3DCoreContext .prototype,
    },
    getShadow ()
    {
-      return this [_shadow] [0];
+      return this [_shadow];
    },
    getSurface ()
    {
