@@ -58,7 +58,7 @@ const Legacy =
                child .style .display = "none";
 
             if (child .matches (":not(.x_ite-private-browser)"))
-               child .style .display = "";
+               child .style .display = "initial";
          }
       }
    },
