@@ -3,7 +3,6 @@ import X3DConstants from "../../Base/X3DConstants.js";
 import _            from "../../../locale/gettext.js";
 
 const
-   _options  = Symbol (),
    _userMenu = Symbol (),
    _hide     = Symbol ();
 
@@ -22,13 +21,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       const browser = this .getBrowser ();
 
-      this [_options] = {
-         element: $(browser .getElement ()),
-         appendTo: $(browser .getShadow ()),
-         build: this .build .bind (this),
-      };
-
-      this [_options] .element .on ("contextmenu.ContextMenu", event => this .show (event));
+      browser .getElement () .addEventListener ("contextmenu", event => this .show (event));
    },
    getUserMenu ()
    {
@@ -62,19 +55,21 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
    show (event)
    {
       const
-         options = this [_options],
-         menu    = options .build (event),
-         level   = 1;
+         root  = this .getBrowser () .getShadow (),
+         menu  = this .build (),
+         level = 1;
 
+      event .preventDefault ();
       this .hide ();
 
-      if (!menu) return;
+      if (!menu)
+         return;
 
       // Layer
 
       const layer = $("<div></div>")
          .addClass (["context-menu-layer", menu .className])
-         .appendTo (options .appendTo);
+         .appendTo (root);
 
       this [_hide] = () =>
       {
@@ -96,7 +91,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          .hide ()
          .addClass (["context-menu-root", "context-menu-list", menu .className])
          .offset ({ "left": event .pageX, "top": event .pageY })
-         .appendTo (options .appendTo);
+         .appendTo (root);
 
       $("<div></div>")
          .addClass ("context-menu-background")

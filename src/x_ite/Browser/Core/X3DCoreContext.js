@@ -806,7 +806,6 @@ Object .assign (X3DCoreContext .prototype,
    dispose ()
    {
       this [_context] .getExtension ("WEBGL_lose_context") ?.loseContext ?.();
-      this [_shadow] .find ("*") .remove ();
       this [_element] .remove ();
    },
 });
