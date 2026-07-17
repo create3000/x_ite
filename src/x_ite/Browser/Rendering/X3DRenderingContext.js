@@ -481,6 +481,8 @@ Object .assign (X3DRenderingContext .prototype,
 
       $(window)   .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
       $(document) .off (`.X3DRenderingContext-${this .getInstanceId ()}`);
+
+      // TODO: navigator .xr ?.removeEventListener ("devicechange", ...);
    },
 });
 
