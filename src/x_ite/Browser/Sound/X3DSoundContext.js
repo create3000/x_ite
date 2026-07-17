@@ -61,7 +61,7 @@ Object .assign (X3DSoundContext .prototype,
          return defaultPeriodicWave;
       })();
    },
-   startAudioElement (audioElement, functionName = "play", sound = true)
+   startAudioElement (audioElement, functionName = "play")
    {
       if (!audioElement)
          return;

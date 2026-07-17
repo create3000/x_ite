@@ -209,7 +209,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .getSession () .updateRenderState (nearFarPlanes);
       };
    })(),
-   xrUpdateVisibility (event)
+   xrUpdateVisibility ()
    {
       switch (this .getSession () .visibilityState)
       {

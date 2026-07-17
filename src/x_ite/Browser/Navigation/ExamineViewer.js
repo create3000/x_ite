@@ -546,7 +546,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          this .addRotate (this .roll, this .rotation, this .deltaRotation);
       };
    })(),
-   addRotate (roll, rotation, deltaRotation)
+   addRotate (roll, rotation)
    {
       const viewpoint = this .getActiveViewpoint ();
 
