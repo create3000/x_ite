@@ -130,9 +130,9 @@ export default Namespace .add ("${base}", __default__);`;
       sh (`perl -p0i -e 's|^|/* X_ITE v'$npm_package_version' */|sg' '${dist}'`);
 
       const
-         name      = path .parse (src) .name .toLowerCase (),
+         name      = path .parse (src) .base,
          integrity = "sha384-" + sh (`shasum -b -a 384 '${dist}' | awk '{ print $1 }' | xxd -r -p | base64`) .trim (),
-         action    = `perl -p0i -e 's|integrity:${name}.css|${integrity}|sg' dist/x_ite{,.min}.{,m}js`;
+         action    = `perl -p0i -e 's|integrity:${name}|${integrity}|sg' dist/x_ite{,.min}.{,m}js`;
 
       return action;
    });
