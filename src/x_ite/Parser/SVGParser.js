@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       if (input instanceof XMLDocument)
          return input .documentElement .nodeName === "svg";
 
-      if (input .nodeName === "svg")
+      if (input ?.nodeName === "svg")
          return true;
 
       return false;
@@ -728,9 +728,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       this .popAll ();
    },
-   textElement (xmlElement)
+   textElement ()
    {
-
    },
    imageElement (xmlElement)
    {
@@ -1150,7 +1149,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       // Use PNG because image can have alpha channel.
       return this .context .canvas .toDataURL ("image/png");
    },
-   patternUrl (xmlElement)
+   patternUrl ()
    {
       //console .debug ("pattern");
    },
@@ -2678,7 +2677,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       const vertices = coordinateNode .point;
 
-      function combineCallback (coords, data, weight)
+      function combineCallback (coords)
       {
          const index = vertices .length;
 

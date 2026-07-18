@@ -37,6 +37,7 @@ class DOMIntegration
    constructor (browser)
    {
       this .browser        = browser;
+      this .rootElement    = null;
       this .canvasObserver = new MutationObserver (() => this .processCanvasMutation (browser));
 
       this .canvasObserver .observe (browser .getElement (),
@@ -72,9 +73,11 @@ class DOMIntegration
 
          if (!rootElement)
          {
-            browser .replaceWorld (null) .catch (Function .prototype);
+            browser .replaceWorld (null);
             return;
          }
+
+         this .rootElement = rootElement;
 
          // Display splash screen.
 

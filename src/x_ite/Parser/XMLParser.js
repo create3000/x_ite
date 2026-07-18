@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       const { input } = this;
 
       if (input instanceof XMLDocument)
-         return input .documentElement .nodeName === "X3D";
+         return true;
 
       if (input instanceof HTMLElement)
          return true;
@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             const X3D = xmlElement .documentElement;
 
-            if (X3D)
+            if (X3D .nodeName === "X3D")
             {
                this .x3dElement (X3D);
             }
