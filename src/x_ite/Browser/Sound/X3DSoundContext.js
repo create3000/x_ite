@@ -65,9 +65,9 @@ Object .assign (X3DSoundContext .prototype,
 
       this [_audioElements] .set (audioElement, functionName);
 
-      this .startAudioElements ();
+      this .startAudioElements (1);
    },
-   startAudioElements ()
+   startAudioElements (x)
    {
       for (const [audioElement, functionName] of this [_audioElements])
       {
@@ -94,31 +94,42 @@ Object .assign (X3DSoundContext .prototype,
 
       this [_noSoundButtonId] = setTimeout (async () =>
       {
-         this [_noSoundButton] ??= $("<div></div>")
-            .attr ("part", "no-sound-button")
-            .attr ("title", _("Activate sound."))
-            .addClass (["x_ite-private-no-sound-button", "x_ite-private-button"])
-            .on ("mouseup touchend", () => this .startAudioElements ())
-            .appendTo (this .getSurface () .querySelector (".x_ite-private-buttons"));
+         this [_noSoundButton] ??= (() =>
+         {
+            const
+               noSoundButton      = document .createElement ("div"),
+               startAudioElements = () => this .startAudioElements ();
+
+            noSoundButton .classList .add ("x_ite-private-no-sound-button", "x_ite-private-button");
+            noSoundButton .part .add ("no-sound-button");
+
+            noSoundButton .title      = _("Activate sound.");
+            noSoundButton .onmouseup  = startAudioElements;
+            noSoundButton .ontouchend = startAudioElements;
+
+            this .getSurface () .querySelector (".x_ite-private-buttons") .append (noSoundButton);
+
+            return noSoundButton;
+         })();
 
          const
             count = !! this [_audioElements] .size,
             fade  = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300";
 
          if (count)
-            this [_noSoundButton] .show ();
+            this [_noSoundButton] .style .display = "";
 
-         this [_noSoundButton] .addClass (fade);
+         this [_noSoundButton] .classList .add (fade);
 
          await $.sleep (400);
 
-         this [_noSoundButton] .removeClass (fade);
+         this [_noSoundButton] .classList .remove (fade);
 
          if (count !== !! this [_audioElements] .size)
             return;
 
          if (!count)
-            this [_noSoundButton] .hide ();
+            this [_noSoundButton] .style .display = "none";
       },
       200);
    },
