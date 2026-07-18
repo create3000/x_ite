@@ -90,7 +90,7 @@ class DOMIntegration
 
          this .parser .setInput (rootElement);
 
-         await new Promise (this .parser .parseIntoScene .bind (this .parser));
+         await new Promise ((resolve, reject) => this .parser .parseIntoScene (resolve, reject));
 
          browser .replaceWorld (scene);
 

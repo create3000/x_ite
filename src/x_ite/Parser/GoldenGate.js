@@ -16,17 +16,17 @@ class GoldenGate extends X3DParser
    #inputs = new Map ();
 
    static #parsers = [
-      SVGParser,
       XMLParser,
+      VRMLParser,
+      JSONParser,
       GLTF2Parser,
       GLB2Parser,
-      JSONParser,
-      VRMLParser,
       OBJParser,
       STLAParser,
       STLBParser,
       PLYAParser,
       PLYBParser,
+      SVGParser,
    ];
 
    static addParsers (... args)

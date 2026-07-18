@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       const { input } = this;
 
       if (input instanceof XMLDocument)
-         return true;
+         return input .documentElement .nodeName === "X3D";
 
       if (input instanceof HTMLElement)
          return true;
@@ -87,120 +87,49 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    parseIntoScene (resolve, reject)
    {
+      this .xmlElement (this .input)
+         .then (resolve)
+         .catch (reject);
+   },
+   async xmlElement (xmlElement)
+   {
       const
          browser = this .getBrowser (),
          scene   = this .getScene ();
-
-      this .resolve = resolve;
-      this .reject  = reject;
 
       scene .setEncoding ("XML");
       scene .setProfile (browser .getProfile ("Full"));
 
-      this .xmlElement (this .input);
-   },
-   xmlElement (xmlElement)
-   {
-      const
-         browser = this .getBrowser (),
-         scene   = this .getScene ();
-
       if (xmlElement === null)
       {
-         if (this .resolve)
-         {
-            browser .loadComponents (scene)
-               .then (() => this .resolve (scene))
-               .catch (this .reject);
-         }
-
-         return;
+         await browser .loadComponents (scene);
       }
-
-      switch (xmlElement .nodeName)
+      else
       {
-         case "#document":
+         switch (xmlElement .nodeName)
          {
-            const X3D = xmlElement .documentElement;
-
-            if (X3D .nodeName === "X3D")
+            case "#document":
             {
-               this .x3dElement (X3D);
+               await this .x3dElement (xmlElement .documentElement);
+               break;
             }
-            else
+            case "X3D":
             {
-               if (this .resolve)
-               {
-                  browser .loadComponents (scene) .then (() =>
-                  {
-                     this .childrenElements (xmlElement);
-                     this .setupNodes ();
-                     this .resolve (scene);
-                  })
-                  .catch (this .reject);
-               }
-               else
-               {
-                  this .childrenElements (xmlElement);
-                  this .setupNodes ();
-               }
+               await this .x3dElement (xmlElement);
+               break;
             }
-
-            break;
-         }
-         case "X3D":
-         {
-            this .x3dElement (xmlElement);
-            break;
-         }
-         case "Scene":
-         case "SCENE":
-         {
-            if (this .resolve)
-            {
-               browser .loadComponents (scene) .then (() =>
-               {
-                  this .sceneElement (xmlElement);
-                  this .setupNodes ();
-                  this .resolve (scene);
-               })
-               .catch (this .reject);
-            }
-            else
-            {
-               this .sceneElement (xmlElement);
-               this .setupNodes ();
-            }
-
-            break;
-         }
-         default:
-         {
-            if (this .resolve)
-            {
-               browser .loadComponents (scene) .then (() =>
-               {
-                  this .childrenElements (xmlElement);
-                  this .setupNodes ();
-                  this .resolve (scene);
-               })
-               .catch (this .reject);
-            }
-            else
-            {
-               this .childrenElements (xmlElement);
-               this .setupNodes ();
-            }
-
-            break;
          }
       }
+
+      return scene;
    },
-   x3dElement (xmlElement)
+   async x3dElement (xmlElement)
    {
       const
          browser = this .getBrowser (),
          scene   = this .getScene ();
+
+      scene [_x3d] = xmlElement;
 
       try
       {
@@ -209,8 +138,6 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          const
             profileNameId = xmlElement .getAttribute ("profile"),
             profile       = browser .getProfile (profileNameId || "Full");
-
-         this .scene [_x3d] = xmlElement;
 
          scene .setProfile (profile);
       }
@@ -234,25 +161,12 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       if (!this .xml)
          this .headElement (xmlElement);
 
-      if (this .resolve)
-      {
-         browser .loadComponents (scene) .then (() =>
-         {
-            for (const childNode of xmlElement .childNodes)
-               this .x3dElementChildScene (childNode);
+      await browser .loadComponents (scene);
 
-            this .setupNodes ();
-            this .resolve (scene);
-         })
-         .catch (this .reject);
-      }
-      else
-      {
-         for (const childNode of xmlElement .childNodes)
-            this .x3dElementChildScene (childNode);
+      for (const childNode of xmlElement .childNodes)
+         this .x3dElementChildScene (childNode);
 
-         this .setupNodes ();
-      }
+      this .setupNodes ();
    },
    x3dElementChildHead (xmlElement)
    {
