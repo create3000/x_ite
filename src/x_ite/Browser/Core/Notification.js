@@ -15,13 +15,19 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
    {
       X3DBaseNode .prototype .initialize .call (this);
 
-      this .element = $("<div></div>")
-         .css ("visibility", "hidden")
-         .addClass ("x_ite-private-notification")
-         .appendTo (this .getBrowser () .getSurface ())
-         .css ("width", 0);
+      this .element = (() =>
+      {
+         const element = document .createElement ("div");
 
-      $("<span></span>") .appendTo (this .element);
+         element .style .visibility = "hidden";
+
+         element .append (document .createElement ("span"));
+         element .classList .add ("x_ite-private-notification");
+
+         this .getBrowser () .getSurface () .append (element);
+
+         return element;
+      })();
 
       this ._string .addInterest ("set_string__", this);
    },
@@ -35,19 +41,21 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
 
       clearTimeout (this .timeoutId);
 
-      this .element .children () .text (this ._string .getValue ());
+      this .element .querySelector ("span") .textContent = this ._string .getValue ();
 
-      this .element .css ({
+      Object .assign (this .element .style,
+      {
          visibility: "visible",
-         width: this .textWidth (this .element [0]),
+         width: `${this .textWidth (this .element)}px`,
          transition: "width 300ms ease-in-out",
       });
 
       this .timeoutId = setTimeout (() =>
       {
-         this .element .css ({
+         Object .assign (this .element .style,
+         {
             visibility: "hidden",
-            width: 0,
+            width: "0px",
             transition: "visibility 0s 300ms, width 300ms ease-in-out",
          });
       },
