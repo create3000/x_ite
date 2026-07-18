@@ -925,6 +925,14 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          normal: null,
       };
    },
+   isContextLost ()
+   {
+      return this .getContext () .isContextLost ();
+   },
+   loseContext ()
+   {
+      this .getContext () .getExtension ("WEBGL_lose_context") .loseContext ();
+   },
    beginUpdate ()
    {
       this .setLive (true);
@@ -965,10 +973,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    toJSONStream (generator)
    {
       this .currentScene .toJSONStream (generator);
-   },
-   loseContext ()
-   {
-      this .getContext () .getExtension ("WEBGL_lose_context") .loseContext ();
    },
    dispose ()
    {

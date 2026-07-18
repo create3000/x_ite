@@ -324,7 +324,11 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       if (typeof shutdown === "function")
       {
-         this .shutdown = () => this .call__ (shutdown, "shutdown");
+         this .shutdown = () =>
+         {
+            if (!browser .isContextLost ())
+               this .call__ (shutdown, "shutdown");
+         };
 
          window .addEventListener ("unload", this .shutdown, { once: true });
       }

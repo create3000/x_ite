@@ -452,6 +452,10 @@ type ClosestObject = {
 };
 ```
 
+#### **isContextLost** (): boolean <small class="blue">non-standard</small>
+
+Returns a boolean value indicating whether or not the WebGL context has been lost.
+
 #### **loseContext** (): void <small class="blue">non-standard</small>
 
 Loses the WebGL context.
