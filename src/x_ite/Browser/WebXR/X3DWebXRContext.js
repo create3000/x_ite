@@ -42,17 +42,8 @@ Object .assign (X3DWebXRContext .prototype,
       {
          const xrButton = document .createElement ("div");
 
-         const prevent = event =>
+         const xrToggleSession = () =>
          {
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-            event .stopPropagation ();
-         };
-
-         const xrToggleSession = event =>
-         {
-            prevent (event);
-
             this .startAudioElements ();
 
             if (this .getSession () === window)
@@ -64,11 +55,9 @@ Object .assign (X3DWebXRContext .prototype,
          xrButton .classList .add ("x_ite-private-xr-button", "x_ite-private-button");
          xrButton .part .add ("xr-button");
 
-         xrButton .title        = _("Start WebXR session.");
-         xrButton .onmousedown  = prevent;
-         xrButton .ontouchstart = prevent;
-         xrButton .onmouseup    = xrToggleSession;
-         xrButton .ontouchend   = xrToggleSession;
+         xrButton .title      = _("Start WebXR session.");
+         xrButton .onmouseup  = xrToggleSession;
+         xrButton .ontouchend = xrToggleSession;
 
          this .getSurface () .querySelector (".x_ite-private-buttons") .append (xrButton);
 
