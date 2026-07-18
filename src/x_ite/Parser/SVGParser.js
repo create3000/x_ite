@@ -1336,14 +1336,14 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       this .parseValue (attribute);
 
       let
-         points   = [ ],
-         previous = "",
-         command  = "",
-         relative = false,
-         ax       = 0,
-         ay       = 0,
-         px       = 0,
-         py       = 0;
+         points  = [ ],
+         command = "",
+         ax      = 0,
+         ay      = 0,
+         px      = 0,
+         py      = 0;
+
+      let previous, relative;
 
       while (true)
       {
