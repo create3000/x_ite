@@ -77,8 +77,6 @@ class DOMIntegration
             return;
          }
 
-         this .rootElement = rootElement;
-
          // Display splash screen.
 
          browser .setBrowserLoading (true);
