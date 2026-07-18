@@ -38,11 +38,11 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      this [_xrButton] = $("<div></div>")
-         .attr ("title", _("Start WebXR session."))
-         .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
-         .on ("mousedown touchstart", false)
-         .on ("mouseup touchend", event =>
+      this [_xrButton] = (() =>
+      {
+         const xrButton = document .createElement ("div");
+
+         const xrToggleSession = event =>
          {
             event .preventDefault ();
             event .stopImmediatePropagation ();
@@ -54,8 +54,19 @@ Object .assign (X3DWebXRContext .prototype,
                this .xrStartSession ();
             else
                this .xrStopSession ();
-         })
-         .appendTo (this .getSurface () .querySelector (".x_ite-private-buttons"));
+         };
+
+         xrButton .classList .add ("x_ite-private-xr-button", "x_ite-private-button");
+         xrButton .part .add ("xr-button");
+
+         xrButton .title      = _("Start WebXR session.");
+         xrButton .onmouseup  = xrToggleSession;
+         xrButton .ontouchend = xrToggleSession;
+
+         this .getSurface () .querySelector (".x_ite-private-buttons") .append (xrButton);
+
+         return xrButton;
+      })();
    },
    async xrStartSession ()
    {
@@ -108,7 +119,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Button
 
-         this [_xrButton] .attr ("title", _("Stop WebXR session."));
+         this [_xrButton] .title = _("Stop WebXR session.");
 
          // session .addEventListener ("select", event =>
          // {
@@ -158,7 +169,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Button
 
-         this [_xrButton] .attr ("title", _("Start WebXR session."));
+         this [_xrButton] .title = _("Start WebXR session.");
       });
    },
    xrContentScale ()

@@ -65,7 +65,7 @@ Object .assign (X3DSoundContext .prototype,
 
       this [_audioElements] .set (audioElement, functionName);
 
-      this .startAudioElements (1);
+      this .startAudioElements ();
    },
    startAudioElements ()
    {
