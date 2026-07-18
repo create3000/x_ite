@@ -121,13 +121,11 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          case "#document":
          {
-            const X3D = Array .from (xmlElement .children)
-               .filter (child => child .matches ("X3D"));
+            const X3D = xmlElement .documentElement;
 
-            if (X3D .length)
+            if (X3D)
             {
-               for (const xmlElement of X3D)
-                  this .x3dElement (xmlElement);
+               this .x3dElement (X3D);
             }
             else
             {
@@ -1032,7 +1030,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          if (field .isInitializable ())
             this .fieldValue (field, xmlAttribute .value);
       }
-      catch (error)
+      catch
       {
          // console .error (error);
       }

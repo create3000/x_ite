@@ -56,10 +56,9 @@ class DOMIntegration
 
    processCanvasMutation (browser)
    {
-      const X3D = Array .from (browser .getElement () .children)
-         .filter (child => child .matches ("X3D"));
+      const X3D = browser .getElement () .querySelector (":scope > X3D:last-of-type");
 
-      this .processRootElement (browser, X3D .at (-1));
+      this .processRootElement (browser, X3D);
    }
 
    async processRootElement (browser, rootElement)
@@ -73,7 +72,7 @@ class DOMIntegration
 
          if (!rootElement)
          {
-            browser .replaceWorld (null);
+            browser .replaceWorld (null) .catch (Function .prototype);
             return;
          }
 

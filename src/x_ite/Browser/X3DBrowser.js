@@ -23,7 +23,6 @@ import SFNodeCache          from "../Fields/SFNodeCache.js";
 import Features             from "../Features.js";
 import Algorithm            from "../../standard/Math/Algorithm.js";
 import _                    from "../../locale/gettext.js";
-import DEVELOPMENT          from "../DEVELOPMENT.js";
 
 import "../Components.js";
 
@@ -84,8 +83,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       scene .setup ();
 
-      this .replaceWorld (scene)
-         .catch (DEVELOPMENT ? error => console .error (error) : Function .prototype);
+      this .replaceWorld (scene) .catch (Function .prototype);
 
       this [_DOMIntegration] = new DOMIntegration (this);
 
@@ -382,7 +380,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       {
          this [_fileLoader] ?.abort ();
 
-         this [_reject] ?.("Replacing world aborted.");
+         this [_reject] ?.(new Error ("Replacing world aborted."));
          this [_reject] = reject;
 
          this .setBrowserLoading (true);

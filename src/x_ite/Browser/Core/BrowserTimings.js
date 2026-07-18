@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
       this .getBrowser () .getSurface () .insertAdjacentHTML ("beforeend", html);
 
-      const element = this .getBrowser () .getSurface () .querySelector (":last-child");
+      const element = this .getBrowser () .getSurface () .querySelector (":scope > :last-child");
 
       this .element         = element;
       this .table           = element .querySelector ("table");

@@ -196,11 +196,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       {
          case "#document":
          {
-            const svg = Array .from (xmlElement .children) .filter (child => child .matches ("svg"));
-
-            for (const xmlElement of svg)
-               await this .svgElement (xmlElement);
-
+            await this .svgElement (xmlElement .documentElement);
             break;
          }
          case "svg":
