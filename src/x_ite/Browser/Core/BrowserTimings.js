@@ -8,6 +8,8 @@ function BrowserTimings (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
+   // Private properties
+
    this .localStorage  = this .getBrowser () .getLocalStorage () .addNameSpace ("BrowserTimings.");
    this .fps           = new StopWatch ();
    this .primitives    = { };
@@ -19,116 +21,118 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
    {
       X3DBaseNode .prototype .initialize .call (this);
 
-      this .getBrowser () .getBrowserOptions () ._Timings .addInterest ("set_enabled__", this);
-
       this .localStorage .setDefaultValues ({ type: "LESS" });
 
-      this .element = $("<div></div>")
-         .addClass (["x_ite-private-browser-timings", "x_ite-private-hidden"])
-         .appendTo (this .getBrowser () .getSurface ());
-
-      this .table = $("<table></table>")
-         .appendTo (this .element);
-
-      this .header = $("<thead></thead>")
-         .append ($("<tr></tr>")
-         .append ($("<th colspan='2'></th>")
-         .text (_("Browser Timings"))))
-         .appendTo (this .table);
-
-      this .body = $("<tbody></tbody>")
-         .appendTo (this .table);
-
-      this .footer = $("<tfoot></tfoot>")
-         .append ($("<tr></tr>")
-         .append ($("<td colspan='2'></td>")))
-         .appendTo (this .table);
-
-      this .button = $("<button></button>")
-         .appendTo (this .footer .find ("td"));
-
-      this .frameRate       = $("<td></td>");
-      this .speed           = $("<td></td>");
-      this .frameRate       = $("<td></td>");
-      this .speed           = $("<td></td>");
-      this .browserTime     = $("<td></td>");
-      this .x3dTotal        = $("<td></td>");
-      this .eventProcessing = $("<td></td>");
-      this .pointerTime     = $("<td></td>");
-      this .cameraTime      = $("<td></td>");
-      this .pickingTime     = $("<td></td>");
-      this .collisionTime   = $("<td></td>");
-      this .renderTime      = $("<td></td>");
-      this .numPrimitives   = $("<td></td>") .addClass ("pointer") .attr ("title", _("Points; Lines; Triangles"));
-      this .numShapes       = $("<td></td>") .addClass ("pointer") .attr ("title", _("Opaque Shapes + Transparent Shapes"));
-      this .sensors         = $("<td></td>");
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Frame rate") + ":"))
-         .append (this .frameRate));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Speed") + ":"))
-         .append (this .speed)
-         .addClass ("x_ite-private-more"));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Browser") + ":"))
-         .append (this .browserTime));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("X3D total") + ":"))
-         .append (this .x3dTotal));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Event Processing") + ":"))
-         .append (this .eventProcessing));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Pointer") + ":"))
-         .append (this .pointerTime));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Camera") + ":"))
-         .append (this .cameraTime));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Picking") + ":"))
-         .append (this .pickingTime));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Collision Detection") + ":"))
-         .append (this .collisionTime));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Rendering") + ":"))
-         .append (this .renderTime));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Number of Primitives") + ":"))
-         .append (this .numPrimitives));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Number of Shapes") + ":"))
-         .append (this .numShapes));
-
-      this .body .append ($("<tr></tr>")
-         .append ($("<td></td>") .text (_("Number of Sensors") + ":"))
-         .append (this .sensors));
-
-      this .button .on ("click touchend", this .set_type__ .bind (this));
-
       this .localStorage .type = this .localStorage .type === "MORE" ? "LESS" : "MORE";
+
+      // HTML
+
+      const html = /* html */ `
+<div class="x_ite-private-browser-timings x_ite-private-hidden"><table>
+   <thead>
+      <tr>
+         <th colspan="2">${_("Browser Timings")}</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>${_("Frame rate")}:</td>
+         <td class="frame-rate"></td>
+      </tr>
+      <tr class="x_ite-private-more">
+         <td>${_("Speed")}:</td>
+         <td class="speed"></td>
+      </tr>
+      <tr>
+         <td>${_("Browser")}:</td>
+         <td class="browser-time"></td>
+      </tr>
+      <tr>
+         <td>${_("X3D total")}:</td>
+         <td class="x3d-total"></td>
+      </tr>
+      <tr>
+         <td>${_("Event Processing")}:</td>
+         <td class="event-processing"></td>
+      </tr>
+      <tr>
+         <td>${_("Pointer")}:</td>
+         <td class="pointer"></td>
+      </tr>
+      <tr>
+         <td>${_("Camera")}:</td>
+         <td class="camera"></td>
+      </tr>
+      <tr>
+         <td>${_("Picking")}:</td>
+         <td class="picking"></td>
+      </tr>
+      <tr>
+         <td>${_("Collision Detection")}:</td>
+         <td class="collision-detection"></td>
+      </tr>
+      <tr>
+         <td>${_("Rendering")}:</td>
+         <td class="rendering"></td>
+      </tr>
+      <tr>
+         <td>${_("Number of Primitives")}:</td>
+         <td class="primitives pointer" title="${_("Points; Lines; Triangles")}"></td>
+      </tr>
+      <tr>
+         <td>${_("Number of Shapes")}:</td>
+         <td class="shapes pointer" title="${_("Opaque Shapes + Transparent Shapes")}"></td>
+      </tr>
+      <tr>
+         <td>${_("Number of Sensors")}:</td>
+         <td class="sensors"></td>
+      </tr>
+   </tbody>
+   <tfoot>
+      <tr>
+         <td colspan="2"><button></button></td>
+      </tr>
+   </tfoot>
+</table></div>`;
+
+      this .getBrowser () .getSurface () .insertAdjacentHTML ("beforeend", html);
+
+      const element = this .getBrowser () .getSurface () .querySelector (":last-child");
+
+      this .element         = element;
+      this .table           = element .querySelector ("table");
+      this .frameRate       = element .querySelector (".frame-rate");
+      this .speed           = element .querySelector (".speed");
+      this .browserTime     = element .querySelector (".browser-time");
+      this .x3dTotal        = element .querySelector (".x3d-total");
+      this .eventProcessing = element .querySelector (".event-processing");
+      this .pointerTime     = element .querySelector (".pointer");
+      this .cameraTime      = element .querySelector (".camera");
+      this .pickingTime     = element .querySelector (".picking");
+      this .collisionTime   = element .querySelector (".collision-detection");
+      this .renderTime      = element .querySelector (".rendering");
+      this .numPrimitives   = element .querySelector (".primitives");
+      this .numShapes       = element .querySelector (".shapes");
+      this .sensors         = element .querySelector (".sensors");
+      this .button          = element .querySelector ("button");
+
+      // Events
+
+      this .button .addEventListener ("click",    this .set_type__ .bind (this));
+      this .button .addEventListener ("touchend", this .set_type__ .bind (this));
+
+      this .getBrowser () .getBrowserOptions () ._Timings .addInterest ("set_enabled__", this);
 
       this .set_type__ ();
    },
    set_enabled__ ()
    {
+      const { element } = this;
+
       if (this .getBrowser () .getBrowserOption ("Timings"))
       {
-         this .element
-            .removeClass (["x_ite-private-fade-out-300", "x_ite-private-hidden"])
-            .addClass ("x_ite-private-fade-in-300");
+         element .classList .remove ("x_ite-private-fade-out-300", "x_ite-private-hidden");
+         element .classList .add ("x_ite-private-fade-in-300");
 
          this .getBrowser () .addBrowserCallback (this, X3DConstants .INITIALIZED_EVENT, () => this .reset ());
          this .getBrowser () .prepareEvents () .addInterest ("update", this);
@@ -136,9 +140,8 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       }
       else
       {
-         this .element
-            .removeClass ("x_ite-private-fade-in-300")
-            .addClass ("x_ite-private-fade-out-300");
+         element .classList .remove ("x_ite-private-fade-in-300");
+         element .classList .add ("x_ite-private-fade-out-300");
 
          this .getBrowser () .removeBrowserCallback (this, X3DConstants .INITIALIZED_EVENT);
          this .getBrowser () .prepareEvents () .removeInterest ("update", this);
@@ -146,28 +149,24 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
    },
    set_type__ ()
    {
-      if (this .localStorage .type === "MORE")
+      const { localStorage, table, button } = this;
+
+      if (localStorage .type === "MORE")
       {
-         this .localStorage .type = "LESS";
-         this .table .addClass ("less");
-         this .table .removeClass ("more");
+         localStorage .type = "LESS";
+         table .classList .add ("less");
+         table .classList .remove ("more");
+         button .textContent = _("More Properties");
       }
       else
       {
-         this .localStorage .type = "MORE";
-         this .table .addClass ("more");
-         this .table .removeClass ("less");
+         localStorage .type = "MORE";
+         table .classList .add ("more");
+         table .classList .remove ("less");
+         button .textContent = _("Less Properties");
       }
 
-      this .set_button__ ();
       this .build ();
-   },
-   set_button__ ()
-   {
-      if (this .localStorage .type === "MORE")
-         this .button .text (_("Less Properties"));
-      else
-         this .button .text (_("More Properties"));
    },
    async reset ()
    {
@@ -194,13 +193,13 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
       if (this .fps .elapsedTime)
       {
-         this .frameRate .text (`${f2 (1000 / this .fps .averageTime)} ${_("fps")}`);
-         this .speed .text (`${f2 (this .getSpeed (browser .currentSpeed ))} ${this .getSpeedUnit (browser .currentSpeed)}`);
+         this .frameRate .textContent = `${f2 (1000 / this .fps .averageTime)} ${_("fps")}`;
+         this .speed .textContent = `${f2 (this .getSpeed (browser .currentSpeed ))} ${this .getSpeedUnit (browser .currentSpeed)}`;
       }
       else
       {
-         this .frameRate .text (`${f2 (0)} ${_("fps")}`);
-         this .speed .text (`${f2 (this .getSpeed (0))} ${this .getSpeedUnit (0)}`);
+         this .frameRate .textContent = `${f2 (0)} ${_("fps")}`;
+         this .speed .textContent = `${f2 (this .getSpeed (0))} ${this .getSpeedUnit (0)}`;
       }
 
       if (this .localStorage .type !== "MORE" || !browser .getWorld ())
@@ -218,17 +217,17 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          opaqueShapes      = this .getOpaqueShapes (layers),
          transparentShapes = this .getTransparentShapes (layers);
 
-      this .browserTime     .text (`${f2 (browser .getSystemTime () .averageTime)} ${_("ms")}`);
-      this .x3dTotal        .text (`${f2 (browser .getBrowserTime () .averageTime)} ${_("ms")}`);
-      this .eventProcessing .text (`${f2 (routingTime)} ${_("ms")}`);
-      this .pointerTime     .text (`${f2 (browser .getPointingTime () .averageTime)} ${_("ms")}`);
-      this .cameraTime      .text (`${f2 (browser .getCameraTime () .averageTime)} ${_("ms")}`);
-      this .pickingTime     .text (`${f2 (browser .getPickingTime () .averageTime)} ${_("ms")}`);
-      this .collisionTime   .text (`${f2 (collisionTime)} ${_("ms")}`);
-      this .renderTime      .text (`${f2 (browser .getDisplayTime () .averageTime)} ${_("ms")}`);
-      this .numPrimitives   .text (`${f0 (primitives .points)}; ${f0 (primitives .lines)}; ${f0 (primitives .triangles)}`);
-      this .numShapes       .text (`${f0 (opaqueShapes)} + ${f0 (transparentShapes)}`);
-      this .sensors         .text (f0 (prepareEvents + sensors));
+      this .browserTime     .textContent = `${f2 (browser .getSystemTime () .averageTime)} ${_("ms")}`;
+      this .x3dTotal        .textContent = `${f2 (browser .getBrowserTime () .averageTime)} ${_("ms")}`;
+      this .eventProcessing .textContent = `${f2 (routingTime)} ${_("ms")}`;
+      this .pointerTime     .textContent = `${f2 (browser .getPointingTime () .averageTime)} ${_("ms")}`;
+      this .cameraTime      .textContent = `${f2 (browser .getCameraTime () .averageTime)} ${_("ms")}`;
+      this .pickingTime     .textContent = `${f2 (browser .getPickingTime () .averageTime)} ${_("ms")}`;
+      this .collisionTime   .textContent = `${f2 (collisionTime)} ${_("ms")}`;
+      this .renderTime      .textContent = `${f2 (browser .getDisplayTime () .averageTime)} ${_("ms")}`;
+      this .numPrimitives   .textContent = `${f0 (primitives .points)}; ${f0 (primitives .lines)}; ${f0 (primitives .triangles)}`;
+      this .numShapes       .textContent = `${f0 (opaqueShapes)} + ${f0 (transparentShapes)}`;
+      this .sensors         .textContent = f0 (prepareEvents + sensors);
 
       browser .getSystemTime ()    .reset ();
       browser .getBrowserTime ()   .reset ();
