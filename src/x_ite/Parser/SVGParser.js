@@ -173,13 +173,12 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    },
    isValid ()
    {
-      if (!(this .input instanceof XMLDocument))
-         return false;
+      const { input } = this;
 
-      if (Array .from (this .input .children) .find (child => child .matches ("svg")))
-         return true;
+      if (input instanceof XMLDocument)
+         return input .documentElement .nodeName === "svg";
 
-      if (this .input .nodeName === "svg")
+      if (input .nodeName === "svg")
          return true;
 
       return false;
