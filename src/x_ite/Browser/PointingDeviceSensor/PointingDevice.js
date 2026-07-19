@@ -26,11 +26,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       $.on (this, surface, "touchstart", event => this .touchstart (event));
       $.on (this, surface, "touchend",   event => this .touchend   (event));
    },
-   mousedown (event, touch)
+   mousedown (event)
    {
-      if (!touch && this .touch)
-         return;
-
       const
          browser = this .getBrowser (),
          surface = browser .getSurface ();
@@ -111,11 +108,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       event .preventDefault ();
       event .stopImmediatePropagation ();
    },
-   mousemove (event, touch)
+   mousemove (event)
    {
-      if (!touch && this .touch)
-         return;
-
       // Motion.
 
       const browser = this .getBrowser ();
@@ -139,8 +133,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       {
          case 1:
          {
-            this .touch = true;
-
             // button 0.
 
             event = this .getBrowser () .copyEvent (event);
@@ -172,8 +164,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    touchend (event)
    {
-      this .touch = false;
-
       event = this .getBrowser () .copyEvent (event);
 
       event .button = 0;
