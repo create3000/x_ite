@@ -73,8 +73,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       $.on (this, surface, "dblclick",  event => this .dblclick  (event));
       $.on (this, surface, "wheel",     event => this .wheel     (event));
 
-      $.on (this, surface, "touchstart",  event => this .touchstart (event));
-      $.on (this, surface, "touchend",    event => this .touchend   (event));
+      $.on (this, surface, "touchstart", event => this .touchstart (event));
+      $.on (this, surface, "touchend",   event => this .touchend   (event));
 
       // Setup scroll chaser.
 
