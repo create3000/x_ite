@@ -141,7 +141,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
 
-            this .mousedown (event, true);
+            this .mousedown (event);
 
             // Show context menu on long tab.
 
@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       event .button = 0;
 
-      this .mouseup (event, true);
+      this .mouseup (event);
 
       clearTimeout (this .touchTimeout);
    },
@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
 
-            this .mousemove (event, true);
+            this .mousemove (event);
 
             if (Math .hypot (this .touchX - event .pageX, this .touchY - event .pageY) > 7)
                clearTimeout (this .touchTimeout);
