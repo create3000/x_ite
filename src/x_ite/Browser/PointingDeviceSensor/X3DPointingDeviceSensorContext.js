@@ -117,6 +117,20 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       this .getSurface () .style .cursor = css;
    },
+   copyEvent (event)
+   {
+      const copy = Object .assign ({ }, event);
+
+      for (const key in event)
+      {
+         const value = event [key];
+
+         if (typeof value === "function")
+            copy [key] = value .bind (event);
+      }
+
+      return copy;
+   },
    getPointer ()
    {
       return this [_pointer];

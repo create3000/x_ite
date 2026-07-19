@@ -26,8 +26,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       $.on (this, surface, "touchstart", event => this .touchstart (event));
       $.on (this, surface, "touchend",   event => this .touchend   (event));
    },
-   mousedown (event)
+   mousedown (event, touch)
    {
+      if (!touch && this .touch)
+         return;
+
       const
          browser = this .getBrowser (),
          surface = browser .getSurface ();
@@ -39,21 +42,21 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       if (event .button === 0)
       {
-         const { x, y } = browser .getPointerFromEvent (event);
-
          $.off (this, surface, "mousemove");
-
          $.on (this, document, "mouseup",   event => this .mouseup   (event));
          $.on (this, document, "mousemove", event => this .mousemove (event));
+
          $.on (this, document, "touchend" , event => this .touchend  (event));
          $.on (this, document, "touchmove", event => this .touchmove (event));
+
+         const { x, y } = browser .getPointerFromEvent (event);
 
          if (browser .buttonPressEvent (x, y))
          {
             // Stop event propagation.
 
             event .preventDefault ();
-            event .stopImmediatePropagation (); // Keeps the rest of the handlers from being executed
+            event .stopImmediatePropagation ();
 
             this .grabbing = Array .from (browser .getHit () .sensors .keys ())
                .some (node => node .getType () .includes (X3DConstants .X3DDragSensorNode));
@@ -77,7 +80,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       const { x, y } = browser .getPointerFromEvent (event);
 
-      $.off (this,document);
+      $.off (this, document);
       $.on (this, surface, "mousemove", event => this .mousemove (event));
 
       this .grabbing = false;
@@ -108,8 +111,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       event .preventDefault ();
       event .stopImmediatePropagation ();
    },
-   mousemove (event)
+   mousemove (event, touch)
    {
+      if (!touch && this .touch)
+         return;
+
       // Motion.
 
       const browser = this .getBrowser ();
@@ -127,31 +133,34 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    touchstart (event)
    {
-      const touches = event .originalEvent .touches;
+      const touches = event .touches;
 
       switch (touches .length)
       {
          case 1:
          {
+            this .touch = true;
+
             // button 0.
+
+            event = this .getBrowser () .copyEvent (event);
 
             event .button = 0;
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
 
-            this .mousedown (event);
+            this .mousedown (event, true);
 
             // Show context menu on long tab.
 
             const hit = this .getBrowser () .getHit ();
 
-            if (hit .id === 0 || hit .sensors .size === 0)
+            if (!hit .id || !hit .sensors .size)
             {
                this .touchX       = event .pageX;
                this .touchY       = event .pageY;
                this .touchTimeout = setTimeout (() => this .showContextMenu (event), CONTEXT_MENU_TIME);
             }
-
             break;
          }
          case 2:
@@ -163,27 +172,32 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    touchend (event)
    {
+      this .touch = false;
+
+      event = this .getBrowser () .copyEvent (event);
+
       event .button = 0;
 
-      this .mouseup (event);
+      this .mouseup (event, true);
 
       clearTimeout (this .touchTimeout);
    },
    touchmove (event)
    {
-      const touches = event .originalEvent .touches;
+      const touches = event .touches;
 
       switch (touches .length)
       {
          case 1:
          {
             // button 0.
+            event = this .getBrowser () .copyEvent (event);
 
             event .button = 0;
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
 
-            this .mousemove (event);
+            this .mousemove (event, true);
 
             if (Math .hypot (this .touchX - event .pageX, this .touchY - event .pageY) > 7)
                clearTimeout (this .touchTimeout);

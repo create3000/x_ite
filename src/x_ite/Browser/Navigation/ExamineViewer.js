@@ -7,15 +7,11 @@ import Vector2           from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 
-void (typeof jquery_mousewheel); // import plugin
-
-const macOS = /Mac OS X/i .test (navigator .userAgent);
-
 const
    SPIN_RELEASE_TIME = 20,
    SPIN_ANGLE        = Algorithm .radians (2),
    SPIN_FACTOR       = 0.3,
-   SCROLL_FACTOR     = macOS ? 1 / 120 : 1 / 20,
+   SCROLL_FACTOR     = 1 / 120,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.2,
    DISK_ANGLE        = Algorithm .radians (15),
@@ -62,7 +58,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       const
          browser = this .getBrowser (),
-         surface = $(browser .getSurface ());
+         surface = browser .getSurface ();
 
       // Disconnect from spin.
 
@@ -72,13 +68,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       // Bind pointing device events.
 
-      surface .on ("mousedown.ExamineViewer",  this .mousedown  .bind (this));
-      surface .on ("mouseup.ExamineViewer",    this .mouseup    .bind (this));
-      surface .on ("dblclick.ExamineViewer",   this .dblclick   .bind (this));
-      surface .on ("mousewheel.ExamineViewer", this .mousewheel .bind (this));
+      $.on (this, surface, "mousedown", event => this .mousedown (event));
+      $.on (this, surface, "mouseup",   event => this .mouseup   (event));
+      $.on (this, surface, "dblclick",  event => this .dblclick  (event));
+      $.on (this, surface, "wheel",     event => this .wheel     (event));
 
-      surface .on ("touchstart.ExamineViewer",  this .touchstart .bind (this));
-      surface .on ("touchend.ExamineViewer",    this .touchend   .bind (this));
+      $.on (this, surface, "touchstart",  event => this .touchstart (event));
+      $.on (this, surface, "touchend",    event => this .touchend   (event));
 
       // Setup scroll chaser.
 
@@ -137,10 +133,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             this .button = event .button;
 
-            $(document) .on ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
-            $(document) .on ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
-            $(document) .on ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
-            $(document) .on ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
+            $.on (this, document, "mouseup",   event => this .mouseup   (event));
+            $.on (this, document, "mousemove", event => this .mousemove (event));
+            $.on (this, document, "touchend",  event => this .touchend  (event));
+            $.on (this, document, "touchmove", event => this .touchmove (event));
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
@@ -162,10 +158,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             this .button = event .button;
 
-            $(document) .on ("mouseup.ExamineViewer"   + this .getId (), this .mouseup   .bind (this));
-            $(document) .on ("mousemove.ExamineViewer" + this .getId (), this .mousemove .bind (this));
-            $(document) .on ("touchend.ExamineViewer"  + this .getId (), this .touchend  .bind (this));
-            $(document) .on ("touchmove.ExamineViewer" + this .getId (), this .touchmove .bind (this));
+            $.on (this, document, "mouseup",   event => this .mouseup   (event));
+            $.on (this, document, "mousemove", event => this .mousemove (event));
+            $.on (this, document, "touchend",  event => this .touchend  (event));
+            $.on (this, document, "touchmove", event => this .touchmove (event));
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
@@ -184,7 +180,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       this .button = -1;
 
-      $(document) .off (".ExamineViewer" + this .getId ());
+      $.off (this, document);
 
       switch (this .getButton (event .button))
       {
@@ -268,7 +264,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       }
    },
-   mousewheel (event)
+   wheel (event)
    {
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
@@ -290,12 +286,14 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    touchstart (event)
    {
-      const touches = event .originalEvent .touches;
+      const touches = event .touches;
 
       switch (touches .length)
       {
          case 1:
          {
+            event = this .getBrowser () .copyEvent (event);
+
             // Start rotate (button 0).
 
             event .button = 0;
@@ -343,6 +341,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          case 0:
          {
+            event = this .getBrowser () .copyEvent (event);
+
             // End rotate (button 0).
 
             event .button = 0;
@@ -388,12 +388,14 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       return function (event)
       {
-         const touches = event .originalEvent .touches;
+         const touches = event .touches;
 
          switch (touches .length)
          {
             case 1:
             {
+               event = this .getBrowser () .copyEvent (event);
+
                // Rotate (button 0).
 
                event .pageX = touches [0] .pageX;
@@ -440,16 +442,15 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
                      const
                         distance2 = this .touch1 .distance (this .touch2),
-                        delta     = distance2 - distance1;
+                        delta     = distance1 - distance2;
 
                      event .deltaY     = delta;
-                     event .zoomFactor = Math .abs (delta) / $(window) .width ();
+                     event .zoomFactor = Math .abs (delta) / window .innerWidth;
 
                      event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
                      event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
 
-                     this .mousewheel (event);
-
+                     this .wheel (event);
                      break;
                   }
                }
@@ -688,10 +689,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          this .getDistanceToCenter (step) .multiply (zoomFactor);
          viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .norm ()));
 
-         if (deltaY > 0)
+         if (deltaY < 0)
             this .addMove (translation .negate (), Vector3 .ZERO);
 
-         else if (deltaY < 0)
+         else if (deltaY > 0)
             this .addMove (translation, Vector3 .ZERO);
       };
    })(),
@@ -862,8 +863,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);
 
-      $(browser .getSurface ()) .off (".ExamineViewer");
-      $(document) .off (".ExamineViewer" + this .getId ());
+      $.off (this, browser .getSurface ());
+      $.off (this, document);
    },
 });
 
