@@ -288,12 +288,12 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    {
       const touches = event .touches;
 
+      event = this .getBrowser () .copyEvent (event);
+
       switch (touches .length)
       {
          case 1:
          {
-            event = this .getBrowser () .copyEvent (event);
-
             // Start rotate (button 0).
 
             event .button = 0;
@@ -309,8 +309,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 2:
          {
-            event = this .getBrowser () .copyEvent (event);
-
             // End rotate (button 0).
 
             this .touchend (event);
@@ -339,12 +337,12 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    touchend (event)
    {
+      event = this .getBrowser () .copyEvent (event);
+
       switch (this .button)
       {
          case 0:
          {
-            event = this .getBrowser () .copyEvent (event);
-
             // End rotate (button 0).
 
             event .button = 0;
@@ -370,8 +368,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 1:
          {
-            event = this .getBrowser () .copyEvent (event);
-
             // End move (button 1).
 
             this .touchMode = 0;
@@ -394,12 +390,12 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          const touches = event .touches;
 
+         event = this .getBrowser () .copyEvent (event);
+
          switch (touches .length)
          {
             case 1:
             {
-               event = this .getBrowser () .copyEvent (event);
-
                // Rotate (button 0).
 
                event .pageX = touches [0] .pageX;
@@ -410,8 +406,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             }
             case 2:
             {
-               event = this .getBrowser () .copyEvent (event);
-
                touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
                touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
 
