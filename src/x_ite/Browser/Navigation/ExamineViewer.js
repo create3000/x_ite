@@ -309,6 +309,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 2:
          {
+            event = this .getBrowser () .copyEvent (event);
+
             // End rotate (button 0).
 
             this .touchend (event);
@@ -368,6 +370,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
          case 1:
          {
+            event = this .getBrowser () .copyEvent (event);
+
             // End move (button 1).
 
             this .touchMode = 0;
@@ -406,6 +410,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             }
             case 2:
             {
+               event = this .getBrowser () .copyEvent (event);
+
                touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
                touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
 
