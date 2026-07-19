@@ -119,14 +119,13 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    copyEvent (event)
    {
-      const copy = Object .assign ({ }, event);
+      const copy = { };
 
       for (const key in event)
       {
          const value = event [key];
 
-         if (typeof value === "function")
-            copy [key] = value .bind (event);
+         copy [key] = typeof value === "function" ? value .bind (event) : value;
       }
 
       return copy;

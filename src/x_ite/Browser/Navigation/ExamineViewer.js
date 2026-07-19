@@ -286,9 +286,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    touchstart (event)
    {
-      const touches = event .touches;
-
       event = this .getBrowser () .copyEvent (event);
+
+      const touches = event .touches;
 
       switch (touches .length)
       {
@@ -388,9 +388,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       return function (event)
       {
-         const touches = event .touches;
-
          event = this .getBrowser () .copyEvent (event);
+
+         const touches = event .touches;
 
          switch (touches .length)
          {
