@@ -161,43 +161,15 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
          submenu .style [position] =`${parentRect .width - 36}px`;
 
-         if (rect .height >= window .innerHeight)
+         if (rect .height >= window .innerHeight - window .scrollY)
          {
+            submenu .style .top = `${-submenu .closest ("li") .getBoundingClientRect () .top}px`;
             submenu .style .maxHeight = "100vh";
             submenu .style .overflowY = "scroll";
          }
 
          submenu .style .display = "";
       };
-
-      // If the submenu is higher than vh, reposition it.
-
-      for (const submenu of ul .querySelectorAll ("li"))
-      {
-         const handler = event =>
-         {
-            event .stopImmediatePropagation ();
-
-            const
-               menuItem = event .target .closest ("li"),
-               submenu  = menuItem .querySelectorAll (":scope > ul");
-
-            for (const child of submenu)
-            {
-               child .style .top = "";
-
-               const
-                  rect   = child .getBoundingClientRect (),
-                  bottom = rect .top + child .offsetHeight - window .scrollY - window .innerHeight;
-
-               if (bottom > 0)
-                  child .style .top = `${child .style .top .slice (0, -2) - bottom - 12}px`;
-            }
-         };
-
-         submenu .addEventListener ("mouseenter", handler);
-         submenu .addEventListener ("touchstart", handler);
-      }
    },
    createItem (item, parent, key, level)
    {
