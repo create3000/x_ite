@@ -132,7 +132,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       // Reposition menu if to right or to low.
 
       this .offset (ul, { left: event .pageX, top: event .pageY});
-      this .offset (ul, { left: event .pageX, top: event .pageY});
+      this .offset (ul, { left: event .pageX, top: event .pageY}); // Do it again.
 
       const rect = ul .getBoundingClientRect ();
 
