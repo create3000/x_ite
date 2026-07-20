@@ -9,7 +9,9 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v16.0 Series
 
-*Leipzig, 26th July 2026:* The 16.0 series of X_ITE introduces a comprehensive test suite based on [Vitest](https://vitest.dev), significantly improving automated testing across both Node.js and browser environments. The new testing infrastructure has already helped uncover and resolve a number of subtle bugs, increasing the overall stability and reliability of the library. This investment in automated testing provides a solid foundation for future development and helps ensure that new features and changes can be integrated with greater confidence.
+*Leipzig, 26th July 2026:* The 16.0 series of X_ITE introduces a new comprehensive test suite based on [Vitest](https://vitest.dev), significantly improving automated testing across both Node.js and browser environments. The new testing infrastructure has already helped uncover and resolve a number of subtle bugs, increasing the overall stability and reliability of the library. This investment in automated testing provides a solid foundation for future development and helps ensure that new features and changes can be integrated with greater confidence.
+
+Additionally, X_ITE no longer depends on jQuery. The entire codebase now uses modern, standards-based JavaScript APIs, reducing the overall library size, eliminating an external dependency, and simplifying maintenance. This change has no impact on existing X3D content or the public X_ITE API, while contributing to faster loading times and a leaner, more future-proof implementation.
 
 ## X_ITE v15.1 Series
 
