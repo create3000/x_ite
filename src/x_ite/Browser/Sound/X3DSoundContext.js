@@ -27,10 +27,10 @@ Object .assign (X3DSoundContext .prototype,
          "keyup",
          "mousedown",
          "mouseup",
-         "wheel",
          "pointerup",
          "touchend",
          "touchstart",
+         "wheel",
       ];
 
       for (const event of events)
