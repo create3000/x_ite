@@ -317,8 +317,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
                   event .deltaY     = delta;
                   event .zoomFactor = Math .abs (delta) / window .innerWidth;
 
-                  event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
-                  event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
+                  event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
+                  event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
 
                   this .wheel (event);
                }
