@@ -131,8 +131,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Reposition menu if to right or to low.
 
-      this .offset (ul, { left: event .pageX, top: event .pageY});
-      this .offset (ul, { left: event .pageX, top: event .pageY}); // Do it again.
+      this .offset (ul, { left: event .pageX, top: event .pageY });
+      this .offset (ul, { left: event .pageX, top: event .pageY }); // Do it again.
 
       const rect = ul .getBoundingClientRect ();
 
@@ -151,15 +151,14 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
          const
             parentRect = ul .getBoundingClientRect (),
-            rect       = submenu .getBoundingClientRect (),
-            width      = rect .width + parentRect .width,
+            width      = submenu .clientWidth + ul .clientWidth,
             position   = parentRect .left + width > window .innerWidth ? "right" : "left";
 
          submenu .children [0] .style .height = `${submenu .clientHeight}px`;
 
-         submenu .style [position] =`${parentRect .width - 36}px`;
+         submenu .style [position] =`${ul .clientWidth - 36}px`;
 
-         if (rect .height >= window .innerHeight)
+         if (submenu .clientHeight >= window .innerHeight)
          {
             submenu .style .top       = `${-submenu .closest ("li") .getBoundingClientRect () .top}px`;
             submenu .style .maxHeight = "100vh";
