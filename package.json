@@ -127,7 +127,6 @@
     "jpeg-js": "^0.4.4",
     "jpeg-lossless-decoder-js": "2.1.2",
     "jquery": "^4.0.0",
-    "jquery-mousewheel": "^3.2.2",
     "libtess": "^1.2.2",
     "madge": "^8.0.0",
     "meshoptimizer": "^1.2.0",

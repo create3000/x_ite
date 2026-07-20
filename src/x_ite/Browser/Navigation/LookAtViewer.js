@@ -5,12 +5,8 @@ import Vector2           from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 
-void (typeof jquery_mousewheel); // import plugin
-
-const macOS = /Mac OS X/i .test (navigator .userAgent);
-
 const
-   SCROLL_FACTOR = macOS ? 1 / 120 : 1 / 20,
+   SCROLL_FACTOR = 1 / 120,
    MOVE_TIME     = 0.3,
    ROTATE_TIME   = 0.3;
 
@@ -205,7 +201,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          case 1:
          {
             // Start move (button 0).
-            
+
             event .preventDefault ();
 
             this .touch1 .set (touches [0] .pageX, touches [0] .pageY);

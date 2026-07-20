@@ -1,11 +1,7 @@
 import X3DViewer from "./X3DViewer.js";
 import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 
-void (typeof jquery_mousewheel); // import plugin
-
-const macOS = /Mac OS X/i .test (navigator .userAgent);
-
-const SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;
+const SCROLL_FACTOR = 1 / 160;
 
 const
    vector                 = new Vector3 (),
@@ -138,11 +134,11 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       viewpoint .transitionStop ();
 
-      if (event .deltaY > 0) // Move backwards.
+      if (event .deltaY < 0) // Move backwards.
       {
          viewpoint ._fieldOfViewScale = Math .max (0.00001, viewpoint ._fieldOfViewScale .getValue () * (1 - SCROLL_FACTOR));
       }
-      else if (event .deltaY < 0) // Move forwards.
+      else if (event .deltaY > 0) // Move forwards.
       {
          viewpoint ._fieldOfViewScale = viewpoint ._fieldOfViewScale .getValue () * (1 + SCROLL_FACTOR);
 

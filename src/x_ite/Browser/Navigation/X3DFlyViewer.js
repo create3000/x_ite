@@ -4,10 +4,6 @@ import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 
-void (typeof jquery_mousewheel); // import plugin
-
-const macOS = /Mac OS X/i .test (navigator .userAgent);
-
 const
    SPEED_FACTOR           = 0.007,
    SHIFT_SPEED_FACTOR     = 4 * SPEED_FACTOR,
@@ -15,7 +11,7 @@ const
    ROTATION_LIMIT         = 40,
    PAN_SPEED_FACTOR       = SPEED_FACTOR,
    PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
-   ROLL_ANGLE             = macOS ? Math .PI / 512 : Math .PI / 32,
+   ROLL_ANGLE             = Math .PI / 512,
    ROTATE_TIME            = 0.3;
 
 const

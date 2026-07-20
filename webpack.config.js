@@ -177,7 +177,6 @@ export default Namespace .add ("${base}", __default__);`;
          new webpack .ProvidePlugin ({
             $: ["jquery", "default"],
             jQuery: ["jquery", "default"],
-            jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             SuperGif: "@create3000/libgif/libgif.js",
             APNG: "apng-js",
@@ -321,7 +320,6 @@ export default Namespace .add ("${base}", __default__);`;
          new webpack .ProvidePlugin ({
             $: ["jquery", "default"],
             jQuery: ["jquery", "default"],
-            jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             SuperGif: "@create3000/libgif/libgif.js",
             APNG: "apng-js",
