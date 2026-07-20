@@ -604,6 +604,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                         l .classList .add ("x_ite-private-world-info-info");
 
                         linkify (l, line);
+
+                        content .append (l);
                      }
                   });
 
