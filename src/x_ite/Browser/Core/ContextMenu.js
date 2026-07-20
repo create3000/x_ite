@@ -157,12 +157,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          // Background
          submenu .children [0] .style .height = `${submenu .clientHeight}px`;
 
-         submenu .style [position] =`${ul .clientWidth - 36}px`;
+         submenu .style [position] = `${ul .clientWidth - 28}px`;
 
-         if (submenu .clientHeight >= window .innerHeight)
+         if (submenu .clientHeight >= (window .visualViewport ?.height ?? window .innerHeight))
          {
             submenu .style .top       = `${-submenu .closest ("li") .getBoundingClientRect () .top}px`;
-            submenu .style .maxHeight = "100vh";
+            submenu .style .maxHeight = "100svh";
             submenu .style .overflowY = "scroll";
          }
 
