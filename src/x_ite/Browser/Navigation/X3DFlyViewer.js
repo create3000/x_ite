@@ -47,16 +47,16 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       const
          browser = this .getBrowser (),
-         surface = $(browser .getSurface ());
+         surface = browser .getSurface ();
 
       // Bind pointing device events.
 
-      surface .on ("mousedown.X3DFlyViewer",  this .mousedown  .bind (this));
-      surface .on ("mouseup.X3DFlyViewer",    this .mouseup    .bind (this));
-      surface .on ("mousewheel.X3DFlyViewer", this .mousewheel .bind (this));
+      $.on (this, surface, "mousedown", event => this .mousedown (event));
+      $.on (this, surface, "mouseup",   event => this .mouseup   (event));
+      $.on (this, surface, "wheel",     event => this .wheel     (event));
 
-      surface .on ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
-      surface .on ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
+      $.on (this, surface, "touchstart", event => this .touchstart (event));
+      $.on (this, surface, "touchend",   event => this .touchend   (event));
 
       browser ._controlKey .addInterest ("set_controlKey__", this);
 
@@ -97,10 +97,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
             this .button = event .button;
 
-            $(document) .on ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
-            $(document) .on ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
-            $(document) .on ("touchend.X3DFlyViewer"  + this .getId (), this .touchend  .bind (this));
-            $(document) .on ("touchmove.X3DFlyViewer" + this .getId (), this .touchmove .bind (this));
+            $.on (this, document, "mouseup",   event => this .mouseup   (event));
+            $.on (this, document, "mousemove", event => this .mousemove (event));
+            $.on (this, document, "touchend",  event => this .touchend  (event));
+            $.on (this, document, "touchmove", event => this .touchmove (event));
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
@@ -139,8 +139,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
             this .button = event .button;
 
-            $(document) .on ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
-            $(document) .on ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
+            $.on (this, document, "mouseup",   event => this .mouseup   (event));
+            $.on (this, document, "mousemove", event => this .mousemove (event));
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
@@ -176,7 +176,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .direction .set (0);
 
-      $(document) .off (".X3DFlyViewer" + this .getId ());
+      $.off (this, document);
 
       this .disconnect ();
       this .getBrowser () .setCursor ("DEFAULT");
@@ -236,7 +236,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          }
       }
    },
-   mousewheel (event)
+   wheel (event)
    {
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
@@ -261,7 +261,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    },
    touchstart (event)
    {
-      const touches = event .originalEvent .touches;
+      event = this .getBrowser () .copyEvent (event);
+
+      const touches = event .touches;
 
       switch (touches .length)
       {
@@ -303,6 +305,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    },
    touchend (event)
    {
+      event = this .getBrowser () .copyEvent (event);
+
       switch (this .button)
       {
          case 0:
@@ -318,7 +322,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    },
    touchmove (event)
    {
-      const touches = event .originalEvent .touches;
+      event = this .getBrowser () .copyEvent (event);
+
+      const touches = event .touches;
 
       switch (touches .length)
       {
@@ -615,8 +621,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .disconnect ();
       this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
-      $(this .getBrowser () .getSurface ()) .off (".X3DFlyViewer");
-      $(document) .off (".X3DFlyViewer" + this .getId ());
+
+      $.off (this, this .getBrowser () .getSurface ());
+      $.off (this, document);
    },
 });
 
