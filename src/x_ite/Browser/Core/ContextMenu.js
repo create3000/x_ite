@@ -602,9 +602,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                         const l = document .createElement ("div");
 
                         l .classList .add ("x_ite-private-world-info-info");
-                        l .textContent = line;
 
-                        linkify (l);
+                        linkify (l, line);
                      }
                   });
 
