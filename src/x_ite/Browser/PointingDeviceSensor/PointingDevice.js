@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       const { x, y } = browser .getPointerFromEvent (event);
 
-      this .onmotion (x, y, true);
+      this .motion (x, y, true);
 
       if (!this .over)
          return;
@@ -197,7 +197,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          }
       }
    },
-   onmotion (x, y, move = false)
+   motion (x, y, move = false)
    {
       const browser = this .getBrowser ();
 
@@ -223,7 +223,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       await this .getBrowser () .nextFrame ();
 
-      this .onmotion (x, y);
+      this .motion (x, y);
    },
    showContextMenu (event)
    {
