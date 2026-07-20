@@ -67,18 +67,26 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Layer
 
-      const layer = $("<div></div>")
-         .addClass (["context-menu-layer", menu .className])
-         .appendTo (root);
+      const layer = document .createElement ("div");
+
+      layer .classList .add ("context-menu-layer", menu .className);
+
+      layer .addEventListener ("mousedown",   () => this .hide ());
+      layer .addEventListener ("contextmenu", () => this .hide ());
+
+      root .appendChild (layer);
 
       this [_hide] = () =>
       {
          this [_hide] = null;
 
          layer .remove ();
-         ul .children ()
-            .removeClass ("x_ite-private-fade-in-300")
-            .addClass ("x_ite-private-fade-out-300");
+
+         for (const child of ul .children)
+         {
+            child .classList .remove ("x_ite-private-fade-in-300");
+            child .classList .add ("x_ite-private-fade-out-300");
+         }
 
          setTimeout (() => ul .remove (), 1000);
 
@@ -87,104 +95,129 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Menu
 
-      const ul = $("<ul></ul>")
-         .hide ()
-         .addClass (["context-menu-root", "context-menu-list", menu .className])
-         .offset ({ "left": event .pageX, "top": event .pageY })
-         .appendTo (root);
+      const ul = document .createElement ("ul");
 
-      $("<div></div>")
-         .addClass ("context-menu-background")
-         .appendTo (ul);
+      ul .classList .add ("context-menu-root", "context-menu-list", menu .className);
+
+      ul .style .display = "none";
+
+      ul .addEventListener ("contextmenu", () => this .hide ());
+
+      root .appendChild (ul);
+
+      const background = document .createElement ("div");
+
+      background .classList .add ("context-menu-background");
+
+      ul .appendChild (background);
 
       for (const k in menu .items)
-         ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1));
+         ul .appendChild (this .createItem (menu .items [k], "context-menu-root", k, level + 1));
 
       // Show
       // Must animate children because of blurish background.
 
-      ul .children () .addClass ("x_ite-private-hidden");
-      ul .show ();
-      ul .children ()
-         .removeClass ("x_ite-private-hidden")
-         .addClass ("x_ite-private-fade-in-300");
+      for (const child of ul .children)
+         child .classList .add ("x_ite-private-hidden");
+
+      ul .style .display = "block";
+
+      for (const child of ul .children)
+      {
+         child .classList .remove ("x_ite-private-hidden");
+         child .classList .add ("x_ite-private-fade-in-300");
+      }
 
       // Reposition menu if to right or to low.
 
-      ul .offset ({ "left": event .pageX, "top": event .pageY }); // Do it again!
+      Object .assign (ul .style,
+      {
+         left: `${event .pageX - window .scrollX}px`,
+         top:  `${event .pageY - window .scrollY}px`,
+      });
 
-      if (ul .offset () .left - $(document) .scrollLeft () + ul .outerWidth () > $(window) .width ())
-         ul .offset ({ "left":  $(document) .scrollLeft () + Math .max (0, $(window) .width () - ul .outerWidth ()) });
+      const rect = ul .getBoundingClientRect ();
 
-      if (ul .offset () .top - $(document) .scrollTop () + ul .outerHeight () > $(window) .height ())
-         ul .offset ({ "top": $(document) .scrollTop () + Math .max (0, $(window) .height () - ul .outerHeight ()) });
+      if (rect .left + ul .offsetWidth > window .innerWidth)
+         ul .style .left = `${Math .max (0, window .innerWidth - ul .offsetWidth)}px`;
+
+      if (rect .top + ul .offsetHeight > window .innerHeight)
+         ul .style .top = `${Math .max (0, window .innerHeight - ul .offsetHeight)}px`;
 
       // Display submenus on the left or right side.
       // If the submenu is higher than vh, add scrollbars.
 
-      ul .find ("ul") .each ((i, e) =>
+      for (const submenu of ul .querySelectorAll ("ul"))
       {
-         e = $(e);
+         submenu .style .display = "block";
 
          const
-            width    = e .outerWidth () + ul .outerWidth (),
-            position = ul .offset () .left - $(document) .scrollLeft () + width > $(window) .width () ? "right" : "left";
+            parentRect = ul .getBoundingClientRect (),
+            rect       = submenu .getBoundingClientRect (),
+            width      = rect .width + parentRect .width,
+            position   = parentRect .left + width > window .innerWidth ? "right" : "left";
 
-         e .children (":first-child") .css ("height", e .innerHeight ());
+         submenu .children [0] .style .height = `${submenu .clientHeight}px`;
 
-         e
-            .css ("width",  e .outerWidth ())
-            .css (position, e .parent () .closest ("ul") .width () - 12);
+         submenu .style [position] =`${parentRect .width - 36}px`;
 
-         if (e .outerHeight () >= $(window) .height ())
-            e .css ({ "max-height": "100vh", "overflow-y": "scroll" });
-      });
+         if (rect .height >= window .innerHeight)
+         {
+            submenu .style .maxHeight = "100vh";
+            submenu .style .overflowY = "scroll";
+         }
+
+         submenu .style .display = "";
+      };
 
       // If the submenu is higher than vh, reposition it.
 
-      ul .find ("li") .on ("mouseenter touchstart", event =>
+      for (const submenu of ul .querySelectorAll ("li"))
       {
-         event .stopImmediatePropagation ();
+         const handler = event =>
+         {
+            event .stopImmediatePropagation ();
 
-         const
-            t = $(event .target) .closest ("li"),
-            e = t .children ("ul");
+            const
+               menuItem = event .target .closest ("li"),
+               submenu  = menuItem .querySelectorAll (":scope > ul");
 
-         if (!e .length)
-            return;
+            for (const child of submenu)
+            {
+               child .style .top = "";
 
-         e .css ("top", "");
+               const
+                  rect   = child .getBoundingClientRect (),
+                  bottom = rect .top + child .offsetHeight - window .scrollY - window .innerHeight;
 
-         const bottom = e .offset () .top + e .outerHeight () - $(window) .scrollTop () - $(window) .height ();
+               if (bottom > 0)
+                  child .style .top = `${child .style .top .slice (0, -2) - bottom - 12}px`;
+            }
+         };
 
-         if (bottom > 0)
-            e .offset ({ "top": e .offset () .top - bottom });
-      });
-
-      // Layer
-
-      layer .on ("mousedown contextmenu", () => this .hide ());
-      ul .on ("contextmenu", () => this .hide ());
-
-      return false;
+         submenu .addEventListener ("mouseenter", handler);
+         submenu .addEventListener ("touchstart", handler);
+      }
    },
    createItem (item, parent, key, level)
    {
-      const li = $("<li></li>") .addClass ("context-menu-item");
+      const li = document .createElement ("li");
+
+      li .classList .add ("context-menu-item");
 
       switch (typeof item)
       {
          case "string":
          {
             if (item .match (/^-+$/))
-               li .addClass (["context-menu-separator", "context-menu-not-selectable"]);
+               li .classList .add ("context-menu-separator", "context-menu-not-selectable");
 
             break;
          }
          case "object":
          {
             if (item .className)
-               li .addClass (item .className);
+               li .classList .add (... item .className .split (/\s+/));
 
             switch (item .type)
             {
@@ -192,26 +225,39 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                case "checkbox":
                {
                   const
-                     label = $("<label></label>") .appendTo (li),
-                     input = $("<input></input>") .appendTo (label);
+                     label = document .createElement ("label"),
+                     input = document .createElement ("input");
 
-                  input
-                     .attr ("type", item .type)
-                     .attr ("name", `context-menu-input-${item .radio || parent}`);
+                  li    .append (label);
+                  label .append (input);
 
-                  $("<span></span>") .text (item .name) .appendTo (label);
+                  input .setAttribute ("type", item .type);
+                  input .setAttribute ("name", `context-menu-input-${item .radio || parent}`);
+
+                  const span = document .createElement ("span");
+
+                  span .textContent = item .name;
+
+                  label .append (span);
 
                   if (item .selected)
-                     input .attr ("checked", "");
+                     input .setAttribute ("checked", "");
 
-                  li .addClass ("context-menu-input");
+                  li .classList .add ("context-menu-input");
+
                   this .addEvents (item, input, false);
                   break;
                }
                default:
                {
                   if (item .name)
-                     $("<span></span>") .text (item .name) .appendTo (li);
+                  {
+                     const span = document .createElement ("span");
+
+                     span .textContent = item .name;
+
+                     li .append (span);
+                  }
 
                   this .addEvents (item, li, true);
                   break;
@@ -224,19 +270,24 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       if (typeof item .items === "object" && level < 3)
       {
-         const ul = $("<ul></ul>")
-            .addClass ("context-menu-list")
-            .css ("z-index", level)
-            .appendTo (li);
+         const ul = document .createElement ("ul");
 
-         $("<div></div>")
-            .addClass ("context-menu-background")
-            .appendTo (ul);
+         ul .classList .add ("context-menu-list");
+
+         ul .style .zIndex = level;
+
+         li .append (ul);
+
+         const background = document .createElement ("div");
+
+         background .classList .add ("context-menu-background");
+
+         ul .append (background);
 
          for (const k in item .items)
             ul .append (this .createItem (item .items [k], key, k, level + 1));
 
-         li .addClass ("context-menu-submenu");
+         li .classList .add ("context-menu-submenu");
       }
 
       return li;
@@ -245,10 +296,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
    {
       if (typeof item .callback === "function")
       {
-         element .on ("click", item .callback);
+         element .addEventListener ("click", item .callback);
 
          if (hide)
-            element .on ("click", () => this .hide ());
+            element .addEventListener ("click", () => this .hide ());
       }
 
       if (typeof item .events === "object")
@@ -256,7 +307,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          for (const k in item .events)
          {
             if (typeof item .events [k] === "function")
-               element .on (k, item .events [k]);
+               element .addEventListener (k, item .events [k]);
          }
       }
    },
