@@ -169,19 +169,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          submenu .style .display = "";
       };
    },
-   offset (elem, options)
-   {
-		const
-         rect    = elem .getBoundingClientRect (),
-         curTop  = parseFloat (elem .style .top)  || 0,
-         curLeft = parseFloat (elem .style .left) || 0;
-
-      if (options .left !== undefined)
-         elem .style .left = `${options .left - (rect .left + window .scrollX) + curLeft}px`;
-
-      if (options .top !== undefined)
-         elem .style .top = `${options .top - (rect .top + window .scrollY) + curTop}px`;
-	},
    createItem (item, parent, key, level)
    {
       const li = document .createElement ("li");
@@ -294,6 +281,19 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          }
       }
    },
+   offset (elem, options)
+   {
+		const
+         rect    = elem .getBoundingClientRect (),
+         curTop  = parseFloat (elem .style .top)  || 0,
+         curLeft = parseFloat (elem .style .left) || 0;
+
+      if (options .left !== undefined)
+         elem .style .left = `${options .left - (rect .left + window .scrollX) + curLeft}px`;
+
+      if (options .top !== undefined)
+         elem .style .top = `${options .top - (rect .top + window .scrollY) + curTop}px`;
+	},
    build ()
    {
       const
