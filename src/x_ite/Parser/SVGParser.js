@@ -14,6 +14,7 @@ import Complex      from "../../standard/Math/Numbers/Complex.js";
 import Box2         from "../../standard/Math/Geometry/Box2.js";
 import Bezier       from "../../standard/Math/Algorithms/Bezier.js";
 import MatrixStack  from "../../standard/Math/Utility/MatrixStack.js";
+import $            from "../../lib/helper.js";
 
 /*
  *  Grammar

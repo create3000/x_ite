@@ -1,4 +1,5 @@
 import PLYAParser from "./PLYAParser.js";
+import $          from "../../lib/helper.js";
 
 function PLYBParser (scene)
 {

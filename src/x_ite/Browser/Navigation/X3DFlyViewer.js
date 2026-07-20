@@ -3,6 +3,7 @@ import ScreenLine        from "../Rendering/ScreenLine.js";
 import OrientationChaser from "../../Components/Followers/OrientationChaser.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
+import $                 from "../../../lib/helper.js";
 
 const
    SPEED_FACTOR           = 0.007,

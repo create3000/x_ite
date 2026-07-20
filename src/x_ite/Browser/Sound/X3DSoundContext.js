@@ -1,5 +1,6 @@
 import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
 import _            from "../../../locale/gettext.js";
+import $            from "../../../lib/helper.js";
 
 const
    _audioElements       = Symbol (),

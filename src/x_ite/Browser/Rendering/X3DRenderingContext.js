@@ -3,6 +3,7 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFramebuffer from "../../Rendering/MultiSampleFramebuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
+import $                      from "../../../lib/helper.js";
 
 const
    _session             = Symbol (),

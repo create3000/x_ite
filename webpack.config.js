@@ -429,7 +429,6 @@ export default Namespace .add ("${base}", __default__);`;
                header: `const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];\n`,
             }),
             new webpack .ProvidePlugin ({
-               $: path .resolve (__dirname, "src/lib/helper.js"),
                // Per component
                ... {
                   Texturing3D: {

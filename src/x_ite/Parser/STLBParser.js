@@ -1,5 +1,6 @@
 import X3DParser from "./X3DParser.js";
 import Color3    from "../../standard/Math/Numbers/Color3.js";
+import $         from "../../lib/helper.js";
 
 // http://paulbourke.net/dataformats/stl/
 // https://people.sc.fsu.edu/~jburkardt/data/obj/obj.html

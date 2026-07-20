@@ -7,6 +7,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import FileLoader           from "../../InputOutput/FileLoader.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import $                    from "../../../lib/helper.js";
 
 const customOptions = [
    "X3D_GEOMETRY_0D",

@@ -1,5 +1,6 @@
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import $            from "../../../lib/helper.js";
 import _            from "../../../locale/gettext.js";
 
 const

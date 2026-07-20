@@ -2,6 +2,7 @@ import VRMLGenerator from "../InputOutput/VRMLGenerator.js";
 import XMLGenerator  from "../InputOutput/XMLGenerator.js";
 import JSONGenerator from "../InputOutput/JSONGenerator.js";
 import Features      from "../Features.js";
+import $             from "../../lib/helper.js";
 
 const
    _id            = Symbol (),

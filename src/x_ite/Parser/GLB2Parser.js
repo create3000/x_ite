@@ -1,5 +1,6 @@
 import X3DParser   from "./X3DParser.js";
 import GLTF2Parser from "./GLTF2Parser.js";
+import $           from "../../lib/helper.js";
 
 function GLB2Parser (scene)
 {

@@ -3,6 +3,7 @@ import X3DOptimizer from "./X3DOptimizer.js";
 import Expressions  from "./Expressions.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
+import $            from "../../lib/helper.js";
 import DEVELOPMENT  from "../DEVELOPMENT.js";
 
 // http://paulbourke.net/dataformats/obj/

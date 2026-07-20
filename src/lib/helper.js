@@ -1,7 +1,6 @@
 const events = new WeakMap ();
 
-Object .assign ($,
-{
+const $ = {
    on (requester, object, event, callback)
    {
       if (!object)
@@ -120,7 +119,7 @@ Object .assign ($,
 
       return bytes [0] === 0x1f && bytes [1] === 0x8b;
    },
-});
+};
 
 // // decorator: @iffe fn (... args) { return function () { }; }
 // function iife (target, key, descriptor)

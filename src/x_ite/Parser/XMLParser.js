@@ -11,6 +11,7 @@ import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
 import Placeholder               from "./Placeholder.js";
+import $                         from "../../lib/helper.js";
 import DEVELOPMENT               from "../DEVELOPMENT.js";
 
 const

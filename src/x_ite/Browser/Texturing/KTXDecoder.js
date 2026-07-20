@@ -1,3 +1,5 @@
+import $ from "../../../lib/helper.js";
+
 export default class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)

@@ -4,6 +4,7 @@ import X3DUrlObject  from "../Networking/X3DUrlObject.js";
 import TextAlignment from "../../Browser/Text/TextAlignment.js";
 import X3DConstants  from "../../Base/X3DConstants.js";
 import URLs          from "../../Browser/Networking/URLs.js";
+import $             from "../../../lib/helper.js";
 
 /*
  * Font paths for default SERIF, SANS and TYPEWRITER families.

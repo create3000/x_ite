@@ -4,6 +4,7 @@ import X3DConstants     from "../../Base/X3DConstants.js";
 import X3DCast          from "../../Base/X3DCast.js";
 import Matrix3          from "../../../standard/Math/Numbers/Matrix3.js";
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+import $                from "../../../lib/helper.js";
 
 const _uniformLocation = Symbol .for ("X_ITE.X3DField.uniformLocation");
 

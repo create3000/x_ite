@@ -33,6 +33,7 @@ import X3DScriptNode               from "./X3DScriptNode.js";
 import FileLoader                  from "../../InputOutput/FileLoader.js";
 import X3DConstants                from "../../Base/X3DConstants.js";
 import SFNodeCache                 from "../../Fields/SFNodeCache.js";
+import $                           from "../../../lib/helper.js";
 
 function Script (executionContext)
 {

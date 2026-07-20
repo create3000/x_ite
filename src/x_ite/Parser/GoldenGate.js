@@ -10,6 +10,7 @@ import STLBParser  from "./STLBParser.js";
 import PLYAParser  from "./PLYAParser.js";
 import PLYBParser  from "./PLYBParser.js";
 import SVGParser   from "./SVGParser.js";
+import $           from "../../lib/helper.js";
 
 class GoldenGate extends X3DParser
 {

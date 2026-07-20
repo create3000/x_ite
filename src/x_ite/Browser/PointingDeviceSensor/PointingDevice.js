@@ -1,5 +1,6 @@
 import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import $            from "../../../lib/helper.js";
 
 const CONTEXT_MENU_TIME = 1200;
 

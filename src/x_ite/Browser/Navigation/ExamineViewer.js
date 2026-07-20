@@ -6,6 +6,7 @@ import Algorithm         from "../../../standard/Math/Algorithm.js";
 import Vector2           from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3           from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
+import $                 from "../../../lib/helper.js";
 
 const
    SPIN_RELEASE_TIME = 20,

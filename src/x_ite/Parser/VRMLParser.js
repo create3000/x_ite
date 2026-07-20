@@ -16,6 +16,7 @@ import Rotation4                 from "../../standard/Math/Numbers/Rotation4.js"
 import Vector2                   from "../../standard/Math/Numbers/Vector2.js";
 import Vector3                   from "../../standard/Math/Numbers/Vector3.js";
 import Vector4                   from "../../standard/Math/Numbers/Vector4.js";
+import $                         from "../../lib/helper.js";
 
 /*
  *  Grammar

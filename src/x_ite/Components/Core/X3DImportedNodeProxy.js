@@ -1,6 +1,7 @@
 import X3DChildObject from "../../Base/X3DChildObject.js";
 import X3DConstants   from "../../Base/X3DConstants.js";
 import X3DNode        from "./X3DNode.js";
+import $              from "../../../lib/helper.js";
 
 const
    _importedName = Symbol (),
