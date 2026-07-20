@@ -858,6 +858,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       const browser = this .getBrowser ();
 
       this .disconnect ();
+
       this    .getNavigationInfo () ._transitionStart   .removeInterest ("disconnect", this);
       browser .getBrowserOptions () ._StraightenHorizon .removeInterest ("disconnect", this);
 

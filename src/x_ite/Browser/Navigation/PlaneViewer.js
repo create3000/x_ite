@@ -29,12 +29,12 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       const
          browser = this .getBrowser (),
-         surface = $(browser .getSurface ());
+         surface = browser .getSurface ();
 
-      surface .on ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
-      surface .on ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
-      surface .on ("mousemove.PlaneViewer",  this .mousemove  .bind (this));
-      surface .on ("mousewheel.PlaneViewer", this .mousewheel .bind (this));
+      $.on (this, surface, "mousedown", event => this .mousedown (event));
+      $.on (this, surface, "mouseup",   event => this .mouseup   (event));
+      $.on (this, surface, "mousemove", event => this .mousemove (event));
+      $.on (this, surface, "wheel",     event => this .wheel     (event));
    },
    mousedown (event)
    {
@@ -58,9 +58,9 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
             this .button = event .button;
 
-            $(this .getBrowser () .getSurface ()) .off ("mousemove.PlaneViewer");
-            $(document) .on ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
-            $(document) .on ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
+            $.off (this, this .getBrowser () .getSurface ());
+            $.on (this, document, "mouseup",   event => this .mouseup   (event));
+            $.on (this, document, "mousemove", event => this .mousemove (event));
 
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
@@ -85,8 +85,8 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       this .button = -1;
 
-      $(document) .off (".PlaneViewer" + this .getId ());
-      $(this .getBrowser () .getSurface ()) .on ("mousemove.PlaneViewer", this .mousemove .bind (this));
+      $.off (this, document);
+      $.on (this, this .getBrowser () .getSurface (), "mousemove", event => this .mousemove (event));
 
       this .getBrowser () .setCursor ("DEFAULT");
 
@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
          }
       }
    },
-   mousewheel (event)
+   wheel (event)
    {
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
@@ -168,8 +168,8 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    },
    dispose ()
    {
-      $(this .getBrowser () .getSurface ()) .off (".PlaneViewer");
-      $(document) .off (".PlaneViewer" + this .getId ());
+      $.off (this, this .getBrowser () .getSurface ());
+      $.off (this, document);
    },
 });
 

@@ -40,17 +40,17 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       const
          browser = this .getBrowser (),
-         surface = $(browser .getSurface ());
+         surface = browser .getSurface ();
 
       // Bind pointing device events.
 
-      surface .on ("mousedown.LookAtViewer",  this .mousedown  .bind (this));
-      surface .on ("mouseup.LookAtViewer",    this .mouseup    .bind (this));
-      surface .on ("dblclick.LookAtViewer",   this .dblclick   .bind (this));
-      surface .on ("mousewheel.LookAtViewer", this .mousewheel .bind (this));
+      $.on (this, surface, "mousedown", event => this .mousedown (event));
+      $.on (this, surface, "mouseup",   event => this .mouseup   (event));
+      $.on (this, surface, "dblclick",  event => this .dblclick  (event));
+      $.on (this, surface, "wheel",     event => this .wheel     (event));
 
-      surface .on ("touchstart.LookAtViewer", this .touchstart .bind (this));
-      surface .on ("touchend.LookAtViewer",   this .touchend   .bind (this));
+      $.on (this, surface, "touchstart", event => this .touchstart (event));
+      $.on (this, surface, "touchend",   event => this .touchend   (event));
 
       // Setup chaser.
 
@@ -85,10 +85,10 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
             this .button = event .button;
 
-            $(document) .on ("mouseup.LookAtViewer"   + this .getId (), this .mouseup   .bind (this));
-            $(document) .on ("mousemove.LookAtViewer" + this .getId (), this .mousemove .bind (this));
-            $(document) .on ("touchend.LookAtViewer"  + this .getId (), this .mouseup   .bind (this));
-            $(document) .on ("touchmove.LookAtViewer" + this .getId (), this .touchmove .bind (this));
+            $.on (this, document, "mouseup",   event => this .mouseup   (event));
+            $.on (this, document, "mousemove", event => this .mousemove (event));
+            $.on (this, document, "touchend",  event => this .touchend  (event));
+            $.on (this, document, "touchmove", event => this .touchmove (event));
 
             this .getActiveViewpoint () .transitionStop ();
             this .trackballProjectToSphere (x, y, this .fromVector);
@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       this .button = -1;
 
-      $(document) .off (".LookAtViewer" + this .getId ());
+      $.off (this, document);
 
       switch (event .button)
       {
@@ -161,7 +161,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          }
       }
    },
-   mousewheel: (() =>
+   wheel: (() =>
    {
       const
          step        = new Vector3 (),
@@ -196,13 +196,17 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    })(),
    touchstart (event)
    {
-      const touches = event .originalEvent .touches;
+      event = this .getBrowser () .copyEvent (event);
+
+      const touches = event .touches;
 
       switch (touches .length)
       {
          case 1:
          {
             // Start move (button 0).
+            
+            event .preventDefault ();
 
             this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
             break;
@@ -236,6 +240,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    },
    touchend (event)
    {
+      event = this .getBrowser () .copyEvent (event);
+
       switch (this .button)
       {
          case 0:
@@ -269,7 +275,9 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       return function (event)
       {
-         const touches = event .originalEvent .touches;
+         event = this .getBrowser () .copyEvent (event);
+
+         const touches = event .touches;
 
          switch (touches .length)
          {
@@ -311,12 +319,12 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
                      delta     = distance2 - distance1;
 
                   event .deltaY     = delta;
-                  event .zoomFactor = Math .abs (delta) / $(window) .width ();
+                  event .zoomFactor = Math .abs (delta) / window .innerWidth;
 
                   event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
                   event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
 
-                  this .mousewheel (event);
+                  this .wheel (event);
                }
 
                this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
@@ -438,14 +446,16 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    })(),
    disconnect ()
    {
-      this .orientationChaser      ._value_changed .removeInterest ("set_orientationOffset__", this);
+      this .orientationChaser      ._value_changed .removeInterest ("set_orientationOffset__",      this);
       this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this);
       this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
    },
    dispose ()
    {
-      $(this .getBrowser () .getSurface ()) .off (".LookAtViewer");
-      $(document) .off (".LookAtViewer" + this .getId ());
+      this .disconnect ();
+
+      $.off (this, this .getBrowser () .getSurface ());
+      $.off (this, document);
    },
 });
 
