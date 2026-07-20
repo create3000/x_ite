@@ -154,6 +154,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             width      = submenu .clientWidth + ul .clientWidth,
             position   = parentRect .left + width > window .innerWidth ? "right" : "left";
 
+         // Background
          submenu .children [0] .style .height = `${submenu .clientHeight}px`;
 
          submenu .style [position] =`${ul .clientWidth - 36}px`;
