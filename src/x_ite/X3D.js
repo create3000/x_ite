@@ -36,7 +36,7 @@ import "./SUPPORTED_VERSIONS.js";
 import "./Features.js";
 import "./X3DCanvasElement.js";
 import "../standard/Math/Algorithms/QuickSort.js";
-import "../lib/jquery.js";
+import "../lib/helper.js";
 import "../lib/libtess.js";
 
 let promise; // Declare return value of X3D function.

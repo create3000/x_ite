@@ -1,5 +1,4 @@
 import Expressions from "../../Parser/Expressions.js";
-import $           from "../../../lib/jquery.js";
 
 // Grammar
 
