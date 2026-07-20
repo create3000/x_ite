@@ -131,19 +131,16 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       // Reposition menu if to right or to low.
 
-      Object .assign (ul .style,
-      {
-         left: `${event .pageX - window .scrollX}px`,
-         top:  `${event .pageY - window .scrollY}px`,
-      });
+      this .offset (ul, { left: event .pageX, top: event .pageY});
+      this .offset (ul, { left: event .pageX, top: event .pageY});
 
       const rect = ul .getBoundingClientRect ();
 
       if (rect .left + ul .offsetWidth > window .innerWidth)
-         ul .style .left = `${Math .max (0, window .innerWidth - ul .offsetWidth)}px`;
+         this .offset (ul, { left: window .scrollX + Math .max (0, window .innerWidth - ul .offsetWidth) });
 
       if (rect .top + ul .offsetHeight > window .innerHeight)
-         ul .style .top = `${Math .max (0, window .innerHeight - ul .offsetHeight)}px`;
+         this .offset (ul, { top: window .scrollY + Math .max (0, window .innerHeight - ul .offsetHeight) });
 
       // Display submenus on the left or right side.
       // If the submenu is higher than vh, add scrollbars.
@@ -162,9 +159,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
          submenu .style [position] =`${parentRect .width - 36}px`;
 
-         if (rect .height >= window .innerHeight - window .scrollY)
+         if (rect .height >= window .innerHeight)
          {
-            submenu .style .top = `${-submenu .closest ("li") .getBoundingClientRect () .top}px`;
+            submenu .style .top       = `${-submenu .closest ("li") .getBoundingClientRect () .top}px`;
             submenu .style .maxHeight = "100vh";
             submenu .style .overflowY = "scroll";
          }
@@ -172,6 +169,19 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          submenu .style .display = "";
       };
    },
+   offset (elem, options)
+   {
+		const
+         rect    = elem .getBoundingClientRect (),
+         curTop  = parseFloat (elem .style .top)  || 0,
+         curLeft = parseFloat (elem .style .left) || 0;
+
+      if (options .left !== undefined)
+         elem .style .left = (options .left - (rect .left + window .scrollX) + curLeft) + "px";
+
+      if (options .top !== undefined)
+         elem .style .top = (options .top - (rect .top + window .scrollY) + curTop) + "px";
+	},
    createItem (item, parent, key, level)
    {
       const li = document .createElement ("li");
