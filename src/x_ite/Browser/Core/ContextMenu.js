@@ -315,32 +315,32 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                name: _("Straighten Horizon"),
                type: "checkbox",
                selected: browser .getBrowserOption ("StraightenHorizon"),
-               callback: (event) =>
+               callback: event =>
                {
-                  const straightenHorizon = $(event .target) .is (":checked");
+                  const straightenHorizon = event .target .checked;
 
                   browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
 
                   if (straightenHorizon)
-                     browser .setDescription (_("Straighten Horizon") + ": " + _("on"));
+                     browser .setDescription (`${_("Straighten Horizon")}: ${_("on")}`);
                   else
-                     browser .setDescription (_("Straighten Horizon") + ": " + _("off"));
+                     browser .setDescription (`${_("Straighten Horizon")}: ${_("off")}`);
                },
             },
             "display-rubberband": {
                name: _("Display Rubberband"),
                type: "checkbox",
                selected: browser .getBrowserOption ("Rubberband"),
-               callback: (event) =>
+               callback: event =>
                {
-                  const rubberband = $(event .target) .is (":checked");
+                  const rubberband = event .target .checked;
 
                   browser .setBrowserOption ("Rubberband", rubberband);
 
                   if (rubberband)
-                     browser .setDescription (_("Rubberband") + ": " + _("on"));
+                     browser .setDescription (`${_("Rubberband")}: ${_("on")}`);
                   else
-                     browser .setDescription (_("Rubberband") + ": " + _("off"));
+                     browser .setDescription (`${_("Rubberband")}: ${_("off")}`);
                },
             },
             "separator1": "--------",
@@ -356,7 +356,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("PrimitiveQuality", "HIGH");
-                        browser .setDescription (_("Primitive Quality") + ": " + _("high"));
+                        browser .setDescription (`${_("Primitive Quality")}: ${_("high")}`);
                      },
                   },
                   "medium": {
@@ -367,7 +367,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
-                        browser .setDescription (_("Primitive Quality") + ": " + _("medium"));
+                        browser .setDescription (`${_("Primitive Quality")}: ${_("medium")}`);
                      },
                   },
                   "low": {
@@ -378,7 +378,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("PrimitiveQuality", "LOW");
-                        browser .setDescription (_("Primitive Quality") + ": " + _("low"));
+                        browser .setDescription (`${_("Primitive Quality")}: ${_("low")}`);
                      },
                   },
                },
@@ -395,7 +395,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("TextureQuality", "HIGH");
-                        browser .setDescription (_("Texture Quality") + ": " + _("high"));
+                        browser .setDescription (`${_("Texture Quality")}: ${_("high")}`);
                      },
                   },
                   "medium": {
@@ -406,7 +406,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("TextureQuality", "MEDIUM");
-                        browser .setDescription (_("Texture Quality") + ": " + _("medium"));
+                        browser .setDescription (`${_("Texture Quality")}: ${_("medium")}`);
                      },
                   },
                   "low": {
@@ -417,7 +417,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("TextureQuality", "LOW");
-                        browser .setDescription (_("Texture Quality") + ": " + _("low"));
+                        browser .setDescription (`${_("Texture Quality")}: ${_("low")}`);
                      },
                   },
                },
@@ -434,7 +434,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("Shading", "POINT");
-                        browser .setDescription (_("Shading") + ": " + _("Points"));
+                        browser .setDescription (`${_("Shading")}: ${_("Points")}`);
                      },
                   },
                   "wireframe": {
@@ -445,7 +445,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("Shading", "WIREFRAME");
-                        browser .setDescription (_("Shading") + ": " + _("Wireframe"));
+                        browser .setDescription (`${_("Shading")}: ${_("Wireframe")}`);
                      },
                   },
                   "flat": {
@@ -456,7 +456,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("Shading", "FLAT");
-                        browser .setDescription (_("Shading") + ": " + _("Flat"));
+                        browser .setDescription (`${_("Shading")}: ${_("Flat")}`);
                      },
                   },
                   "gouraud": {
@@ -467,7 +467,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("Shading", "GOURAUD");
-                        browser .setDescription (_("Shading") + ": " + _("Gouraud"));
+                        browser .setDescription (`${_("Shading")}: ${_("Gouraud")}`);
                      },
                   },
                   "phong": {
@@ -478,7 +478,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      callback: () =>
                      {
                         browser .setBrowserOption ("Shading", "PHONG");
-                        browser .setDescription (_("Shading") + ": " + _("Phong"));
+                        browser .setDescription (`${_("Shading")}: ${_("Phong")}`);
                      },
                   },
                },
@@ -496,9 +496,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                name: _("Browser Timings"),
                type: "checkbox",
                selected: browser .getBrowserOption ("Timings"),
-               callback: (event) =>
+               callback: event =>
                {
-                  browser .setBrowserOption ("Timings", $(event .target) .is (":checked"));
+                  browser .setBrowserOption ("Timings", event .target .checked);
                   browser .getSurface () .focus ();
                },
             },
@@ -519,137 +519,158 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                className: "context-menu-icon x_ite-private-icon-world-info",
                callback ()
                {
-                  $(browser .getShadow ()) .find (".x_ite-private-world-info") .remove ();
+                  browser .getShadow () .querySelector (".x_ite-private-world-info") ?.remove ();
 
                   const
-                     priv         = $(browser .getShadow ()) .find (".x_ite-private-browser"),
-                     overlay      = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
-                     div          = $("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
-                     content      = $("<div></div>"),
+                     priv         = browser .getShadow () .querySelector (".x_ite-private-browser"),
+                     overlay      = document .createElement ("div"),
+                     div          = document .createElement ("div"),
+                     content      = document .createElement ("div"),
                      worldInfos   = browser .getExecutionContext () .getWorldInfos (),
                      worldInfo    = worldInfos .length ? worldInfos [0] : null,
                      hasWorldInfo = worldInfo ?.title .length || worldInfo ?.info .length;
 
-                  const linkify = function ()
+                  overlay .classList .add ("x_ite-private-world-info-overlay");
+                  priv .append (overlay);
+
+                  div .style .display = "none";
+                  div .classList .add ("x_ite-private-world-info", "x_ite-private-hidden");
+                  overlay .append (div);
+
+                  const buttons = document .createElement ("div");
+
+                  buttons .classList .add ("x_ite-private-world-info-buttons");
+                  div .append (buttons);
+
+                  const linkify = (element, string) =>
                   {
                      const email = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]{2,})/ig;
 
                      const link = /(https?:\/\/[-a-zA-Z0-9@:%._+~#=]+\.[a-zA-Z0-9]{2,}\b[-a-zA-Z0-9()@:%_+.~#?&/=]*\b\/?)/ig;
 
-                     const replaced_text = $(this) .html ()
+                     const replaced_text = string
                         .replace (email, `<a href="mailto:$1" target="_blank">$1</a>`)
                         .replace (link, `<a href="$1" target="_blank">$1</a>`);
 
-                     $(this)
-                        .html (replaced_text)
-                        .find ("a")
-                        .on ("click", event => event .stopPropagation ());
+                     element .innerHTML = replaced_text;
+
+                     for (const a of element .querySelectorAll ("a"))
+                        a .addEventListener ("click", event => event .stopPropagation ());
                   };
 
-                  const buttons = $("<div></div>")
-                     .addClass ("x_ite-private-world-info-buttons")
-                     .appendTo (div);
+                  const worldInfoButton = document .createElement ("button");
 
-                  const worldInfoButton = $("<button></button>")
-                     .addClass ("x_ite-private-browser-button")
-                     .css ("width", "100pt")
-                     .text ("World Info")
-                     .on ("click", event =>
+                  worldInfoButton .classList .add ("x_ite-private-browser-button");
+                  worldInfoButton .style .width = "100pt";
+                  worldInfoButton .textContent = _("World Info");
+                  buttons .append (worldInfoButton);
+
+                  worldInfoButton .addEventListener ("click", event =>
+                  {
+                     event .preventDefault ();
+                     event .stopPropagation ();
+                     event .stopImmediatePropagation ();
+
+                     const
+                        title = worldInfo .title,
+                        info  = worldInfo .info;
+
+                     buttons .querySelector ("button") .classList .remove ("active");
+                     worldInfoButton .classList .add ("active");
+
+                     content .replaceChildren ();
+
+                     const top = document .createElement ("div");
+
+                     top .classList .add ("x_ite-private-world-info-top");
+                     top .textContent = _("World Info");
+                     content .append (top);
+
+                     if (title .length)
                      {
-                        event .preventDefault ();
-                        event .stopPropagation ();
-                        event .stopImmediatePropagation ();
+                        const t = document .createElement ("div");
 
+                        t .classList .add ("x_ite-private-world-info-title");
+                        t .textContent = title;
+
+                        content .append (t);
+                     }
+
+                     for (const line of info)
+                     {
+                        const l = document .createElement ("div");
+
+                        l .classList .add ("x_ite-private-world-info-info");
+                        l .textContent = line;
+
+                        linkify (l);
+                     }
+                  });
+
+                  const metaDataButton = document .createElement ("button");
+
+                  metaDataButton .classList .add ("x_ite-private-browser-button");
+                  metaDataButton .style .width = "100pt";
+                  metaDataButton .textContent = _("Metadata");
+                  buttons .append (metaDataButton);
+
+                  metaDataButton .addEventListener ("click", event =>
+                  {
+                     event .preventDefault ();
+                     event .stopPropagation ();
+                     event .stopImmediatePropagation ();
+
+                     buttons .querySelector ("button") .classList .remove ("active");
+                     worldInfoButton .classList .add ("active");
+
+                     content .replaceChildren ();
+
+                     const top = document .createElement ("div");
+
+                     top .classList .add ("x_ite-private-world-info-top");
+                     top .textContent = _("Metadata");
+                     content .append (top);
+
+                     const table = document .createElement ("table");
+
+                     content .append (table);
+
+                     for (const [key, value] of browser .currentScene .getMetaDatas ())
+                     {
                         const
-                           title = worldInfo .title,
-                           info  = worldInfo .info;
+                           tr  = document .createElement ("tr"),
+                           td1 = document .createElement ("td"),
+                           td2 = document .createElement ("td");
 
-                        buttons .find ("button") .removeClass ("active");
-                        worldInfoButton .addClass ("active");
+                        td1 .textContent = `${key}:`;
 
-                        content .empty ();
+                        linkify (td2, value);
 
-                        $("<div></div>")
-                           .addClass ("x_ite-private-world-info-top")
-                           .text ("World Info")
-                           .appendTo (content);
-
-                        if (title .length)
-                        {
-                           $("<div></div>")
-                              .addClass ("x_ite-private-world-info-title")
-                              .text (title)
-                              .appendTo (content);
-                        }
-
-                        for (const line of info)
-                        {
-                           $("<div></div>")
-                              .addClass ("x_ite-private-world-info-info")
-                              .text (line)
-                              .appendTo (content)
-                              .each (linkify);
-                        }
-                     })
-                     .appendTo (buttons);
-
-                  const metaDataButton = $("<button></button>")
-                     .addClass ("x_ite-private-browser-button")
-                     .css ("width", "100pt")
-                     .text ("Metadata")
-                     .on ("click", event =>
-                     {
-                        event .preventDefault ();
-                        event .stopPropagation ();
-                        event .stopImmediatePropagation ();
-
-                        buttons .find ("button") .removeClass ("active");
-                        metaDataButton .addClass ("active");
-
-                        content .empty ();
-
-                        $("<div></div>")
-                           .addClass ("x_ite-private-world-info-top")
-                           .text ("Metadata")
-                           .appendTo (content);
-
-                        const table = $("<table></table>") .appendTo (content);
-
-                        for (const [key, value] of browser .currentScene .getMetaDatas ())
-                        {
-                           const tr = $("<tr></tr>") .appendTo (table);
-
-                           $("<td></td>") .text (key + ":") .appendTo (tr);
-                           $("<td></td>")
-                              .text (value)
-                              .appendTo (tr)
-                              .each (linkify);
-                        }
-
-                     })
-                     .appendTo (buttons);
-
-                  content .appendTo (div);
+                        tr .append (td1, td2);
+                        table .append (tr);
+                     }
+                  });
 
                   if (!hasWorldInfo)
-                     worldInfoButton .hide ();
+                     worldInfoButton .style .display = "none";
 
                   if (!browser .currentScene .getMetaDatas () .length)
-                     metaDataButton .hide ();
+                     metaDataButton .style .display = "none";
 
                   if (hasWorldInfo)
-                     worldInfoButton .trigger ("click");
+                     worldInfoButton .click ();
                   else
-                     metaDataButton .trigger ("click");
+                     metaDataButton .click ();
 
-                  div
-                     .show ()
-                     .removeClass ("x_ite-private-hidden")
-                     .addClass ("x_ite-private-fade-in-300");
+                  div .append (content);
 
-                  overlay .on ("click", () =>
+                  div .style .display = "block";
+                  div .classList .remove ("x_ite-private-hidden");
+                  div .classList .add ("x_ite-private-fade-in-300");
+
+                  overlay .addEventListener ("click", () =>
                   {
-                     div .addClass ("x_ite-private-fade-out-300");
+                     div .classList .add ("x_ite-private-fade-out-300");
                      setTimeout (() => overlay .remove (), 300);
                   });
                },
