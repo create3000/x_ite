@@ -44,10 +44,9 @@ Object .assign (MergeSort .prototype,
       // Copy back next-greatest element at each time.
       while (k < j && j <= hi)
       {
-         if (compare (array [j], auxiliary [i]))
-            array [k ++] = array [j ++];
-         else
-            array [k ++] = auxiliary [i ++];
+         array [k ++] = compare (array [j], auxiliary [i])
+            ? array [j ++]
+            : auxiliary [i ++];
       }
 
       // Copy back remaining elements of first half (if any).
