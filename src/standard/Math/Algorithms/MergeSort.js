@@ -34,23 +34,25 @@ Object .assign (MergeSort .prototype,
       let i, j, k;
 
       i = 0, j = lo;
+
       // Copy first half of array a to auxiliary array b.
       while (j <= m)
-         auxiliary [i++] = array [j++];
+         auxiliary [i ++] = array [j ++];
 
       i = 0; k = lo;
+
       // Copy back next-greatest element at each time.
       while (k < j && j <= hi)
       {
          if (compare (array [j], auxiliary [i]))
-            array [k++] = array [j++];
+            array [k ++] = array [j ++];
          else
-            array [k++] = auxiliary [i++];
+            array [k ++] = auxiliary [i ++];
       }
 
       // Copy back remaining elements of first half (if any).
       while (k < j)
-         array [k++] = auxiliary [i++];
+         array [k ++] = auxiliary [i ++];
    }
 });
 

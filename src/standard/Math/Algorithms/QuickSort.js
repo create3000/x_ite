@@ -38,10 +38,11 @@ Object .assign (QuickSort .prototype,
             // Exchange
 
             const t = array [i];
+
             array [i] = array [j];
             array [j] = t;
 
-            i ++; j --;
+            ++ i; -- j;
          }
          else
          {
