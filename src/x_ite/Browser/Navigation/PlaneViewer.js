@@ -2,7 +2,10 @@ import X3DViewer from "./X3DViewer.js";
 import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 import $         from "../../../lib/helper.js";
 
-const SCROLL_FACTOR = 1 / 160;
+
+const
+   MAC_OS        = /Mac OS X/i .test (navigator .userAgent),
+   SCROLL_FACTOR = MAC_OS ? 1 / 160 : 1 / 20;
 
 const
    vector                 = new Vector3 (),

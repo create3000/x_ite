@@ -6,13 +6,14 @@ import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 import $                 from "../../../lib/helper.js";
 
 const
+   MAC_OS                 = /Mac OS X/i .test (navigator .userAgent),
    SPEED_FACTOR           = 0.007,
    SHIFT_SPEED_FACTOR     = 4 * SPEED_FACTOR,
    ROTATION_SPEED_FACTOR  = 1.4,
    ROTATION_LIMIT         = 40,
    PAN_SPEED_FACTOR       = SPEED_FACTOR,
    PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
-   ROLL_ANGLE             = Math .PI / 512,
+   ROLL_ANGLE             = MAC_OS ? Math .PI / 512 : Math .PI / 32,
    ROTATE_TIME            = 0.3;
 
 const

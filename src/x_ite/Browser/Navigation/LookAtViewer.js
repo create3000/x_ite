@@ -7,7 +7,8 @@ import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 import $                 from "../../../lib/helper.js";
 
 const
-   SCROLL_FACTOR = 1 / 120,
+   MAC_OS        = /Mac OS X/i .test (navigator .userAgent),
+   SCROLL_FACTOR = MAC_OS ? 1 / 120 : 1 / 20,
    MOVE_TIME     = 0.3,
    ROTATE_TIME   = 0.3;
 
