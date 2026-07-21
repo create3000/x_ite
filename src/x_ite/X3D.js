@@ -35,7 +35,6 @@ import X3DCanvasElement            from "./X3DCanvasElement.js";
 import "./SUPPORTED_VERSIONS.js";
 import "./Features.js";
 import "./X3DCanvasElement.js";
-import "../standard/Math/Algorithms/QuickSort.js";
 import "../lib/libtess.js";
 
 let promise; // Declare return value of X3D function.
