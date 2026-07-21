@@ -145,14 +145,15 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       // Display submenus on the left or right side.
       // If the submenu is higher than vh, add scrollbars.
 
+      const parentRect = ul .getBoundingClientRect ();
+
       for (const submenu of ul .querySelectorAll ("ul"))
       {
          submenu .style .display = "block";
 
          const
-            parentRect = ul .getBoundingClientRect (),
-            width      = submenu .clientWidth + ul .clientWidth,
-            position   = parentRect .left + width > window .innerWidth ? "right" : "left";
+            width    = submenu .clientWidth + ul .clientWidth,
+            position = parentRect .left + width > window .innerWidth ? "right" : "left";
 
          // Background
          submenu .children [0] .style .height = `${submenu .clientHeight}px`;
@@ -281,18 +282,18 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          }
       }
    },
-   offset (elem, options)
+   offset (element, { left, top })
    {
 		const
-         rect    = elem .getBoundingClientRect (),
-         curTop  = parseFloat (elem .style .top)  || 0,
-         curLeft = parseFloat (elem .style .left) || 0;
+         rect    = element .getBoundingClientRect (),
+         cssTop  = parseFloat (element .style .top)  || 0,
+         cssLeft = parseFloat (element .style .left) || 0;
 
-      if (options .left !== undefined)
-         elem .style .left = `${options .left - (rect .left + window .scrollX) + curLeft}px`;
+      if (left !== undefined)
+         element .style .left = `${left - (rect .left + window .scrollX) + cssLeft}px`;
 
-      if (options .top !== undefined)
-         elem .style .top = `${options .top - (rect .top + window .scrollY) + curTop}px`;
+      if (top !== undefined)
+         element .style .top = `${top - (rect .top + window .scrollY) + cssTop}px`;
 	},
    build ()
    {
