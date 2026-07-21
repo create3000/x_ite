@@ -187,8 +187,8 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          }
          case "object":
          {
-            if (item .className)
-               li .classList .add (... item .className .split (/\s+/));
+            if (typeof item .className === "string")
+               li .classList .add (... item .className .split (/\s+/) .filter (s => s));
 
             switch (item .type)
             {
