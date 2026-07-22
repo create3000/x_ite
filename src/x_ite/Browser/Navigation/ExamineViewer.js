@@ -9,11 +9,11 @@ import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 import $                 from "../../../lib/helper.js";
 
 const
-   MAC_OS            = /Mac OS X/i .test (navigator .userAgent),
+   SLOW_SCROLL       = /Mac OS X|OculusBrowser/i .test (navigator .userAgent),
    SPIN_RELEASE_TIME = 20,
    SPIN_ANGLE        = Algorithm .radians (2),
    SPIN_FACTOR       = 0.3,
-   SCROLL_FACTOR     = MAC_OS ? 1 / 120 : 1 / 20,
+   SCROLL_FACTOR     = SLOW_SCROLL ? 1 / 120 : 1 / 20,
    MOVE_TIME         = 0.2,
    ROTATE_TIME       = 0.2,
    DISK_ANGLE        = Algorithm .radians (15),
