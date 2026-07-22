@@ -251,10 +251,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       viewpoint .transitionStop ();
 
-      if (event .deltaY > 0)
+      if (event .deltaY < 0)
          this .addRoll (-ROLL_ANGLE);
 
-      else if (event .deltaY < 0)
+      else if (event .deltaY > 0)
          this .addRoll (ROLL_ANGLE);
    },
    touchstart (event)
