@@ -1,4 +1,5 @@
 import X3DViewer from "./X3DViewer.js";
+import Vector2   from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 import $         from "../../../lib/helper.js";
 
@@ -19,6 +20,9 @@ function PlaneViewer (executionContext, navigationInfo)
    this .button    = -1;
    this .fromPoint = new Vector3 ();
    this .toPoint   = new Vector3 ();
+   this .touchMode = 0;
+   this .touch1    = new Vector2 ();
+   this .touch2    = new Vector2 ();
 }
 
 Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .prototype),
@@ -33,8 +37,10 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       $.on (this, surface, "mousedown", event => this .mousedown (event));
       $.on (this, surface, "mouseup",   event => this .mouseup   (event));
-      $.on (this, surface, "mousemove", event => this .mousemove (event));
       $.on (this, surface, "wheel",     event => this .wheel     (event));
+
+      $.on (this, surface, "touchstart", event => this .touchstart (event));
+      $.on (this, surface, "touchend",   event => this .touchend   (event));
    },
    mousedown (event)
    {
@@ -58,9 +64,10 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
             this .button = event .button;
 
-            $.off (this, this .getBrowser () .getSurface ());
             $.on (this, document, "mouseup",   event => this .mouseup   (event));
             $.on (this, document, "mousemove", event => this .mousemove (event));
+            $.on (this, document, "touchend",  event => this .touchend  (event));
+            $.on (this, document, "touchmove", event => this .touchmove (event));
 
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
@@ -138,13 +145,17 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       viewpoint .transitionStop ();
 
+      const
+         fieldOfViewScale = viewpoint ._fieldOfViewScale .getValue (),
+         zoomFactor       = event .zoomFactor || SCROLL_FACTOR;
+
       if (event .deltaY < 0) // Move backwards.
       {
-         viewpoint ._fieldOfViewScale = Math .max (0.00001, viewpoint ._fieldOfViewScale .getValue () * (1 - SCROLL_FACTOR));
+         viewpoint ._fieldOfViewScale = Math .max (0.00001, fieldOfViewScale * (1 - zoomFactor));
       }
       else if (event .deltaY > 0) // Move forwards.
       {
-         viewpoint ._fieldOfViewScale = viewpoint ._fieldOfViewScale .getValue () * (1 + SCROLL_FACTOR);
+         viewpoint ._fieldOfViewScale = fieldOfViewScale * (1 + zoomFactor);
 
          this .constrainFieldOfViewScale ();
       }
@@ -156,6 +167,124 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       viewpoint ._positionOffset         = positionOffset         .assign (viewpoint ._positionOffset         .getValue ()) .add (translation);
       viewpoint ._centerOfRotationOffset = centerOfRotationOffset .assign (viewpoint ._centerOfRotationOffset .getValue ()) .add (translation);
    },
+   touchstart (event)
+   {
+      event = this .getBrowser () .copyEvent (event);
+
+      const touches = event .touches;
+
+      switch (touches .length)
+      {
+         case 2:
+         {
+            // Start move (button 1).
+
+            event .button = 1;
+            event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
+            event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
+
+            this .mousedown (event);
+
+            // Start zoom (mouse wheel).
+
+            this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+            this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+            break;
+         }
+      }
+   },
+   touchend (event)
+   {
+      event = this .getBrowser () .copyEvent (event);
+
+      switch (this .button)
+      {
+         case 1:
+         {
+            // End move (button 1).
+
+            this .touchMode = 0;
+            event .button   = 1;
+
+            this .mouseup (event);
+            break;
+         }
+      }
+   },
+   touchmove: (() =>
+   {
+      const
+         MOVE_ANGLE   = 0.7,
+         ZOOM_ANGLE   = -0.7,
+         touch1Change = new Vector2 (),
+         touch2Change = new Vector2 ();
+
+      return function (event)
+      {
+         event = this .getBrowser () .copyEvent (event);
+
+         const touches = event .touches;
+
+         switch (touches .length)
+         {
+            case 2:
+            {
+               touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
+               touch2Change .set (touches [1] .pageX, touches [1] .pageY) .subtract (this .touch2) .normalize ();
+
+               const
+                  move = touch1Change .dot (touch2Change) > MOVE_ANGLE,
+                  zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE,
+                  mode = this .touchMode || (move ? 1 : (zoom ? 2 : 0));
+
+               switch (mode)
+               {
+                  case 1:
+                  {
+                     // Move (button 1).
+
+                     this .touchMode = 1;
+
+                     event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
+                     event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
+
+                     this .mousemove (event);
+
+                     break;
+                  }
+                  case 2:
+                  {
+                     // Zoom (mouse wheel).
+
+                     this .touchMode = 2;
+
+                     const distance1 = this .touch1 .distance (this .touch2);
+
+                     this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+                     this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+
+                     const
+                        distance2 = this .touch1 .distance (this .touch2),
+                        delta     = distance1 - distance2;
+
+                     event .deltaY     = delta;
+                     event .zoomFactor = Math .abs (delta) / window .innerWidth;
+
+                     event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
+                     event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
+
+                     this .wheel (event);
+                     break;
+                  }
+               }
+
+               this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+               this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+               break;
+            }
+         }
+      };
+   })(),
    constrainFieldOfViewScale ()
    {
       const viewpoint = this .getActiveViewpoint ();
