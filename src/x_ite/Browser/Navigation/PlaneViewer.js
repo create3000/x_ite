@@ -93,7 +93,6 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       this .button = -1;
 
       $.off (this, document);
-      $.on (this, this .getBrowser () .getSurface (), "mousemove", event => this .mousemove (event));
 
       this .getBrowser () .setCursor ("DEFAULT");
 

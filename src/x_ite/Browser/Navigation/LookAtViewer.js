@@ -101,24 +101,19 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
       if (event .button !== this .button)
          return;
 
+      // Stop event propagation.
+
+      event .preventDefault ();
+
+      // Disable all.
+
       this .button = -1;
 
       $.off (this, document);
 
-      switch (event .button)
-      {
-         case 0:
-         {
-            // Stop event propagation.
+      this .getBrowser () .setCursor ("DEFAULT");
 
-            event .preventDefault ();
-
-            // Look around.
-
-            this ._isActive = false;
-            break;
-         }
-      }
+      this ._isActive = false;
    },
    dblclick (event)
    {

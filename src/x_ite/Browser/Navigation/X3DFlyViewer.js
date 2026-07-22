@@ -169,10 +169,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       // Disable all.
 
+      this .direction .set (0);
+
       this .event  = null;
       this .button = -1;
-
-      this .direction .set (0);
 
       $.off (this, document);
 

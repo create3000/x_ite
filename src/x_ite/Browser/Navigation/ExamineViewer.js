@@ -180,39 +180,29 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       if (event .button !== this .button)
          return;
 
+      // Stop event propagation.
+
+      event .preventDefault ();
+
+      // Disable all.
+
       this .button = -1;
 
       $.off (this, document);
+
+      this .getBrowser () .setCursor ("DEFAULT");
+
+      this ._isActive = false;
 
       switch (this .getButton (event .button))
       {
          case 0:
          {
-            // Stop event propagation.
-
-            event .preventDefault ();
-
             // End rotate.
-
-            this .getBrowser () .setCursor ("DEFAULT");
 
             if (Math .abs (this .deltaRotation .angle) > SPIN_ANGLE && Date .now () - this .motionTime < SPIN_RELEASE_TIME)
                this .addSpinning (this .deltaRotation);
 
-            this ._isActive = false;
-            break;
-         }
-         case 1:
-         {
-            // Stop event propagation.
-
-            event .preventDefault ();
-
-            // End pan.
-
-            this .getBrowser () .setCursor ("DEFAULT");
-
-            this ._isActive = false;
             break;
          }
       }
