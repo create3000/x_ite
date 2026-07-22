@@ -52,9 +52,10 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      switch (event .button)
+      switch (this .getButton (event .button))
       {
          case 0:
+         case 1:
          {
             // Stop event propagation.
 
@@ -103,9 +104,10 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    {
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      switch (this .button)
+      switch (this .getButton (this .button))
       {
          case 0:
+         case 1:
          {
             // Stop event propagation.
 
