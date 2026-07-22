@@ -52,9 +52,9 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      switch (this .getButton (event .button))
+      switch (event .button)
       {
-         case 1:
+         case 0:
          {
             // Stop event propagation.
 
@@ -103,9 +103,9 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    {
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      switch (this .getButton (this .button))
+      switch (this .button)
       {
-         case 1:
+         case 0:
          {
             // Stop event propagation.
 
@@ -179,7 +179,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
          {
             // Start move (button 1).
 
-            event .button = 1;
+            event .button = 0;
             event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
             event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
 
@@ -199,12 +199,12 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       switch (this .button)
       {
-         case 1:
+         case 0:
          {
             // End move (button 1).
 
             this .touchMode = 0;
-            event .button   = 1;
+            event .button   = 0;
 
             this .mouseup (event);
             break;
@@ -249,7 +249,6 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
                      event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
 
                      this .mousemove (event);
-
                      break;
                   }
                   case 2:
