@@ -17,7 +17,7 @@ Additionally, X_ITE no longer depends on jQuery. The entire codebase now uses mo
 
 - [x] New testing environment based on Vitest.
 - [x] Removed internal need for jQuery.
-- [x] Better touch device support, including fixed for Examine viewer and support for Plane viewer.
+- [x] Better touch device support, including fixes for Examine viewer and support for Plane viewer.
 
 ## X_ITE v15.1 Series
 
