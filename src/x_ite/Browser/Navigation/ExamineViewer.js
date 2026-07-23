@@ -370,7 +370,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .touchMode = 0;
             event .button   = 1;
 
-            this .mouseup (event, spin);
+            this .mouseup (event, false);
             break;
          }
       }
