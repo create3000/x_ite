@@ -285,14 +285,15 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             // Start look around (button 0).
 
             this .lookAround = true;
-            event .button    = 0;
-            event .pageX     = (touches [0] .pageX + touches [1] .pageX) / 2;
-            event .pageY     = (touches [0] .pageY + touches [1] .pageY) / 2;
+
+            event .button = 0;
+            event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
+            event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
 
             this .mousedown (event);
             break;
          }
-         case 3:
+         default:
          {
             // End look around (button 0).
 

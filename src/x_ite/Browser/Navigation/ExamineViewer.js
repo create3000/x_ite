@@ -133,7 +133,10 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             // Start rotate.
 
-            this .button = event .button;
+            this .button     = event .button;
+            this .motionTime = Date .now ();
+
+            this .deltaRotation .assign (Rotation4 .IDENTITY);
 
             $.on (this, document, "mouseup",   event => this .mouseup   (event));
             $.on (this, document, "mousemove", event => this .mousemove (event));
@@ -144,8 +147,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
             this .startRotate (x, y, 0);
-
-            this .motionTime = Date .now ();
 
             this ._isActive = true;
             break;
@@ -175,7 +176,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          }
       }
    },
-   mouseup (event)
+   mouseup (event, spin = true)
    {
       if (event .button !== this .button)
          return;
@@ -199,6 +200,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          case 0:
          {
             // End rotate.
+
+            if (!spin)
+               break;
 
             if (Math .abs (this .deltaRotation .angle) > SPIN_ANGLE && Date .now () - this .motionTime < SPIN_RELEASE_TIME)
                this .addSpinning (this .deltaRotation);
@@ -303,7 +307,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          {
             // End rotate (button 0).
 
-            this .touchend (event);
+            this .touchend (event, false);
 
             // Start move (button 1).
 
@@ -319,15 +323,16 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
             break;
          }
-         case 3:
+         default:
          {
             // End move (button 1).
-            this .touchend (event);
+
+            this .touchend (event, false);
             break;
          }
       }
    },
-   touchend (event)
+   touchend (event, spin = true)
    {
       event = this .getBrowser () .copyEvent (event);
 
@@ -341,7 +346,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             event .pageX  = this .touch1 .x;
             event .pageY  = this .touch1 .y;
 
-            this .mouseup (event);
+            this .mouseup (event, spin);
 
             // Start dblclick (button 0).
 
@@ -365,7 +370,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             this .touchMode = 0;
             event .button   = 1;
 
-            this .mouseup (event);
+            this .mouseup (event, spin);
             break;
          }
       }

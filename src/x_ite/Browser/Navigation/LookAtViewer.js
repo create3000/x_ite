@@ -224,8 +224,10 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
             this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
             break;
          }
-         case 3:
+         default:
          {
+            // End move (button 1).
+
             this .touchend (event);
             break;
          }
@@ -274,11 +276,6 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
          switch (touches .length)
          {
-            case 1:
-            {
-               // Move (button 0).
-               break;
-            }
             case 2:
             {
                touch1Change .set (touches [0] .pageX, touches [0] .pageY) .subtract (this .touch1) .normalize ();
