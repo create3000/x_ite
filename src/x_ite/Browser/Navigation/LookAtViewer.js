@@ -255,7 +255,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       if (Date .now () / 1_000 - this .tapStart < DBL_TAP_TIME)
       {
-         event .button = 1;
+         event .button = 0;
          event .pageX  = this .touch1 .x;
          event .pageY  = this .touch1 .y;
 
