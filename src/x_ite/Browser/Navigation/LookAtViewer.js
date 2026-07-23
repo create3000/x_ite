@@ -10,7 +10,8 @@ const
    SLOW_SCROLL   = /Mac OS X|OculusBrowser/i .test (navigator .userAgent),
    SCROLL_FACTOR = SLOW_SCROLL ? 1 / 120 : 1 / 20,
    MOVE_TIME     = 0.3,
-   ROTATE_TIME   = 0.3;
+   ROTATE_TIME   = 0.3,
+   DBL_TAP_TIME  = 0.4;
 
 function LookAtViewer (executionContext, navigationInfo)
 {
@@ -23,7 +24,6 @@ function LookAtViewer (executionContext, navigationInfo)
    this .touch1                 = new Vector2 ();
    this .touch2                 = new Vector2 ();
    this .tapStart               = 0;
-   this .dblTapInterval         = 0.4;
 
    this .positionChaser         = new PositionChaser (executionContext);
    this .centerOfRotationChaser = new PositionChaser (executionContext);
@@ -126,7 +126,11 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       this .disconnect ();
-      this .lookAtPoint (x, y, this .getStraightenHorizon ());
+
+      if (this .getBrowser () .getAltKey ())
+         this .lookAtPoint (x, y, this .getStraightenHorizon ());
+      else
+         this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
    mousemove (event)
    {
@@ -249,7 +253,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       // Start dblclick (button 0).
 
-      if (Date .now () - this .tapStart < this .dblTapInterval)
+      if (Date .now () / 1_000 - this .tapStart < DBL_TAP_TIME)
       {
          event .button = 1;
          event .pageX  = this .touch1 .x;
@@ -258,7 +262,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          this .dblclick (event);
       }
 
-      this .tapStart = Date .now ();
+      this .tapStart = Date .now () / 1_000;
    },
    touchmove: (() =>
    {
