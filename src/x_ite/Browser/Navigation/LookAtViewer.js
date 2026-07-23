@@ -241,15 +241,11 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    {
       event = this .getBrowser () .copyEvent (event);
 
-      switch (this .button)
-      {
-         case 0:
-         {
-            // End look around (button 0).
-            this .mouseup (event);
-            break;
-         }
-      }
+      // End look around (button 0).
+
+      event .button = 0;
+
+      this .mouseup (event);
 
       // Start dblclick (button 0).
 

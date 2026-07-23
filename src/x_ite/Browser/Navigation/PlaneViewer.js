@@ -196,19 +196,12 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    {
       event = this .getBrowser () .copyEvent (event);
 
-      switch (this .button)
-      {
-         case 0:
-         {
-            // End move (button 1).
+      // End move (button 1).
 
-            this .touchMode = 0;
-            event .button   = 0;
+      this .touchMode = 0;
+      event .button   = 0;
 
-            this .mouseup (event);
-            break;
-         }
-      }
+      this .mouseup (event);
    },
    touchmove: (() =>
    {

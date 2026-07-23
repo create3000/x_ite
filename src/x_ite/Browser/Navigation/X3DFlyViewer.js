@@ -306,18 +306,12 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    {
       event = this .getBrowser () .copyEvent (event);
 
-      switch (this .button)
-      {
-         case 0:
-         {
-            // End move or look around (button 0).
-            this .lookAround = false;
-            event .button    = 0;
+      // End move or look around (button 0).
+   
+      this .lookAround = false;
+      event .button    = 0;
 
-            this .mouseup (event);
-            break;
-         }
-      }
+      this .mouseup (event);
    },
    touchmove (event)
    {
