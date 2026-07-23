@@ -13,6 +13,12 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 Additionally, X_ITE no longer depends on jQuery. The entire codebase now uses modern, standards-based JavaScript APIs, reducing the overall library size, eliminating an external dependency, and simplifying maintenance. This change has no impact on existing X3D content or the public X_ITE API, while contributing to faster loading times and a leaner, more future-proof implementation.
 
+### Notable Changes
+
+- [x] New testing environment based on Vitest.
+- [x] Removed internal need for jQuery.
+- [x] Better touch device support, including fixed for Examine viewer and support for Plane viewer.
+
 ## X_ITE v15.1 Series
 
 *Leipzig, 31st May 2026:* The 15.1 release of X_ITE comes now with basic support for 3D Gaussian Splatting, bringing a modern point-based rendering technique to the X3D ecosystem. To make working with Gaussian Splats straightforward and fully integrated into X3D scenes, this release introduces the new [GaussianSplats](/x_ite/components/gaussiansplats/gaussiansplats/) node. It enables the loading and rendering of Gaussian Splat datasets while leveraging X_ITE's existing scene graph architecture.
