@@ -5,6 +5,7 @@ nav: main
 categories: []
 tags: [Getting Started, X3D, VRML, glTF, Viewer]
 permalink: /
+jquery: true
 ---
 
 >**Latest News:** Now comes with [3D Gaussian Splatting](/x_ite/what-s-new/#x_ite-v151-series) support.

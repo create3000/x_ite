@@ -287,7 +287,9 @@ function initialize ()
 
 function initialize ()
 {
-   if (typeof $ === "undefined")
+   const element = document .querySelector ("#teaser-credits");
+
+   if (!element)
       return;
 
    const credits = worldInfo .info .join ("\n")
@@ -297,7 +299,7 @@ function initialize ()
 
    const playground = `<a href="/x_ite/playground/?url=${worldURL}" title="Show scene in Playground."><i class="fas fa-rocket"></i></a>`;
 
-   $("#teaser-credits") .html (`${credits} · ${playground}`);
+   element .innerHTML = `${credits} · ${playground}`;
 }
 ]]>
     </Script>

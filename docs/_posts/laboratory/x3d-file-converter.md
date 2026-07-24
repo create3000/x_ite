@@ -3,6 +3,7 @@ title: Free Online X3D File Format Converter
 date: 2023-02-21
 categories: [Laboratory]
 tags: [X3D, File, Format, Converter, Laboratory]
+jquery: true
 x_ite: true
 ---
 <style>

@@ -4,6 +4,7 @@ date: 2023-02-21
 layout: wide
 categories: [Laboratory]
 tags: [3D, L-System, Generator, Laboratory]
+jquery: true
 ---
 <style>
 /* Viewer */

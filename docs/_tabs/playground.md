@@ -4,6 +4,7 @@ date: 2022-11-28
 layout: wide
 icon: fas fa-rocket
 order: 4
+jquery: true
 monaco: true
 ---
 <style>

@@ -4,6 +4,7 @@ date: 2025-03-28
 layout: wide
 categories: [Laboratory]
 tags: [Area Chart, Laboratory]
+jquery: true
 ---
 <style>
 /* Paragraph */

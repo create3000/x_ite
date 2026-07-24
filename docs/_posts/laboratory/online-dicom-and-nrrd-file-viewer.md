@@ -4,6 +4,7 @@ date: 2023-02-21
 layout: wide
 categories: [Laboratory]
 tags: [Online, DICOM, NRRD, File, Viewer, Laboratory]
+jquery: true
 ---
 <style>
 /* Paragraph */
