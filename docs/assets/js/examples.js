@@ -1,8 +1,12 @@
-$(".examples a") .on ("click", function ()
+for (const a of document .querySelectorAll (".examples a"))
 {
-   Examples .shared .load ($(this));
-   return false;
-});
+   a .addEventListener ("click", event =>
+   {
+      event .preventDefault ();
+
+      Examples .shared .load (a);
+   });
+}
 
 class Examples
 {
@@ -78,23 +82,23 @@ class Examples
 
       this .#canvas
          .removeClass (["tr", "br", "bl", "tl"] .map (p => `buttons-${p}`))
-         .addClass (`buttons-${a .attr ("buttonsPosition")}`)
-         .attr ("xrMovementControl", a .attr ("xrMovementControl"));
+         .addClass (`buttons-${a .getAttribute ("buttonsPosition")}`)
+         .attr ("xrMovementControl", a .getAttribute ("xrMovementControl"));
 
-      this .#header .text (a .attr ("title"));
-      this .#canvas .attr ("src", a .attr ("href"));
-      this .#zip    .attr ("href", a .attr ("href") .replace (/\.x3d$/, ".zip"));
-      this .#source .attr ("href", `/x_ite/playground/?url=${a .attr ("href")}`);
+      this .#header .text (a .getAttribute ("title"));
+      this .#canvas .attr ("src", a .getAttribute ("href"));
+      this .#zip    .attr ("href", a .getAttribute ("href") .replace (/\.x3d$/, ".zip"));
+      this .#source .attr ("href", `/x_ite/playground/?url=${a .getAttribute ("href")}`);
 
-      if (a .attr ("doc") === "true")
+      if (a .getAttribute ("doc") === "true")
       {
          $("<a></a>")
             .text ("#")
             .attr ("title", "Go to documentation page.")
-            .attr ("href", `/x_ite/components/${a .attr ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${a .attr ("typeName") .toLowerCase ()}/`)
+            .attr ("href", `/x_ite/components/${a .getAttribute ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${a .getAttribute ("typeName") .toLowerCase ()}/`)
             .appendTo (this .#header);
       }
 
-      console .log (`Loading ${a .attr ("title")} ...`);
+      console .log (`Loading ${a .getAttribute ("title")} ...`);
    }
 }
