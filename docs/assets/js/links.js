@@ -1,5 +1,10 @@
-$("a[href='/x_ite/components/']") .attr ("href", "/x_ite/components/overview/");
-$("a[href='/x_ite/reference/']")  .attr ("href", "/x_ite/reference/ecmascript-object-and-function-definitions/");
-$("a[href='/x_ite/tutorials/']")  .attr ("href", "/x_ite/tutorials/overview/");
-$("a[href='/x_ite/laboratory/']") .attr ("href", "/x_ite/laboratory/overview/");
-$("a[href='/x_ite/editor/']")     .attr ("href", "/sunrize/");
+document .querySelector ("a[href='/x_ite/components/']")
+   .setAttribute ("href", "/x_ite/components/overview/");
+document .querySelector ("a[href='/x_ite/reference/']")
+   .setAttribute ("href", "/x_ite/reference/ecmascript-object-and-function-definitions/");
+document .querySelector ("a[href='/x_ite/tutorials/']")
+   .setAttribute ("href", "/x_ite/tutorials/overview/");
+document .querySelector ("a[href='/x_ite/laboratory/']")
+   .setAttribute ("href", "/x_ite/laboratory/overview/");
+document .querySelector ("a[href='/x_ite/editor/']")
+   .setAttribute ("href", "/sunrize/");

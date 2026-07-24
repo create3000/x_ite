@@ -429,7 +429,7 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ## X_ITE v8.5.0 Released
 
-*Leipzig, 23rd January 2023:* With this new version it is now possible to configure antialiasing. Antialiasing can be turned on/off, multisampling and supersampling can now be configured. Additionally glTF files can now be loaded, either directly as source of the \<x3d-canvas\> element or as source of an Inline node, as well as with API methods. The glTF file is internally converted into X3D and then made available to the scene-graph. Also there is a new node ImageTextureAtlas, which makes it easy to load 3D textures.
+*Leipzig, 23rd January 2023:* With this new version it is now possible to configure antialiasing. Antialiasing can be turned on/off, multisampling and super-sampling can now be configured. Additionally glTF files can now be loaded, either directly as source of the \<x3d-canvas\> element or as source of an Inline node, as well as with API methods. The glTF file is internally converted into X3D and then made available to the scene-graph. Also there is a new node ImageTextureAtlas, which makes it easy to load 3D textures.
 
 ### New Features
 
@@ -519,7 +519,7 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ## X_ITE v7.0.0 Released
 
-*Leipzig, 13th November 2022*: We finally released the new version 7.0.0. This version comes with a brand new shader system. The default shaders are now highly specialized and therefor very fast. First tests reveal that the shaders are now 2 up to 3 times faster. But this also means that custom shaders may be broken now, because all x3d_Num* variables are now removed. X3D Authors must now hardcode these values into their shaders, or develop an own system.
+*Leipzig, 13th November 2022*: We finally released the new version 7.0.0. This version comes with a brand new shader system. The default shaders are now highly specialized and therefore very fast. First tests reveal that the shaders are now 2 up to 3 times faster. But this also means that custom shaders may be broken now, because all x3d_Num* variables are now removed. X3D Authors must now hardcode these values into their shaders, or develop an own system.
 
 ### New Features
 
