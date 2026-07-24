@@ -26,52 +26,39 @@ class Examples
 
    constructor ()
    {
-      this .#element = $("<div></div>")
-         .addClass ("example")
-         .appendTo ("body");
+      const html = /* html */ `
+<div class="example">
+   <p class="header"></p>
+   <x3d-canvas contentScale="auto" update="auto"></x3d-canvas>
+   <p class="footer"><a class="zip" download>Download ZIP Archive</a><span class="dot"></span><a class="source">View Source in Playground</a></p>
+   <i class="close fas fa-solid fa-circle-xmark fa-fw"></i>
+</div>
+      `;
 
-      this .#header = $("<p></p>")
-         .addClass ("header")
-         .appendTo (this .#element);
+      const body = document .querySelector ("body");
 
-      this .#canvas = $("<x3d-canvas></x3d-canvas>")
-         .attr ("contentScale", "auto")
-         .attr ("update", "auto")
-         .appendTo (this .#element);
+      body .insertAdjacentHTML ("beforeend", html);
 
-      this .#browser = this .#canvas .prop ("browser");
+      this .#element = body .querySelector (":scope > :last-child");
+      this .#header  = this .#element .querySelector (".header");
+      this .#canvas  = this .#element .querySelector ("x3d-canvas");
+      this .#browser = this .#canvas .browser;
+      this .#zip     = this .#element .querySelector (".zip");
+      this .#source  = this .#element .querySelector (".source");
 
-      $("<i></i>")
-         .addClass (["fas", "fa-solid", "fa-circle-xmark", "fa-fw"])
-         .appendTo (this .#element)
-         .on ("click", () => this .hide ());
-
-      const footer = $("<p></p>") .addClass ("footer") .appendTo (this .#element);
-
-      this .#zip = $("<a></a>")
-         .addClass ("zip")
-         .attr ("download", "")
-         .text ("Download ZIP Archive")
-         .appendTo (footer);
-
-      $("<span></span>") .addClass ("dot") .appendTo (footer);
-
-      this .#source = $("<a></a>")
-         .addClass ("source")
-         .text ("View Source in Playground")
-         .appendTo (footer);
+      this .#element .querySelector (".close") .addEventListener ("click", () => this .hide ());
    }
 
    show ()
    {
       this .#browser .beginUpdate ();
-      this .#element .show ();
+      this .#element .style .display = "";
    }
 
    hide ()
    {
       this .#browser .endUpdate ();
-      this .#element .hide ();
+      this .#element .style .display = "none";
    }
 
    load (a)
@@ -80,23 +67,21 @@ class Examples
 
       this .#browser .getBrowserOptions () .reset ();
 
-      this .#canvas
-         .removeClass (["tr", "br", "bl", "tl"] .map (p => `buttons-${p}`))
-         .addClass (`buttons-${a .getAttribute ("buttonsPosition")}`)
-         .attr ("xrMovementControl", a .getAttribute ("xrMovementControl"));
+      this .#canvas .classList .remove (... ["tr", "br", "bl", "tl"] .map (p => `buttons-${p}`));
+      this .#canvas .classList .add (`buttons-${a .getAttribute ("buttonsPosition")}`);
+      this .#canvas .setAttribute ("xrMovementControl", a .getAttribute ("xrMovementControl"));
 
-      this .#header .text (a .getAttribute ("title"));
-      this .#canvas .attr ("src", a .getAttribute ("href"));
-      this .#zip    .attr ("href", a .getAttribute ("href") .replace (/\.x3d$/, ".zip"));
-      this .#source .attr ("href", `/x_ite/playground/?url=${a .getAttribute ("href")}`);
+      this .#header .textContent = a .getAttribute ("title");
+
+      this .#canvas .setAttribute ("src", a .getAttribute ("href"));
+      this .#zip    .setAttribute ("href", a .getAttribute ("href") .replace (/\.x3d$/, ".zip"));
+      this .#source .setAttribute ("href", `/x_ite/playground/?url=${a .getAttribute ("href")}`);
 
       if (a .getAttribute ("doc") === "true")
       {
-         $("<a></a>")
-            .text ("#")
-            .attr ("title", "Go to documentation page.")
-            .attr ("href", `/x_ite/components/${a .getAttribute ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${a .getAttribute ("typeName") .toLowerCase ()}/`)
-            .appendTo (this .#header);
+         const html = /* html */ `<a title="Go to documentation page." href="/x_ite/components/${a .getAttribute ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${a .getAttribute ("typeName") .toLowerCase ()}/">#</a>`;
+
+         this .#header .insertAdjacentHTML ("beforeend", html);
       }
 
       console .log (`Loading ${a .getAttribute ("title")} ...`);
