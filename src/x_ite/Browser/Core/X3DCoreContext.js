@@ -70,7 +70,7 @@ function X3DCoreContext (element)
    </div>
 </div>`;
 
-   if (element .nodeName .toLowerCase () === "x3d-canvas")
+   if (element .nodeName .toLowerCase () === "x3d-canvas" && element .shadowRoot)
    {
       this [_shadow] = element .shadowRoot;
 
