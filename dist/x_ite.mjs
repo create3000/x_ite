@@ -1,7 +1,7 @@
-/* X_ITE v16.0.1 */
+/* X_ITE v16.0.2 */
 var __webpack_modules__ = ({
 
-/***/ 930
+/***/ 882
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 592
+/***/ 512
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 796
+/***/ 444
 (module) {
 
 /**
@@ -18826,7 +18826,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.0.1";
+const BROWSER_VERSION_default_ = "16.0.2";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -31113,7 +31113,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(796);
+/* provided dependency */ var libtess = __webpack_require__(444);
 
 
 const Triangle3 =
@@ -47743,7 +47743,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(796);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(444);
 
 
 
@@ -54435,7 +54435,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-yblDRQC+FheZWCT3oClt00fsBg/UdYeaOF9pkqpS7E5sIX9tNZ/uINHzxomyiZ0l";
+         link .integrity   = "sha384-Y7ZIRmsB0Ps2F6tEqyEto4cb+wz/wCof3usIJpWKEoKpx2a8ym7kD+woJa/Ho8QV";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -71547,7 +71547,7 @@ Object .assign (X3DSoundContext .prototype,
                startAudioElements = () => this .startAudioElements ();
 
             noSoundButton .classList .add ("x_ite-private-no-sound-button", "x_ite-private-button");
-            noSoundButton .part .add ("no-sound-button");
+            noSoundButton .part ?.add ("no-sound-button");
 
             noSoundButton .title      = gettext("Activate sound.");
             noSoundButton .onmouseup  = startAudioElements;
@@ -90953,8 +90953,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(930);
-/* provided dependency */ var APNG = __webpack_require__(592);
+/* provided dependency */ var SuperGif = __webpack_require__(882);
+/* provided dependency */ var APNG = __webpack_require__(512);
 
 
 
@@ -93659,7 +93659,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(796);
+/* provided dependency */ var libtess_libtess = __webpack_require__(444);
 const libtess_default_ = libtess_libtess;
 ;
 

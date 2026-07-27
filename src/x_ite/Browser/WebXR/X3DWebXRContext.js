@@ -53,7 +53,7 @@ Object .assign (X3DWebXRContext .prototype,
          };
 
          xrButton .classList .add ("x_ite-private-xr-button", "x_ite-private-button");
-         xrButton .part .add ("xr-button");
+         xrButton .part ?.add ("xr-button");
 
          xrButton .title      = _("Start WebXR session.");
          xrButton .onmouseup  = xrToggleSession;

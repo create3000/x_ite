@@ -102,7 +102,7 @@ Object .assign (X3DSoundContext .prototype,
                startAudioElements = () => this .startAudioElements ();
 
             noSoundButton .classList .add ("x_ite-private-no-sound-button", "x_ite-private-button");
-            noSoundButton .part .add ("no-sound-button");
+            noSoundButton .part ?.add ("no-sound-button");
 
             noSoundButton .title      = _("Activate sound.");
             noSoundButton .onmouseup  = startAudioElements;

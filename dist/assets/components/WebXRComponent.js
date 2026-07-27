@@ -1,4 +1,4 @@
-/* X_ITE v16.0.1 */
+/* X_ITE v16.0.2 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -456,7 +456,7 @@ Object .assign (X3DWebXRContext .prototype,
          };
 
          xrButton .classList .add ("x_ite-private-xr-button", "x_ite-private-button");
-         xrButton .part .add ("xr-button");
+         xrButton .part ?.add ("xr-button");
 
          xrButton .title      = external_X_ITE_X3D_gettext_default()("Start WebXR session.");
          xrButton .onmouseup  = xrToggleSession;
