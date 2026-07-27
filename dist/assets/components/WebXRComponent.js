@@ -1,41 +1,9 @@
-/* X_ITE v15.2.0 */
+/* X_ITE v16.0.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 254
-(module) {
-
-module.exports = __X_ITE_X3D__ .jquery;
-
-/***/ }
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	const __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		const cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		const module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
+/******/ 	// The require scope
+/******/ 	const __webpack_require__ = {};
 /******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
@@ -346,7 +314,7 @@ Object .assign ((external_X_ITE_X3D_ExamineViewer_default()).prototype,
 
       if (button0)
       {
-         this .zoom (gamepad .axes [3] * GAMEPAD_ZOOM_FACTOR * f, Math .sign (-gamepad .axes [3]));
+         this .zoom (gamepad .axes [3] * GAMEPAD_ZOOM_FACTOR * f, Math .sign (gamepad .axes [3]));
       }
       else if (button1)
       {
@@ -433,7 +401,6 @@ Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
 });
 
 ;// ./src/x_ite/Browser/WebXR/X3DWebXRContext.js
-/* provided dependency */ var $ = __webpack_require__(254);
 
 
 
@@ -474,24 +441,31 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      this [_xrButton] = $("<div></div>")
-         .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."))
-         .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
-         .on ("mousedown touchstart", false)
-         .on ("mouseup touchend", event =>
-         {
-            event .preventDefault ();
-            event .stopImmediatePropagation ();
-            event .stopPropagation ();
+      this [_xrButton] = (() =>
+      {
+         const xrButton = document .createElement ("div");
 
+         const xrToggleSession = () =>
+         {
             this .startAudioElements ();
 
             if (this .getSession () === window)
                this .xrStartSession ();
             else
                this .xrStopSession ();
-         })
-         .appendTo (this .getSurface () .querySelector (".x_ite-private-buttons"));
+         };
+
+         xrButton .classList .add ("x_ite-private-xr-button", "x_ite-private-button");
+         xrButton .part .add ("xr-button");
+
+         xrButton .title      = external_X_ITE_X3D_gettext_default()("Start WebXR session.");
+         xrButton .onmouseup  = xrToggleSession;
+         xrButton .ontouchend = xrToggleSession;
+
+         this .getSurface () .querySelector (".x_ite-private-buttons") .append (xrButton);
+
+         return xrButton;
+      })();
    },
    async xrStartSession ()
    {
@@ -544,7 +518,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Button
 
-         this [_xrButton] .attr ("title", external_X_ITE_X3D_gettext_default()("Stop WebXR session."));
+         this [_xrButton] .title = external_X_ITE_X3D_gettext_default()("Stop WebXR session.");
 
          // session .addEventListener ("select", event =>
          // {
@@ -594,7 +568,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          // Button
 
-         this [_xrButton] .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."));
+         this [_xrButton] .title = external_X_ITE_X3D_gettext_default()("Start WebXR session.");
       });
    },
    xrContentScale ()

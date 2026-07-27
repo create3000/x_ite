@@ -1,4 +1,4 @@
-/* X_ITE v15.2.0 */
+/* X_ITE v16.0.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -287,7 +287,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
 
             for (let i = 0; i < numPickedTargets; ++ i)
             {
-               if (pickedGeometries [0] = this .getPickedGeometry (pickedTargets [i]))
+               if ((pickedGeometries [0] = this .getPickedGeometry (pickedTargets [i])))
                   break;
             }
 

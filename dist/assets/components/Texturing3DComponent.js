@@ -1,9 +1,9 @@
-/* X_ITE v15.2.0 */
+/* X_ITE v16.0.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 170
+/***/ 641
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ },
 
-/***/ 348
+/***/ 739
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -77,7 +77,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ },
 
-/***/ 928
+/***/ 139
 (module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4035,7 +4035,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ },
 
-/***/ 588
+/***/ 11
 (module) {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5612,9 +5612,9 @@ var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .Expressions"
 const external_X_ITE_X3D_Expressions_namespaceObject = __X_ITE_X3D__ .Expressions;
 var external_X_ITE_X3D_Expressions_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Expressions_namespaceObject);
-;// external "__X_ITE_X3D__ .jquery"
-const external_X_ITE_X3D_jquery_namespaceObject = __X_ITE_X3D__ .jquery;
-var external_X_ITE_X3D_jquery_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_jquery_namespaceObject);
+;// external "__X_ITE_X3D__ .helper"
+const external_X_ITE_X3D_helper_namespaceObject = __X_ITE_X3D__ .helper;
+var external_X_ITE_X3D_helper_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_helper_namespaceObject);
 ;// ./src/x_ite/Browser/Texturing3D/NRRDParser.js
 
 
@@ -5658,7 +5658,7 @@ Object .assign (NRRDParser .prototype,
    setInput (value)
    {
       this .dataView     = new DataView (value);
-      this .input        = external_X_ITE_X3D_jquery_default().decodeText (value);
+      this .input        = external_X_ITE_X3D_helper_default().decodeText (value);
       this .lastIndex    = 0;
       this .nrrd         = { };
       this .littleEndian = true;
@@ -6016,7 +6016,7 @@ Object .assign (NRRDParser .prototype,
 
          const
             input       = this .dataView .buffer .slice (this .lastIndex),
-            arrayBuffer = await external_X_ITE_X3D_jquery_default().gunzip (input);
+            arrayBuffer = await external_X_ITE_X3D_helper_default().gunzip (input);
 
          this .dataView = new DataView (arrayBuffer);
 
@@ -7190,10 +7190,10 @@ var Decoder = class _Decoder {
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(928);
-/* provided dependency */ var jpegDecode = __webpack_require__(588);
-/* provided dependency */ var CharLS = __webpack_require__(170);
-/* provided dependency */ var OpenJPEG = __webpack_require__(348);
+/* provided dependency */ var dicomParser = __webpack_require__(139);
+/* provided dependency */ var jpegDecode = __webpack_require__(11);
+/* provided dependency */ var CharLS = __webpack_require__(641);
+/* provided dependency */ var OpenJPEG = __webpack_require__(739);
 
 
 
