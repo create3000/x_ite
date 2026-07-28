@@ -136,7 +136,6 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
 
             // Copy color texture.
 
-            gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
             gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
