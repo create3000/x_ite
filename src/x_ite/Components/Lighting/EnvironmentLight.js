@@ -116,11 +116,6 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .uniform1i        (uniforms .diffuseTextureLevels,  diffuseTexture ?.getLevels () ?? 0);
       gl .uniform1i        (uniforms .specularTextureLevels, specularTexture ?.getLevels () ?? 0);
 
-      if (lightNode .traverseSpecular)
-         gl .uniform3f (uniforms .flipX, 1, 1, 1);
-      else
-         gl .uniform3f (uniforms .flipX, -1, 1, 1);
-
       if (uniforms .sheenTexture)
       {
          const sheenTexture = lightNode .getSheenTexture ();
