@@ -34,9 +34,9 @@ Object .assign (EnvironmentLightContainer .prototype,
 
       this .modelViewMatrix .push (modelViewMatrix);
    },
-   renderShadowMap (renderObject)
+   renderShadowMap (/* renderObject */)
    { },
-   setGlobalVariables (renderObject)
+   setGlobalVariables (/* renderObject */)
    {
       this .modelViewMatrix .get () .getTransform (null, this .rotation);
 

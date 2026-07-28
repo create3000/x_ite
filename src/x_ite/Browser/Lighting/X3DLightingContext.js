@@ -150,9 +150,9 @@ Object .assign (X3DLightingContext .prototype,
 
       if (roughness .length > 1)
       {
-         gl .generateMipmap (gl .TEXTURE_CUBE_MAP);
-         gl .texParameteri (gl .TEXTURE_CUBE_MAP, gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
-         gl .texParameteri (gl .TEXTURE_CUBE_MAP, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+         gl .generateMipmap (filtered .getTarget ());
+         gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
+         gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MAG_FILTER, gl .LINEAR);
       }
 
       // Setup defaults.
@@ -168,7 +168,7 @@ Object .assign (X3DLightingContext .prototype,
 
       gl .useProgram (shaderNode .getProgram ());
       gl .activeTexture (gl .TEXTURE0);
-      gl .bindTexture (gl .TEXTURE_CUBE_MAP, texture .getTexture ());
+      gl .bindTexture (texture .getTarget (), texture .getTexture ());
       gl .uniform1i (shaderNode .x3d_TextureEXT, 0);
       gl .uniform1i (shaderNode .x3d_TextureSizeEXT, size);
       gl .uniform1i (shaderNode .x3d_TextureLinearEXT, texture .isLinear ());
