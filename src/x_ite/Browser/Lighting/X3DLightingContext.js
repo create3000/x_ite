@@ -161,7 +161,6 @@ Object .assign (X3DLightingContext .prototype,
       gl .disable (gl .DEPTH_TEST);
       gl .enable (gl .CULL_FACE);
       gl .frontFace (gl .CCW);
-      gl .clearColor (0, 0, 0, 0);
       gl .bindVertexArray (this .getFullscreenVertexArrayObject ());
 
       // Setup specular texture uniforms.
@@ -196,8 +195,6 @@ Object .assign (X3DLightingContext .prototype,
          for (const [face, target] of filtered .getTargets () .entries ())
          {
             gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, target, filtered .getTexture (), level);
-
-            gl .clear (gl .COLOR_BUFFER_BIT);
             gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, face);
             gl .drawArrays (gl .TRIANGLES, 0, 6);
          }
