@@ -131,6 +131,7 @@ Object .assign (X3DLightingContext .prototype,
 
       if (!cachedNode)
       {
+         filtered .updateTextureParameters = Function .prototype;
          filtered .setName (name);
          filtered .setPrivate (true);
          filtered .setLinear (true);
