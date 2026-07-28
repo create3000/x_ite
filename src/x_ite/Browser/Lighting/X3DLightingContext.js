@@ -193,12 +193,12 @@ Object .assign (X3DLightingContext .prototype,
          gl .viewport (0, 0, mipSize, mipSize);
          gl .scissor  (0, 0, mipSize, mipSize);
 
-         for (const [i, target] of filtered .getTargets () .entries ())
+         for (const [f, target] of filtered .getTargets () .entries ())
          {
             gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, target, filtered .getTexture (), level);
 
             gl .clear (gl .COLOR_BUFFER_BIT);
-            gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
+            gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, f);
             gl .drawArrays (gl .TRIANGLES, 0, 6);
          }
       }
