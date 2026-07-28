@@ -147,7 +147,7 @@ const X_ITE_TESTS = [
    { path: "Geospatial/tie.x3dv" },
    { path: "Geospatial/YUp.x3d" },
    { component: "glTF" },
-   { path: "glTF/stormtrooper/stormtrooper.x3d" },
+   { path: "glTF/StormTrooper/StormTrooper.x3d" },
    { component: "Grouping" },
    { path: "Grouping/AddRemoveChildren.x3dv" },
    { path: "Grouping/NegativeScale.x3d" },
