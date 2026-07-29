@@ -182,14 +182,13 @@ Object .assign (X3DLightingContext .prototype,
 
          // console .log (level, mipSize, r, filtered .getLevels ());
 
-         // Setup mip level uniforms.
-
-         gl .uniform1f (shaderNode .x3d_RoughnessEXT, r);
-
-         // Generate images.
+         // Setup mip level values.
 
          gl .viewport (0, 0, mipSize, mipSize);
          gl .scissor  (0, 0, mipSize, mipSize);
+         gl .uniform1f (shaderNode .x3d_RoughnessEXT, r);
+
+         // Generate images.
 
          for (const [face, target] of filtered .getTargets () .entries ())
          {
