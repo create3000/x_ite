@@ -12,7 +12,7 @@ precision highp samplerCube;
 
 ${Object .entries (Distribution) .map (([name, value]) => `#define X3D_${name} ${value}`) .join ("\n")}
 
-const float M_PI = 3.1415926535897932384626433832795;
+const float M_PI = 3.141592653589793;
 
 uniform samplerCube x3d_TextureEXT;
 uniform int         x3d_TextureSizeEXT;

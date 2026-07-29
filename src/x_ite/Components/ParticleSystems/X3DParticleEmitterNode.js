@@ -336,7 +336,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       ${Object .entries (GeometryType) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
 
       const int   ARRAY_SIZE = 32;
-      const float M_PI       = 3.14159265359;
+      const float M_PI       = 3.141592653589793;
 
       uniform float NaN;
 
