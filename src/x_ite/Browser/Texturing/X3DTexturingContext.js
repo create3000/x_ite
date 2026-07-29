@@ -42,6 +42,7 @@ Object .assign (X3DTexturingContext .prototype,
       const gl = this .getContext ();
 
       gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
+      gl .hint (gl .GENERATE_MIPMAP_HINT, gl .NICEST);
 
       // Get texture Units
 
@@ -241,9 +242,9 @@ Object .assign (X3DTexturingContext .prototype,
    },
    setTextureQuality (textureQuality)
    {
-      const
-         gl                = this .getContext (),
-         textureProperties = this .getDefaultTextureProperties ();
+      const textureProperties = this .getDefaultTextureProperties ();
+
+      textureProperties ._generateMipMaps = true;
 
       switch (textureQuality)
       {
@@ -252,10 +253,6 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._magnificationFilter = "AVG_PIXEL";
             textureProperties ._minificationFilter  = "AVG_PIXEL";
             textureProperties ._textureCompression  = "FASTEST";
-            textureProperties ._generateMipMaps     = true;
-
-            gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
-            //gl .hint (gl .PERSPECTIVE_CORRECTION_HINT, gl .FASTEST);
             break;
          }
          case TextureQuality .MEDIUM:
@@ -263,10 +260,7 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._magnificationFilter = "NICEST";
             textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
             textureProperties ._textureCompression  = "NICEST";
-            textureProperties ._generateMipMaps     = true;
 
-            gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
-            //gl .hint (gl .PERSPECTIVE_CORRECTION_HINT, gl .FASTEST);
             break;
          }
          case TextureQuality .HIGH:
@@ -274,10 +268,6 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._magnificationFilter = "NICEST";
             textureProperties ._minificationFilter  = "NICEST";
             textureProperties ._textureCompression  = "NICEST";
-            textureProperties ._generateMipMaps     = true;
-
-            gl .hint (gl .GENERATE_MIPMAP_HINT, gl .NICEST);
-            //gl .hint (gl .PERSPECTIVE_CORRECTION_HINT, gl .NICEST);
             break;
          }
       }
