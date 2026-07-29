@@ -1,4 +1,3 @@
-import ToneMapping2 from "../../../assets/shaders/webgl2/pbr/ToneMapping2.glsl.js";
 import Distribution from "./Distribution.js";
 
 export default /* glsl */ `#version 300 es
@@ -9,7 +8,7 @@ precision highp float;
 precision highp int;
 precision highp samplerCube;
 
-${ToneMapping2 ()}
+#include <ToneMapping>
 
 ${Object .entries (Distribution) .map (([name, value]) => `#define X3D_${name} ${value}`) .join ("\n")}
 
