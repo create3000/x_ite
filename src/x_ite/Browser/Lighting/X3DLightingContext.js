@@ -153,6 +153,11 @@ Object .assign (X3DLightingContext .prototype,
          gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
          gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MAG_FILTER, gl .LINEAR);
       }
+      else
+      {
+         gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+         gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+      }
 
       // Setup defaults.
 

@@ -1,4 +1,4 @@
-/* X_ITE v16.0.3 */
+/* X_ITE v16.0.4 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 521
+/***/ 72
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 939
+/***/ 402
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 159
+/***/ 258
 (module) {
 
 /**
@@ -18846,7 +18846,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.0.3";
+const BROWSER_VERSION_default_ = "16.0.4";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -31133,7 +31133,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(159);
+/* provided dependency */ var libtess = __webpack_require__(258);
 
 
 const Triangle3 =
@@ -47763,7 +47763,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(159);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(258);
 
 
 
@@ -54455,7 +54455,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-kJEneJ/A3x8UCAr9atGL38mNOYbyOsYx1KrBl+f1Al3bK4S1tzl/AYvqtxknYzkx";
+         link .integrity   = "sha384-r/Gb5cpjKIPkLAwOrsKEHLP6i0CMS4kHdw86CIUHces4jE1JV+E2ip+Bb42dwD2D";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -59286,47 +59286,6 @@ const X3DLayeringContext_default_ = X3DLayeringContext;
 ;
 
 /* harmony default export */ const Layering_X3DLayeringContext = (x_ite_Namespace .add ("X3DLayeringContext", X3DLayeringContext_default_));
-;// ./src/assets/shaders/webgl2/pbr/ToneMapping2.glsl.js
-const ToneMapping2_glsl_default_ = () => /* glsl */ `
-const float GAMMA=2.2;const float INV_GAMMA=1./GAMMA;vec3 linearToSRGB(const in vec3 color){return pow(color,vec3(INV_GAMMA));}vec4 linearToSRGB(const in vec4 color){return vec4(linearToSRGB(color.rgb),color.a);}vec3 sRGBToLinear(const in vec3 color){return pow(color,vec3(GAMMA));}vec4 sRGBToLinear(const in vec4 color){return vec4(sRGBToLinear(color.rgb),color.a);}
-#if defined(X3D_LINEAR_OUTPUT)
-vec3 toneMap(in vec3 color){
-#if defined(X3D_COLORSPACE_SRGB)
-color=sRGBToLinear(color);
-#endif
-return color;}
-#else
-#if defined(X3D_TONEMAP_ACES_NARKOWICZ)
-vec3 toneMapACES_Narkowicz(const in vec3 color){const float A=2.51;const float B=.03;const float C=2.43;const float D=.59;const float E=.14;return clamp((color*(A*color+B))/(color*(C*color+D)+E),0.,1.);}
-#endif
-#if defined(X3D_TONEMAP_ACES_HILL)||defined(X3D_TONEMAP_ACES_HILL_EXPOSURE_BOOST)
-const mat3 ACESInputMat=mat3(.59719,.07600,.02840,.35458,.90834,.13383,.04823,.01566,.83777);const mat3 ACESOutputMat=mat3(1.60475,-.10208,-.00327,-.53108,1.10813,-.07276,-.07367,-.00605,1.07602);vec3 RRTAndODTFit(const in vec3 color){vec3 a=color*(color+.0245786)-.000090537;vec3 b=color*(.983729*color+.4329510)+.238081;return a/b;}vec3 toneMapACES_Hill(in vec3 color){color=ACESInputMat*color;color=RRTAndODTFit(color);color=ACESOutputMat*color;color=clamp(color,0.,1.);return color;}
-#endif
-#if defined(X3D_TONEMAP_KHR_PBR_NEUTRAL)
-vec3 toneMap_KhronosPbrNeutral(in vec3 color){const float startCompression=.8-.04;const float desaturation=.15;float x=min(color.r,min(color.g,color.b));float offset=x<.08?x-6.25*x*x:.04;color-=offset;float peak=max(color.r,max(color.g,color.b));if(peak<startCompression)return color;const float d=1.-startCompression;float newPeak=1.-d*d/(peak+d-startCompression);color*=newPeak/peak;float g=1.-1./(desaturation*(peak-newPeak)+1.);return mix(color,newPeak*vec3(1),g);}
-#endif
-uniform float x3d_Exposure;vec3 toneMap(in vec3 color){color*=x3d_Exposure;
-#if defined(X3D_TONEMAP_ACES_NARKOWICZ)
-color=toneMapACES_Narkowicz(color);
-#endif
-#if defined(X3D_TONEMAP_ACES_HILL)
-color=toneMapACES_Hill(color);
-#endif
-#if defined(X3D_TONEMAP_ACES_HILL_EXPOSURE_BOOST)
-color/=.6;color=toneMapACES_Hill(color);
-#endif
-#if defined(X3D_TONEMAP_KHR_PBR_NEUTRAL)
-color=toneMap_KhronosPbrNeutral(color);
-#endif
-#if defined(X3D_COLORSPACE_LINEAR)
-color=linearToSRGB(color);
-#endif
-return color;}
-#endif
-`
-;
-
-/* harmony default export */ const ToneMapping2_glsl = (x_ite_Namespace .add ("ToneMapping2.glsl", ToneMapping2_glsl_default_));
 ;// ./src/x_ite/Browser/Lighting/Distribution.js
 let Distribution_i = 0;
 
@@ -59344,12 +59303,11 @@ const Distribution_default_ = Distribution;
 ;// ./src/x_ite/Browser/Lighting/Filter2.fs.js
 
 
-
 const Filter2_fs_default_ = /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp samplerCube;
-${ToneMapping2_glsl ()}
+#include<ToneMapping>
 ${Object .entries (Lighting_Distribution) .map (([name, value]) => `#define X3D_${name} ${value}`) .join ("\n")}
-const float M_PI=3.1415926535897932384626433832795;uniform samplerCube x3d_TextureEXT;uniform int x3d_TextureSizeEXT;uniform bool x3d_TextureLinearEXT;uniform int x3d_CurrentFaceEXT;uniform int x3d_DistributionEXT;uniform int x3d_SampleCountEXT;uniform float x3d_RoughnessEXT;uniform float x3d_LodBiasEXT;uniform float x3d_IntensityEXT;uniform vec3 x3d_FlipEXT;in vec2 texCoord;out vec4 x3d_FragColor;mat3 generateTBN(const in vec3 normal){vec3 bitangent=vec3(0.,1.,0.);float NdotUp=dot(normal,vec3(0.,1.,0.));float epsilon=.0000001;if(1.-abs(NdotUp)<=epsilon){if(NdotUp>0.)bitangent=vec3(0.,0.,1.);else bitangent=vec3(0.,0.,-1.);}vec3 tangent=normalize(cross(bitangent,normal));bitangent=cross(normal,tangent);return mat3(tangent,bitangent,normal);}struct MicrofacetDistributionSample{float pdf;float cosTheta;float sinTheta;float phi;};float radicalInverse_VdC(in uint bits){bits=(bits<<16u)|(bits>>16u);bits=((bits&0x55555555u)<<1u)|((bits&0xAAAAAAAAu)>>1u);bits=((bits&0x33333333u)<<2u)|((bits&0xCCCCCCCCu)>>2u);bits=((bits&0x0F0F0F0Fu)<<4u)|((bits&0xF0F0F0F0u)>>4u);bits=((bits&0x00FF00FFu)<<8u)|((bits&0xFF00FF00u)>>8u);return float(bits)*2.3283064365386963e-10;}vec2 hammersley2d(const in int i,const in int N){return vec2(float(i)/float(N),radicalInverse_VdC(uint(i)));}MicrofacetDistributionSample Lambertian(const in vec2 xi,const in float roughness){MicrofacetDistributionSample lambertian;lambertian.cosTheta=sqrt(1.-xi.y);lambertian.sinTheta=sqrt(xi.y);lambertian.phi=2.*M_PI*xi.x;lambertian.pdf=lambertian.cosTheta/M_PI;return lambertian;}float saturate(const in float v){return clamp(v,0.,1.);}float D_GGX(const in float NdotH,const in float roughness){float a=NdotH*roughness;float k=roughness/(1.-NdotH*NdotH+a*a);return k*k*(1./M_PI);}MicrofacetDistributionSample GGX(const in vec2 xi,const in float roughness){MicrofacetDistributionSample ggx;float alpha=roughness*roughness;ggx.cosTheta=saturate(sqrt((1.-xi.y)/(1.+(alpha*alpha-1.)*xi.y)));ggx.sinTheta=sqrt(1.-ggx.cosTheta*ggx.cosTheta);ggx.phi=2.*M_PI*xi.x;ggx.pdf=D_GGX(ggx.cosTheta,alpha);ggx.pdf/=4.;return ggx;}float D_Charlie(in float sheenRoughness,const in float NdotH){sheenRoughness=max(sheenRoughness,.000001);float invR=1./sheenRoughness;float cos2h=NdotH*NdotH;float sin2h=1.-cos2h;return(2.+invR)*pow(sin2h,invR*.5)/(2.*M_PI);}MicrofacetDistributionSample Charlie(const in vec2 xi,const in float roughness){MicrofacetDistributionSample charlie;float alpha=roughness*roughness;charlie.sinTheta=pow(xi.y,alpha/(2.*alpha+1.));charlie.cosTheta=sqrt(1.-charlie.sinTheta*charlie.sinTheta);charlie.phi=2.*M_PI*xi.x;charlie.pdf=D_Charlie(alpha,charlie.cosTheta);charlie.pdf/=4.;return charlie;}vec4 getImportanceSample(const in int sampleIndex,const in vec3 N,const in float roughness){vec2 xi=hammersley2d(sampleIndex,x3d_SampleCountEXT);MicrofacetDistributionSample importanceSample;switch(x3d_DistributionEXT){case X3D_LAMBERTIAN:{importanceSample=Lambertian(xi,roughness);break;}case X3D_GGX:{importanceSample=GGX(xi,roughness);break;}case X3D_CHARLIE:{importanceSample=Charlie(xi,roughness);break;}}vec3 localSpaceDirection=normalize(vec3(importanceSample.sinTheta*cos(importanceSample.phi),importanceSample.sinTheta*sin(importanceSample.phi),importanceSample.cosTheta));mat3 TBN=generateTBN(N);vec3 direction=TBN*localSpaceDirection;return vec4(direction,importanceSample.pdf);}float computeLod(const in float pdf){float lod=.5*log2(6.*float(x3d_TextureSizeEXT)*float(x3d_TextureSizeEXT)/(float(x3d_SampleCountEXT)*pdf));return lod;}vec3 filterColor(const in vec3 N){vec3 color=vec3(0);float weight=0.;for(int i=0;i<x3d_SampleCountEXT;++i){vec4 importanceSample=getImportanceSample(i,N,x3d_RoughnessEXT);vec3 H=importanceSample.xyz;float pdf=importanceSample.w;float lod=computeLod(pdf);lod+=x3d_LodBiasEXT;switch(x3d_DistributionEXT){case X3D_LAMBERTIAN:{vec3 lambertian=textureLod(x3d_TextureEXT,H,lod).rgb;if(!x3d_TextureLinearEXT)lambertian=sRGBToLinear(lambertian);color+=lambertian;break;}case X3D_GGX:case X3D_CHARLIE:{vec3 V=N;vec3 L=normalize(reflect(-V,H));float NdotL=dot(N,L);if(NdotL>0.){if(x3d_RoughnessEXT==0.){lod=x3d_LodBiasEXT;}vec3 sampleColor=textureLod(x3d_TextureEXT,L,lod).rgb;if(!x3d_TextureLinearEXT)sampleColor=sRGBToLinear(sampleColor);color+=sampleColor*NdotL;weight+=NdotL;}break;}}}if(weight!=0.0f)color/=weight;else color/=float(x3d_SampleCountEXT);return color*x3d_IntensityEXT;}vec3 getNormal(const in int face,const in vec2 t){float x;float y;float z;switch(face){case 0:x=t.x;y=-t.y;z=1.;break;case 1:x=-t.x;y=-t.y;z=-1.;break;case 2:x=-1.;y=-t.y;z=t.x;break;case 3:x=1.;y=-t.y;z=-t.x;break;case 4:x=t.x;y=1.;z=t.y;break;case 5:x=t.x;y=-1.;z=-t.y;break;}return normalize(vec3(x,y,z))*x3d_FlipEXT;}void main(){vec3 normal=getNormal(x3d_CurrentFaceEXT,texCoord);x3d_FragColor=vec4(filterColor(normal),1.);}`
+const float M_PI=3.141592653589793;uniform samplerCube x3d_TextureEXT;uniform int x3d_TextureSizeEXT;uniform bool x3d_TextureLinearEXT;uniform int x3d_CurrentFaceEXT;uniform int x3d_DistributionEXT;uniform int x3d_SampleCountEXT;uniform float x3d_RoughnessEXT;uniform float x3d_LodBiasEXT;uniform float x3d_IntensityEXT;uniform vec3 x3d_FlipEXT;in vec2 texCoord;out vec4 x3d_FragColor;mat3 generateTBN(const in vec3 normal){vec3 bitangent=vec3(0.,1.,0.);float NdotUp=dot(normal,vec3(0.,1.,0.));float epsilon=.0000001;if(1.-abs(NdotUp)<=epsilon){if(NdotUp>0.)bitangent=vec3(0.,0.,1.);else bitangent=vec3(0.,0.,-1.);}vec3 tangent=normalize(cross(bitangent,normal));bitangent=cross(normal,tangent);return mat3(tangent,bitangent,normal);}struct MicrofacetDistributionSample{float pdf;float cosTheta;float sinTheta;float phi;};float radicalInverse_VdC(in uint bits){bits=(bits<<16u)|(bits>>16u);bits=((bits&0x55555555u)<<1u)|((bits&0xAAAAAAAAu)>>1u);bits=((bits&0x33333333u)<<2u)|((bits&0xCCCCCCCCu)>>2u);bits=((bits&0x0F0F0F0Fu)<<4u)|((bits&0xF0F0F0F0u)>>4u);bits=((bits&0x00FF00FFu)<<8u)|((bits&0xFF00FF00u)>>8u);return float(bits)*2.3283064365386963e-10;}vec2 hammersley2d(const in int i,const in int N){return vec2(float(i)/float(N),radicalInverse_VdC(uint(i)));}MicrofacetDistributionSample Lambertian(const in vec2 xi,const in float roughness){MicrofacetDistributionSample lambertian;lambertian.cosTheta=sqrt(1.-xi.y);lambertian.sinTheta=sqrt(xi.y);lambertian.phi=2.*M_PI*xi.x;lambertian.pdf=lambertian.cosTheta/M_PI;return lambertian;}float saturate(const in float v){return clamp(v,0.,1.);}float D_GGX(const in float NdotH,const in float roughness){float a=NdotH*roughness;float k=roughness/(1.-NdotH*NdotH+a*a);return k*k*(1./M_PI);}MicrofacetDistributionSample GGX(const in vec2 xi,const in float roughness){MicrofacetDistributionSample ggx;float alpha=roughness*roughness;ggx.cosTheta=saturate(sqrt((1.-xi.y)/(1.+(alpha*alpha-1.)*xi.y)));ggx.sinTheta=sqrt(1.-ggx.cosTheta*ggx.cosTheta);ggx.phi=2.*M_PI*xi.x;ggx.pdf=D_GGX(ggx.cosTheta,alpha);ggx.pdf/=4.;return ggx;}float D_Charlie(in float sheenRoughness,const in float NdotH){sheenRoughness=max(sheenRoughness,.000001);float invR=1./sheenRoughness;float cos2h=NdotH*NdotH;float sin2h=1.-cos2h;return(2.+invR)*pow(sin2h,invR*.5)/(2.*M_PI);}MicrofacetDistributionSample Charlie(const in vec2 xi,const in float roughness){MicrofacetDistributionSample charlie;float alpha=roughness*roughness;charlie.sinTheta=pow(xi.y,alpha/(2.*alpha+1.));charlie.cosTheta=sqrt(1.-charlie.sinTheta*charlie.sinTheta);charlie.phi=2.*M_PI*xi.x;charlie.pdf=D_Charlie(alpha,charlie.cosTheta);charlie.pdf/=4.;return charlie;}vec4 getImportanceSample(const in int sampleIndex,const in vec3 N,const in float roughness){vec2 xi=hammersley2d(sampleIndex,x3d_SampleCountEXT);MicrofacetDistributionSample importanceSample;switch(x3d_DistributionEXT){case X3D_LAMBERTIAN:{importanceSample=Lambertian(xi,roughness);break;}case X3D_GGX:{importanceSample=GGX(xi,roughness);break;}case X3D_CHARLIE:{importanceSample=Charlie(xi,roughness);break;}}vec3 localSpaceDirection=normalize(vec3(importanceSample.sinTheta*cos(importanceSample.phi),importanceSample.sinTheta*sin(importanceSample.phi),importanceSample.cosTheta));mat3 TBN=generateTBN(N);vec3 direction=TBN*localSpaceDirection;return vec4(direction,importanceSample.pdf);}float computeLod(const in float pdf){float lod=.5*log2(6.*float(x3d_TextureSizeEXT)*float(x3d_TextureSizeEXT)/(float(x3d_SampleCountEXT)*pdf));return lod;}vec3 filterColor(const in vec3 N){vec3 color=vec3(0);float weight=0.;for(int i=0;i<x3d_SampleCountEXT;++i){vec4 importanceSample=getImportanceSample(i,N,x3d_RoughnessEXT);vec3 H=importanceSample.xyz;float pdf=importanceSample.w;float lod=computeLod(pdf);lod+=x3d_LodBiasEXT;switch(x3d_DistributionEXT){case X3D_LAMBERTIAN:{vec3 lambertian=textureLod(x3d_TextureEXT,H,lod).rgb;if(!x3d_TextureLinearEXT)lambertian=sRGBToLinear(lambertian);color+=lambertian;break;}case X3D_GGX:case X3D_CHARLIE:{vec3 V=N;vec3 L=normalize(reflect(-V,H));float NdotL=dot(N,L);if(NdotL>0.){if(x3d_RoughnessEXT==0.){lod=x3d_LodBiasEXT;}vec3 sampleColor=textureLod(x3d_TextureEXT,L,lod).rgb;if(!x3d_TextureLinearEXT)sampleColor=sRGBToLinear(sampleColor);color+=sampleColor*NdotL;weight+=NdotL;}break;}}}if(weight!=0.)color/=weight;else color/=float(x3d_SampleCountEXT);return color*x3d_IntensityEXT;}vec3 getNormal(const in int face,const in vec2 t){float x;float y;float z;switch(face){case 0:x=t.x;y=-t.y;z=1.;break;case 1:x=-t.x;y=-t.y;z=-1.;break;case 2:x=-1.;y=-t.y;z=t.x;break;case 3:x=1.;y=-t.y;z=-t.x;break;case 4:x=t.x;y=1.;z=t.y;break;case 5:x=t.x;y=-1.;z=-t.y;break;}return normalize(vec3(x,y,z))*x3d_FlipEXT;}void main(){vec3 normal=getNormal(x3d_CurrentFaceEXT,texCoord);x3d_FragColor=vec4(filterColor(normal),1.);}`
 ;
 
 /* harmony default export */ const Filter2_fs = (x_ite_Namespace .add ("Filter2.fs", Filter2_fs_default_));
@@ -59509,6 +59467,11 @@ Object .assign (X3DLightingContext .prototype,
          gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
          gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MAG_FILTER, gl .LINEAR);
       }
+      else
+      {
+         gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MIN_FILTER, gl .LINEAR);
+         gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+      }
 
       // Setup defaults.
 
@@ -59538,14 +59501,13 @@ Object .assign (X3DLightingContext .prototype,
 
          // console .log (level, mipSize, r, filtered .getLevels ());
 
-         // Setup mip level uniforms.
-
-         gl .uniform1f (shaderNode .x3d_RoughnessEXT, r);
-
-         // Generate images.
+         // Setup values for each mip level.
 
          gl .viewport (0, 0, mipSize, mipSize);
          gl .scissor  (0, 0, mipSize, mipSize);
+         gl .uniform1f (shaderNode .x3d_RoughnessEXT, r);
+
+         // Generate images.
 
          for (const [face, target] of filtered .getTargets () .entries ())
          {
@@ -67119,6 +67081,47 @@ vec3 getPunctualRadianceTransmission(const in vec3 normal,const in vec3 view,con
 ;
 
 /* harmony default export */ const Punctual2_glsl = (x_ite_Namespace .add ("Punctual2.glsl", Punctual2_glsl_default_));
+;// ./src/assets/shaders/webgl2/pbr/ToneMapping2.glsl.js
+const ToneMapping2_glsl_default_ = () => /* glsl */ `
+const float GAMMA=2.2;const float INV_GAMMA=1./GAMMA;vec3 linearToSRGB(const in vec3 color){return pow(color,vec3(INV_GAMMA));}vec4 linearToSRGB(const in vec4 color){return vec4(linearToSRGB(color.rgb),color.a);}vec3 sRGBToLinear(const in vec3 color){return pow(color,vec3(GAMMA));}vec4 sRGBToLinear(const in vec4 color){return vec4(sRGBToLinear(color.rgb),color.a);}
+#if defined(X3D_LINEAR_OUTPUT)
+vec3 toneMap(in vec3 color){
+#if defined(X3D_COLORSPACE_SRGB)
+color=sRGBToLinear(color);
+#endif
+return color;}
+#else
+#if defined(X3D_TONEMAP_ACES_NARKOWICZ)
+vec3 toneMapACES_Narkowicz(const in vec3 color){const float A=2.51;const float B=.03;const float C=2.43;const float D=.59;const float E=.14;return clamp((color*(A*color+B))/(color*(C*color+D)+E),0.,1.);}
+#endif
+#if defined(X3D_TONEMAP_ACES_HILL)||defined(X3D_TONEMAP_ACES_HILL_EXPOSURE_BOOST)
+const mat3 ACESInputMat=mat3(.59719,.07600,.02840,.35458,.90834,.13383,.04823,.01566,.83777);const mat3 ACESOutputMat=mat3(1.60475,-.10208,-.00327,-.53108,1.10813,-.07276,-.07367,-.00605,1.07602);vec3 RRTAndODTFit(const in vec3 color){vec3 a=color*(color+.0245786)-.000090537;vec3 b=color*(.983729*color+.4329510)+.238081;return a/b;}vec3 toneMapACES_Hill(in vec3 color){color=ACESInputMat*color;color=RRTAndODTFit(color);color=ACESOutputMat*color;color=clamp(color,0.,1.);return color;}
+#endif
+#if defined(X3D_TONEMAP_KHR_PBR_NEUTRAL)
+vec3 toneMap_KhronosPbrNeutral(in vec3 color){const float startCompression=.8-.04;const float desaturation=.15;float x=min(color.r,min(color.g,color.b));float offset=x<.08?x-6.25*x*x:.04;color-=offset;float peak=max(color.r,max(color.g,color.b));if(peak<startCompression)return color;const float d=1.-startCompression;float newPeak=1.-d*d/(peak+d-startCompression);color*=newPeak/peak;float g=1.-1./(desaturation*(peak-newPeak)+1.);return mix(color,newPeak*vec3(1),g);}
+#endif
+uniform float x3d_Exposure;vec3 toneMap(in vec3 color){color*=x3d_Exposure;
+#if defined(X3D_TONEMAP_ACES_NARKOWICZ)
+color=toneMapACES_Narkowicz(color);
+#endif
+#if defined(X3D_TONEMAP_ACES_HILL)
+color=toneMapACES_Hill(color);
+#endif
+#if defined(X3D_TONEMAP_ACES_HILL_EXPOSURE_BOOST)
+color/=.6;color=toneMapACES_Hill(color);
+#endif
+#if defined(X3D_TONEMAP_KHR_PBR_NEUTRAL)
+color=toneMap_KhronosPbrNeutral(color);
+#endif
+#if defined(X3D_COLORSPACE_LINEAR)
+color=linearToSRGB(color);
+#endif
+return color;}
+#endif
+`
+;
+
+/* harmony default export */ const ToneMapping2_glsl = (x_ite_Namespace .add ("ToneMapping2.glsl", ToneMapping2_glsl_default_));
 ;// ./src/assets/shaders/webgl2/Default2.vs.js
 const Default2_vs_default_ = () => /* glsl */ `#version 300 es
 precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
@@ -90956,8 +90959,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(521);
-/* provided dependency */ var APNG = __webpack_require__(939);
+/* provided dependency */ var SuperGif = __webpack_require__(72);
+/* provided dependency */ var APNG = __webpack_require__(402);
 
 
 
@@ -93662,7 +93665,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(159);
+/* provided dependency */ var libtess_libtess = __webpack_require__(258);
 const libtess_default_ = libtess_libtess;
 ;
 
