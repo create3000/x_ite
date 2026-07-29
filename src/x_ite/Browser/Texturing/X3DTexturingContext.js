@@ -42,7 +42,6 @@ Object .assign (X3DTexturingContext .prototype,
       const gl = this .getContext ();
 
       gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
-      gl .hint (gl .GENERATE_MIPMAP_HINT, gl .NICEST);
 
       // Get texture Units
 
@@ -242,7 +241,9 @@ Object .assign (X3DTexturingContext .prototype,
    },
    setTextureQuality (textureQuality)
    {
-      const textureProperties = this .getDefaultTextureProperties ();
+      const
+         gl                = this .getContext (),
+         textureProperties = this .getDefaultTextureProperties ();
 
       switch (textureQuality)
       {
@@ -251,6 +252,8 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._magnificationFilter = "AVG_PIXEL";
             textureProperties ._minificationFilter  = "AVG_PIXEL";
             textureProperties ._textureCompression  = "FASTEST";
+
+            gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
             break;
          }
          case TextureQuality .MEDIUM:
@@ -259,6 +262,7 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
             textureProperties ._textureCompression  = "NICEST";
 
+            gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
             break;
          }
          case TextureQuality .HIGH:
@@ -266,6 +270,8 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._magnificationFilter = "NICEST";
             textureProperties ._minificationFilter  = "NICEST";
             textureProperties ._textureCompression  = "NICEST";
+
+            gl .hint (gl .GENERATE_MIPMAP_HINT, gl .NICEST);
             break;
          }
       }
