@@ -1,9 +1,11 @@
 ---
-title: X3D Examples
+title: Annotated X3D Examples
 date: 2025-08-13
 nav: main
 categories: []
 tags: [X3D, Examples]
+redirect_from:
+  - /x3d-examples/
 ---
 
 This collection of X3D examples showcases how powerful and flexible the standard can be for creating interactive 3D content on the web. You’ll find demonstrations of core features, including geometry, lighting, animation, prototyping, and scripting, each designed to highlight practical techniques. Whether you’re exploring X3D for learning, prototyping new ideas, or building full applications, these examples provide a solid starting point and inspiration.
