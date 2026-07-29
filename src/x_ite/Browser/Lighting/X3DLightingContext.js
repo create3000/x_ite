@@ -182,7 +182,7 @@ Object .assign (X3DLightingContext .prototype,
 
          // console .log (level, mipSize, r, filtered .getLevels ());
 
-         // Setup mip level values.
+         // Setup values for each mip level.
 
          gl .viewport (0, 0, mipSize, mipSize);
          gl .scissor  (0, 0, mipSize, mipSize);
