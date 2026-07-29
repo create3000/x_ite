@@ -118,14 +118,12 @@ Object .assign (X3DLightingContext .prototype,
       // Render the texture.
 
       const
-         gl                 = this .getContext (),
-         executionContext   = texture .getExecutionContext (),
-         currentFramebuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING),
-         currentProgram     = gl .getParameter (gl .CURRENT_PROGRAM),
-         shaderNode         = this .getEnvironmentTextureShader (),
-         framebuffer        = this [_filterFrameBuffer] ??= gl .createFramebuffer (),
-         size               = texture .getSize (),
-         filtered           = cachedNode ?? executionContext .createNode ("ImageCubeMapTexture", false);
+         gl               = this .getContext (),
+         executionContext = texture .getExecutionContext (),
+         shaderNode       = this .getEnvironmentTextureShader (),
+         framebuffer      = this [_filterFrameBuffer] ??= gl .createFramebuffer (),
+         size             = texture .getSize (),
+         filtered         = cachedNode ?? executionContext .createNode ("ImageCubeMapTexture", false);
 
       // Setup texture.
 
@@ -202,8 +200,6 @@ Object .assign (X3DLightingContext .prototype,
       }
 
       gl .enable (gl .DEPTH_TEST);
-      gl .useProgram (currentProgram);
-      gl .bindFramebuffer (gl .FRAMEBUFFER, currentFramebuffer);
 
       return filtered;
    },

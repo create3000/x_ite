@@ -1,7 +1,7 @@
-/* X_ITE v16.0.2 */
+/* X_ITE v16.0.3 */
 var __webpack_modules__ = ({
 
-/***/ 882
+/***/ 521
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 512
+/***/ 939
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 444
+/***/ 159
 (module) {
 
 /**
@@ -18826,7 +18826,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.0.2";
+const BROWSER_VERSION_default_ = "16.0.3";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -31113,7 +31113,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(444);
+/* provided dependency */ var libtess = __webpack_require__(159);
 
 
 const Triangle3 =
@@ -47743,7 +47743,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(444);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(159);
 
 
 
@@ -54425,7 +54425,7 @@ function X3DCoreContext (element)
    </div>
 </div>`;
 
-   if (element .nodeName .toLowerCase () === "x3d-canvas" && element .shadowRoot)
+   if (element .shadowRoot)
    {
       this [_shadow] = element .shadowRoot;
 
@@ -54435,7 +54435,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-Y7ZIRmsB0Ps2F6tEqyEto4cb+wz/wCof3usIJpWKEoKpx2a8ym7kD+woJa/Ho8QV";
+         link .integrity   = "sha384-kJEneJ/A3x8UCAr9atGL38mNOYbyOsYx1KrBl+f1Al3bK4S1tzl/AYvqtxknYzkx";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -59454,19 +59454,18 @@ Object .assign (X3DLightingContext .prototype,
       // Render the texture.
 
       const
-         gl                 = this .getContext (),
-         executionContext   = texture .getExecutionContext (),
-         currentFramebuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING),
-         currentProgram     = gl .getParameter (gl .CURRENT_PROGRAM),
-         shaderNode         = this .getEnvironmentTextureShader (),
-         framebuffer        = this [_filterFrameBuffer] ??= gl .createFramebuffer (),
-         size               = texture .getSize (),
-         filtered           = cachedNode ?? executionContext .createNode ("ImageCubeMapTexture", false);
+         gl               = this .getContext (),
+         executionContext = texture .getExecutionContext (),
+         shaderNode       = this .getEnvironmentTextureShader (),
+         framebuffer      = this [_filterFrameBuffer] ??= gl .createFramebuffer (),
+         size             = texture .getSize (),
+         filtered         = cachedNode ?? executionContext .createNode ("ImageCubeMapTexture", false);
 
       // Setup texture.
 
       if (!cachedNode)
       {
+         filtered .updateTextureParameters = Function .prototype;
          filtered .setName (name);
          filtered .setPrivate (true);
          filtered .setLinear (true);
@@ -59486,9 +59485,9 @@ Object .assign (X3DLightingContext .prototype,
 
       if (roughness .length > 1)
       {
-         gl .generateMipmap (gl .TEXTURE_CUBE_MAP);
-         gl .texParameteri (gl .TEXTURE_CUBE_MAP, gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
-         gl .texParameteri (gl .TEXTURE_CUBE_MAP, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+         gl .generateMipmap (filtered .getTarget ());
+         gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
+         gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MAG_FILTER, gl .LINEAR);
       }
 
       // Setup defaults.
@@ -59497,14 +59496,13 @@ Object .assign (X3DLightingContext .prototype,
       gl .disable (gl .DEPTH_TEST);
       gl .enable (gl .CULL_FACE);
       gl .frontFace (gl .CCW);
-      gl .clearColor (0, 0, 0, 0);
       gl .bindVertexArray (this .getFullscreenVertexArrayObject ());
 
       // Setup specular texture uniforms.
 
       gl .useProgram (shaderNode .getProgram ());
       gl .activeTexture (gl .TEXTURE0);
-      gl .bindTexture (gl .TEXTURE_CUBE_MAP, texture .getTexture ());
+      gl .bindTexture (texture .getTarget (), texture .getTexture ());
       gl .uniform1i (shaderNode .x3d_TextureEXT, 0);
       gl .uniform1i (shaderNode .x3d_TextureSizeEXT, size);
       gl .uniform1i (shaderNode .x3d_TextureLinearEXT, texture .isLinear ());
@@ -59529,19 +59527,15 @@ Object .assign (X3DLightingContext .prototype,
          gl .viewport (0, 0, mipSize, mipSize);
          gl .scissor  (0, 0, mipSize, mipSize);
 
-         for (let i = 0; i < 6; ++ i)
+         for (const [face, target] of filtered .getTargets () .entries ())
          {
-            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, filtered .getTargets () [i], filtered .getTexture (), level);
-
-            gl .clear (gl .COLOR_BUFFER_BIT);
-            gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, target, filtered .getTexture (), level);
+            gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, face);
             gl .drawArrays (gl .TRIANGLES, 0, 6);
          }
       }
 
       gl .enable (gl .DEPTH_TEST);
-      gl .useProgram (currentProgram);
-      gl .bindFramebuffer (gl .FRAMEBUFFER, currentFramebuffer);
 
       return filtered;
    },
@@ -72128,10 +72122,8 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._magnificationFilter = "AVG_PIXEL";
             textureProperties ._minificationFilter  = "AVG_PIXEL";
             textureProperties ._textureCompression  = "FASTEST";
-            textureProperties ._generateMipMaps     = true;
 
             gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
-            //gl .hint (gl .PERSPECTIVE_CORRECTION_HINT, gl .FASTEST);
             break;
          }
          case TextureQuality .MEDIUM:
@@ -72139,10 +72131,8 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._magnificationFilter = "NICEST";
             textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
             textureProperties ._textureCompression  = "NICEST";
-            textureProperties ._generateMipMaps     = true;
 
             gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
-            //gl .hint (gl .PERSPECTIVE_CORRECTION_HINT, gl .FASTEST);
             break;
          }
          case TextureQuality .HIGH:
@@ -72150,10 +72140,8 @@ Object .assign (X3DTexturingContext .prototype,
             textureProperties ._magnificationFilter = "NICEST";
             textureProperties ._minificationFilter  = "NICEST";
             textureProperties ._textureCompression  = "NICEST";
-            textureProperties ._generateMipMaps     = true;
 
             gl .hint (gl .GENERATE_MIPMAP_HINT, gl .NICEST);
-            //gl .hint (gl .PERSPECTIVE_CORRECTION_HINT, gl .NICEST);
             break;
          }
       }
@@ -81290,9 +81278,9 @@ Object .assign (EnvironmentLightContainer .prototype,
 
       this .modelViewMatrix .push (modelViewMatrix);
    },
-   renderShadowMap (renderObject)
+   renderShadowMap (/* renderObject */)
    { },
-   setGlobalVariables (renderObject)
+   setGlobalVariables (/* renderObject */)
    {
       this .modelViewMatrix .get () .getTransform (null, this .rotation);
 
@@ -81371,11 +81359,6 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .uniformMatrix3fv (uniforms .rotation, false,       this .rotationMatrix);
       gl .uniform1i        (uniforms .diffuseTextureLevels,  diffuseTexture ?.getLevels () ?? 0);
       gl .uniform1i        (uniforms .specularTextureLevels, specularTexture ?.getLevels () ?? 0);
-
-      if (lightNode .traverseSpecular)
-         gl .uniform3f (uniforms .flipX, 1, 1, 1);
-      else
-         gl .uniform3f (uniforms .flipX, -1, 1, 1);
 
       if (uniforms .sheenTexture)
       {
@@ -90953,8 +90936,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(882);
-/* provided dependency */ var APNG = __webpack_require__(512);
+/* provided dependency */ var SuperGif = __webpack_require__(521);
+/* provided dependency */ var APNG = __webpack_require__(939);
 
 
 
@@ -93659,7 +93642,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(444);
+/* provided dependency */ var libtess_libtess = __webpack_require__(159);
 const libtess_default_ = libtess_libtess;
 ;
 

@@ -1,4 +1,4 @@
-/* X_ITE v16.0.2 */
+/* X_ITE v16.0.3 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -366,7 +366,6 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
 
             // Copy color texture.
 
-            gl .bindTexture (gl .TEXTURE_2D, textureNode .getTexture ());
             gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, textureNode .getTexture (), 0);
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
@@ -912,7 +911,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
          for (let i = 0; i < 6; ++ i)
-            gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
          // Extract images.
 
@@ -971,7 +970,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       gl .bindTexture (this .getTarget (), this .getTexture ());
 
       for (let i = 0; i < 6; ++ i)
-         gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+         gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
       // Render faces.
 
