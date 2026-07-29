@@ -327,7 +327,7 @@ filterColor (const in vec3 N)
       }
    }
 
-   if(weight != 0.0f)
+   if(weight != 0.0)
       color /= weight;
    else
       color /= float (x3d_SampleCountEXT);
