@@ -244,8 +244,6 @@ Object .assign (X3DTexturingContext .prototype,
    {
       const textureProperties = this .getDefaultTextureProperties ();
 
-      textureProperties ._generateMipMaps = true;
-
       switch (textureQuality)
       {
          case TextureQuality .LOW:
