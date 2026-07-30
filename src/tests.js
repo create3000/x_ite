@@ -482,6 +482,7 @@ const X_ITE_TESTS = [
    { path: "Texturing/KTX3D.x3d" },
    { path: "Texturing/KTXCube.x3d" },
    { path: "Texturing/KTXCubeGZ.x3d" },
+   { path: "Texturing/KTXCubeMap.x3d" },
    { path: "Texturing/MirrorBox.x3d" },
    { path: "Texturing/MovieTexture.x3d" },
    { path: "Texturing/MultiTexture.x3d" },
