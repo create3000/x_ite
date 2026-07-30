@@ -138,8 +138,7 @@ Object .assign (X3DShapeContext .prototype,
          ],
          [ ],
          [ ],
-      ]
-      [pass];
+      ] [pass];
 
       const transformFeedbackVaryings = [
          [
@@ -157,8 +156,7 @@ Object .assign (X3DShapeContext .prototype,
             "instanceNormalMatrix1", "tangent1", "normal1",
             "instanceNormalMatrix2", "tangent2", "normal2",
          ],
-      ]
-      [pass];
+      ] [pass];
 
       return this .createShader ({
          name: `LineTransform${instanced ? "Instanced" : ""}`,
