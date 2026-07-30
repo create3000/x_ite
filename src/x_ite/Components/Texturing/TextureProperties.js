@@ -65,7 +65,7 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
          ["AVG_PIXEL",                    ["LINEAR",  "LINEAR"]],
          ["NEAREST_PIXEL",                ["NEAREST", "NEAREST"]],
          ["NICEST",                       ["LINEAR",  "LINEAR_MIPMAP_LINEAR"]],
-         ["FASTEST",                      ["NEAREST", "NEAREST"]],
+         ["FASTEST",                      ["NEAREST", "NEAREST_MIPMAP_NEAREST"]],
       ]);
 
       return function (mipMaps = true)

@@ -249,8 +249,8 @@ Object .assign (X3DTexturingContext .prototype,
       {
          case TextureQuality .LOW:
          {
-            textureProperties ._magnificationFilter = "AVG_PIXEL";
-            textureProperties ._minificationFilter  = "AVG_PIXEL";
+            textureProperties ._magnificationFilter = "FASTEST";
+            textureProperties ._minificationFilter  = "FASTEST";
             textureProperties ._textureCompression  = "FASTEST";
 
             gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
@@ -259,7 +259,7 @@ Object .assign (X3DTexturingContext .prototype,
          case TextureQuality .MEDIUM:
          {
             textureProperties ._magnificationFilter = "NICEST";
-            textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
+            textureProperties ._minificationFilter  = "AVG_PIXEL_NEAREST_MIPMAP";
             textureProperties ._textureCompression  = "NICEST";
 
             gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
