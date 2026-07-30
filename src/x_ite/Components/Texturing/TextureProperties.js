@@ -59,10 +59,10 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, X3DNode .p
    {
       const minificationFilters = new Map ([
          ["AVG_PIXEL_AVG_MIPMAP",         ["LINEAR",  "LINEAR_MIPMAP_LINEAR"]],
-         ["AVG_PIXEL",                    ["LINEAR",  "LINEAR"]],
          ["AVG_PIXEL_NEAREST_MIPMAP",     ["LINEAR",  "LINEAR_MIPMAP_NEAREST"]],
          ["NEAREST_PIXEL_AVG_MIPMAP",     ["NEAREST", "NEAREST_MIPMAP_LINEAR"]],
          ["NEAREST_PIXEL_NEAREST_MIPMAP", ["NEAREST", "NEAREST_MIPMAP_NEAREST"]],
+         ["AVG_PIXEL",                    ["LINEAR",  "LINEAR"]],
          ["NEAREST_PIXEL",                ["NEAREST", "NEAREST"]],
          ["NICEST",                       ["LINEAR",  "LINEAR_MIPMAP_LINEAR"]],
          ["FASTEST",                      ["NEAREST", "NEAREST"]],
