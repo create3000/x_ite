@@ -219,7 +219,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             texture: this .specularTexture,
             distribution: Distribution .LAMBERTIAN,
             sampleCount: 2048,
-            roughness: [0],
+            roughnesses: [0],
             flipX: !this .traverseSpecular,
             cachedNode: this .generatedDiffuseTexture,
          });
@@ -238,15 +238,15 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             console .info ("Generating specular texture for EnvironmentLight.");
 
          const
-            levels    = this .specularTexture .getLevels (),
-            roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
+            levels      = this .specularTexture .getLevels (),
+            roughnesses = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
 
          return browser .filterEnvironmentTexture ({
             name: "GeneratedSpecularTexture",
             texture: this .specularTexture,
             distribution: Distribution .GGX,
             sampleCount: 1024,
-            roughness,
+            roughnesses,
             flipX: !this .traverseSpecular,
             cachedNode: this .generatedSpecularTexture,
          });
@@ -265,15 +265,15 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             console .info ("Generating sheen texture for EnvironmentLight.");
 
          const
-            levels    = this .specularTexture .getLevels (),
-            roughness = Array .from ({ length: levels + 1 }, (_, i) => Math .max (i / (levels || 1), 2, 0.000001));
+            levels      = this .specularTexture .getLevels (),
+            roughnesses = Array .from ({ length: levels + 1 }, (_, i) => Math .max (i / (levels || 1), 2, 0.000001));
 
          return browser .filterEnvironmentTexture ({
             name: "GeneratedSheenTexture",
             texture: this .specularTexture,
             distribution: Distribution .CHARLIE,
             sampleCount: 64,
-            roughness: roughness,
+            roughnesses,
             flipX: !this .traverseSpecular,
             cachedNode: this .generatedSheenTexture,
          });
