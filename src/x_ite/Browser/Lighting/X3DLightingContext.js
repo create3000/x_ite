@@ -46,7 +46,6 @@ Object .assign (X3DLightingContext .prototype,
          texture           = new ImageTexture (this .getPrivateScene ()),
          textureProperties = new TextureProperties (this .getPrivateScene ());
 
-      textureProperties ._generateMipMaps     = false;
       textureProperties ._minificationFilter  = "AVG_PIXEL";
       textureProperties ._magnificationFilter = "AVG_PIXEL";
       textureProperties ._boundaryModeS       = "CLAMP_TO_BOUNDARY";

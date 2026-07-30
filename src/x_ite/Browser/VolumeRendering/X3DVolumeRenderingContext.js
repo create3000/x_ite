@@ -58,10 +58,8 @@ Object .assign (X3DVolumeRenderingContext .prototype,
 
          textureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";
          textureProperties ._boundaryModeT       = "REPEAT";
-         textureProperties ._magnificationFilter = "DEFAULT";
-         textureProperties ._minificationFilter  = "DEFAULT";
-         textureProperties ._generateMipMaps     = true;
-         textureProperties ._textureCompression  = "DEFAULT";
+         textureProperties ._magnificationFilter = "NICEST";
+         textureProperties ._minificationFilter  = "NICEST";
 
          textureProperties .setup ();
 

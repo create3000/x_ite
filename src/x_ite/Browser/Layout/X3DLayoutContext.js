@@ -20,8 +20,6 @@ Object .assign (X3DLayoutContext .prototype,
          screenTextureProperties ._boundaryModeR       = "CLAMP_TO_EDGE";
          screenTextureProperties ._minificationFilter  = "NEAREST_PIXEL";
          screenTextureProperties ._magnificationFilter = "NEAREST_PIXEL";
-         screenTextureProperties ._generateMipMaps     = false;
-         screenTextureProperties ._textureCompression  = "DEFAULT";
 
          screenTextureProperties .setup ();
 

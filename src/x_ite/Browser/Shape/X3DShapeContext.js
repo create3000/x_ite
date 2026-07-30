@@ -108,7 +108,6 @@ Object .assign (X3DShapeContext .prototype,
 
          lineFillTextureProperties ._minificationFilter  = "NEAREST_PIXEL";
          lineFillTextureProperties ._magnificationFilter = "NEAREST_PIXEL";
-         lineFillTextureProperties ._textureCompression  = "DEFAULT";
 
          lineFillTextureProperties .setup ();
 

@@ -17,7 +17,7 @@ Object .assign (X3DEnvironmentalEffectsContext .prototype,
          backgroundTextureProperties ._boundaryModeR       = "CLAMP_TO_EDGE";
          backgroundTextureProperties ._minificationFilter  = "NICEST";
          backgroundTextureProperties ._magnificationFilter = "NICEST";
-         backgroundTextureProperties ._textureCompression  = "DEFAULT";
+
          backgroundTextureProperties .setup ();
 
          return backgroundTextureProperties;
