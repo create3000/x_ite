@@ -181,7 +181,7 @@ Object .assign (X3DLightingContext .prototype,
       gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
       gl .uniform3f (shaderNode .x3d_FlipEXT, flipX ? -1 : 1, 1, 1);
 
-      for (const [level, r] of roughness .entries ())
+      for (const [level, levelRoughness] of roughness .entries ())
       {
          const mipSize = size >> level;
 
@@ -191,7 +191,7 @@ Object .assign (X3DLightingContext .prototype,
 
          gl .viewport (0, 0, mipSize, mipSize);
          gl .scissor  (0, 0, mipSize, mipSize);
-         gl .uniform1f (shaderNode .x3d_RoughnessEXT, r);
+         gl .uniform1f (shaderNode .x3d_RoughnessEXT, levelRoughness);
 
          // Generate images.
 
