@@ -112,7 +112,7 @@ Object .assign (X3DLightingContext .prototype,
          ],
       });
    },
-   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness, flipX, cachedNode })
+   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughnesses, flipX, cachedNode })
    {
       // Render the texture.
 
@@ -146,7 +146,7 @@ Object .assign (X3DLightingContext .prototype,
       for (const target of filtered .getTargets ())
          gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-      if (roughness .length > 1)
+      if (roughnesses .length > 1)
       {
          gl .generateMipmap (filtered .getTarget ());
          gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
@@ -180,7 +180,7 @@ Object .assign (X3DLightingContext .prototype,
       gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
       gl .uniform3f (shaderNode .x3d_FlipEXT, flipX ? -1 : 1, 1, 1);
 
-      for (const [level, levelRoughness] of roughness .entries ())
+      for (const [level, roughness] of roughnesses .entries ())
       {
          const mipSize = size >> level;
 
@@ -190,7 +190,7 @@ Object .assign (X3DLightingContext .prototype,
 
          gl .viewport (0, 0, mipSize, mipSize);
          gl .scissor  (0, 0, mipSize, mipSize);
-         gl .uniform1f (shaderNode .x3d_RoughnessEXT, levelRoughness);
+         gl .uniform1f (shaderNode .x3d_RoughnessEXT, roughness);
 
          // Generate images.
 
