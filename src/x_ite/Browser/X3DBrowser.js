@@ -949,7 +949,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       console .log (string);
 
       for (const element of this [_console])
-         element .append (document .createTextNode (string));
+         element .append (string);
    },
    println (... args)
    {
@@ -958,7 +958,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       console .log (string);
 
       for (const element of this [_console])
-         element .append (document .createTextNode (`${string}\n`));
+         element .append (`${string}\n`);
    },
    toVRMLStream (generator)
    {

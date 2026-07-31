@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       layer .addEventListener ("mousedown",   () => this .hide ());
       layer .addEventListener ("contextmenu", () => this .hide ());
 
-      root .appendChild (layer);
+      root .append (layer);
 
       this [_hide] = () =>
       {
@@ -104,16 +104,16 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       ul .addEventListener ("contextmenu", () => this .hide ());
 
-      root .appendChild (ul);
+      root .append (ul);
 
       const background = document .createElement ("div");
 
       background .classList .add ("context-menu-background");
 
-      ul .appendChild (background);
+      ul .append (background);
 
       for (const k in menu .items)
-         ul .appendChild (this .createItem (menu .items [k], "context-menu-root", k, level + 1));
+         ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1));
 
       // Show
       // Must animate children because of blurish background.
