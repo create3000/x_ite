@@ -137,8 +137,8 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
    createCDATA (document, element, str)
    {
       const
-         docu  = $.parseXML ("<xml></xml>",),
-         cdata = docu .createCDATASection (str);
+         root  = $.parseXML ("<xml></xml>",),
+         cdata = root .createCDATASection (str);
 
       element .append (cdata);
    },
@@ -183,7 +183,6 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
                   this .convertToDOM (object [key] [childkey], childkey, child);
 
                   element .append (child);
-                  element .append (document .createTextNode ("\n"));
                }
             }
          }
@@ -194,7 +193,6 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
             this .convertToDOM (object [key], key, child);
 
             element .append (child);
-            element .append (document .createTextNode ("\n"));
          }
       }
    },
