@@ -142,14 +142,14 @@ for (const canvas of canvases)
 Creates a new x3d-canvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created. This function is exactly the same as `document .createElement ("x3d-canvas")`.
 
 ```js
-function addBrowser (parent)
+function addBrowser (parentElement)
 {
    // Create a new x3d-canvas element.
    const canvas = X3D .createBrowser ();
 
    canvas .setAttribute ("src", "/my/world.x3d");
 
-   parent .appendChild (canvas);
+   parentElement .append (canvas);
 }
 ```
 

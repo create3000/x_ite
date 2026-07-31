@@ -138,11 +138,11 @@ function addBlueBox ()
   transform .setAttribute ("scale",        "3 5 8");
   material  .setAttribute ("diffuseColor", "0 0.5 1")
 
-  transform  .appendChild (shape);
-  shape      .appendChild (appearance);
-  shape      .appendChild (box);
-  appearance .appendChild (material);
-  scene      .appendChild (transform);
+  transform  .append (shape);
+  shape      .append (appearance);
+  shape      .append (box);
+  appearance .append (material);
+  scene      .append (transform);
 }
 
 function removeBlueBox ()
@@ -173,7 +173,7 @@ function addRoute ()
   route .setAttribute ("toNode",    "Interpolator");
   route .setAttribute ("toField",   "set_fraction");
 
-  scene .appendChild (route);
+  scene .append (route);
 }
 
 function removeRoute ()
