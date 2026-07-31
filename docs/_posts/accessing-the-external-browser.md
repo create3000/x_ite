@@ -253,10 +253,10 @@ function init ()
     changeBackgroundButton = document .getElementById ("change-background"),
     spinButton             = document .getElementById ("spin");
 
-  centerButton           .addEventListener ("click",  center);
+  centerButton           .addEventListener ("click",  centerView);
   changeStyleButton      .addEventListener ("change", changeStyle);
   changeBackgroundButton .addEventListener ("change", changeBackground);
-  spinButton             .addEventListener ("click",  spin);
+  spinButton             .addEventListener ("click",  toggleSpin);
 
   changeStyle ();
   changeBackground ();
@@ -272,7 +272,7 @@ function init ()
   });
 };
 
-function center ()
+function centerView ()
 {
   // Rebind viewpoint and remove user offsets.
   Browser .changeViewpoint ("Viewpoint");
@@ -306,7 +306,7 @@ function changeBackground ()
   }
 }
 
-function spin ()
+function toggleSpin ()
 {
   const
     scene = Browser .currentScene,                      // Get the scene.
