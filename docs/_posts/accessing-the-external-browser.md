@@ -248,22 +248,28 @@ Browser .addBrowserCallback ("init", X3D .X3DConstants .INITIALIZED_EVENT, init)
 function init ()
 {
   const
+    centerButton           = document .getElementById ("center"),
+    changeStyleButton      = document .getElementById ("change-style"),
+    changeBackgroundButton = document .getElementById ("change-background"),
+    spinButton             = document .getElementById ("spin");
+
+  centerButton           .addEventListener ("click",  center);
+  changeStyleButton      .addEventListener ("change", changeStyle);
+  changeBackgroundButton .addEventListener ("change", changeBackground);
+  spinButton             .addEventListener ("click",  spin);
+
+  changeStyle ();
+  changeBackground ();
+
+  const
     scene = Browser .currentScene,                      // Get the scene.
     timer = scene .getNamedNode ("SpinAnimationTimer"); // Get box TimeSensor node.
-
-  document .getElementById ("center")            .addEventListener ("click",  center);
-  document .getElementById ("change-style")      .addEventListener ("change", changeStyle);
-  document .getElementById ("change-background") .addEventListener ("change", changeBackground);
-  document .getElementById ("spin")              .addEventListener ("click",  spin);
 
   // Connect to cycleTime events.
   timer .addFieldCallback ("check", "cycleTime", value =>
   {
     console .log (`cycleTime: ${value}`);
   });
-
-  changeStyle ();
-  changeBackground ();
 };
 
 function center ()
