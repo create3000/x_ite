@@ -131,7 +131,7 @@ const
 
 // Append <x3d-canvas> element to body:
 
-document .body .appendChild (canvas);
+document .body .append (canvas);
 
 // Change Browser Options (this could also be done by setting the attributes of the canvas):
 
