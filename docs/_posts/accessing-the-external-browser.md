@@ -236,7 +236,6 @@ Adding HTML controls to your scene is no rocket science. We have added some HTML
 ### The JavaScript
 
 ```html
-<script defer src="https://code.jquery.com/jquery-latest.js"></script>
 <script type="module">
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
 
@@ -252,10 +251,10 @@ function init ()
     scene = Browser .currentScene,                      // Get the scene.
     timer = scene .getNamedNode ("SpinAnimationTimer"); // Get box TimeSensor node.
 
-  $("#center")            .on ("click",  center);
-  $("#change-style")      .on ("change", changeStyle);
-  $("#change-background") .on ("change", changeBackground);
-  $("#spin")              .on ("click",  spin);
+  document .getElementById ("center")            .addEventListener ("click",  center);
+  document .getElementById ("change-style")      .addEventListener ("change", changeStyle);
+  document .getElementById ("change-background") .addEventListener ("change", changeBackground);
+  document .getElementById ("spin")              .addEventListener ("click",  spin);
 
   // Connect to cycleTime events.
   timer .addFieldCallback ("check", "cycleTime", value =>
@@ -281,7 +280,7 @@ function changeStyle ()
 
   // Change styles.
 
-  switchNode .whichChoice = parseInt ($("#change-style") .val ());
+  switchNode .whichChoice = parseInt (document .getElementById ("change-style") .value);
 }
 
 function changeBackground ()
@@ -290,7 +289,7 @@ function changeBackground ()
     scene          = Browser .currentScene,              // Get the scene.
     backgroundNode = scene .getNamedNode ("Background"); // Get Background node.
 
-  switch (parseInt ($("#change-background") .val ()))
+  switch (parseInt (document .getElementById ("change-background") .value))
   {
     case 0:
       backgroundNode .skyColor [0] = new X3D .SFColor (1, 1, 1);
