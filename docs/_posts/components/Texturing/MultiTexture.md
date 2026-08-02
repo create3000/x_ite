@@ -82,8 +82,9 @@ The *alpha* field defines the *alpha* (1-transparency) base value for mode opera
 - Include the same number of *mode* values as textures, otherwise the default value MODULATE is added for each remaining stage.
 - [X3D Architecture Table 18.3 Multitexture modes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#t-MultitextureModes) for further details.
 
-#### Warning
+#### Warnings
 
+- These enumeration names did not include underscore characters in X3D version 3.0 through 4.0.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### MFString [in, out] **source** [ ]
@@ -99,12 +100,16 @@ The *alpha* field defines the *alpha* (1-transparency) base value for mode opera
 ### MFString [in, out] **function** [ ]
 {: #fields-function }
 
-*function* operators COMPLEMENT or ALPHAREPLICATE can be applied after the mode blending operation. Empty string value "" indicates that no *function* operation is applied for that stage.
+*function* operators COMPLEMENT or ALPHA_REPLICATE can be applied after the mode blending operation. Empty string value "" indicates that no *function* operation is applied for that stage.
 
 #### Hints
 
 - Include the same number of *function* values as textures, otherwise the default of no *function* operation is applied for each remaining stage.
 - [X3D Architecture Table 18.5 Values for the *function* field](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#t-ValuesForFunctionField) for further details.
+
+#### Warning
+
+- The ALPHA_REPLICATE enumeration name did not include underscore characters in X3D version 3.0 through 4.0.
 
 ### MFNode [in, out] **texture** [ ] <small>[X3DTextureNode]</small>
 {: #fields-texture }

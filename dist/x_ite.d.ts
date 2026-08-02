@@ -8868,7 +8868,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * The opacity of a Gaussian splat is defined by the opacities field.
+       * The opacities field defines the opacity of each individual Gaussian splat.
        *
        * This field is of access type 'inputOutput' and type MFFloat.
        */
@@ -12569,7 +12569,7 @@ declare namespace X3D
       trackCurrentView: boolean;
    }
 
-   /** LoadSensor generates events as watchList child nodes are either loaded or fail to load. */
+   /** LoadSensor generates events as children (watchList in X3Dv3) child nodes are either loaded or fail to load. */
    interface LoadSensorProxy extends X3DNetworkSensorNodeProxy
    {
       /**
@@ -12597,7 +12597,7 @@ declare namespace X3D
        */
       readonly isActive: boolean;
       /**
-       * Notify when all watchList child nodes are loaded, or at least one has failed.
+       * Notify when all children/watchList child nodes are loaded, or at least one has failed.
        *
        * This field is of access type 'outputOnly' and type SFBool.
        */
@@ -13069,7 +13069,7 @@ declare namespace X3D
        */
       reference: string;
       /**
-       * The value field provides a list of X3DMetadataObject nodes whose meaning is determined by the name field.
+       * The value field provides a list of X3DMetadataObject nodes whose meaning is each determined by their respective name field.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -13528,7 +13528,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      function: MFString <"COMPLEMENT" | "ALPHAREPLICATE" | "">;
+      function: MFString <"COMPLEMENT" | "ALPHA_REPLICATE" | "">;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -13540,7 +13540,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      mode: MFString <"ADD" | "ADDSIGNED" | "ADDSIGNED2X" | "ADDSMOOTH" | "BLENDCURRENTALPHA" | "BLENDDIFFUSEALPHA" | "BLENDFACTORALPHA" | "BLENDTEXTUREALPHA" | "DOTPRODUCT3" | "MODULATE" | "MODULATE2X" | "MODULATE4X" | "MODULATEALPHA_ADDCOLOR" | "MODULATEINVALPHA_ADDCOLOR" | "MODULATEINVCOLOR_ADDALPHA" | "OFF" | "REPLACE" | "SELECTARG1" | "SELECTARG2" | "SUBTRACT">;
+      mode: MFString <"ADD" | "ADD_SIGNED" | "ADD_SIGNED_2X" | "ADD_SMOOTH" | "BLEND_CURRENT_ALPHA" | "BLEND_DIFFUSE_ALPHA" | "BLEND_FACTOR_ALPHA" | "BLEND_TEXTURE_ALPHA" | "DOT_PRODUCT_3" | "MODULATE" | "MODULATE_2X" | "MODULATE_4X" | "MODULATE_ALPHA_ADD_COLOR" | "MODULATE_INV_ALPHA_ADD_COLOR" | "MODULATE_INV_COLOR_ADD_ALPHA" | "OFF" | "REPLACE" | "SELECT_ARG1" | "SELECT_ARG2" | "SUBTRACT">;
       /**
        * source field determines whether each image source is treated as DIFFUSE, SPECULAR or a multiplicative FACTOR.
        *
@@ -19490,7 +19490,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
-      mode: "SPHERE" | "CAMERASPACENORMAL" | "CAMERASPACEPOSITION" | "CAMERASPACEREFLECTIONVECTOR" | "SPHERE-LOCAL" | "COORD" | "COORD-EYE" | "NOISE" | "NOISE-EYE" | "SPHERE-REFLECT" | "SPHERE-REFLECT-LOCAL";
+      mode: "SPHERE" | "CAMERA_SPACE_NORMAL" | "CAMERA_SPACE_POSITION" | "CAMERA_SPACE_REFLECTION_VECTOR" | "SPHERE_LOCAL" | "COORD" | "COORD_EYE" | "NOISE" | "NOISE_EYE" | "SPHERE_REFLECT" | "SPHERE_REFLECT_LOCAL";
       /**
        * parameter array contains scale and translation (x y z) values for Perlin NOISE mode, parameter[0] contains index of refraction for SPHERE-REFLECT mode, parameter[0] contains index of refraction and parameter[1 to 3] contains the eye point in local coordinates for SPHERE-REFLECT-LOCAL mode.
        *

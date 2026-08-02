@@ -1,4 +1,4 @@
-/* X_ITE v16.0.4 */
+/* X_ITE v16.0.5 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 72
+/***/ 998
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 402
+/***/ 844
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 258
+/***/ 728
 (module) {
 
 /**
@@ -18846,7 +18846,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.0.4";
+const BROWSER_VERSION_default_ = "16.0.5";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -20467,7 +20467,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
       layer .addEventListener ("mousedown",   () => this .hide ());
       layer .addEventListener ("contextmenu", () => this .hide ());
 
-      root .appendChild (layer);
+      root .append (layer);
 
       this [_hide] = () =>
       {
@@ -20496,16 +20496,16 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
 
       ul .addEventListener ("contextmenu", () => this .hide ());
 
-      root .appendChild (ul);
+      root .append (ul);
 
       const background = document .createElement ("div");
 
       background .classList .add ("context-menu-background");
 
-      ul .appendChild (background);
+      ul .append (background);
 
       for (const k in menu .items)
-         ul .appendChild (this .createItem (menu .items [k], "context-menu-root", k, level + 1));
+         ul .append (this .createItem (menu .items [k], "context-menu-root", k, level + 1));
 
       // Show
       // Must animate children because of blurish background.
@@ -30339,8 +30339,8 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
    createCDATA (document, element, str)
    {
       const
-         docu  = helper.parseXML ("<xml></xml>",),
-         cdata = docu .createCDATASection (str);
+         root  = helper.parseXML ("<xml></xml>",),
+         cdata = root .createCDATASection (str);
 
       element .append (cdata);
    },
@@ -30385,7 +30385,6 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
                   this .convertToDOM (object [key] [childkey], childkey, child);
 
                   element .append (child);
-                  element .append (document .createTextNode ("\n"));
                }
             }
          }
@@ -30396,7 +30395,6 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
             this .convertToDOM (object [key], key, child);
 
             element .append (child);
-            element .append (document .createTextNode ("\n"));
          }
       }
    },
@@ -31133,7 +31131,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(258);
+/* provided dependency */ var libtess = __webpack_require__(728);
 
 
 const Triangle3 =
@@ -47763,7 +47761,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(258);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(728);
 
 
 
@@ -54455,7 +54453,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-r/Gb5cpjKIPkLAwOrsKEHLP6i0CMS4kHdw86CIUHces4jE1JV+E2ip+Bb42dwD2D";
+         link .integrity   = "sha384-z3n/GOGoKsMpVZSKJ93fURwkAP+Pc26L4fyoX8sqfSjRbaqYaOKMzV8xyfYFto4R";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -55246,13 +55244,13 @@ Object .assign (Object .setPrototypeOf (TextureProperties .prototype, Core_X3DNo
    {
       const minificationFilters = new Map ([
          ["AVG_PIXEL_AVG_MIPMAP",         ["LINEAR",  "LINEAR_MIPMAP_LINEAR"]],
-         ["AVG_PIXEL",                    ["LINEAR",  "LINEAR"]],
          ["AVG_PIXEL_NEAREST_MIPMAP",     ["LINEAR",  "LINEAR_MIPMAP_NEAREST"]],
          ["NEAREST_PIXEL_AVG_MIPMAP",     ["NEAREST", "NEAREST_MIPMAP_LINEAR"]],
          ["NEAREST_PIXEL_NEAREST_MIPMAP", ["NEAREST", "NEAREST_MIPMAP_NEAREST"]],
+         ["AVG_PIXEL",                    ["LINEAR",  "LINEAR"]],
          ["NEAREST_PIXEL",                ["NEAREST", "NEAREST"]],
          ["NICEST",                       ["LINEAR",  "LINEAR_MIPMAP_LINEAR"]],
-         ["FASTEST",                      ["NEAREST", "NEAREST"]],
+         ["FASTEST",                      ["NEAREST", "NEAREST_MIPMAP_NEAREST"]],
       ]);
 
       return function (mipMaps = true)
@@ -55349,7 +55347,7 @@ Object .assign (X3DEnvironmentalEffectsContext .prototype,
          backgroundTextureProperties ._boundaryModeR       = "CLAMP_TO_EDGE";
          backgroundTextureProperties ._minificationFilter  = "NICEST";
          backgroundTextureProperties ._magnificationFilter = "NICEST";
-         backgroundTextureProperties ._textureCompression  = "DEFAULT";
+
          backgroundTextureProperties .setup ();
 
          return backgroundTextureProperties;
@@ -59360,7 +59358,6 @@ Object .assign (X3DLightingContext .prototype,
          texture           = new Texturing_ImageTexture (this .getPrivateScene ()),
          textureProperties = new Texturing_TextureProperties (this .getPrivateScene ());
 
-      textureProperties ._generateMipMaps     = false;
       textureProperties ._minificationFilter  = "AVG_PIXEL";
       textureProperties ._magnificationFilter = "AVG_PIXEL";
       textureProperties ._boundaryModeS       = "CLAMP_TO_BOUNDARY";
@@ -59427,7 +59424,7 @@ Object .assign (X3DLightingContext .prototype,
          ],
       });
    },
-   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness, flipX, cachedNode })
+   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughnesses, flipX, cachedNode })
    {
       // Render the texture.
 
@@ -59461,7 +59458,7 @@ Object .assign (X3DLightingContext .prototype,
       for (const target of filtered .getTargets ())
          gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-      if (roughness .length > 1)
+      if (roughnesses .length > 1)
       {
          gl .generateMipmap (filtered .getTarget ());
          gl .texParameteri (filtered .getTarget (), gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
@@ -59495,7 +59492,7 @@ Object .assign (X3DLightingContext .prototype,
       gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
       gl .uniform3f (shaderNode .x3d_FlipEXT, flipX ? -1 : 1, 1, 1);
 
-      for (const [level, r] of roughness .entries ())
+      for (const [level, roughness] of roughnesses .entries ())
       {
          const mipSize = size >> level;
 
@@ -59505,7 +59502,7 @@ Object .assign (X3DLightingContext .prototype,
 
          gl .viewport (0, 0, mipSize, mipSize);
          gl .scissor  (0, 0, mipSize, mipSize);
-         gl .uniform1f (shaderNode .x3d_RoughnessEXT, r);
+         gl .uniform1f (shaderNode .x3d_RoughnessEXT, roughness);
 
          // Generate images.
 
@@ -71298,7 +71295,6 @@ Object .assign (X3DShapeContext .prototype,
 
          lineFillTextureProperties ._minificationFilter  = "NEAREST_PIXEL";
          lineFillTextureProperties ._magnificationFilter = "NEAREST_PIXEL";
-         lineFillTextureProperties ._textureCompression  = "DEFAULT";
 
          lineFillTextureProperties .setup ();
 
@@ -71329,8 +71325,7 @@ Object .assign (X3DShapeContext .prototype,
          ],
          [ ],
          [ ],
-      ]
-      [pass];
+      ] [pass];
 
       const transformFeedbackVaryings = [
          [
@@ -71348,8 +71343,7 @@ Object .assign (X3DShapeContext .prototype,
             "instanceNormalMatrix1", "tangent1", "normal1",
             "instanceNormalMatrix2", "tangent2", "normal2",
          ],
-      ]
-      [pass];
+      ] [pass];
 
       return this .createShader ({
          name: `LineTransform${instanced ? "Instanced" : ""}`,
@@ -72142,8 +72136,8 @@ Object .assign (X3DTexturingContext .prototype,
       {
          case TextureQuality .LOW:
          {
-            textureProperties ._magnificationFilter = "AVG_PIXEL";
-            textureProperties ._minificationFilter  = "AVG_PIXEL";
+            textureProperties ._magnificationFilter = "FASTEST";
+            textureProperties ._minificationFilter  = "FASTEST";
             textureProperties ._textureCompression  = "FASTEST";
 
             gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
@@ -72152,7 +72146,7 @@ Object .assign (X3DTexturingContext .prototype,
          case TextureQuality .MEDIUM:
          {
             textureProperties ._magnificationFilter = "NICEST";
-            textureProperties ._minificationFilter  = "NEAREST_PIXEL_AVG_MIPMAP";
+            textureProperties ._minificationFilter  = "AVG_PIXEL_NEAREST_MIPMAP";
             textureProperties ._textureCompression  = "NICEST";
 
             gl .hint (gl .GENERATE_MIPMAP_HINT, gl .FASTEST);
@@ -81486,7 +81480,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, Lighting_X3
             texture: this .specularTexture,
             distribution: Lighting_Distribution .LAMBERTIAN,
             sampleCount: 2048,
-            roughness: [0],
+            roughnesses: [0],
             flipX: !this .traverseSpecular,
             cachedNode: this .generatedDiffuseTexture,
          });
@@ -81505,15 +81499,15 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, Lighting_X3
             console .info ("Generating specular texture for EnvironmentLight.");
 
          const
-            levels    = this .specularTexture .getLevels (),
-            roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
+            levels      = this .specularTexture .getLevels (),
+            roughnesses = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
 
          return browser .filterEnvironmentTexture ({
             name: "GeneratedSpecularTexture",
             texture: this .specularTexture,
             distribution: Lighting_Distribution .GGX,
             sampleCount: 1024,
-            roughness,
+            roughnesses,
             flipX: !this .traverseSpecular,
             cachedNode: this .generatedSpecularTexture,
          });
@@ -81532,15 +81526,15 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, Lighting_X3
             console .info ("Generating sheen texture for EnvironmentLight.");
 
          const
-            levels    = this .specularTexture .getLevels (),
-            roughness = Array .from ({ length: levels + 1 }, (_, i) => Math .max (i / (levels || 1), 2, 0.000001));
+            levels      = this .specularTexture .getLevels (),
+            roughnesses = Array .from ({ length: levels + 1 }, (_, i) => Math .max (i / (levels || 1), 2, 0.000001));
 
          return browser .filterEnvironmentTexture ({
             name: "GeneratedSheenTexture",
             texture: this .specularTexture,
             distribution: Lighting_Distribution .CHARLIE,
             sampleCount: 64,
-            roughness: roughness,
+            roughnesses,
             flipX: !this .traverseSpecular,
             cachedNode: this .generatedSheenTexture,
          });
@@ -90959,8 +90953,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(72);
-/* provided dependency */ var APNG = __webpack_require__(402);
+/* provided dependency */ var SuperGif = __webpack_require__(998);
+/* provided dependency */ var APNG = __webpack_require__(844);
 
 
 
@@ -93293,7 +93287,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
       console .log (string);
 
       for (const element of this [_console])
-         element .append (document .createTextNode (string));
+         element .append (string);
    },
    println (... args)
    {
@@ -93302,7 +93296,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
       console .log (string);
 
       for (const element of this [_console])
-         element .append (document .createTextNode (`${string}\n`));
+         element .append (`${string}\n`);
    },
    toVRMLStream (generator)
    {
@@ -93665,7 +93659,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(258);
+/* provided dependency */ var libtess_libtess = __webpack_require__(728);
 const libtess_default_ = libtess_libtess;
 ;
 

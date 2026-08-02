@@ -1,4 +1,4 @@
-/* X_ITE v16.0.4 */
+/* X_ITE v16.0.5 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -359,10 +359,8 @@ Object .assign (X3DVolumeRenderingContext .prototype,
 
          textureProperties ._boundaryModeS       = "CLAMP_TO_EDGE";
          textureProperties ._boundaryModeT       = "REPEAT";
-         textureProperties ._magnificationFilter = "DEFAULT";
-         textureProperties ._minificationFilter  = "DEFAULT";
-         textureProperties ._generateMipMaps     = true;
-         textureProperties ._textureCompression  = "DEFAULT";
+         textureProperties ._magnificationFilter = "NICEST";
+         textureProperties ._minificationFilter  = "NICEST";
 
          textureProperties .setup ();
 

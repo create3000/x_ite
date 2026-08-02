@@ -1,4 +1,4 @@
-/* X_ITE v16.0.4 */
+/* X_ITE v16.0.5 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -95,8 +95,6 @@ Object .assign (X3DLayoutContext .prototype,
          screenTextureProperties ._boundaryModeR       = "CLAMP_TO_EDGE";
          screenTextureProperties ._minificationFilter  = "NEAREST_PIXEL";
          screenTextureProperties ._magnificationFilter = "NEAREST_PIXEL";
-         screenTextureProperties ._generateMipMaps     = false;
-         screenTextureProperties ._textureCompression  = "DEFAULT";
 
          screenTextureProperties .setup ();
 
