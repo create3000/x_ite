@@ -55,9 +55,10 @@ X3DCanvas {
   --text-shadow-color: black;
   --link-color: rgb(255, 146, 48);
   --logo-opacity: 0.6;
-  --progress-color: rgba(255, 255, 255, 1);
-  --progress-background: rgba(52, 52, 52, 1);
+  --progress-background: rgb(255, 255, 255);
+  --progress-color: var(--red);
   --splash-screen-background: rgb(15, 15, 15);
+  --splash-screen-image: url(assets/images/background-dark.svg);
   --gradient: linear-gradient(to bottom, rgba(35, 37, 40, 0.553) 0%, rgba(13, 16, 21, 0.831) 100%);
   --border: 4px solid rgba(43, 45, 47, 0.675);
   --tint-color: rgba(0, 0, 0, 0.38196601);
@@ -81,9 +82,10 @@ X3DCanvas {
     --text-shadow-color: white;
     --link-color: var(--red);
     --logo-opacity: 1;
-    --progress-color: rgba(0, 0, 0, 1);
-    --progress-background: rgba(204, 204, 204, 1);
+    --progress-background: rgb(0, 0, 0);
+    --progress-color: var(--red);
     --splash-screen-background: rgb(252, 252, 252);
+    --splash-screen-image: url(assets/images/background-light.svg);
     --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
     --border: 4px solid rgba(229, 229, 234, 0.66);
     --tint-color: rgba(255, 255, 255, 0.38196601);
@@ -107,9 +109,10 @@ X3DCanvas[theme=light] {
   --text-shadow-color: white;
   --link-color: var(--red);
   --logo-opacity: 1;
-  --progress-color: rgba(0, 0, 0, 1);
-  --progress-background: rgba(204, 204, 204, 1);
+  --progress-background: rgb(0, 0, 0);
+  --progress-color: var(--red);
   --splash-screen-background: rgb(252, 252, 252);
+  --splash-screen-image: url(assets/images/background-light.svg);
   --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
   --border: 4px solid rgba(229, 229, 234, 0.66);
   --tint-color: rgba(255, 255, 255, 0.38196601);
@@ -724,9 +727,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   pointer-events: none;
   position: absolute;
   inset: 0;
-  background: var(--splash-screen-background);
+  background: var(--splash-screen-image) var(--splash-screen-background) repeat center center;
 }
 
+/*
 .x_ite-private-spinner {
   --size: 230px;
   --center-x: calc(458 / 1024 * var(--size));
@@ -748,6 +752,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
     transform: rotate(360deg);
   }
 }
+*/
 
 .x_ite-private-progress {
   position: absolute;
