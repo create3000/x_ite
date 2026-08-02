@@ -152,19 +152,31 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          submenu .style .display = "block";
 
          const
-            width    = submenu .clientWidth + ul .clientWidth,
-            position = parentRect .left + width > window .innerWidth ? "right" : "left";
+            width        = submenu .clientWidth + ul .clientWidth,
+            position     = parentRect .left + width > window .innerWidth ? "right" : "left",
+            windowHeight = (window .visualViewport ?.height ?? window .innerHeight);
 
          // Background
          submenu .children [0] .style .height = `${submenu .clientHeight}px`;
 
          submenu .style [position] = `${ul .clientWidth - 28}px`;
 
-         if (submenu .clientHeight >= (window .visualViewport ?.height ?? window .innerHeight))
+         if (submenu .clientHeight >= windowHeight)
          {
             submenu .style .top       = `${-submenu .closest ("li") .getBoundingClientRect () .top}px`;
             submenu .style .maxHeight = "100dvh";
             submenu .style .overflowY = "scroll";
+         }
+         else
+         {
+            // Submenu goes out of page.
+
+            const bottom = submenu .getBoundingClientRect () .top + submenu .clientHeight - (window .scrollY + windowHeight - 20);
+
+            if (bottom > 0)
+            {
+               this .offset (submenu, { top: submenu .getBoundingClientRect () .top - bottom });
+            }
          }
 
          submenu .style .display = "";
