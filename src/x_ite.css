@@ -54,7 +54,6 @@ X3DCanvas {
   --text-color-dark: white;
   --text-shadow-color: black;
   --link-color: rgb(255, 146, 48);
-  --logo-opacity: 0.6;
   --progress-background: rgb(255, 255, 255);
   --progress-color: var(--red);
   --splash-screen-background: rgb(15, 15, 15);
@@ -81,7 +80,6 @@ X3DCanvas {
     --text-color: black;
     --text-shadow-color: white;
     --link-color: var(--red);
-    --logo-opacity: 1;
     --progress-background: rgb(0, 0, 0);
     --progress-color: var(--red);
     --splash-screen-background: rgb(252, 252, 252);
@@ -108,7 +106,6 @@ X3DCanvas[theme=light] {
   --text-color: black;
   --text-shadow-color: white;
   --link-color: var(--red);
-  --logo-opacity: 1;
   --progress-background: rgb(0, 0, 0);
   --progress-color: var(--red);
   --splash-screen-background: rgb(252, 252, 252);
@@ -729,30 +726,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   inset: 0;
   background: var(--splash-screen-image) var(--splash-screen-background) repeat center center;
 }
-
-/*
-.x_ite-private-spinner {
-  --size: 230px;
-  --center-x: calc(458 / 1024 * var(--size));
-  --center-y: calc(539 / 1024 * var(--size));
-  position: absolute;
-  top: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-y)));
-  left: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-x)));
-  width: var(--size);
-  height: var(--size);
-  background: url(assets/images/logo.svg) no-repeat;
-  background-size: var(--size) var(--size);
-  opacity: var(--logo-opacity);
-  animation: x_ite-spinner-animation 32s linear infinite;
-  transform-origin: var(--center-x) var(--center-y);
-}
-
-@keyframes x_ite-spinner-animation {
-  100% {
-    transform: rotate(360deg);
-  }
-}
-*/
 
 .x_ite-private-progress {
   position: absolute;
