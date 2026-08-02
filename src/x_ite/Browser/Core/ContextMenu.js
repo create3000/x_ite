@@ -163,7 +163,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          if (submenu .clientHeight >= (window .visualViewport ?.height ?? window .innerHeight))
          {
             submenu .style .top       = `${-submenu .closest ("li") .getBoundingClientRect () .top}px`;
-            submenu .style .maxHeight = "100svh";
+            submenu .style .maxHeight = "100dvh";
             submenu .style .overflowY = "scroll";
          }
 
