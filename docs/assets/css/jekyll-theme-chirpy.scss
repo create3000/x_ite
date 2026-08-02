@@ -92,21 +92,21 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  html:not([data-mode]), html[data-mode=dark] {
+  html:not([data-bs-theme]), html[data-bs-theme=dark] {
     @include x_ite-dark-scheme;
   }
 
-  html[data-mode=light] {
+  html[data-bs-theme=light] {
     @include x_ite-light-scheme;
   }
 }
 
 @media (prefers-color-scheme: light) {
-  html[data-mode=dark] {
+  html[data-bs-theme=dark] {
     @include x_ite-dark-scheme;
   }
 
-  html:not([data-mode]), html[data-mode=light] {
+  html:not([data-bs-theme]), html[data-bs-theme=light] {
     @include x_ite-light-scheme;
   }
 }
