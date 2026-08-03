@@ -7,7 +7,7 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
-## X_ITE v16.0 Series
+## X_ITE v16.1 Series
 
 **Leipzig, 9th August 2026:** The 16.1 series of X_ITE introduces a fresh new splash-screen design, giving applications a more modern and polished appearance while content is loading. The updated design improves the first impression for users with cleaner visuals and smoother presentation, making startup feel more refined without affecting existing projects or workflows. This enhancement is part of X_ITE's ongoing effort to modernize the user experience while maintaining full compatibility and performance.
 
