@@ -727,6 +727,28 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: var(--splash-screen-image) var(--splash-screen-background) repeat center center;
 }
 
+.x_ite-private-spinner {
+  --size: 64px;
+  --center-x: calc(458 / 1024 * var(--size));
+  --center-y: calc(539 / 1024 * var(--size));
+  position: absolute;
+  top: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-y)) - 87px);
+  left: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-x)) - 183px);
+  width: var(--size);
+  height: var(--size);
+  background: url(assets/images/logo.svg) no-repeat;
+  background-size: var(--size) var(--size);
+  animation: x_ite-spinner-animation 8s linear infinite;
+  transform-origin: var(--center-x) var(--center-y);
+}
+
+@keyframes x_ite-spinner-animation {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
 .x_ite-private-progress {
   position: absolute;
   top: calc(50% - 28pt - 11pt);
