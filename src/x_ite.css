@@ -10,7 +10,7 @@
   font-style: normal;
   font-weight: 400;
   src: url(assets/fonts/PT_Sans/PTSans-Regular.woff2);
-  font-display: block;
+  font-display: swap;
 }
 
 @font-face {
@@ -18,7 +18,7 @@
   font-style: normal;
   font-weight: 700;
   src: url(assets/fonts/PT_Sans/PTSans-Bold.woff2);
-  font-display: block;
+  font-display: swap;
 }
 
 @font-face {
@@ -26,7 +26,7 @@
   font-style: italic;
   font-weight: 400;
   src: url(assets/fonts/PT_Sans/PTSans-Italic.woff2);
-  font-display: block;
+  font-display: swap;
 }
 
 @font-face {
@@ -34,7 +34,7 @@
   font-style: italic;
   font-weight: 700;
   src: url(assets/fonts/PT_Sans/PTSans-BoldItalic.woff2);
-  font-display: block;
+  font-display: swap;
 }
 */
 
