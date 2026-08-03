@@ -85,7 +85,7 @@ Object .assign (X3DNetworkingContext .prototype,
             this .getSplashScreen () .classList .remove ("x_ite-private-fade-out-splash-screen", "x_ite-private-hidden");
          }
       }
-      else
+      else if (false)
       {
          this .resetLoadCount ();
 
