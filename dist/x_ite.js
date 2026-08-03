@@ -1,4 +1,4 @@
-/* X_ITE v16.0.5 */
+/* X_ITE v16.1.0 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 998
+/***/ 163
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 844
+/***/ 225
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 728
+/***/ 265
 (module) {
 
 /**
@@ -18846,7 +18846,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.0.5";
+const BROWSER_VERSION_default_ = "16.1.0";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -20544,19 +20544,31 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
          submenu .style .display = "block";
 
          const
-            width    = submenu .clientWidth + ul .clientWidth,
-            position = parentRect .left + width > window .innerWidth ? "right" : "left";
+            width        = submenu .clientWidth + ul .clientWidth,
+            position     = parentRect .left + width > window .innerWidth ? "right" : "left",
+            windowHeight = (window .visualViewport ?.height ?? window .innerHeight);
 
          // Background
          submenu .children [0] .style .height = `${submenu .clientHeight}px`;
 
          submenu .style [position] = `${ul .clientWidth - 28}px`;
 
-         if (submenu .clientHeight >= (window .visualViewport ?.height ?? window .innerHeight))
+         if (submenu .clientHeight >= windowHeight)
          {
             submenu .style .top       = `${-submenu .closest ("li") .getBoundingClientRect () .top}px`;
-            submenu .style .maxHeight = "100svh";
+            submenu .style .maxHeight = "100dvh";
             submenu .style .overflowY = "scroll";
+         }
+         else
+         {
+            // Submenu goes out of page.
+
+            const bottom = submenu .getBoundingClientRect () .top + submenu .clientHeight - (window .scrollY + windowHeight - 20);
+
+            if (bottom > 0)
+            {
+               this .offset (submenu, { top: submenu .getBoundingClientRect () .top - bottom });
+            }
          }
 
          submenu .style .display = "";
@@ -31131,7 +31143,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(728);
+/* provided dependency */ var libtess = __webpack_require__(265);
 
 
 const Triangle3 =
@@ -47761,7 +47773,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(728);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(265);
 
 
 
@@ -54356,7 +54368,7 @@ function Fonts_add (path, bold, italic)
       {
          style: italic ? "italic" : "normal",
          weight: bold ? "700" : "400",
-         display: "block",
+         display: "swap",
       }));
    }
    catch (error)
@@ -54453,7 +54465,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-z3n/GOGoKsMpVZSKJ93fURwkAP+Pc26L4fyoX8sqfSjRbaqYaOKMzV8xyfYFto4R";
+         link .integrity   = "sha384-FFe+A/LlgO2IEpOMp+dkCR3QO/mFR66blaOr+NTadcKHxnGzSm8EdCuwQ+HtDZHM";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -54465,9 +54477,9 @@ function X3DCoreContext (element)
 
       const browser = this [_shadow] .querySelector (".x_ite-private-browser");
 
-      browser .style .display = "none";
+      browser .style .visibility = "hidden";
 
-      stylesheet .then (() => browser .style .display = "");
+      stylesheet .then (() => browser .style .visibility = "");
    }
    else
    {
@@ -90953,8 +90965,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(998);
-/* provided dependency */ var APNG = __webpack_require__(844);
+/* provided dependency */ var SuperGif = __webpack_require__(163);
+/* provided dependency */ var APNG = __webpack_require__(225);
 
 
 
@@ -93659,7 +93671,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(728);
+/* provided dependency */ var libtess_libtess = __webpack_require__(265);
 const libtess_default_ = libtess_libtess;
 ;
 
