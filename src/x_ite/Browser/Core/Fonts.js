@@ -11,7 +11,7 @@ function add (path, bold, italic)
       {
          style: italic ? "italic" : "normal",
          weight: bold ? "700" : "400",
-         display: "block",
+         display: "swap",
       }));
    }
    catch (error)
