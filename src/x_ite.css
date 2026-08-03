@@ -728,12 +728,14 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-spinner {
+  --offset-x: -183px;
+  --offset-y: -87px;
   --size: 64px;
   --center-x: calc(458 / 1024 * var(--size));
   --center-y: calc(539 / 1024 * var(--size));
   position: absolute;
-  top: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-y)) - 87px);
-  left: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-x)) - 183px);
+  top: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-y)) + var(--offset-y));
+  left: calc(50% - (var(--size) / 2) + calc(var(--size) / 2 - var(--center-x)) + var(--offset-x));
   width: var(--size);
   height: var(--size);
   background: url(assets/images/logo.svg) no-repeat;
