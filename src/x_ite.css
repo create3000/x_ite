@@ -724,7 +724,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   pointer-events: none;
   position: absolute;
   inset: 0;
-  background: var(--splash-screen-image) var(--splash-screen-background) repeat center center;
+  background: var(--splash-screen-image) var(--splash-screen-background) center;
 }
 
 .x_ite-private-spinner {
