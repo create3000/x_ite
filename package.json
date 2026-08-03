@@ -1,6 +1,6 @@
 {
   "name": "x_ite",
-  "version": "16.0.5",
+  "version": "16.1.0",
   "description": "X_ITE X3D Browser and VRML Viewer — View and Manipulate X3D, VRML, glTF and Other 3D Sources in HTML",
   "main": "dist/x_ite.js",
   "module": "dist/x_ite.mjs",
@@ -123,7 +123,7 @@
     "dicom-parser": "^1.8.21",
     "eslint": "^10.8.0",
     "fast-xml-parser": "^5.10.1",
-    "globals": "^17.8.0",
+    "globals": "^17.9.0",
     "jpeg-js": "^0.4.4",
     "jpeg-lossless-decoder-js": "2.1.2",
     "libtess": "^1.2.2",
