@@ -243,7 +243,10 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this .intersectionObserver ?.disconnect ();
 
       if (!autoUpdate .getValue ())
+      {
+         this .isVisible = true;
          return;
+      }
 
       const
          browser = this .getBrowser (),
