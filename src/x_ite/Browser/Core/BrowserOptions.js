@@ -25,6 +25,7 @@ function BrowserOptions (executionContext)
    this .textureQuality   = TextureQuality .MEDIUM;
    this .primitiveQuality = PrimitiveQuality .MEDIUM;
    this .shading          = Shading .GOURAUD;
+   this .isVisible        = true;
 }
 
 Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .prototype),
@@ -248,7 +249,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          browser = this .getBrowser (),
          element = browser .getElement ();
 
-      if (this .isVisible ())
+      if (this .isVisible)
          this .wasLive = browser .isLive ();
 
       this .checkUpdateListener = () => this .checkUpdate ();
@@ -278,6 +279,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       if ((!hidden && this .isIntersecting) || browser .getPose ())
       {
+         this .isVisible = true;
+
          if (this .wasLive)
             browser .beginUpdate ();
          else
@@ -285,21 +288,11 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       }
       else
       {
-         this .wasLive = browser .isLive ();
+         this .isVisible = false;
+         this .wasLive   = browser .isLive ();
 
          browser .endUpdate ();
       }
-   },
-   isVisible ()
-   {
-      const
-         browser = this .getBrowser (),
-         hidden  = document .webkitHidden !== undefined ? document .webkitHidden : document .hidden;
-
-      // Only webkitHidden is reliable in Electron.
-      // https://github.com/electron/electron/issues/28677
-
-      return (!hidden && this .isIntersecting) || browser .getPose ();
    },
    set_ContentScale__ (contentScale)
    {
