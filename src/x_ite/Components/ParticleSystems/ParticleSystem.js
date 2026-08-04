@@ -123,8 +123,9 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this ._color             .addInterest ("set_colorRamp__",         this);
       this ._texCoordKey       .addInterest ("set_texCoord__",          this);
       this ._texCoord          .addInterest ("set_texCoordRamp__",      this);
-      this ._scaleKey          .addInterest ("set_scale__",              this);
-      this ._scale             .addInterest ("set_scaleRamp__",          this);
+      this ._scaleKey          .addInterest ("set_scale__",             this);
+      this ._scale             .addInterest ("set_scaleRamp__",         this);
+      this ._geometry          .addInterest ("updateVertexArrays",      this);
 
       // Create particles stuff.
 
