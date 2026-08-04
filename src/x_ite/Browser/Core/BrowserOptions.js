@@ -25,7 +25,6 @@ function BrowserOptions (executionContext)
    this .textureQuality   = TextureQuality .MEDIUM;
    this .primitiveQuality = PrimitiveQuality .MEDIUM;
    this .shading          = Shading .GOURAUD;
-   this .isVisible        = true;
 }
 
 Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .prototype),
@@ -244,7 +243,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       if (!autoUpdate .getValue ())
       {
-         this .isVisible = true;
+         this .wasLive = undefined;
          return;
       }
 
@@ -252,7 +251,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          browser = this .getBrowser (),
          element = browser .getElement ();
 
-      if (this .isVisible)
+      if (this .wasLive === undefined)
          this .wasLive = browser .isLive ();
 
       this .checkUpdateListener = () => this .checkUpdate ();
@@ -273,6 +272,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       if (!this ._AutoUpdate .getValue ())
          return;
 
+      if (this .isIntersecting === undefined)
+         return;
+
       const
          browser = this .getBrowser (),
          hidden  = document .webkitHidden !== undefined ? document .webkitHidden : document .hidden;
@@ -282,17 +284,20 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       if ((!hidden && this .isIntersecting) || browser .getPose ())
       {
-         this .isVisible = true;
+         if (this .wasLive !== undefined)
+         {
+            if (this .wasLive)
+               browser .beginUpdate ();
+            else
+               browser .endUpdate ();
 
-         if (this .wasLive)
-            browser .beginUpdate ();
-         else
-            browser .endUpdate ();
+            this .wasLive = undefined;
+         }
       }
       else
       {
-         this .isVisible = false;
-         this .wasLive   = browser .isLive ();
+         if (this .wasLive === undefined)
+            this .wasLive = browser .isLive ();
 
          browser .endUpdate ();
       }
