@@ -270,9 +270,13 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       if (!this ._AutoUpdate .getValue ())
          return;
 
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         hidden  = document .webkitHidden !== undefined ? document .webkitHidden : document .hidden;
 
-      if ((!document .hidden && this .isIntersecting) || browser .getPose ())
+      // Only webkitHidden is reliable in Electron.
+
+      if ((!hidden && this .isIntersecting) || browser .getPose ())
       {
          this .isVisible = true;
 
