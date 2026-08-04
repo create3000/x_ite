@@ -25,7 +25,7 @@ function BrowserOptions (executionContext)
    this .textureQuality   = TextureQuality .MEDIUM;
    this .primitiveQuality = PrimitiveQuality .MEDIUM;
    this .shading          = Shading .GOURAUD;
-   this .wasLive          = true;
+   this .isVisible        = true;
 }
 
 Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .prototype),
@@ -249,6 +249,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          browser = this .getBrowser (),
          element = browser .getElement ();
 
+      if (this .isVisible)
+         this .wasLive = browser .isLive ();
+
       this .checkUpdateListener = () => this .checkUpdate ();
 
       document .addEventListener ("visibilitychange", this .checkUpdateListener);
@@ -271,6 +274,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       if ((!document .hidden && this .isIntersecting) || browser .getPose ())
       {
+         this .isVisible = true;
+
          if (this .wasLive)
             browser .beginUpdate ();
          else
@@ -278,7 +283,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       }
       else
       {
-         this .wasLive = browser .isLive ();
+         this .isVisible = false;
+         this .wasLive   = browser .isLive ();
 
          browser .endUpdate ();
       }
