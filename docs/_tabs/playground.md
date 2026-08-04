@@ -197,10 +197,10 @@ monaco: true
 <div class="playground">
   <div class="toolbar"></div>
   <div class="viewer-row">
-     <div class="viewer-column1 viewer-column">
-       <x3d-canvas splashScreen="false" debug="true" contentScale="auto" update="auto" xrSessionMode="IMMERSIVE_AR"></x3d-canvas>
-       <div class="console"></div>
-     </div>
-     <div class="viewer-column2 viewer-column"><div id="editor"></div></div>
+    <div class="viewer-column1 viewer-column">
+      <x3d-canvas splashScreen="false" debug="true" contentScale="auto" update="auto"></x3d-canvas>
+      <div class="console"></div>
+    </div>
+    <div class="viewer-column2 viewer-column"><div id="editor"></div></div>
   </div>
 </div>
