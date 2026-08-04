@@ -13524,7 +13524,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * function operators COMPLEMENT or ALPHAREPLICATE can be applied after the mode blending operation.
+       * function operators COMPLEMENT or ALPHA_REPLICATE can be applied after the mode blending operation.
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
