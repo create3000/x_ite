@@ -25,6 +25,7 @@ function BrowserOptions (executionContext)
    this .textureQuality   = TextureQuality .MEDIUM;
    this .primitiveQuality = PrimitiveQuality .MEDIUM;
    this .shading          = Shading .GOURAUD;
+   this .wasLive          = true;
 }
 
 Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .prototype),
@@ -270,13 +271,16 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       if ((!document .hidden && this .isIntersecting) || browser .getPose ())
       {
-         if (!browser .isLive ())
+         if (this .wasLive)
             browser .beginUpdate ();
+         else
+            browser .endUpdate ();
       }
       else
       {
-         if (browser .isLive ())
-            browser .endUpdate ();
+         this .wasLive = browser .isLive ();
+
+         browser .endUpdate ();
       }
    },
    set_ContentScale__ (contentScale)
