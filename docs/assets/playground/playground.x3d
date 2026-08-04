@@ -1,28 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
-    <component name='ParticleSystems' level='3'/>
+    <component name='Networking' level='4'/>
   </head>
   <Scene>
-    <Background
-        transparency='0.96'/>
     <Viewpoint
-        description='Initial View'
-        position='4.737889 4.718629 7.435519'
-        orientation='-0.640652763184828 0.744770464531058 0.186764536745701 0.746185800293648'/>
-    <ParticleSystem
-        geometryType='GEOMETRY'
-        maxParticles='10'
-        bboxSize='10 10 10'>
-      <PointEmitter
-          direction='0 0 0'
-          speed='1'/>
-      <Appearance>
-        <Material
-            diffuseColor='0 0.5 1'/>
-      </Appearance>
-      <Box/>
-    </ParticleSystem>
+        position='100.3924 -79.72891 141.733'
+        centerOfRotation='100.3924 -79.72891 0'/>
+    <Transform DEF='Playground'
+        scale='1 -1 1'>
+      <Group DEF='FlickerAnimation'>
+        <TimeSensor DEF='FlickerAnimationTimer'
+            description='Flicker Animation'
+            cycleInterval='2'
+            loop='true'/>
+        <ScalarInterpolator DEF='UnlitMaterialTransparencyInterpolator'
+            key='0, 0.1, 0.1, 0.2, 0.2, 0.3, 0.3, 0.4, 0.4, 0.5, 0.5, 0.6, 0.6, 0.7, 0.7, 0.8, 0.8, 0.9, 0.9, 1, 1'
+            keyValue='0, 0, 0.184271, 0.184271, 0.937542, 0.937542, 0.461983, 0.461983, 0.028615, 0.028615, 0.773194, 0.773194, 0.592807, 0.592807, 0.346158, 0.346158, 0.815429, 0.815429, 0.109764, 0.109764, 1'/>
+      </Group>
+      <Shape DEF='P'>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0.9568627 0.2627451 0.2117647'/>
+        </Appearance>
+        <InlineGeometry
+            url='"text.x3d#P"'/>
+      </Shape>
+      <Shape DEF='l'>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0.454902 0.2784314 0'/>
+        </Appearance>
+        <InlineGeometry
+            url='"text.x3d#l"'/>
+      </Shape>
+      <Shape DEF='a'>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0.8078431 0.4941176 0'/>
+        </Appearance>
+        <InlineGeometry
+            url='"text.x3d#a"'/>
+      </Shape>
+      <Shape DEF='y'>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0.5607843 0.8078431 0'/>
+        </Appearance>
+        <InlineGeometry
+            url='"text.x3d#y"'/>
+      </Shape>
+      <Shape DEF='g'>
+        <Appearance>
+          <UnlitMaterial DEF='gMaterial'
+              emissiveColor='0.1607843 0.5254902 0.8'/>
+        </Appearance>
+        <InlineGeometry
+            url='"text.x3d#g"'/>
+      </Shape>
+      <Shape DEF='r'>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0.08627451 0.3254902 0.4941176'/>
+        </Appearance>
+        <InlineGeometry
+            url='"text.x3d#r"'/>
+      </Shape>
+      <Shape DEF='o'>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0.4156863 0.1960784 0.6235294'/>
+        </Appearance>
+        <InlineGeometry
+            url='"text.x3d#o"'/>
+      </Shape>
+      <Shape DEF='u'>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0.7882353 0 0.4627451'/>
+        </Appearance>
+        <InlineGeometry
+            url='"text.x3d#u"'/>
+      </Shape>
+      <Shape DEF='n'>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0.9568627 0.2627451 0.2117647'/>
+        </Appearance>
+        <InlineGeometry
+            url='"text.x3d#n"'/>
+      </Shape>
+      <Shape DEF='d'>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0.454902 0.2784314 0'/>
+        </Appearance>
+        <InlineGeometry
+            url='"text.x3d#d"'/>
+      </Shape>
+    </Transform>
+    <ROUTE fromNode='UnlitMaterialTransparencyInterpolator' fromField='value_changed' toNode='gMaterial' toField='set_transparency'/>
+    <ROUTE fromNode='FlickerAnimationTimer' fromField='fraction_changed' toNode='UnlitMaterialTransparencyInterpolator' toField='set_fraction'/>
   </Scene>
 </X3D>
