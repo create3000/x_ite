@@ -266,11 +266,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
 
       bbox = X3DViewpointNode .prototype .lookAtBBox .call (this, layerNode, bbox, transitionTime, factor, straighten);
 
-      const
-         size   = bbox .size,
-         scaleX = size .x / this .getSizeX (),
-         scaleY = size .y / this .getSizeY (),
-         scale  = Math .max (scaleX, scaleY) * VIEW_ALL_SCALE_FACTOR;
+      const scale = this .getViewAllScale (bbox);
 
       const
          offset0 = this .getMinimumX () * scale - this .getMinimumX (),
@@ -292,16 +288,41 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    {
       bbox = X3DViewpointNode .prototype .viewAll .call (this, bbox);
 
-      const
-         size   = bbox .size,
-         scaleX = size .x / this .getSizeX (),
-         scaleY = size .y / this .getSizeY (),
-         scale  = Math .max (scaleX, scaleY) * VIEW_ALL_SCALE_FACTOR;
+      const scale = this .getViewAllScale (bbox);
 
       this ._fieldOfViewOffset [0] = this .getMinimumX () * scale - this .getMinimumX ();
       this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
       this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
       this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
+   },
+   getViewAllScale (bbox)
+   {
+      const
+         viewport = this .getBrowser () .getViewport (),
+         width    = viewport [2],
+         height   = viewport [3],
+         aspect   = width / height,
+         bboxSize = bbox .size;
+
+      let sizeX, sizeY;
+
+      if (aspect > this .getSizeX () / this .getSizeY ())
+      {
+         sizeX = (this .getSizeY () * aspect),
+         sizeY = this .getSizeY ();
+      }
+      else
+      {
+         sizeX = this .getSizeX (),
+         sizeY = (this .getSizeX () / aspect) / 2;
+      }
+
+      const
+         scaleX = bboxSize .x / sizeX,
+         scaleY = bboxSize .y / sizeY,
+         scale  = Math .max (scaleX, scaleY) * VIEW_ALL_SCALE_FACTOR;
+
+      return scale;
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
