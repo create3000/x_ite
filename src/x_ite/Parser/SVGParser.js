@@ -895,6 +895,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          {
             const geometryNode = scene .createNode ("IndexedTriangleSet");
 
+            this .idAttribute (xmlElement .getAttribute ("id"), "Fill", geometryNode);
+
             this .fillGeometries .set (xmlElement, geometryNode);
 
             shapeNode .geometry    = geometryNode;
@@ -921,6 +923,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          else
          {
             const geometryNode = scene .createNode ("IndexedLineSet");
+
+            this .idAttribute (xmlElement .getAttribute ("id"), "Stroke", geometryNode);
 
             this .strokeGeometries .set (xmlElement, geometryNode);
 
@@ -1154,7 +1158,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       //console .debug ("pattern");
    },
-   idAttribute (attribute, node)
+   idAttribute (attribute, suffix, node)
    {
       if (attribute === null)
          return;
@@ -1166,8 +1170,8 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       if (!name)
          return;
 
-      scene .addNamedNode (scene .getUniqueName (name), node);
-      scene .addExportedNode (scene .getUniqueExportName (name), node);
+      scene .addNamedNode (scene .getUniqueName (name + suffix), node);
+      scene .addExportedNode (scene .getUniqueExportName (name + suffix), node);
    },
    viewBoxAttribute (attribute, defaultValue)
    {
@@ -2497,7 +2501,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       // Set name.
 
-      this .idAttribute (xmlElement .getAttribute ("id"), transformNode);
+      this .idAttribute (xmlElement .getAttribute ("id"), "", transformNode);
 
       // Add node to parent.
 

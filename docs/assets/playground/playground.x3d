@@ -27,7 +27,7 @@
               emissiveColor='0.9568627 0.2627451 0.2117647'/>
         </Appearance>
         <InlineGeometry
-            url='"text.x3d#P"'/>
+            url='"playground.svg#PStroke"'/>
       </Shape>
       <Shape DEF='l'>
         <Appearance>
@@ -36,7 +36,7 @@
               emissiveColor='0.454902 0.2784314 0'/>
         </Appearance>
         <InlineGeometry
-            url='"text.x3d#l"'/>
+            url='"playground.svg#lStroke"'/>
       </Shape>
       <Shape DEF='a'>
         <Appearance>
@@ -45,7 +45,7 @@
               emissiveColor='0.8078431 0.4941176 0'/>
         </Appearance>
         <InlineGeometry
-            url='"text.x3d#a"'/>
+            url='"playground.svg#aStroke"'/>
       </Shape>
       <Shape DEF='y'>
         <Appearance>
@@ -54,7 +54,7 @@
               emissiveColor='0.5607843 0.8078431 0'/>
         </Appearance>
         <InlineGeometry
-            url='"text.x3d#y"'/>
+            url='"playground.svg#yStroke"'/>
       </Shape>
       <Shape DEF='g'>
         <Appearance>
@@ -64,7 +64,7 @@
               transparency='0.109764'/>
         </Appearance>
         <InlineGeometry
-            url='"text.x3d#g"'/>
+            url='"playground.svg#gStroke"'/>
       </Shape>
       <Shape DEF='r'>
         <Appearance>
@@ -73,7 +73,7 @@
               emissiveColor='0.08627451 0.3254902 0.4941176'/>
         </Appearance>
         <InlineGeometry
-            url='"text.x3d#r"'/>
+            url='"playground.svg#rStroke"'/>
       </Shape>
       <Shape DEF='o'>
         <Appearance>
@@ -82,7 +82,7 @@
               emissiveColor='0.4156863 0.1960784 0.6235294'/>
         </Appearance>
         <InlineGeometry
-            url='"text.x3d#o"'/>
+            url='"playground.svg#oStroke"'/>
       </Shape>
       <Shape DEF='u'>
         <Appearance>
@@ -91,7 +91,7 @@
               emissiveColor='0.7882353 0 0.4627451'/>
         </Appearance>
         <InlineGeometry
-            url='"text.x3d#u"'/>
+            url='"playground.svg#uStroke"'/>
       </Shape>
       <Shape DEF='n'>
         <Appearance>
@@ -100,7 +100,7 @@
               emissiveColor='0.9568627 0.2627451 0.2117647'/>
         </Appearance>
         <InlineGeometry
-            url='"text.x3d#n"'/>
+            url='"playground.svg#nStroke"'/>
       </Shape>
       <Shape DEF='d'>
         <Appearance>
@@ -109,7 +109,7 @@
               emissiveColor='0.454902 0.2784314 0'/>
         </Appearance>
         <InlineGeometry
-            url='"text.x3d#d"'/>
+            url='"playground.svg#dStroke"'/>
       </Shape>
     </Transform>
     <ROUTE fromNode='UnlitMaterialTransparencyInterpolator' fromField='value_changed' toNode='gMaterial' toField='set_transparency'/>
