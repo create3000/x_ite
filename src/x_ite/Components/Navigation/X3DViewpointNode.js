@@ -557,7 +557,9 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    viewAll (layerNode, bbox)
    {
-      bbox = bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());
+      const center = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy ();
+
+      bbox = bbox .copy () .multRight (this .getViewMatrix ());
 
       if (bbox .size .equals (Vector3 .ZERO))
       {
@@ -567,14 +569,14 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       else
       {
          const
-            direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
+            direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
             distance        = this .getLookAtDistance (layerNode, bbox),
-            userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
-            userOrientation = this .getLookAtRotation (userPosition, bbox .center);
+            userPosition    = center .copy () .add (direction .multiply (distance)),
+            userOrientation = this .getLookAtRotation (userPosition, center);
 
          this ._positionOffset         = userPosition .subtract (this .getPosition ());
          this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
-         this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
+         this ._centerOfRotationOffset = center .copy () .subtract (this .getCenterOfRotation ());
          this ._fieldOfViewScale       = 1;
          this .nearDistance            = distance * (0.125 / 10);
          this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
