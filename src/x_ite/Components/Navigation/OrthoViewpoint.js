@@ -288,6 +288,21 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       this ._fieldOfViewOffset [2] = offset2;
       this ._fieldOfViewOffset [3] = offset3;
    },
+   viewAll (bbox)
+   {
+      bbox = X3DViewpointNode .prototype .viewAll .call (this, bbox);
+
+      const
+         size   = bbox .size,
+         scaleX = size .x / this .getSizeX (),
+         scaleY = size .y / this .getSizeY (),
+         scale  = Math .max (scaleX, scaleY) * VIEW_ALL_SCALE_FACTOR;
+
+      this ._fieldOfViewOffset [0] = this .getMinimumX () * scale - this .getMinimumX ();
+      this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
+      this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
+      this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
+   },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
       const
@@ -313,21 +328,6 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
 
          return Camera .ortho (this .getUserMinimumX (), this .getUserMaximumX (), center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
       }
-   },
-   viewAll (bbox)
-   {
-      bbox = X3DViewpointNode .prototype .viewAll .call (this, bbox);
-
-      const
-         size   = bbox .size,
-         scaleX = size .x / this .getSizeX (),
-         scaleY = size .y / this .getSizeY (),
-         scale  = Math .max (scaleX, scaleY) * VIEW_ALL_SCALE_FACTOR;
-
-      this ._fieldOfViewOffset [0] = this .getMinimumX () * scale - this .getMinimumX ();
-      this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
-      this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
-      this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
    },
    convertFields (fields)
    {
