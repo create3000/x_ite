@@ -113,11 +113,11 @@ Contains metadata keyword=value pairs, where approved keyword terms are humanoid
 ### SFString [in, out] **version** "2.1"
 {: #fields-version }
 
-**HAnimHumanoid** *version*, where allowed value is 2.0 for final ISO 19774 *version* 2019.
+**HAnimHumanoid** *version*, where allowed value is 2.0 for final ISO 19774 *version* 2019, or 2.1 for developmental *version* 202x.
 
 #### Hint
 
-- Default **HAnimHumanoid** *version* is 1.0 for X3D *version* 3, and **HAnimHumanoid** required *version* is 2.0 for X3D *version* 4.
+- Default **HAnimHumanoid** *version* is 2.0 for X3D *version* 3, and **HAnimHumanoid** required *version* is 2.0 for X3D *version* 4.
 
 #### Warnings
 
