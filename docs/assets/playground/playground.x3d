@@ -22,7 +22,7 @@
       <Shape DEF='P'>
         <Appearance>
           <LineProperties DEF='_1'
-              linewidthScaleFactor='2'/>
+              linewidthScaleFactor='4'/>
           <UnlitMaterial
               emissiveColor='0.9568627 0.2627451 0.2117647'/>
         </Appearance>
