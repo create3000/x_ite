@@ -474,7 +474,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       if (bbox .size .equals (Vector3 .ZERO))
          return;
 
-      bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .rotate (this .getUserOrientation ()) .inverse ());
+      bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
 
       this .lookAt (layerNode, bbox .center, this .getLookAtDistance (layerNode, bbox), transitionTime, factor, straighten);
 
@@ -555,7 +555,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    viewAll (layerNode, bbox)
    {
-      bbox = bbox .copy () .multRight (this .modelMatrix .copy () .rotate (this .getUserOrientation ()) .inverse ());
+      bbox = bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());
 
       if (bbox .size .equals (Vector3 .ZERO))
       {
