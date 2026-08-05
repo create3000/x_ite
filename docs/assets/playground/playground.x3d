@@ -21,6 +21,8 @@
       </Group>
       <Shape DEF='P'>
         <Appearance>
+          <LineProperties DEF='_1'
+              linewidthScaleFactor='2'/>
           <UnlitMaterial
               emissiveColor='0.9568627 0.2627451 0.2117647'/>
         </Appearance>
@@ -29,6 +31,7 @@
       </Shape>
       <Shape DEF='l'>
         <Appearance>
+          <LineProperties USE='_1'/>
           <UnlitMaterial
               emissiveColor='0.454902 0.2784314 0'/>
         </Appearance>
@@ -37,6 +40,7 @@
       </Shape>
       <Shape DEF='a'>
         <Appearance>
+          <LineProperties USE='_1'/>
           <UnlitMaterial
               emissiveColor='0.8078431 0.4941176 0'/>
         </Appearance>
@@ -45,6 +49,7 @@
       </Shape>
       <Shape DEF='y'>
         <Appearance>
+          <LineProperties USE='_1'/>
           <UnlitMaterial
               emissiveColor='0.5607843 0.8078431 0'/>
         </Appearance>
@@ -53,14 +58,17 @@
       </Shape>
       <Shape DEF='g'>
         <Appearance>
+          <LineProperties USE='_1'/>
           <UnlitMaterial DEF='gMaterial'
-              emissiveColor='0.1607843 0.5254902 0.8'/>
+              emissiveColor='0.1607843 0.5254902 0.8'
+              transparency='0.109764'/>
         </Appearance>
         <InlineGeometry
             url='"text.x3d#g"'/>
       </Shape>
       <Shape DEF='r'>
         <Appearance>
+          <LineProperties USE='_1'/>
           <UnlitMaterial
               emissiveColor='0.08627451 0.3254902 0.4941176'/>
         </Appearance>
@@ -69,6 +77,7 @@
       </Shape>
       <Shape DEF='o'>
         <Appearance>
+          <LineProperties USE='_1'/>
           <UnlitMaterial
               emissiveColor='0.4156863 0.1960784 0.6235294'/>
         </Appearance>
@@ -77,6 +86,7 @@
       </Shape>
       <Shape DEF='u'>
         <Appearance>
+          <LineProperties USE='_1'/>
           <UnlitMaterial
               emissiveColor='0.7882353 0 0.4627451'/>
         </Appearance>
@@ -85,6 +95,7 @@
       </Shape>
       <Shape DEF='n'>
         <Appearance>
+          <LineProperties USE='_1'/>
           <UnlitMaterial
               emissiveColor='0.9568627 0.2627451 0.2117647'/>
         </Appearance>
@@ -93,6 +104,7 @@
       </Shape>
       <Shape DEF='d'>
         <Appearance>
+          <LineProperties USE='_1'/>
           <UnlitMaterial
               emissiveColor='0.454902 0.2784314 0'/>
         </Appearance>
