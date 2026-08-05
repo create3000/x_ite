@@ -255,7 +255,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          return viewportSize .set (sizeX, sizeX / aspect);
       };
    })(),
-   getLookAtDistance (bbox)
+   getLookAtDistance (layerNode, bbox)
    {
       return bbox .size .norm () / 2 + 10;
    },
@@ -320,9 +320,9 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       const
          scaleX = bboxSize .x / sizeX,
          scaleY = bboxSize .y / sizeY,
-         scale  = Math .max (scaleX, scaleY) * VIEW_ALL_SCALE_FACTOR;
+         scale  = Math .max (scaleX, scaleY);
 
-      return scale;
+      return scale * VIEW_ALL_SCALE_FACTOR;
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {

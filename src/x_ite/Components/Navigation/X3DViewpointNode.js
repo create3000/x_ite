@@ -476,7 +476,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
 
-      this .lookAt (layerNode, bbox .center, this .getLookAtDistance (bbox), transitionTime, factor, straighten);
+      this .lookAt (layerNode, bbox .center, this .getLookAtDistance (layerNode, bbox), transitionTime, factor, straighten);
 
       return bbox;
    },
@@ -566,7 +566,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       {
          const
             direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
-            distance        = this .getLookAtDistance (bbox),
+            distance        = this .getLookAtDistance (layerNode, bbox),
             userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
             userOrientation = this .getLookAtRotation (userPosition, bbox .center);
 

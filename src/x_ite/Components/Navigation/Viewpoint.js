@@ -8,6 +8,8 @@ import Camera               from "../../../standard/Math/Geometry/Camera.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
+const VIEW_ALL_SCALE_FACTOR = 1.1;
+
 function Viewpoint (executionContext)
 {
    X3DViewpointNode .call (this, executionContext);
@@ -117,9 +119,28 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
          return viewportSize .set (size, size / aspect);
       };
    })(),
-   getLookAtDistance (bbox)
+   getLookAtDistance (layerNode, bbox)
    {
-      return (bbox .size .norm () / 2) / Math .tan (this .getUserFieldOfView () / 2);
+      const viewport = layerNode .getViewport () .getRectangle ();
+
+      let size;
+
+      if (viewport [2] / viewport [3] < 1)
+      {
+         size = viewport [2] / viewport [3] < bbox .size .x / bbox .size .y
+            ? bbox .size .x
+            : bbox .size .y * (viewport [2] / viewport [3]);
+      }
+      else
+      {
+         size = viewport [2] / viewport [3] < bbox .size .x / bbox .size .y
+            ? bbox .size .x * (viewport [3] / viewport [2])
+            : bbox .size .y;
+      }
+
+      size *= VIEW_ALL_SCALE_FACTOR;
+
+      return (size / 2) / Math .tan (this .getUserFieldOfView () / 2);
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
