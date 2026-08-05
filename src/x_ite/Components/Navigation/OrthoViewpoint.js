@@ -11,6 +11,8 @@ import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
+const VIEW_ALL_SCALE_FACTOR = 1.1;
+
 function OrthoViewpoint (executionContext)
 {
    X3DViewpointNode .call (this, executionContext);
@@ -268,7 +270,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          size   = bbox .size,
          scaleX = size .x / this .getSizeX (),
          scaleY = size .y / this .getSizeY (),
-         scale  = Math .max (scaleX, scaleY) * 1.1;
+         scale  = Math .max (scaleX, scaleY) * VIEW_ALL_SCALE_FACTOR;
 
       const
          offset0 = this .getMinimumX () * scale - this .getMinimumX (),
@@ -320,7 +322,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          size   = bbox .size,
          scaleX = size .x / this .getSizeX (),
          scaleY = size .y / this .getSizeY (),
-         scale  = Math .max (scaleX, scaleY) * 1.1;
+         scale  = Math .max (scaleX, scaleY) * VIEW_ALL_SCALE_FACTOR;
 
       this ._fieldOfViewOffset [0] = this .getMinimumX () * scale - this .getMinimumX ();
       this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
