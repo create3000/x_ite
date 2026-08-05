@@ -1171,7 +1171,9 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          return;
 
       scene .addNamedNode (scene .getUniqueName (name + suffix), node);
-      scene .addExportedNode (scene .getUniqueExportName (name + suffix), node);
+
+      if (!suffix)
+         scene .addExportedNode (scene .getUniqueExportName (name), node);
    },
    viewBoxAttribute (attribute, defaultValue)
    {
