@@ -308,13 +308,13 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
 
       if (aspect > this .getSizeX () / this .getSizeY ())
       {
-         sizeX = (this .getSizeY () * aspect),
+         sizeX = this .getSizeY () * aspect,
          sizeY = this .getSizeY ();
       }
       else
       {
          sizeX = this .getSizeX (),
-         sizeY = (this .getSizeX () / aspect) / 2;
+         sizeY = this .getSizeX () / aspect;
       }
 
       const
