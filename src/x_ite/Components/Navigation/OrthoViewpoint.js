@@ -89,22 +89,14 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    getRelativeTransformation (fromViewpointNode)
    {
-      const relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);
+      const
+         relative = X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode),
+         same     = fromViewpointNode .constructor === this .constructor;
 
-      if (fromViewpointNode .constructor === this .constructor)
-      {
-         relative .userMinimumX = fromViewpointNode .getUserMinimumX ();
-         relative .userMinimumY = fromViewpointNode .getUserMinimumY ();
-         relative .userMaximumX = fromViewpointNode .getUserMaximumX ();
-         relative .userMaximumY = fromViewpointNode .getUserMaximumY ();
-      }
-      else
-      {
-         relative .userMinimumX = 0;
-         relative .userMinimumY = 0;
-         relative .userMaximumX = 0;
-         relative .userMaximumY = 0;
-      }
+      relative .userMinimumX = same ? fromViewpointNode .getUserMinimumX () : 0;
+      relative .userMinimumY = same ? fromViewpointNode .getUserMinimumY () : 0;
+      relative .userMaximumX = same ? fromViewpointNode .getUserMaximumX () : 0;
+      relative .userMaximumY = same ? fromViewpointNode .getUserMaximumY () : 0;
 
       return relative;
    },
