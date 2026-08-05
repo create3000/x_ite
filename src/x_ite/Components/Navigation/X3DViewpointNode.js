@@ -474,9 +474,11 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       if (bbox .size .equals (Vector3 .ZERO))
          return;
 
-      bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
+      const center = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy ();
 
-      this .lookAt (layerNode, bbox .center, this .getLookAtDistance (layerNode, bbox), transitionTime, factor, straighten);
+      bbox = bbox .copy () .multRight (this .getViewMatrix ());
+
+      this .lookAt (layerNode, center, this .getLookAtDistance (layerNode, bbox), transitionTime, factor, straighten);
 
       return bbox;
    },
