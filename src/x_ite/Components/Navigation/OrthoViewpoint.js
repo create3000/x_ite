@@ -246,7 +246,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    {
       const viewportSize = new Vector2 ();
 
-      return function (viewport, nearValue)
+      return function (viewport /*, nearValue */)
       {
          const
             width  = viewport [2],
