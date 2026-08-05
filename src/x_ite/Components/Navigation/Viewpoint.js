@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
 
       size *= VIEW_ALL_SCALE_FACTOR;
 
-      return (size / 2) / Math .tan (this .getUserFieldOfView () / 2);
+      return (size / 2) / Math .tan (this .getUserFieldOfView () / 2) + bbox .size .z / 2;
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
