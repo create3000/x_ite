@@ -266,7 +266,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
 
       bbox = X3DViewpointNode .prototype .lookAtBBox .call (this, layerNode, bbox, transitionTime, factor, straighten);
 
-      const scale = this .getViewAllScale (bbox);
+      const scale = this .getViewAllScale (layerNode, bbox);
 
       const
          offset0 = this .getMinimumX () * scale - this .getMinimumX (),
@@ -284,21 +284,21 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       this ._fieldOfViewOffset [2] = offset2;
       this ._fieldOfViewOffset [3] = offset3;
    },
-   viewAll (bbox)
+   viewAll (layerNode, bbox)
    {
-      bbox = X3DViewpointNode .prototype .viewAll .call (this, bbox);
+      bbox = X3DViewpointNode .prototype .viewAll .call (this, layerNode, bbox);
 
-      const scale = this .getViewAllScale (bbox);
+      const scale = this .getViewAllScale (layerNode, bbox);
 
       this ._fieldOfViewOffset [0] = this .getMinimumX () * scale - this .getMinimumX ();
       this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
       this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
       this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
    },
-   getViewAllScale (bbox)
+   getViewAllScale (layerNode, bbox)
    {
       const
-         viewport = this .getBrowser () .getViewport (),
+         viewport = layerNode .getViewport () .getRectangle (),
          width    = viewport [2],
          height   = viewport [3],
          aspect   = width / height,

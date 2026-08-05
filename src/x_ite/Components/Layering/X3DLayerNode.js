@@ -284,7 +284,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       viewpointNode .resetUserOffsets ();
 
       if (viewpointNode ._viewAll .getValue ())
-         viewpointNode .viewAll (this .getBBox (new Box3 ()));
+         viewpointNode .viewAll (this, this .getBBox (new Box3 ()));
 
       viewpointNode .update ();
    },

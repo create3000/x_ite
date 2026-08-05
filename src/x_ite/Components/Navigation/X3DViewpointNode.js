@@ -309,7 +309,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
             this .resetUserOffsets ();
 
          if (this ._viewAll .getValue ())
-            this .viewAll (layerNode .getBBox (new Box3 ()));
+            this .viewAll (layerNode, layerNode .getBBox (new Box3 ()));
 
          // Handle NavigationInfo.
 
@@ -553,7 +553,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       return orientation .straighten (upVector);
    },
-   viewAll (bbox)
+   viewAll (layerNode, bbox)
    {
       bbox = bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());
 
