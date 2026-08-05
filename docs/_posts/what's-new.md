@@ -14,6 +14,8 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 ### Notable Changes
 
 - [x] Improved context menu handling on mobile devices.
+- [x] Fixed bug in X3DViewpointNode.viewAll if there are transformations above the node.
+- [x] Fixed a bug in OrthoViewpoint when a transition is made.
 
 ## X_ITE v16.0 Series
 
