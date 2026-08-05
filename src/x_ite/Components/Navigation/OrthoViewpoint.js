@@ -7,6 +7,7 @@ import ScalarInterpolator   from "../Interpolation/ScalarInterpolator.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Camera               from "../../../standard/Math/Geometry/Camera.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
@@ -83,6 +84,8 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       this ._fieldOfViewOffset [1] = 0;
       this ._fieldOfViewOffset [2] = 0;
       this ._fieldOfViewOffset [3] = 0;
+
+      this ._fieldOfViewScale = 1;
    },
    getRelativeTransformation (fromViewpointNode)
    {
@@ -94,6 +97,13 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          relative .userMinimumY = fromViewpointNode .getUserMinimumY ();
          relative .userMaximumX = fromViewpointNode .getUserMaximumX ();
          relative .userMaximumY = fromViewpointNode .getUserMaximumY ();
+      }
+      else
+      {
+         relative .userMinimumX = 0;
+         relative .userMinimumY = 0;
+         relative .userMaximumX = 0;
+         relative .userMaximumY = 0;
       }
 
       return relative;
@@ -114,10 +124,10 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (offset3, this ._fieldOfViewOffset [3]);
          this .fieldOfViewScaleInterpolator   ._keyValue = new Fields .MFFloat (1, this ._fieldOfViewScale .getValue ());
 
-         this ._fieldOfViewOffset [0] = relative .offset0;
-         this ._fieldOfViewOffset [1] = relative .offset1;
-         this ._fieldOfViewOffset [2] = relative .offset2;
-         this ._fieldOfViewOffset [3] = relative .offset3;
+         this ._fieldOfViewOffset [0] = offset0;
+         this ._fieldOfViewOffset [1] = offset1;
+         this ._fieldOfViewOffset [2] = offset2;
+         this ._fieldOfViewOffset [3] = offset3;
          this ._fieldOfViewScale      = 1;
       }
       else
@@ -255,6 +265,35 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    {
       return bbox .size .norm () / 2 + 10;
    },
+   lookAtBBox (layerNode, bbox, transitionTime, factor, straighten)
+   {
+      if (bbox .size .equals (Vector3 .ZERO))
+         return;
+
+      bbox = X3DViewpointNode .prototype .lookAtBBox .call (this, layerNode, bbox, transitionTime, factor, straighten);
+
+      const
+         size   = bbox .size,
+         scaleX = size .x / this .getSizeX (),
+         scaleY = size .y / this .getSizeY (),
+         scale  = Math .max (scaleX, scaleY) * 1.1;
+
+      const
+         offset0 = this .getMinimumX () * scale - this .getMinimumX (),
+         offset1 = this .getMinimumY () * scale - this .getMinimumY (),
+         offset2 = this .getMaximumX () * scale - this .getMaximumX (),
+         offset3 = this .getMaximumY () * scale - this .getMaximumY ();
+
+      this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [0], offset0);
+      this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [1], offset1);
+      this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [2], offset2);
+      this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [3], offset3);
+
+      this ._fieldOfViewOffset [0] = offset0;
+      this ._fieldOfViewOffset [1] = offset1;
+      this ._fieldOfViewOffset [2] = offset2;
+      this ._fieldOfViewOffset [3] = offset3;
+   },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
       const
@@ -283,7 +322,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    viewAll (bbox)
    {
-      X3DViewpointNode .prototype .viewAll .call (this, bbox);
+      bbox = X3DViewpointNode .prototype .viewAll .call (this, bbox);
 
       const
          size   = bbox .size,

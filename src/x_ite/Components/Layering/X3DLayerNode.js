@@ -222,12 +222,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       const
          viewpointNode = this .getViewpoint (),
-         bbox          = this .getBBox (new Box3 ()) .multRight (viewpointNode .getModelMatrix () .copy () .inverse ());
+         bbox          = this .getBBox (new Box3 ());
 
-      if (bbox .size .equals (Vector3 .ZERO))
-         return;
-
-      viewpointNode .lookAt (this, bbox .center, viewpointNode .getLookAtDistance (bbox), transitionTime, factor, straighten);
+      viewpointNode .lookAtBBox (this, bbox, transitionTime, factor, straighten);
    },
    straightenView ()
    {

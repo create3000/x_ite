@@ -895,7 +895,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          {
             const geometryNode = scene .createNode ("IndexedTriangleSet");
 
-            this .idAttribute (xmlElement .getAttribute ("id"), "Fill", geometryNode);
+            this .idAttribute (xmlElement .getAttribute ("id"), "Fill", geometryNode, { named: true });
 
             this .fillGeometries .set (xmlElement, geometryNode);
 
@@ -924,7 +924,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          {
             const geometryNode = scene .createNode ("IndexedLineSet");
 
-            this .idAttribute (xmlElement .getAttribute ("id"), "Stroke", geometryNode);
+            this .idAttribute (xmlElement .getAttribute ("id"), "Stroke", geometryNode, { named: true });
 
             this .strokeGeometries .set (xmlElement, geometryNode);
 
@@ -1158,9 +1158,9 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       //console .debug ("pattern");
    },
-   idAttribute (attribute, suffix, node)
+   idAttribute (attribute, suffix, node, { named, exported })
    {
-      if (attribute === null)
+      if (!attribute)
          return;
 
       const
@@ -1170,14 +1170,15 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       if (!name)
          return;
 
-      scene .addNamedNode (scene .getUniqueName (name + suffix), node);
+      if (named)
+         scene .addNamedNode (scene .getUniqueName (name + suffix), node);
 
-      if (!suffix)
+      if (exported)
          scene .addExportedNode (scene .getUniqueExportName (name), node);
    },
    viewBoxAttribute (attribute, defaultValue)
    {
-      if (attribute === null)
+      if (!attribute)
          return defaultValue;
 
       this .parseValue (attribute);
@@ -1221,7 +1222,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       // Returns length in pixel.
 
-      if (attribute === null)
+      if (!attribute)
          return defaultValue;
 
       this .parseValue (attribute);
@@ -1305,7 +1306,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    },
    pointsAttribute (attribute, points)
    {
-      if (attribute === null)
+      if (!attribute)
          return false;
 
       this .parseValue (attribute);
@@ -1337,7 +1338,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    },
    dAttribute (attribute, contours)
    {
-      if (attribute === null)
+      if (!attribute)
          return false;
 
       this .parseValue (attribute);
@@ -1869,7 +1870,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    {
       const matrix = new Matrix3 ();
 
-      if (attribute === null)
+      if (!attribute)
          return matrix;
 
       this .parseValue (attribute);
@@ -2121,7 +2122,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    },
    styleAttribute (attribute)
    {
-      if (attribute === null)
+      if (!attribute)
          return;
 
       const values = attribute .split (";");
@@ -2503,7 +2504,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       // Set name.
 
-      this .idAttribute (xmlElement .getAttribute ("id"), "", transformNode);
+      this .idAttribute (xmlElement .getAttribute ("id"), "", transformNode, { named: true, exported: true });
 
       // Add node to parent.
 
