@@ -5,7 +5,7 @@ import X3DBBoxNode  from "../../Browser/Grouping/X3DBBoxNode.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
 import Box3         from "../../../standard/Math/Geometry/Box3.js";
 
-function X3DBoundedObject (executionContext)
+function X3DBoundedObject (/* executionContext */)
 {
    this .addType (X3DConstants .X3DBoundedObject);
 
