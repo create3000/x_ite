@@ -263,7 +263,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    {
       X3DViewpointNode .prototype .lookAt .call (this, layerNode, point, distance, transitionTime, 0, straighten);
 
-      const scale = 1 - (0.5 * factor);
+      const scale = 1 - (0.9 * factor);
 
       const
          offset0 = this .getUserMinimumX () * scale - this .getMinimumX (),

@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
          viewpointNode = this .getActiveViewpoint (),
          hit           = this .getBrowser () .getHit ();
 
-      viewpointNode .lookAtPoint (this .getActiveLayer (), hit .point, 1, 0.8, straightenHorizon);
+      viewpointNode .lookAtPoint (this .getActiveLayer (), hit .point, 1, 0.5, straightenHorizon);
    },
    lookAtBBox (x, y, straightenHorizon)
    {
