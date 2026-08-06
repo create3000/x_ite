@@ -116,13 +116,13 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (offset1, this ._fieldOfViewOffset [1]);
          this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (offset2, this ._fieldOfViewOffset [2]);
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (offset3, this ._fieldOfViewOffset [3]);
-         this .fieldOfViewScaleInterpolator   ._keyValue = new Fields .MFFloat (1, this ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator   ._keyValue = new Fields .MFFloat (fromViewpointNode ._fieldOfViewScale .getValue (), 1);
 
          this ._fieldOfViewOffset [0] = offset0;
          this ._fieldOfViewOffset [1] = offset1;
          this ._fieldOfViewOffset [2] = offset2;
          this ._fieldOfViewOffset [3] = offset3;
-         this ._fieldOfViewScale      = 1;
+         this ._fieldOfViewScale      = fromViewpointNode ._fieldOfViewScale .getValue ();
       }
       else
       {
@@ -130,7 +130,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [1], this ._fieldOfViewOffset [1]);
          this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [2], this ._fieldOfViewOffset [2]);
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [3], this ._fieldOfViewOffset [3]);
-         this .fieldOfViewScaleInterpolator   ._keyValue = new Fields .MFFloat (1, this ._fieldOfViewOffset .getValue ());
+         this .fieldOfViewScaleInterpolator   ._keyValue = new Fields .MFFloat (1, 1);
 
          this ._fieldOfViewOffset = this ._fieldOfViewOffset .getValue ();
          this ._fieldOfViewScale  = 1;
@@ -261,6 +261,8 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    lookAt (layerNode, point, distance, transitionTime, factor, straighten)
    {
+      const fieldOfViewOffset = this ._fieldOfViewOffset .copy ();
+
       X3DViewpointNode .prototype .lookAt .call (this, layerNode, point, distance, transitionTime, 0, straighten);
 
       const scale = 1 - (0.9 * factor);
@@ -271,15 +273,17 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          offset2 = this .getUserMaximumX () * scale - this .getMaximumX (),
          offset3 = this .getUserMaximumY () * scale - this .getMaximumY ();
 
-      this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [0], offset0);
-      this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [1], offset1);
-      this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [2], offset2);
-      this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [3], offset3);
+      this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [0], offset0);
+      this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [1], offset1);
+      this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [2], offset2);
+      this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [3], offset3);
    },
    lookAtBBox (layerNode, bbox, transitionTime, factor, straighten)
    {
       if (bbox .size .equals (Vector3 .ZERO))
          return;
+
+      const fieldOfViewOffset = this ._fieldOfViewOffset .copy ();
 
       bbox = X3DViewpointNode .prototype .lookAtBBox .call (this, layerNode, bbox, transitionTime, factor, straighten);
 
@@ -291,10 +295,10 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          offset2 = this .getMaximumX () * scale - this .getMaximumX (),
          offset3 = this .getMaximumY () * scale - this .getMaximumY ();
 
-      this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [0], offset0);
-      this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [1], offset1);
-      this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [2], offset2);
-      this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [3], offset3);
+      this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [0], offset0);
+      this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [1], offset1);
+      this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [2], offset2);
+      this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [3], offset3);
    },
    viewAll (layerNode, bbox)
    {

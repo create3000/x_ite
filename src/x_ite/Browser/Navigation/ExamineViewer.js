@@ -40,8 +40,6 @@ function ExamineViewer (executionContext, navigationInfo)
    this .touchMode                = 0;
    this .touch1                   = new Vector2 ();
    this .touch2                   = new Vector2 ();
-   this .tapStart                 = 0;
-   this .dblTapInterval           = 0.4;
 
    this .initialPositionOffset    = new Vector3 ();
    this .initialOrientationOffset = new Rotation4 ();

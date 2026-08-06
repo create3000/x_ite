@@ -44,15 +44,15 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
       {
          const scale = relative .fieldOfView / this .getUserFieldOfView ();
 
-         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (scale, this ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (scale, 1);
 
          this ._fieldOfViewScale = scale;
       }
       else
       {
-         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (this ._fieldOfViewScale .getValue (), this ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new Fields .MFFloat (1, 1);
 
-         this ._fieldOfViewScale = this ._fieldOfViewScale .getValue ();
+         this ._fieldOfViewScale = 1;
       }
    },
    getLogarithmicDepthBuffer ()

@@ -37,6 +37,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       $.on (this, surface, "mousedown", event => this .mousedown (event));
       $.on (this, surface, "mouseup",   event => this .mouseup   (event));
+      $.on (this, surface, "dblclick",  event => this .dblclick  (event));
       $.on (this, surface, "wheel",     event => this .wheel     (event));
 
       $.on (this, surface, "touchstart", event => this .touchstart (event));
@@ -97,6 +98,23 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       this .getBrowser () .setCursor ("DEFAULT");
 
       this ._isActive = false;
+   },
+   dblclick (event)
+   {
+      // Stop event propagation.
+
+      event .preventDefault ();
+
+      // Look at.
+
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+
+      this .disconnect ();
+
+      if (this .getBrowser () .getAltKey ())
+         this .lookAtPoint (x, y, this .getStraightenHorizon ());
+      else
+         this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
    mousemove (event)
    {
@@ -196,12 +214,33 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    {
       event = this .getBrowser () .copyEvent (event);
 
-      // End move (button 0).
+      switch (this .button)
+      {
+         case 0:
+         {
+            // End move (button 0).
 
-      this .touchMode = 0;
-      event .button   = 0;
+            this .touchMode = 0;
+            event .button   = 0;
 
-      this .mouseup (event);
+            this .mouseup (event);
+
+            // Start dblclick (button 0).
+
+            if (this .tapedTwice)
+            {
+               this .dblclick (event);
+            }
+            else
+            {
+               this .tapedTwice = true;
+
+               setTimeout (() => this .tapedTwice = false, 300);
+            }
+
+            break;
+         }
+      }
    },
    touchmove: (() =>
    {
