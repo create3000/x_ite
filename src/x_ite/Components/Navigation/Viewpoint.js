@@ -131,12 +131,12 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
       {
          size = viewport [2] / viewport [3] < bboxSize .x / bboxSize .y
             ? bboxSize .x
-            : bboxSize .y * (viewport [2] / viewport [3]);
+            : bboxSize .y * viewport [2] / viewport [3];
       }
       else
       {
          size = viewport [2] / viewport [3] < bboxSize .x / bboxSize .y
-            ? bboxSize .x * (viewport [3] / viewport [2])
+            ? bboxSize .x * viewport [3] / viewport [2]
             : bboxSize .y;
       }
 
