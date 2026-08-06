@@ -7,6 +7,7 @@ import $            from "../../lib/helper.js";
 import DEVELOPMENT  from "../DEVELOPMENT.js";
 
 // http://paulbourke.net/dataformats/obj/
+// https://paulbourke.net/dataformats/mtl/
 // https://people.sc.fsu.edu/~jburkardt/data/obj/obj.html
 
 /*
@@ -34,6 +35,8 @@ const Grammar = Expressions ({
    illum: /\billum\b/y,
    map_Ka: /\bmap_Ka\b/y,
    map_Kd: /\bmap_Kd\b/y,
+   map_Ks: /\map_Ks\b/y,
+   map_Ns: /\map_Ns\b/y,
    o: /\bo\b/y,
    v: /\bv\b/y,
    vt: /\bvt\b/y,
@@ -268,9 +271,6 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
          for (const [id, material] of parser .materials)
             this .materials .set (id, material);
-
-         for (const [id, material] of parser .materials)
-            console .log (material .toVRMLString ());
       }
       catch (error)
       {
@@ -821,10 +821,16 @@ Object .assign (MaterialParser .prototype,
       if (this .illum ())
          return true;
 
-      if (this .map_Ka ())
+      if (this .map_X ("map_Ka", "ambientTexture"))
          return true;
 
-      if (this .map_Kd ())
+      if (this .map_X ("map_Kd", "diffuseTexture"))
+         return true;
+
+      if (this .map_X ("map_Ks", "specularTexture"))
+         return true;
+
+      if (this .map_X ("map_Ns", "shininessTexture"))
          return true;
 
       // Skip empty and unknown lines.
@@ -1003,11 +1009,11 @@ Object .assign (MaterialParser .prototype,
 
       return false;
    },
-   map_Ka ()
+   map_X (map_X, materialTexture)
    {
       this .comments ();
 
-      if (Grammar .map_Ka .parse (this))
+      if (Grammar [map_X] .parse (this))
       {
          this .whitespacesNoLineTerminator ();
 
@@ -1036,54 +1042,7 @@ Object .assign (MaterialParser .prototype,
                      this .textures .set (path, texture);
                   }
 
-                  this .material .ambientTexture = texture;
-               }
-            }
-
-            return true;
-         }
-
-         Grammar .untilEndOfLine .parse (this);
-
-         return true;
-      }
-
-      return false;
-   },
-   map_Kd ()
-   {
-      this .comments ();
-
-      if (Grammar .map_Kd .parse (this))
-      {
-         this .whitespacesNoLineTerminator ();
-
-         if (Grammar .untilEndOfLine .parse (this))
-         {
-            const string = this .result [0];
-
-            if (string .length && this .id .length)
-            {
-               const paths = string .trim () .split (/\s+/);
-
-               if (paths .length)
-               {
-                  const path = paths .at (-1) .replace (/\\/g, "/");
-
-                  let texture = this .textures .get (path);
-
-                  if (!texture)
-                  {
-                     const scene = this .executionContext;
-
-                     texture = scene .createNode ("ImageTexture");
-
-                     texture .url = [path];
-
-                     this .textures .set (path, texture);
-                  }
-
-                  this .material .diffuseTexture = texture;
+                  this .material [materialTexture] = texture;
                }
             }
 
