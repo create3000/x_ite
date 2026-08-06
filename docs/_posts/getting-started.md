@@ -376,7 +376,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 | SOG              | .sog           | model/sog         | [By Using an Extension][8]      |
 | SPZ              | .spz           | model/spz         | [By Using an Extension][9]      |
 | OFF              | .off           | model/off         | [By Using an Extension][10]     |
-| SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
+| SVG Document     | .svg, .svgz    | image/svg+xml     | Basic Support                   |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
   [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
