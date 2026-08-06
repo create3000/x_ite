@@ -259,6 +259,23 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    {
       return bbox .size .norm () / 2 + 10;
    },
+   lookAt (layerNode, point, distance, transitionTime, factor, straighten)
+   {
+      X3DViewpointNode .prototype .lookAt .call (this, layerNode, point, distance, transitionTime, 0, straighten);
+
+      const scale = 1 - (0.5 * factor);
+
+      const
+         offset0 = this .getUserMinimumX () * scale - this .getMinimumX (),
+         offset1 = this .getUserMinimumY () * scale - this .getMinimumY (),
+         offset2 = this .getUserMaximumX () * scale - this .getMaximumX (),
+         offset3 = this .getUserMaximumY () * scale - this .getMaximumY ();
+
+      this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [0], offset0);
+      this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [1], offset1);
+      this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [2], offset2);
+      this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [3], offset3);
+   },
    lookAtBBox (layerNode, bbox, transitionTime, factor, straighten)
    {
       if (bbox .size .equals (Vector3 .ZERO))
@@ -278,11 +295,6 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [1], offset1);
       this .fieldOfViewOffsetInterpolator2 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [2], offset2);
       this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (this ._fieldOfViewOffset [3], offset3);
-
-      this ._fieldOfViewOffset [0] = offset0;
-      this ._fieldOfViewOffset [1] = offset1;
-      this ._fieldOfViewOffset [2] = offset2;
-      this ._fieldOfViewOffset [3] = offset3;
    },
    viewAll (layerNode, bbox)
    {
@@ -290,10 +302,10 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
 
       const scale = this .getViewAllScale (layerNode, bbox);
 
-      this ._fieldOfViewOffset [0] = this .getMinimumX () * scale - this .getMinimumX ();
-      this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
-      this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
-      this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
+      this ._fieldOfViewOffset [0] = this .getUserMinimumX () * scale - this .getUserMinimumX ();
+      this ._fieldOfViewOffset [1] = this .getUserMinimumY () * scale - this .getUserMinimumY ();
+      this ._fieldOfViewOffset [2] = this .getUserMaximumX () * scale - this .getUserMaximumX ();
+      this ._fieldOfViewOffset [3] = this .getUserMaximumY () * scale - this .getUserMaximumY ();
    },
    getViewAllScale (layerNode, bbox)
    {

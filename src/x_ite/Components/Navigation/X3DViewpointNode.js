@@ -514,14 +514,12 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, Vector3 .ONE);
       this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
-      const relative = this .getRelativeTransformation (this);
-
       this ._fieldOfViewScale       = 1;
       this ._centerOfRotationOffset = point .copy () .subtract (this .getCenterOfRotation ());
       this .nearDistance            = distance * (0.125 / 10);
       this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
 
-      this .setInterpolators (this, relative);
+      this .setInterpolators (this, this .getRelativeTransformation (this));
    },
    straightenView (layerNode)
    {
