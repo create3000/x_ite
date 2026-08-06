@@ -32,6 +32,7 @@ const Grammar = Expressions ({
    d: /\bd\b/y,
    Tr: /\bTr\b/y,
    illum: /\billum\b/y,
+   map_Ka: /\bmap_Ka\b/y,
    map_Kd: /\bmap_Kd\b/y,
    o: /\bo\b/y,
    v: /\bv\b/y,
@@ -70,7 +71,6 @@ function OBJParser (scene)
    this .smoothingGroups = new Map ();
    this .groups          = new Map ();
    this .materials       = new Map ();
-   this .textures        = new Map ();
    this .lastIndex       = 0;
 }
 
@@ -269,8 +269,8 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          for (const [id, material] of parser .materials)
             this .materials .set (id, material);
 
-         for (const [id, texture] of parser .textures)
-            this .textures .set (id, texture);
+         for (const [id, material] of parser .materials)
+            console .log (material .toVRMLString ());
       }
       catch (error)
       {
@@ -292,7 +292,6 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             const
                scene    = this .getExecutionContext (),
                material = this .materials .get (id) ?? this .createDefaultMaterial (id),
-               texture  = this .textures .get (id),
                name     = this .sanitizeName (id);
 
             if (name)
@@ -302,16 +301,9 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
                   scene .addNamedNode (scene .getUniqueName (name), material);
                   scene .addExportedNode (scene .getUniqueExportName (name), material);
                }
-
-               if (texture && !texture .getNodeName ())
-               {
-                  scene .addNamedNode (scene .getUniqueName (name), texture);
-                  scene .addExportedNode (scene .getUniqueExportName (name), texture);
-               }
             }
 
             this .material = material;
-            this .texture  = texture;
          }
 
          return true;
@@ -409,8 +401,6 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       id += this .group .getId ();
       id += ".";
       id += this .material .getId ();
-      id += ".";
-      id += this .texture ?.getId () ?? "";
 
       return id;
    },
@@ -565,7 +555,6 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             });
 
             appearance .material        = this .material;
-            appearance .texture         = this .texture;
             this .geometry .creaseAngle = this .smoothingGroup ? Math .PI : 0;
             this .shape .appearance     = appearance;
             this .shape .geometry       = this .geometry;
@@ -832,6 +821,9 @@ Object .assign (MaterialParser .prototype,
       if (this .illum ())
          return true;
 
+      if (this .map_Ka ())
+         return true;
+
       if (this .map_Kd ())
          return true;
 
@@ -1011,6 +1003,53 @@ Object .assign (MaterialParser .prototype,
 
       return false;
    },
+   map_Ka ()
+   {
+      this .comments ();
+
+      if (Grammar .map_Ka .parse (this))
+      {
+         this .whitespacesNoLineTerminator ();
+
+         if (Grammar .untilEndOfLine .parse (this))
+         {
+            const string = this .result [0];
+
+            if (string .length && this .id .length)
+            {
+               const paths = string .trim () .split (/\s+/);
+
+               if (paths .length)
+               {
+                  const path = paths .at (-1) .replace (/\\/g, "/");
+
+                  let texture = this .textures .get (path);
+
+                  if (!texture)
+                  {
+                     const scene = this .executionContext;
+
+                     texture = scene .createNode ("ImageTexture");
+
+                     texture .url = [path];
+
+                     this .textures .set (path, texture);
+                  }
+
+                  this .material .ambientTexture = texture;
+               }
+            }
+
+            return true;
+         }
+
+         Grammar .untilEndOfLine .parse (this);
+
+         return true;
+      }
+
+      return false;
+   },
    map_Kd ()
    {
       this .comments ();
@@ -1029,14 +1068,22 @@ Object .assign (MaterialParser .prototype,
 
                if (paths .length)
                {
-                  const
-                     scene   = this .executionContext,
-                     texture = scene .createNode ("ImageTexture"),
-                     path    = paths .at (-1) .replace (/\\/g, "/");
+                  const path = paths .at (-1) .replace (/\\/g, "/");
 
-                  texture .url = [path];
+                  let texture = this .textures .get (path);
 
-                  this .textures .set (this .id, texture);
+                  if (!texture)
+                  {
+                     const scene = this .executionContext;
+
+                     texture = scene .createNode ("ImageTexture");
+
+                     texture .url = [path];
+
+                     this .textures .set (path, texture);
+                  }
+
+                  this .material .diffuseTexture = texture;
                }
             }
 
