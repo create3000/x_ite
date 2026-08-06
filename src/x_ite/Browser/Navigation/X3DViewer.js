@@ -130,9 +130,9 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
       const
          viewpointNode = this .getActiveViewpoint (),
          hit           = this .getBrowser () .getHit (),
-         distance      = viewpointNode instanceof OrthoViewpoint ? 0 : 0.1;
+         factor        = viewpointNode instanceof OrthoViewpoint ? 0 : 0.8;
 
-      viewpointNode .lookAtPoint (this .getActiveLayer (), hit .point, 1, distance, straightenHorizon);
+      viewpointNode .lookAtPoint (this .getActiveLayer (), hit .point, 1, factor, straightenHorizon);
    },
    lookAtBBox (x, y, straightenHorizon)
    {
@@ -141,13 +141,14 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
 
       const
          viewpointNode = this .getActiveViewpoint (),
-         hit           = this .getBrowser () .getHit ();
+         hit           = this .getBrowser () .getHit (),
+         factor        = viewpointNode instanceof OrthoViewpoint ? 0 : 0.8;
 
       const bbox = hit .shapeNode .getBBox (new Box3 ())
          .multRight (hit .modelViewMatrix)
          .multRight (viewpointNode .getCameraSpaceMatrix ());
 
-      viewpointNode .lookAtBBox (this .getActiveLayer (), bbox, 1, 0.8, straightenHorizon);
+      viewpointNode .lookAtBBox (this .getActiveLayer (), bbox, 1, factor, straightenHorizon);
    },
    touch (x, y)
    {
