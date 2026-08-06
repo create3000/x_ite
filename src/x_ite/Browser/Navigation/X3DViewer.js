@@ -129,9 +129,10 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
 
       const
          viewpointNode = this .getActiveViewpoint (),
-         hit           = this .getBrowser () .getHit ();
+         hit           = this .getBrowser () .getHit (),
+         distance      = viewpointNode instanceof OrthoViewpoint ? 0 : 0.1;
 
-      viewpointNode .lookAtPoint (this .getActiveLayer (), hit .point, 1, 0.8, straightenHorizon);
+      viewpointNode .lookAtPoint (this .getActiveLayer (), hit .point, 1, distance, straightenHorizon);
    },
    lookAtBBox (x, y, straightenHorizon)
    {
