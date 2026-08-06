@@ -3,6 +3,8 @@ import Vector2   from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 import $         from "../../../lib/helper.js";
 
+import DEVELOPMENT from "../../DEVELOPMENT.js";
+
 
 const
    SLOW_SCROLL   = /Mac OS X|OculusBrowser/i .test (navigator .userAgent),
@@ -104,6 +106,9 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       // Stop event propagation.
 
       event .preventDefault ();
+
+      if (!DEVELOPMENT)
+         return;
 
       // Look at.
 
