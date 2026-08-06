@@ -111,12 +111,12 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
             width  = viewport [2],
             height = viewport [3],
             size   = nearValue * Math .tan (this .getUserFieldOfView () / 2) * 2,
-            aspect = width / height;
+            ratio  = width / height;
 
-         if (aspect > 1)
-            return viewportSize .set (size * aspect, size);
+         if (ratio > 1)
+            return viewportSize .set (size * ratio, size);
 
-         return viewportSize .set (size, size / aspect);
+         return viewportSize .set (size, size / ratio);
       };
    })(),
    getLookAtDistance (layerNode, bbox)

@@ -217,13 +217,13 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    getScreenScale (point, viewport, screenScale)
    {
       const
-         width  = viewport [2],
-         height = viewport [3],
-         sizeX  = this .getUserSizeX (),
-         sizeY  = this .getUserSizeY (),
-         aspect = width / height;
+         width = viewport [2],
+         height= viewport [3],
+         sizeX = this .getUserSizeX (),
+         sizeY = this .getUserSizeY (),
+         ratio = width / height;
 
-      if (aspect > sizeX / sizeY)
+      if (ratio > sizeX / sizeY)
       {
          const s = sizeY / height;
 
@@ -247,12 +247,12 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
             height = viewport [3],
             sizeX  = this .getUserSizeX (),
             sizeY  = this .getUserSizeY (),
-            aspect = width / height;
+            ratio  = width / height;
 
-         if (aspect > sizeX / sizeY)
-            return viewportSize .set (sizeY * aspect, sizeY);
+         if (ratio > sizeX / sizeY)
+            return viewportSize .set (sizeY * ratio, sizeY);
 
-         return viewportSize .set (sizeX, sizeX / aspect);
+         return viewportSize .set (sizeX, sizeX / ratio);
       };
    })(),
    getLookAtDistance (layerNode, bbox)
@@ -301,20 +301,20 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          viewport = layerNode .getViewport () .getRectangle (),
          width    = viewport [2],
          height   = viewport [3],
-         aspect   = width / height,
+         ratio    = width / height,
          bboxSize = bbox .size;
 
       let sizeX, sizeY;
 
-      if (aspect > this .getSizeX () / this .getSizeY ())
+      if (ratio > this .getSizeX () / this .getSizeY ())
       {
-         sizeX = this .getSizeY () * aspect,
+         sizeX = this .getSizeY () * ratio,
          sizeY = this .getSizeY ();
       }
       else
       {
          sizeX = this .getSizeX (),
-         sizeY = this .getSizeX () / aspect;
+         sizeY = this .getSizeX () / ratio;
       }
 
       const
@@ -329,15 +329,15 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       const
          width  = viewport [2],
          height = viewport [3],
-         aspect = width / height,
+         ratio  = width / height,
          sizeX  = this .getUserSizeX (),
          sizeY  = this .getUserSizeY ();
 
-      if (aspect > sizeX / sizeY)
+      if (ratio > sizeX / sizeY)
       {
          const
             center  = (this .getUserMinimumX () + this .getUserMaximumX ()) / 2,
-            size1_2 = (sizeY * aspect) / 2;
+            size1_2 = (sizeY * ratio) / 2;
 
          return Camera .ortho (center - size1_2, center + size1_2, this .getUserMinimumY (), this .getUserMaximumY (), nearValue, farValue, this .projectionMatrix);
       }
@@ -345,7 +345,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       {
          const
             center  = (this .getUserMinimumY () + this .getUserMaximumY ()) / 2,
-            size1_2 = (sizeX / aspect) / 2;
+            size1_2 = (sizeX / ratio) / 2;
 
          return Camera .ortho (this .getUserMinimumX (), this .getUserMaximumX (), center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
       }
