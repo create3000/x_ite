@@ -14,7 +14,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 ### Notable Changes
 
 - [x] Improved context menu handling on mobile devices.
-- [x] OBJ parser now uses material textures and parses ambient, diffuse, specular and shininess texture.
+- [x] OBJ parser now uses material textures and parses ambient, diffuse, specular and shininess textures.
 - [x] Fixed bug in X3DViewpointNode.viewAll if there are transformations above the node.
 - [x] Fixed a bug in OrthoViewpoint when a transition is made.
 
