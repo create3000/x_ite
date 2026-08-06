@@ -121,26 +121,28 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, X3DViewpointNode .
    })(),
    getLookAtDistance (layerNode, bbox)
    {
-      const viewport = layerNode .getViewport () .getRectangle ();
+      const
+         viewport = layerNode .getViewport () .getRectangle (),
+         bboxSize = bbox .size;
 
       let size;
 
       if (viewport [2] < viewport [3])
       {
-         size = viewport [2] / viewport [3] < bbox .size .x / bbox .size .y
-            ? bbox .size .x
-            : bbox .size .y * (viewport [2] / viewport [3]);
+         size = viewport [2] / viewport [3] < bboxSize .x / bboxSize .y
+            ? bboxSize .x
+            : bboxSize .y * (viewport [2] / viewport [3]);
       }
       else
       {
-         size = viewport [2] / viewport [3] < bbox .size .x / bbox .size .y
-            ? bbox .size .x * (viewport [3] / viewport [2])
-            : bbox .size .y;
+         size = viewport [2] / viewport [3] < bboxSize .x / bboxSize .y
+            ? bboxSize .x * (viewport [3] / viewport [2])
+            : bboxSize .y;
       }
 
       size *= VIEW_ALL_SCALE_FACTOR;
 
-      return (size / 2) / Math .tan (this .getUserFieldOfView () / 2) + bbox .size .z / 2;
+      return (size / 2) / Math .tan (this .getUserFieldOfView () / 2) + bboxSize .z / 2;
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
