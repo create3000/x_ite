@@ -285,8 +285,6 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       {
          if (this .wasLive === true)
             browser .beginUpdate ();
-         else if (this .wasLive === false)
-            browser .endUpdate ();
 
          this .wasLive = undefined;
       }
