@@ -1770,6 +1770,7 @@ function eventsProcessed ()
          return mesh .shapeNodes;
       }
 
+      // Actually shapeNodes are not always Shape nodes, it also can be a Switch nodes from variants.
       const shapeNodes = this .primitivesArray (mesh, skin, EXT_mesh_gpu_instancing);
 
       // Name Shape nodes.
@@ -1783,7 +1784,9 @@ function eventsProcessed ()
          for (const [i, shapeNode] of shapeNodes .entries ())
          {
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
-            scene .addNamedNode (scene .getUniqueName (`${name}-Mesh-${i}`), shapeNode ._geometry);
+
+            if (shapeNode .getGeometry ?.())
+               scene .addNamedNode (scene .getUniqueName (`${name}-Mesh-${i}`), shapeNode .getGeometry ());
          }
       }
 
