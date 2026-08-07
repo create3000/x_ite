@@ -283,7 +283,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       if ((!hidden && this .isIntersecting) || browser .getPose ())
       {
-         if (this .wasLive === true)
+         if (this .wasLive)
             browser .beginUpdate ();
 
          this .wasLive = undefined;
