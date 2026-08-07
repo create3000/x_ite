@@ -251,14 +251,13 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          browser = this .getBrowser (),
          element = browser .getElement ();
 
-      if (this .wasLive === undefined)
-         this .wasLive = browser .isLive ();
+      this .wasLive ??= browser .isLive ();
 
       this .checkUpdateListener = () => this .checkUpdate ();
 
       document .addEventListener ("visibilitychange", this .checkUpdateListener);
 
-      this .intersectionObserver ??= new IntersectionObserver (entries =>
+      this .intersectionObserver = new IntersectionObserver (entries =>
       {
          this .isIntersecting = entries .some (entry => entry .isIntersecting);
 
@@ -284,20 +283,16 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       if ((!hidden && this .isIntersecting) || browser .getPose ())
       {
-         if (this .wasLive !== undefined)
-         {
-            if (this .wasLive)
-               browser .beginUpdate ();
-            else
-               browser .endUpdate ();
+         if (this .wasLive === true)
+            browser .beginUpdate ();
+         else if (this .wasLive === false)
+            browser .endUpdate ();
 
-            this .wasLive = undefined;
-         }
+         this .wasLive = undefined;
       }
       else
       {
-         if (this .wasLive === undefined)
-            this .wasLive = browser .isLive ();
+         this .wasLive ??= browser .isLive ();
 
          browser .endUpdate ();
       }

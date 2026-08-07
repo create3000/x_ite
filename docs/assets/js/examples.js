@@ -51,13 +51,11 @@ class Examples
 
    show ()
    {
-      this .#browser .beginUpdate ();
       this .#element .style .display = "";
    }
 
    hide ()
    {
-      this .#browser .endUpdate ();
       this .#element .style .display = "none";
    }
 
