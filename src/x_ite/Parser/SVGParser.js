@@ -895,7 +895,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          {
             const geometryNode = scene .createNode ("IndexedTriangleSet");
 
-            this .idAttribute (xmlElement .getAttribute ("id"), "Fill", geometryNode, { named: true });
+            this .idAttribute (xmlElement .getAttribute ("id"), "-Fill", geometryNode, { named: true });
 
             this .fillGeometries .set (xmlElement, geometryNode);
 
@@ -924,7 +924,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          {
             const geometryNode = scene .createNode ("IndexedLineSet");
 
-            this .idAttribute (xmlElement .getAttribute ("id"), "Stroke", geometryNode, { named: true });
+            this .idAttribute (xmlElement .getAttribute ("id"), "-Stroke", geometryNode, { named: true });
 
             this .strokeGeometries .set (xmlElement, geometryNode);
 
