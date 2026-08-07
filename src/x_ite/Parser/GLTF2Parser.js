@@ -1780,10 +1780,10 @@ function eventsProcessed ()
 
       if (name)
       {
-         for (const shapeNode of shapeNodes)
+         for (const [i, shapeNode] of shapeNodes .entries ())
          {
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
-            scene .addNamedNode (scene .getUniqueName (name + "-Mesh"), shapeNode ._geometry);
+            scene .addNamedNode (scene .getUniqueName (`${name}-Mesh-${i}`), shapeNode ._geometry);
          }
       }
 
