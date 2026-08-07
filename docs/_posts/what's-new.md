@@ -13,6 +13,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ### Notable Changes
 
+- [x] New splash-screen design.
 - [x] Improved context menu handling on mobile devices.
 - [x] OBJ parser now uses material textures and parses ambient, diffuse, specular and shininess textures.
 - [x] Improved viewAll for [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) and [Viewpoint](/x_ite/components/navigation/viewpoint/).
