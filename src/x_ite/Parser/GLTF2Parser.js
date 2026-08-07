@@ -1781,10 +1781,7 @@ function eventsProcessed ()
       if (name)
       {
          for (const shapeNode of shapeNodes)
-         {
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
-            scene .addNamedNode (scene .getUniqueName (name + "-Geometry"), shapeNode ._geometry);
-         }
       }
 
       return mesh .shapeNodes = shapeNodes;
