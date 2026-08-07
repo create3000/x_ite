@@ -413,6 +413,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       this .set_nearDistance__ ();
       this .set_farDistance__ ();
+
+      this .update ();
    },
    getRelativeTransformation: (() =>
    {
@@ -562,10 +564,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       }
       else
       {
-         // First create a proper view matrix to transform bbox.
-
-         this .update ();
-
          const
             localBBox       = bbox .copy () .multRight (this .getViewMatrix ()),
             direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
