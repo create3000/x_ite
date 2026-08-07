@@ -491,16 +491,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       const offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
-      layerNode .getNavigationInfo () ._transitionStart = true;
-
-      this .timeSensor ._cycleInterval = transitionTime;
-      this .timeSensor ._stopTime      = Date .now () / 1000;
-      this .timeSensor ._startTime     = Date .now () / 1000;
-
-      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
-
-      this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-
       const
          translation = this ._positionOffset .getValue () .copy () .lerp (offset, factor),
          direction   = this .getPosition () .copy () .add (translation) .subtract (point);
@@ -511,6 +501,16 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       {
          rotation = this .getOrientation () .copy () .inverse () .multRight (this .straightenHorizon (this .getOrientation () .copy () .multRight (rotation)));
       }
+
+      layerNode .getNavigationInfo () ._transitionStart = true;
+
+      this .timeSensor ._cycleInterval = transitionTime;
+      this .timeSensor ._stopTime      = Date .now () / 1000;
+      this .timeSensor ._startTime     = Date .now () / 1000;
+
+      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+
+      this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
       this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
       this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
