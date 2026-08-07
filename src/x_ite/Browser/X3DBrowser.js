@@ -799,7 +799,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       layerNode      = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
       transitionTime = +transitionTime;
 
-      layerNode ?.viewAll (transitionTime, 1, this .getBrowserOption ("StraightenHorizon"));
+      layerNode ?.viewAll ({ transitionTime, straighten: this .getBrowserOption ("StraightenHorizon") });
    },
    firstViewpoint (layerNode)
    {

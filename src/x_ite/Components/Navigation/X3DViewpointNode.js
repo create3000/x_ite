@@ -462,25 +462,25 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          return r;
       };
    })(),
-   lookAtPoint (layerNode, point, transitionTime = 1, factor = 1, straighten = false)
+   lookAtPoint ({ layerNode, point, transitionTime = 1, factor = 1, straighten = false })
    {
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
       this .lookAt (layerNode, point, 0.5, transitionTime, factor, straighten);
    },
-   lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
+   lookAtBBox ({ layerNode, bbox, transitionTime = 1, factor = 1, straighten = false })
    {
       if (bbox .size .equals (Vector3 .ZERO))
          return;
 
-      const center = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy ();
+      const
+         center    = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy (),
+         localBBox = bbox .copy () .multRight (this .getViewMatrix ());
 
-      bbox = bbox .copy () .multRight (this .getViewMatrix ());
+      this .lookAt (layerNode, center, this .getLookAtDistance (layerNode, localBBox), transitionTime, factor, straighten);
 
-      this .lookAt (layerNode, center, this .getLookAtDistance (layerNode, bbox), transitionTime, factor, straighten);
-
-      return bbox;
+      return localBBox;
    },
    lookAt (layerNode, point, distance, transitionTime = 1, factor = 1, straighten = false)
    {
@@ -554,8 +554,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       const center = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy ();
 
-      bbox = bbox .copy () .multRight (this .getViewMatrix ());
-
       if (bbox .size .equals (Vector3 .ZERO))
       {
          this .set_nearDistance__ ();
@@ -563,21 +561,30 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       }
       else
       {
-         const
-            direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
-            distance        = this .getLookAtDistance (layerNode, bbox),
-            userPosition    = center .copy () .add (direction .multiply (distance)),
-            userOrientation = this .getLookAtRotation (userPosition, center);
+         let localBBox;
 
-         this ._positionOffset         = userPosition .subtract (this .getPosition ());
-         this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
-         this ._centerOfRotationOffset = center .copy () .subtract (this .getCenterOfRotation ());
-         this ._fieldOfViewScale       = 1;
-         this .nearDistance            = distance * (0.125 / 10);
-         this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
+         for (let i = 0; i < 2; ++ i)
+         {
+            localBBox = bbox .copy () .multRight (this .getViewMatrix ());
+
+            const
+               direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
+               distance        = this .getLookAtDistance (layerNode, localBBox),
+               userPosition    = center .copy () .add (direction .multiply (distance)),
+               userOrientation = this .getLookAtRotation (userPosition, center);
+
+            this ._positionOffset         = userPosition .subtract (this .getPosition ());
+            this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
+            this ._centerOfRotationOffset = center .copy () .subtract (this .getCenterOfRotation ());
+            this ._fieldOfViewScale       = 1;
+            this .nearDistance            = distance * (0.125 / 10);
+            this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
+
+            this .update ();
+         }
+
+         return localBBox;
       }
-
-      return bbox;
    },
    traverse (type, renderObject)
    {

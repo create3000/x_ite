@@ -281,18 +281,18 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       this .fieldOfViewOffsetInterpolator3 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [3], offset3);
       this .fieldOfViewScaleInterpolator   ._keyValue = new Fields .MFFloat (fieldOfViewScale, 1);
    },
-   lookAtBBox (layerNode, bbox, transitionTime, factor, straighten)
+   lookAtBBox ({ layerNode, bbox, transitionTime, factor, straighten })
    {
-      if (bbox .size .equals (Vector3 .ZERO))
-         return;
-
       const
          fieldOfViewOffset = this ._fieldOfViewOffset .copy (),
          fieldOfViewScale  = this ._fieldOfViewScale .getValue ();
 
-      bbox = X3DViewpointNode .prototype .lookAtBBox .call (this, layerNode, bbox, transitionTime, factor, straighten);
+      const localBBox = X3DViewpointNode .prototype .lookAtBBox .call (this, { layerNode, bbox, transitionTime, factor, straighten });
 
-      const scale = this .getViewAllScale (layerNode, bbox);
+      if (!localBBox)
+         return;
+
+      const scale = this .getViewAllScale (layerNode, localBBox);
 
       const
          offset0 = this .getMinimumX () * scale - this .getMinimumX (),
@@ -308,9 +308,12 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    viewAll (layerNode, bbox)
    {
-      bbox = X3DViewpointNode .prototype .viewAll .call (this, layerNode, bbox);
+      const localBBox = X3DViewpointNode .prototype .viewAll .call (this, layerNode, bbox);
 
-      const scale = this .getViewAllScale (layerNode, bbox);
+      if (!localBBox)
+         return;
+
+      const scale = this .getViewAllScale (layerNode, localBBox);
 
       this ._fieldOfViewOffset [0] = this .getUserMinimumX () * scale - this .getUserMinimumX ();
       this ._fieldOfViewOffset [1] = this .getUserMinimumY () * scale - this .getUserMinimumY ();

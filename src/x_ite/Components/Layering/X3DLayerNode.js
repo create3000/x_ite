@@ -11,7 +11,6 @@ import X3DCast         from "../../Base/X3DCast.js";
 import TraverseType    from "../../Rendering/TraverseType.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
 import Camera          from "../../../standard/Math/Geometry/Camera.js";
-import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3            from "../../../standard/Math/Geometry/Box3.js";
 
@@ -218,13 +217,13 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       return this .viewpointStack;
    },
-   viewAll (transitionTime = 1, factor = 1, straighten = false)
+   viewAll ({ transitionTime, factor, straighten })
    {
       const
          viewpointNode = this .getViewpoint (),
          bbox          = this .getBBox (new Box3 ());
 
-      viewpointNode .lookAtBBox (this, bbox, transitionTime, factor, straighten);
+      viewpointNode .lookAtBBox ({ layerNode: this, bbox, transitionTime, factor, straighten });
    },
    straightenView ()
    {
