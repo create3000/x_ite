@@ -467,7 +467,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
-      this .lookAt (layerNode, point, 0.5, transitionTime, factor, straighten);
+      this .lookAt ({ layerNode, point, distance: 0.5, transitionTime, factor, straighten });
    },
    lookAtBBox ({ layerNode, bbox, transitionTime = 1, factor = 1, straighten = false })
    {
@@ -475,14 +475,15 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          return;
 
       const
-         center    = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy (),
-         localBBox = bbox .copy () .multRight (this .getViewMatrix ());
+         point     = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy (),
+         localBBox = bbox .copy () .multRight (this .getViewMatrix ()),
+         distance  = this .getLookAtDistance (layerNode, localBBox);
 
-      this .lookAt (layerNode, center, this .getLookAtDistance (layerNode, localBBox), transitionTime, factor, straighten);
+      this .lookAt ({ layerNode, point, distance, transitionTime, factor, straighten });
 
       return localBBox;
    },
-   lookAt (layerNode, point, distance, transitionTime = 1, factor = 1, straighten = false)
+   lookAt ({ layerNode, point, distance, transitionTime = 1, factor = 1, straighten = false })
    {
       this .timeSensor ._description = "lookAt";
 

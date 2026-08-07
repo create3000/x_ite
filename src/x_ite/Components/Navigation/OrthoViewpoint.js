@@ -258,7 +258,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    {
       return bbox .size .norm () / 2 + 10;
    },
-   lookAt (layerNode, point, distance, transitionTime, factor, straighten)
+   lookAt ({ layerNode, point, distance, transitionTime, factor, straighten })
    {
       const
          fieldOfViewOffset = this ._fieldOfViewOffset .copy (),
@@ -272,7 +272,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
          offset2 = this .getUserMaximumX () * scale - this .getMaximumX (),
          offset3 = this .getUserMaximumY () * scale - this .getMaximumY ();
 
-      X3DViewpointNode .prototype .lookAt .call (this, layerNode, point, distance, transitionTime, 0, straighten);
+      X3DViewpointNode .prototype .lookAt .call (this, { layerNode, point, distance, transitionTime, factor: 0, straighten });
 
       this .fieldOfViewOffsetInterpolator0 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [0], offset0);
       this .fieldOfViewOffsetInterpolator1 ._keyValue = new Fields .MFFloat (fieldOfViewOffset [1], offset1);
