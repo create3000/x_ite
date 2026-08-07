@@ -1,7 +1,7 @@
 /* X_ITE v16.1.0 */
 var __webpack_modules__ = ({
 
-/***/ 814
+/***/ 84
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 628
+/***/ 182
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 104
+/***/ 222
 (module) {
 
 /**
@@ -23790,7 +23790,7 @@ const X3DBBoxNode_default_ = X3DBBoxNode;
 
 
 
-function X3DBoundedObject (executionContext)
+function X3DBoundedObject (/* executionContext */)
 {
    this .addType (Base_X3DConstants .X3DBoundedObject);
 
@@ -31146,7 +31146,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(104);
+/* provided dependency */ var libtess = __webpack_require__(222);
 
 
 const Triangle3 =
@@ -38363,7 +38363,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
       viewpointNode .resetUserOffsets ();
 
       if (viewpointNode ._viewAll .getValue ())
-         viewpointNode .viewAll (this .getBBox (new Geometry_Box3 ()));
+         viewpointNode .viewAll (this, this .getBBox (new Geometry_Box3 ()));
 
       viewpointNode .update ();
    },
@@ -39775,7 +39775,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
             this .resetUserOffsets ();
 
          if (this ._viewAll .getValue ())
-            this .viewAll (layerNode .getBBox (new Geometry_Box3 ()));
+            this .viewAll (layerNode, layerNode .getBBox (new Geometry_Box3 ()));
 
          // Handle NavigationInfo.
 
@@ -39940,9 +39940,11 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
       if (bbox .size .equals (Numbers_Vector3 .ZERO))
          return;
 
-      bbox = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ());
+      const center = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy ();
 
-      this .lookAt (layerNode, bbox .center, this .getLookAtDistance (bbox), transitionTime, factor, straighten);
+      bbox = bbox .copy () .multRight (this .getViewMatrix ());
+
+      this .lookAt (layerNode, center, this .getLookAtDistance (layerNode, bbox), transitionTime, factor, straighten);
 
       return bbox;
    },
@@ -39978,14 +39980,11 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
       this .scaleInterpolator            ._keyValue = new x_ite_Fields .MFVec3f (this ._scaleOffset, Numbers_Vector3 .ONE);
       this .scaleOrientationInterpolator ._keyValue = new x_ite_Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
-      const relative = this .getRelativeTransformation (this);
-
-      this ._fieldOfViewScale       = 1;
       this ._centerOfRotationOffset = point .copy () .subtract (this .getCenterOfRotation ());
       this .nearDistance            = distance * (0.125 / 10);
       this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
 
-      this .setInterpolators (this, relative);
+      this .setInterpolators (this, this .getRelativeTransformation (this));
    },
    straightenView (layerNode)
    {
@@ -40011,17 +40010,17 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
 
       const relative = this .getRelativeTransformation (this);
 
-      this ._fieldOfViewScale = 1;
-
       this .setInterpolators (this, relative);
    },
    straightenHorizon (orientation, upVector = this .getUpVector (true))
    {
       return orientation .straighten (upVector);
    },
-   viewAll (bbox)
+   viewAll (layerNode, bbox)
    {
-      bbox = bbox .copy () .multRight (this .modelMatrix .copy () .inverse ());
+      const center = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy ();
+
+      bbox = bbox .copy () .multRight (this .getViewMatrix ());
 
       if (bbox .size .equals (Numbers_Vector3 .ZERO))
       {
@@ -40031,14 +40030,14 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
       else
       {
          const
-            direction       = this .getUserPosition () .copy () .subtract (bbox .center) .normalize (),
-            distance        = this .getLookAtDistance (bbox),
-            userPosition    = bbox .center .copy () .add (direction .multiply (distance)),
-            userOrientation = this .getLookAtRotation (userPosition, bbox .center);
+            direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
+            distance        = this .getLookAtDistance (layerNode, bbox),
+            userPosition    = center .copy () .add (direction .multiply (distance)),
+            userOrientation = this .getLookAtRotation (userPosition, center);
 
          this ._positionOffset         = userPosition .subtract (this .getPosition ());
          this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
-         this ._centerOfRotationOffset = bbox .center .copy () .subtract (this .getCenterOfRotation ());
+         this ._centerOfRotationOffset = center .copy () .subtract (this .getCenterOfRotation ());
          this ._fieldOfViewScale       = 1;
          this .nearDistance            = distance * (0.125 / 10);
          this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
@@ -40110,6 +40109,8 @@ const X3DViewpointNode_default_ = X3DViewpointNode;
 
 
 
+const VIEW_ALL_SCALE_FACTOR = 1.1;
+
 function Viewpoint (executionContext)
 {
    Navigation_X3DViewpointNode .call (this, executionContext);
@@ -40144,15 +40145,15 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, Navigation_X3DView
       {
          const scale = relative .fieldOfView / this .getUserFieldOfView ();
 
-         this .fieldOfViewScaleInterpolator ._keyValue = new x_ite_Fields .MFFloat (scale, this ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new x_ite_Fields .MFFloat (scale, 1);
 
          this ._fieldOfViewScale = scale;
       }
       else
       {
-         this .fieldOfViewScaleInterpolator ._keyValue = new x_ite_Fields .MFFloat (this ._fieldOfViewScale .getValue (), this ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator ._keyValue = new x_ite_Fields .MFFloat (1, 1);
 
-         this ._fieldOfViewScale = this ._fieldOfViewScale .getValue ();
+         this ._fieldOfViewScale = 1;
       }
    },
    getLogarithmicDepthBuffer ()
@@ -40211,17 +40212,38 @@ Object .assign (Object .setPrototypeOf (Viewpoint .prototype, Navigation_X3DView
             width  = viewport [2],
             height = viewport [3],
             size   = nearValue * Math .tan (this .getUserFieldOfView () / 2) * 2,
-            aspect = width / height;
+            ratio  = width / height;
 
-         if (aspect > 1)
-            return viewportSize .set (size * aspect, size);
+         if (ratio > 1)
+            return viewportSize .set (size * ratio, size);
 
-         return viewportSize .set (size, size / aspect);
+         return viewportSize .set (size, size / ratio);
       };
    })(),
-   getLookAtDistance (bbox)
+   getLookAtDistance (layerNode, bbox)
    {
-      return (bbox .size .norm () / 2) / Math .tan (this .getUserFieldOfView () / 2);
+      const
+         viewport = layerNode .getViewport () .getRectangle (),
+         bboxSize = bbox .size;
+
+      let size;
+
+      if (viewport [2] < viewport [3])
+      {
+         size = viewport [2] / viewport [3] < bboxSize .x / bboxSize .y
+            ? bboxSize .x
+            : bboxSize .y * viewport [2] / viewport [3];
+      }
+      else
+      {
+         size = viewport [2] / viewport [3] < bboxSize .x / bboxSize .y
+            ? bboxSize .x * viewport [3] / viewport [2]
+            : bboxSize .y;
+      }
+
+      size *= VIEW_ALL_SCALE_FACTOR;
+
+      return (size / 2) / Math .tan (this .getUserFieldOfView () / 2) + bboxSize .z / 2;
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
@@ -44864,6 +44886,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 
 // http://paulbourke.net/dataformats/obj/
+// https://paulbourke.net/dataformats/mtl/
 // https://people.sc.fsu.edu/~jburkardt/data/obj/obj.html
 
 /*
@@ -44889,7 +44912,10 @@ const OBJParser_Grammar = Parser_Expressions ({
    d: /\bd\b/y,
    Tr: /\bTr\b/y,
    illum: /\billum\b/y,
+   map_Ka: /\bmap_Ka\b/y,
    map_Kd: /\bmap_Kd\b/y,
+   map_Ks: /\bmap_Ks\b/y,
+   map_Ns: /\bmap_Ns\b/y,
    o: /\bo\b/y,
    v: /\bv\b/y,
    vt: /\bvt\b/y,
@@ -44927,7 +44953,6 @@ function OBJParser (scene)
    this .smoothingGroups = new Map ();
    this .groups          = new Map ();
    this .materials       = new Map ();
-   this .textures        = new Map ();
    this .lastIndex       = 0;
 }
 
@@ -45125,9 +45150,6 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
 
          for (const [id, material] of parser .materials)
             this .materials .set (id, material);
-
-         for (const [id, texture] of parser .textures)
-            this .textures .set (id, texture);
       }
       catch (error)
       {
@@ -45149,7 +45171,6 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
             const
                scene    = this .getExecutionContext (),
                material = this .materials .get (id) ?? this .createDefaultMaterial (id),
-               texture  = this .textures .get (id),
                name     = this .sanitizeName (id);
 
             if (name)
@@ -45159,16 +45180,9 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
                   scene .addNamedNode (scene .getUniqueName (name), material);
                   scene .addExportedNode (scene .getUniqueExportName (name), material);
                }
-
-               if (texture && !texture .getNodeName ())
-               {
-                  scene .addNamedNode (scene .getUniqueName (name), texture);
-                  scene .addExportedNode (scene .getUniqueExportName (name), texture);
-               }
             }
 
             this .material = material;
-            this .texture  = texture;
          }
 
          return true;
@@ -45266,8 +45280,6 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
       id += this .group .getId ();
       id += ".";
       id += this .material .getId ();
-      id += ".";
-      id += this .texture ?.getId () ?? "";
 
       return id;
    },
@@ -45422,7 +45434,6 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
             });
 
             appearance .material        = this .material;
-            appearance .texture         = this .texture;
             this .geometry .creaseAngle = this .smoothingGroup ? Math .PI : 0;
             this .shape .appearance     = appearance;
             this .shape .geometry       = this .geometry;
@@ -45689,7 +45700,16 @@ Object .assign (MaterialParser .prototype,
       if (this .illum ())
          return true;
 
-      if (this .map_Kd ())
+      if (this .map_X ("map_Ka", "ambientTexture"))
+         return true;
+
+      if (this .map_X ("map_Kd", "diffuseTexture"))
+         return true;
+
+      if (this .map_X ("map_Ks", "specularTexture"))
+         return true;
+
+      if (this .map_X ("map_Ns", "shininessTexture"))
          return true;
 
       // Skip empty and unknown lines.
@@ -45868,11 +45888,11 @@ Object .assign (MaterialParser .prototype,
 
       return false;
    },
-   map_Kd ()
+   map_X (map_X, materialTexture)
    {
       this .comments ();
 
-      if (OBJParser_Grammar .map_Kd .parse (this))
+      if (OBJParser_Grammar [map_X] .parse (this))
       {
          this .whitespacesNoLineTerminator ();
 
@@ -45886,14 +45906,22 @@ Object .assign (MaterialParser .prototype,
 
                if (paths .length)
                {
-                  const
-                     scene   = this .executionContext,
-                     texture = scene .createNode ("ImageTexture"),
-                     path    = paths .at (-1) .replace (/\\/g, "/");
+                  const path = paths .at (-1) .replace (/\\/g, "/");
 
-                  texture .url = [path];
+                  let texture = this .textures .get (path);
 
-                  this .textures .set (this .id, texture);
+                  if (!texture)
+                  {
+                     const scene = this .executionContext;
+
+                     texture = scene .createNode ("ImageTexture");
+
+                     texture .url = [path];
+
+                     this .textures .set (path, texture);
+                  }
+
+                  this .material [materialTexture] = texture;
                }
             }
 
@@ -47776,7 +47804,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(104);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(222);
 
 
 
@@ -59560,6 +59588,8 @@ const X3DLightingContext_default_ = X3DLightingContext;
 
 
 
+const OrthoViewpoint_VIEW_ALL_SCALE_FACTOR = 1.1;
+
 function OrthoViewpoint (executionContext)
 {
    Navigation_X3DViewpointNode .call (this, executionContext);
@@ -59638,22 +59668,14 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
    },
    getRelativeTransformation (fromViewpointNode)
    {
-      const relative = Navigation_X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode);
+      const
+         relative = Navigation_X3DViewpointNode .prototype .getRelativeTransformation .call (this, fromViewpointNode),
+         same     = fromViewpointNode .constructor === this .constructor;
 
-      if (fromViewpointNode .constructor === this .constructor)
-      {
-         relative .userMinimumX = fromViewpointNode .getUserMinimumX ();
-         relative .userMinimumY = fromViewpointNode .getUserMinimumY ();
-         relative .userMaximumX = fromViewpointNode .getUserMaximumX ();
-         relative .userMaximumY = fromViewpointNode .getUserMaximumY ();
-      }
-      else
-      {
-         relative .userMinimumX = 0;
-         relative .userMinimumY = 0;
-         relative .userMaximumX = 0;
-         relative .userMaximumY = 0;
-      }
+      relative .userMinimumX = same ? fromViewpointNode .getUserMinimumX () : 0;
+      relative .userMinimumY = same ? fromViewpointNode .getUserMinimumY () : 0;
+      relative .userMaximumX = same ? fromViewpointNode .getUserMaximumX () : 0;
+      relative .userMaximumY = same ? fromViewpointNode .getUserMaximumY () : 0;
 
       return relative;
    },
@@ -59671,13 +59693,13 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
          this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields .MFFloat (offset1, this ._fieldOfViewOffset [1]);
          this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields .MFFloat (offset2, this ._fieldOfViewOffset [2]);
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields .MFFloat (offset3, this ._fieldOfViewOffset [3]);
-         this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields .MFFloat (1, this ._fieldOfViewScale .getValue ());
+         this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields .MFFloat (fromViewpointNode ._fieldOfViewScale .getValue (), 1);
 
          this ._fieldOfViewOffset [0] = offset0;
          this ._fieldOfViewOffset [1] = offset1;
          this ._fieldOfViewOffset [2] = offset2;
          this ._fieldOfViewOffset [3] = offset3;
-         this ._fieldOfViewScale      = 1;
+         this ._fieldOfViewScale      = fromViewpointNode ._fieldOfViewScale .getValue ();
       }
       else
       {
@@ -59685,7 +59707,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
          this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields .MFFloat (this ._fieldOfViewOffset [1], this ._fieldOfViewOffset [1]);
          this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields .MFFloat (this ._fieldOfViewOffset [2], this ._fieldOfViewOffset [2]);
          this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields .MFFloat (this ._fieldOfViewOffset [3], this ._fieldOfViewOffset [3]);
-         this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields .MFFloat (1, this ._fieldOfViewOffset .getValue ());
+         this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields .MFFloat (1, 1);
 
          this ._fieldOfViewOffset = this ._fieldOfViewOffset .getValue ();
          this ._fieldOfViewScale  = 1;
@@ -59772,13 +59794,13 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
    getScreenScale (point, viewport, screenScale)
    {
       const
-         width  = viewport [2],
-         height = viewport [3],
-         sizeX  = this .getUserSizeX (),
-         sizeY  = this .getUserSizeY (),
-         aspect = width / height;
+         width = viewport [2],
+         height= viewport [3],
+         sizeX = this .getUserSizeX (),
+         sizeY = this .getUserSizeY (),
+         ratio = width / height;
 
-      if (aspect > sizeX / sizeY)
+      if (ratio > sizeX / sizeY)
       {
          const s = sizeY / height;
 
@@ -59802,30 +59824,52 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
             height = viewport [3],
             sizeX  = this .getUserSizeX (),
             sizeY  = this .getUserSizeY (),
-            aspect = width / height;
+            ratio  = width / height;
 
-         if (aspect > sizeX / sizeY)
-            return viewportSize .set (sizeY * aspect, sizeY);
+         if (ratio > sizeX / sizeY)
+            return viewportSize .set (sizeY * ratio, sizeY);
 
-         return viewportSize .set (sizeX, sizeX / aspect);
+         return viewportSize .set (sizeX, sizeX / ratio);
       };
    })(),
-   getLookAtDistance (bbox)
+   getLookAtDistance (layerNode, bbox)
    {
       return bbox .size .norm () / 2 + 10;
+   },
+   lookAt (layerNode, point, distance, transitionTime, factor, straighten)
+   {
+      const
+         fieldOfViewOffset = this ._fieldOfViewOffset .copy (),
+         fieldOfViewScale  = this ._fieldOfViewScale .getValue ();
+
+      const scale = 1 - (0.9 * factor);
+
+      const
+         offset0 = this .getUserMinimumX () * scale - this .getMinimumX (),
+         offset1 = this .getUserMinimumY () * scale - this .getMinimumY (),
+         offset2 = this .getUserMaximumX () * scale - this .getMaximumX (),
+         offset3 = this .getUserMaximumY () * scale - this .getMaximumY ();
+
+      Navigation_X3DViewpointNode .prototype .lookAt .call (this, layerNode, point, distance, transitionTime, 0, straighten);
+
+      this .fieldOfViewOffsetInterpolator0 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [0], offset0);
+      this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [1], offset1);
+      this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [2], offset2);
+      this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [3], offset3);
+      this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewScale, 1);
    },
    lookAtBBox (layerNode, bbox, transitionTime, factor, straighten)
    {
       if (bbox .size .equals (Numbers_Vector3 .ZERO))
          return;
 
+      const
+         fieldOfViewOffset = this ._fieldOfViewOffset .copy (),
+         fieldOfViewScale  = this ._fieldOfViewScale .getValue ();
+
       bbox = Navigation_X3DViewpointNode .prototype .lookAtBBox .call (this, layerNode, bbox, transitionTime, factor, straighten);
 
-      const
-         size   = bbox .size,
-         scaleX = size .x / this .getSizeX (),
-         scaleY = size .y / this .getSizeY (),
-         scale  = Math .max (scaleX, scaleY) * 1.1;
+      const scale = this .getViewAllScale (layerNode, bbox);
 
       const
          offset0 = this .getMinimumX () * scale - this .getMinimumX (),
@@ -59833,30 +59877,66 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
          offset2 = this .getMaximumX () * scale - this .getMaximumX (),
          offset3 = this .getMaximumY () * scale - this .getMaximumY ();
 
-      this .fieldOfViewOffsetInterpolator0 ._keyValue = new x_ite_Fields .MFFloat (this ._fieldOfViewOffset [0], offset0);
-      this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields .MFFloat (this ._fieldOfViewOffset [1], offset1);
-      this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields .MFFloat (this ._fieldOfViewOffset [2], offset2);
-      this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields .MFFloat (this ._fieldOfViewOffset [3], offset3);
+      this .fieldOfViewOffsetInterpolator0 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [0], offset0);
+      this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [1], offset1);
+      this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [2], offset2);
+      this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [3], offset3);
+      this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewScale, 1);
+   },
+   viewAll (layerNode, bbox)
+   {
+      bbox = Navigation_X3DViewpointNode .prototype .viewAll .call (this, layerNode, bbox);
 
-      this ._fieldOfViewOffset [0] = offset0;
-      this ._fieldOfViewOffset [1] = offset1;
-      this ._fieldOfViewOffset [2] = offset2;
-      this ._fieldOfViewOffset [3] = offset3;
+      const scale = this .getViewAllScale (layerNode, bbox);
+
+      this ._fieldOfViewOffset [0] = this .getUserMinimumX () * scale - this .getUserMinimumX ();
+      this ._fieldOfViewOffset [1] = this .getUserMinimumY () * scale - this .getUserMinimumY ();
+      this ._fieldOfViewOffset [2] = this .getUserMaximumX () * scale - this .getUserMaximumX ();
+      this ._fieldOfViewOffset [3] = this .getUserMaximumY () * scale - this .getUserMaximumY ();
+   },
+   getViewAllScale (layerNode, bbox)
+   {
+      const
+         viewport = layerNode .getViewport () .getRectangle (),
+         width    = viewport [2],
+         height   = viewport [3],
+         ratio    = width / height,
+         bboxSize = bbox .size;
+
+      let sizeX, sizeY;
+
+      if (ratio > this .getSizeX () / this .getSizeY ())
+      {
+         sizeX = this .getSizeY () * ratio,
+         sizeY = this .getSizeY ();
+      }
+      else
+      {
+         sizeX = this .getSizeX (),
+         sizeY = this .getSizeX () / ratio;
+      }
+
+      const
+         scaleX = bboxSize .x / sizeX,
+         scaleY = bboxSize .y / sizeY,
+         scale  = Math .max (scaleX, scaleY);
+
+      return scale * OrthoViewpoint_VIEW_ALL_SCALE_FACTOR;
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
       const
          width  = viewport [2],
          height = viewport [3],
-         aspect = width / height,
+         ratio  = width / height,
          sizeX  = this .getUserSizeX (),
          sizeY  = this .getUserSizeY ();
 
-      if (aspect > sizeX / sizeY)
+      if (ratio > sizeX / sizeY)
       {
          const
             center  = (this .getUserMinimumX () + this .getUserMaximumX ()) / 2,
-            size1_2 = (sizeY * aspect) / 2;
+            size1_2 = (sizeY * ratio) / 2;
 
          return Geometry_Camera .ortho (center - size1_2, center + size1_2, this .getUserMinimumY (), this .getUserMaximumY (), nearValue, farValue, this .projectionMatrix);
       }
@@ -59864,25 +59944,10 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
       {
          const
             center  = (this .getUserMinimumY () + this .getUserMaximumY ()) / 2,
-            size1_2 = (sizeX / aspect) / 2;
+            size1_2 = (sizeX / ratio) / 2;
 
          return Geometry_Camera .ortho (this .getUserMinimumX (), this .getUserMaximumX (), center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
       }
-   },
-   viewAll (bbox)
-   {
-      bbox = Navigation_X3DViewpointNode .prototype .viewAll .call (this, bbox);
-
-      const
-         size   = bbox .size,
-         scaleX = size .x / this .getSizeX (),
-         scaleY = size .y / this .getSizeY (),
-         scale  = Math .max (scaleX, scaleY) * 1.1;
-
-      this ._fieldOfViewOffset [0] = this .getMinimumX () * scale - this .getMinimumX ();
-      this ._fieldOfViewOffset [1] = this .getMinimumY () * scale - this .getMinimumY ();
-      this ._fieldOfViewOffset [2] = this .getMaximumX () * scale - this .getMaximumX ();
-      this ._fieldOfViewOffset [3] = this .getMaximumY () * scale - this .getMaximumY ();
    },
    convertFields (fields)
    {
@@ -60059,7 +60124,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, Base_X3DBaseNode .
          viewpointNode = this .getActiveViewpoint (),
          hit           = this .getBrowser () .getHit ();
 
-      viewpointNode .lookAtPoint (this .getActiveLayer (), hit .point, 1, 0.8, straightenHorizon);
+      viewpointNode .lookAtPoint (this .getActiveLayer (), hit .point, 1, 0.5, straightenHorizon);
    },
    lookAtBBox (x, y, straightenHorizon)
    {
@@ -60554,8 +60619,6 @@ function ExamineViewer (executionContext, navigationInfo)
    this .touchMode                = 0;
    this .touch1                   = new Numbers_Vector2 ();
    this .touch2                   = new Numbers_Vector2 ();
-   this .tapStart                 = 0;
-   this .dblTapInterval           = 0.4;
 
    this .initialPositionOffset    = new Numbers_Vector3 ();
    this .initialOrientationOffset = new Numbers_Rotation4 ();
@@ -62331,6 +62394,8 @@ const FlyViewer_default_ = FlyViewer;
 
 
 
+
+
 const
    PlaneViewer_SLOW_SCROLL   = /Mac OS X|OculusBrowser/i .test (navigator .userAgent),
    PlaneViewer_SCROLL_FACTOR = PlaneViewer_SLOW_SCROLL ? 1 / 160 : 1 / 20;
@@ -62364,6 +62429,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
 
       helper.on (this, surface, "mousedown", event => this .mousedown (event));
       helper.on (this, surface, "mouseup",   event => this .mouseup   (event));
+      helper.on (this, surface, "dblclick",  event => this .dblclick  (event));
       helper.on (this, surface, "wheel",     event => this .wheel     (event));
 
       helper.on (this, surface, "touchstart", event => this .touchstart (event));
@@ -62424,6 +62490,26 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
       this .getBrowser () .setCursor ("DEFAULT");
 
       this ._isActive = false;
+   },
+   dblclick (event)
+   {
+      // Stop event propagation.
+
+      event .preventDefault ();
+
+      if (!DEVELOPMENT)
+         return;
+
+      // Look at.
+
+      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+
+      this .disconnect ();
+
+      if (this .getBrowser () .getAltKey ())
+         this .lookAtPoint (x, y, this .getStraightenHorizon ());
+      else
+         this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
    mousemove (event)
    {
@@ -62523,12 +62609,33 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
    {
       event = this .getBrowser () .copyEvent (event);
 
-      // End move (button 0).
+      switch (this .button)
+      {
+         case 0:
+         {
+            // End move (button 0).
 
-      this .touchMode = 0;
-      event .button   = 0;
+            this .touchMode = 0;
+            event .button   = 0;
 
-      this .mouseup (event);
+            this .mouseup (event);
+
+            // Start dblclick (button 0).
+
+            if (this .tapedTwice)
+            {
+               this .dblclick (event);
+            }
+            else
+            {
+               this .tapedTwice = true;
+
+               setTimeout (() => this .tapedTwice = false, 300);
+            }
+
+            break;
+         }
+      }
    },
    touchmove: (() =>
    {
@@ -91014,8 +91121,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(814);
-/* provided dependency */ var APNG = __webpack_require__(628);
+/* provided dependency */ var SuperGif = __webpack_require__(84);
+/* provided dependency */ var APNG = __webpack_require__(182);
 
 
 
@@ -93720,7 +93827,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(104);
+/* provided dependency */ var libtess_libtess = __webpack_require__(222);
 const libtess_default_ = libtess_libtess;
 ;
 

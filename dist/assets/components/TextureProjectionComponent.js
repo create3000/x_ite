@@ -517,7 +517,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       const
          width        = lightNode .getTexture () .getWidth (),
          height       = lightNode .getTexture () .getHeight (),
-         aspect       = width / height,
+         ratio        = width / height,
          minimumX     = lightNode .getMinimumX (),
          maximumX     = lightNode .getMaximumX (),
          minimumY     = lightNode .getMinimumY (),
@@ -527,11 +527,11 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          nearDistance = lightNode .getNearDistance (),
          farDistance  = lightNode .getFarDistance ();
 
-      if (aspect > sizeX / sizeY)
+      if (ratio > sizeX / sizeY)
       {
          const
             center  = (minimumX + maximumX) / 2,
-            size1_2 = (sizeY * aspect) / 2;
+            size1_2 = (sizeY * ratio) / 2;
 
          external_X_ITE_X3D_Camera_default().ortho (center - size1_2, center + size1_2, minimumY, maximumY, nearDistance, farDistance, this .projectionMatrix);
       }
@@ -539,7 +539,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       {
          const
             center  = (minimumY + maximumY) / 2,
-            size1_2 = (sizeX / aspect) / 2;
+            size1_2 = (sizeX / ratio) / 2;
 
          external_X_ITE_X3D_Camera_default().ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
       }
@@ -565,7 +565,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
 
       this .matrixArray .set (this .matrix);
    },
-   setShaderUniforms (gl, shaderObject, renderObject)
+   setShaderUniforms (gl, shaderObject /*, renderObject */)
    {
       const
          i        = shaderObject .numTextureProjectors ++,
