@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 84
+/***/ 934
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 182
+/***/ 420
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 222
+/***/ 768
 (module) {
 
 /**
@@ -19983,14 +19983,13 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
          browser = this .getBrowser (),
          element = browser .getElement ();
 
-      if (this .wasLive === undefined)
-         this .wasLive = browser .isLive ();
+      this .wasLive ??= browser .isLive ();
 
       this .checkUpdateListener = () => this .checkUpdate ();
 
       document .addEventListener ("visibilitychange", this .checkUpdateListener);
 
-      this .intersectionObserver ??= new IntersectionObserver (entries =>
+      this .intersectionObserver = new IntersectionObserver (entries =>
       {
          this .isIntersecting = entries .some (entry => entry .isIntersecting);
 
@@ -20011,25 +20010,22 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
          browser = this .getBrowser (),
          hidden  = document .webkitHidden !== undefined ? document .webkitHidden : document .hidden;
 
-      // Only webkitHidden is reliable in Electron.
+      // 👆 Only webkitHidden is reliable in Electron.
       // https://github.com/electron/electron/issues/28677
 
       if ((!hidden && this .isIntersecting) || browser .getPose ())
       {
-         if (this .wasLive !== undefined)
-         {
-            if (this .wasLive)
-               browser .beginUpdate ();
-            else
-               browser .endUpdate ();
+         if (this .wasLive === true)
+            browser .beginUpdate ();
+         else if (this .wasLive === false)
+            browser .endUpdate ();
 
-            this .wasLive = undefined;
-         }
+         this .wasLive = undefined;
       }
       else
       {
-         if (this .wasLive === undefined)
-            this .wasLive = browser .isLive ();
+         // If this case is made a second time, ignore browser is live state.
+         this .wasLive ??= browser .isLive ();
 
          browser .endUpdate ();
       }
@@ -31166,7 +31162,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(222);
+/* provided dependency */ var libtess = __webpack_require__(768);
 
 
 const Triangle3 =
@@ -38113,7 +38109,6 @@ const Background_default_ = Background;
 
 
 
-
 function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 {
    Core_X3DNode         .call (this, executionContext);
@@ -38317,13 +38312,13 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
    {
       return this .viewpointStack;
    },
-   viewAll (transitionTime = 1, factor = 1, straighten = false)
+   viewAll ({ transitionTime, factor, straighten })
    {
       const
          viewpointNode = this .getViewpoint (),
          bbox          = this .getBBox (new Geometry_Box3 ());
 
-      viewpointNode .lookAtBBox (this, bbox, transitionTime, factor, straighten);
+      viewpointNode .lookAtBBox ({ layerNode: this, bbox, transitionTime, factor, straighten });
    },
    straightenView ()
    {
@@ -39714,7 +39709,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
    },
    getNearDistance (navigationInfoNode)
    {
-      return this .nearDistance ?? navigationInfoNode ?.getNearValue ();
+      return this .nearDistance ?? navigationInfoNode .getNearValue ();
    },
    setNearDistance (value)
    {
@@ -39722,8 +39717,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
    },
    getFarDistance (navigationInfoNode)
    {
-      return this .farDistance
-         ?? (navigationInfoNode ? navigationInfoNode .getFarValue () || this .getMaxFarValue () : undefined);
+      return this .farDistance ?? (navigationInfoNode .getFarValue () || this .getMaxFarValue ());
    },
    setFarDistance (value)
    {
@@ -39899,6 +39893,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
 
       this .set_nearDistance__ ();
       this .set_farDistance__ ();
+
+      this .update ();
    },
    getRelativeTransformation: (() =>
    {
@@ -39948,41 +39944,32 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
          return r;
       };
    })(),
-   lookAtPoint (layerNode, point, transitionTime = 1, factor = 1, straighten = false)
+   lookAtPoint ({ layerNode, point, transitionTime = 1, factor = 1, straighten = false })
    {
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
-      this .lookAt (layerNode, point, 0.5, transitionTime, factor, straighten);
+      this .lookAt ({ layerNode, point, distance: 0.5, transitionTime, factor, straighten });
    },
-   lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
+   lookAtBBox ({ layerNode, bbox, transitionTime, factor, straighten })
    {
       if (bbox .size .equals (Numbers_Vector3 .ZERO))
          return;
 
-      const center = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy ();
+      const
+         point     = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy (),
+         localBBox = bbox .copy () .multRight (this .getViewMatrix ()),
+         distance  = this .getLookAtDistance (layerNode, localBBox);
 
-      bbox = bbox .copy () .multRight (this .getViewMatrix ());
+      this .lookAt ({ layerNode, point, distance, transitionTime, factor, straighten });
 
-      this .lookAt (layerNode, center, this .getLookAtDistance (layerNode, bbox), transitionTime, factor, straighten);
-
-      return bbox;
+      return localBBox;
    },
-   lookAt (layerNode, point, distance, transitionTime = 1, factor = 1, straighten = false)
+   lookAt ({ layerNode, point, distance, transitionTime = 1, factor = 1, straighten = false })
    {
       this .timeSensor ._description = "lookAt";
 
       const offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Numbers_Vector3 (0, 0, distance))) .subtract (this .getPosition ());
-
-      layerNode .getNavigationInfo () ._transitionStart = true;
-
-      this .timeSensor ._cycleInterval = transitionTime;
-      this .timeSensor ._stopTime      = Date .now () / 1000;
-      this .timeSensor ._startTime     = Date .now () / 1000;
-
-      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
-
-      this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields .MFVec2f (new x_ite_Fields .SFVec2f (0, 1), new x_ite_Fields .SFVec2f (1, 0));
 
       const
          translation = this ._positionOffset .getValue () .copy () .lerp (offset, factor),
@@ -39994,6 +39981,16 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
       {
          rotation = this .getOrientation () .copy () .inverse () .multRight (this .straightenHorizon (this .getOrientation () .copy () .multRight (rotation)));
       }
+
+      layerNode .getNavigationInfo () ._transitionStart = true;
+
+      this .timeSensor ._cycleInterval = transitionTime;
+      this .timeSensor ._stopTime      = Date .now () / 1000;
+      this .timeSensor ._startTime     = Date .now () / 1000;
+
+      this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+
+      this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields .MFVec2f (new x_ite_Fields .SFVec2f (0, 1), new x_ite_Fields .SFVec2f (1, 0));
 
       this .positionInterpolator         ._keyValue = new x_ite_Fields .MFVec3f (this ._positionOffset, translation);
       this .orientationInterpolator      ._keyValue = new x_ite_Fields .MFRotation (this ._orientationOffset, rotation);
@@ -40011,6 +40008,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
       if (this .checkTransition ("straightenView"))
          return;
 
+      const rotation = this .getOrientation () .copy () .inverse () .multRight (this .straightenHorizon (this .getUserOrientation ()));
+
       layerNode .getNavigationInfo () ._transitionStart = true;
 
       this .timeSensor ._cycleInterval = 1;
@@ -40021,16 +40020,12 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
 
       this .easeInEaseOut ._easeInEaseOut = new x_ite_Fields .MFVec2f (new x_ite_Fields .SFVec2f (0, 1), new x_ite_Fields .SFVec2f (1, 0));
 
-      const rotation = this .getOrientation () .copy () .inverse () .multRight (this .straightenHorizon (this .getUserOrientation ()));
-
       this .positionInterpolator         ._keyValue = new x_ite_Fields .MFVec3f (this ._positionOffset, this ._positionOffset);
       this .orientationInterpolator      ._keyValue = new x_ite_Fields .MFRotation (this ._orientationOffset, rotation);
       this .scaleInterpolator            ._keyValue = new x_ite_Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
       this .scaleOrientationInterpolator ._keyValue = new x_ite_Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
-      const relative = this .getRelativeTransformation (this);
-
-      this .setInterpolators (this, relative);
+      this .setInterpolators (this, this .getRelativeTransformation (this));
    },
    straightenHorizon (orientation, upVector = this .getUpVector (true))
    {
@@ -40040,8 +40035,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
    {
       const center = bbox .copy () .multRight (this .getModelMatrix () .copy () .inverse ()) .center .copy ();
 
-      bbox = bbox .copy () .multRight (this .getViewMatrix ());
-
       if (bbox .size .equals (Numbers_Vector3 .ZERO))
       {
          this .set_nearDistance__ ();
@@ -40050,8 +40043,9 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
       else
       {
          const
+            localBBox       = bbox .copy () .multRight (this .getViewMatrix ()),
             direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
-            distance        = this .getLookAtDistance (layerNode, bbox),
+            distance        = this .getLookAtDistance (layerNode, localBBox),
             userPosition    = center .copy () .add (direction .multiply (distance)),
             userOrientation = this .getLookAtRotation (userPosition, center);
 
@@ -40061,9 +40055,9 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
          this ._fieldOfViewScale       = 1;
          this .nearDistance            = distance * (0.125 / 10);
          this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
-      }
 
-      return bbox;
+         return localBBox;
+      }
    },
    traverse (type, renderObject)
    {
@@ -42130,8 +42124,11 @@ function eventsProcessed ()
 
       if (name)
       {
-         for (const shapeNode of shapeNodes)
+         for (const [i, shapeNode] of shapeNodes .entries ())
+         {
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
+            scene .addNamedNode (scene .getUniqueName (`${name}-Mesh-${i}`), shapeNode ._geometry);
+         }
       }
 
       return mesh .shapeNodes = shapeNodes;
@@ -44969,6 +44966,7 @@ function OBJParser (scene)
    // Globals
 
    this .geometryIndices = new Map ();
+   this .numGeometries   = 0;
    this .smoothingGroup  = -1;
    this .smoothingGroups = new Map ();
    this .groups          = new Map ();
@@ -45446,6 +45444,8 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
             this .normalIndex   = [ ];
             this .coordIndex    = [ ];
 
+            scene .addNamedNode (scene .getUniqueName (`Geometry-${this .numGeometries ++}`), this .geometry);
+
             this .geometryIndices .set (this .geometry,
             {
                texCoordIndex: this .texCoordIndex,
@@ -45918,27 +45918,31 @@ Object .assign (MaterialParser .prototype,
 
          if (OBJParser_Grammar .untilEndOfLine .parse (this))
          {
-            const string = this .result [0];
+            const string = this .result [0] .trim ();
 
             if (string .length && this .id .length)
             {
-               const paths = string .trim () .split (/\s+/);
+               const paths = string .split (/\s+/);
 
                if (paths .length)
                {
                   const path = paths .at (-1) .replace (/\\/g, "/");
 
-                  let texture = this .textures .get (path);
+                  let texture = this .textures .get (string);
 
                   if (!texture)
                   {
-                     const scene = this .executionContext;
+                     const
+                        scene  = this .executionContext,
+                        repeat = !string .match (/-clamp\s+on/);
 
                      texture = scene .createNode ("ImageTexture");
 
-                     texture .url = [path];
+                     texture .url     = [path];
+                     texture .repeatS = repeat;
+                     texture .repeatT = repeat;
 
-                     this .textures .set (path, texture);
+                     this .textures .set (string, texture);
                   }
 
                   this .material [materialTexture] = texture;
@@ -47824,7 +47828,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(222);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(768);
 
 
 
@@ -48722,7 +48726,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
          {
             const geometryNode = scene .createNode ("IndexedTriangleSet");
 
-            this .idAttribute (xmlElement .getAttribute ("id"), "Fill", geometryNode, { named: true });
+            this .idAttribute (xmlElement .getAttribute ("id"), "-Fill", geometryNode, { named: true });
 
             this .fillGeometries .set (xmlElement, geometryNode);
 
@@ -48751,7 +48755,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
          {
             const geometryNode = scene .createNode ("IndexedLineSet");
 
-            this .idAttribute (xmlElement .getAttribute ("id"), "Stroke", geometryNode, { named: true });
+            this .idAttribute (xmlElement .getAttribute ("id"), "-Stroke", geometryNode, { named: true });
 
             this .strokeGeometries .set (xmlElement, geometryNode);
 
@@ -59607,7 +59611,6 @@ const X3DLightingContext_default_ = X3DLightingContext;
 
 
 
-
 const OrthoViewpoint_VIEW_ALL_SCALE_FACTOR = 1.1;
 
 function OrthoViewpoint (executionContext)
@@ -59856,64 +59859,6 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
    {
       return bbox .size .norm () / 2 + 10;
    },
-   lookAt (layerNode, point, distance, transitionTime, factor, straighten)
-   {
-      const
-         fieldOfViewOffset = this ._fieldOfViewOffset .copy (),
-         fieldOfViewScale  = this ._fieldOfViewScale .getValue ();
-
-      const scale = 1 - (0.9 * factor);
-
-      const
-         offset0 = this .getUserMinimumX () * scale - this .getMinimumX (),
-         offset1 = this .getUserMinimumY () * scale - this .getMinimumY (),
-         offset2 = this .getUserMaximumX () * scale - this .getMaximumX (),
-         offset3 = this .getUserMaximumY () * scale - this .getMaximumY ();
-
-      Navigation_X3DViewpointNode .prototype .lookAt .call (this, layerNode, point, distance, transitionTime, 0, straighten);
-
-      this .fieldOfViewOffsetInterpolator0 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [0], offset0);
-      this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [1], offset1);
-      this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [2], offset2);
-      this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [3], offset3);
-      this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewScale, 1);
-   },
-   lookAtBBox (layerNode, bbox, transitionTime, factor, straighten)
-   {
-      if (bbox .size .equals (Numbers_Vector3 .ZERO))
-         return;
-
-      const
-         fieldOfViewOffset = this ._fieldOfViewOffset .copy (),
-         fieldOfViewScale  = this ._fieldOfViewScale .getValue ();
-
-      bbox = Navigation_X3DViewpointNode .prototype .lookAtBBox .call (this, layerNode, bbox, transitionTime, factor, straighten);
-
-      const scale = this .getViewAllScale (layerNode, bbox);
-
-      const
-         offset0 = this .getMinimumX () * scale - this .getMinimumX (),
-         offset1 = this .getMinimumY () * scale - this .getMinimumY (),
-         offset2 = this .getMaximumX () * scale - this .getMaximumX (),
-         offset3 = this .getMaximumY () * scale - this .getMaximumY ();
-
-      this .fieldOfViewOffsetInterpolator0 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [0], offset0);
-      this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [1], offset1);
-      this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [2], offset2);
-      this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [3], offset3);
-      this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewScale, 1);
-   },
-   viewAll (layerNode, bbox)
-   {
-      bbox = Navigation_X3DViewpointNode .prototype .viewAll .call (this, layerNode, bbox);
-
-      const scale = this .getViewAllScale (layerNode, bbox);
-
-      this ._fieldOfViewOffset [0] = this .getUserMinimumX () * scale - this .getUserMinimumX ();
-      this ._fieldOfViewOffset [1] = this .getUserMinimumY () * scale - this .getUserMinimumY ();
-      this ._fieldOfViewOffset [2] = this .getUserMaximumX () * scale - this .getUserMaximumX ();
-      this ._fieldOfViewOffset [3] = this .getUserMaximumY () * scale - this .getUserMaximumY ();
-   },
    getViewAllScale (layerNode, bbox)
    {
       const
@@ -59943,6 +59888,67 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
 
       return scale * OrthoViewpoint_VIEW_ALL_SCALE_FACTOR;
    },
+   lookAtBBox ({ layerNode, bbox, transitionTime, factor, straighten })
+   {
+      const
+         fieldOfViewOffset = this ._fieldOfViewOffset .copy (),
+         fieldOfViewScale  = this ._fieldOfViewScale .getValue ();
+
+      const localBBox = Navigation_X3DViewpointNode .prototype .lookAtBBox .call (this, { layerNode, bbox, transitionTime, factor, straighten });
+
+      if (!localBBox)
+         return;
+
+      const scale = this .getViewAllScale (layerNode, localBBox);
+
+      const
+         offset0 = this .getMinimumX () * scale - this .getMinimumX (),
+         offset1 = this .getMinimumY () * scale - this .getMinimumY (),
+         offset2 = this .getMaximumX () * scale - this .getMaximumX (),
+         offset3 = this .getMaximumY () * scale - this .getMaximumY ();
+
+      this .fieldOfViewOffsetInterpolator0 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [0], offset0);
+      this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [1], offset1);
+      this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [2], offset2);
+      this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [3], offset3);
+      this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewScale, 1);
+   },
+   lookAt ({ layerNode, point, distance, transitionTime, factor, straighten })
+   {
+      const
+         fieldOfViewOffset = this ._fieldOfViewOffset .copy (),
+         fieldOfViewScale  = this ._fieldOfViewScale .getValue ();
+
+      const scale = 1 - (0.9 * factor);
+
+      const
+         offset0 = this .getUserMinimumX () * scale - this .getMinimumX (),
+         offset1 = this .getUserMinimumY () * scale - this .getMinimumY (),
+         offset2 = this .getUserMaximumX () * scale - this .getMaximumX (),
+         offset3 = this .getUserMaximumY () * scale - this .getMaximumY ();
+
+      Navigation_X3DViewpointNode .prototype .lookAt .call (this, { layerNode, point, distance, transitionTime, factor: 0, straighten });
+
+      this .fieldOfViewOffsetInterpolator0 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [0], offset0);
+      this .fieldOfViewOffsetInterpolator1 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [1], offset1);
+      this .fieldOfViewOffsetInterpolator2 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [2], offset2);
+      this .fieldOfViewOffsetInterpolator3 ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewOffset [3], offset3);
+      this .fieldOfViewScaleInterpolator   ._keyValue = new x_ite_Fields .MFFloat (fieldOfViewScale, 1);
+   },
+   viewAll (layerNode, bbox)
+   {
+      const localBBox = Navigation_X3DViewpointNode .prototype .viewAll .call (this, layerNode, bbox);
+
+      if (!localBBox)
+         return;
+
+      const scale = this .getViewAllScale (layerNode, localBBox);
+
+      this ._fieldOfViewOffset [0] = this .getUserMinimumX () * scale - this .getUserMinimumX ();
+      this ._fieldOfViewOffset [1] = this .getUserMinimumY () * scale - this .getUserMinimumY ();
+      this ._fieldOfViewOffset [2] = this .getUserMaximumX () * scale - this .getUserMaximumX ();
+      this ._fieldOfViewOffset [3] = this .getUserMaximumY () * scale - this .getUserMaximumY ();
+   },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
       const
@@ -59971,6 +59977,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
    },
    convertFields (fields)
    {
+      // Convert fields for to*String.
       // Don't check for specification version, it will not work with Sunrize.
 
       fields .find (field => field .getName () === "fieldOfView")
@@ -60135,23 +60142,25 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, Base_X3DBaseNode .
 
       return vector .set (x, y, tbProjectToSphere (0.5, x, y));
    },
-   lookAtPoint (x, y, straightenHorizon)
+   lookAtPoint (x, y, straighten)
    {
       if (!this .touch (x, y))
          return;
 
       const
+         layerNode     = this .getActiveLayer (),
          viewpointNode = this .getActiveViewpoint (),
          hit           = this .getBrowser () .getHit ();
 
-      viewpointNode .lookAtPoint (this .getActiveLayer (), hit .point, 1, 0.5, straightenHorizon);
+      viewpointNode .lookAtPoint ({ layerNode, point: hit .point, factor: 0.5, straighten });
    },
-   lookAtBBox (x, y, straightenHorizon)
+   lookAtBBox (x, y, straighten)
    {
       if (!this .touch (x, y))
          return;
 
       const
+         layerNode     = this .getActiveLayer (),
          viewpointNode = this .getActiveViewpoint (),
          hit           = this .getBrowser () .getHit ();
 
@@ -60159,7 +60168,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, Base_X3DBaseNode .
          .multRight (hit .modelViewMatrix)
          .multRight (viewpointNode .getCameraSpaceMatrix ());
 
-      viewpointNode .lookAtBBox (this .getActiveLayer (), bbox, 1, 0.8, straightenHorizon);
+      viewpointNode .lookAtBBox ({ layerNode, bbox, factor: 0.8, straighten });
    },
    touch (x, y)
    {
@@ -91141,8 +91150,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(84);
-/* provided dependency */ var APNG = __webpack_require__(182);
+/* provided dependency */ var SuperGif = __webpack_require__(934);
+/* provided dependency */ var APNG = __webpack_require__(420);
 
 
 
@@ -93325,7 +93334,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
       layerNode      = Base_X3DCast (Base_X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
       transitionTime = +transitionTime;
 
-      layerNode ?.viewAll (transitionTime, 1, this .getBrowserOption ("StraightenHorizon"));
+      layerNode ?.viewAll ({ transitionTime, straighten: this .getBrowserOption ("StraightenHorizon") });
    },
    firstViewpoint (layerNode)
    {
@@ -93847,7 +93856,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(222);
+/* provided dependency */ var libtess_libtess = __webpack_require__(768);
 const libtess_default_ = libtess_libtess;
 ;
 
