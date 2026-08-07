@@ -566,9 +566,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
          this .update ();
 
-         const localBBox = bbox .copy () .multRight (this .getViewMatrix ());
-
          const
+            localBBox       = bbox .copy () .multRight (this .getViewMatrix ()),
             direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
             distance        = this .getLookAtDistance (layerNode, localBBox),
             userPosition    = center .copy () .add (direction .multiply (distance)),
