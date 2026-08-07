@@ -545,9 +545,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
       this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
-      const relative = this .getRelativeTransformation (this);
-
-      this .setInterpolators (this, relative);
+      this .setInterpolators (this, this .getRelativeTransformation (this));
    },
    straightenHorizon (orientation, upVector = this .getUpVector (true))
    {
