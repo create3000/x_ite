@@ -70,6 +70,7 @@ function OBJParser (scene)
    // Globals
 
    this .geometryIndices = new Map ();
+   this .numGeometries   = 0;
    this .smoothingGroup  = -1;
    this .smoothingGroups = new Map ();
    this .groups          = new Map ();
@@ -546,6 +547,8 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             this .texCoordIndex = [ ];
             this .normalIndex   = [ ];
             this .coordIndex    = [ ];
+
+            scene .addNamedNode (scene .getUniqueName (`Geometry-${this .numGeometries ++}`), this .geometry);
 
             this .geometryIndices .set (this .geometry,
             {
