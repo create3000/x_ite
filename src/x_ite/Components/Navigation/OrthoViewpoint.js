@@ -258,6 +258,35 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    {
       return bbox .size .norm () / 2 + 10;
    },
+   getViewAllScale (layerNode, bbox)
+   {
+      const
+         viewport = layerNode .getViewport () .getRectangle (),
+         width    = viewport [2],
+         height   = viewport [3],
+         ratio    = width / height,
+         bboxSize = bbox .size;
+
+      let sizeX, sizeY;
+
+      if (ratio > this .getSizeX () / this .getSizeY ())
+      {
+         sizeX = this .getSizeY () * ratio,
+         sizeY = this .getSizeY ();
+      }
+      else
+      {
+         sizeX = this .getSizeX (),
+         sizeY = this .getSizeX () / ratio;
+      }
+
+      const
+         scaleX = bboxSize .x / sizeX,
+         scaleY = bboxSize .y / sizeY,
+         scale  = Math .max (scaleX, scaleY);
+
+      return scale * VIEW_ALL_SCALE_FACTOR;
+   },
    lookAtBBox ({ layerNode, bbox, transitionTime, factor, straighten })
    {
       const
@@ -318,35 +347,6 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       this ._fieldOfViewOffset [1] = this .getUserMinimumY () * scale - this .getUserMinimumY ();
       this ._fieldOfViewOffset [2] = this .getUserMaximumX () * scale - this .getUserMaximumX ();
       this ._fieldOfViewOffset [3] = this .getUserMaximumY () * scale - this .getUserMaximumY ();
-   },
-   getViewAllScale (layerNode, bbox)
-   {
-      const
-         viewport = layerNode .getViewport () .getRectangle (),
-         width    = viewport [2],
-         height   = viewport [3],
-         ratio    = width / height,
-         bboxSize = bbox .size;
-
-      let sizeX, sizeY;
-
-      if (ratio > this .getSizeX () / this .getSizeY ())
-      {
-         sizeX = this .getSizeY () * ratio,
-         sizeY = this .getSizeY ();
-      }
-      else
-      {
-         sizeX = this .getSizeX (),
-         sizeY = this .getSizeX () / ratio;
-      }
-
-      const
-         scaleX = bboxSize .x / sizeX,
-         scaleY = bboxSize .y / sizeY,
-         scale  = Math .max (scaleX, scaleY);
-
-      return scale * VIEW_ALL_SCALE_FACTOR;
    },
    getProjectionMatrixWithLimits (nearValue, farValue, viewport)
    {
