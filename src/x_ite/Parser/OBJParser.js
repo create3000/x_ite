@@ -1022,27 +1022,31 @@ Object .assign (MaterialParser .prototype,
 
          if (Grammar .untilEndOfLine .parse (this))
          {
-            const string = this .result [0];
+            const string = this .result [0] .trim ();
 
             if (string .length && this .id .length)
             {
-               const paths = string .trim () .split (/\s+/);
+               const paths = string .split (/\s+/);
 
                if (paths .length)
                {
                   const path = paths .at (-1) .replace (/\\/g, "/");
 
-                  let texture = this .textures .get (path);
+                  let texture = this .textures .get (string);
 
                   if (!texture)
                   {
-                     const scene = this .executionContext;
+                     const
+                        scene  = this .executionContext,
+                        repeat = !string .match (/-clamp\s+on/);
 
                      texture = scene .createNode ("ImageTexture");
 
-                     texture .url = [path];
+                     texture .url     = [path];
+                     texture .repeatS = repeat;
+                     texture .repeatT = repeat;
 
-                     this .textures .set (path, texture);
+                     this .textures .set (string, texture);
                   }
 
                   this .material [materialTexture] = texture;
