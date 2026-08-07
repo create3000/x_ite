@@ -7,7 +7,6 @@ import ScalarInterpolator   from "../Interpolation/ScalarInterpolator.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Camera               from "../../../standard/Math/Geometry/Camera.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
