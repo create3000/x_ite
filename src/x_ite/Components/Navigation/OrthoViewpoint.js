@@ -376,6 +376,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    convertFields (fields)
    {
+      // Convert fields for to*String.
       // Don't check for specification version, it will not work with Sunrize.
 
       fields .find (field => field .getName () === "fieldOfView")
