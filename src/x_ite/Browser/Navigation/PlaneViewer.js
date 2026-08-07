@@ -219,32 +219,24 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    {
       event = this .getBrowser () .copyEvent (event);
 
-      switch (this .button)
+      // End move (button 0).
+
+      this .touchMode = 0;
+      event .button   = 0;
+
+      this .mouseup (event);
+
+      // Start dblclick (button 0).
+
+      if (this .tapedTwice)
       {
-         case 0:
-         {
-            // End move (button 0).
+         this .dblclick (event);
+      }
+      else
+      {
+         this .tapedTwice = true;
 
-            this .touchMode = 0;
-            event .button   = 0;
-
-            this .mouseup (event);
-
-            // Start dblclick (button 0).
-
-            if (this .tapedTwice)
-            {
-               this .dblclick (event);
-            }
-            else
-            {
-               this .tapedTwice = true;
-
-               setTimeout (() => this .tapedTwice = false, 300);
-            }
-
-            break;
-         }
+         setTimeout (() => this .tapedTwice = false, 300);
       }
    },
    touchmove: (() =>
