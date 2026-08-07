@@ -565,6 +565,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
          for (let i = 0; i < 2; ++ i)
          {
+            // Must be done twice to have proper view matrix.
+
             localBBox = bbox .copy () .multRight (this .getViewMatrix ());
 
             const
