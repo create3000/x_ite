@@ -528,6 +528,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       if (this .checkTransition ("straightenView"))
          return;
 
+      const rotation = this .getOrientation () .copy () .inverse () .multRight (this .straightenHorizon (this .getUserOrientation ()));
+
       layerNode .getNavigationInfo () ._transitionStart = true;
 
       this .timeSensor ._cycleInterval = 1;
@@ -537,8 +539,6 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
       this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-
-      const rotation = this .getOrientation () .copy () .inverse () .multRight (this .straightenHorizon (this .getUserOrientation ()));
 
       this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, this ._positionOffset);
       this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
