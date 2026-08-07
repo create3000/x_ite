@@ -562,29 +562,24 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       }
       else
       {
-         let localBBox;
+         // First create a proper view matrix to transform bbox.
 
-         for (let i = 0; i < 2; ++ i)
-         {
-            // Must be done twice to have a proper view matrix to transform bbox.
+         this .update ();
 
-            localBBox = bbox .copy () .multRight (this .getViewMatrix ());
+         const localBBox = bbox .copy () .multRight (this .getViewMatrix ());
 
-            const
-               direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
-               distance        = this .getLookAtDistance (layerNode, localBBox),
-               userPosition    = center .copy () .add (direction .multiply (distance)),
-               userOrientation = this .getLookAtRotation (userPosition, center);
+         const
+            direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
+            distance        = this .getLookAtDistance (layerNode, localBBox),
+            userPosition    = center .copy () .add (direction .multiply (distance)),
+            userOrientation = this .getLookAtRotation (userPosition, center);
 
-            this ._positionOffset         = userPosition .subtract (this .getPosition ());
-            this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
-            this ._centerOfRotationOffset = center .copy () .subtract (this .getCenterOfRotation ());
-            this ._fieldOfViewScale       = 1;
-            this .nearDistance            = distance * (0.125 / 10);
-            this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
-
-            this .update ();
-         }
+         this ._positionOffset         = userPosition .subtract (this .getPosition ());
+         this ._orientationOffset      = this .getOrientation () .copy () .inverse () .multRight (userOrientation);
+         this ._centerOfRotationOffset = center .copy () .subtract (this .getCenterOfRotation ());
+         this ._fieldOfViewScale       = 1;
+         this .nearDistance            = distance * (0.125 / 10);
+         this .farDistance             = this .nearDistance * this .getMaxFarValue () / 0.125;
 
          return localBBox;
       }
