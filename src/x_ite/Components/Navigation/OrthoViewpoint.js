@@ -79,12 +79,12 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    resetUserOffsets ()
    {
+      X3DViewpointNode .prototype .resetUserOffsets .call (this);
+
       this ._fieldOfViewOffset [0] = 0;
       this ._fieldOfViewOffset [1] = 0;
       this ._fieldOfViewOffset [2] = 0;
       this ._fieldOfViewOffset [3] = 0;
-
-      X3DViewpointNode .prototype .resetUserOffsets .call (this);
    },
    getRelativeTransformation (fromViewpointNode)
    {
