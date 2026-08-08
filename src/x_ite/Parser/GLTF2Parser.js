@@ -1770,7 +1770,8 @@ function eventsProcessed ()
          return mesh .shapeNodes;
       }
 
-      // Actually shapeNodes are not always Shape nodes, it also can be a Switch nodes from variants.
+      // Actually shapeNodes are not always Shape nodes, it also can be a Switch nodes from variants
+      // or a GaussianSplats node.
       const shapeNodes = this .primitivesArray (mesh, skin, EXT_mesh_gpu_instancing);
 
       // Name Shape nodes.
