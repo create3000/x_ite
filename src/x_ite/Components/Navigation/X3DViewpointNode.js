@@ -401,7 +401,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .timeSensor ._stopTime = Date .now () / 1000;
       this .timeSensor ._isActive .removeInterest ("set_active__", this);
    },
-   resetUserOffsets (update = true)
+   resetUserOffsets ()
    {
       this ._positionOffset         = Vector3   .ZERO;
       this ._orientationOffset      = Rotation4 .IDENTITY;
@@ -413,8 +413,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .set_nearDistance__ ();
       this .set_farDistance__ ();
 
-      if (update)
-         this .update ();
+      this .update ();
    },
    getRelativeTransformation: (() =>
    {
