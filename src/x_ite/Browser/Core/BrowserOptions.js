@@ -290,7 +290,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       }
       else
       {
-         // If this branch is processed a second time, ignore browser is live state.
+         // If this branch is processed a second time, ignore browser is live state,
+         // because isLive is now false.
          this .wasLive ??= browser .isLive ();
 
          browser .endUpdate ();
