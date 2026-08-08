@@ -113,7 +113,8 @@ x3d-canvas {
 < clockwise rotation about local y-axis,
 + counterclockwise rotation about local z-axis,
 - clockwise rotation about local z-axis,
-| turn around 180° #0-9 color index">
+| turn around 180°,
+#0-9 color index">
                   <tbody>
                     <tr>
                       <td>
