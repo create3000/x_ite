@@ -9,10 +9,10 @@
     <component name='Scripting' level='1'/>
     <component name='Text' level='1'/>
     <meta name='title' content='glTF Sample Viewer'/>
-    <meta name='created' content='Sun, 27 Apr 2025 10:03:02 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
+    <meta name='created' content='Sun, 27 Apr 2025 10:03:02 GMT'/>
+    <meta name='modified' content='Sat, 08 Aug 2026 11:57:18 GMT'/>
     <meta name='generator' content='Sunrize X3D Editor V2.1.18, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 08 Aug 2026 11:42:40 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
