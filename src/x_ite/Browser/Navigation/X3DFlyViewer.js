@@ -65,13 +65,15 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       if (this .button >= 0)
          return;
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const browser = this .getBrowser ();
+
+      const { x, y } = browser .getPointerFromEvent (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      this .controlKey = this .getBrowser () .getControlKey () || this .getBrowser () .getCommandKey ();
-      this .altKey     = this .getBrowser () .getAltKey ();
+      this .controlKey = browser .getControlKey () || browser .getCommandKey ();
+      this .altKey     = browser .getAltKey ();
 
       const button = this .getButton (event .button, this .altKey);
 
@@ -94,7 +96,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
-            this .getBrowser () .setCursor ("MOVE");
+            browser .setCursor ("MOVE");
 
             if (this .controlKey || this .lookAround)
             {
@@ -112,8 +114,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
                this .getFlyDirection (this .fromVector, this .toVector, this .direction);
                this .addFly ();
 
-               if (this .getBrowser () .getBrowserOption ("Rubberband"))
-                  this .getBrowser () .finishedEvents () .addInterest ("display", this, MOVE);
+               if (browser .getBrowserOption ("Rubberband"))
+                  browser .finishedEvents () .addInterest ("display", this, MOVE);
             }
 
             this ._isActive = true;
@@ -134,7 +136,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
-            this .getBrowser () .setCursor ("MOVE");
+            browser .setCursor ("MOVE");
 
             this .fromVector .set (x, y, 0);
             this .toVector   .assign (this .fromVector);
@@ -142,8 +144,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
             this .addPan ();
 
-            if (this .getBrowser () .getBrowserOption ("Rubberband"))
-               this .getBrowser () .finishedEvents () .addInterest ("display", this, PAN);
+            if (browser .getBrowserOption ("Rubberband"))
+               browser .finishedEvents () .addInterest ("display", this, PAN);
 
             this ._isActive = true;
             break;
@@ -462,8 +464,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       if (this .startTime)
          return;
 
-      this .getBrowser () .prepareEvents () .addInterest ("fly", this);
-      this .getBrowser () .addBrowserEvent ();
+      const browser = this .getBrowser ();
+
+      browser .prepareEvents () .addInterest ("fly", this);
+      browser .addBrowserEvent ();
 
       this .startTime = Date .now ();
    },
@@ -472,9 +476,11 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       if (this .startTime)
          return;
 
+      const browser = this .getBrowser ();
+
       this .disconnect ();
-      this .getBrowser () .prepareEvents () .addInterest ("pan", this);
-      this .getBrowser () .addBrowserEvent ();
+      browser .prepareEvents () .addInterest ("pan", this);
+      browser .addBrowserEvent ();
 
       this .startTime = Date .now ();
    },

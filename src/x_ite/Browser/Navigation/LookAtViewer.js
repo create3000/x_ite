@@ -123,22 +123,26 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       // Look at.
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const browser = this .getBrowser ();
+
+      const { x, y } = browser .getPointerFromEvent (event);
 
       this .disconnect ();
 
-      if (this .getBrowser () .getAltKey ())
+      if (browser .getAltKey ())
          this .lookAtPoint (x, y, this .getStraightenHorizon ());
       else
          this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
    mousemove (event)
    {
-      this .getBrowser () .addBrowserEvent ();
+      const browser = this .getBrowser ();
+
+      browser .addBrowserEvent ();
 
       this .event = event;
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const { x, y } = browser .getPointerFromEvent (event);
 
       switch (this .button)
       {

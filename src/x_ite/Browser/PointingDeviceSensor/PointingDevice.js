@@ -127,6 +127,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    touchstart (event)
    {
+      const browser = this .getBrowser ();
+
+      browser .getElement () .focus ({ preventScroll: true });
+
       const touches = event .touches;
 
       switch (touches .length)
@@ -135,7 +139,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          {
             // button 0.
 
-            event = this .getBrowser () .copyEvent (event);
+            event = browser .copyEvent (event);
 
             event .button = 0;
             event .pageX  = touches [0] .pageX;
@@ -145,7 +149,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
             // Show context menu on long tab.
 
-            const hit = this .getBrowser () .getHit ();
+            const hit = browser .getHit ();
 
             if (!hit .id || !hit .sensors .size)
             {

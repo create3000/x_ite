@@ -116,12 +116,14 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       if (this .button >= 0)
          return;
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const browser = this .getBrowser ();
+
+      const { x, y } = browser .getPointerFromEvent (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      this .altKey = this .getBrowser () .getAltKey ();
+      this .altKey = browser .getAltKey ();
 
       const button = this .getButton (event .button, this .altKey);
 
@@ -147,7 +149,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
-            this .getBrowser () .setCursor ("MOVE");
+            browser .setCursor ("MOVE");
             this .startRotate (x, y, 0);
 
             this ._isActive = true;
@@ -170,7 +172,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
-            this .getBrowser () .setCursor ("MOVE");
+            browser .setCursor ("MOVE");
             this .startPan (x, y);
 
             this ._isActive = true;
@@ -223,11 +225,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       // Look at.
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const browser = this .getBrowser ();
+
+      const { x, y } = browser .getPointerFromEvent (event);
 
       this .disconnect ();
 
-      if (this .getBrowser () .getAltKey ())
+      if (browser .getAltKey ())
          this .lookAtPoint (x, y, this .getStraightenHorizon ());
       else
          this .lookAtBBox (x, y, this .getStraightenHorizon ());
