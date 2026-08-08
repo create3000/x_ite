@@ -61,6 +61,20 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       switch (button)
       {
+         case 0:
+         {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
+            // Start move.
+
+            this .button = button;
+
+            $.on (this, document, "mouseup",  event => this .mouseup   (event));
+            $.on (this, document, "touchend", event => this .touchend  (event));
+            break;
+         }
          case 1:
          {
             // Stop event propagation.
@@ -208,6 +222,21 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       switch (touches .length)
       {
+         case 1:
+         {
+            // Start rotate (button 0).
+
+            event .button = 0;
+            event .pageX  = touches [0] .pageX;
+            event .pageY  = touches [0] .pageY;
+
+            this .mousedown (event);
+
+            // Remember tap.
+
+            this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+            break;
+         }
          case 2:
          {
             // Start move (button 1).
@@ -232,12 +261,13 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       switch (this .button)
       {
-         case 1:
+         case 0:
          {
-            // End move (button 0).
+            // End rotate (button 0).
 
-            this .touchMode = 0;
-            event .button   = 1;
+            event .button = 0;
+            event .pageX  = this .touch1 .x;
+            event .pageY  = this .touch1 .y;
 
             this .mouseup (event);
 
@@ -254,6 +284,16 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
                setTimeout (() => this .tapedTwice = false, 300);
             }
 
+            break;
+         }
+         case 1:
+         {
+            // End move (button 0).
+
+            this .touchMode = 0;
+            event .button   = 1;
+
+            this .mouseup (event);
             break;
          }
       }
