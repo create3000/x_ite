@@ -224,7 +224,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       {
          case 1:
          {
-            // Start rotate (button 0).
+            // Start tab (button 0).
 
             event .button = 0;
             event .pageX  = touches [0] .pageX;
@@ -267,7 +267,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       {
          case 0:
          {
-            // End rotate (button 0).
+            // End tab (button 0).
 
             event .button = 0;
             event .pageX  = this .touch1 .x;
