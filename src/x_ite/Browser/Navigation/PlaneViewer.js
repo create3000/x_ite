@@ -237,7 +237,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
             // End move (button 0).
 
             this .touchMode = 0;
-            event .button   = 0;
+            event .button   = 1;
 
             this .mouseup (event);
 
