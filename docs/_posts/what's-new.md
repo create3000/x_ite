@@ -18,6 +18,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 - [x] OBJ parser now uses material textures and parses ambient, diffuse, specular and shininess textures.
 - [x] Improved viewAll for [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) and [Viewpoint](/x_ite/components/navigation/viewpoint/).
 - [x] Implemented expand internal scene of [InlineGeometry](/x_ite/components/networking/inlinegeometry/) in the Outline Editor of [Sunrize](/sunrize/).
+- [x] Made key handling of navigation viewers distraction free.
 
 ## X_ITE v16.0 Series
 
