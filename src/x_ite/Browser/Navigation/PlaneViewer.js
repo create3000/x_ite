@@ -239,6 +239,10 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
          }
          case 2:
          {
+            // End tab (button 0).
+
+            this .touchend (event);
+
             // Start move (button 1).
 
             event .button = 1;
