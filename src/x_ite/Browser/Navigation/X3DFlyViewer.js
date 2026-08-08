@@ -419,8 +419,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    pan: (() =>
    {
       const
-         direction = new Vector3 (),
-         axis      = new Vector3 ();
+         userOrientation = new Rotation4 (),
+         direction       = new Vector3 (),
+         axis            = new Vector3 ();
 
       return function ()
       {
@@ -441,7 +442,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          speedFactor *= dt;
 
          const
-            orientation = viewpoint .getUserOrientation () .multRight (Rotation4 .fromVectors (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .Y_AXIS)), upVector)),
+            orientation = viewpoint .getUserOrientation (userOrientation) .multRight (Rotation4 .fromVectors (viewpoint .getUserOrientation (userOrientation) .multVecRot (axis .assign (Vector3 .Y_AXIS)), upVector)),
             translation = orientation .multVecRot (direction .multiply (speedFactor)),
             constrained = this .getActiveLayer () .constrainTranslation (translation);
 
