@@ -211,7 +211,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       return function (value)
       {
-         this ._orientationOffset = orientationOffset .assign (this .getOrientation ()) .inverse ()
+         this ._orientationOffset = orientationOffset .assign (this .getOrientation ())
+            .inverse ()
             .multRight (value);
       };
    })(),
