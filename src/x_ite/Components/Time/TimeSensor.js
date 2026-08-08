@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       this ._cycleTime        = time;
       this ._fraction_changed = this .fraction;
    },
-   set_resume (pauseInterval)
+   set_resume (/* pauseInterval */)
    {
       this .setRange (this .fraction, this ._range [1], this ._range [2], false);
    },

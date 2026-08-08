@@ -12,7 +12,7 @@ function OscillatorSource (executionContext)
 
    this .addType (X3DConstants .OscillatorSource);
 
-   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool (true));
 }
 
 Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSourceNode .prototype),
@@ -119,6 +119,10 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    {
       this .oscillatorNode .stop ();
       this .oscillatorNode .disconnect ();
+   },
+   set_time ()
+   {
+      this ._elapsedTime = this .getElapsedTime ();
    },
 });
 

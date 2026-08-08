@@ -13,7 +13,7 @@ function X3DSoundProcessingNode (executionContext)
 
    this .addType (X3DConstants .X3DSoundProcessingNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool (true));
 
    const audioContext = this .getBrowser () .getAudioContext ();
 

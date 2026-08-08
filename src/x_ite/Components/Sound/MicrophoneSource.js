@@ -11,7 +11,7 @@ function MicrophoneSource (executionContext)
 
    this .addType (X3DConstants .MicrophoneSource);
 
-   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool (true));
 }
 
 Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSourceNode .prototype),
@@ -116,6 +116,10 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
 
       this .mediaStreamAudioSourceNode = null;
       this .restore                    = restore;
+   },
+   set_time ()
+   {
+      this ._elapsedTime = this .getElapsedTime ();
    },
 });
 

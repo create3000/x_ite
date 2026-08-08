@@ -15,7 +15,7 @@ function StreamAudioSource (executionContext)
 
    this .addType (X3DConstants .StreamAudioSource);
 
-   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .inputOutput, "loop", new Fields .SFBool (true));
 }
 
 Object .assign (Object .setPrototypeOf (StreamAudioSource .prototype, X3DSoundSourceNode .prototype),
