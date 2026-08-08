@@ -1,5 +1,7 @@
 import $ from "../../../lib/helper.js";
 
+// https://github.khronos.org/KTX-Software/ktxjswrappers/libktx_js.html
+
 export default class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -41,7 +43,7 @@ export default class KTXDecoder
          }
          else if (dxtSupported)
          {
-            formatString = ktxTexture.numComponents == 4 ? "BC3" : "BC1";
+            formatString = ktxTexture.numComponents === 4 ? "BC3" : "BC1";
             format       = transcode_fmt .BC1_OR_3;
          }
          else if (pvrtcSupported)
@@ -89,6 +91,9 @@ export default class KTXDecoder
    //    return this .loadKTXFromBuffer (await response .arrayBuffer ());
    // }
 
+   // https://github.com/KhronosGroup/KTX-Software/issues/327
+   #numComponents = [0, 3, 4];
+
    async loadKTXFromBuffer (arrayBuffer)
    {
       await this .initialized;
@@ -102,7 +107,7 @@ export default class KTXDecoder
       texture .baseWidth     = ktxTexture .baseWidth;
       texture .baseHeight    = ktxTexture .baseHeight;
       texture .baseDepth     = ktxTexture .baseDepth ?? 1; // TODO: No support.
-      texture .numComponents = ktxTexture .numComponents;
+      texture .numComponents = this .#numComponents [ktxTexture .numComponents] ?? ktxTexture .numComponents;
       texture .target        = uploadResult .target;
 
       ktxTexture .delete ();
