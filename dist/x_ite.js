@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 379
+/***/ 969
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 745
+/***/ 43
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 601
+/***/ 943
 (module) {
 
 /**
@@ -20933,7 +20933,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
                callback: event =>
                {
                   browser .setBrowserOption ("Timings", event .target .checked);
-                  browser .getSurface () .focus ();
                },
             },
             "fullscreen": {
@@ -21178,7 +21177,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
             callback: () =>
             {
                browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-               browser .getSurface () .focus ();
             },
          };
       }
@@ -21205,7 +21203,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
             {
                browser ._viewer = viewer;
                browser .setDescription (gettext(this .getViewerName (viewer)));
-               browser .getSurface () .focus ();
             },
          };
       }
@@ -31161,7 +31158,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(601);
+/* provided dependency */ var libtess = __webpack_require__(943);
 
 
 const Triangle3 =
@@ -39693,7 +39690,8 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
 
       return function (value)
       {
-         this ._orientationOffset = orientationOffset .assign (this .getOrientation ()) .inverse ()
+         this ._orientationOffset = orientationOffset .assign (this .getOrientation ())
+            .inverse ()
             .multRight (value);
       };
    })(),
@@ -47851,7 +47849,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(601);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(943);
 
 
 
@@ -59703,12 +59701,12 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
    },
    resetUserOffsets ()
    {
+      Navigation_X3DViewpointNode .prototype .resetUserOffsets .call (this);
+
       this ._fieldOfViewOffset [0] = 0;
       this ._fieldOfViewOffset [1] = 0;
       this ._fieldOfViewOffset [2] = 0;
       this ._fieldOfViewOffset [3] = 0;
-
-      Navigation_X3DViewpointNode .prototype .resetUserOffsets .call (this);
    },
    getRelativeTransformation (fromViewpointNode)
    {
@@ -60743,12 +60741,14 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
       if (this .button >= 0)
          return;
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const browser = this .getBrowser ();
+
+      const { x, y } = browser .getPointerFromEvent (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      this .altKey = this .getBrowser () .getAltKey ();
+      this .altKey = browser .getAltKey ();
 
       const button = this .getButton (event .button, this .altKey);
 
@@ -60774,7 +60774,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
-            this .getBrowser () .setCursor ("MOVE");
+            browser .setCursor ("MOVE");
             this .startRotate (x, y, 0);
 
             this ._isActive = true;
@@ -60797,7 +60797,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
-            this .getBrowser () .setCursor ("MOVE");
+            browser .setCursor ("MOVE");
             this .startPan (x, y);
 
             this ._isActive = true;
@@ -60850,11 +60850,13 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
       // Look at.
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const browser = this .getBrowser ();
+
+      const { x, y } = browser .getPointerFromEvent (event);
 
       this .disconnect ();
 
-      if (this .getBrowser () .getAltKey ())
+      if (browser .getAltKey ())
          this .lookAtPoint (x, y, this .getStraightenHorizon ());
       else
          this .lookAtBBox (x, y, this .getStraightenHorizon ());
@@ -61780,13 +61782,15 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
       if (this .button >= 0)
          return;
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const browser = this .getBrowser ();
+
+      const { x, y } = browser .getPointerFromEvent (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      this .controlKey = this .getBrowser () .getControlKey () || this .getBrowser () .getCommandKey ();
-      this .altKey     = this .getBrowser () .getAltKey ();
+      this .controlKey = browser .getControlKey () || browser .getCommandKey ();
+      this .altKey     = browser .getAltKey ();
 
       const button = this .getButton (event .button, this .altKey);
 
@@ -61809,7 +61813,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
-            this .getBrowser () .setCursor ("MOVE");
+            browser .setCursor ("MOVE");
 
             if (this .controlKey || this .lookAround)
             {
@@ -61827,8 +61831,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
                this .getFlyDirection (this .fromVector, this .toVector, this .direction);
                this .addFly ();
 
-               if (this .getBrowser () .getBrowserOption ("Rubberband"))
-                  this .getBrowser () .finishedEvents () .addInterest ("display", this, MOVE);
+               if (browser .getBrowserOption ("Rubberband"))
+                  browser .finishedEvents () .addInterest ("display", this, MOVE);
             }
 
             this ._isActive = true;
@@ -61849,7 +61853,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
 
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
-            this .getBrowser () .setCursor ("MOVE");
+            browser .setCursor ("MOVE");
 
             this .fromVector .set (x, y, 0);
             this .toVector   .assign (this .fromVector);
@@ -61857,8 +61861,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
 
             this .addPan ();
 
-            if (this .getBrowser () .getBrowserOption ("Rubberband"))
-               this .getBrowser () .finishedEvents () .addInterest ("display", this, PAN);
+            if (browser .getBrowserOption ("Rubberband"))
+               browser .finishedEvents () .addInterest ("display", this, PAN);
 
             this ._isActive = true;
             break;
@@ -62177,8 +62181,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
       if (this .startTime)
          return;
 
-      this .getBrowser () .prepareEvents () .addInterest ("fly", this);
-      this .getBrowser () .addBrowserEvent ();
+      const browser = this .getBrowser ();
+
+      browser .prepareEvents () .addInterest ("fly", this);
+      browser .addBrowserEvent ();
 
       this .startTime = Date .now ();
    },
@@ -62187,9 +62193,11 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
       if (this .startTime)
          return;
 
+      const browser = this .getBrowser ();
+
       this .disconnect ();
-      this .getBrowser () .prepareEvents () .addInterest ("pan", this);
-      this .getBrowser () .addBrowserEvent ();
+      browser .prepareEvents () .addInterest ("pan", this);
+      browser .addBrowserEvent ();
 
       this .startTime = Date .now ();
    },
@@ -62504,12 +62512,14 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
       if (this .button >= 0)
          return;
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const browser = this .getBrowser ();
+
+      const { x, y } = browser .getPointerFromEvent (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      this .altKey = this .getBrowser () .getAltKey ();
+      this .altKey = browser .getAltKey ();
 
       const button = this .getButton (event .button, this .altKey);
 
@@ -62545,7 +62555,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
             helper.on (this, document, "touchmove", event => this .touchmove (event));
 
             this .getActiveViewpoint () .transitionStop ();
-            this .getBrowser () .setCursor ("MOVE");
+            browser .setCursor ("MOVE");
 
             this .getPointOnCenterPlane (x, y, this .fromPoint);
 
@@ -62586,11 +62596,13 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
 
       // Look at.
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const browser = this .getBrowser ();
+
+      const { x, y } = browser .getPointerFromEvent (event);
 
       this .disconnect ();
 
-      if (this .getBrowser () .getAltKey ())
+      if (browser .getAltKey ())
          this .lookAtPoint (x, y, this .getStraightenHorizon ());
       else
          this .lookAtBBox (x, y, this .getStraightenHorizon ());
@@ -63008,22 +63020,26 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
 
       // Look at.
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const browser = this .getBrowser ();
+
+      const { x, y } = browser .getPointerFromEvent (event);
 
       this .disconnect ();
 
-      if (this .getBrowser () .getAltKey ())
+      if (browser .getAltKey ())
          this .lookAtPoint (x, y, this .getStraightenHorizon ());
       else
          this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
    mousemove (event)
    {
-      this .getBrowser () .addBrowserEvent ();
+      const browser = this .getBrowser ();
+
+      browser .addBrowserEvent ();
 
       this .event = event;
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
+      const { x, y } = browser .getPointerFromEvent (event);
 
       switch (this .button)
       {
@@ -64288,11 +64304,12 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
    {
       const surface = this .getBrowser () .getSurface ();
 
-      helper.on (this, surface, "mousedown", event => this .mousedown  (event));
-      helper.on (this, surface, "mouseup",   event => this .mouseup    (event));
-      helper.on (this, surface, "dblclick",  event => this .dblclick   (event));
-      helper.on (this, surface, "mousemove", event => this .mousemove  (event));
-      helper.on (this, surface, "mouseout",  event => this .onmouseout (event));
+      helper.on (this, surface, "mousedown",  event => this .mousedown    (event));
+      helper.on (this, surface, "mouseup",    event => this .mouseup      (event));
+      helper.on (this, surface, "dblclick",   event => this .dblclick     (event));
+      helper.on (this, surface, "mousemove",  event => this .mousemove    (event));
+      helper.on (this, surface, "mouseenter", event => this .onmouseenter (event));
+      helper.on (this, surface, "mouseout",   event => this .onmouseout   (event));
 
       helper.on (this, surface, "touchstart", event => this .touchstart (event));
       helper.on (this, surface, "touchend",   event => this .touchend   (event));
@@ -64302,8 +64319,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
       const
          browser = this .getBrowser (),
          surface = browser .getSurface ();
-
-      browser .getElement () .focus ();
 
       if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
          return;
@@ -64398,6 +64413,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
    },
    touchstart (event)
    {
+      const browser = this .getBrowser ();
+
+      browser .getElement () .focus ({ preventScroll: true });
+
       const touches = event .touches;
 
       switch (touches .length)
@@ -64406,7 +64425,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
          {
             // button 0.
 
-            event = this .getBrowser () .copyEvent (event);
+            event = browser .copyEvent (event);
 
             event .button = 0;
             event .pageX  = touches [0] .pageX;
@@ -64416,7 +64435,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
 
             // Show context menu on long tab.
 
-            const hit = this .getBrowser () .getHit ();
+            const hit = browser .getHit ();
 
             if (!hit .id || !hit .sensors .size)
             {
@@ -64480,6 +64499,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
          browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
       else
          browser .setCursor (this .grabbing && move ? "GRABBING" : "DEFAULT");
+   },
+   onmouseenter ()
+   {
+      this .getBrowser () .getElement () .focus ({ preventScroll: true });
    },
    onmouseout ()
    {
@@ -91240,8 +91263,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(379);
-/* provided dependency */ var APNG = __webpack_require__(745);
+/* provided dependency */ var SuperGif = __webpack_require__(969);
+/* provided dependency */ var APNG = __webpack_require__(43);
 
 
 
@@ -93946,7 +93969,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(601);
+/* provided dependency */ var libtess_libtess = __webpack_require__(943);
 const libtess_default_ = libtess_libtess;
 ;
 
