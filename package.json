@@ -121,7 +121,7 @@
     "apng-js": "^1.1.5",
     "CharLS.js": "^2.0.1",
     "dicom-parser": "^1.8.21",
-    "eslint": "^10.8.0",
+    "eslint": "^10.8.1",
     "fast-xml-parser": "^5.10.1",
     "globals": "^17.9.0",
     "jpeg-js": "^0.4.4",
