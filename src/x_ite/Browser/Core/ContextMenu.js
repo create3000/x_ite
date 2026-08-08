@@ -523,7 +523,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                callback: event =>
                {
                   browser .setBrowserOption ("Timings", event .target .checked);
-                  browser .getSurface () .focus ();
                },
             },
             "fullscreen": {
@@ -768,7 +767,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             callback: () =>
             {
                browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-               browser .getSurface () .focus ();
             },
          };
       }
@@ -795,7 +793,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             {
                browser ._viewer = viewer;
                browser .setDescription (_(this .getViewerName (viewer)));
-               browser .getSurface () .focus ();
             },
          };
       }
