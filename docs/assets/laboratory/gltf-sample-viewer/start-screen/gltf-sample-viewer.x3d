@@ -11,7 +11,7 @@
     <meta name='created' content='Sun, 27 Apr 2025 10:03:02 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.1.18, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Sat, 08 Aug 2026 10:52:56 GMT'/>
+    <meta name='modified' content='Sat, 08 Aug 2026 11:26:50 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -67,15 +67,28 @@ function changeColorScheme (event)
     </EnvironmentLight>
     <Viewpoint
         position='0 -0.5130038 8.320494'
-        centerOfRotation='0 -0.5130038 0'/>
+        centerOfRotation='0 -0.5130038 0'
+        viewAll='true'/>
+    <Transform DEF='ViewAllBox'
+        translation='0 -0.5130038 0'
+        scale='1.423299 1.423299 1.423299'>
+      <Shape
+          pointerEvents='false'>
+        <Appearance>
+          <UnlitMaterial
+              transparency='1'/>
+        </Appearance>
+        <Box/>
+      </Shape>
+    </Transform>
     <Transform DEF='Logo'
         scale='3.991387 3.991387 3.991387'>
       <Inline
           url='"gltf_logo.glb"'/>
     </Transform>
-    <Transform DEF='Text_1'
+    <Transform DEF='Text'
         translation='0 -2.9167 0'
-        scale='0.68 0.68 0.68'>
+        scale='0.72 0.72 0.72'>
       <FontLibrary
           family='Suissnord'
           url='"suissnord.regular.otf"'/>
