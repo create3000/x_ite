@@ -56,37 +56,23 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    },
    getMode (index)
    {
-      if (index < this .modes .length)
-         return this .modes [index];
-
-      return ModeType .MODULATE;
+      return this .modes [index] ?? ModeType .MODULATE;
    },
    getAlphaMode (index)
    {
-      if (index < this .alphaModes .length)
-         return this .alphaModes [index];
-
-      return ModeType .MODULATE;
+      return this .alphaModes [index] ?? ModeType .MODULATE;
    },
    getSource (index)
    {
-      if (index < this .sources .length)
-         return this .sources [index];
-
-      return SourceType .DEFAULT;
+      return this .sources [index] ?? SourceType .DEFAULT;
    },
    getFunction (index)
    {
-      if (index < this .functions .length)
-         return this .functions [index];
-
-      return FunctionType .DEFAULT;
+      return this .functions [index] ?? FunctionType .DEFAULT;
    },
    set_color__ ()
    {
-      this .color [0] = this ._color .r;
-      this .color [1] = this ._color .g;
-      this .color [2] = this ._color .b;
+      this .color .set (this ._color .getValue ());
    },
    set_alpha__ ()
    {
@@ -95,7 +81,8 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    set_mode__: (() =>
    {
       const modeTypes = new Map ([
-         // ... Object .entries (ModeType),
+         ... Object .entries (ModeType),
+         // Legacy
          ["REPLACE",                   ModeType .REPLACE],
          ["MODULATE",                  ModeType .MODULATE],
          ["MODULATE2X",                ModeType .MODULATE_2X],
@@ -138,45 +125,24 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
 
             // RGB
 
-            const modeType = modeTypes .get (mode [0]);
-
-            if (modeType !== undefined)
-               this .modes .push (modeType);
-            else
-               this .modes .push (ModeType .MODULATE);
+            this .modes .push (modeTypes .get (mode [0]) ?? ModeType .MODULATE);
 
             // Alpha
 
-            const alphaModeType = modeTypes .get (mode [1]);
-
-            if (alphaModeType !== undefined)
-               this .alphaModes .push (alphaModeType);
-            else
-               this .alphaModes .push (ModeType .MODULATE);
+            this .alphaModes .push (modeTypes .get (mode [1]) ?? ModeType .MODULATE);
          }
       };
    })(),
    set_source__: (() =>
    {
-      const sourceTypes = new Map ([
-         ["DIFFUSE",  SourceType .DIFFUSE],
-         ["SPECULAR", SourceType .SPECULAR],
-         ["FACTOR",   SourceType .FACTOR],
-      ]);
+      const sourceTypes = new Map (Object .entries (SourceType));
 
       return function ()
       {
          this .sources .length = 0;
 
          for (const source of this ._source)
-         {
-            const sourceType = sourceTypes .get (source);
-
-            if (sourceType !== undefined)
-               this .sources .push (sourceType);
-            else
-               this .sources .push (SourceType .DEFAULT);
-         }
+            this .sources .push (sourceTypes .get (source) ?? SourceType .DEFAULT);
       };
    })(),
    set_function__: (() =>
@@ -192,14 +158,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
          this .functions .length = 0;
 
          for (const func of this ._function)
-         {
-            const functionsType = functionsTypes .get (func);
-
-            if (functionsType !== undefined)
-               this .functions .push (functionsType);
-            else
-               this .functions .push (FunctionType .DEFAULT);
-         }
+            this .functions .push (functionsTypes .get (func) ?? FunctionType .DEFAULT);
       };
    })(),
    set_texture__ ()
