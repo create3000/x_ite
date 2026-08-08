@@ -56,10 +56,8 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
       // If Alt key is pressed and button 0, then emulate button 1 (middle).
       if (button === 0)
       {
-         if (altKey ?? this .getBrowser () .getAltKey ())
-         {
+         if (altKey)
             return 1;
-         }
       }
 
       return button;
