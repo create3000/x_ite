@@ -106,7 +106,14 @@ x3d-canvas {
             <tr>
               <td>Rules:</td>
               <td>
-                <table class="l-system-rules" title="a-zA-Z0-9 draw line along local y-axis, \ counterclockwise rotation about local x-axis, / clockwise rotation about local x-axis, > counterclockwise rotation about local y-axis, < clockwise rotation about local y-axis, + counterclockwise rotation about local z-axis, - clockwise rotation about local z-axis, | turn around 180° #0-9 color index">
+                <table class="l-system-rules" title="a-zA-Z0-9 draw line along local y-axis,
+\ counterclockwise rotation about local x-axis,
+/ clockwise rotation about local x-axis,
+> counterclockwise rotation about local y-axis,
+< clockwise rotation about local y-axis,
++ counterclockwise rotation about local z-axis,
+- clockwise rotation about local z-axis,
+| turn around 180° #0-9 color index">
                   <tbody>
                     <tr>
                       <td>
