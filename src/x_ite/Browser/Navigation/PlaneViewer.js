@@ -55,9 +55,13 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      switch (event .button)
+      this .altKey = this .getBrowser () .getAltKey ();
+
+      const button = this .getButton (event .button, this .altKey);
+
+      switch (button)
       {
-         case 0:
+         case 1:
          {
             // Stop event propagation.
 
@@ -65,7 +69,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
             // Start move.
 
-            this .button = event .button;
+            this .button = button;
 
             $.on (this, document, "mouseup",   event => this .mouseup   (event));
             $.on (this, document, "mousemove", event => this .mousemove (event));
@@ -84,7 +88,9 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    },
    mouseup (event)
    {
-      if (event .button !== this .button)
+      const button = this .getButton (event .button, this .altKey);
+
+      if (button !== this .button)
          return;
 
       // Stop event propagation.
@@ -123,11 +129,16 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    },
    mousemove (event)
    {
+      const button  = this .getButton (this .button, this .altKey);
+
+      if (button !== this .button)
+         return;
+
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      switch (this .button)
+      switch (button)
       {
-         case 0:
+         case 1:
          {
             // Stop event propagation.
 
@@ -201,7 +212,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
          {
             // Start move (button 1).
 
-            event .button = 0;
+            event .button = 1;
             event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
             event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
 
@@ -221,7 +232,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
 
       switch (this .button)
       {
-         case 0:
+         case 1:
          {
             // End move (button 0).
 
