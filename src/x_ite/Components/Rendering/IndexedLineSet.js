@@ -37,17 +37,11 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
    },
    getColorPerVertexIndex (index)
    {
-      if (index < this ._colorIndex .length)
-         return this ._colorIndex [index];
-
-      return this ._coordIndex [index];
+      return this ._colorIndex [index] ?? this ._coordIndex [index];
    },
    getColorIndex (index)
    {
-      if (index < this ._colorIndex .length)
-         return this ._colorIndex [index];
-
-      return index;
+      return this ._colorIndex [index] ?? index;
    },
    getPolylineIndices ()
    {
@@ -59,7 +53,9 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
 
       if (coordIndex .length)
       {
-         for (let i = 0, length = coordIndex .length; i < length; ++ i)
+         const length = coordIndex .length;
+
+         for (let i = 0; i < length; ++ i)
          {
             const index = coordIndex [i];
 
@@ -77,10 +73,8 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
             }
          }
 
-         if (coordIndex [coordIndex .length - 1] >= 0)
-         {
+         if (coordIndex [length - 1] >= 0)
             polylines .push (polyline);
-         }
       }
 
       return polylines;
@@ -119,9 +113,13 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
 
          if (polyline .length > 1)
          {
-            for (let line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
+            const l_end = polyline .length - 1;
+
+            for (let line = 0; line < l_end; ++ line)
             {
-               for (let l = line, i_end = line + 2; l < i_end; ++ l)
+               const i_end = line + 2;
+
+               for (let l = line; l < i_end; ++ l)
                {
                   const
                      i     = polyline [l],

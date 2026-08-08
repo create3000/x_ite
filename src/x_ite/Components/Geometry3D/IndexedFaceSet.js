@@ -31,38 +31,23 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
    },
    getTexCoordPerVertexIndex (index)
    {
-      if (index < this ._texCoordIndex .length)
-         return this ._texCoordIndex [index];
-
-      return this ._coordIndex [index];
+      return this ._texCoordIndex [index] ?? this ._coordIndex [index];
    },
    getColorPerVertexIndex (index)
    {
-      if (index < this ._colorIndex .length)
-         return this ._colorIndex [index];
-
-      return this ._coordIndex [index];
+      return this ._colorIndex [index] ?? this ._coordIndex [index];
    },
    getColorPerFaceIndex (index)
    {
-      if (index < this ._colorIndex .length)
-         return this ._colorIndex [index];
-
-      return index;
+      return this ._colorIndex [index] ?? index;
    },
    getNormalPerVertexIndex (index)
    {
-      if (index < this ._normalIndex .length)
-         return this ._normalIndex [index];
-
-      return this ._coordIndex [index];
+      return this ._normalIndex [index] ?? this ._coordIndex [index];
    },
    getNormalPerFaceIndex (index)
    {
-      if (index < this ._normalIndex .length)
-         return this ._normalIndex [index];
-
-      return index;
+      return this ._normalIndex [index] ?? index;
    },
    build ()
    {
@@ -336,11 +321,13 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
          // Determine polygon normal.
          // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-         const normal = new Vector3 ();
+         const
+            normal = new Vector3 (),
+            length = vertices .length;
 
          coord .get1Point (coordIndex [vertices [0]], next);
 
-         for (let i = 0, length = vertices .length; i < length; ++ i)
+         for (let i = 0; i < length; ++ i)
          {
             const tmp = current;
             current = next;
