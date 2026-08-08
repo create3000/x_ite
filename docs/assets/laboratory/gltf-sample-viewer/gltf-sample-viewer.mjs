@@ -885,11 +885,11 @@ class SampleViewer
 
    async loadURL (filename)
    {
-      this .toggleOptions (false);
+      this .showOptions (false);
 
       await this .browser .loadURL (new X3D .MFString (filename));
 
-      this .toggleOptions (true);
+      this .showOptions (true);
       this .viewAll ();
       this .setEnvironmentLight (!no_ibl .some (name => filename .includes (name)));
       this .setHeadlight (!no_headlight .some (name => filename .includes (name)));
@@ -901,7 +901,7 @@ class SampleViewer
       this .addAnimations ();
    }
 
-   toggleOptions (show)
+   showOptions (show)
    {
       if (show)
       {
