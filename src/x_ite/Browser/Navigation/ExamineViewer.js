@@ -121,7 +121,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      switch (this .getButton (event .button))
+      this .altKey = this .getBrowser () .getAltKey ();
+
+      const button = this .getButton (event .button, this .altKey);
+
+      switch (button)
       {
          case 0:
          {
@@ -131,7 +135,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             // Start rotate.
 
-            this .button     = event .button;
+            this .button     = button;
             this .motionTime = Date .now ();
 
             this .deltaRotation .assign (Rotation4 .IDENTITY);
@@ -157,7 +161,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             // Start pan.
 
-            this .button = event .button;
+            this .button = button;
 
             $.on (this, document, "mouseup",   event => this .mouseup   (event));
             $.on (this, document, "mousemove", event => this .mousemove (event));
@@ -176,7 +180,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    mouseup (event, spin = true)
    {
-      if (event .button !== this .button)
+      const button = this .getButton (event .button, this .altKey);
+
+      if (button !== this .button)
          return;
 
       // Stop event propagation.
@@ -193,7 +199,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
       this ._isActive = false;
 
-      switch (this .getButton (event .button))
+      switch (button)
       {
          case 0:
          {
@@ -228,9 +234,14 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    mousemove (event)
    {
+      const button  = this .getButton (this .button, this .altKey);
+
+      if (button !== this .button)
+         return;
+
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      switch (this .getButton (this .button))
+      switch (button)
       {
          case 0:
          {
@@ -655,14 +666,16 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    },
    pan: (() =>
    {
-      const fromPoint = new Vector3 ();
+      const
+         userOrientation = new Rotation4 (),
+         fromPoint       = new Vector3 ();
 
       return function  (x, y)
       {
          const
             viewpoint   = this .getActiveViewpoint (),
             toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
-            translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
+            translation = viewpoint .getUserOrientation (userOrientation) .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
 
          this .addMove (translation, translation);
 
@@ -672,8 +685,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    zoom: (() =>
    {
       const
-         step        = new Vector3 (),
-         translation = new Vector3 ();
+         userOrientation = new Rotation4 (),
+         step            = new Vector3 (),
+         translation     = new Vector3 ();
 
       return function (zoomFactor, deltaY)
       {
@@ -682,7 +696,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          const viewpoint = this .getActiveViewpoint ();
 
          this .getDistanceToCenter (step) .multiply (zoomFactor);
-         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .norm ()));
+         viewpoint .getUserOrientation (userOrientation) .multVecRot (translation .set (0, 0, step .norm ()));
 
          if (deltaY < 0)
             this .addMove (translation .negate (), Vector3 .ZERO);

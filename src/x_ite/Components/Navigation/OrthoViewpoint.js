@@ -77,14 +77,14 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
       this ._fieldOfViewOffset [2] = this .fieldOfViewOffsetInterpolator2 ._value_changed .getValue ();
       this ._fieldOfViewOffset [3] = this .fieldOfViewOffsetInterpolator3 ._value_changed .getValue ();
    },
-   resetUserOffsets (update)
+   resetUserOffsets ()
    {
       this ._fieldOfViewOffset [0] = 0;
       this ._fieldOfViewOffset [1] = 0;
       this ._fieldOfViewOffset [2] = 0;
       this ._fieldOfViewOffset [3] = 0;
 
-      X3DViewpointNode .prototype .resetUserOffsets .call (update);
+      X3DViewpointNode .prototype .resetUserOffsets .call (this);
    },
    getRelativeTransformation (fromViewpointNode)
    {
@@ -137,9 +137,9 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    {
       return false;
    },
-   getFieldOfView ()
+   getFieldOfView (value = new Vector4 ())
    {
-      return new Vector4 (
+      return value .set (
          this .getMinimumX (),
          this .getMinimumY (),
          this .getMaximumX (),
@@ -150,9 +150,9 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    {
       this ._fieldOfView = value;
    },
-   getUserFieldOfView ()
+   getUserFieldOfView (value = new Vector4 ())
    {
-      return new Vector4 (
+      return value .set (
          this .getUserMinimumX (),
          this .getUserMinimumY (),
          this .getUserMaximumX (),

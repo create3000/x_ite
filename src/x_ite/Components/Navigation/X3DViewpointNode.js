@@ -34,13 +34,10 @@ function X3DViewpointNode (executionContext)
 
    // Private properties
 
-   this .descriptions         = [ ];
-   this .userPosition         = new Vector3 ();
-   this .userOrientation      = new Rotation4 ();
-   this .userCenterOfRotation = new Vector3 ();
-   this .modelMatrix          = new Matrix4 ();
-   this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
-   this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
+   this .descriptions      = [ ];
+   this .modelMatrix       = new Matrix4 ();
+   this .cameraSpaceMatrix = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
+   this .viewMatrix        = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
 
    const
       browser      = this .getBrowser (),
@@ -188,36 +185,51 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       this ._centerOfRotation = value;
    },
-   getUserPosition ()
+   getUserPosition (value = new Vector3 ())
    {
-      return this .userPosition .assign (this .getPosition ())
+      return value .assign (this .getPosition ())
          .add (this ._positionOffset .getValue ());
    },
-   setUserPosition (userPosition)
+   setUserPosition: (() =>
    {
-      this ._positionOffset = this .userPosition .assign (userPosition)
-         .subtract (this .getPosition ());
-   },
-   getUserOrientation ()
+      const positionOffset = new Vector3 ();
+
+      return function (value)
+      {
+         this ._positionOffset = positionOffset .assign (value)
+            .subtract (this .getPosition ());
+      };
+   })(),
+   getUserOrientation (value = new Rotation4 ())
    {
-      return this .userOrientation .assign (this .getOrientation ())
+      return value .assign (this .getOrientation ())
          .multRight (this ._orientationOffset .getValue ());
    },
-   setUserOrientation (userOrientation)
+   setUserOrientation: (() =>
    {
-      this ._orientationOffset = this .userOrientation .assign (this .getOrientation ()) .inverse ()
-         .multRight (userOrientation);
-   },
-   getUserCenterOfRotation ()
+      const orientationOffset = new Rotation4 ();
+
+      return function (value)
+      {
+         this ._orientationOffset = orientationOffset .assign (this .getOrientation ()) .inverse ()
+            .multRight (value);
+      };
+   })(),
+   getUserCenterOfRotation (value = new Vector3 ())
    {
-      return this .userCenterOfRotation .assign (this .getCenterOfRotation ())
+      return value .assign (this .getCenterOfRotation ())
          .add (this ._centerOfRotationOffset .getValue ());
    },
-   setUserCenterOfRotation (userCenterOfRotation)
+   setUserCenterOfRotation: (() =>
    {
-      this ._centerOfRotationOffset = this .userCenterOfRotation .assign (userCenterOfRotation)
-         .subtract (this .getCenterOfRotation ());
-   },
+      const centerOfRotationOffset = new Vector3 ();
+
+      return function (value)
+      {
+         this ._centerOfRotationOffset = centerOfRotationOffset .assign (value)
+            .subtract (this .getCenterOfRotation ());
+      };
+   })(),
    getFieldOfViewScale ()
    {
       return this ._fieldOfViewScale .getValue ();
@@ -563,7 +575,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       {
          const
             localBBox       = bbox .copy () .multRight (this .getViewMatrix ()),
-            direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
+            direction       = this .getUserPosition () .subtract (center) .normalize (),
             distance        = this .getLookAtDistance (layerNode, localBBox),
             userPosition    = center .copy () .add (direction .multiply (distance)),
             userOrientation = this .getLookAtRotation (userPosition, center);
@@ -612,17 +624,24 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
    },
-   update ()
+   update: (() =>
    {
-      this .cameraSpaceMatrix .setTransform (this .getUserPosition (),
-                                             this .getUserOrientation (),
-                                             this ._scaleOffset .getValue (),
-                                             this ._scaleOrientationOffset .getValue ());
+      const
+         userPosition    = new Vector3 (),
+         userOrientation = new Rotation4 ();
 
-      this .cameraSpaceMatrix .multRight (this .modelMatrix);
+      return function ()
+      {
+         this .cameraSpaceMatrix .setTransform (this .getUserPosition (userPosition),
+                                                this .getUserOrientation (userOrientation),
+                                                this ._scaleOffset .getValue (),
+                                                this ._scaleOrientationOffset .getValue ());
 
-      this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
-   }
+         this .cameraSpaceMatrix .multRight (this .modelMatrix);
+
+         this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+      };
+   })()
 });
 
 Object .defineProperties (X3DViewpointNode, X3DNode .getStaticProperties ("X3DViewpointNode", "Navigation", 1));

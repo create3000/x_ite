@@ -31,7 +31,6 @@ function X3DFlyViewer (executionContext, navigationInfo)
    this .toVector          = new Vector3 ();
    this .direction         = new Vector3 ();
    this .startTime         = 0;
-   this .event             = null;
    this .lookAround        = false;
    this .orientationChaser = new OrientationChaser (executionContext);
    this .rubberBand        = new ScreenLine (browser, 1, 1, 0.4);
@@ -56,34 +55,27 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       $.on (this, surface, "touchstart", event => this .touchstart (event));
       $.on (this, surface, "touchend",   event => this .touchend   (event));
 
-      browser ._controlKey .addInterest ("set_controlKey__", this);
-
       // Setup look around chaser.
 
       this .orientationChaser ._duration = ROTATE_TIME;
       this .orientationChaser .setup ();
-   },
-   set_controlKey__ ()
-   {
-      if (this .event && this .event .button === 0)
-      {
-         this .button = -1;
-         this .mousedown (this .event);
-      }
    },
    mousedown (event)
    {
       if (this .button >= 0)
          return;
 
-      this .event = event;
-
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      switch (this .getButton (event .button))
+      this .controlKey = this .getBrowser () .getControlKey () || this .getBrowser () .getCommandKey ();
+      this .altKey     = this .getBrowser () .getAltKey ();
+
+      const button = this .getButton (event .button, this .altKey);
+
+      switch (button)
       {
          case 0:
          {
@@ -93,7 +85,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
             // Start walk or fly.
 
-            this .button = event .button;
+            this .button = button;
 
             $.on (this, document, "mouseup",   event => this .mouseup   (event));
             $.on (this, document, "mousemove", event => this .mousemove (event));
@@ -104,7 +96,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
 
-            if (this .getBrowser () .getControlKey () || this .getBrowser () .getCommandKey () || this .lookAround)
+            if (this .controlKey || this .lookAround)
             {
                // Look around.
 
@@ -135,7 +127,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
             // Start pan.
 
-            this .button = event .button;
+            this .button = button;
 
             $.on (this, document, "mouseup",   event => this .mouseup   (event));
             $.on (this, document, "mousemove", event => this .mousemove (event));
@@ -160,7 +152,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    },
    mouseup (event)
    {
-      if (event .button !== this .button)
+      const button = this .getButton (event .button, this .altKey);
+
+      if (button !== this .button)
          return;
 
       // Stop event propagation.
@@ -171,7 +165,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .direction .set (0);
 
-      this .event  = null;
       this .button = -1;
 
       $.off (this, document);
@@ -183,15 +176,18 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    },
    mousemove (event)
    {
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         button  = this .getButton (this .button, this .altKey);
+
+      if (button !== this .button)
+         return;
 
       browser .addBrowserEvent ();
 
-      this .event = event;
+      const { x, y } = browser .getPointerFromEvent (event);
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
-
-      switch (this .getButton (this .button))
+      switch (button)
       {
          case 0:
          {
@@ -199,7 +195,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
             event .preventDefault ();
 
-            if (browser .getControlKey () || browser .getCommandKey () || this .lookAround)
+            if (this .controlKey || this .lookAround)
             {
                // Look around
 
@@ -307,7 +303,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       event = this .getBrowser () .copyEvent (event);
 
       // End move or look around (button 0).
-   
+
       this .lookAround = false;
       event .button    = 0;
 
@@ -348,12 +344,13 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    fly: (() =>
    {
       const
-         upVector           = new Vector3 (),
-         direction          = new Vector3 (),
-         axis               = new Vector3 (),
-         userOrientation    = new Rotation4 (),
-         orientationOffset  = new Rotation4 (),
-         rubberBandRotation = new Rotation4 ();
+         upVector               = new Vector3 (),
+         direction              = new Vector3 (),
+         axis                   = new Vector3 (),
+         currentUserOrientation = new Rotation4 (),
+         userOrientation        = new Rotation4 (),
+         orientationOffset      = new Rotation4 (),
+         rubberBandRotation     = new Rotation4 ();
 
       return function ()
       {
@@ -398,7 +395,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          userOrientation
             .assign (Rotation4 .IDENTITY)
             .slerp (rubberBandRotation, weight)
-            .multRight (viewpoint .getUserOrientation ());
+            .multRight (viewpoint .getUserOrientation (currentUserOrientation));
 
          // Straighten horizon of userOrientation.
 
@@ -613,7 +610,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       this .rubberBand .dispose ();
 
       this .disconnect ();
-      this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
 
       $.off (this, this .getBrowser () .getSurface ());
       $.off (this, document);

@@ -425,6 +425,7 @@ Object .assign (X3DRenderObject .prototype,
          projectionMatrix     = new Matrix4 (),
          viewProjectionMatrix = new Matrix4 (),
          viewMatrix           = new Matrix4 (),
+         userPosition         = new Vector3 (),
          localOrientation     = new Rotation4 (),
          rotation             = new Rotation4 ();
 
@@ -469,7 +470,7 @@ Object .assign (X3DRenderObject .prototype,
 
          viewMatrix
             .assign (viewpointNode .getModelMatrix ())
-            .translate (viewpointNode .getUserPosition ())
+            .translate (viewpointNode .getUserPosition (userPosition))
             .rotate (rotation)
             .inverse ()
             .multLeft (viewpointNode .getCameraSpaceMatrix ());
@@ -939,6 +940,7 @@ Object .assign (X3DRenderObject .prototype,
       const
          projectionMatrix     = new Matrix4 (),
          viewProjectionMatrix = new Matrix4 (),
+         userPosition         = new Vector3 (),
          translation          = new Vector3 (),
          rotation             = new Rotation4 ();
 
@@ -986,7 +988,7 @@ Object .assign (X3DRenderObject .prototype,
 
          viewProjectionMatrix
             .assign (viewpointNode .getModelMatrix ())
-            .translate (viewpointNode .getUserPosition ())
+            .translate (viewpointNode .getUserPosition (userPosition))
             .rotate (down)
             .inverse ()
             .multRight (projectionMatrix)

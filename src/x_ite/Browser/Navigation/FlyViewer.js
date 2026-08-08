@@ -1,4 +1,5 @@
 import X3DFlyViewer from "./X3DFlyViewer.js";
+import Rotation4    from "../../../standard/Math/Numbers/Rotation4.js";
 
 function FlyViewer (executionContext, navigationInfo)
 {
@@ -15,10 +16,15 @@ Object .assign (Object .setPrototypeOf (FlyViewer .prototype, X3DFlyViewer .prot
    {
       return direction .assign (toVector) .subtract (fromVector);
    },
-   getTranslationOffset (velocity)
+   getTranslationOffset: (() =>
    {
-      return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);
-   },
+      const userOrientation = new Rotation4 ();
+
+      return function (velocity)
+      {
+         return this .getActiveViewpoint () .getUserOrientation (userOrientation) .multVecRot (velocity);
+      };
+   })(),
    constrainPanDirection (direction)
    {
       return direction;
