@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 969
+/***/ 556
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 43
+/***/ 278
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 943
+/***/ 398
 (module) {
 
 /**
@@ -31158,7 +31158,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(943);
+/* provided dependency */ var libtess = __webpack_require__(398);
 
 
 const Triangle3 =
@@ -47849,7 +47849,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(943);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(398);
 
 
 
@@ -55751,38 +55751,23 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, Rendering_X3D
    },
    getTexCoordPerVertexIndex (index)
    {
-      if (index < this ._texCoordIndex .length)
-         return this ._texCoordIndex [index];
-
-      return this ._coordIndex [index];
+      return this ._texCoordIndex [index] ?? this ._coordIndex [index];
    },
    getColorPerVertexIndex (index)
    {
-      if (index < this ._colorIndex .length)
-         return this ._colorIndex [index];
-
-      return this ._coordIndex [index];
+      return this ._colorIndex [index] ?? this ._coordIndex [index];
    },
    getColorPerFaceIndex (index)
    {
-      if (index < this ._colorIndex .length)
-         return this ._colorIndex [index];
-
-      return index;
+      return this ._colorIndex [index] ?? index;
    },
    getNormalPerVertexIndex (index)
    {
-      if (index < this ._normalIndex .length)
-         return this ._normalIndex [index];
-
-      return this ._coordIndex [index];
+      return this ._normalIndex [index] ?? this ._coordIndex [index];
    },
    getNormalPerFaceIndex (index)
    {
-      if (index < this ._normalIndex .length)
-         return this ._normalIndex [index];
-
-      return index;
+      return this ._normalIndex [index] ?? index;
    },
    build ()
    {
@@ -56056,11 +56041,13 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, Rendering_X3D
          // Determine polygon normal.
          // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-         const normal = new Numbers_Vector3 ();
+         const
+            normal = new Numbers_Vector3 (),
+            length = vertices .length;
 
          coord .get1Point (coordIndex [vertices [0]], next);
 
-         for (let i = 0, length = vertices .length; i < length; ++ i)
+         for (let i = 0; i < length; ++ i)
          {
             const tmp = current;
             current = next;
@@ -59024,17 +59011,11 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
    },
    getColorPerVertexIndex (index)
    {
-      if (index < this ._colorIndex .length)
-         return this ._colorIndex [index];
-
-      return this ._coordIndex [index];
+      return this ._colorIndex [index] ?? this ._coordIndex [index];
    },
    getColorIndex (index)
    {
-      if (index < this ._colorIndex .length)
-         return this ._colorIndex [index];
-
-      return index;
+      return this ._colorIndex [index] ?? index;
    },
    getPolylineIndices ()
    {
@@ -59046,7 +59027,9 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
 
       if (coordIndex .length)
       {
-         for (let i = 0, length = coordIndex .length; i < length; ++ i)
+         const length = coordIndex .length;
+
+         for (let i = 0; i < length; ++ i)
          {
             const index = coordIndex [i];
 
@@ -59064,10 +59047,8 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
             }
          }
 
-         if (coordIndex [coordIndex .length - 1] >= 0)
-         {
+         if (coordIndex [length - 1] >= 0)
             polylines .push (polyline);
-         }
       }
 
       return polylines;
@@ -59106,9 +59087,13 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, Rendering_X3D
 
          if (polyline .length > 1)
          {
-            for (let line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
+            const l_end = polyline .length - 1;
+
+            for (let line = 0; line < l_end; ++ line)
             {
-               for (let l = line, i_end = line + 2; l < i_end; ++ l)
+               const i_end = line + 2;
+
+               for (let l = line; l < i_end; ++ l)
                {
                   const
                      i     = polyline [l],
@@ -72081,6 +72066,8 @@ const TextureTransform_default_ = TextureTransform;
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
 
 
+// https://github.khronos.org/KTX-Software/ktxjswrappers/libktx_js.html
+
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -72122,7 +72109,7 @@ const KTXDecoder_default_ = class KTXDecoder
          }
          else if (dxtSupported)
          {
-            formatString = ktxTexture.numComponents == 4 ? "BC3" : "BC1";
+            formatString = ktxTexture.numComponents === 4 ? "BC3" : "BC1";
             format       = transcode_fmt .BC1_OR_3;
          }
          else if (pvrtcSupported)
@@ -72170,6 +72157,9 @@ const KTXDecoder_default_ = class KTXDecoder
    //    return this .loadKTXFromBuffer (await response .arrayBuffer ());
    // }
 
+   // https://github.com/KhronosGroup/KTX-Software/issues/327
+   #numComponents = [0, 3, 4];
+
    async loadKTXFromBuffer (arrayBuffer)
    {
       await this .initialized;
@@ -72183,7 +72173,7 @@ const KTXDecoder_default_ = class KTXDecoder
       texture .baseWidth     = ktxTexture .baseWidth;
       texture .baseHeight    = ktxTexture .baseHeight;
       texture .baseDepth     = ktxTexture .baseDepth ?? 1; // TODO: No support.
-      texture .numComponents = ktxTexture .numComponents;
+      texture .numComponents = this .#numComponents [ktxTexture .numComponents] ?? ktxTexture .numComponents;
       texture .target        = uploadResult .target;
 
       ktxTexture .delete ();
@@ -79410,14 +79400,14 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, T
       const modes = new Map ([
          ... Object .entries (TextureCoordinateGeneratorModeType),
          // Legacy Enums
-         ["CAMERASPACENORMAL",              TextureCoordinateGeneratorModeType .CAMERA_SPACE_NORMAL],
-         ["CAMERASPACEPOSITION",            TextureCoordinateGeneratorModeType .CAMERA_SPACE_POSITION],
-         ["CAMERASPACEREFLECTIONVECTOR",    TextureCoordinateGeneratorModeType .CAMERA_SPACE_REFLECTION_VECTOR],
-         ["SPHERE-LOCAL",                   TextureCoordinateGeneratorModeType .SPHERE_LOCAL],
-         ["COORD-EYE",                      TextureCoordinateGeneratorModeType .COORD_EYE],
-         ["NOISE-EYE",                      TextureCoordinateGeneratorModeType .NOISE_EYE],
-         ["SPHERE-REFLECT",                 TextureCoordinateGeneratorModeType .SPHERE_REFLECT],
-         ["SPHERE-REFLECT-LOCAL",           TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL],
+         ["CAMERASPACENORMAL",           TextureCoordinateGeneratorModeType .CAMERA_SPACE_NORMAL],
+         ["CAMERASPACEPOSITION",         TextureCoordinateGeneratorModeType .CAMERA_SPACE_POSITION],
+         ["CAMERASPACEREFLECTIONVECTOR", TextureCoordinateGeneratorModeType .CAMERA_SPACE_REFLECTION_VECTOR],
+         ["SPHERE-LOCAL",                TextureCoordinateGeneratorModeType .SPHERE_LOCAL],
+         ["COORD-EYE",                   TextureCoordinateGeneratorModeType .COORD_EYE],
+         ["NOISE-EYE",                   TextureCoordinateGeneratorModeType .NOISE_EYE],
+         ["SPHERE-REFLECT",              TextureCoordinateGeneratorModeType .SPHERE_REFLECT],
+         ["SPHERE-REFLECT-LOCAL",        TextureCoordinateGeneratorModeType .SPHERE_REFLECT_LOCAL],
       ]);
 
       return function ()
@@ -91263,8 +91253,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(969);
-/* provided dependency */ var APNG = __webpack_require__(43);
+/* provided dependency */ var SuperGif = __webpack_require__(556);
+/* provided dependency */ var APNG = __webpack_require__(278);
 
 
 
@@ -91624,37 +91614,23 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
    },
    getMode (index)
    {
-      if (index < this .modes .length)
-         return this .modes [index];
-
-      return Texturing_ModeType .MODULATE;
+      return this .modes [index] ?? Texturing_ModeType .MODULATE;
    },
    getAlphaMode (index)
    {
-      if (index < this .alphaModes .length)
-         return this .alphaModes [index];
-
-      return Texturing_ModeType .MODULATE;
+      return this .alphaModes [index] ?? Texturing_ModeType .MODULATE;
    },
    getSource (index)
    {
-      if (index < this .sources .length)
-         return this .sources [index];
-
-      return Texturing_SourceType .DEFAULT;
+      return this .sources [index] ?? Texturing_SourceType .DEFAULT;
    },
    getFunction (index)
    {
-      if (index < this .functions .length)
-         return this .functions [index];
-
-      return Texturing_FunctionType .DEFAULT;
+      return this .functions [index] ?? Texturing_FunctionType .DEFAULT;
    },
    set_color__ ()
    {
-      this .color [0] = this ._color .r;
-      this .color [1] = this ._color .g;
-      this .color [2] = this ._color .b;
+      this .color .set (this ._color .getValue ());
    },
    set_alpha__ ()
    {
@@ -91663,7 +91639,8 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
    set_mode__: (() =>
    {
       const modeTypes = new Map ([
-         // ... Object .entries (ModeType),
+         ... Object .entries (Texturing_ModeType),
+         // Legacy
          ["REPLACE",                   Texturing_ModeType .REPLACE],
          ["MODULATE",                  Texturing_ModeType .MODULATE],
          ["MODULATE2X",                Texturing_ModeType .MODULATE_2X],
@@ -91706,45 +91683,24 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
 
             // RGB
 
-            const modeType = modeTypes .get (mode [0]);
-
-            if (modeType !== undefined)
-               this .modes .push (modeType);
-            else
-               this .modes .push (Texturing_ModeType .MODULATE);
+            this .modes .push (modeTypes .get (mode [0]) ?? Texturing_ModeType .MODULATE);
 
             // Alpha
 
-            const alphaModeType = modeTypes .get (mode [1]);
-
-            if (alphaModeType !== undefined)
-               this .alphaModes .push (alphaModeType);
-            else
-               this .alphaModes .push (Texturing_ModeType .MODULATE);
+            this .alphaModes .push (modeTypes .get (mode [1]) ?? Texturing_ModeType .MODULATE);
          }
       };
    })(),
    set_source__: (() =>
    {
-      const sourceTypes = new Map ([
-         ["DIFFUSE",  Texturing_SourceType .DIFFUSE],
-         ["SPECULAR", Texturing_SourceType .SPECULAR],
-         ["FACTOR",   Texturing_SourceType .FACTOR],
-      ]);
+      const sourceTypes = new Map (Object .entries (Texturing_SourceType));
 
       return function ()
       {
          this .sources .length = 0;
 
          for (const source of this ._source)
-         {
-            const sourceType = sourceTypes .get (source);
-
-            if (sourceType !== undefined)
-               this .sources .push (sourceType);
-            else
-               this .sources .push (Texturing_SourceType .DEFAULT);
-         }
+            this .sources .push (sourceTypes .get (source) ?? Texturing_SourceType .DEFAULT);
       };
    })(),
    set_function__: (() =>
@@ -91760,14 +91716,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
          this .functions .length = 0;
 
          for (const func of this ._function)
-         {
-            const functionsType = functionsTypes .get (func);
-
-            if (functionsType !== undefined)
-               this .functions .push (functionsType);
-            else
-               this .functions .push (Texturing_FunctionType .DEFAULT);
-         }
+            this .functions .push (functionsTypes .get (func) ?? Texturing_FunctionType .DEFAULT);
       };
    })(),
    set_texture__ ()
@@ -93969,7 +93918,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(943);
+/* provided dependency */ var libtess_libtess = __webpack_require__(398);
 const libtess_default_ = libtess_libtess;
 ;
 
