@@ -305,7 +305,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          transform .rotation = new Rotation4 (1, 0, 0, Math .PI);
          transform .children .push (gaussianSplats);
 
-         scene .rootNodes .push (transform);
+         scene .getRootNodes () .push (transform);
+         scene .addNamedNode (scene .getUniqueName ("GaussianSplats"), gaussianSplats);
+         scene .addExportedNode (scene .getUniqueExportName ("GaussianSplats"), gaussianSplats);
       }
       else if (this .coordIndex) // IndexedFaceSet
       {
@@ -371,6 +373,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          shape .geometry      = geometry;
 
          scene .getRootNodes () .push (shape);
+         scene .addNamedNode (scene .getUniqueName ("Shape"), shape);
+         scene .addExportedNode (scene .getUniqueExportName ("Shape"), shape);
       }
       else // PointSet
       {
@@ -406,6 +410,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          shape .geometry      = geometry;
 
          scene .getRootNodes () .push (shape);
+         scene .addNamedNode (scene .getUniqueName ("Shape"), shape);
+         scene .addExportedNode (scene .getUniqueExportName ("Shape"), shape);
       }
    },
    createColor ()
