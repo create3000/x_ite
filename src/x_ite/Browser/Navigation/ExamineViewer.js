@@ -685,9 +685,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
    zoom: (() =>
    {
       const
-         userOrientation = new Rotation4 (),
-         step            = new Vector3 (),
-         translation     = new Vector3 ();
+         step        = new Vector3 (),
+         translation = new Vector3 ();
 
       return function (zoomFactor, deltaY)
       {
@@ -696,7 +695,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          const viewpoint = this .getActiveViewpoint ();
 
          this .getDistanceToCenter (step) .multiply (zoomFactor);
-         viewpoint .getUserOrientation (userOrientation) .multVecRot (translation .set (0, 0, step .norm ()));
+         viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .norm ()));
 
          if (deltaY < 0)
             this .addMove (translation .negate (), Vector3 .ZERO);
