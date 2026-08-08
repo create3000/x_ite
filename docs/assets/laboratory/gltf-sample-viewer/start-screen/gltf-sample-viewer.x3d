@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
+    <component name='Core' level='2'/>
+    <component name='CubeMapTexturing' level='2'/>
+    <component name='Lighting' level='3'/>
+    <component name='Networking' level='2'/>
     <component name='Scripting' level='1'/>
     <component name='Text' level='1'/>
     <meta name='created' content='Sun, 27 Apr 2025 10:03:02 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.8.5, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 05 May 2025 11:48:45 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.1.18, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sat, 08 Aug 2026 10:52:56 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -57,21 +61,41 @@ function changeColorScheme (event)
     <Background DEF='White'
         skyColor='1 1 1'/>
     <Background DEF='Black'/>
-    <Shape DEF='Light'
-        visible='false'>
-      <Appearance>
-        <UnlitMaterial
-            emissiveColor='0 0 0'/>
-      </Appearance>
-      <Text DEF='_2'
-          string='"glTF Sample Viewer"'>
-        <FontStyle
-            justify='"MIDDLE", "MIDDLE"'/>
-      </Text>
-    </Shape>
-    <Shape DEF='Dark'>
-      <Text USE='_2'/>
-    </Shape>
+    <EnvironmentLight DEF='CannonExterior'>
+      <ImageCubeMapTexture containerField='specularTexture'
+          url='"../images/cannon-exterior.avif", "../images/cannon-exterior.jpg"'/>
+    </EnvironmentLight>
+    <Viewpoint
+        position='0 -0.5130038 8.320494'
+        centerOfRotation='0 -0.5130038 0'/>
+    <Transform DEF='Logo'
+        scale='3.991387 3.991387 3.991387'>
+      <Inline
+          url='"gltf_logo.glb"'/>
+    </Transform>
+    <Transform DEF='Text_1'
+        translation='0 -2.9167 0'
+        scale='0.68 0.68 0.68'>
+      <FontLibrary
+          family='Suissnord'
+          url='"suissnord.regular.otf"'/>
+      <Shape DEF='Light'
+          visible='false'>
+        <Appearance>
+          <UnlitMaterial
+              emissiveColor='0 0 0'/>
+        </Appearance>
+        <Text DEF='_2'
+            string='"Sample Viewer"'>
+          <FontStyle
+              family='"Suissnord", "SANS"'
+              justify='"MIDDLE", "MIDDLE"'/>
+        </Text>
+      </Shape>
+      <Shape DEF='Dark'>
+        <Text USE='_2'/>
+      </Shape>
+    </Transform>
     <ROUTE fromNode='_1' fromField='light' toNode='Light' toField='set_visible'/>
     <ROUTE fromNode='_1' fromField='light' toNode='White' toField='set_bind'/>
     <ROUTE fromNode='_1' fromField='dark' toNode='Dark' toField='set_visible'/>

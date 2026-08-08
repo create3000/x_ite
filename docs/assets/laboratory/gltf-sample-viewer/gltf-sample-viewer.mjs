@@ -789,7 +789,7 @@ class SampleViewer
       }
       else
       {
-         browser .loadURL (new X3D .MFString ("/x_ite/assets/laboratory/gltf-sample-viewer/gltf-sample-viewer.x3d"));
+         browser .loadURL (new X3D .MFString ("/x_ite/assets/laboratory/gltf-sample-viewer/start-screen/gltf-sample-viewer.x3d"));
       }
    }
 
@@ -885,10 +885,11 @@ class SampleViewer
 
    async loadURL (filename)
    {
-      $("#scenes, #viewpoints, #material-variants, #animations") .hide ();
+      this .toggleOptions (false);
 
       await this .browser .loadURL (new X3D .MFString (filename));
 
+      this .toggleOptions (true);
       this .viewAll ();
       this .setEnvironmentLight (!no_ibl .some (name => filename .includes (name)));
       this .setHeadlight (!no_headlight .some (name => filename .includes (name)));
@@ -898,6 +899,19 @@ class SampleViewer
       this .addViewpoints ();
       this .addMaterialVariants ();
       this .addAnimations ();
+   }
+
+   toggleOptions (show)
+   {
+      if (show)
+      {
+         $("#options") .show ();
+      }
+      else
+      {
+         $("#options") .hide ();
+         $("#scenes, #viewpoints, #material-variants, #animations") .hide ();
+      }
    }
 
    async viewAll ()

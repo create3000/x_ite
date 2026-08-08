@@ -99,7 +99,7 @@ x3d-canvas {
 <div class="viewer viewer-row">
   <div class="viewer-column1">
     <x3d-canvas class="buttons-tr" debug="true" contentScale="auto" update="auto" toneMapping="KHR_PBR_NEUTRAL"></x3d-canvas>
-    <div id="options">
+    <div id="options" style="display: none">
       <div id="lighting">
         <b>Image Based Lighting</b>
         <select id="ibl" class="select">
