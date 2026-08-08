@@ -247,12 +247,12 @@ Spherical harmonics data.
 
 - To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
-### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
+### SFBool [in, out] **pointerEvents** FALSE
 {: #fields-pointerEvents }
 
 Indicates whether this **GaussianSplats** node is a target for pointer events, if FALSE then it is ignored during pointer picking.
 
-### SFBool [in, out] **castShadow** TRUE
+### SFBool [in, out] **castShadow** FALSE
 {: #fields-castShadow }
 
 *castShadow* defines whether this **GaussianSplats** node casts shadows as produced by lighting nodes.
