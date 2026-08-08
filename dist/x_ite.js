@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 97
+/***/ 379
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 3
+/***/ 745
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 319
+/***/ 601
 (module) {
 
 /**
@@ -20008,21 +20008,22 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
 
       const
          browser = this .getBrowser (),
-         hidden  = document .webkitHidden !== undefined ? document .webkitHidden : document .hidden;
+         hidden  = document .webkitHidden ?? document .hidden;
 
       // 👆 Only webkitHidden is reliable in Electron.
       // https://github.com/electron/electron/issues/28677
 
       if ((!hidden && this .isIntersecting) || browser .getPose ())
       {
-         if (this .wasLive === true)
+         if (this .wasLive)
             browser .beginUpdate ();
 
          this .wasLive = undefined;
       }
       else
       {
-         // If this branch is processed a second time, ignore browser is live state.
+         // If this branch is processed a second time, ignore browser is live state,
+         // because isLive is now false.
          this .wasLive ??= browser .isLive ();
 
          browser .endUpdate ();
@@ -31160,7 +31161,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(319);
+/* provided dependency */ var libtess = __webpack_require__(601);
 
 
 const Triangle3 =
@@ -32686,6 +32687,7 @@ Object .assign (X3DRenderObject .prototype,
          projectionMatrix     = new Numbers_Matrix4 (),
          viewProjectionMatrix = new Numbers_Matrix4 (),
          viewMatrix           = new Numbers_Matrix4 (),
+         userPosition         = new Numbers_Vector3 (),
          localOrientation     = new Numbers_Rotation4 (),
          rotation             = new Numbers_Rotation4 ();
 
@@ -32730,7 +32732,7 @@ Object .assign (X3DRenderObject .prototype,
 
          viewMatrix
             .assign (viewpointNode .getModelMatrix ())
-            .translate (viewpointNode .getUserPosition ())
+            .translate (viewpointNode .getUserPosition (userPosition))
             .rotate (rotation)
             .inverse ()
             .multLeft (viewpointNode .getCameraSpaceMatrix ());
@@ -33200,6 +33202,7 @@ Object .assign (X3DRenderObject .prototype,
       const
          projectionMatrix     = new Numbers_Matrix4 (),
          viewProjectionMatrix = new Numbers_Matrix4 (),
+         userPosition         = new Numbers_Vector3 (),
          translation          = new Numbers_Vector3 (),
          rotation             = new Numbers_Rotation4 ();
 
@@ -33247,7 +33250,7 @@ Object .assign (X3DRenderObject .prototype,
 
          viewProjectionMatrix
             .assign (viewpointNode .getModelMatrix ())
-            .translate (viewpointNode .getUserPosition ())
+            .translate (viewpointNode .getUserPosition (userPosition))
             .rotate (down)
             .inverse ()
             .multRight (projectionMatrix)
@@ -39513,13 +39516,10 @@ function X3DViewpointNode (executionContext)
 
    // Private properties
 
-   this .descriptions         = [ ];
-   this .userPosition         = new Numbers_Vector3 ();
-   this .userOrientation      = new Numbers_Rotation4 ();
-   this .userCenterOfRotation = new Numbers_Vector3 ();
-   this .modelMatrix          = new Numbers_Matrix4 ();
-   this .cameraSpaceMatrix    = new Numbers_Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
-   this .viewMatrix           = new Numbers_Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
+   this .descriptions      = [ ];
+   this .modelMatrix       = new Numbers_Matrix4 ();
+   this .cameraSpaceMatrix = new Numbers_Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
+   this .viewMatrix        = new Numbers_Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
 
    const
       browser      = this .getBrowser (),
@@ -39667,36 +39667,51 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
    {
       this ._centerOfRotation = value;
    },
-   getUserPosition ()
+   getUserPosition (value = new Numbers_Vector3 ())
    {
-      return this .userPosition .assign (this .getPosition ())
+      return value .assign (this .getPosition ())
          .add (this ._positionOffset .getValue ());
    },
-   setUserPosition (userPosition)
+   setUserPosition: (() =>
    {
-      this ._positionOffset = this .userPosition .assign (userPosition)
-         .subtract (this .getPosition ());
-   },
-   getUserOrientation ()
+      const positionOffset = new Numbers_Vector3 ();
+
+      return function (value)
+      {
+         this ._positionOffset = positionOffset .assign (value)
+            .subtract (this .getPosition ());
+      };
+   })(),
+   getUserOrientation (value = new Numbers_Rotation4 ())
    {
-      return this .userOrientation .assign (this .getOrientation ())
+      return value .assign (this .getOrientation ())
          .multRight (this ._orientationOffset .getValue ());
    },
-   setUserOrientation (userOrientation)
+   setUserOrientation: (() =>
    {
-      this ._orientationOffset = this .userOrientation .assign (this .getOrientation ()) .inverse ()
-         .multRight (userOrientation);
-   },
-   getUserCenterOfRotation ()
+      const orientationOffset = new Numbers_Rotation4 ();
+
+      return function (value)
+      {
+         this ._orientationOffset = orientationOffset .assign (this .getOrientation ()) .inverse ()
+            .multRight (value);
+      };
+   })(),
+   getUserCenterOfRotation (value = new Numbers_Vector3 ())
    {
-      return this .userCenterOfRotation .assign (this .getCenterOfRotation ())
+      return value .assign (this .getCenterOfRotation ())
          .add (this ._centerOfRotationOffset .getValue ());
    },
-   setUserCenterOfRotation (userCenterOfRotation)
+   setUserCenterOfRotation: (() =>
    {
-      this ._centerOfRotationOffset = this .userCenterOfRotation .assign (userCenterOfRotation)
-         .subtract (this .getCenterOfRotation ());
-   },
+      const centerOfRotationOffset = new Numbers_Vector3 ();
+
+      return function (value)
+      {
+         this ._centerOfRotationOffset = centerOfRotationOffset .assign (value)
+            .subtract (this .getCenterOfRotation ());
+      };
+   })(),
    getFieldOfViewScale ()
    {
       return this ._fieldOfViewScale .getValue ();
@@ -40042,7 +40057,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
       {
          const
             localBBox       = bbox .copy () .multRight (this .getViewMatrix ()),
-            direction       = this .getUserPosition () .copy () .subtract (center) .normalize (),
+            direction       = this .getUserPosition () .subtract (center) .normalize (),
             distance        = this .getLookAtDistance (layerNode, localBBox),
             userPosition    = center .copy () .add (direction .multiply (distance)),
             userOrientation = this .getLookAtRotation (userPosition, center);
@@ -40091,17 +40106,24 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
    },
-   update ()
+   update: (() =>
    {
-      this .cameraSpaceMatrix .setTransform (this .getUserPosition (),
-                                             this .getUserOrientation (),
-                                             this ._scaleOffset .getValue (),
-                                             this ._scaleOrientationOffset .getValue ());
+      const
+         userPosition    = new Numbers_Vector3 (),
+         userOrientation = new Numbers_Rotation4 ();
 
-      this .cameraSpaceMatrix .multRight (this .modelMatrix);
+      return function ()
+      {
+         this .cameraSpaceMatrix .setTransform (this .getUserPosition (userPosition),
+                                                this .getUserOrientation (userOrientation),
+                                                this ._scaleOffset .getValue (),
+                                                this ._scaleOrientationOffset .getValue ());
 
-      this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
-   }
+         this .cameraSpaceMatrix .multRight (this .modelMatrix);
+
+         this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+      };
+   })()
 });
 
 Object .defineProperties (X3DViewpointNode, Core_X3DNode .getStaticProperties ("X3DViewpointNode", "Navigation", 1));
@@ -47829,7 +47851,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(319);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(601);
 
 
 
@@ -59681,14 +59703,12 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
    },
    resetUserOffsets ()
    {
-      Navigation_X3DViewpointNode .prototype .resetUserOffsets .call (this);
-
       this ._fieldOfViewOffset [0] = 0;
       this ._fieldOfViewOffset [1] = 0;
       this ._fieldOfViewOffset [2] = 0;
       this ._fieldOfViewOffset [3] = 0;
 
-      this ._fieldOfViewScale = 1;
+      Navigation_X3DViewpointNode .prototype .resetUserOffsets .call (this);
    },
    getRelativeTransformation (fromViewpointNode)
    {
@@ -59741,9 +59761,9 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
    {
       return false;
    },
-   getFieldOfView ()
+   getFieldOfView (value = new Numbers_Vector4 ())
    {
-      return new Numbers_Vector4 (
+      return value .set (
          this .getMinimumX (),
          this .getMinimumY (),
          this .getMaximumX (),
@@ -59754,9 +59774,9 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, Navigation_X3
    {
       this ._fieldOfView = value;
    },
-   getUserFieldOfView ()
+   getUserFieldOfView (value = new Numbers_Vector4 ())
    {
-      return new Numbers_Vector4 (
+      return value .set (
          this .getUserMinimumX (),
          this .getUserMinimumY (),
          this .getUserMaximumX (),
@@ -60072,15 +60092,13 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, Base_X3DBaseNode .
 
       return browser .getBrowserOption ("StraightenHorizon") || !! browser .getPose ();
    },
-   getButton (button)
+   getButton (button, altKey)
    {
       // If Alt key is pressed and button 0, then emulate button 1 (middle).
       if (button === 0)
       {
-         if (this .getBrowser () .getAltKey ())
-         {
+         if (altKey)
             return 1;
-         }
       }
 
       return button;
@@ -60730,7 +60748,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      switch (this .getButton (event .button))
+      this .altKey = this .getBrowser () .getAltKey ();
+
+      const button = this .getButton (event .button, this .altKey);
+
+      switch (button)
       {
          case 0:
          {
@@ -60740,7 +60762,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
             // Start rotate.
 
-            this .button     = event .button;
+            this .button     = button;
             this .motionTime = Date .now ();
 
             this .deltaRotation .assign (Numbers_Rotation4 .IDENTITY);
@@ -60766,7 +60788,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
             // Start pan.
 
-            this .button = event .button;
+            this .button = button;
 
             helper.on (this, document, "mouseup",   event => this .mouseup   (event));
             helper.on (this, document, "mousemove", event => this .mousemove (event));
@@ -60785,7 +60807,9 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
    },
    mouseup (event, spin = true)
    {
-      if (event .button !== this .button)
+      const button = this .getButton (event .button, this .altKey);
+
+      if (button !== this .button)
          return;
 
       // Stop event propagation.
@@ -60802,7 +60826,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
       this ._isActive = false;
 
-      switch (this .getButton (event .button))
+      switch (button)
       {
          case 0:
          {
@@ -60837,9 +60861,14 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
    },
    mousemove (event)
    {
+      const button  = this .getButton (this .button, this .altKey);
+
+      if (button !== this .button)
+         return;
+
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      switch (this .getButton (this .button))
+      switch (button)
       {
          case 0:
          {
@@ -61264,14 +61293,16 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
    },
    pan: (() =>
    {
-      const fromPoint = new Numbers_Vector3 ();
+      const
+         userOrientation = new Numbers_Rotation4 (),
+         fromPoint       = new Numbers_Vector3 ();
 
       return function  (x, y)
       {
          const
             viewpoint   = this .getActiveViewpoint (),
             toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
-            translation = viewpoint .getUserOrientation () .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
+            translation = viewpoint .getUserOrientation (userOrientation) .multVecRot (fromPoint .assign (this .fromPoint) .subtract (toPoint));
 
          this .addMove (translation, translation);
 
@@ -61715,7 +61746,6 @@ function X3DFlyViewer (executionContext, navigationInfo)
    this .toVector          = new Numbers_Vector3 ();
    this .direction         = new Numbers_Vector3 ();
    this .startTime         = 0;
-   this .event             = null;
    this .lookAround        = false;
    this .orientationChaser = new Followers_OrientationChaser (executionContext);
    this .rubberBand        = new Rendering_ScreenLine (browser, 1, 1, 0.4);
@@ -61740,34 +61770,27 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
       helper.on (this, surface, "touchstart", event => this .touchstart (event));
       helper.on (this, surface, "touchend",   event => this .touchend   (event));
 
-      browser ._controlKey .addInterest ("set_controlKey__", this);
-
       // Setup look around chaser.
 
       this .orientationChaser ._duration = X3DFlyViewer_ROTATE_TIME;
       this .orientationChaser .setup ();
-   },
-   set_controlKey__ ()
-   {
-      if (this .event && this .event .button === 0)
-      {
-         this .button = -1;
-         this .mousedown (this .event);
-      }
    },
    mousedown (event)
    {
       if (this .button >= 0)
          return;
 
-      this .event = event;
-
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      switch (this .getButton (event .button))
+      this .controlKey = this .getBrowser () .getControlKey () || this .getBrowser () .getCommandKey ();
+      this .altKey     = this .getBrowser () .getAltKey ();
+
+      const button = this .getButton (event .button, this .altKey);
+
+      switch (button)
       {
          case 0:
          {
@@ -61777,7 +61800,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
 
             // Start walk or fly.
 
-            this .button = event .button;
+            this .button = button;
 
             helper.on (this, document, "mouseup",   event => this .mouseup   (event));
             helper.on (this, document, "mousemove", event => this .mousemove (event));
@@ -61788,7 +61811,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
 
-            if (this .getBrowser () .getControlKey () || this .getBrowser () .getCommandKey () || this .lookAround)
+            if (this .controlKey || this .lookAround)
             {
                // Look around.
 
@@ -61819,7 +61842,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
 
             // Start pan.
 
-            this .button = event .button;
+            this .button = button;
 
             helper.on (this, document, "mouseup",   event => this .mouseup   (event));
             helper.on (this, document, "mousemove", event => this .mousemove (event));
@@ -61844,7 +61867,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
    },
    mouseup (event)
    {
-      if (event .button !== this .button)
+      const button = this .getButton (event .button, this .altKey);
+
+      if (button !== this .button)
          return;
 
       // Stop event propagation.
@@ -61855,7 +61880,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
 
       this .direction .set (0);
 
-      this .event  = null;
       this .button = -1;
 
       helper.off (this, document);
@@ -61867,15 +61891,18 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
    },
    mousemove (event)
    {
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         button  = this .getButton (this .button, this .altKey);
+
+      if (button !== this .button)
+         return;
 
       browser .addBrowserEvent ();
 
-      this .event = event;
+      const { x, y } = browser .getPointerFromEvent (event);
 
-      const { x, y } = this .getBrowser () .getPointerFromEvent (event);
-
-      switch (this .getButton (this .button))
+      switch (button)
       {
          case 0:
          {
@@ -61883,7 +61910,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
 
             event .preventDefault ();
 
-            if (browser .getControlKey () || browser .getCommandKey () || this .lookAround)
+            if (this .controlKey || this .lookAround)
             {
                // Look around
 
@@ -61991,7 +62018,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
       event = this .getBrowser () .copyEvent (event);
 
       // End move or look around (button 0).
-   
+
       this .lookAround = false;
       event .button    = 0;
 
@@ -62032,12 +62059,13 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
    fly: (() =>
    {
       const
-         upVector           = new Numbers_Vector3 (),
-         direction          = new Numbers_Vector3 (),
-         axis               = new Numbers_Vector3 (),
-         userOrientation    = new Numbers_Rotation4 (),
-         orientationOffset  = new Numbers_Rotation4 (),
-         rubberBandRotation = new Numbers_Rotation4 ();
+         upVector               = new Numbers_Vector3 (),
+         direction              = new Numbers_Vector3 (),
+         axis                   = new Numbers_Vector3 (),
+         currentUserOrientation = new Numbers_Rotation4 (),
+         userOrientation        = new Numbers_Rotation4 (),
+         orientationOffset      = new Numbers_Rotation4 (),
+         rubberBandRotation     = new Numbers_Rotation4 ();
 
       return function ()
       {
@@ -62082,7 +62110,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
          userOrientation
             .assign (Numbers_Rotation4 .IDENTITY)
             .slerp (rubberBandRotation, weight)
-            .multRight (viewpoint .getUserOrientation ());
+            .multRight (viewpoint .getUserOrientation (currentUserOrientation));
 
          // Straighten horizon of userOrientation.
 
@@ -62106,8 +62134,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
    pan: (() =>
    {
       const
-         direction = new Numbers_Vector3 (),
-         axis      = new Numbers_Vector3 ();
+         userOrientation = new Numbers_Rotation4 (),
+         direction       = new Numbers_Vector3 (),
+         axis            = new Numbers_Vector3 ();
 
       return function ()
       {
@@ -62128,7 +62157,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
          speedFactor *= dt;
 
          const
-            orientation = viewpoint .getUserOrientation () .multRight (Numbers_Rotation4 .fromVectors (viewpoint .getUserOrientation () .multVecRot (axis .assign (Numbers_Vector3 .Y_AXIS)), upVector)),
+            orientation = viewpoint .getUserOrientation (userOrientation) .multRight (Numbers_Rotation4 .fromVectors (viewpoint .getUserOrientation (userOrientation) .multVecRot (axis .assign (Numbers_Vector3 .Y_AXIS)), upVector)),
             translation = orientation .multVecRot (direction .multiply (speedFactor)),
             constrained = this .getActiveLayer () .constrainTranslation (translation);
 
@@ -62297,7 +62326,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
       this .rubberBand .dispose ();
 
       this .disconnect ();
-      this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
 
       helper.off (this, this .getBrowser () .getSurface ());
       helper.off (this, document);
@@ -62345,7 +62373,7 @@ Object .assign (Object .setPrototypeOf (WalkViewer .prototype, Navigation_X3DFly
             viewpoint = this .getActiveViewpoint (),
             upVector  = viewpoint .getUpVector ();
 
-         userOrientation .assign (viewpoint .getUserOrientation ());
+         viewpoint .getUserOrientation (userOrientation);
          userOrientation .multVecRot (localYAxis .assign (Numbers_Vector3 .Y_AXIS));
          rotation        .setVectors (localYAxis, upVector);
 
@@ -62379,6 +62407,7 @@ const WalkViewer_default_ = WalkViewer;
 ;// ./src/x_ite/Browser/Navigation/FlyViewer.js
 
 
+
 function FlyViewer (executionContext, navigationInfo)
 {
    Navigation_X3DFlyViewer .call (this, executionContext, navigationInfo);
@@ -62394,10 +62423,15 @@ Object .assign (Object .setPrototypeOf (FlyViewer .prototype, Navigation_X3DFlyV
    {
       return direction .assign (toVector) .subtract (fromVector);
    },
-   getTranslationOffset (velocity)
+   getTranslationOffset: (() =>
    {
-      return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);
-   },
+      const userOrientation = new Numbers_Rotation4 ();
+
+      return function (velocity)
+      {
+         return this .getActiveViewpoint () .getUserOrientation (userOrientation) .multVecRot (velocity);
+      };
+   })(),
    constrainPanDirection (direction)
    {
       return direction;
@@ -62475,7 +62509,11 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
       if (!this .isPointerInRectangle (x, y))
          return;
 
-      switch (event .button)
+      this .altKey = this .getBrowser () .getAltKey ();
+
+      const button = this .getButton (event .button, this .altKey);
+
+      switch (button)
       {
          case 0:
          {
@@ -62485,7 +62523,21 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
 
             // Start move.
 
-            this .button = event .button;
+            this .button = button;
+
+            helper.on (this, document, "mouseup",  event => this .mouseup   (event));
+            helper.on (this, document, "touchend", event => this .touchend  (event));
+            break;
+         }
+         case 1:
+         {
+            // Stop event propagation.
+
+            event .preventDefault ();
+
+            // Start move.
+
+            this .button = button;
 
             helper.on (this, document, "mouseup",   event => this .mouseup   (event));
             helper.on (this, document, "mousemove", event => this .mousemove (event));
@@ -62504,7 +62556,9 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
    },
    mouseup (event)
    {
-      if (event .button !== this .button)
+      const button = this .getButton (event .button, this .altKey);
+
+      if (button !== this .button)
          return;
 
       // Stop event propagation.
@@ -62543,11 +62597,16 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
    },
    mousemove (event)
    {
+      const button  = this .getButton (this .button, this .altKey);
+
+      if (button !== this .button)
+         return;
+
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
-      switch (this .button)
+      switch (button)
       {
-         case 0:
+         case 1:
          {
             // Stop event propagation.
 
@@ -62617,11 +62676,30 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
 
       switch (touches .length)
       {
-         case 2:
+         case 1:
          {
-            // Start move (button 1).
+            // Start tab (button 0).
 
             event .button = 0;
+            event .pageX  = touches [0] .pageX;
+            event .pageY  = touches [0] .pageY;
+
+            this .mousedown (event);
+
+            // Remember tap.
+
+            this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+            break;
+         }
+         case 2:
+         {
+            // End tab (button 0).
+
+            this .touchend (event);
+
+            // Start move (button 1).
+
+            event .button = 1;
             event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
             event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
 
@@ -62643,10 +62721,11 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
       {
          case 0:
          {
-            // End move (button 0).
+            // End tab (button 0).
 
-            this .touchMode = 0;
-            event .button   = 0;
+            event .button = 0;
+            event .pageX  = this .touch1 .x;
+            event .pageY  = this .touch1 .y;
 
             this .mouseup (event);
 
@@ -62663,6 +62742,16 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
                setTimeout (() => this .tapedTwice = false, 300);
             }
 
+            break;
+         }
+         case 1:
+         {
+            // End move (button 0).
+
+            this .touchMode = 0;
+            event .button   = 1;
+
+            this .mouseup (event);
             break;
          }
       }
@@ -91151,8 +91240,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(97);
-/* provided dependency */ var APNG = __webpack_require__(3);
+/* provided dependency */ var SuperGif = __webpack_require__(379);
+/* provided dependency */ var APNG = __webpack_require__(745);
 
 
 
@@ -93857,7 +93946,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(319);
+/* provided dependency */ var libtess_libtess = __webpack_require__(601);
 const libtess_default_ = libtess_libtess;
 ;
 
