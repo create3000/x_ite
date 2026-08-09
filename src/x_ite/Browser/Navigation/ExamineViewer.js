@@ -508,7 +508,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
                pixelPerRevolutionX = this .getViewport () [2] * 2,
                pixelPerRevolutionY = this .getViewport () [3] * 2,
                startRoll           = Math .acos (Algorithm .clamp (this .startOrientation .multVecRot (axis .assign (Vector3 .Z_AXIS)) .dot (upVector), -1, 1)),
-               roll                = Math .PI * 2 * +translation .y / pixelPerRevolutionY,
+               roll                = Math .PI * 2 * translation .y / pixelPerRevolutionY,
                clampedRoll         = Algorithm .clamp (startRoll + roll, CRITICAL_ANGLE, Math .PI - CRITICAL_ANGLE) - startRoll;
 
             // Adjust fromPointer y.
