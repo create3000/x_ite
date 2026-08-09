@@ -1126,7 +1126,7 @@ class SampleViewer
             .val (i)
             .appendTo (select);
 
-         viewpoint .getField ("isBound") .addFieldCallback ("bind", () => select .val (i));
+         viewpoint .addFieldCallback ("bind", "isBound", () => select .val (i));
       }
 
       $("#viewpoints") .show ();

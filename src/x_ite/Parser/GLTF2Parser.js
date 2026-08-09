@@ -1786,7 +1786,7 @@ function eventsProcessed ()
          {
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
 
-            if (shapeNode .getGeometry ?.())
+            if (shapeNode .getGeometry ?.() && !shapeNode .getGeometry () .getName ())
                scene .addNamedNode (scene .getUniqueName (`${name}-Mesh-${i}`), shapeNode .getGeometry ());
          }
       }

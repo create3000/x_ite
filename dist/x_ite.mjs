@@ -1,7 +1,7 @@
 /* X_ITE v16.1.0 */
 var __webpack_modules__ = ({
 
-/***/ 154
+/***/ 240
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 144
+/***/ 370
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 812
+/***/ 186
 (module) {
 
 /**
@@ -31138,7 +31138,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(812);
+/* provided dependency */ var libtess = __webpack_require__(186);
 
 
 const Triangle3 =
@@ -42128,7 +42128,7 @@ function eventsProcessed ()
          {
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
 
-            if (shapeNode .getGeometry ?.())
+            if (shapeNode .getGeometry ?.() && !shapeNode .getGeometry () .getName ())
                scene .addNamedNode (scene .getUniqueName (`${name}-Mesh-${i}`), shapeNode .getGeometry ());
          }
       }
@@ -47836,7 +47836,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(812);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(186);
 
 
 
@@ -54547,6 +54547,7 @@ function X3DCoreContext (element)
 
       const browser = this [_shadow] .querySelector (".x_ite-private-browser");
 
+      // Must use display, because Firefox doesn't like visibility.
       browser .style .display = "none";
 
       stylesheet .then (() => browser .style .display = "");
@@ -91248,8 +91249,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(154);
-/* provided dependency */ var APNG = __webpack_require__(144);
+/* provided dependency */ var SuperGif = __webpack_require__(240);
+/* provided dependency */ var APNG = __webpack_require__(370);
 
 
 
@@ -93913,7 +93914,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(812);
+/* provided dependency */ var libtess_libtess = __webpack_require__(186);
 const libtess_default_ = libtess_libtess;
 ;
 
