@@ -55,7 +55,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 
 - [TODO support planned to perform multiple-node *mapping* validation checks using X3D Schematron or X3D Validator](https://savage.nps.edu/X3dValidator)
 
-### SFString [in, out] **mode** "SPHERE" <small>["SPHERE"|"CAMERASPACENORMAL"|"CAMERASPACEPOSITION"|"CAMERASPACEREFLECTIONVECTOR"|"SPHERE-LOCAL"|"COORD"|"COORD-EYE"|"NOISE"|"NOISE-EYE"|"SPHERE-REFLECT"|"SPHERE-REFLECT-LOCAL"]</small>
+### SFString [in, out] **mode** "SPHERE" <small>["SPHERE"|"CAMERA_SPACE_NORMAL"|"CAMERA_SPACE_POSITION"|"CAMERA_SPACE_REFLECTION_VECTOR"|"SPHERE_LOCAL"|"COORD"|"COORD_EYE"|"NOISE"|"NOISE_EYE"|"SPHERE_REFLECT"|"SPHERE_REFLECT_LOCAL"]</small>
 {: #fields-mode }
 
 Parameter field defines the algorithm used to compute texture coordinates.
