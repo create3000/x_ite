@@ -83,15 +83,11 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
       const modeTypes = new Map ([
          ... Object .entries (ModeType),
          // Legacy
-         ["REPLACE",                   ModeType .REPLACE],
-         ["MODULATE",                  ModeType .MODULATE],
          ["MODULATE2X",                ModeType .MODULATE_2X],
          ["MODULATE4X",                ModeType .MODULATE_4X],
-         ["ADD",                       ModeType .ADD],
          ["ADDSIGNED",                 ModeType .ADD_SIGNED],
          ["ADDSIGNED2X",               ModeType .ADD_SIGNED_2X],
          ["ADDSMOOTH",                 ModeType .ADD_SMOOTH],
-         ["SUBTRACT",                  ModeType .SUBTRACT],
          ["BLENDDIFFUSEALPHA",         ModeType .BLEND_DIFFUSE_ALPHA],
          ["BLENDTEXTUREALPHA",         ModeType .BLEND_TEXTURE_ALPHA],
          ["BLENDFACTORALPHA",          ModeType .BLEND_FACTOR_ALPHA],
@@ -102,7 +98,6 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
          ["DOTPRODUCT3",               ModeType .DOT_PRODUCT_3],
          ["SELECTARG1",                ModeType .SELECT_ARG1],
          ["SELECTARG2",                ModeType .SELECT_ARG2],
-         ["OFF",                       ModeType .OFF],
       ]);
 
       return function ()
