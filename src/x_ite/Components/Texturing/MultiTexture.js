@@ -109,9 +109,6 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
          {
             const mode = modes .split (",");
 
-            if (mode .length === 0)
-               mode .push ("MODULATE");
-
             if (mode .length < 2)
                mode .push (mode [0]);
 
