@@ -92,9 +92,10 @@ function X3DCoreContext (element)
 
       const browser = this [_shadow] .querySelector (".x_ite-private-browser");
 
-      browser .style .visibility = "hidden";
+      // Must use display, because Firefox doesn't like visibility.
+      browser .style .display = "none";
 
-      stylesheet .then (() => browser .style .visibility = "");
+      stylesheet .then (() => browser .style .display = "");
    }
    else
    {

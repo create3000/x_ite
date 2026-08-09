@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 556
+/***/ 154
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 278
+/***/ 144
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 398
+/***/ 812
 (module) {
 
 /**
@@ -31158,7 +31158,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(398);
+/* provided dependency */ var libtess = __webpack_require__(812);
 
 
 const Triangle3 =
@@ -39010,7 +39010,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, Core_X3DSensorNod
       this ._cycleTime        = time;
       this ._fraction_changed = this .fraction;
    },
-   set_resume (pauseInterval)
+   set_resume (/* pauseInterval */)
    {
       this .setRange (this .fraction, this ._range [1], this ._range [2], false);
    },
@@ -42132,7 +42132,8 @@ function eventsProcessed ()
          return mesh .shapeNodes;
       }
 
-      // Actually shapeNodes are not always Shape nodes, it also can be a Switch nodes from variants.
+      // Actually shapeNodes are not always Shape nodes, it also can be a Switch nodes from variants
+      // or a GaussianSplats node.
       const shapeNodes = this .primitivesArray (mesh, skin, EXT_mesh_gpu_instancing);
 
       // Name Shape nodes.
@@ -46829,7 +46830,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
          transform .rotation = new Numbers_Rotation4 (1, 0, 0, Math .PI);
          transform .children .push (gaussianSplats);
 
-         scene .rootNodes .push (transform);
+         scene .getRootNodes () .push (transform);
+         scene .addNamedNode (scene .getUniqueName ("GaussianSplats"), gaussianSplats);
+         scene .addExportedNode (scene .getUniqueExportName ("GaussianSplats"), gaussianSplats);
       }
       else if (this .coordIndex) // IndexedFaceSet
       {
@@ -46895,6 +46898,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
          shape .geometry      = geometry;
 
          scene .getRootNodes () .push (shape);
+         scene .addNamedNode (scene .getUniqueName ("Shape"), shape);
+         scene .addExportedNode (scene .getUniqueExportName ("Shape"), shape);
       }
       else // PointSet
       {
@@ -46930,6 +46935,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
          shape .geometry      = geometry;
 
          scene .getRootNodes () .push (shape);
+         scene .addNamedNode (scene .getUniqueName ("Shape"), shape);
+         scene .addExportedNode (scene .getUniqueExportName ("Shape"), shape);
       }
    },
    createColor ()
@@ -47849,7 +47856,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(398);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(812);
 
 
 
@@ -54560,9 +54567,9 @@ function X3DCoreContext (element)
 
       const browser = this [_shadow] .querySelector (".x_ite-private-browser");
 
-      browser .style .visibility = "hidden";
+      browser .style .display = "none";
 
-      stylesheet .then (() => browser .style .visibility = "");
+      stylesheet .then (() => browser .style .display = "");
    }
    else
    {
@@ -89943,6 +89950,10 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, Sound_X3DSo
       this .mediaStreamAudioSourceNode = null;
       this .restore                    = restore;
    },
+   set_time ()
+   {
+      this ._elapsedTime = this .getElapsedTime ();
+   },
 });
 
 Object .defineProperties (MicrophoneSource,
@@ -90096,6 +90107,10 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
    {
       this .oscillatorNode .stop ();
       this .oscillatorNode .disconnect ();
+   },
+   set_time ()
+   {
+      this ._elapsedTime = this .getElapsedTime ();
    },
 });
 
@@ -91253,8 +91268,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(556);
-/* provided dependency */ var APNG = __webpack_require__(278);
+/* provided dependency */ var SuperGif = __webpack_require__(154);
+/* provided dependency */ var APNG = __webpack_require__(144);
 
 
 
@@ -93918,7 +93933,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(398);
+/* provided dependency */ var libtess_libtess = __webpack_require__(812);
 const libtess_default_ = libtess_libtess;
 ;
 
