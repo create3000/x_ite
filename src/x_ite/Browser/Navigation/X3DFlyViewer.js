@@ -525,7 +525,8 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
    {
       const
          userOrientation   = new Rotation4 (),
-         orientationOffset = new Rotation4 ();
+         orientationOffset = new Rotation4 (),
+         upVector          = new Vector3 ();
 
       return function (fromVector, toVector)
       {
@@ -541,6 +542,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             if (this .getStraightenHorizon ())
                viewpoint .straightenHorizon (userOrientation);
 
+            if (Math .abs (viewpoint .getUpVector () .dot (userOrientation .multVecRot (upVector .set (0, 1, 0)))) < 0.1)
+               return;
+
             orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
 
             this .orientationChaser ._set_destination = orientationOffset;
@@ -553,6 +557,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
             if (this .getStraightenHorizon ())
                viewpoint .straightenHorizon (userOrientation);
+
+            if (Math .abs (viewpoint .getUpVector () .dot (userOrientation .multVecRot (upVector .set (0, 1, 0)))) < 0.1)
+               return;
 
             orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
 
