@@ -14,7 +14,8 @@ const
    PAN_SPEED_FACTOR       = SPEED_FACTOR,
    PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
    ROLL_ANGLE             = SLOW_SCROLL ? Math .PI / 512 : Math .PI / 32,
-   ROTATE_TIME            = 0.3;
+   ROTATE_TIME            = 0.3,
+   CRITICAL_ANGLE         = 0.99;
 
 const
    MOVE = 0,
@@ -542,7 +543,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             if (this .getStraightenHorizon ())
                viewpoint .straightenHorizon (userOrientation);
 
-            if (Math .abs (viewpoint .getUpVector () .dot (userOrientation .multVecRot (upVector .set (0, 1, 0)))) < 0.1)
+            if (Math .abs (viewpoint .getUpVector () .dot (userOrientation .multVecRot (upVector .set (0, 0, 1)))) > CRITICAL_ANGLE)
                return;
 
             orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
@@ -558,7 +559,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             if (this .getStraightenHorizon ())
                viewpoint .straightenHorizon (userOrientation);
 
-            if (Math .abs (viewpoint .getUpVector () .dot (userOrientation .multVecRot (upVector .set (0, 1, 0)))) < 0.1)
+            if (Math .abs (viewpoint .getUpVector () .dot (userOrientation .multVecRot (upVector .set (0, 0, 1)))) > CRITICAL_ANGLE)
                return;
 
             orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
