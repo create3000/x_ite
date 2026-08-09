@@ -109,9 +109,6 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
          {
             const mode = modes .split (",");
 
-            for (let m = 0, l = mode .length; m < l; ++ m)
-               mode [m] = mode [m] .trim ();
-
             if (mode .length === 0)
                mode .push ("MODULATE");
 
@@ -120,11 +117,11 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
 
             // RGB
 
-            this .modes .push (modeTypes .get (mode [0]) ?? ModeType .MODULATE);
+            this .modes .push (modeTypes .get (mode [0] .trim ()) ?? ModeType .MODULATE);
 
             // Alpha
 
-            this .alphaModes .push (modeTypes .get (mode [1]) ?? ModeType .MODULATE);
+            this .alphaModes .push (modeTypes .get (mode [1] .trim ()) ?? ModeType .MODULATE);
          }
       };
    })(),
