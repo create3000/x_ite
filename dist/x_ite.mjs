@@ -1,7 +1,7 @@
 /* X_ITE v16.1.0 */
 var __webpack_modules__ = ({
 
-/***/ 240
+/***/ 548
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 370
+/***/ 174
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 186
+/***/ 246
 (module) {
 
 /**
@@ -31138,7 +31138,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(186);
+/* provided dependency */ var libtess = __webpack_require__(246);
 
 
 const Triangle3 =
@@ -47836,7 +47836,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(186);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(246);
 
 
 
@@ -91249,8 +91249,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(240);
-/* provided dependency */ var APNG = __webpack_require__(370);
+/* provided dependency */ var SuperGif = __webpack_require__(548);
+/* provided dependency */ var APNG = __webpack_require__(174);
 
 
 
@@ -91637,15 +91637,11 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
       const modeTypes = new Map ([
          ... Object .entries (Texturing_ModeType),
          // Legacy
-         ["REPLACE",                   Texturing_ModeType .REPLACE],
-         ["MODULATE",                  Texturing_ModeType .MODULATE],
          ["MODULATE2X",                Texturing_ModeType .MODULATE_2X],
          ["MODULATE4X",                Texturing_ModeType .MODULATE_4X],
-         ["ADD",                       Texturing_ModeType .ADD],
          ["ADDSIGNED",                 Texturing_ModeType .ADD_SIGNED],
          ["ADDSIGNED2X",               Texturing_ModeType .ADD_SIGNED_2X],
          ["ADDSMOOTH",                 Texturing_ModeType .ADD_SMOOTH],
-         ["SUBTRACT",                  Texturing_ModeType .SUBTRACT],
          ["BLENDDIFFUSEALPHA",         Texturing_ModeType .BLEND_DIFFUSE_ALPHA],
          ["BLENDTEXTUREALPHA",         Texturing_ModeType .BLEND_TEXTURE_ALPHA],
          ["BLENDFACTORALPHA",          Texturing_ModeType .BLEND_FACTOR_ALPHA],
@@ -91656,7 +91652,6 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
          ["DOTPRODUCT3",               Texturing_ModeType .DOT_PRODUCT_3],
          ["SELECTARG1",                Texturing_ModeType .SELECT_ARG1],
          ["SELECTARG2",                Texturing_ModeType .SELECT_ARG2],
-         ["OFF",                       Texturing_ModeType .OFF],
       ]);
 
       return function ()
@@ -91668,22 +91663,13 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
          {
             const mode = modes .split (",");
 
-            for (let m = 0, l = mode .length; m < l; ++ m)
-               mode [m] = mode [m] .trim ();
-
-            if (mode .length === 0)
-               mode .push ("MODULATE");
-
             if (mode .length < 2)
                mode .push (mode [0]);
 
-            // RGB
+            // RGB, Alpha
 
-            this .modes .push (modeTypes .get (mode [0]) ?? Texturing_ModeType .MODULATE);
-
-            // Alpha
-
-            this .alphaModes .push (modeTypes .get (mode [1]) ?? Texturing_ModeType .MODULATE);
+            this .modes      .push (modeTypes .get (mode [0] .trim ()) ?? Texturing_ModeType .MODULATE);
+            this .alphaModes .push (modeTypes .get (mode [1] .trim ()) ?? Texturing_ModeType .MODULATE);
          }
       };
    })(),
@@ -93914,7 +93900,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(186);
+/* provided dependency */ var libtess_libtess = __webpack_require__(246);
 const libtess_default_ = libtess_libtess;
 ;
 
