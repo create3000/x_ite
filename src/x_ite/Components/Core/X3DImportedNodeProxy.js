@@ -50,7 +50,7 @@ const handler =
          if (node)
             return Reflect .set (node, key, value, receiver);
 
-         return true;
+         return false;
       }
    },
    has (target, key)
@@ -60,7 +60,8 @@ const handler =
    },
    ownKeys (target)
    {
-      return Array .from (new Set (Reflect .ownKeys (target) .concat (Reflect .ownKeys (target .getSharedNode () ?? { }))));
+      return Array .from (new Set (Reflect .ownKeys (target)
+         .concat (Reflect .ownKeys (target .getSharedNode () ?? { }))));
    },
    getOwnPropertyDescriptor (target, key)
    {
