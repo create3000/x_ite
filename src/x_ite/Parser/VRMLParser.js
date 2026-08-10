@@ -60,10 +60,10 @@ const Grammar = Expressions ({
    Period:       /\./y,
    Colon:        /:/y,
 
-   /* eslint-disable no-control-regex */
+   // eslint-disable-next-line no-control-regex
    Id: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/y,
+   // eslint-disable-next-line no-control-regex
    ComponentNameId: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*/y,
-   /* eslint-enable no-control-regex */
 
    initializeOnly: /initializeOnly/y,
    inputOnly:      /inputOnly/y,
