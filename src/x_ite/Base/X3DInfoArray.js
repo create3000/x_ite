@@ -45,8 +45,7 @@ const handler =
    },
    ownKeys (target)
    {
-      // Use `Object.keys()` here, because `Reflect.ownKeys` also returns the Symbols.
-      return Object .keys (target [_array]) .concat (Object .keys (target));
+      return Reflect .ownKeys (target [_array]) .concat (Reflect .ownKeys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {

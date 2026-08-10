@@ -10,48 +10,52 @@ const
 
 const handler =
 {
-   get (target, key)
+   get (target, key, receiver)
    {
       if (key in target)
-         return target [key];
+         return Reflect .get (target, key, receiver);
 
-      const
-         node     = target .getSharedNode (),
-         property = node ?.[key];
+      const node = target .getSharedNode ();
 
-      if (typeof property === "function")
-         return property .bind (node);
+      if (node)
+      {
+         const property = Reflect .get (node, key, receiver);
 
-      return property;
+         if (typeof property === "function")
+            return property .bind (node);
+
+         return property;
+      }
    },
-   set (target, key, value)
+   set (target, key, value, receiver)
    {
       if (key in target)
       {
-         target [key] = value;
+         return Reflect .set (target, key, value, receiver);
       }
       else
       {
          const node = target .getSharedNode ();
 
          if (node)
-            node [key] = value;
-      }
+            return Reflect .set (node, key, value, receiver);
 
-      return true;
+         return true;
+      }
    },
    has (target, key)
    {
-      return key in (target .getSharedNode () ?? { });
+      return Reflect .has (target, key)
+         ?? Reflect .has (target .getSharedNode () ?? { }, key);
    },
    ownKeys (target)
    {
-      // Use `Object.keys()` here, because `Reflect.ownKeys` also returns the Symbols.
-      return Object .keys (target .getSharedNode () ?? { });
+      return Array .from (new Set (Reflect .ownKeys (target) .concat (Reflect .ownKeys (target .getSharedNode () ?? { }))));
    },
    getOwnPropertyDescriptor (target, key)
    {
-      return Reflect .getOwnPropertyDescriptor (target .getSharedNode () ?? { }, key);
+      return Reflect .getOwnPropertyDescriptor (target, key)
+         ?? Reflect .getOwnPropertyDescriptor (target .getSharedNode () ?? { }, key);
    },
 };
 
