@@ -23,7 +23,16 @@ const handler =
          const property = Reflect .get (node, key, receiver);
 
          if (typeof property === "function")
-            return target [_functions] .getOrInsertComputed (key, () => property .bind (node));
+         {
+            return target [_functions] .get (key) ?? (() =>
+            {
+               const func = property .bind (node);
+
+               target [_functions] .set (key, func);
+
+               return func;
+            })();
+         }
 
          return property;
       }
