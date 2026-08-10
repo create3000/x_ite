@@ -63,6 +63,7 @@ const handler =
    },
    ownKeys (target)
    {
+      // Use `Object.keys()` here, because `Reflect.ownKeys` also returns the Symbols.
       return Object .keys (target .getValue ()) .concat (Object .keys (target));
    },
    getOwnPropertyDescriptor (target, key)
@@ -74,7 +75,7 @@ const handler =
          if (Number .isInteger (index) && index >= 0)
          {
             if (index < target .getValue () .length)
-               return Object .getOwnPropertyDescriptor (target .getValue (), key);
+               return Reflect .getOwnPropertyDescriptor (target .getValue (), key);
          }
       }
 

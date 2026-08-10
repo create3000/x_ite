@@ -46,11 +46,12 @@ const handler =
    },
    ownKeys (target)
    {
+      // Use `Object.keys()` here, because `Reflect.ownKeys` also returns the Symbols.
       return Object .keys (target .getSharedNode () ?? { });
    },
    getOwnPropertyDescriptor (target, key)
    {
-      return Object .getOwnPropertyDescriptor (target .getSharedNode () ?? { }, key);
+      return Reflect .getOwnPropertyDescriptor (target .getSharedNode () ?? { }, key);
    },
 };
 

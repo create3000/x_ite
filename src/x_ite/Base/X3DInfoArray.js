@@ -45,6 +45,7 @@ const handler =
    },
    ownKeys (target)
    {
+      // Use `Object.keys()` here, because `Reflect.ownKeys` also returns the Symbols.
       return Object .keys (target [_array]) .concat (Object .keys (target));
    },
    getOwnPropertyDescriptor (target, key)
@@ -57,7 +58,7 @@ const handler =
          {
             if (index < target [_array] .length)
             {
-               const propertyDescriptor = Object .getOwnPropertyDescriptor (target [_array], key);
+               const propertyDescriptor = Reflect .getOwnPropertyDescriptor (target [_array], key);
 
                if (propertyDescriptor)
                   propertyDescriptor .writable = false;
@@ -288,7 +289,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
             if (proto)
                generator .TidyBreak ();
          }
-         catch (error)
+         catch
          {
             // console .error (error);
          }
@@ -304,7 +305,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
             generator .TidyBreak ();
          }
-         catch (error)
+         catch
          {
             // console .error (error);
          }
