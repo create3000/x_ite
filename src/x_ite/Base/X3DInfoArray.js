@@ -45,7 +45,7 @@ const handler =
    },
    ownKeys (target)
    {
-      return Reflect .ownKeys (target [_array]) .concat (Reflect .ownKeys (target));
+      return Object .keys (target [_array]) .concat (Reflect .ownKeys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
@@ -65,12 +65,15 @@ const handler =
                return propertyDescriptor;
             }
          }
-
-         if (key === "length")
-            return { value: target .length, writable: true, enumerable: false, configurable: true };
       }
 
       return Reflect .getOwnPropertyDescriptor (target, key);
+   },
+};
+
+const properties = {
+   length: {
+      get () { return this [_array] .length; },
    },
 };
 
@@ -79,6 +82,8 @@ function X3DInfoArray (values, valueType)
    const proxy = new Proxy (this, handler);
 
    X3DChildObject .call (this);
+
+   Object .defineProperties (this, properties);
 
    this [_array]     = [ ];
    this [_index]     = new Map ();
@@ -338,13 +343,5 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
 for (const key of Object .keys (X3DInfoArray .prototype))
    Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });
-
-Object .defineProperties (X3DInfoArray .prototype,
-{
-   length:
-   {
-      get () { return this [_array] .length; },
-   },
-});
 
 export default X3DInfoArray;

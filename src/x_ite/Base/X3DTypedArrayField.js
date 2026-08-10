@@ -104,8 +104,6 @@ const handler =
       for (let i = 0; i < length; ++ i)
          ownKeys .push (String (i));
 
-      ownKeys .push ("length");
-
       return ownKeys .concat (Reflect .ownKeys (target));
    },
    getOwnPropertyDescriptor (target, key)
@@ -119,12 +117,21 @@ const handler =
             if (index < target [_length])
                return Reflect .getOwnPropertyDescriptor (target .getValue (), key);
          }
-
-         if (key === "length")
-            return { value: target .length, writable: true, enumerable: false, configurable: true };
       }
 
       return Reflect .getOwnPropertyDescriptor (target, key);
+   },
+};
+
+const properties = {
+   length: {
+      get () { return this [_length]; },
+      set (value)
+      {
+         const target = this [_target];
+
+         target .resize (value, target .getSingleValue ());
+      },
    },
 };
 
@@ -133,6 +140,8 @@ function X3DTypedArrayField (values)
    const proxy = new Proxy (this, handler);
 
    X3DArrayField .call (this, new (this .getArrayType ()) (16));
+
+   Object .defineProperties (this, properties);
 
    this [_target] = this;
    this [_proxy]  = proxy;
@@ -1044,17 +1053,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
 for (const key of Object .keys (X3DTypedArrayField .prototype))
    Object .defineProperty (X3DTypedArrayField .prototype, key, { enumerable: false });
-
-Object .defineProperty (X3DTypedArrayField .prototype, "length",
-{
-   get () { return this [_length]; },
-   set (value)
-   {
-      const target = this [_target];
-
-      target .resize (value, target .getSingleValue ());
-   },
-});
 
 // Getter/Setter functions to reference a value for a given index.
 

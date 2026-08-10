@@ -63,7 +63,7 @@ const handler =
    },
    ownKeys (target)
    {
-      return Reflect .ownKeys (target .getValue ()) .concat (Reflect .ownKeys (target));
+      return Object .keys (target .getValue ()) .concat (Reflect .ownKeys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
@@ -76,12 +76,16 @@ const handler =
             if (index < target .getValue () .length)
                return Reflect .getOwnPropertyDescriptor (target .getValue (), key);
          }
-
-         if (key === "length")
-            return { value: target .length, writable: true, enumerable: false, configurable: true };
       }
 
       return Reflect .getOwnPropertyDescriptor (target, key);
+   },
+};
+
+const properties = {
+   length: {
+      get () { return this [_target] .getValue () .length; },
+      set (value) { this [_target] .resize (value); },
    },
 };
 
@@ -90,6 +94,8 @@ function X3DObjectArrayField (values)
    const proxy = new Proxy (this, handler);
 
    X3DArrayField .call (this, [ ]);
+
+   Object .defineProperties (this, properties);
 
    this [_target] = this;
    this [_proxy]  = proxy;
@@ -506,11 +512,5 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
 
 for (const key of Object .keys (X3DObjectArrayField .prototype))
    Object .defineProperty (X3DObjectArrayField .prototype, key, { enumerable: false });
-
-Object .defineProperty (X3DObjectArrayField .prototype, "length",
-{
-   get () { return this [_target] .getValue () .length; },
-   set (value) { this [_target] .resize (value); },
-});
 
 export default X3DObjectArrayField;
