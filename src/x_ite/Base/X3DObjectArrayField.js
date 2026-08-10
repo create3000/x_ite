@@ -63,7 +63,11 @@ const handler =
    },
    ownKeys (target)
    {
-      return Reflect .ownKeys (target .getValue ()) .concat (Reflect .ownKeys (target));
+      const ownKeys = Reflect .ownKeys (target .getValue ());
+
+      ownKeys .push ("length");
+
+      return ownKeys .concat (Reflect .ownKeys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
