@@ -6,13 +6,14 @@ import $              from "../../../lib/helper.js";
 const
    _importedName = Symbol (),
    _importedNode = Symbol (),
-   _type         = Symbol ();
+   _type         = Symbol (),
+   _functions    = Symbol ();
 
 const handler =
 {
    get (target, key, receiver)
    {
-      if (key in target)
+      if (Reflect .has (target, key))
          return Reflect .get (target, key, receiver);
 
       const node = target .getSharedNode ();
@@ -22,14 +23,14 @@ const handler =
          const property = Reflect .get (node, key, receiver);
 
          if (typeof property === "function")
-            return property .bind (node);
+            return target [_functions] .getOrInsertComputed (key, () => property .bind (node));
 
          return property;
       }
    },
    set (target, key, value, receiver)
    {
-      if (key in target)
+      if (Reflect .has (target, key))
       {
          return Reflect .set (target, key, value, receiver);
       }
@@ -67,6 +68,7 @@ function X3DImportedNodeProxy (executionContext, importedName, type)
 
    this [_importedName] = importedName;
    this [_type]         = type;
+   this [_functions]    = new Map ();
 
    this .setup ();
 
