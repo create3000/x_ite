@@ -119,6 +119,9 @@ const handler =
             if (index < target [_length])
                return Reflect .getOwnPropertyDescriptor (target .getValue (), key);
          }
+
+         if (key === "length")
+            return { value: target .length, writable: true, enumerable: false, configurable: true };
       }
 
       return Reflect .getOwnPropertyDescriptor (target, key);

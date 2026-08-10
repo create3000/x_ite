@@ -47,8 +47,6 @@ const handler =
    {
       const ownKeys = Reflect .ownKeys (target [_array]);
 
-      ownKeys .push ("length");
-
       return ownKeys .concat (Reflect .ownKeys (target));
    },
    getOwnPropertyDescriptor (target, key)
@@ -69,6 +67,9 @@ const handler =
                return propertyDescriptor;
             }
          }
+
+         if (key === "length")
+            return { value: target .length, writable: true, enumerable: false, configurable: true };
       }
 
       return Reflect .getOwnPropertyDescriptor (target, key);
