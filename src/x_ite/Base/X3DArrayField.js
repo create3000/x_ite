@@ -34,7 +34,7 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    lastIndexOf: Array .prototype .lastIndexOf,
    map (... args)
    {
-      return this .constructor .from (Array .prototype .map .call (this, ... args));
+      return this .constructor .from (this, ... args);
    },
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
