@@ -76,7 +76,7 @@ const handler =
 
          if (node)
          {
-            const fieldDefinition = node .getFieldDefinition (key);
+            const fieldDefinition = node .getFieldDefinitions () .get (key);
 
             if (fieldDefinition)
             {
@@ -223,7 +223,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    },
    getFieldDefinition (name)
    {
-      const fieldDefinition = this .getFieldDefinition (name);
+      const fieldDefinition = this .getFieldDefinitions () .get (name);
 
       if (fieldDefinition)
          return fieldDefinition;
