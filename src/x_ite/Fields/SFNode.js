@@ -356,10 +356,6 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       return node ? SFNodeCache .get (node) : null;
    },
-   fromString: undefined,
-   fromVRMLString: undefined,
-   fromXMLString: undefined,
-   fromJSONString: undefined,
    toStream (generator)
    {
       const
@@ -410,7 +406,15 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    },
    dispose ()
    {
-      const target = this [_target];
+      const
+         target = this [_target],
+         node   = target .getValue ();
+
+      if (node)
+      {
+         if (SFNodeCache .get (node) === this)
+            node .dispose ();
+      }
 
       target .set (null);
       target .processInterests ();

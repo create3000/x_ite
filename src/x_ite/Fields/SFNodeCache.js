@@ -26,27 +26,11 @@ const SFNodeCache =
    },
    set (baseNode, node)
    {
-      Object .defineProperties (node, properties);
-
       cache .set (baseNode, node);
    },
    delete (baseNode)
    {
       cache .delete (baseNode);
-   },
-};
-
-const properties =
-{
-   dispose:
-   {
-      value ()
-      {
-         this .getValue () ?.dispose ();
-
-         SFNode .prototype .dispose .call (this);
-      },
-      configurable: true,
    },
 };
 
