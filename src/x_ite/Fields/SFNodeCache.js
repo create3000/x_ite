@@ -2,9 +2,6 @@ import SFNode from "./SFNode.js";
 
 const cache = new WeakMap ();
 
-// const r = new FinalizationRegistry (t => console .error (`object deleted ${--i} ${t}`));
-// let i = 0;
-
 const SFNodeCache =
 {
    get (baseNode)
