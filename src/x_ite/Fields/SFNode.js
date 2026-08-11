@@ -356,6 +356,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       return node ? SFNodeCache .get (node) : null;
    },
+   fromString: undefined,
+   fromVRMLString: undefined,
+   fromXMLString: undefined,
+   fromJSONString: undefined,
    toStream (generator)
    {
       const

@@ -36,18 +36,8 @@ const SFNodeCache =
    },
 };
 
-const disable =
-{
-   value: undefined,
-   configurable: true,
-};
-
 const properties =
 {
-   fromString: disable,
-   fromVRMLString: disable,
-   fromXMLString: disable,
-   fromJSONString: disable,
    dispose:
    {
       value ()
