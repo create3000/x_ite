@@ -39,24 +39,14 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    lastIndexOf: Array .prototype .lastIndexOf,
    map (... args)
    {
-      const array = new (this .constructor) ();
-
-      for (const v of Array .prototype .map .call (this, ... args))
-         array .push (v);
-
-      return array;
+      return this .constructor .from (Array .prototype .map .call (this, ... args));
    },
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
    reverse: Array .prototype .reverse,
    slice (... args)
    {
-      const array = new (this .constructor) ();
-
-      for (const v of Array .prototype .slice .call (this, ... args))
-         array .push (v);
-
-      return array;
+      return this .constructor .from (Array .prototype .slice .call (this, ... args));
    },
    some: Array .prototype .some,
    sort: Array .prototype .sort,
@@ -89,5 +79,32 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
 
 for (const key of Object .keys (X3DArrayField .prototype))
    Object .defineProperty (X3DArrayField .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DArrayField,
+{
+   addStaticProperties:
+   {
+      value (constructor, typeName)
+      {
+         X3DField .addStaticProperties (constructor, typeName);
+
+         Object .defineProperties (constructor,
+         {
+            from:
+            {
+               value (items, mapFn, thisArg)
+               {
+                  const array = new constructor ();
+
+                  for (const v of mapFn ? Array .from (items, mapFn, thisArg) : items)
+                     array .push (v);
+
+                  return array;
+               },
+            },
+         });
+      },
+   },
+});
 
 export default X3DArrayField;

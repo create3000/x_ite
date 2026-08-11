@@ -10,7 +10,7 @@ import SFRotation          from "./SFRotation.js";
 import SFVec2              from "./SFVec2.js";
 import SFVec3              from "./SFVec3.js";
 import SFVec4              from "./SFVec4.js";
-import X3DField            from "../Base/X3DField.js";
+import X3DArrayField       from "../Base/X3DArrayField.js";
 import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
 import X3DTypedArrayField  from "../Base/X3DTypedArrayField.js";
 import Matrix3             from "../../standard/Math/Numbers/Matrix3.js";
@@ -246,7 +246,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
 for (const key of Object .keys (MFNode .prototype))
    Object .defineProperty (MFNode .prototype, key, { enumerable: false });
 
-X3DField .addStaticProperties (MFNode, "MFNode");
+X3DArrayField .addStaticProperties (MFNode, "MFNode");
 
 function MFString (... args)
 {
@@ -288,7 +288,7 @@ Object .assign (Object .setPrototypeOf (MFString .prototype, X3DObjectArrayField
 for (const key of Object .keys (MFString .prototype))
    Object .defineProperty (MFString .prototype, key, { enumerable: false });
 
-X3DField .addStaticProperties (MFString, "MFString");
+X3DArrayField .addStaticProperties (MFString, "MFString");
 
 /**
  * MFImage
@@ -310,7 +310,7 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
 for (const key of Object .keys (MFImage .prototype))
    Object .defineProperty (MFImage .prototype, key, { enumerable: false });
 
-X3DField .addStaticProperties (MFImage, "MFImage");
+X3DArrayField .addStaticProperties (MFImage, "MFImage");
 
 function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Components, singleValue)
 {
@@ -346,7 +346,7 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
    for (const key of Object .keys (ArrayField .prototype))
       Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
-   X3DField .addStaticProperties (ArrayField, TypeName);
+   X3DArrayField .addStaticProperties (ArrayField, TypeName);
 
    return ArrayField;
 }
