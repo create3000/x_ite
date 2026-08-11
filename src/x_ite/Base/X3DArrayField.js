@@ -16,11 +16,11 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    entries: Array .prototype .entries,
    every: Array .prototype .every,
    fill: Array .prototype .fill,
-   filter (/* callbackFn, thisArg */)
+   filter (... args)
    {
       const array = new (this .constructor) ();
 
-      for (const v of Array .prototype .filter .call (this, ... arguments))
+      for (const v of Array .prototype .filter .call (this, ... args))
          array .push (v);
 
       return array;
@@ -37,11 +37,11 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    join: Array .prototype .join,
    keys: Array .prototype .keys,
    lastIndexOf: Array .prototype .lastIndexOf,
-   map (/* callbackFn, thisArg */)
+   map (... args)
    {
       const array = new (this .constructor) ();
 
-      for (const v of Array .prototype .map .call (this, ... arguments))
+      for (const v of Array .prototype .map .call (this, ... args))
          array .push (v);
 
       return array;
@@ -49,11 +49,11 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    reduce: Array .prototype .reduce,
    reduceRight: Array .prototype .reduceRight,
    reverse: Array .prototype .reverse,
-   slice (/* start, end */)
+   slice (... args)
    {
       const array = new (this .constructor) ();
 
-      for (const v of Array .prototype .slice .call (this, ... arguments))
+      for (const v of Array .prototype .slice .call (this, ... args))
          array .push (v);
 
       return array;
@@ -64,15 +64,15 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    {
       return this .copy () .reverse ();
    },
-   toSorted (/* compareFn */)
+   toSorted (... args)
    {
-      return this .copy () .sort (... arguments);
+      return this .copy () .sort (... args);
    },
-   toSpliced (/* start, deleteCount, ... insertValues */)
+   toSpliced (... args)
    {
       const copy = this .copy ();
 
-      copy .splice (... arguments);
+      copy .splice (... args);
 
       return copy;
    },
