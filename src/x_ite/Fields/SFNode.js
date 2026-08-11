@@ -39,9 +39,7 @@ const handler =
 
          if (field)
          {
-            const accessType = field .getAccessType ();
-
-            if (accessType === X3DConstants .outputOnly)
+            if (field .getAccessType () === X3DConstants .outputOnly)
                return false;
 
             field .setValue (value);
@@ -78,7 +76,7 @@ const handler =
 
          if (node)
          {
-            const fieldDefinition = node .getFieldDefinitions () .get (key);
+            const fieldDefinition = node .getFieldDefinition (key);
 
             if (fieldDefinition)
             {
@@ -225,7 +223,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    },
    getFieldDefinition (name)
    {
-      const fieldDefinition = this .getFieldDefinitions () .get (name);
+      const fieldDefinition = this .getFieldDefinition (name);
 
       if (fieldDefinition)
          return fieldDefinition;
