@@ -18,12 +18,7 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
    fill: Array .prototype .fill,
    filter (... args)
    {
-      const array = new (this .constructor) ();
-
-      for (const v of Array .prototype .filter .call (this, ... args))
-         array .push (v);
-
-      return array;
+      return this .constructor .from (Array .prototype .filter .call (this, ... args));
    },
    find: Array .prototype .find,
    findIndex: Array .prototype .findIndex,
