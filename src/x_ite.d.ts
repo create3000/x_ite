@@ -2988,6 +2988,7 @@ declare namespace X3D
       length: number;
 
       at (index: number): T;
+      concat (... arrays: this []): this;
       entries (): IterableIterator <[number, T]>;
       every (predicate: ArrayTest <T>): boolean;
       fill (val: T, start?: number, end?: number): this;
@@ -2996,17 +2997,19 @@ declare namespace X3D
       findIndex (test: ArrayTest <T>): number;
       findLast (test: ArrayTest <T>): T | undefined;
       findLastIndex (test: ArrayTest <T>): number;
+      flat (): T [ ];
+      flatMap <U> (callbackFn: (element: T, i: number, array: this) => U, thisArg?: any): U [ ];
       forEach (action: ArrayAction <T>): void;
       includes (needle: T): boolean;
       indexOf (needle: T): number;
       join (separator?: string): string;
       keys (): number [];
       lastIndexOf (needle: T): number;
-      map <U> (f: (element: T, i: number, array: this) => U): this;
+      map <U> (callbackFn: (element: T, i: number, array: this) => U, thisArg?: any): this;
       pop (): T;
       push (... elements: T []): number;
-      reduce <U> (f: ArrayReducer <T, U>, initial?: U): U;
-      reduceRight <U> (f: ArrayReducer <T, U>, initial?: U): U;
+      reduce <U> (callbackFn: ArrayReducer <T, U>, initial?: U): U;
+      reduceRight <U> (callbackFn: ArrayReducer <T, U>, initial?: U): U;
       reverse (): this;
       shift (): T;
       slice (start?: number, end?: number): this;
