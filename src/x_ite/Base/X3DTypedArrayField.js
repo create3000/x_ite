@@ -663,7 +663,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          components = target .getComponents ();
 
       if (-length <= start && start < 0)
-         start = start + length;
+         start += length;
 
       if (start < -length)
          start = 0;
@@ -672,7 +672,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          return;
 
       if (-length <= end && end < 0)
-         end = end + length;
+         end += length;
 
       if (end < -length)
          end = 0;
