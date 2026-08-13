@@ -1769,7 +1769,7 @@ The MFBool object corresponds to an X3D MFBool field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (items: Iterable\<boolean\> | ArrayLike\<boolean\>): MFBool
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>): MFBool
 
 Returns a new `MFBool` field initialized with the values from the specified iterable.
 
@@ -1835,7 +1835,7 @@ The MFDouble/MFFloat object corresponds to an X3D MFDouble/MFFloat field. It is 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<number\> | ArrayLike\<number\>): MFDouble/MFFloat
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>): MFDouble/MFFloat
 
 Returns a new `MFDouble/MFFloat` field initialized with the values from the specified iterable.
 
@@ -1899,7 +1899,7 @@ The MFInt32 object corresponds to an X3D MFInt32 field. It is used to store a on
 
 ### Static Methods
 
-#### **from** (items: Iterable\<number\> | ArrayLike\<number\>): MFInt32
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>): MFInt32
 
 Returns a new `MFInt32` field initialized with the values from the specified iterable.
 
@@ -2127,7 +2127,7 @@ The MFString object corresponds to an X3D MFString field. It is used to store a 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<string\> | ArrayLike\<string\>): MFString
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>): MFString
 
 Returns a new `MFString` field initialized with the values from the specified iterable.
 
@@ -2159,7 +2159,7 @@ The MFTime object corresponds to an X3D MFTime field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (items: Iterable\<number\> | ArrayLike\<number\>): MFTime
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>): MFTime
 
 Returns a new `MFTime` field initialized with the values from the specified iterable.
 

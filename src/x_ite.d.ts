@@ -3037,7 +3037,7 @@ declare namespace X3D
        * Returns a new `MFBool` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<boolean> | ArrayLike<boolean>): MFBool;
+      static from (items: Iterable<any> | ArrayLike<any>): MFBool;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => boolean, thisArg?: any): MFBool;
    }
 
@@ -3085,7 +3085,7 @@ declare namespace X3D
        * Returns a new `MFDouble` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<number> | ArrayLike<number>): MFDouble;
+      static from (items: Iterable<any> | ArrayLike<any>): MFDouble;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFDouble;
    }
 
@@ -3101,7 +3101,7 @@ declare namespace X3D
        * Returns a new `MFFloat` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<number> | ArrayLike<number>): MFFloat;
+      static from (items: Iterable<any> | ArrayLike<any>): MFFloat;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFFloat;
    }
 
@@ -3133,7 +3133,7 @@ declare namespace X3D
        * Returns a new `MFInt32` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<number> | ArrayLike<number>): MFInt32;
+      static from (items: Iterable<any> | ArrayLike<any>): MFInt32;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFInt32;
    }
 
@@ -3259,7 +3259,7 @@ declare namespace X3D
        * Returns a new `MFString` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<string> | ArrayLike<string>): MFString;
+      static from (items: Iterable<any> | ArrayLike<any>): MFString;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => string, thisArg?: any): MFString;
    }
 
@@ -3275,7 +3275,7 @@ declare namespace X3D
        * Returns a new `MFTime` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<number> | ArrayLike<number>): MFTime;
+      static from (items: Iterable<any> | ArrayLike<any>): MFTime;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFTime;
    }
 
