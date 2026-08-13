@@ -1767,6 +1767,12 @@ Common Array functions like `at`, `entries`, `every`, `fill`, `filter`, `find`, 
 
 The MFBool object corresponds to an X3D MFBool field. It is used to store a one-dimensional array of SFBool objects.
 
+### Static Methods
+
+#### **from** (iterable: Iterable\<boolean\>): MFBool
+
+Returns a new `MFBool` field initialized with the values from the specified iterable.
+
 ### Instance Creation Method(s)
 
 #### *mfBoolObjectName* = new **MFBool** (*... values: boolean []*)
@@ -1788,6 +1794,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 ## MFColor/MFColorRGBA Object
 
 The MFColor/MFColorRGBA object corresponds to an X3D MFColor/MFColorRGBA field. It is used to store a one-dimensional array of SFColor/SFColorRGBA objects.
+
+### Static Methods
+
+#### **from** (iterable: Iterable\<SFColor/SFColorRGBA\>): MFColor/MFColorRGBA
+
+Returns a new `MFColor/MFColorRGBA` field initialized with the values from the specified iterable.
 
 ### Instance Creation Method(s)
 
@@ -1813,6 +1825,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 The MFDouble/MFFloat object corresponds to an X3D MFDouble/MFFloat field. It is used to store a one-dimensional array of SFFloat objects.
 
+### Static Methods
+
+#### **from** (iterable: Iterable\<number\>): MFDouble/MFFloat
+
+Returns a new `MFDouble/MFFloat` field initialized with the values from the specified iterable.
+
 ### Instance Creation Method(s)
 
 #### *mfFloat/DoubleObjectName* = new **MFDouble/MFFloat** (*... values: number []*)
@@ -1834,6 +1852,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 ## MFImage Object
 
 The MFImage object corresponds to an X3D MFImage field. It is used to store a one-dimensional array of SFImage objects.
+
+### Static Methods
+
+#### **from** (iterable: Iterable\<SFImage\>): MFImage
+
+Returns a new `MFImage` field initialized with the values from the specified iterable.
 
 ### Instance Creation Method(s)
 
@@ -1857,6 +1881,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 The MFInt32 object corresponds to an X3D MFInt32 field. It is used to store a one-dimensional array of SFInt32 objects.
 
+### Static Methods
+
+#### **from** (iterable: Iterable\<number\>): MFInt32
+
+Returns a new `MFInt32` field initialized with the values from the specified iterable.
+
 ### Instance Creation Method(s)
 
 #### *mfInt32ObjectName* = new **MFInt32** (*... values: number []*)
@@ -1875,9 +1905,15 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
-## MFMatrix3d/MFMatrix3d/f Object
+## MFMatrix3d/MFMatrix3f Object
 
 The MFMatrix3d/f object corresponds to an X3D MFMatrix3d/f field. It is used to store a one-dimensional array of SFMatrix3d/f objects.
+
+### Static Methods
+
+#### **from** (iterable: Iterable\<SFMatrix3d/f\>): MFMatrix3d/f
+
+Returns a new `MFMatrix3d/f` field initialized with the values from the specified iterable.
 
 ### Instance Creation Method(s)
 
@@ -1901,6 +1937,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 The MFMatrix4d/f object corresponds to an X3D MFMatrix4d/f field. It is used to store a one-dimensional array of SFMatrix4d/f objects.
 
+### Static Methods
+
+#### **from** (iterable: Iterable\<SFMatrix4d/f\>): MFMatrix4d/f
+
+Returns a new `MFMatrix4d/f` field initialized with the values from the specified iterable.
+
 ### Instance Creation Method(s)
 
 #### *mfMatrix4d/fObjectName* = new **MFMatrix4d/f** (*... values: SFMatrix4d/f []*)
@@ -1922,6 +1964,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 ## MFNode Object
 
 The MFNode object corresponds to an X3D MFNode field. It is used to store a one-dimensional array of SFNode objects.
+
+### Static Methods
+
+#### **from** (iterable: Iterable\<SFNode\>): MFNode
+
+Returns a new `MFNode` field initialized with the values from the specified iterable.
 
 ### Instance Creation Method(s)
 
@@ -1981,6 +2029,12 @@ For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmls
 
 The MFQuaternion object corresponds to an X3D MFQuaternion field. It is used to store a one-dimensional array of SFQuaternion objects.
 
+### Static Methods
+
+#### **from** (iterable: Iterable\<SFQuaternion\>): MFQuaternion
+
+Returns a new `MFQuaternion` field initialized with the values from the specified iterable.
+
 ### Instance Creation Method(s)
 
 #### *mfQuaternionObjectName* = new **MFQuaternion** (*... values: SFQuaternion []*)
@@ -2002,6 +2056,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 ## MFRotation Object
 
 The MFRotation object corresponds to an X3D MFRotation field. It is used to store a one-dimensional array of SFRotation objects.
+
+### Static Methods
+
+#### **from** (iterable: Iterable\<SFRotation\>): MFRotation
+
+Returns a new `MFRotation` field initialized with the values from the specified iterable.
 
 ### Instance Creation Method(s)
 
@@ -2025,6 +2085,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 The MFString object corresponds to an X3D MFString field. It is used to store a one-dimensional array of String objects.
 
+### Static Methods
+
+#### **from** (iterable: Iterable\<string\>): MFString
+
+Returns a new `MFString` field initialized with the values from the specified iterable.
+
 ### Instance Creation Method(s)
 
 #### *mfStringObjectName* = new **MFString** (*... values: string []*)
@@ -2046,6 +2112,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 ## MFTime Object
 
 The MFTime object corresponds to an X3D MFTime field. It is used to store a one-dimensional array of SFTime objects.
+
+### Static Methods
+
+#### **from** (iterable: Iterable\<number\>): MFTime
+
+Returns a new `MFTime` field initialized with the values from the specified iterable.
 
 ### Instance Creation Method(s)
 
@@ -2069,6 +2141,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
 The MFVec2d/f object corresponds to an X3D MFVec2d/f field. It is used to store a one-dimensional array of SFVec2d/f objects.
 
+### Static Methods
+
+#### **from** (iterable: Iterable\<SFVec2d/f\>): MFVec2d/f
+
+Returns a new `MFVec2d/f` field initialized with the values from the specified iterable.
+
 ### Instance Creation Method(s)
 
 #### *mfVec2d/fObjectName* = new **MFVec2d/f** (*... values: SFVec2d/f []*)
@@ -2087,9 +2165,15 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 
-## MFVec3d/MFVec3d/f Object
+## MFVec3d/MFVec3f Object
 
 The MFVec3d/f object corresponds to an X3D MFVec3d/f field. It is used to store a one-dimensional array of SFVec3d/f objects.
+
+### Static Methods
+
+#### **from** (iterable: Iterable\<SFVec3d/f\>): MFVec3d/f
+
+Returns a new `MFVec3d/f` field initialized with the values from the specified iterable.
 
 ### Instance Creation Method(s)
 
@@ -2112,6 +2196,12 @@ See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
 ## MFVec4d/MFVec4f Object
 
 The MFVec4d/f object corresponds to an X3D MFVec4d/f field. It is used to store a one-dimensional array of SFVec4d/f objects.
+
+### Static Methods
+
+#### **from** (iterable: Iterable\<SFVec4d/f\>): MFVec4d/f
+
+Returns a new `MFVec4d/f` field initialized with the values from the specified iterable.
 
 ### Instance Creation Method(s)
 

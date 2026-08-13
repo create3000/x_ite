@@ -3032,6 +3032,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFBool";
+
+      /**
+       * Returns a new `MFBool` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <boolean>): MFBool;
    }
 
    /**
@@ -3041,6 +3047,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFColor";
+
+      /**
+       * Returns a new `MFColor` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFColor>): MFColor;
    }
 
    /**
@@ -3050,6 +3062,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFColorRGBA";
+
+      /**
+       * Returns a new `MFColorRGBA` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFColorRGBA>): MFColorRGBA;
    }
 
    /**
@@ -3059,6 +3077,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFDouble";
+
+      /**
+       * Returns a new `MFDouble` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <number>): MFDouble;
    }
 
    /**
@@ -3068,6 +3092,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFFloat";
+
+      /**
+       * Returns a new `MFFloat` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <number>): MFFloat;
    }
 
    /**
@@ -3077,6 +3107,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFImage";
+
+      /**
+       * Returns a new `MFImage` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFImage>): MFImage;
    }
 
    /**
@@ -3086,6 +3122,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFInt32";
+
+      /**
+       * Returns a new `MFInt32` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <number>): MFInt32;
    }
 
    /**
@@ -3095,6 +3137,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix3d";
+
+      /**
+       * Returns a new `MFMatrix3d` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFMatrix3d>): MFMatrix3d;
    }
 
    /**
@@ -3104,6 +3152,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix3f";
+
+      /**
+       * Returns a new `MFMatrix3f` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFMatrix3f>): MFMatrix3f;
    }
 
    /**
@@ -3113,6 +3167,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix4d";
+
+      /**
+       * Returns a new `MFMatrix4d` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFMatrix4d>): MFMatrix4d;
    }
 
    /**
@@ -3122,6 +3182,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix4f";
+
+      /**
+       * Returns a new `MFMatrix4f` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFMatrix4f>): MFMatrix4f;
    }
 
    /**
@@ -3131,6 +3197,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFNode";
+
+      /**
+       * Returns a new `MFNode` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFNode>): MFNode;
    }
 
    /**
@@ -3140,6 +3212,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFQuaternion";
+
+      /**
+       * Returns a new `MFQuaternion` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFQuaternion>): MFQuaternion;
    }
 
    /**
@@ -3149,6 +3227,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFRotation";
+
+      /**
+       * Returns a new `MFRotation` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFRotation>): MFRotation;
    }
 
    /**
@@ -3158,6 +3242,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFString";
+
+      /**
+       * Returns a new `MFString` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <string>): MFString;
    }
 
    /**
@@ -3167,6 +3257,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFTime";
+
+      /**
+       * Returns a new `MFTime` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <number>): MFTime;
    }
 
    /**
@@ -3176,6 +3272,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec2d";
+
+      /**
+       * Returns a new `MFVec2d` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFVec2d>): MFVec2d;
    }
 
    /**
@@ -3185,6 +3287,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec2f";
+
+      /**
+       * Returns a new `MFVec2f` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFVec2f>): MFVec2f;
    }
 
    /**
@@ -3194,6 +3302,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec3d";
+
+      /**
+       * Returns a new `MFVec3d` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFVec3d>): MFVec3d;
    }
 
    /**
@@ -3203,6 +3317,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec3f";
+
+      /**
+       * Returns a new `MFVec3f` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFVec3f>): MFVec3f;
    }
 
    /**
@@ -3212,6 +3332,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec4d";
+
+      /**
+       * Returns a new `MFVec4d` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFVec4d>): MFVec4d;
    }
 
    /**
@@ -3221,6 +3347,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec4f";
+
+      /**
+       * Returns a new `MFVec4f` field initialized with the values from the specified iterable.
+       * @param iterable
+       */
+      static from (iterable: Iterable <SFVec4f>): MFVec4f;
    }
 
    /**
