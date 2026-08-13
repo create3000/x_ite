@@ -91,10 +91,12 @@ Object .defineProperties (X3DArrayField,
             {
                value (... args)
                {
-                  const array = new constructor ();
+                  const
+                     array  = new constructor (),
+                     target = array .getTarget ();
 
                   for (const v of Array .from (... args))
-                     array .push (v);
+                     target .push (v);
 
                   return array;
                },
