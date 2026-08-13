@@ -646,13 +646,13 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          valueType  = target .getValueType ();
 
       if (components === 1)
-         return Array .from (array, value => valueType (value));
+         return Array .from (array, valueType);
 
       return Array .from (array);
    },
    flatMap (... args)
    {
-      return this .map (...args) .flat ();
+      return this .map (... args) .flat ();
    },
    [_fill] (value, start = 0, end = this .length)
    {

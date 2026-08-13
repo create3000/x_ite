@@ -2998,7 +2998,7 @@ declare namespace X3D
       findLast (test: ArrayTest <T>): T | undefined;
       findLastIndex (test: ArrayTest <T>): number;
       flat (): T [ ];
-      flatMap <U> (callbackFn: (element: T, i: number, array: this) => U, thisArg?: any): U [ ];
+      flatMap <U> (callbackFn: (element: any, i: number, array: this) => U | U [], thisArg?: any): U [ ];
       forEach (action: ArrayAction <T>): void;
       includes (needle: T): boolean;
       indexOf (needle: T): number;
