@@ -9,42 +9,45 @@ function X3DArrayField (value)
 
 Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prototype),
 {
-   // Implement all function also in TypedArray, if possible.
-   at: Array .prototype .at,
-   concat: Array .prototype .concat,
-   // copyWithin: Array.prototype.copyWithin,
-   entries: Array .prototype .entries,
-   every: Array .prototype .every,
-   fill: Array .prototype .fill,
+   // Add all function possible in Array and TypedArray:
+   ... Object .fromEntries ([
+      "at",
+      "concat",
+      "entries",
+      "every",
+      "fill",
+      "find",
+      "findIndex",
+      "findLast",
+      "findLastIndex",
+      "flat",
+      "flatMap",
+      "forEach",
+      "includes",
+      "indexOf",
+      "join",
+      "keys",
+      "lastIndexOf",
+      "reduce",
+      "reduceRight",
+      "reverse",
+      "some",
+      "sort",
+      "values",
+   ]
+   .map (name => [name, Array .prototype [name]])),
    filter (... args)
    {
       return this .constructor .from (Array .prototype .filter .call (this, ... args));
    },
-   find: Array .prototype .find,
-   findIndex: Array .prototype .findIndex,
-   findLast: Array .prototype .findLast,
-   findLastIndex: Array .prototype .findLastIndex,
-   flat: Array .prototype .flat,
-   flatMap: Array .prototype .flatMap,
-   forEach: Array .prototype .forEach,
-   includes: Array .prototype .includes,
-   indexOf: Array .prototype .indexOf,
-   join: Array .prototype .join,
-   keys: Array .prototype .keys,
-   lastIndexOf: Array .prototype .lastIndexOf,
    map (... args)
    {
       return this .constructor .from (this, ... args);
    },
-   reduce: Array .prototype .reduce,
-   reduceRight: Array .prototype .reduceRight,
-   reverse: Array .prototype .reverse,
    slice (... args)
    {
       return this .constructor .from (Array .prototype .slice .call (this, ... args));
    },
-   some: Array .prototype .some,
-   sort: Array .prototype .sort,
    toReversed ()
    {
       return this .copy () .reverse ();
@@ -61,7 +64,6 @@ Object .assign (Object .setPrototypeOf (X3DArrayField .prototype, X3DField .prot
 
       return copy;
    },
-   values: Array .prototype .values,
    with (index, value)
    {
       const copy = this .copy ();
