@@ -3037,7 +3037,7 @@ declare namespace X3D
        * Returns a new `MFBool` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <boolean>): MFBool;
+      static from (items: Iterable<boolean> | ArrayLike<boolean>): MFBool;
    }
 
    /**
@@ -3052,7 +3052,7 @@ declare namespace X3D
        * Returns a new `MFColor` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFColor>): MFColor;
+      static from (items: Iterable<SFColor> | ArrayLike<SFColor>): MFColor;
    }
 
    /**
@@ -3067,7 +3067,7 @@ declare namespace X3D
        * Returns a new `MFColorRGBA` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFColorRGBA>): MFColorRGBA;
+      static from (items: Iterable<SFColorRGBA> | ArrayLike<SFColorRGBA>): MFColorRGBA;
    }
 
    /**
@@ -3082,7 +3082,7 @@ declare namespace X3D
        * Returns a new `MFDouble` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <number>): MFDouble;
+      static from (items: Iterable<number> | ArrayLike<number>): MFDouble;
    }
 
    /**
@@ -3097,7 +3097,7 @@ declare namespace X3D
        * Returns a new `MFFloat` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <number>): MFFloat;
+      static from (items: Iterable<number> | ArrayLike<number>): MFFloat;
    }
 
    /**
@@ -3112,7 +3112,7 @@ declare namespace X3D
        * Returns a new `MFImage` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFImage>): MFImage;
+      static from (items: Iterable<SFImage> | ArrayLike<SFImage>): MFImage;
    }
 
    /**
@@ -3127,7 +3127,7 @@ declare namespace X3D
        * Returns a new `MFInt32` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <number>): MFInt32;
+      static from (items: Iterable<number> | ArrayLike<number>): MFInt32;
    }
 
    /**
@@ -3142,7 +3142,7 @@ declare namespace X3D
        * Returns a new `MFMatrix3d` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFMatrix3d>): MFMatrix3d;
+      static from (items: Iterable<SFMatrix3d> | ArrayLike<SFMatrix3d>): MFMatrix3d;
    }
 
    /**
@@ -3157,7 +3157,7 @@ declare namespace X3D
        * Returns a new `MFMatrix3f` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFMatrix3f>): MFMatrix3f;
+      static from (items: Iterable<SFMatrix3f> | ArrayLike<SFMatrix3f>): MFMatrix3f;
    }
 
    /**
@@ -3172,7 +3172,7 @@ declare namespace X3D
        * Returns a new `MFMatrix4d` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFMatrix4d>): MFMatrix4d;
+      static from (items: Iterable<SFMatrix4d> | ArrayLike<SFMatrix4d>): MFMatrix4d;
    }
 
    /**
@@ -3187,7 +3187,7 @@ declare namespace X3D
        * Returns a new `MFMatrix4f` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFMatrix4f>): MFMatrix4f;
+      static from (items: Iterable<SFMatrix4f> | ArrayLike<SFMatrix4f>): MFMatrix4f;
    }
 
    /**
@@ -3202,7 +3202,7 @@ declare namespace X3D
        * Returns a new `MFNode` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFNode>): MFNode;
+      static from (items: Iterable<SFNode> | ArrayLike<SFNode>): MFNode;
    }
 
    /**
@@ -3217,7 +3217,7 @@ declare namespace X3D
        * Returns a new `MFQuaternion` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFQuaternion>): MFQuaternion;
+      static from (items: Iterable<SFQuaternion> | ArrayLike<SFQuaternion>): MFQuaternion;
    }
 
    /**
@@ -3232,7 +3232,7 @@ declare namespace X3D
        * Returns a new `MFRotation` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFRotation>): MFRotation;
+      static from (items: Iterable<SFRotation> | ArrayLike<SFRotation>): MFRotation;
    }
 
    /**
@@ -3247,7 +3247,7 @@ declare namespace X3D
        * Returns a new `MFString` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <string>): MFString;
+      static from (items: Iterable<string> | ArrayLike<string>): MFString;
    }
 
    /**
@@ -3262,7 +3262,7 @@ declare namespace X3D
        * Returns a new `MFTime` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <number>): MFTime;
+      static from (items: Iterable<number> | ArrayLike<number>): MFTime;
    }
 
    /**
@@ -3277,7 +3277,7 @@ declare namespace X3D
        * Returns a new `MFVec2d` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFVec2d>): MFVec2d;
+      static from (items: Iterable<SFVec2d> | ArrayLike<SFVec2d>): MFVec2d;
    }
 
    /**
@@ -3292,7 +3292,7 @@ declare namespace X3D
        * Returns a new `MFVec2f` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFVec2f>): MFVec2f;
+      static from (items: Iterable<SFVec2f> | ArrayLike<SFVec2f>): MFVec2f;
    }
 
    /**
@@ -3307,7 +3307,7 @@ declare namespace X3D
        * Returns a new `MFVec3d` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFVec3d>): MFVec3d;
+      static from (items: Iterable<SFVec3d> | ArrayLike<SFVec3d>): MFVec3d;
    }
 
    /**
@@ -3322,7 +3322,7 @@ declare namespace X3D
        * Returns a new `MFVec3f` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFVec3f>): MFVec3f;
+      static from (items: Iterable<SFVec3f> | ArrayLike<SFVec3f>): MFVec3f;
    }
 
    /**
@@ -3337,7 +3337,7 @@ declare namespace X3D
        * Returns a new `MFVec4d` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFVec4d>): MFVec4d;
+      static from (items: Iterable<SFVec4d> | ArrayLike<SFVec4d>): MFVec4d;
    }
 
    /**
@@ -3352,7 +3352,7 @@ declare namespace X3D
        * Returns a new `MFVec4f` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable <SFVec4f>): MFVec4f;
+      static from (items: Iterable<SFVec4f> | ArrayLike<SFVec4f>): MFVec4f;
    }
 
    /**
