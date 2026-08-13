@@ -1769,7 +1769,11 @@ The MFBool object corresponds to an X3D MFBool field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (items: Iterable\<boolean\> | ArrayLike\<boolean\>, mapFn?: (element: boolean, index: number) => number, thisArg?: any): MFBool
+#### **from** (items: Iterable\<boolean\> | ArrayLike\<boolean\>): MFBool
+
+Returns a new `MFBool` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => boolean, thisArg?: any): MFBool
 
 Returns a new `MFBool` field initialized with the values from the specified iterable.
 
@@ -1797,7 +1801,11 @@ The MFColor/MFColorRGBA object corresponds to an X3D MFColor/MFColorRGBA field. 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFColor/SFColorRGBA\> | ArrayLike\<SFColor/SFColorRGBA\>, mapFn?: (element: SFColor/SFColorRGBA, index: SFColor/SFColorRGBA) => any, thisArg?: any): MFColor/MFColorRGBA
+#### **from** (items: Iterable\<SFColor/SFColorRGBA\> | ArrayLike\<SFColor/SFColorRGBA\>): MFColor/MFColorRGBA
+
+Returns a new `MFColor/MFColorRGBA` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFColor/SFColorRGBA, thisArg?: any): MFColor/MFColorRGBA
 
 Returns a new `MFColor/MFColorRGBA` field initialized with the values from the specified iterable.
 
@@ -1827,7 +1835,11 @@ The MFDouble/MFFloat object corresponds to an X3D MFDouble/MFFloat field. It is 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<number\> | ArrayLike\<number\>, mapFn?: (element: number, index: number) => number, thisArg?: any): MFDouble/MFFloat
+#### **from** (items: Iterable\<number\> | ArrayLike\<number\>): MFDouble/MFFloat
+
+Returns a new `MFDouble/MFFloat` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => number, thisArg?: any): MFDouble/MFFloat
 
 Returns a new `MFDouble/MFFloat` field initialized with the values from the specified iterable.
 
@@ -1855,7 +1867,11 @@ The MFImage object corresponds to an X3D MFImage field. It is used to store a on
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFImage\> | ArrayLike\<SFImage\>, mapFn?: (element: SFImage, index: number) => SFImage, thisArg?: any): MFImage
+#### **from** (items: Iterable\<SFImage\> | ArrayLike\<SFImage\>): MFImage
+
+Returns a new `MFImage` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFImage, thisArg?: any): MFImage
 
 Returns a new `MFImage` field initialized with the values from the specified iterable.
 
@@ -1883,7 +1899,11 @@ The MFInt32 object corresponds to an X3D MFInt32 field. It is used to store a on
 
 ### Static Methods
 
-#### **from** (items: Iterable\<number\> | ArrayLike\<number\>, mapFn?: (element: number, index: number) => number, thisArg?: any): MFInt32
+#### **from** (items: Iterable\<number\> | ArrayLike\<number\>): MFInt32
+
+Returns a new `MFInt32` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => number, thisArg?: any): MFInt32
 
 Returns a new `MFInt32` field initialized with the values from the specified iterable.
 
@@ -1911,7 +1931,11 @@ The MFMatrix3d/f object corresponds to an X3D MFMatrix3d/f field. It is used to 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFMatrix3d/f\> | ArrayLike\<SFMatrix3d/f\>, mapFn?: (element: SFMatrix3d/f, index: number) => SFMatrix3d/f, thisArg?: any): MFMatrix3d/f
+#### **from** (items: Iterable\<SFMatrix3d/f\> | ArrayLike\<SFMatrix3d/f\>): MFMatrix3d/f
+
+Returns a new `MFMatrix3d/f` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFMatrix3d/f, thisArg?: any): MFMatrix3d/f
 
 Returns a new `MFMatrix3d/f` field initialized with the values from the specified iterable.
 
@@ -1939,7 +1963,11 @@ The MFMatrix4d/f object corresponds to an X3D MFMatrix4d/f field. It is used to 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFMatrix4d/f\> | ArrayLike\<SFMatrix4d/f\>, mapFn?: (element: SFMatrix4d/f, index: number) => SFMatrix4d/f, thisArg?: any): MFMatrix4d/f
+#### **from** (items: Iterable\<SFMatrix4d/f\> | ArrayLike\<SFMatrix4d/f\>): MFMatrix4d/f
+
+Returns a new `MFMatrix4d/f` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFMatrix4d/f, thisArg?: any): MFMatrix4d/f
 
 Returns a new `MFMatrix4d/f` field initialized with the values from the specified iterable.
 
@@ -1967,7 +1995,11 @@ The MFNode object corresponds to an X3D MFNode field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFNode\> | ArrayLike\<SFNode\>, mapFn?: (element: SFNode, index: number) => SFNode, thisArg?: any): MFNode
+#### **from** (items: Iterable\<SFNode\> | ArrayLike\<SFNode\>): MFNode
+
+Returns a new `MFNode` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFNode, thisArg?: any): MFNode
 
 Returns a new `MFNode` field initialized with the values from the specified iterable.
 
@@ -2031,7 +2063,11 @@ The MFQuaternion object corresponds to an X3D MFQuaternion field. It is used to 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFQuaternion\> | ArrayLike\<SFQuaternion\>, mapFn?: (element: SFQuaternion, index: number) => SFQuaternion, thisArg?: any): MFQuaternion
+#### **from** (items: Iterable\<SFQuaternion\> | ArrayLike\<SFQuaternion\>): MFQuaternion
+
+Returns a new `MFQuaternion` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFQuaternion, thisArg?: any): MFQuaternion
 
 Returns a new `MFQuaternion` field initialized with the values from the specified iterable.
 
@@ -2059,7 +2095,11 @@ The MFRotation object corresponds to an X3D MFRotation field. It is used to stor
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFRotation\> | ArrayLike\<SFRotation\>, mapFn?: (element: SFRotation, index: number) => SFRotation, thisArg?: any): MFRotation
+#### **from** (items: Iterable\<SFRotation\> | ArrayLike\<SFRotation\>): MFRotation
+
+Returns a new `MFRotation` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFRotation, thisArg?: any): MFRotation
 
 Returns a new `MFRotation` field initialized with the values from the specified iterable.
 
@@ -2087,7 +2127,11 @@ The MFString object corresponds to an X3D MFString field. It is used to store a 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<string\> | ArrayLike\<string\>, mapFn?: (element: string, index: number) => string, thisArg?: any): MFString
+#### **from** (items: Iterable\<string\> | ArrayLike\<string\>): MFString
+
+Returns a new `MFString` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => string, thisArg?: any): MFString
 
 Returns a new `MFString` field initialized with the values from the specified iterable.
 
@@ -2115,7 +2159,11 @@ The MFTime object corresponds to an X3D MFTime field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (items: Iterable\<number\> | ArrayLike\<number\>, mapFn?: (element: number, index: number) => number, thisArg?: any): MFTime
+#### **from** (items: Iterable\<number\> | ArrayLike\<number\>): MFTime
+
+Returns a new `MFTime` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => number, thisArg?: any): MFTime
 
 Returns a new `MFTime` field initialized with the values from the specified iterable.
 
@@ -2143,7 +2191,11 @@ The MFVec2d/f object corresponds to an X3D MFVec2d/f field. It is used to store 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFVec2d/f\> | ArrayLike\<SFVec2d/f\>, mapFn?: (element: SFVec2d/f, index: number) => SFVec2d/f, thisArg?: any): MFVec2d/f
+#### **from** (items: Iterable\<SFVec2d/f\> | ArrayLike\<SFVec2d/f\>): MFVec2d/f
+
+Returns a new `MFVec2d/f` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFVec2d/f, thisArg?: any): MFVec2d/f
 
 Returns a new `MFVec2d/f` field initialized with the values from the specified iterable.
 
@@ -2171,7 +2223,11 @@ The MFVec3d/f object corresponds to an X3D MFVec3d/f field. It is used to store 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFVec3d/f\> | ArrayLike\<SFVec3d/f\>, mapFn?: (element: SFVec3d/f, index: number) => SFVec3d/f, thisArg?: any): MFVec3d/f
+#### **from** (items: Iterable\<SFVec3d/f\> | ArrayLike\<SFVec3d/f\>): MFVec3d/f
+
+Returns a new `MFVec3d/f` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFVec3d/f, thisArg?: any): MFVec3d/f
 
 Returns a new `MFVec3d/f` field initialized with the values from the specified iterable.
 
@@ -2199,7 +2255,11 @@ The MFVec4d/f object corresponds to an X3D MFVec4d/f field. It is used to store 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFVec4d/f\> | ArrayLike\<SFVec4d/f\>, mapFn?: (element: SFVec4d/f, index: number) => SFVec4d/f, thisArg?: any): MFVec4d/f
+#### **from** (items: Iterable\<SFVec4d/f\> | ArrayLike\<SFVec4d/f\>): MFVec4d/f
+
+Returns a new `MFVec4d/f` field initialized with the values from the specified iterable.
+
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFVec4d/f, thisArg?: any): MFVec4d/f
 
 Returns a new `MFVec4d/f` field initialized with the values from the specified iterable.
 
