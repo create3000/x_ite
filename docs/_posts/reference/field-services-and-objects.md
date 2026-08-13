@@ -1769,7 +1769,7 @@ The MFBool object corresponds to an X3D MFBool field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<boolean\>): MFBool
+#### **from** (items: Iterable\<boolean\>): MFBool
 
 Returns a new `MFBool` field initialized with the values from the specified iterable.
 
@@ -1797,7 +1797,7 @@ The MFColor/MFColorRGBA object corresponds to an X3D MFColor/MFColorRGBA field. 
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<SFColor/SFColorRGBA\>): MFColor/MFColorRGBA
+#### **from** (items: Iterable\<SFColor/SFColorRGBA\>): MFColor/MFColorRGBA
 
 Returns a new `MFColor/MFColorRGBA` field initialized with the values from the specified iterable.
 
@@ -1827,7 +1827,7 @@ The MFDouble/MFFloat object corresponds to an X3D MFDouble/MFFloat field. It is 
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<number\>): MFDouble/MFFloat
+#### **from** (items: Iterable\<number\>): MFDouble/MFFloat
 
 Returns a new `MFDouble/MFFloat` field initialized with the values from the specified iterable.
 
@@ -1855,7 +1855,7 @@ The MFImage object corresponds to an X3D MFImage field. It is used to store a on
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<SFImage\>): MFImage
+#### **from** (items: Iterable\<SFImage\>): MFImage
 
 Returns a new `MFImage` field initialized with the values from the specified iterable.
 
@@ -1883,7 +1883,7 @@ The MFInt32 object corresponds to an X3D MFInt32 field. It is used to store a on
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<number\>): MFInt32
+#### **from** (items: Iterable\<number\>): MFInt32
 
 Returns a new `MFInt32` field initialized with the values from the specified iterable.
 
@@ -1911,7 +1911,7 @@ The MFMatrix3d/f object corresponds to an X3D MFMatrix3d/f field. It is used to 
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<SFMatrix3d/f\>): MFMatrix3d/f
+#### **from** (items: Iterable\<SFMatrix3d/f\>): MFMatrix3d/f
 
 Returns a new `MFMatrix3d/f` field initialized with the values from the specified iterable.
 
@@ -1939,7 +1939,7 @@ The MFMatrix4d/f object corresponds to an X3D MFMatrix4d/f field. It is used to 
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<SFMatrix4d/f\>): MFMatrix4d/f
+#### **from** (items: Iterable\<SFMatrix4d/f\>): MFMatrix4d/f
 
 Returns a new `MFMatrix4d/f` field initialized with the values from the specified iterable.
 
@@ -1967,7 +1967,7 @@ The MFNode object corresponds to an X3D MFNode field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<SFNode\>): MFNode
+#### **from** (items: Iterable\<SFNode\>): MFNode
 
 Returns a new `MFNode` field initialized with the values from the specified iterable.
 
@@ -2031,7 +2031,7 @@ The MFQuaternion object corresponds to an X3D MFQuaternion field. It is used to 
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<SFQuaternion\>): MFQuaternion
+#### **from** (items: Iterable\<SFQuaternion\>): MFQuaternion
 
 Returns a new `MFQuaternion` field initialized with the values from the specified iterable.
 
@@ -2059,7 +2059,7 @@ The MFRotation object corresponds to an X3D MFRotation field. It is used to stor
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<SFRotation\>): MFRotation
+#### **from** (items: Iterable\<SFRotation\>): MFRotation
 
 Returns a new `MFRotation` field initialized with the values from the specified iterable.
 
@@ -2087,7 +2087,7 @@ The MFString object corresponds to an X3D MFString field. It is used to store a 
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<string\>): MFString
+#### **from** (items: Iterable\<string\>): MFString
 
 Returns a new `MFString` field initialized with the values from the specified iterable.
 
@@ -2115,7 +2115,7 @@ The MFTime object corresponds to an X3D MFTime field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<number\>): MFTime
+#### **from** (items: Iterable\<number\>): MFTime
 
 Returns a new `MFTime` field initialized with the values from the specified iterable.
 
@@ -2143,7 +2143,7 @@ The MFVec2d/f object corresponds to an X3D MFVec2d/f field. It is used to store 
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<SFVec2d/f\>): MFVec2d/f
+#### **from** (items: Iterable\<SFVec2d/f\>): MFVec2d/f
 
 Returns a new `MFVec2d/f` field initialized with the values from the specified iterable.
 
@@ -2171,7 +2171,7 @@ The MFVec3d/f object corresponds to an X3D MFVec3d/f field. It is used to store 
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<SFVec3d/f\>): MFVec3d/f
+#### **from** (items: Iterable\<SFVec3d/f\>): MFVec3d/f
 
 Returns a new `MFVec3d/f` field initialized with the values from the specified iterable.
 
@@ -2199,7 +2199,7 @@ The MFVec4d/f object corresponds to an X3D MFVec4d/f field. It is used to store 
 
 ### Static Methods
 
-#### **from** (iterable: Iterable\<SFVec4d/f\>): MFVec4d/f
+#### **from** (items: Iterable\<SFVec4d/f\>): MFVec4d/f
 
 Returns a new `MFVec4d/f` field initialized with the values from the specified iterable.
 
