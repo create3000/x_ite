@@ -7,5 +7,7 @@ const r = scene .rootNodes;
 const n = scene .createNode ("BlendMode");
 const a = [... n .getFieldDefinitions ()]
 const t = X3D .X3DConstants .AcousticProperties;
-const m = X3D .MFBool .from ([0,1,0]);
+const m = new X3D .MFBool (0,1,0);
 m .push (123)
+const f = Float16Array .from ([true, false]);
+f [0] = true;
