@@ -87,11 +87,11 @@ Object .defineProperties (X3DArrayField,
          {
             from:
             {
-               value (items, mapFn, thisArg)
+               value (... args)
                {
                   const array = new constructor ();
 
-                  for (const v of mapFn ? Array .from (items, mapFn, thisArg) : items)
+                  for (const v of Array .from (... args))
                      array .push (v);
 
                   return array;
