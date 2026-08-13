@@ -87,15 +87,11 @@ Object .defineProperties (X3DArrayField,
          {
             from:
             {
-               value (items, mapFn, thisArg)
+               value (... args)
                {
                   const array = new constructor ();
 
-                  const iterable = !mapFn && (Array .isArray (items) || isIterable (items))
-                     ? items
-                     : Array .from (items, mapFn, thisArg);
-
-                  for (const v of iterable)
+                  for (const v of Array .from (... args))
                      array .push (v);
 
                   return array;
@@ -105,10 +101,5 @@ Object .defineProperties (X3DArrayField,
       },
    },
 });
-
-function isIterable (value)
-{
-  return typeof value ?.[Symbol .iterator] === "function";
-}
 
 export default X3DArrayField;
