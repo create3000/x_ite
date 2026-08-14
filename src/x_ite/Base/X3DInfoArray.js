@@ -221,41 +221,41 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
       this .addEvent ();
    },
-   at: Array .prototype .at,
-   // concat: Array .prototype .concat,
-   // copyWithin: Array.prototype.copyWithin,
-   entries: Array .prototype .entries,
-   every: Array .prototype .every,
-   // fill: Array .prototype .fill,
+   // Add all non destructive functions:
+   ... Object .fromEntries ([
+      "at",
+      "entries",
+      "every",
+      "find",
+      "findIndex",
+      "findLast",
+      "findLastIndex",
+      "flat",
+      "flatMap",
+      "forEach",
+      "includes",
+      "indexOf",
+      "join",
+      "keys",
+      "lastIndexOf",
+      "reduce",
+      "reduceRight",
+      "some",
+      "values",
+   ]
+   .map (name => [name, Array .prototype [name]])),
    filter (callbackFn, thisArg)
    {
       return new (this .constructor) (Array .prototype .filter .call (this, callbackFn, thisArg));
    },
-   find: Array .prototype .find,
-   findIndex: Array .prototype .findIndex,
-   findLast: Array .prototype .findLast,
-   findLastIndex: Array .prototype .findLastIndex,
-   flat: Array .prototype .flat,
-   flatMap: Array .prototype .flatMap,
-   forEach: Array .prototype .forEach,
-   includes: Array .prototype .includes,
-   indexOf: Array .prototype .indexOf,
-   join: Array .prototype .join,
-   keys: Array .prototype .keys,
-   lastIndexOf: Array .prototype .lastIndexOf,
    map (callbackFn, thisArg)
    {
       return new (this .constructor) (Array .prototype .map .call (this, callbackFn, thisArg));
    },
-   reduce: Array .prototype .reduce,
-   reduceRight: Array .prototype .reduceRight,
-   // reverse: Array .prototype .reverse,
    slice (start, end)
    {
       return new (this .constructor) (Array .prototype .slice .call (this, start, end));
    },
-   some: Array .prototype .some,
-   // sort: Array .prototype .sort,
    toReversed ()
    {
       return new (this .constructor) ([... this] .reverse ());
@@ -272,7 +272,6 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
       return new (this .constructor) (array);
    },
-   values: Array .prototype .values,
    with (index, value)
    {
       const array = [... this];
