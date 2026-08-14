@@ -42,12 +42,12 @@ function main ()
 
    // Light and Dark Images
 
-   for (const [theme, x3d, magick] of [["light", "1000 1000 1000 1", "white"], ["dark", "black", "black"]])
+   for (const [theme, x3d] of [["light", "white"], ["dark", "black"]])
    {
       for (const [i, file] of files .entries ())
       {
          systemSync (`npx --yes x3d-image -s 3200x1800 -c LINEAR -m KHR_PBR_NEUTRAL -w CANNON -b "${x3d}" -r "${rotation}" -a -i "${file}" -o image.png`);
-         systemSync (`magick image.png -trim -resize ${resize} -size ${size} "xc:${magick}" +swap -gravity center -composite -quality 50 ${theme}-image${i + 1}.avif`);
+         systemSync (`magick image.png -trim -resize ${resize} -size ${size} "xc:$(magick image.png -format '%[pixel:p{0,0}]' info:)" +swap -gravity center -composite -quality 50 ${theme}-image${i + 1}.avif`);
       }
    }
 
