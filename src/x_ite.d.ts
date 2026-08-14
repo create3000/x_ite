@@ -2991,21 +2991,21 @@ declare namespace X3D
       concat (... arrays: this []): this;
       entries (): IterableIterator <[number, T]>;
       every (predicate: ArrayTest <T>): boolean;
-      fill (val: T, start?: number, end?: number): this;
+      fill (value: T, start?: number, end?: number): this;
       filter (predicate: ArrayTest <T>): this;
       find (test: ArrayTest <T>): T | undefined;
       findIndex (test: ArrayTest <T>): number;
       findLast (test: ArrayTest <T>): T | undefined;
       findLastIndex (test: ArrayTest <T>): number;
       flat (): T [ ];
-      flatMap <U> (callbackFn: (element: any, i: number, array: this) => U | U [], thisArg?: any): U [ ];
+      flatMap <U> (callbackFn: (element: any, index: number, array: this) => U | U [], thisArg?: any): U [ ];
       forEach (action: ArrayAction <T>): void;
       includes (needle: T): boolean;
       indexOf (needle: T): number;
       join (separator?: string): string;
       keys (): number [];
       lastIndexOf (needle: T): number;
-      map <U> (callbackFn: (element: T, i: number, array: this) => U, thisArg?: any): this;
+      map <U> (callbackFn: (element: T, index: number, array: this) => U, thisArg?: any): this;
       pop (): T;
       push (... elements: T []): number;
       reduce <U> (callbackFn: ArrayReducer <T, U>, initial?: U): U;
@@ -3024,9 +3024,9 @@ declare namespace X3D
       with (index: number, value: T): this;
    }
 
-   type ArrayTest <T> = (element: T, i: number, array: X3DArrayField <T>) => boolean;
-   type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void;
-   type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U;
+   type ArrayTest <T> = (element: T, index: number, array: X3DArrayField <T>) => boolean;
+   type ArrayAction <T> = (element: T, index: number, array: X3DArrayField <T>) => void;
+   type ArrayReducer <T, U> = (accum: U, current: T, index: number, array: X3DArrayField <T>) => U;
 
    /**
     * The MFBool object corresponds to an X3D MFBool field. It is used to store a one-dimensional array of SFBool objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfBoolObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `false`.
