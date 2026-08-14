@@ -1085,6 +1085,9 @@ declare namespace X3D
    {
       [Symbol .iterator](): IterableIterator <T>;
       readonly [index: number]: T;
+      /**
+       * An integer containing the number of elements in the array.
+       */
       readonly length: number;
 
       at (index: number): T;
