@@ -1102,7 +1102,7 @@ declare namespace X3D
       join (separator?: string): string;
       keys (): number [];
       lastIndexOf (needle: T): number;
-      map <U> (f: (element: T, i: number, array: this) => U): this;
+      map <U> (f: (element: T, index: number, array: this) => U): this;
       reduce <U> (f: ArrayReducer <T, U>, initial?: U): U;
       reduceRight <U> (f: ArrayReducer <T, U>, initial?: U): U;
       slice (start?: number, end?: number): this;
@@ -2998,7 +2998,7 @@ declare namespace X3D
       findLast (test: ArrayTest <T>): T | undefined;
       findLastIndex (test: ArrayTest <T>): number;
       flat (): T [ ];
-      flatMap <U> (callbackFn: (element: any, index: number, array: this) => U | U [], thisArg?: any): U [ ];
+      flatMap <U> (callbackFn: (element: any, index: number, array: this) => U | U [], thisArg?: any): U [];
       forEach (action: ArrayAction <T>): void;
       includes (needle: T): boolean;
       indexOf (needle: T): number;
