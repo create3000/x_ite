@@ -101,6 +101,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
    {
       yield* this [_array];
    },
+   // Public functions:
    copy ()
    {
       const copy = new (this .constructor) ();
@@ -109,6 +110,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
       return copy;
    },
+   // Private functions:
    clear ()
    {
       this [_array] .length = 0;
@@ -126,6 +128,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
       this .addEvent ();
    },
+   // Public functions:
    equals (array)
    {
       const
@@ -147,6 +150,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
       return true;
    },
+   // Private functions:
    has (key)
    {
       return this [_index] .has (key);
@@ -221,6 +225,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
       this .addEvent ();
    },
+   // Public functions:
    // Add all non destructive functions:
    ... Object .fromEntries ([
       "at",
@@ -280,6 +285,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
       return new (this .constructor) (array);
    },
+   // Private functions:
    toVRMLStream (generator)
    {
       const proto = this .getTypeName () .includes ("Proto");
