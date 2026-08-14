@@ -1098,7 +1098,7 @@ declare namespace X3D
       findIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
       findLast (callbackFn: ArrayTest <T>, thisArg?: any): T | undefined;
       findLastIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
-      flat (): T [ ];
+      flat (): T [];
       flatMap <U> (callbackFn: (element: any, index: number, array: this) => U | U [], thisArg?: any): U [];
       forEach (callbackFn: ArrayAction <T>, thisArg?: any): void;
       includes (searchElement: T, fromIndex?: number): boolean;
@@ -3001,7 +3001,7 @@ declare namespace X3D
       findIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
       findLast (callbackFn: ArrayTest <T>, thisArg?: any): T | undefined;
       findLastIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
-      flat (): T [ ];
+      flat (): T [];
       flatMap <U> (callbackFn: (element: any, index: number, array: this) => U | U [], thisArg?: any): U [];
       forEach (callbackFn: ArrayAction <T>, thisArg?: any): void;
       includes (searchElement: T, fromIndex?: number): boolean;
