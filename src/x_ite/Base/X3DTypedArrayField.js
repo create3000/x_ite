@@ -130,8 +130,6 @@ const properties = {
       {
          const target = this [_target];
 
-         console .log (target .getSingleValue ())
-
          target .resize (value, target .getSingleValue ());
       },
    },
