@@ -54,22 +54,6 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    {
       return Math .min (this .textureNodes .length, this .maxTextures);
    },
-   getMode (index)
-   {
-      return this .modes [index] ?? ModeType .MODULATE;
-   },
-   getAlphaMode (index)
-   {
-      return this .alphaModes [index] ?? ModeType .MODULATE;
-   },
-   getSource (index)
-   {
-      return this .sources [index] ?? SourceType .DEFAULT;
-   },
-   getFunction (index)
-   {
-      return this .functions [index] ?? FunctionType .DEFAULT;
-   },
    set_color__ ()
    {
       this .color .set (this ._color .getValue ());
@@ -176,7 +160,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
       const
          maxTextures  = this .maxTextures,
          textureNodes = this .textureNodes,
-         channels     = Math .min (maxTextures, textureNodes .length);
+         channels     = Math .min (textureNodes .length, maxTextures);
 
       for (let i = 0; i < channels; ++ i)
          textureNodes [i] .updateTextureBits (textureBits, i);
@@ -192,7 +176,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    {
       const
          textureNodes = this .textureNodes,
-         channels     = Math .min (this .maxTextures, textureNodes .length);
+         channels     = Math .min (textureNodes .length, this .maxTextures);
 
       for (let i = 0; i < channels; ++ i)
          textureNodes [i] .getShaderOptions (options, i);
@@ -201,7 +185,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    {
       const
          textureNodes = this .textureNodes,
-         channels     = Math .min (this .maxTextures, textureNodes .length);
+         channels     = Math .min (textureNodes .length, this .maxTextures);
 
       gl .uniform4fv (shaderObject .x3d_MultiTextureColor, this .color);
 
@@ -211,10 +195,10 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
 
          textureNodes [i] .setShaderUniforms (gl, shaderObject .x3d_Texture [i]);
 
-         gl .uniform1i  (uniforms .mode,      this .getMode (i));
-         gl .uniform1i  (uniforms .alphaMode, this .getAlphaMode (i));
-         gl .uniform1i  (uniforms .source,    this .getSource (i));
-         gl .uniform1i  (uniforms .function,  this .getFunction (i));
+         gl .uniform1i  (uniforms .mode,      this .modes [i] ?? ModeType .MODULATE);
+         gl .uniform1i  (uniforms .alphaMode, this .alphaModes [i] ?? ModeType .MODULATE);
+         gl .uniform1i  (uniforms .source,    this .sources [i] ?? SourceType .DEFAULT);
+         gl .uniform1i  (uniforms .function,  this .functions [i] ?? FunctionType .DEFAULT);
       }
    },
 });

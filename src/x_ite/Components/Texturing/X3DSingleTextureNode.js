@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       return false;
    },
-   getRenderedTextures (renderedTextures)
+   getRenderedTextures (/* renderedTextures */)
    { },
    loadImage (fileURL)
    {
