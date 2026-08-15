@@ -337,11 +337,11 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    {
       this .fromVRMLString (value, scene);
    },
-   fromVRMLString (value, scene)
+   fromVRMLString (/* value, scene */)
    {
       // Function will be overridden in VRMLParser.
    },
-   fromXMLString (value, scene)
+   fromXMLString (/* value, scene */)
    {
       // Function will be overridden in XMLParser.
    },
