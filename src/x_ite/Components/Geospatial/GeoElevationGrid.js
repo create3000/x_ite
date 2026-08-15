@@ -42,13 +42,6 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
       this .set_tangent__ ();
       this .set_normal__ ();
    },
-   getHeight (index)
-   {
-      if (index < this ._height .length)
-         return this ._height [index] * this ._yScale .getValue ();
-
-      return 0;
-   },
    createTexCoords ()
    {
       const
@@ -162,7 +155,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
             {
                const point = new Vector3 (zSpacing * z, // latitude, northing
                                           xSpacing * x, // longitude, easting
-                                          this .getHeight (x + z * xDimension));
+                                          (this ._height [x + z * xDimension] ?? 0) * this ._yScale .getValue ());
 
                point .add (this ._geoGridOrigin .getValue ());
 

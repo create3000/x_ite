@@ -44,13 +44,6 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
       this .set_tangent__ ();
       this .set_normal__ ();
    },
-   getHeight (index)
-   {
-      if (index < this ._height .length)
-         return this ._height [index];
-
-      return 0;
-   },
    createTexCoords ()
    {
       const
@@ -152,9 +145,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
       {
          for (let x = 0; x < xDimension; ++ x)
          {
-            points .push (new Vector3 (xSpacing * x,
-                                       this .getHeight (x + z * xDimension),
-                                       zSpacing * z));
+            points .push (new Vector3 (xSpacing * x, this ._height [x + z * xDimension] ?? 0, zSpacing * z));
          }
       }
 
