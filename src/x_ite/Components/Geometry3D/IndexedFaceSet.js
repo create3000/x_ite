@@ -29,26 +29,6 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
       this ._set_normalIndex   .addFieldInterest (this ._normalIndex);
       this ._set_coordIndex    .addFieldInterest (this ._coordIndex);
    },
-   getTexCoordPerVertexIndex (index)
-   {
-      return this ._texCoordIndex [index] ?? this ._coordIndex [index];
-   },
-   getColorPerVertexIndex (index)
-   {
-      return this ._colorIndex [index] ?? this ._coordIndex [index];
-   },
-   getColorPerFaceIndex (index)
-   {
-      return this ._colorIndex [index] ?? index;
-   },
-   getNormalPerVertexIndex (index)
-   {
-      return this ._normalIndex [index] ?? this ._coordIndex [index];
-   },
-   getNormalPerFaceIndex (index)
-   {
-      return this ._normalIndex [index] ?? index;
-   },
    build ()
    {
       // Triangulate
@@ -65,6 +45,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
       const
          colorPerVertex     = this ._colorPerVertex .getValue (),
          normalPerVertex    = this ._normalPerVertex .getValue (),
+         colorIndex         = this ._colorIndex,
+         texCoordIndex      = this ._texCoordIndex,
+         normalIndex        = this ._normalIndex,
          coordIndex         = this ._coordIndex .getValue (),
          coordIndicesArray  = this .getCoordIndices (),
          attribNodes        = this .getAttrib (),
@@ -98,12 +81,12 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
 
             fogCoordNode ?.addDepth (index, fogDepthArray);
 
-            colorNode ?.addColor (colorPerVertex ? this .getColorPerVertexIndex (i) : this .getColorPerFaceIndex (face), colorArray);
+            colorNode ?.addColor (colorPerVertex ? (colorIndex [i] ?? index) : (colorIndex [face] ?? face), colorArray);
 
-            texCoordNode ?.addPoint (this .getTexCoordPerVertexIndex (i), multiTexCoordArray);
+            texCoordNode ?.addPoint (texCoordIndex [i] ?? index, multiTexCoordArray);
 
-            tangentNode ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalPerFaceIndex (face), tangentArray);
-            normalNode  ?.addVector (normalPerVertex ? this .getNormalPerVertexIndex (i) : this .getNormalPerFaceIndex (face), normalArray);
+            tangentNode ?.addVector (normalPerVertex ? (normalIndex [i] ?? index) : (normalIndex [face] ?? face), tangentArray);
+            normalNode  ?.addVector (normalPerVertex ? (normalIndex [i] ?? index) : (normalIndex [face] ?? face), normalArray);
 
             coordNode .addPoint (index, vertexArray);
          }
