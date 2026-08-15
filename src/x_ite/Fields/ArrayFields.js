@@ -15,7 +15,6 @@ import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
 import X3DTypedArrayField  from "../Base/X3DTypedArrayField.js";
 import Matrix3             from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4             from "../../standard/Math/Numbers/Matrix4.js";
-import Quaternion          from "../../standard/Math/Numbers/Quaternion.js";
 import Rotation4           from "../../standard/Math/Numbers/Rotation4.js";
 import Vector4             from "../../standard/Math/Numbers/Vector4.js";
 
