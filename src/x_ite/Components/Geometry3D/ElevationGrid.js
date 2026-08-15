@@ -211,7 +211,6 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
                attribNodes [a] .addValue (index, attribArrays [a]);
 
             fogCoordNode ?.addDepth (index, fogDepthArray);
-
             colorNode ?.addColor (colorPerVertex ? index : face, colorArray);
 
             if (texCoordNode)
