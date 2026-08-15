@@ -202,8 +202,8 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          for (let p = 0; p < 6; ++ p, ++ c)
          {
             const
-               index      = coordIndex [c],
-               { x, y, z} = points [index];
+               index       = coordIndex [c],
+               { x, y, z } = points [index];
 
             coordIndicesArray .push (index);
 
