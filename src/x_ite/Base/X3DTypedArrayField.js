@@ -130,6 +130,8 @@ const properties = {
       {
          const target = this [_target];
 
+         console .log (target .getSingleValue ())
+
          target .resize (value, target .getSingleValue ());
       },
    },
@@ -243,9 +245,8 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
    set (otherArray /* value of field */, l /* length of field */)
    {
       const
-         target      = this [_target],
-         components  = target .getComponents (),
-         length      = target [_length];
+         target     = this [_target],
+         components = target .getComponents ();
 
       let
          array       = target .getValue (),
@@ -267,16 +268,10 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          array = target [_grow] (otherArray .length);
 
          array .set (otherArray);
-
-         if (rest)
-            array .fill (0, otherLength * components, otherLength * components + rest);
       }
       else
       {
          array .set (otherArray);
-
-         if (otherLength < length)
-            array .fill (0, otherLength * components, length * components);
       }
 
       target [_length] = otherLength;
@@ -367,7 +362,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          }
 
          array .copyWithin (0, components, length * components);
-         array .fill (0, components * newLength, length * components);
 
          target [_length] = newLength;
 
@@ -439,8 +433,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
             value = new valueType (... tmp);
          }
-
-         array .fill (0, newLength * components, length * components);
 
          target [_length] = newLength;
 
@@ -532,7 +524,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
       last  *= components;
 
       array .copyWithin (first, last, length * components);
-      array .fill (0, newLength * components, length * components);
 
       target [_length] = newLength;
 
@@ -559,8 +550,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
       if (newLength < length)
       {
-         array .fill (0, newLength * components, length * components);
-
          if (components > 1)
             target [_cache] .length = newLength;
 
@@ -571,7 +560,9 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
       {
          array = target [_grow] (newLength * components);
 
-         if (value !== undefined)
+         if (value === undefined)
+            array .fill (0, length * components, newLength * components);
+         else
             this [_fill] (value, length, newLength);
 
          if (!silently)
