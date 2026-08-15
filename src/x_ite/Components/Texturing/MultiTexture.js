@@ -123,6 +123,8 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    {
       const sourceTypes = new Map (Object .entries (SourceType));
 
+      sourceTypes .delete ("DEFAULT");
+
       return function ()
       {
          this .sources .length = 0;
@@ -138,6 +140,8 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
          // Legacy
          ["ALPHAREPLICATE",  FunctionType .ALPHA_REPLICATE],
       ]);
+
+      functionsTypes .delete ("DEFAULT");
 
       return function ()
       {

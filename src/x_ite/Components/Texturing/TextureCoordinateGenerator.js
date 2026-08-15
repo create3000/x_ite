@@ -45,6 +45,8 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X
          ["SPHERE-REFLECT-LOCAL",        ModeType .SPHERE_REFLECT_LOCAL],
       ]);
 
+      modes .delete ("NONE");
+
       return function ()
       {
          this .mode = modes .get (this ._mode .getValue ())
