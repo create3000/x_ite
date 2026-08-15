@@ -593,7 +593,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          arrayType = target .getArrayType (),
          buffer    = array .buffer;
 
-      if (length <= buffer .length / arrayType .BYTES_PER_ELEMENT)
+      if (length <= buffer .byteLength / arrayType .BYTES_PER_ELEMENT)
       {
          const newArray = new arrayType (buffer);
 
