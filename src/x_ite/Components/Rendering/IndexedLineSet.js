@@ -35,14 +35,6 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
       this .set_normal__ ();
       this .set_coord__ ();
    },
-   getColorPerVertexIndex (index)
-   {
-      return this ._colorIndex [index] ?? this ._coordIndex [index];
-   },
-   getColorIndex (index)
-   {
-      return this ._colorIndex [index] ?? index;
-   },
    getPolylineIndices ()
    {
       const
@@ -85,7 +77,8 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
          return;
 
       const
-         coordIndex        = this ._coordIndex,
+         colorIndex        = this ._colorIndex .shrinkToFit (),
+         coordIndex        = this ._coordIndex .getValue (),
          polylines         = this .getPolylineIndices (),
          colorPerVertex    = this ._colorPerVertex .getValue (),
          coordIndicesArray = this .getCoordIndices (),
@@ -131,9 +124,7 @@ Object .assign (Object .setPrototypeOf (IndexedLineSet .prototype, X3DLineGeomet
                      attribNodes [a] .addValue (index, attribArrays [a]);
 
                   fogCoordNode ?.addDepth (index, fogDepthArray);
-
-                  colorNode ?.addColor (colorPerVertex ? this .getColorPerVertexIndex (i) : this .getColorIndex (face), colorArray);
-
+                  colorNode ?.addColor (colorPerVertex ? (colorIndex [i] ?? coordIndex [i]) : (colorIndex [face] ?? face), colorArray);
                   tangentNode ?.addVector (index, tangentArray);
                   normalNode  ?.addVector (index, normalArray);
 
