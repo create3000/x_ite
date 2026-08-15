@@ -135,10 +135,12 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
    {
       const
          points     = [ ],
+         yScale     = this ._yScale .getValue (),
          xDimension = this ._xDimension .getValue (),
          zDimension = this ._zDimension .getValue (),
          xSpacing   = this ._xSpacing .getValue (),
-         zSpacing   = this ._zSpacing .getValue ();
+         zSpacing   = this ._zSpacing .getValue (),
+         height     = this ._height;
 
       // When the geoSystem is "GD", xSpacing refers to the number of units of longitude in angle base units between
       // adjacent height values and zSpacing refers to the number of units of latitude in angle base units between
@@ -155,10 +157,9 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
             {
                const point = new Vector3 (zSpacing * z, // latitude, northing
                                           xSpacing * x, // longitude, easting
-                                          (this ._height [x + z * xDimension] ?? 0) * this ._yScale .getValue ());
+                                          (height [x + z * xDimension] ?? 0) * yScale);
 
                point .add (this ._geoGridOrigin .getValue ());
-
                points .push (this .getCoord (point, point));
             }
          }
@@ -171,10 +172,9 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
             {
                const point = new Vector3 (xSpacing * x, // longitude, easting
                                           zSpacing * z, // latitude, northing
-                                          this .getHeight (x + z * xDimension));
+                                          (height [x + z * xDimension] ?? 0) * yScale);
 
                point .add (this ._geoGridOrigin .getValue ());
-
                points .push (this .getCoord (point, point));
             }
          }

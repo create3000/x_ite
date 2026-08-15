@@ -139,13 +139,14 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          xDimension = this ._xDimension .getValue (),
          zDimension = this ._zDimension .getValue (),
          xSpacing   = this ._xSpacing .getValue (),
-         zSpacing   = this ._zSpacing .getValue ();
+         zSpacing   = this ._zSpacing .getValue (),
+         height     = this ._height;
 
       for (let z = 0; z < zDimension; ++ z)
       {
          for (let x = 0; x < xDimension; ++ x)
          {
-            points .push (new Vector3 (xSpacing * x, this ._height [x + z * xDimension] ?? 0, zSpacing * z));
+            points .push (new Vector3 (xSpacing * x, height [x + z * xDimension] ?? 0, zSpacing * z));
          }
       }
 
