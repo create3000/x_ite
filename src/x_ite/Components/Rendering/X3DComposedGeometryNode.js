@@ -113,11 +113,8 @@ Object .assign (Object .setPrototypeOf (X3DComposedGeometryNode .prototype, X3DG
             attribNodes [a] .addValue (index, attribArrays [a]);
 
          fogCoordNode ?.addDepth (index, fogDepthArray);
-
          colorNode ?.addColor (colorPerVertex ? index : face, colorArray);
-
          texCoordNode ?.addPoint (index, multiTexCoordArray);
-
          tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
          normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
 

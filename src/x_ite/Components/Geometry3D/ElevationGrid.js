@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (ElevationGrid .prototype, X3DGeometryNod
          zDimension = this ._zDimension .getValue (),
          xSpacing   = this ._xSpacing .getValue (),
          zSpacing   = this ._zSpacing .getValue (),
-         height     = this ._height;
+         height     = this ._height .shrinkToFit ();
 
       for (let z = 0; z < zDimension; ++ z)
       {

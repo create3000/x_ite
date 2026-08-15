@@ -590,14 +590,29 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          return array;
 
       const
-         maxLength = Algorithm .nextPowerOfTwo (length),
-         newArray  = new (target .getArrayType ()) (maxLength);
+         arrayType = target .getArrayType (),
+         buffer    = array .buffer;
 
-      newArray .set (array);
+      if (length <= buffer .length / arrayType .BYTES_PER_ELEMENT)
+      {
+         const newArray = new arrayType (buffer);
 
-      X3DArrayField .prototype .set .call (target, newArray);
+         X3DArrayField .prototype .set .call (target, newArray);
 
-      return newArray;
+         return newArray;
+      }
+      else
+      {
+         const
+            nextLength = Algorithm .nextPowerOfTwo (length),
+            newArray   = new arrayType (nextLength);
+
+         newArray .set (array);
+
+         X3DArrayField .prototype .set .call (target, newArray);
+
+         return newArray;
+      }
    },
    shrinkToFit ()
    {

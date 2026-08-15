@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
          zDimension = this ._zDimension .getValue (),
          xSpacing   = this ._xSpacing .getValue (),
          zSpacing   = this ._zSpacing .getValue (),
-         height     = this ._height;
+         height     = this ._height .shrinkToFit ();
 
       // When the geoSystem is "GD", xSpacing refers to the number of units of longitude in angle base units between
       // adjacent height values and zSpacing refers to the number of units of latitude in angle base units between

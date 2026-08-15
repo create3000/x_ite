@@ -45,9 +45,9 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
       const
          colorPerVertex     = this ._colorPerVertex .getValue (),
          normalPerVertex    = this ._normalPerVertex .getValue (),
-         colorIndex         = this ._colorIndex,
-         texCoordIndex      = this ._texCoordIndex,
-         normalIndex        = this ._normalIndex,
+         colorIndex         = this ._colorIndex .shrinkToFit (),
+         texCoordIndex      = this ._texCoordIndex .shrinkToFit (),
+         normalIndex        = this ._normalIndex .shrinkToFit (),
          coordIndex         = this ._coordIndex .getValue (),
          coordIndicesArray  = this .getCoordIndices (),
          attribNodes        = this .getAttrib (),
@@ -80,11 +80,8 @@ Object .assign (Object .setPrototypeOf (IndexedFaceSet .prototype, X3DComposedGe
                attribNodes [a] .addValue (index, attribArrays [a]);
 
             fogCoordNode ?.addDepth (index, fogDepthArray);
-
             colorNode ?.addColor (colorPerVertex ? (colorIndex [i] ?? index) : (colorIndex [face] ?? face), colorArray);
-
             texCoordNode ?.addPoint (texCoordIndex [i] ?? index, multiTexCoordArray);
-
             tangentNode ?.addVector (normalPerVertex ? (normalIndex [i] ?? index) : (normalIndex [face] ?? face), tangentArray);
             normalNode  ?.addVector (normalPerVertex ? (normalIndex [i] ?? index) : (normalIndex [face] ?? face), normalArray);
 
