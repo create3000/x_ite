@@ -52,7 +52,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    },
    getCount ()
    {
-      return Math .min (this .maxTextures, this .textureNodes .length);
+      return Math .min (this .textureNodes .length, this .maxTextures);
    },
    getMode (index)
    {
