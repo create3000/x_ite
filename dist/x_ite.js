@@ -1,4 +1,4 @@
-/* X_ITE v16.1.1 */
+/* X_ITE v16.1.2 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 398
+/***/ 603
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 716
+/***/ 777
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 104
+/***/ 457
 (module) {
 
 /**
@@ -18858,7 +18858,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.1.1";
+const BROWSER_VERSION_default_ = "16.1.2";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -24019,7 +24019,7 @@ const X3DImportedNodeProxy_handler =
    has (target, key)
    {
       return Reflect .has (target, key)
-         ?? Reflect .has (target .getSharedNode () ?? { }, key);
+         || Reflect .has (target .getSharedNode () ?? { }, key);
    },
    ownKeys (target)
    {
@@ -31187,7 +31187,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(104);
+/* provided dependency */ var libtess = __webpack_require__(457);
 
 
 const Triangle3 =
@@ -47887,7 +47887,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(104);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(457);
 
 
 
@@ -54586,7 +54586,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-1vPaIJudUTTOjvL50zMvQFe8URzodukj76PiypMzilSkookl3hppd2N0o3V8sSJL";
+         link .integrity   = "sha384-FEmsQpL8R1dkzlxB19h2qi5U9Cuh8Zk2953YCudH0PTQSwiWiUovdIWVDBu3/YAc";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -91269,8 +91269,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(398);
-/* provided dependency */ var APNG = __webpack_require__(716);
+/* provided dependency */ var SuperGif = __webpack_require__(603);
+/* provided dependency */ var APNG = __webpack_require__(777);
 
 
 
@@ -93908,7 +93908,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(104);
+/* provided dependency */ var libtess_libtess = __webpack_require__(457);
 const libtess_default_ = libtess_libtess;
 ;
 
