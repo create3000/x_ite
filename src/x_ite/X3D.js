@@ -32,7 +32,6 @@ import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
 import X3DCanvasElement            from "./X3DCanvasElement.js";
 
-import "./SUPPORTED_VERSIONS.js";
 import "./Features.js";
 import "./X3DCanvasElement.js";
 import "../standard/Math/Algorithms/QuickSort.js";
