@@ -35,9 +35,12 @@ Object .assign (Object .setPrototypeOf (TextureBackground .prototype, X3DBackgro
       this .set_texture__ (4, this ._topTexture);
       this .set_texture__ (5, this ._bottomTexture);
    },
-   set_texture__ (index, textureNode)
+   set_texture__ (index, node)
    {
-      X3DBackgroundNode .prototype .set_texture__ .call (this, index, X3DCast (X3DConstants .X3DTextureNode, textureNode));
+      const textureNode = X3DCast (X3DConstants .X3DTexture2DNode, node)
+         ?? X3DCast (X3DConstants .MultiTexture, node);
+
+      X3DBackgroundNode .prototype .set_texture__ .call (this, index, textureNode);
    },
    traverse (type, renderObject)
    {
