@@ -56,7 +56,7 @@ const handler =
    has (target, key)
    {
       return Reflect .has (target, key)
-         ?? Reflect .has (target .getSharedNode () ?? { }, key);
+         || Reflect .has (target .getSharedNode () ?? { }, key);
    },
    ownKeys (target)
    {
