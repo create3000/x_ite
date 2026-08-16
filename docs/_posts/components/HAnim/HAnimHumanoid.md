@@ -113,16 +113,16 @@ Contains metadata keyword=value pairs, where approved keyword terms are humanoid
 ### SFString [in, out] **version** "2.1"
 {: #fields-version }
 
-**HAnimHumanoid** *version*, where allowed value is 2.0 for final ISO 19774 *version* 2019, or 2.1 for developmental *version* 202x.
+**HAnimHumanoid** *version* is required, where allowed value is 2.0 for final ISO 19774 *version* 2019, or 2.1 for developmental *version* 202x.
 
 #### Hint
 
-- Default **HAnimHumanoid** *version* is 2.0 for X3D *version* 3, and **HAnimHumanoid** required *version* is 2.0 for X3D *version* 4.
+- Default **HAnimHumanoid** *version* is 1.0 for X3D *version* 3, and **HAnimHumanoid** required *version* is 2.0 (or draft 2.1) for X3D *version* 4.
 
 #### Warnings
 
 - No other values are allowed for strict validation.
-- Prior developmental versions of HAnim nodes, such as *version* 1 of standardized ISO 19774 *version* 2006, might not validate correctly due to small changes in the contained-node content model, so conversion of such models is recommended.
+- Prior developmental versions of HAnim nodes, such as *version* 1 of standardized ISO 19774 *version* 2006, might not validate correctly due to changes in the contained-node content model, so conversion of such models from HAnim 1 to HAnim 2 is recommended.
 
 ### SFString [in, out] **skeletalConfiguration** "BASIC"
 {: #fields-skeletalConfiguration }

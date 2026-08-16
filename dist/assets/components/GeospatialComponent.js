@@ -1,4 +1,4 @@
-/* X_ITE v16.1.0 */
+/* X_ITE v16.1.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1153,13 +1153,6 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
       this .set_tangent__ ();
       this .set_normal__ ();
    },
-   getHeight (index)
-   {
-      if (index < this ._height .length)
-         return this ._height [index] * this ._yScale .getValue ();
-
-      return 0;
-   },
    createTexCoords ()
    {
       const
@@ -1253,10 +1246,12 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
    {
       const
          points     = [ ],
+         yScale     = this ._yScale .getValue (),
          xDimension = this ._xDimension .getValue (),
          zDimension = this ._zDimension .getValue (),
          xSpacing   = this ._xSpacing .getValue (),
-         zSpacing   = this ._zSpacing .getValue ();
+         zSpacing   = this ._zSpacing .getValue (),
+         height     = this ._height .shrinkToFit ();
 
       // When the geoSystem is "GD", xSpacing refers to the number of units of longitude in angle base units between
       // adjacent height values and zSpacing refers to the number of units of latitude in angle base units between
@@ -1273,10 +1268,9 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
             {
                const point = new (external_X_ITE_X3D_Vector3_default()) (zSpacing * z, // latitude, northing
                                           xSpacing * x, // longitude, easting
-                                          this .getHeight (x + z * xDimension));
+                                          (height [x + z * xDimension] ?? 0) * yScale);
 
                point .add (this ._geoGridOrigin .getValue ());
-
                points .push (this .getCoord (point, point));
             }
          }
@@ -1289,10 +1283,9 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
             {
                const point = new (external_X_ITE_X3D_Vector3_default()) (xSpacing * x, // longitude, easting
                                           zSpacing * z, // latitude, northing
-                                          this .getHeight (x + z * xDimension));
+                                          (height [x + z * xDimension] ?? 0) * yScale);
 
                point .add (this ._geoGridOrigin .getValue ());
-
                points .push (this .getCoord (point, point));
             }
          }

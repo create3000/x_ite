@@ -1085,30 +1085,34 @@ declare namespace X3D
    {
       [Symbol .iterator](): IterableIterator <T>;
       readonly [index: number]: T;
+      /**
+       * An integer containing the number of elements in the array.
+       */
       readonly length: number;
 
       at (index: number): T;
       entries (): IterableIterator <[number, T]>;
-      every (predicate: ArrayTest <T>): boolean;
-      fill (val: T, start?: number, end?: number): this;
-      filter (predicate: ArrayTest <T>): this;
-      find (test: ArrayTest <T>): T | undefined;
-      findIndex (test: ArrayTest <T>): number;
-      findLast (test: ArrayTest <T>): T | undefined;
-      findLastIndex (test: ArrayTest <T>): number;
-      forEach (action: ArrayAction <T>): void;
-      includes (needle: T): boolean;
-      indexOf (needle: T): number;
+      every (callbackFn: ArrayTest <T>, thisArg?: any): boolean;
+      filter (callbackFn: ArrayTest <T>, thisArg?: any): this;
+      find (callbackFn: ArrayTest <T>, thisArg?: any): T | undefined;
+      findIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
+      findLast (callbackFn: ArrayTest <T>, thisArg?: any): T | undefined;
+      findLastIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
+      flat (): T [];
+      flatMap <U> (callbackFn: (element: any, index: number, array: this) => U | U [], thisArg?: any): U [];
+      forEach (callbackFn: ArrayAction <T>, thisArg?: any): void;
+      includes (searchElement: T, fromIndex?: number): boolean;
+      indexOf (searchElement: T, fromIndex?: number): number;
       join (separator?: string): string;
       keys (): number [];
-      lastIndexOf (needle: T): number;
-      map <U> (f: (element: T, i: number, array: this) => U): this;
-      reduce <U> (f: ArrayReducer <T, U>, initial?: U): U;
-      reduceRight <U> (f: ArrayReducer <T, U>, initial?: U): U;
+      lastIndexOf (searchElement: T, fromIndex?: number): number;
+      map <U> (callbackFn: (element: T, index: number, array: this) => U, thisArg?: any): this;
+      reduce <U> (callbackFn: ArrayReducer <T, U>, initialValue?: U): U;
+      reduceRight <U> (callbackFn: ArrayReducer <T, U>, initialValue?: U): U;
       slice (start?: number, end?: number): this;
-      some (predicate: ArrayTest <T>): boolean;
+      some (callbackFn: ArrayTest <T>, thisArg?: any): boolean;
       toReversed (): this;
-      toSorted (comparator?: (a: T, b: T) => number): this;
+      toSorted (compareFn?: (a: T, b: T) => number): this;
       toSpliced (start: number, deleteCount: number, ... items: T []): this;
       values (): IterableIterator <T>;
       with (index: number, value: T): this;
@@ -2207,10 +2211,6 @@ declare namespace X3D
        */
       getFieldDefinitions (): FieldDefinitionArray;
       /**
-       * @deprecated Returns the corresponding X3DField object associated with *name*. Use sfnode.{fieldName} syntax.
-       */
-      getField (name: string): X3DField;
-      /**
        * Returns the node name.
        */
       getNodeName (): string;
@@ -2988,42 +2988,45 @@ declare namespace X3D
       length: number;
 
       at (index: number): T;
+      concat (... arrays: this []): this;
       entries (): IterableIterator <[number, T]>;
-      every (predicate: ArrayTest <T>): boolean;
-      fill (val: T, start?: number, end?: number): this;
-      filter (predicate: ArrayTest <T>): this;
-      find (test: ArrayTest <T>): T | undefined;
-      findIndex (test: ArrayTest <T>): number;
-      findLast (test: ArrayTest <T>): T | undefined;
-      findLastIndex (test: ArrayTest <T>): number;
-      forEach (action: ArrayAction <T>): void;
-      includes (needle: T): boolean;
-      indexOf (needle: T): number;
+      every (callbackFn: ArrayTest <T>, thisArg?: any): boolean;
+      fill (value: T, start?: number, end?: number): this;
+      filter (callbackFn: ArrayTest <T>, thisArg?: any): this;
+      find (callbackFn: ArrayTest <T>, thisArg?: any): T | undefined;
+      findIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
+      findLast (callbackFn: ArrayTest <T>, thisArg?: any): T | undefined;
+      findLastIndex (callbackFn: ArrayTest <T>, thisArg?: any): number;
+      flat (): T [];
+      flatMap <U> (callbackFn: (element: any, index: number, array: this) => U | U [], thisArg?: any): U [];
+      forEach (callbackFn: ArrayAction <T>, thisArg?: any): void;
+      includes (searchElement: T, fromIndex?: number): boolean;
+      indexOf (searchElement: T, fromIndex?: number): number;
       join (separator?: string): string;
       keys (): number [];
-      lastIndexOf (needle: T): number;
-      map <U> (f: (element: T, i: number, array: this) => U): this;
+      lastIndexOf (searchElement: T, fromIndex?: number): number;
+      map <U> (callbackFn: (element: T, index: number, array: this) => U, thisArg?: any): this;
       pop (): T;
       push (... elements: T []): number;
-      reduce <U> (f: ArrayReducer <T, U>, initial?: U): U;
-      reduceRight <U> (f: ArrayReducer <T, U>, initial?: U): U;
+      reduce <U> (callbackFn: ArrayReducer <T, U>, initialValue?: U): U;
+      reduceRight <U> (callbackFn: ArrayReducer <T, U>, initialValue?: U): U;
       reverse (): this;
       shift (): T;
       slice (start?: number, end?: number): this;
-      some (predicate: ArrayTest <T>): boolean;
-      sort (comparator?: (a: T, b: T) => number): this;
+      some (callbackFn: ArrayTest <T>, thisArg?: any): boolean;
+      sort (compareFn?: (a: T, b: T) => number): this;
       splice (start: number, deleteCount: number, ... items: T []): this;
       toReversed (): this;
-      toSorted (comparator?: (a: T, b: T) => number): this;
+      toSorted (compareFn?: (a: T, b: T) => number): this;
       toSpliced (start: number, deleteCount: number, ... items: T []): this;
       unshift (... elements: T []): number;
       values (): IterableIterator <T>;
       with (index: number, value: T): this;
    }
 
-   type ArrayTest <T> = (element: T, i: number, array: X3DArrayField <T>) => boolean;
-   type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void;
-   type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U;
+   type ArrayTest <T> = (element: T, index: number, array: X3DArrayField <T>) => boolean;
+   type ArrayAction <T> = (element: T, index: number, array: X3DArrayField <T>) => void;
+   type ArrayReducer <T, U> = (accumulator: U, currentValue: T, currentIndex: number, array: X3DArrayField <T>) => U;
 
    /**
     * The MFBool object corresponds to an X3D MFBool field. It is used to store a one-dimensional array of SFBool objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfBoolObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `false`.
@@ -3032,6 +3035,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFBool";
+
+      /**
+       * Returns a new `MFBool` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<any> | ArrayLike<any>): MFBool;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => boolean, thisArg?: any): MFBool;
    }
 
    /**
@@ -3041,6 +3051,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFColor";
+
+      /**
+       * Returns a new `MFColor` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFColor> | ArrayLike<SFColor>): MFColor;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFColor, thisArg?: any): MFColor;
    }
 
    /**
@@ -3050,6 +3067,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFColorRGBA";
+
+      /**
+       * Returns a new `MFColorRGBA` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFColorRGBA> | ArrayLike<SFColorRGBA>): MFColorRGBA;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFColorRGBA, thisArg?: any): MFColorRGBA;
    }
 
    /**
@@ -3059,6 +3083,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFDouble";
+
+      /**
+       * Returns a new `MFDouble` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<any> | ArrayLike<any>): MFDouble;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFDouble;
    }
 
    /**
@@ -3068,6 +3099,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFFloat";
+
+      /**
+       * Returns a new `MFFloat` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<any> | ArrayLike<any>): MFFloat;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFFloat;
    }
 
    /**
@@ -3077,6 +3115,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFImage";
+
+      /**
+       * Returns a new `MFImage` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFImage> | ArrayLike<SFImage>): MFImage;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFImage, thisArg?: any): MFImage;
    }
 
    /**
@@ -3086,6 +3131,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFInt32";
+
+      /**
+       * Returns a new `MFInt32` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<any> | ArrayLike<any>): MFInt32;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFInt32;
    }
 
    /**
@@ -3095,6 +3147,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix3d";
+
+      /**
+       * Returns a new `MFMatrix3d` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFMatrix3d> | ArrayLike<SFMatrix3d>): MFMatrix3d;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFMatrix3d, thisArg?: any): MFMatrix3d;
    }
 
    /**
@@ -3104,6 +3163,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix3f";
+
+      /**
+       * Returns a new `MFMatrix3f` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFMatrix3f> | ArrayLike<SFMatrix3f>, mapFn: (element: SFMatrix3f, index: number) => SFMatrix3f, thisArg?: any): MFMatrix3f;
    }
 
    /**
@@ -3113,6 +3178,12 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix4d";
+
+      /**
+       * Returns a new `MFMatrix4d` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFMatrix4d> | ArrayLike<SFMatrix4d>, mapFn: (element: SFMatrix4d, index: number) => SFMatrix4d, thisArg?: any): MFMatrix4d;
    }
 
    /**
@@ -3122,6 +3193,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFMatrix4f";
+
+      /**
+       * Returns a new `MFMatrix4f` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFMatrix4f> | ArrayLike<SFMatrix4f>): MFMatrix4f;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFMatrix4f, thisArg?: any): MFMatrix4f;
    }
 
    /**
@@ -3131,6 +3209,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFNode";
+
+      /**
+       * Returns a new `MFNode` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFNode> | ArrayLike<SFNode>): MFNode;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFNode, thisArg?: any): MFNode;
    }
 
    /**
@@ -3140,6 +3225,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFQuaternion";
+
+      /**
+       * Returns a new `MFQuaternion` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFQuaternion> | ArrayLike<SFQuaternion>): MFQuaternion;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFQuaternion, thisArg?: any): MFQuaternion;
    }
 
    /**
@@ -3149,6 +3241,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFRotation";
+
+      /**
+       * Returns a new `MFRotation` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFRotation> | ArrayLike<SFRotation>): MFRotation;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFRotation, thisArg?: any): MFRotation;
    }
 
    /**
@@ -3158,6 +3257,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFString";
+
+      /**
+       * Returns a new `MFString` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<any> | ArrayLike<any>): MFString;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => string, thisArg?: any): MFString;
    }
 
    /**
@@ -3167,6 +3273,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFTime";
+
+      /**
+       * Returns a new `MFTime` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<any> | ArrayLike<any>): MFTime;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFTime;
    }
 
    /**
@@ -3176,6 +3289,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec2d";
+
+      /**
+       * Returns a new `MFVec2d` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec2d> | ArrayLike<SFVec2d>): MFVec2d;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec2d, thisArg?: any): MFVec2d;
    }
 
    /**
@@ -3185,6 +3305,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec2f";
+
+      /**
+       * Returns a new `MFVec2f` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec2f> | ArrayLike<SFVec2f>): MFVec2f;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec2f, thisArg?: any): MFVec2f;
    }
 
    /**
@@ -3194,6 +3321,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec3d";
+
+      /**
+       * Returns a new `MFVec3d` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec3d> | ArrayLike<SFVec3d>): MFVec3d;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec3d, thisArg?: any): MFVec3d;
    }
 
    /**
@@ -3203,6 +3337,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec3f";
+
+      /**
+       * Returns a new `MFVec3f` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec3f> | ArrayLike<SFVec3f>): MFVec3f;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec3f, thisArg?: any): MFVec3f;
    }
 
    /**
@@ -3212,6 +3353,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec4d";
+
+      /**
+       * Returns a new `MFVec4d` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec4d> | ArrayLike<SFVec4d>): MFVec4d;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec4d, thisArg?: any): MFVec4d;
    }
 
    /**
@@ -3221,6 +3369,13 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFVec4f";
+
+      /**
+       * Returns a new `MFVec4f` field initialized with the values from the specified iterable.
+       * @param items An iterable or array-like object to convert to an array.
+       */
+      static from (items: Iterable<SFVec4f> | ArrayLike<SFVec4f>): MFVec4f;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec4f, thisArg?: any): MFVec4f;
    }
 
    /**
