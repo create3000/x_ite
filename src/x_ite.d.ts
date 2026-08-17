@@ -3271,13 +3271,13 @@ declare namespace X3D
        * Returns a new `MFNode` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<SFNode> | ArrayLike<SFNode>): MFNode;
-      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFNode, thisArg?: any): MFNode;
+      static from (items: Iterable<SFNode | null> | ArrayLike<SFNode | null>): MFNode;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFNode | null, thisArg?: any): MFNode;
       /**
        * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
        * @param values A flat array of values.
        */
-      static fromArray (values: SFNode []): MFNode;
+      static fromArray (values: (SFNode | null) []): MFNode;
    }
 
    /**

@@ -1769,13 +1769,17 @@ The MFBool object corresponds to an X3D MFBool field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (items: Iterable\<any\> | ArrayLike\<any\>): MFBool
+#### **from** (items: Iterable\<boolean\> | ArrayLike\<boolean\>): MFBool
 
 Returns a new `MFBool` field initialized with the values from the specified iterable.
 
 #### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => boolean, thisArg?: any): MFBool
 
 Returns a new `MFBool` field initialized with the values from the specified iterable.
+
+#### **fromArray** (values: boolean []): MFBool
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
 
 ### Instance Creation Method(s)
 
@@ -1809,6 +1813,10 @@ Returns a new `MFColor/MFColorRGBA` field initialized with the values from the s
 
 Returns a new `MFColor/MFColorRGBA` field initialized with the values from the specified iterable.
 
+#### **fromArray** (values: number []): MFColor/MFColorRGBA
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+
 ### Instance Creation Method(s)
 
 #### *mfColorObjectName* = new **MFColor/MFColorRGBA** (*... values: SFColor/SFColorRGBA []*)
@@ -1835,13 +1843,17 @@ The MFDouble/MFFloat object corresponds to an X3D MFDouble/MFFloat field. It is 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<any\> | ArrayLike\<any\>): MFDouble/MFFloat
+#### **from** (items: Iterable\<number\> | ArrayLike\<number\>): MFDouble/MFFloat
 
 Returns a new `MFDouble/MFFloat` field initialized with the values from the specified iterable.
 
 #### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => number, thisArg?: any): MFDouble/MFFloat
 
 Returns a new `MFDouble/MFFloat` field initialized with the values from the specified iterable.
+
+#### **fromArray** (values: number []): MFDouble/MFFloat
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
 
 ### Instance Creation Method(s)
 
@@ -1875,6 +1887,10 @@ Returns a new `MFImage` field initialized with the values from the specified ite
 
 Returns a new `MFImage` field initialized with the values from the specified iterable.
 
+#### **fromArray** (values: SFImage []): MFImage
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+
 ### Instance Creation Method(s)
 
 #### *mfImageObjectName* = new **MFImage** (*... values: SFImage []*)
@@ -1899,13 +1915,17 @@ The MFInt32 object corresponds to an X3D MFInt32 field. It is used to store a on
 
 ### Static Methods
 
-#### **from** (items: Iterable\<any\> | ArrayLike\<any\>): MFInt32
+#### **from** (items: Iterable\<number\> | ArrayLike\<number\>): MFInt32
 
 Returns a new `MFInt32` field initialized with the values from the specified iterable.
 
 #### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => number, thisArg?: any): MFInt32
 
 Returns a new `MFInt32` field initialized with the values from the specified iterable.
+
+#### **fromArray** (values: number []): MFInt32
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
 
 ### Instance Creation Method(s)
 
@@ -1939,6 +1959,10 @@ Returns a new `MFMatrix3d/f` field initialized with the values from the specifie
 
 Returns a new `MFMatrix3d/f` field initialized with the values from the specified iterable.
 
+#### **fromArray** (values: number []): MFMatrix3d/f
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+
 ### Instance Creation Method(s)
 
 #### *mfMatrix3d/fObjectName* = new **MFMatrix3d/f** (*... values: SFMatrix3d/f []*)
@@ -1971,6 +1995,10 @@ Returns a new `MFMatrix4d/f` field initialized with the values from the specifie
 
 Returns a new `MFMatrix4d/f` field initialized with the values from the specified iterable.
 
+#### **fromArray** (values: number []): MFMatrix4d/f
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+
 ### Instance Creation Method(s)
 
 #### *mfMatrix4d/fObjectName* = new **MFMatrix4d/f** (*... values: SFMatrix4d/f []*)
@@ -1995,13 +2023,17 @@ The MFNode object corresponds to an X3D MFNode field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (items: Iterable\<SFNode\> | ArrayLike\<SFNode\>): MFNode
+#### **from** (items: Iterable\<SFNode | null\> | ArrayLike\<SFNode | null\>): MFNode
 
 Returns a new `MFNode` field initialized with the values from the specified iterable.
 
-#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFNode, thisArg?: any): MFNode
+#### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFNode | null, thisArg?: any): MFNode
 
 Returns a new `MFNode` field initialized with the values from the specified iterable.
+
+#### **fromArray** (values: (SFNode | null) []): MFNode
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
 
 ### Instance Creation Method(s)
 
@@ -2071,6 +2103,10 @@ Returns a new `MFQuaternion` field initialized with the values from the specifie
 
 Returns a new `MFQuaternion` field initialized with the values from the specified iterable.
 
+#### **fromArray** (values: number []): MFQuaternion
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+
 ### Instance Creation Method(s)
 
 #### *mfQuaternionObjectName* = new **MFQuaternion** (*... values: SFQuaternion []*)
@@ -2103,6 +2139,10 @@ Returns a new `MFRotation` field initialized with the values from the specified 
 
 Returns a new `MFRotation` field initialized with the values from the specified iterable.
 
+#### **fromArray** (values: number []): MFRotation
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+
 ### Instance Creation Method(s)
 
 #### *mfRotationObjectName* = new **MFRotation** (*... values: SFRotation []*)
@@ -2127,13 +2167,17 @@ The MFString object corresponds to an X3D MFString field. It is used to store a 
 
 ### Static Methods
 
-#### **from** (items: Iterable\<any\> | ArrayLike\<any\>): MFString
+#### **from** (items: Iterable\<string\> | ArrayLike\<string\>): MFString
 
 Returns a new `MFString` field initialized with the values from the specified iterable.
 
 #### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => string, thisArg?: any): MFString
 
 Returns a new `MFString` field initialized with the values from the specified iterable.
+
+#### **fromArray** (values: string []): MFString
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
 
 ### Instance Creation Method(s)
 
@@ -2159,13 +2203,17 @@ The MFTime object corresponds to an X3D MFTime field. It is used to store a one-
 
 ### Static Methods
 
-#### **from** (items: Iterable\<any\> | ArrayLike\<any\>): MFTime
+#### **from** (items: Iterable\<number\> | ArrayLike\<number\>): MFTime
 
 Returns a new `MFTime` field initialized with the values from the specified iterable.
 
 #### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => number, thisArg?: any): MFTime
 
 Returns a new `MFTime` field initialized with the values from the specified iterable.
+
+#### **fromArray** (values: number []): MFTime
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
 
 ### Instance Creation Method(s)
 
@@ -2199,6 +2247,10 @@ Returns a new `MFVec2d/f` field initialized with the values from the specified i
 
 Returns a new `MFVec2d/f` field initialized with the values from the specified iterable.
 
+#### **fromArray** (values: number []): MFVec2d/f
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+
 ### Instance Creation Method(s)
 
 #### *mfVec2d/fObjectName* = new **MFVec2d/f** (*... values: SFVec2d/f []*)
@@ -2231,6 +2283,10 @@ Returns a new `MFVec3d/f` field initialized with the values from the specified i
 
 Returns a new `MFVec3d/f` field initialized with the values from the specified iterable.
 
+#### **fromArray** (values: number []): MFVec3d/f
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+
 ### Instance Creation Method(s)
 
 #### *mfVec3d/fObjectName* = new **MFVec3d/f** (*... values: SFVec3d/f []*)
@@ -2262,6 +2318,10 @@ Returns a new `MFVec4d/f` field initialized with the values from the specified i
 #### **from** (items: Iterable\<any\> | ArrayLike\<any\>, mapFn: (element: any, index: number) => SFVec4d/f, thisArg?: any): MFVec4d/f
 
 Returns a new `MFVec4d/f` field initialized with the values from the specified iterable.
+
+#### **fromArray** (values: number []): MFVec4d/f
+
+Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
 
 ### Instance Creation Method(s)
 
