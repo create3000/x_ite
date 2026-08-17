@@ -19,6 +19,12 @@ function truncate (string, length = 120)
    return string .length > length ? `${string .substring (0, length)}…` : string;
 }
 
+// Not every thrown value is an Error, so don't summarize one as [object Object].
+function describe (error)
+{
+   return error ?.message ?? (typeof error === "object" ? $.try (() => JSON .stringify (error)) : null) ?? String (error);
+}
+
 function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
    X3DObject .call (this);
@@ -33,6 +39,7 @@ function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
    this .fileURL          = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
    this .candidateURL     = "";
+   this .resolvedURL      = null;
    this .attempts         = [ ];
 }
 
@@ -185,7 +192,12 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    async loadDocumentAsync (url)
    {
+      // Not every candidate reaches URL resolution, so resolvedURL stays null until it
+      // does. Diagnostics must not attribute the previous candidate's resolved URL to
+      // this one.
+
       this .candidateURL = url;
+      this .resolvedURL  = null;
 
       if (!url .length)
          return this .loadDocumentError (Error ("Empty URL."));
@@ -198,7 +210,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             return await this .callback (url .substring (result [0] .length));
       }
 
-      this .fileURL = new URL (url, this .getBaseURL ());
+      this .fileURL     = new URL (url, this .getBaseURL ());
+      this .resolvedURL = this .fileURL;
 
       // Handle data URLs that are not base64 decoded here:
       if (this .dataAsString)
@@ -358,15 +371,16 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (!error)
          return;
 
-      // An empty candidate never reached URL resolution, so this .fileURL still
-      // refers to the previous candidate and must not be reported as the subject.
+      // Candidates that are evaluated rather than fetched — an empty string, or a
+      // script URL — have no resolved URL, and are reported by their authored value.
 
       const
          typeName = this .node instanceof X3DWorld ? "" : ` for ${this .node .getTypeName ()}`,
-         empty    = !this .candidateURL .length,
-         dataURL  = this .fileURL .protocol === "data:",
-         resolved = empty || dataURL ? "" : `${$.try (() => decodeURI (this .fileURL)) ?? this .fileURL}`,
-         subject  = empty ? "empty URL" : dataURL ? "data URL" : `URL '${resolved}'`;
+         dataURL  = this .resolvedURL ?.protocol === "data:",
+         resolved = this .resolvedURL && !dataURL ? `${$.try (() => decodeURI (this .resolvedURL)) ?? this .resolvedURL}` : "",
+         subject  = !this .candidateURL .length ? "empty URL"
+            : dataURL ? "data URL"
+            : `URL '${resolved || truncate (this .candidateURL)}'`;
 
       this .attempts .push ({ url: this .candidateURL, resolved, error });
 
@@ -380,11 +394,15 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (this .attempts .length === 1)
          return console .error (`Couldn't load ${subject}${typeName}.`, error);
 
+      // Pass the errors themselves along with the summary, so their stacks and context
+      // stay inspectable.
+
       console .error (`Couldn't load any of the ${this .attempts .length} URLs${typeName}, tried in this order:\n`
          + this .attempts
             .map (({ url, resolved, error }, i) =>
-               `  ${i + 1}. '${truncate (url)}'${resolved && resolved !== url ? ` → ${truncate (resolved)}` : ""}: ${error ?.message ?? error}`)
-            .join ("\n"));
+               `  ${i + 1}. '${truncate (url)}'${resolved && resolved !== url ? ` → ${truncate (resolved)}` : ""}: ${describe (error)}`)
+            .join ("\n"),
+         ... this .attempts .map (({ error }) => error));
    },
 });
 
