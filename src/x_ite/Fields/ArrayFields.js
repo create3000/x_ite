@@ -378,4 +378,26 @@ const ArrayFields =
    MFVec4f:      TypedArrayTemplate ("MFVec4f",      SFVec4f,      SFVec4f,      Float32Array, 4,  Vector4 .W_AXIS),
 };
 
+Object .defineProperties (ArrayFields .MFImage,
+{
+   fromArray:
+   {
+      value (values)
+      {
+         return MFImage .fromXMLString (String (values));
+      },
+   },
+});
+
+Object .defineProperties (ArrayFields .MFImage .prototype,
+{
+   flat:
+   {
+      value ()
+      {
+         return Array .from (this, element => Array .from (element)) .flat ();
+      },
+   },
+});
+
 export default ArrayFields;

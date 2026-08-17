@@ -100,6 +100,7 @@ Object .defineProperties (X3DArrayField,
 
                   return array;
                },
+               configurable: true,
             },
             fromArray:
             {
@@ -111,6 +112,7 @@ Object .defineProperties (X3DArrayField,
 
                   return array;
                },
+               configurable: true,
             },
          });
       },
