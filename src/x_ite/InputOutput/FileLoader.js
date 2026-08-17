@@ -389,7 +389,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       // failed only once every candidate has been tried.
 
       if (this .url .length)
-         return console .warn (`Couldn't load ${subject}${typeName}, trying next of ${this .attempts .length + this .url .length} URLs.`, error);
+         return console .warn (`Couldn't load ${subject}${typeName}, trying URL ${this .attempts .length + 1} of ${this .attempts .length + this .url .length}.`, error);
 
       if (this .attempts .length === 1)
          return console .error (`Couldn't load ${subject}${typeName}.`, error);
