@@ -13,7 +13,10 @@ function Image (width, height, comp, array)
    this .width  = Math .max (width|0, 0);
    this .height = Math .max (height|0, 0);
    this .comp   = Algorithm .clamp (comp|0, 0, 4);
-   this .array  = array ? MFInt32 .fromArray (array) : new MFInt32 ();
+   this .array  = new MFInt32 ();
+
+   if (array)
+      this .array .setValue (array);
 
    this .array .length = this .width * this .height;
 }
