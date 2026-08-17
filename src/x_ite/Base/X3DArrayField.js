@@ -100,7 +100,7 @@ Object .defineProperties (X3DArrayField,
 
                   return array;
                },
-               configurable: true,
+               configurable: true, // TODO: use Object.setPrototypeOf(X3DArrayField, X3DField)
             },
             fromArray:
             {
@@ -112,7 +112,7 @@ Object .defineProperties (X3DArrayField,
 
                   return array;
                },
-               configurable: true,
+               configurable: true, // TODO: use Object.setPrototypeOf(X3DArrayField, X3DField)
             },
          });
       },
