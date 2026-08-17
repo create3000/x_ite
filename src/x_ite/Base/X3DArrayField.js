@@ -101,6 +101,17 @@ Object .defineProperties (X3DArrayField,
                   return array;
                },
             },
+            fromArray:
+            {
+               value (value)
+               {
+                  const array = new constructor ();
+
+                  array .setValue (value);
+
+                  return array;
+               },
+            },
          });
       },
    },
