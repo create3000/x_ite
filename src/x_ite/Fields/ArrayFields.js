@@ -318,7 +318,7 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
                comp   = value .shift (),
                array  = value .splice (0, width * height);
 
-            this .push (new SFImage (width, height, comp, ArrayFields .MFInt32 .from (array)));
+            this .push (new SFImage (width, height, comp, array));
          }
       }
       else
