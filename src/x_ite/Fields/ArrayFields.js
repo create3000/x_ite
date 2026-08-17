@@ -17,6 +17,7 @@ import Matrix3             from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4             from "../../standard/Math/Numbers/Matrix4.js";
 import Rotation4           from "../../standard/Math/Numbers/Rotation4.js";
 import Vector4             from "../../standard/Math/Numbers/Vector4.js";
+import $                   from "../../lib/helper.js";
 
 const
    { SFBool, SFDouble, SFFloat, SFInt32, SFString, SFTime } = SFScalar,
@@ -377,5 +378,26 @@ const ArrayFields =
    MFVec4d:      TypedArrayTemplate ("MFVec4d",      SFVec4d,      SFVec4d,      Float64Array, 4,  Vector4 .W_AXIS),
    MFVec4f:      TypedArrayTemplate ("MFVec4f",      SFVec4f,      SFVec4f,      Float32Array, 4,  Vector4 .W_AXIS),
 };
+
+Object .defineProperties (ArrayFields .MFImage .prototype,
+{
+   setValue:
+   {
+      value (value)
+      {
+         if (Array .isArray (value) && value .length)
+            $.try (() => this .fromXMLString (String (value)), true);
+         else
+            X3DObjectArrayField .prototype .setValue .call (this, value);
+      },
+   },
+   flat:
+   {
+      value ()
+      {
+         return Array .from (this, element => Array .from (element)) .flat ();
+      },
+   },
+});
 
 export default ArrayFields;
