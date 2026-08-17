@@ -103,11 +103,11 @@ Object .defineProperties (X3DArrayField,
             },
             fromArray:
             {
-               value (value)
+               value (values)
                {
                   const array = new constructor ();
 
-                  array .setValue (value);
+                  array .setValue (values);
 
                   return array;
                },
