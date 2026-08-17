@@ -307,7 +307,7 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
    },
    setValue (value)
    {
-      if (Array .isArray (value) && value .length && !(value [0] instanceof SFImage))
+      if (value .length && !(value [0] instanceof SFImage))
          $.try (() => this .fromXMLString (String (value)), true);
       else
          X3DObjectArrayField .prototype .setValue .call (this, value);
