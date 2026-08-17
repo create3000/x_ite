@@ -3151,7 +3151,7 @@ declare namespace X3D
        * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
        * @param values A flat array of values.
        */
-      static fromArray (values: SFImage []): MFImage;
+      static fromArray (values: number []): MFImage;
    }
 
    /**

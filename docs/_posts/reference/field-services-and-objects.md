@@ -1887,7 +1887,7 @@ Returns a new `MFImage` field initialized with the values from the specified ite
 
 Returns a new `MFImage` field initialized with the values from the specified iterable.
 
-#### **fromArray** (values: SFImage []): MFImage
+#### **fromArray** (values: number []): MFImage
 
 Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
 
