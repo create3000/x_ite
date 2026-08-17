@@ -305,6 +305,17 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
    {
       return SFImage;
    },
+   setValue (value)
+   {
+      if (Array .isArray (value) && value .length && !(value [0] instanceof SFImage))
+         $.try (() => this .fromXMLString (String (value)), true);
+      else
+         X3DObjectArrayField .prototype .setValue .call (this, value);
+   },
+   flat ()
+   {
+      return Array .from (this, element => Array .from (element)) .flat ();
+   },
 });
 
 for (const key of Object .keys (MFImage .prototype))
@@ -378,26 +389,5 @@ const ArrayFields =
    MFVec4d:      TypedArrayTemplate ("MFVec4d",      SFVec4d,      SFVec4d,      Float64Array, 4,  Vector4 .W_AXIS),
    MFVec4f:      TypedArrayTemplate ("MFVec4f",      SFVec4f,      SFVec4f,      Float32Array, 4,  Vector4 .W_AXIS),
 };
-
-Object .defineProperties (ArrayFields .MFImage .prototype,
-{
-   setValue:
-   {
-      value (value)
-      {
-         if (Array .isArray (value) && value .length)
-            $.try (() => this .fromXMLString (String (value)), true);
-         else
-            X3DObjectArrayField .prototype .setValue .call (this, value);
-      },
-   },
-   flat:
-   {
-      value ()
-      {
-         return Array .from (this, element => Array .from (element)) .flat ();
-      },
-   },
-});
 
 export default ArrayFields;
