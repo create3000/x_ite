@@ -13,6 +13,12 @@ const foreignMimeType = new Set ([
 
 const _cache = Symbol .for ("X_ITE.cache");
 
+// Keep diagnostics readable when a candidate is a long data URL.
+function truncate (string, length = 120)
+{
+   return string .length > length ? `${string .substring (0, length)}…` : string;
+}
+
 function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
    X3DObject .call (this);
@@ -26,6 +32,8 @@ function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
    this .url              = [ ];
    this .fileURL          = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
+   this .candidateURL     = "";
+   this .attempts         = [ ];
 }
 
 Object .assign (FileLoader,
@@ -167,6 +175,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       this .url      = url .slice ();
       this .callback = callback;
 
+      this .attempts .length = 0;
+
       if (url .length === 0)
          return this .loadDocumentError ();
 
@@ -175,8 +185,10 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    async loadDocumentAsync (url)
    {
+      this .candidateURL = url;
+
       if (!url .length)
-         return this .loadDocumentError ();
+         return this .loadDocumentError (Error ("Empty URL."));
 
       // Script:
       {
@@ -346,12 +358,33 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (!error)
          return;
 
-      const typeName = this .node instanceof X3DWorld ? "" : ` for ${this .node .getTypeName ()}`;
+      // An empty candidate never reached URL resolution, so this .fileURL still
+      // refers to the previous candidate and must not be reported as the subject.
 
-      if (this .fileURL .protocol === "data:")
-         console .error (`Couldn't load data URL${typeName}.`, error);
-      else
-         console .error (`Couldn't load URL '${$.try (() => decodeURI (this .fileURL)) ?? this .fileURL}'${typeName}.`, error);
+      const
+         typeName = this .node instanceof X3DWorld ? "" : ` for ${this .node .getTypeName ()}`,
+         empty    = !this .candidateURL .length,
+         dataURL  = this .fileURL .protocol === "data:",
+         resolved = empty || dataURL ? "" : `${$.try (() => decodeURI (this .fileURL)) ?? this .fileURL}`,
+         subject  = empty ? "empty URL" : dataURL ? "data URL" : `URL '${resolved}'`;
+
+      this .attempts .push ({ url: this .candidateURL, resolved, error });
+
+      // A url field is a fallback list, so a failed candidate is not yet a failure of
+      // the resource: a later candidate may still succeed. Report the resource as
+      // failed only once every candidate has been tried.
+
+      if (this .url .length)
+         return console .warn (`Couldn't load ${subject}${typeName}, trying next of ${this .attempts .length + this .url .length} URLs.`, error);
+
+      if (this .attempts .length === 1)
+         return console .error (`Couldn't load ${subject}${typeName}.`, error);
+
+      console .error (`Couldn't load any of the ${this .attempts .length} URLs${typeName}, tried in this order:\n`
+         + this .attempts
+            .map (({ url, resolved, error }, i) =>
+               `  ${i + 1}. '${truncate (url)}'${resolved && resolved !== url ? ` → ${truncate (resolved)}` : ""}: ${error ?.message ?? error}`)
+            .join ("\n"));
    },
 });
 
