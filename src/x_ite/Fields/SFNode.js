@@ -121,10 +121,6 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 {
    [_target]: null,
    [_proxy]: null,
-   *[Symbol .iterator] ()
-   {
-      yield* this .valueOf ();
-   },
    copy (instance)
    {
       const
