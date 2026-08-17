@@ -17,7 +17,6 @@ import Matrix3             from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4             from "../../standard/Math/Numbers/Matrix4.js";
 import Rotation4           from "../../standard/Math/Numbers/Rotation4.js";
 import Vector4             from "../../standard/Math/Numbers/Vector4.js";
-import $                   from "../../lib/helper.js";
 
 const
    { SFBool, SFDouble, SFFloat, SFInt32, SFString, SFTime } = SFScalar,
@@ -308,9 +307,24 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
    setValue (value)
    {
       if (value .length && !(value [0] instanceof SFImage))
-         $.try (() => this .fromXMLString (String (value)), true);
+      {
+         this .length = 0;
+
+         while (value .length)
+         {
+            const
+               width  = value .shift (),
+               height = value .shift (),
+               comp   = value .shift (),
+               array  = value .splice (0, width * height);
+
+            this .push (new SFImage (width, height, comp, ArrayFields .MFInt32 .from (array)));
+         }
+      }
       else
+      {
          X3DObjectArrayField .prototype .setValue .call (this, value);
+      }
    },
    flat ()
    {
