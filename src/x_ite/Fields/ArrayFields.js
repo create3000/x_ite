@@ -330,6 +330,15 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
    {
       return Array .from (this, element => Array .from (element)) .flat ();
    },
+   sort (compareFn)
+   {
+      const target = this .getTarget ();
+
+      Array .prototype .sort .call (target .getValue (), compareFn);
+      target .addEvent ();
+
+      return this;
+   },
 });
 
 for (const key of Object .keys (MFImage .prototype))
