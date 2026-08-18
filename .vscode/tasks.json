@@ -30,7 +30,7 @@
       {
         "label": "X_ITE Docs",
         "type": "shell",
-        "command": "npm run docs",
+        "command": "npm run docs:server",
         "problemMatcher": [],
         "options": {
            "shell": {
