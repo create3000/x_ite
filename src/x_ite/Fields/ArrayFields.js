@@ -308,6 +308,10 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
    {
       if (value .length && !(value [0] instanceof SFImage))
       {
+         const
+            target = this .getTarget (),
+            array  = target .getValue ();
+
          this .length = 0;
 
          while (value .length)
@@ -316,10 +320,14 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
                width  = value .shift (),
                height = value .shift (),
                comp   = value .shift (),
-               array  = value .splice (0, width * height);
+               pixels = value .splice (0, width * height),
+               field  = new SFImage (width, height, comp, pixels);
 
-            this .push (new SFImage (width, height, comp, array));
+            target .addChildObject (field);
+            array .push (field);
          }
+
+         target .addEvent ();
       }
       else
       {
