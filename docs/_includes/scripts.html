@@ -5,7 +5,18 @@
    crossorigin="anonymous"></script>
 {% endif %}
 
-<script defer src="/x_ite/assets/js/links.js"></script>
+<script type="module">
+document .querySelector ("a[href='/x_ite/components/']")
+   .setAttribute ("href", "/x_ite/components/overview/");
+document .querySelector ("a[href='/x_ite/reference/']")
+   .setAttribute ("href", "/x_ite/reference/ecmascript-object-and-function-definitions/");
+document .querySelector ("a[href='/x_ite/tutorials/']")
+   .setAttribute ("href", "/x_ite/tutorials/overview/");
+document .querySelector ("a[href='/x_ite/laboratory/']")
+   .setAttribute ("href", "/x_ite/laboratory/overview/");
+document .querySelector ("a[href='/x_ite/editor/']")
+   .setAttribute ("href", "/sunrize/");
+</script>
 
 {% if content contains '<x3d-canvas' or content contains '<x3d-script-area' or page.x_ite %}
 {% if jekyll.environment == "production" %}
@@ -16,6 +27,15 @@
 {% else %}
 <script defer src="https://weiputer/x_ite/dist/x_ite.min.js"></script>
 {% endif %}
+<script type="module">
+for (const { browser } of document .querySelectorAll ("x3d-canvas"))
+{
+   browser .addBrowserCallback ("check", X3D .X3DConstants .CONNECTION_ERROR, () =>
+   {
+      window .location .reload ();
+   });
+}
+</script>
 {% endif %}
 
 {% if content contains '<x3d-script-area' or page.monaco %}
