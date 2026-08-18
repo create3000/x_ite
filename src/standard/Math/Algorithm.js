@@ -98,10 +98,6 @@ const Algorithm =
       n = (n & 0x33333333) + ((n >>> 2) & 0x33333333);
       return ((n + (n >>> 4) & 0xF0F0F0F) * 0x1010101) >>> 24;
    },
-   cmp (lhs, rhs)
-   {
-      return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
-   },
    less (lhs, rhs)
    {
       return lhs < rhs;

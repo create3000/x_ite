@@ -790,7 +790,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
          const cmp = compareFn
             ? (a, b) => compareFn (valueType (a), valueType (b))
-            : Algorithm .cmp;
+            : undefined;
 
          target .set (array .subarray (0, length) .sort (cmp));
       }

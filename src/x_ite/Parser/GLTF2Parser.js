@@ -3090,7 +3090,7 @@ function eventsProcessed ()
          return null;
 
       const textureTransformNodes = this .textureTransformNodes
-         .sort ((a, b) => Algorithm .cmp (a ._mapping .getValue (), b ._mapping .getValue ()));
+         .sort ((a, b) => a ._mapping .getValue () .localeCompare (b ._mapping .getValue (), "en"));
 
       switch (textureTransformNodes .length)
       {
@@ -3505,7 +3505,7 @@ function eventsProcessed ()
          default:
          {
             const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
-               .sort ((a, b) => Algorithm .cmp (a [0], b [0]))
+               .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
                .sort ((a, b) => a [1] - b [1])
                .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping));
 
