@@ -342,7 +342,7 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
    {
       const target = this .getTarget ();
 
-      Array .prototype .sort .call (target .getValue (), compareFn);
+      target .getValue () .sort (compareFn);
       target .addEvent ();
 
       return this;
