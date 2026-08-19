@@ -42,7 +42,7 @@ The X3DConstants object defines values that can be useful for scripting. See als
 
 <x3d-script-area name="X3D External Browser Example: X3DConstants" style="height: 630px">
 <pre>
-const canvas  = X3D .createBrowser ();
+const canvas  = document .createElement ("x3d-canvas");
 const browser = canvas .browser;
 const node    = browser .currentScene .createNode ("DirectionalLight");
 const types   = node .getNodeType () .reverse (); // Get node type array.
