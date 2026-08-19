@@ -122,7 +122,7 @@
     "CharLS.js": "^2.0.1",
     "dicom-parser": "^1.8.21",
     "eslint": "^10.8.1",
-    "fast-xml-parser": "^5.10.1",
+    "fast-xml-parser": "^5.11.0",
     "globals": "^17.11.0",
     "jpeg-js": "^0.4.4",
     "jpeg-lossless-decoder-js": "2.1.2",
