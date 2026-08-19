@@ -36,7 +36,6 @@ function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
    this .executionContext = node .getExecutionContext ();
    this .target           = "";
    this .url              = [ ];
-   this .fileURL          = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
    this .candidateURL     = "";
    this .resolvedURL      = null;
@@ -70,10 +69,6 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       this .url .length = 0;
 
       this .controller .abort ();
-   },
-   getURL ()
-   {
-      return this .fileURL;
    },
    getBaseURL ()
    {
@@ -157,8 +152,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       if (DEVELOPMENT)
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .fileURL)}'.`);
+         if (this .resolvedURL .protocol !== "data:")
+            console .info (`Done loading scene '${decodeURI (this .resolvedURL)}'.`);
       }
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
@@ -175,7 +170,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (data === null)
          callback (null);
       else
-         this .createX3DFromString (this .fileURL, data, callback, this .loadDocumentError .bind (this));
+         this .createX3DFromString (this .resolvedURL, data, callback, this .loadDocumentError .bind (this));
    },
    loadDocument (url, callback)
    {
@@ -200,7 +195,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       this .resolvedURL  = null;
 
       if (!url .length)
-         return this .loadDocumentError (Error ("Empty URL."));
+         return this .loadDocumentError (new Error ("Empty URL."));
 
       // Script:
       {
@@ -210,8 +205,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             return await this .callback (url .substring (result [0] .length));
       }
 
-      this .fileURL     = new URL (url, this .getBaseURL ());
-      this .resolvedURL = this .fileURL;
+      this .resolvedURL = new URL (url, this .getBaseURL ());
 
       // Handle data URLs that are not base64 decoded here:
       if (this .dataAsString)
@@ -233,17 +227,17 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       // Bind Viewpoint URLs:
 
-      if (this .fileURL .protocol !== "data:" && this .bindViewpoint)
+      if (this .resolvedURL .protocol !== "data:" && this .bindViewpoint)
       {
          const referer = new URL (this .getBaseURL ());
 
-         if (this .fileURL .protocol === referer .protocol &&
-             this .fileURL .hostname === referer .hostname &&
-             this .fileURL .port     === referer .port &&
-             this .fileURL .pathname === referer .pathname &&
-             this .fileURL .hash)
+         if (this .resolvedURL .protocol === referer .protocol &&
+             this .resolvedURL .hostname === referer .hostname &&
+             this .resolvedURL .port     === referer .port &&
+             this .resolvedURL .pathname === referer .pathname &&
+             this .resolvedURL .hash)
          {
-            return this .bindViewpoint (decodeURIComponent (this .fileURL .hash .substring (1)));
+            return this .bindViewpoint (decodeURIComponent (this .resolvedURL .hash .substring (1)));
          }
       }
 
@@ -254,19 +248,19 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          // Handle target
 
          if (this .target .length && this .target !== "_self")
-            return this .foreign (this .fileURL .href, this .target);
+            return this .foreign (this .resolvedURL .href, this .target);
 
          // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (this .fileURL .protocol !== "data:" && this .fileURL .href .match (/\.(?:html|htm|xhtml)$/))
-            return this .foreign (this .fileURL .href, this .target);
+         if (this .resolvedURL .protocol !== "data:" && this .resolvedURL .href .match (/\.(?:html|htm|xhtml)$/))
+            return this .foreign (this .resolvedURL .href, this .target);
       }
 
       // Cached scenes:
 
-      if (this .sceneCallback && this .cacheScene && !this .fileURL .search .length)
+      if (this .sceneCallback && this .cacheScene && !this .resolvedURL .search .length)
       {
-         const cacheURL = new URL (this .fileURL);
+         const cacheURL = new URL (this .resolvedURL);
 
          cacheURL .hash = "";
 
@@ -276,7 +270,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          {
             const scene = await promise;
 
-            scene .setWorldURL (this .fileURL .href);
+            scene .setWorldURL (this .resolvedURL .href);
 
             return this .sceneCallback (scene);
          }
@@ -294,7 +288,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       const
          options  = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
-         response = this .checkResponse (await fetch (this .fileURL, options)),
+         response = this .checkResponse (await fetch (this .resolvedURL, options)),
          mimeType = response .headers .get ("Content-Type") ?.replace (/;.*$/, "");
 
       if (this .foreign)
@@ -302,10 +296,10 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          // console .log (mimeType);
 
          if (foreignMimeType .has (mimeType))
-            return this .foreign (this .fileURL .href, this .target);
+            return this .foreign (this .resolvedURL .href, this .target);
       }
 
-      await this .callback (await $.gunzip (await this .getBlob (response)), this .fileURL);
+      await this .callback (await $.gunzip (await this .getBlob (response)), this .resolvedURL);
    },
    async getBlob (response)
    {
@@ -345,7 +339,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (response .ok)
          return response;
 
-      throw Error (response .statusText || response .status);
+      throw new Error (response .statusText || response .status);
    },
    loadDocumentError (error)
    {

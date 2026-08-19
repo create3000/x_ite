@@ -155,7 +155,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       if (profile)
          return profile;
 
-      throw Error (`Profile '${name}' is not supported.`);
+      throw new Error (`Profile '${name}' is not supported.`);
    },
    addSupportedProfile: function (profile)
    {
@@ -199,7 +199,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             component .dependencies);
       }
 
-      throw Error (`Component '${name}' at level '${level}' is not supported.`);
+      throw new Error (`Component '${name}' at level '${level}' is not supported.`);
    },
    addSupportedComponent (component)
    {
