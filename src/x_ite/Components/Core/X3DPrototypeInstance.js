@@ -179,7 +179,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       for (const fieldDefinition of this [_protoNode] .getFieldDefinitions ())
          this .addPredefinedField (fieldDefinition);
 
-      // Reuse old fields, and therefor routes.
+      // Reuse old fields, and therefore routes.
 
       for (const protoField of this [_protoFields])
       {
