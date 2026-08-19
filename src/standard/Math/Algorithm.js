@@ -114,7 +114,7 @@ const Algorithm =
 
       while (count > 0)
       {
-         let
+         const
             step  = count >>> 1,
             index = first + step;
 
@@ -139,7 +139,7 @@ const Algorithm =
 
       while (count > 0)
       {
-         let
+         const
             step  = count >>> 1,
             index = first + step;
 
