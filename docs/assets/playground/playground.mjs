@@ -168,11 +168,12 @@ class Playground
    async applyChanges ()
    {
       const
-         browser         = this .browser,
-         editor          = this .editor,
-         activeViewpoint = browser .getActiveViewpoint (),
-         text            = editor .getValue (),
-         url             = encodeURI (`data:,${text}`);
+         browser              = this .browser,
+         editor               = this .editor,
+         activeViewpoint      = browser .getActiveViewpoint (),
+         activeNavigationInfo = browser .getActiveNavigationInfo (),
+         text                 = editor .getValue (),
+         url                  = encodeURI (`data:,${text}`);
 
       $("#refresh-button") .addClass ("selected");
 
@@ -182,8 +183,8 @@ class Playground
          userOrientation      = activeViewpoint ?.getUserOrientation () .copy (),
          userCenterOfRotation = activeViewpoint ?.getUserCenterOfRotation () .copy (),
          fieldOfViewScale     = activeViewpoint ?.getFieldOfViewScale (),
-         nearDistance         = activeViewpoint ?.getNearDistance (),
-         farDistance          = activeViewpoint ?.getFarDistance ();
+         nearDistance         = activeViewpoint ?.getNearDistance (activeNavigationInfo),
+         farDistance          = activeViewpoint ?.getFarDistance (activeNavigationInfo);
 
       try
       {

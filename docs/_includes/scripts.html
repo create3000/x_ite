@@ -25,10 +25,10 @@ document .querySelector ("a[href='/x_ite/editor/']")
    integrity="{{ site.x_ite_min_js_integrity }}"
    crossorigin="anonymous"></script>
 {% else %}
-<script defer src="https://weiputer/x_ite/dist/x_ite.min.js"></script>
+<script defer src="https://weiputer/x_ite/dist/x_ite.js"></script>
 {% endif %}
 <script type="module">
-for (const { browser } of document .querySelectorAll ("x3d-canvas"))
+for (const { browser } of document .querySelectorAll ("x3d-canvas") ?? [ ])
 {
    browser .addBrowserCallback ("check", X3D .X3DConstants .CONNECTION_ERROR, () =>
    {
