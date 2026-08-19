@@ -110,19 +110,17 @@ const Algorithm =
    {
       // https://en.cppreference.com/w/cpp/algorithm/lower_bound
 
-      let
-         index = 0,
-         step  = 0,
-         count = last - first;
+      let count = last - first;
 
       while (count > 0)
       {
-         step  = count >>> 1;
-         index = first + step;
+         let
+            step  = count >>> 1,
+            index = first + step;
 
          if (comp (array [index], value))
          {
-            first  = ++ index;
+            first  = index + 1;
             count -= step + 1;
          }
          else
@@ -137,15 +135,13 @@ const Algorithm =
    {
       // https://en.cppreference.com/w/cpp/algorithm/upper_bound
 
-      let
-         index = 0,
-         step  = 0,
-         count = last - first;
+      let count = last - first;
 
       while (count > 0)
       {
-         step  = count >>> 1;
-         index = first + step;
+         let
+            step  = count >>> 1,
+            index = first + step;
 
          if (comp (value, array [index]))
          {
@@ -153,7 +149,7 @@ const Algorithm =
          }
          else
          {
-            first  = ++ index;
+            first  = index + 1;
             count -= step + 1;
          }
       }
