@@ -47,6 +47,11 @@ class Examples
       this .#source  = this .#element .querySelector (".source");
 
       this .#element .querySelector (".close") .addEventListener ("click", () => this .hide ());
+
+      this .#browser .addBrowserCallback ("check", X3D .X3DConstants .CONNECTION_ERROR, () =>
+      {
+         window .location .reload ();
+      });
    }
 
    show ()
