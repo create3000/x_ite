@@ -112,7 +112,7 @@ const X_ITE_X3D = X3D .noConflict ();
 
 The following services can be used to establish a session and obtain the X3DBrowser object.
 
-#### **getBrowser** (*selector: string*): X3DBrowser
+#### **getBrowser** (*selector?: string*): X3DBrowser
 
 The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »x3d-canvas« is used as selector string. The return value is the appropriate X3DBrowser object.
 
