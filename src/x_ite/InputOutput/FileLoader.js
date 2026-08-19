@@ -13,18 +13,6 @@ const foreignMimeType = new Set ([
 
 const _cache = Symbol .for ("X_ITE.cache");
 
-// Keep diagnostics readable when a candidate is a long data URL.
-function truncate (string, length = 120)
-{
-   return string .length > length ? `${string .substring (0, length)}…` : string;
-}
-
-// Not every thrown value is an Error, so don't summarize one as [object Object].
-function describe (error)
-{
-   return error ?.message ?? (typeof error === "object" ? $.try (() => JSON .stringify (error)) : null) ?? String (error);
-}
-
 function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
    X3DObject .call (this);
@@ -374,7 +362,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          resolved = this .resolvedURL && !dataURL ? `${$.try (() => decodeURI (this .resolvedURL)) ?? this .resolvedURL}` : "",
          subject  = !this .candidateURL .length ? "empty URL"
             : dataURL ? "data URL"
-            : `URL '${resolved || truncate (this .candidateURL)}'`;
+            : `URL '${resolved || this .truncate (this .candidateURL)}'`;
 
       this .attempts .push ({ url: this .candidateURL, resolved, error });
 
@@ -394,9 +382,23 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       console .error (`Couldn't load any of the ${this .attempts .length} URLs${typeName}, tried in this order:\n`
          + this .attempts
             .map (({ url, resolved, error }, i) =>
-               `  ${i + 1}. '${truncate (url)}'${resolved && resolved !== url ? ` → ${truncate (resolved)}` : ""}: ${describe (error)}`)
+               `  ${i + 1}. '${this .truncate (url)}'${resolved && resolved !== url ? ` → ${this .truncate (resolved)}` : ""}: ${this .describe (error)}`)
             .join ("\n"),
          ... this .attempts .map (({ error }) => error));
+   },
+   /**
+    * Keep diagnostics readable when a candidate is a long data URL.
+    */
+   truncate (string, length = 120)
+   {
+      return string .length > length ? `${string .substring (0, length)}…` : string;
+   },
+   /**
+    * Not every thrown value is an Error, so don't summarize one as [object Object].
+    */
+   describe (error)
+   {
+      return error ?.message ?? (typeof error === "object" ? $.try (() => JSON .stringify (error)) : null) ?? String (error);
    },
 });
 
