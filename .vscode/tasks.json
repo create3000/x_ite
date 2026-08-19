@@ -37,6 +37,9 @@
               "executable": "zsh",
               "args": ["-c"]
            }
+        },
+        "runOptions": {
+            "runOn": "folderOpen",
         }
       }
    ]
