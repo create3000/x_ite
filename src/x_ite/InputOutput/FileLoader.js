@@ -383,7 +383,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          + this .attempts
             .map (({ url, resolved, error }, i) =>
                `  ${i + 1}. '${this .truncate (url)}'${resolved && resolved !== url ? ` → ${this .truncate (resolved)}` : ""}: ${this .describe (error)}`)
-            .join ("\n"),
+            .join ("\n") + "\n",
          ... this .attempts .map (({ error }) => error));
    },
    /**
