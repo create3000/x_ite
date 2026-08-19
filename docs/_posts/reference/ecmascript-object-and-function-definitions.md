@@ -92,24 +92,6 @@ console .log (length);
 
 ### Functions
 
-#### **noConflict** (): X3D
-
-In X_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
-
-If for some reason two versions of X_ITE are loaded (which is not recommended), calling `X3D .noConflict ()` from the second version will return the globally scoped `X3D` object to those of the first version.
-
-```html
-<script defer src="other_lib.js"></script>
-<script defer src="x_ite.js"></script>
-<script>
-const X_ITE_X3D = X3D .noConflict ();
-// Code that uses other library's X3D can follow here.
-</script>
-```
-
->**Tip:** If you use the ES6 module version with `import` then you will no longer need this function.
-{: .prompt-tip }
-
 The following services can be used to establish a session and obtain the X3DBrowser object.
 
 #### **getBrowser** (*selector?: string*): X3DBrowser
@@ -152,6 +134,24 @@ function addBrowser (parentElement)
    parentElement .append (canvas);
 }
 ```
+
+#### **noConflict** (): X3D
+
+In X_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
+
+If for some reason two versions of X_ITE are loaded (which is not recommended), calling `X3D .noConflict ()` from the second version will return the globally scoped `X3D` object to those of the first version.
+
+```html
+<script defer src="other_lib.js"></script>
+<script defer src="x_ite.js"></script>
+<script>
+const X_ITE_X3D = X3D .noConflict ();
+// Code that uses other library's X3D can follow here.
+</script>
+```
+
+>**Tip:** If you use the ES6 module version with `import` then you will no longer need this function.
+{: .prompt-tip }
 
 ## X3DCanvasElement
 
