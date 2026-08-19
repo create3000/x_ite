@@ -13,6 +13,18 @@ const foreignMimeType = new Set ([
 
 const _cache = Symbol .for ("X_ITE.cache");
 
+// Keep diagnostics readable when a candidate is a long data URL.
+function truncate (string, length = 120)
+{
+   return string .length > length ? `${string .substring (0, length)}…` : string;
+}
+
+// Not every thrown value is an Error, so don't summarize one as [object Object].
+function describe (error)
+{
+   return error ?.message ?? (typeof error === "object" ? $.try (() => JSON .stringify (error)) : null) ?? String (error);
+}
+
 function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
    X3DObject .call (this);
@@ -26,6 +38,9 @@ function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
    this .url              = [ ];
    this .fileURL          = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
+   this .candidateURL     = "";
+   this .resolvedURL      = null;
+   this .attempts         = [ ];
 }
 
 Object .assign (FileLoader,
@@ -167,6 +182,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       this .url      = url .slice ();
       this .callback = callback;
 
+      this .attempts .length = 0;
+
       if (url .length === 0)
          return this .loadDocumentError ();
 
@@ -175,8 +192,15 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    async loadDocumentAsync (url)
    {
+      // Not every candidate reaches URL resolution, so resolvedURL stays null until it
+      // does. Diagnostics must not attribute the previous candidate's resolved URL to
+      // this one.
+
+      this .candidateURL = url;
+      this .resolvedURL  = null;
+
       if (!url .length)
-         return this .loadDocumentError ();
+         return this .loadDocumentError (Error ("Empty URL."));
 
       // Script:
       {
@@ -186,7 +210,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             return await this .callback (url .substring (result [0] .length));
       }
 
-      this .fileURL = new URL (url, this .getBaseURL ());
+      this .fileURL     = new URL (url, this .getBaseURL ());
+      this .resolvedURL = this .fileURL;
 
       // Handle data URLs that are not base64 decoded here:
       if (this .dataAsString)
@@ -346,12 +371,38 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (!error)
          return;
 
-      const typeName = this .node instanceof X3DWorld ? "" : ` for ${this .node .getTypeName ()}`;
+      // Candidates that are evaluated rather than fetched — an empty string, or a
+      // script URL — have no resolved URL, and are reported by their authored value.
 
-      if (this .fileURL .protocol === "data:")
-         console .error (`Couldn't load data URL${typeName}.`, error);
-      else
-         console .error (`Couldn't load URL '${$.try (() => decodeURI (this .fileURL)) ?? this .fileURL}'${typeName}.`, error);
+      const
+         typeName = this .node instanceof X3DWorld ? "" : ` for ${this .node .getTypeName ()}`,
+         dataURL  = this .resolvedURL ?.protocol === "data:",
+         resolved = this .resolvedURL && !dataURL ? `${$.try (() => decodeURI (this .resolvedURL)) ?? this .resolvedURL}` : "",
+         subject  = !this .candidateURL .length ? "empty URL"
+            : dataURL ? "data URL"
+            : `URL '${resolved || truncate (this .candidateURL)}'`;
+
+      this .attempts .push ({ url: this .candidateURL, resolved, error });
+
+      // A url field is a fallback list, so a failed candidate is not yet a failure of
+      // the resource: a later candidate may still succeed. Report the resource as
+      // failed only once every candidate has been tried.
+
+      if (this .url .length)
+         return console .warn (`Couldn't load ${subject}${typeName}, trying URL ${this .attempts .length + 1} of ${this .attempts .length + this .url .length}.`, error);
+
+      if (this .attempts .length === 1)
+         return console .error (`Couldn't load ${subject}${typeName}.`, error);
+
+      // Pass the errors themselves along with the summary, so their stacks and context
+      // stay inspectable.
+
+      console .error (`Couldn't load any of the ${this .attempts .length} URLs${typeName}, tried in this order:\n`
+         + this .attempts
+            .map (({ url, resolved, error }, i) =>
+               `  ${i + 1}. '${truncate (url)}'${resolved && resolved !== url ? ` → ${truncate (resolved)}` : ""}: ${describe (error)}`)
+            .join ("\n"),
+         ... this .attempts .map (({ error }) => error));
    },
 });
 
