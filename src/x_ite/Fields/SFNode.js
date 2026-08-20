@@ -18,8 +18,8 @@ const handler =
 
          if (field)
          {
-            // Specification conform would be: accessType & X3DConstants .outputOnly.
-            // But we allow read access to plain fields, too.
+            // Specification conform would be: `accessType & X3DConstants .outputOnly`.
+            // However, we also allow read access to initializeOnly fields.
             if (field .getAccessType () === X3DConstants .inputOnly)
                return;
 
