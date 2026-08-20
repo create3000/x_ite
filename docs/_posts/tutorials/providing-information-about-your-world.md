@@ -17,7 +17,7 @@ A scene can also contain metadata information, which is a collection of key-valu
 ### XML Encoding
 
 ```x3d
-<X3D ...>
+<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <head>
     <meta name='title' content='Our Masterpiece'/>
     <meta name='created' content='Thu, 15 Jun 2017 07:19:14 GMT'/>
