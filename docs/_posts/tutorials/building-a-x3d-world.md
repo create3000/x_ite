@@ -21,16 +21,10 @@ X3D files contain:
 
 ### XML Encoding
 
-- **head** - can contain component, unit, and meta statements
-- **Scene** - contains the scene content, such as nodes, routes, imports, and exports
-
 ```x3d
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
 <X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
-  <head>
-    <!-- zero or more component, unit, meta statements in arbitrary order -->
-  </head>
   <Scene>
   <!-- A Cylinder -->
   <Shape>
@@ -46,17 +40,6 @@ X3D files contain:
 ```
 
 ### Classic VRML Encoding
-
-#### Order of Statements
-
-1. Header statement (#X3D V{{ site.x3d_latest_version }} utf8)
-2. **PROFILE** statement (**required**)
-3. **COMPONENT** statements (optional)
-4. **UNIT** statements (optional)
-5. **META** statements (optional)
-6. Node statements (e.g., WorldInfo, Shape, etc.)
-7. **IMPORT** and **EXPORT** statements (optional)
-8. **ROUTE** statements (optional)
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
@@ -153,11 +136,15 @@ Order of head statements is important!
 
 ### XML Encoding
 
+- **head** - can contain component, unit, and meta statements
+- **Scene** - contains the scene content, such as nodes, routes, imports, and exports
+
 ```x3d
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
 <X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <head>
+    <!-- zero or more component, unit, meta statements in arbitrary order -->
     <component name='CubeMapTexturing' level='3'/>
     <component name='Scripting' level='1'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
@@ -173,6 +160,17 @@ Order of head statements is important!
 ```
 
 ### Classic VRML Encoding
+
+#### Order of Statements
+
+1. Header statement (#X3D V{{ site.x3d_latest_version }} utf8)
+2. **PROFILE** statement (**required**)
+3. **COMPONENT** statements (optional)
+4. **UNIT** statements (optional)
+5. **META** statements (optional)
+6. Node statements (e.g., WorldInfo, Shape, etc.)
+7. **IMPORT** and **EXPORT** statements (optional)
+8. **ROUTE** statements (optional)
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
