@@ -21,6 +21,9 @@ X3D files contain:
 
 ### XML Encoding
 
+- head - can contain component, unit, and meta statements
+- Scene - contains the scene content, such as nodes, routes, imports, and exports
+
 ```x3d
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
