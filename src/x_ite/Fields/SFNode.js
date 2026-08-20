@@ -143,14 +143,16 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    },
    equals (node)
    {
-      if (node instanceof SFNode)
-         return this .getValue () === node .getValue ();
+      const target = this [_target];
 
-      return this .getValue () === node;
+      if (node instanceof SFNode)
+         return target .getValue () === node .getValue ();
+
+      return target .getValue () === node;
    },
    isDefaultValue ()
    {
-      return this .getValue () === null;
+      return this [_target] .getValue () === null;
    },
    set (node)
    {
