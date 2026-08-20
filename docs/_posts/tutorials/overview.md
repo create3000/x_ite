@@ -64,7 +64,7 @@ Scripts and Prototypes
 - [Introducing Script Use](/x_ite/tutorials/introducing-script-use/)
 - [Writing Program Scripts with ECMAScript](/x_ite/tutorials/writing-program-scripts-with-ecmascript/)
 - [Creating New Node Types](/x_ite/tutorials/creating-new-node-types/)
-- [Providing Information About Your wWorld](/x_ite/tutorials/providing-information-about-your-world/)
+- [Providing Information About Your World](/x_ite/tutorials/providing-information-about-your-world/)
 
 Some words about optimizing a scene
 
