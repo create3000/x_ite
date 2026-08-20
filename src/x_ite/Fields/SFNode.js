@@ -143,9 +143,9 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    },
    equals (node)
    {
-      return this .getValue () === node instanceof SFNode
+      return this .getValue () === (node instanceof SFNode
          ? node .getValue ()
-         : node;
+         : node);
    },
    isDefaultValue ()
    {
