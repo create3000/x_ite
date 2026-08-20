@@ -21,7 +21,7 @@ const handler =
             // Specification conform would be: accessType & X3DConstants .outputOnly.
             // But we allow read access to plain fields, too.
             if (field .getAccessType () === X3DConstants .inputOnly)
-               return undefined;
+               return;
 
             return field .valueOf ();
          }
