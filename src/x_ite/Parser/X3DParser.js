@@ -99,8 +99,6 @@ Object .assign (X3DParser .prototype,
    },
    sanitizeName (name = "")
    {
-       
-
       // NonIdFirstChar
       name = name .replace (/^[\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, "");
 
@@ -114,8 +112,6 @@ Object .assign (X3DParser .prototype,
       name = name .replace (/^-+|-+$/g, "");
 
       return name;
-
-       
    },
    renameExistingNode (name)
    {
