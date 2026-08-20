@@ -50,7 +50,7 @@ X3D files contain:
 #### Order of Statements
 
 1. Header statement (#X3D V{{ site.x3d_latest_version }} utf8)
-2. **PROFILE** statement (required)
+2. **PROFILE** statement (**required**)
 3. **COMPONENT** statements (optional)
 4. **UNIT** statements (optional)
 5. **META** statements (optional)
