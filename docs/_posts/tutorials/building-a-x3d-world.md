@@ -103,7 +103,7 @@ Shape {
 
 ## Understanding Profiles and Components
 
-- **PROFILE Interchange:** File uses nodes from the `Interchange` profile
+- **PROFILE Interchange:** File uses nodes from the [Interchange](/x_ite/profiles/overview/#interchange) profile
 - Nodes are grouped into components
 - Components are grouped into profiles
 - Browsers can load components on demand to reduce initial load times and improve performance by only fetching what is necessary when it’s needed
