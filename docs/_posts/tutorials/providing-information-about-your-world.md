@@ -10,6 +10,34 @@ tags: [WorldInfo]
 - After you've created a great world, sign it!
 - You can provide a title and a description embedded within the file
 
+## Syntax: Metadata
+
+A scene can also contain metadata information, which is a collection of key-value pairs. This information can be used to provide additional context about the scene, such as the author, version, or any other relevant details.
+
+### XML Encoding
+
+```x3d
+<X3D ...>
+  <head>
+    <meta name='title' content='Our Masterpiece'/>
+    <meta name='created' content='Thu, 15 Jun 2017 07:19:14 GMT'/>
+    <meta name='creator' content='John Doe'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sat, 29 Jun 2024 11:35:21 GMT'/>
+  </head>
+</X3D>
+```
+
+### Classic VRML Encoding
+
+```vrml
+META "title" "Our Masterpiece"
+META "created" "Thu, 15 Jun 2017 07:19:14 GMT"
+META "creator" "John Doe"
+META "generator" "Sunrize X3D Editor V1.7.1, https://create3000.github.io/sunrize/"
+META "modified" "Sat, 29 Jun 2024 11:35:21 GMT"
+```
+
 ## Syntax: WorldInfo
 
 A [WorldInfo](/x_ite/components/core/worldinfo/) node provides title and description information for your world:
