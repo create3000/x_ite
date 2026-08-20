@@ -30,7 +30,7 @@ A scene can also contain metadata information, which is a collection of key-valu
 
 ### Classic VRML Encoding
 
-- see [order of statements](/x_ite/tutorials/providing-information-about-your-world/#order-of-statements) for the correct placement of metadata statements
+- see [order of statements](/x_ite/tutorials/building-a-x3d-world/#order-of-statements) for the correct placement of metadata statements
 
 ```vrml
 META "title" "Our Masterpiece"
