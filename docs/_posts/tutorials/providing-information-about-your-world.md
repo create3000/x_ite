@@ -30,6 +30,17 @@ A scene can also contain metadata information, which is a collection of key-valu
 
 ### Classic VRML Encoding
 
+#### Order of Statements
+
+1. Header statement (#X3D V{{ site.x3d_latest_version }} utf8)
+2. **PROFILE** statement (required)
+3. **COMPONENT** statements (optional)
+4. **UNIT** statements (optional)
+5. **META** statements (optional)
+6. Node statements (e.g., WorldInfo, Shape, etc.)
+7. **IMPORT** and **EXPORT** statements (optional)
+8. **ROUTE** statements (optional)
+
 ```vrml
 META "title" "Our Masterpiece"
 META "created" "Thu, 15 Jun 2017 07:19:14 GMT"
