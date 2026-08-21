@@ -18,9 +18,7 @@ function Sound (executionContext)
 
    this .addType (X3DConstants .Sound);
 
-   this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
-
-   this .setVisibleObject (true);
+   this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool ());
 
    // Units
 

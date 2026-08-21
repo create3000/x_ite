@@ -14,9 +14,7 @@ function SpatialSound (executionContext)
 
    this .addType (X3DConstants .SpatialSound);
 
-   this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool (true));
-
-   this .setVisibleObject (true);
+   this .addChildObjects (X3DConstants .outputOnly, "traversed", new Fields .SFBool ());
 
    // Units
 
@@ -224,6 +222,8 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
 
       for (const childNode of this .childNodes)
          childNode .getAudioSource () .connect (this .gainNode);
+
+      this .setVisibleObject (this .childNodes .length);
    },
    update ()
    {
