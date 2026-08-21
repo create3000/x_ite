@@ -34,11 +34,10 @@ Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSo
    {
       return this .mediaStreamAudioDestinationNode;
    },
-   set_enabled__ () { /* remove this function if implemented */ },
+   set_enabled__ ()
+   { },
    set_mediaDeviceID__ ()
-   {
-
-   },
+   { },
 });
 
 Object .defineProperties (StreamAudioDestination,

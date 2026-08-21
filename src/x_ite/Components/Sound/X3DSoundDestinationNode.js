@@ -46,10 +46,20 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    {
       // If enabled field is FALSE, the audio signal is blocked and does not pass through.
 
-      if (this ._enabled .getValue () && this .getLive () .getValue ())
+      const
+         browser = this .getBrowser (),
+         active  = this ._enabled .getValue () && this .getLive () .getValue ();
+
+      if (active)
+      {
          this .audioDestination .connect (this .getSoundDestination ());
+         browser .addAudioNode (this);
+      }
       else
+      {
          this .audioDestination .disconnect ();
+         browser .removeAudioNode (this);
+      }
 
       this ._isActive = this ._enabled;
    },

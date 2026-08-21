@@ -38,22 +38,16 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    },
    set_enabled__ ()
    {
+      X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
+
       const
          browser = this .getBrowser (),
          active  = this ._enabled .getValue () && this .getLive () .getValue ();
 
       if (active)
-      {
-         browser .addAudioNode (this);
          browser .startAudioElement (this .audioElement);
-      }
       else
-      {
-         browser .removeAudioNode (this);
          browser .stopAudioElement (this .audioElement);
-      }
-
-      X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
    },
    set_mediaDeviceID__ ()
    {
