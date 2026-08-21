@@ -30,7 +30,6 @@
       {
         "label": "X_ITE Docs",
         "type": "shell",
-        "command": "npm run docs:server",
         "problemMatcher": [],
         "options": {
            "shell": {
@@ -41,12 +40,9 @@
         "runOptions": {
           "runOn": "folderOpen",
         },
-        "windows": {
-          "command": "exit 0"
+        "osx": {
+          "command": "npm run docs:server",
         },
-        "linux": {
-          "command": "exit 0"
-        }
       }
    ]
 }
