@@ -1,17 +1,23 @@
+import X3DConstants from "../../Base/X3DConstants.js";
+import Fields       from "../../Fields.js";
 import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
 import $            from "../../../lib/helper.js";
 import _            from "../../../locale/gettext.js";
 
 const
-   _audioElements       = Symbol (),
    _audioContext        = Symbol (),
+   _audioElements       = Symbol (),
+   _startElements       = Symbol (),
    _defaultPeriodicWave = Symbol (),
    _noSoundButton       = Symbol (),
    _noSoundButtonId     = Symbol ();
 
 function X3DSoundContext ()
 {
-   this [_audioElements] = new Map ();
+   this .addChildObjects (X3DConstants .outputOnly, "audio", new Fields .SFBool ());
+
+   this [_audioElements] = new Set ();
+   this [_startElements] = new Map ();
 }
 
 Object .assign (X3DSoundContext .prototype,
@@ -48,32 +54,33 @@ Object .assign (X3DSoundContext .prototype,
          return audioContext;
       })();
    },
-   getDefaultPeriodicWave ()
+   addAudioElement (element)
    {
-      return this [_defaultPeriodicWave] ??= (() =>
-      {
-         const defaultPeriodicWave = new PeriodicWave (this .getPrivateScene ());
+      this [_audioElements] .add (element);
 
-         defaultPeriodicWave .setup ();
+      this ._audio = this [_audioElements] .size;
+   },
+   removeAudioElement (element)
+   {
+      this [_audioElements] .delete (element);
 
-         return defaultPeriodicWave;
-      })();
+      this ._audio = this [_audioElements] .size;
    },
    startAudioElement (audioElement, functionName = "play")
    {
       if (!audioElement)
          return;
 
-      this [_audioElements] .set (audioElement, functionName);
+      this [_startElements] .set (audioElement, functionName);
 
       this .startAudioElements ();
    },
    startAudioElements ()
    {
-      for (const [audioElement, functionName] of this [_audioElements])
+      for (const [audioElement, functionName] of this [_startElements])
       {
          audioElement [functionName] ()
-            .then (() => this [_audioElements] .delete (audioElement))
+            .then (() => this [_startElements] .delete (audioElement))
             .catch (Function .prototype)
             .finally (() => this .toggleNoSoundButton ());
       }
@@ -83,7 +90,7 @@ Object .assign (X3DSoundContext .prototype,
       if (!audioElement)
          return;
 
-      this [_audioElements] .delete (audioElement);
+      this [_startElements] .delete (audioElement);
 
       audioElement [functionName] ();
 
@@ -114,7 +121,7 @@ Object .assign (X3DSoundContext .prototype,
          })();
 
          const
-            count = !! this [_audioElements] .size,
+            count = !! this [_startElements] .size,
             fade  = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300";
 
          if (count)
@@ -126,13 +133,24 @@ Object .assign (X3DSoundContext .prototype,
 
          this [_noSoundButton] .classList .remove (fade);
 
-         if (count !== !! this [_audioElements] .size)
+         if (count !== !! this [_startElements] .size)
             return;
 
          if (!count)
             this [_noSoundButton] .style .display = "none";
       },
       200);
+   },
+   getDefaultPeriodicWave ()
+   {
+      return this [_defaultPeriodicWave] ??= (() =>
+      {
+         const defaultPeriodicWave = new PeriodicWave (this .getPrivateScene ());
+
+         defaultPeriodicWave .setup ();
+
+         return defaultPeriodicWave;
+      })();
    },
 });
 
