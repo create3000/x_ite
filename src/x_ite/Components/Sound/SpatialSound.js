@@ -110,9 +110,9 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .getBrowser () .sensorEvents () .addInterest ("update", this);
-
          this .pannerNode .connect (audioContext .destination);
+
+         this .getBrowser () .sensorEvents () .addInterest ("update", this);
       }
       else
       {
