@@ -126,9 +126,9 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .getBrowser () .sensorEvents () .addInterest ("update", this);
-
          this .mergerNode .connect (audioContext .destination);
+
+         this .getBrowser () .sensorEvents () .addInterest ("update", this);
       }
       else
       {
