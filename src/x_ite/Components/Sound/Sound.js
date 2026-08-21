@@ -130,12 +130,12 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
          this .mergerNode .connect (audioContext .destination);
 
-         browser .addAudioElement (this);
+         browser .addAudioNode (this);
          browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
-         browser .removeAudioElement (this);
+         browser .removeAudioNode (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
    },

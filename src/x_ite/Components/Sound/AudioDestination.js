@@ -44,12 +44,12 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
 
       if (active)
       {
-         browser .addAudioElement (this);
+         browser .addAudioNode (this);
          browser .startAudioElement (this .audioElement);
       }
       else
       {
-         browser .removeAudioElement (this);
+         browser .removeAudioNode (this);
          browser .stopAudioElement (this .audioElement);
       }
 

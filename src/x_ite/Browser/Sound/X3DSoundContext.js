@@ -6,8 +6,8 @@ import _            from "../../../locale/gettext.js";
 
 const
    _audioContext        = Symbol (),
+   _audioNodes          = Symbol (),
    _audioElements       = Symbol (),
-   _startElements       = Symbol (),
    _defaultPeriodicWave = Symbol (),
    _noSoundButton       = Symbol (),
    _noSoundButtonId     = Symbol ();
@@ -16,8 +16,8 @@ function X3DSoundContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "audio", new Fields .SFBool ());
 
-   this [_audioElements] = new Set ();
-   this [_startElements] = new Map ();
+   this [_audioNodes]    = new Set ();
+   this [_audioElements] = new Map ();
 }
 
 Object .assign (X3DSoundContext .prototype,
@@ -54,33 +54,33 @@ Object .assign (X3DSoundContext .prototype,
          return audioContext;
       })();
    },
-   addAudioElement (element)
+   addAudioNode (element)
    {
-      this [_audioElements] .add (element);
+      this [_audioNodes] .add (element);
 
-      this ._audio = this [_audioElements] .size;
+      this ._audio = this [_audioNodes] .size;
    },
-   removeAudioElement (element)
+   removeAudioNode (element)
    {
-      this [_audioElements] .delete (element);
+      this [_audioNodes] .delete (element);
 
-      this ._audio = this [_audioElements] .size;
+      this ._audio = this [_audioNodes] .size;
    },
    startAudioElement (audioElement, functionName = "play")
    {
       if (!audioElement)
          return;
 
-      this [_startElements] .set (audioElement, functionName);
+      this [_audioElements] .set (audioElement, functionName);
 
       this .startAudioElements ();
    },
    startAudioElements ()
    {
-      for (const [audioElement, functionName] of this [_startElements])
+      for (const [audioElement, functionName] of this [_audioElements])
       {
          audioElement [functionName] ()
-            .then (() => this [_startElements] .delete (audioElement))
+            .then (() => this [_audioElements] .delete (audioElement))
             .catch (Function .prototype)
             .finally (() => this .toggleNoSoundButton ());
       }
@@ -90,7 +90,7 @@ Object .assign (X3DSoundContext .prototype,
       if (!audioElement)
          return;
 
-      this [_startElements] .delete (audioElement);
+      this [_audioElements] .delete (audioElement);
 
       audioElement [functionName] ();
 
@@ -121,7 +121,7 @@ Object .assign (X3DSoundContext .prototype,
          })();
 
          const
-            count = !! this [_startElements] .size,
+            count = !! this [_audioElements] .size,
             fade  = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300";
 
          if (count)
@@ -133,7 +133,7 @@ Object .assign (X3DSoundContext .prototype,
 
          this [_noSoundButton] .classList .remove (fade);
 
-         if (count !== !! this [_startElements] .size)
+         if (count !== !! this [_audioElements] .size)
             return;
 
          if (!count)
