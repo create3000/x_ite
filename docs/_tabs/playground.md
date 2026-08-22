@@ -98,6 +98,10 @@ monaco: true
   display: none !important;
 }
 
+#editor .monaco-editor .slider {
+  border-radius: 14px;
+}
+
 .content x3d-canvas, x3d-canvas {
   display: block;
   width: 100%;
