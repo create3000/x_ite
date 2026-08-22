@@ -128,9 +128,6 @@ Object .assign (X3DOptimizer .prototype,
       if (!this .combineGroupingNodes)
          return node;
 
-      if (!node .visible)
-         return node;
-
       if (node .getValue () .hasRoutes ())
          return node;
 
@@ -149,6 +146,9 @@ Object .assign (X3DOptimizer .prototype,
       }
 
       if (!node .getNodeType () .includes (X3DConstants .X3DGroupingNode))
+         return node;
+
+      if (!node .visible)
          return node;
 
       const children = Array .from (node .children);
@@ -232,7 +232,7 @@ Object .assign (X3DOptimizer .prototype,
 
       const child = node .children [0];
 
-      if (!child .visible)
+      if (child .visible !== node .visible)
          return node;
 
       if (child .getValue () .getCloneCount () > 1)
