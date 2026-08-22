@@ -37,12 +37,7 @@
               "args": ["-c"]
            }
         },
-        "runOptions": {
-          "runOn": "folderOpen",
-        },
-        "osx": {
-          "command": "npm run docs:server",
-        },
+        "command": "npm run docs:server"
       }
    ]
 }
