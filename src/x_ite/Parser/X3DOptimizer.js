@@ -232,9 +232,6 @@ Object .assign (X3DOptimizer .prototype,
 
       const child = node .children [0];
 
-      if (child .visible !== node .visible)
-         return node;
-
       if (child .getValue () .getCloneCount () > 1)
          return node;
 
@@ -245,16 +242,27 @@ Object .assign (X3DOptimizer .prototype,
       {
          case "Transform":
          case "HAnimHumanoid":
+         {
+            if (child .visible !== node .visible)
+               return node;
+
             return this .combineTransform (node, child, removedNodes);
+         }
          case "DirectionalLight":
          case "PointLight":
          case "SpotLight":
+         {
             return this .combineLight (node, child, removedNodes);
+         }
          case "Viewpoint":
          case "OrthoViewpoint":
+         {
             return this .combineViewpoint (node, child, removedNodes);
+         }
          default:
+         {
             return node;
+         }
       }
    },
    combineTransform (node, child, removedNodes)
