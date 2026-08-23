@@ -124,7 +124,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 ### SFBool [ ] **colorSpaceConversion** TRUE
 {: #fields-colorSpaceConversion }
 
-Field *colorSpaceConversion*.
+If true, the texture is converted to the color space of the display.
 
 ### SFInt32 [out] **width**
 {: #fields-width }
