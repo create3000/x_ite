@@ -17,28 +17,37 @@ export default [
    {
       en: "fps",
       de: "BpS",
+      fr: "",
    },
    {
       en: "Speed",
       de: "Geschwindigkeit",
-      fr: "Vitesse",
+      fr: "Vélocité",
    },
    {
       en: "m/s",
+      de: "",
+      fr: "",
    },
    {
       en: "km/h",
+      de: "",
+      fr: "",
    },
    {
       en: "Browser",
+      de: "",
       fr: "Navigateur",
    },
    {
       en: "ms",
+      de: "",
+      fr: "",
    },
    {
       en: "X3D total",
       de: "X3D gesamt",
+      fr: "X3D total",
    },
    {
       en: "Event Processing",
@@ -62,13 +71,13 @@ export default [
    },
    {
       en: "Rendering",
-      de: "Darstellung",
-      fr: "Rendu",
+      de: "Rendering",
+      fr: "Rendement",
    },
    {
       en: "Number of Primitives",
       de: "Anzahl der Grundobjekte",
-      fr: "Nombre de Primitives",
+      fr: "Nombre d'Objets de Base",
    },
    {
       en: "Number of Shapes",
@@ -78,12 +87,12 @@ export default [
    {
       en: "Number of Sensors",
       de: "Anzahl der Sensoren",
-      fr: "Nombre de Capteurs",
+      fr: "Nombre de Senseurs",
    },
    {
       en: "Browser Timings",
-      de: "Browser-Zeitmessung",
-      fr: "Temps du Navigateur",
+      de: "Zeitberechnung",
+      fr: "Calcul du Temps",
    },
    {
       en: "Viewpoints",
@@ -92,8 +101,8 @@ export default [
    },
    {
       en: "Available Viewers",
-      de: "Verfügbare Ansichtsmodi",
-      fr: "Modes de Visualisation Disponibles",
+      de: "Verfügbare Betrachter",
+      fr: "Visionneurs disponibles",
    },
    {
       en: "Straighten Horizon",
@@ -102,18 +111,18 @@ export default [
    },
    {
       en: "Primitive Quality",
-      de: "Qualität der Grundelemente",
-      fr: "Qualité des Primitives",
+      de: "Qualität der Grundobjekte",
+      fr: "Qualité des Objets simples",
    },
    {
       en: "High",
       de: "Hoch",
-      fr: "Élevée",
+      fr: "Haut",
    },
    {
       en: "high",
       de: "hoch",
-      fr: "élevée",
+      fr: "haut",
    },
    {
       en: "Medium",
@@ -137,18 +146,18 @@ export default [
    },
    {
       en: "Texture Quality",
-      de: "Texturqualität",
+      de: "Textur Qualität",
       fr: "Qualité des Textures",
    },
    {
       en: "Display Rubberband",
       de: "Gummiband anzeigen",
-      fr: "Afficher la Sélection élastique",
+      fr: "Présenter le Bande élastique",
    },
    {
       en: "Rubberband",
       de: "Gummiband",
-      fr: "Sélection élastique",
+      fr: "Bande élastique",
    },
    {
       en: "on",
@@ -163,22 +172,22 @@ export default [
    {
       en: "Mute Browser",
       de: "Browser stumm schalten",
-      fr: "Couper le Son du Navigateur",
+      fr: "Rendre Navigateur muet",
    },
    {
       en: "Browser muted",
-      de: "Browser stummgeschaltet",
-      fr: "Son du Navigateur coupé",
+      de: "Browser stumm geschalten",
+      fr: "Navigateur muet",
    },
    {
       en: "Browser unmuted",
-      de: "Browserton eingeschaltet",
-      fr: "Son du Navigateur rétabli",
+      de: "Browser Ton an",
+      fr: "Son de Navigateur réactivé",
    },
    {
       en: "Leave Fullscreen",
       de: "Vollbild verlassen",
-      fr: "Quitter le plein écran",
+      fr: "Laisser le plein Écran",
    },
    {
       en: "Fullscreen",
@@ -192,37 +201,38 @@ export default [
    },
    {
       en: "Examine Viewer",
-      de: "Untersuchungsmodus",
-      fr: "Mode d'Examen",
+      de: "Untersuchen",
+      fr: "Examiner",
    },
    {
       en: "Walk Viewer",
-      de: "Gehmodus",
-      fr: "Mode Marche",
+      de: "Laufen",
+      fr: "Aller",
    },
    {
       en: "Fly Viewer",
-      de: "Flugmodus",
-      fr: "Mode Vol",
+      de: "Fliegen",
+      fr: "Voler",
    },
    {
       en: "Plane Viewer",
-      de: "Ebenenmodus",
-      fr: "Mode Plan",
+      de: "Ebenen Betrachter",
+      fr: "Visionneur de la Plaine",
    },
    {
       en: "Look At Viewer",
-      de: "Ausrichtungsmodus",
-      fr: "Mode de Visée",
+      de: "Auf Objekte zielen",
+      fr: "Regarder un Objet de près",
    },
    {
       en: "None Viewer",
-      de: "Kein Ansichtsmodus",
-      fr: "Aucun Mode de Vsualisation",
+      de: "Kein Betrachter",
+      fr: "Pas de Visionneur",
    },
    {
       en: "Points",
       de: "Punkte",
+      fr: "",
    },
    {
       en: "Flat",
@@ -231,42 +241,43 @@ export default [
    },
    {
       en: "Wireframe",
-      de: "Drahtgittermodell",
+      de: "Drahtgittermodel",
       fr: "Image filaire",
    },
    {
       en: "Loading %1 file",
-      de: "%1 Datei wird geladen",
-      fr: "Chargement de %1 Fichier",
+      de: "Lade %1 Datei",
+      fr: "Télécharger %1 Fichier",
    },
    {
       en: "Loading %1 files",
-      de: "%1 Dateien werden geladen",
-      fr: "Chargement de %1 Fichiers",
+      de: "Lade %1 Dateien",
+      fr: "Télécharger %1 Fichiers",
    },
    {
       en: "Loading done",
-      de: "Ladevorgang abgeschlossen",
-      fr: "Chargement terminé",
+      de: "Fertig mit Laden",
+      fr: "Téléchargement fini",
    },
    {
       en: "Failed loading world.",
-      de: "Welt konnte nicht geladen werden.",
-      fr: "Échec du chargement du monde.",
+      de: "Laden der Dateien fehlgeschlagen.",
+      fr: "Le chargement des Fichiers a échoué.",
    },
    {
       en: "Show World Info",
-      de: "Weltinformationen anzeigen",
-      fr: "Afficher les Informations sur le Monde",
+      de: "World Info anzeigen",
+      fr: "Afficher World Info",
    },
    {
       en: "Viewpoint is copied to clipboard.",
       de: "Ansichtspunkt wurde in die Zwischenablage kopiert.",
-      fr: "Le point de vue a été copié dans le presse-papiers.",
+      fr: "Le point de Vue est copié dans le Presse-Papiers.",
    },
    {
       en: "Animations",
-      fr: "Séquences animées",
+      de: "Animationen",
+      fr: "",
    },
    {
       en: "All",
@@ -280,18 +291,18 @@ export default [
    },
    {
       en: "Start WebXR session.",
-      de: "WebXR-Sitzung starten.",
-      fr: "Démarrer une session WebXR.",
+      de: "Starte eine WebXR Session.",
+      fr: "Démarrez une session WebXR.",
    },
    {
       en: "Stop WebXR session.",
-      de: "WebXR-Sitzung beenden.",
-      fr: "Terminer la session WebXR.",
+      de: "Beende die WebXR Session.",
+      fr: "Terminez la session WebXR.",
    },
    {
       en: "Activate sound.",
-      de: "Ton aktivieren.",
-      fr: "Activer le son.",
+      de: "Activiere den Ton.",
+      fr: "Activez le son.",
    },
    {
       en: "Points; Lines; Triangles",
@@ -300,7 +311,7 @@ export default [
    },
    {
       en: "Opaque Shapes + Transparent Shapes",
-      de: "Undurchsichtige Formen + Transparente Formen",
+      de: "opaque Formen + transparente Formen",
       fr: "Formes opaques + Formes transparentes",
    },
 ];
