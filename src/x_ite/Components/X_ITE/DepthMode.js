@@ -57,11 +57,15 @@ Object .assign (Object .setPrototypeOf (DepthMode .prototype, X3DAppearanceChild
       gl .polygonOffset (... this ._polygonOffset);
 
       if (this ._depthTest .getValue ())
+      {
          gl .enable (gl .DEPTH_TEST);
+         gl .depthFunc (this .depthFunction);
+      }
       else
+      {
          gl .disable (gl .DEPTH_TEST);
+      }
 
-      gl .depthFunc (this .depthFunction);
       gl .depthRange (... this ._depthRange .getValue ());
       gl .depthMask (this ._depthMask .getValue ());
    },
