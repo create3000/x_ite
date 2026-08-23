@@ -3040,8 +3040,13 @@ declare namespace X3D
        * Returns a new `MFBool` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<any> | ArrayLike<any>): MFBool;
+      static from (items: Iterable<boolean> | ArrayLike<boolean>): MFBool;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => boolean, thisArg?: any): MFBool;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: boolean []): MFBool;
    }
 
    /**
@@ -3058,6 +3063,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFColor> | ArrayLike<SFColor>): MFColor;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFColor, thisArg?: any): MFColor;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFColor;
    }
 
    /**
@@ -3074,6 +3084,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFColorRGBA> | ArrayLike<SFColorRGBA>): MFColorRGBA;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFColorRGBA, thisArg?: any): MFColorRGBA;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFColorRGBA;
    }
 
    /**
@@ -3088,8 +3103,13 @@ declare namespace X3D
        * Returns a new `MFDouble` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<any> | ArrayLike<any>): MFDouble;
+      static from (items: Iterable<number> | ArrayLike<number>): MFDouble;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFDouble;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFDouble;
    }
 
    /**
@@ -3104,8 +3124,13 @@ declare namespace X3D
        * Returns a new `MFFloat` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<any> | ArrayLike<any>): MFFloat;
+      static from (items: Iterable<number> | ArrayLike<number>): MFFloat;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFFloat;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFFloat;
    }
 
    /**
@@ -3122,6 +3147,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFImage> | ArrayLike<SFImage>): MFImage;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFImage, thisArg?: any): MFImage;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFImage;
    }
 
    /**
@@ -3136,8 +3166,13 @@ declare namespace X3D
        * Returns a new `MFInt32` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<any> | ArrayLike<any>): MFInt32;
+      static from (items: Iterable<number> | ArrayLike<number>): MFInt32;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFInt32;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFInt32;
    }
 
    /**
@@ -3154,6 +3189,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFMatrix3d> | ArrayLike<SFMatrix3d>): MFMatrix3d;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFMatrix3d, thisArg?: any): MFMatrix3d;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFMatrix3d;
    }
 
    /**
@@ -3168,7 +3208,13 @@ declare namespace X3D
        * Returns a new `MFMatrix3f` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
+      static from (items: Iterable<SFMatrix3f> | ArrayLike<SFMatrix3f>): MFMatrix3f;
       static from (items: Iterable<SFMatrix3f> | ArrayLike<SFMatrix3f>, mapFn: (element: SFMatrix3f, index: number) => SFMatrix3f, thisArg?: any): MFMatrix3f;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFMatrix3f;
    }
 
    /**
@@ -3183,7 +3229,13 @@ declare namespace X3D
        * Returns a new `MFMatrix4d` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
+      static from (items: Iterable<SFMatrix4d> | ArrayLike<SFMatrix4d>): MFMatrix4d;
       static from (items: Iterable<SFMatrix4d> | ArrayLike<SFMatrix4d>, mapFn: (element: SFMatrix4d, index: number) => SFMatrix4d, thisArg?: any): MFMatrix4d;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFMatrix4d;
    }
 
    /**
@@ -3200,6 +3252,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFMatrix4f> | ArrayLike<SFMatrix4f>): MFMatrix4f;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFMatrix4f, thisArg?: any): MFMatrix4f;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFMatrix4f;
    }
 
    /**
@@ -3214,8 +3271,13 @@ declare namespace X3D
        * Returns a new `MFNode` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<SFNode> | ArrayLike<SFNode>): MFNode;
-      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFNode, thisArg?: any): MFNode;
+      static from (items: Iterable<SFNode | null> | ArrayLike<SFNode | null>): MFNode;
+      static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFNode | null, thisArg?: any): MFNode;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: (SFNode | null) []): MFNode;
    }
 
    /**
@@ -3232,6 +3294,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFQuaternion> | ArrayLike<SFQuaternion>): MFQuaternion;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFQuaternion, thisArg?: any): MFQuaternion;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFQuaternion;
    }
 
    /**
@@ -3248,6 +3315,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFRotation> | ArrayLike<SFRotation>): MFRotation;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFRotation, thisArg?: any): MFRotation;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFRotation;
    }
 
    /**
@@ -3262,8 +3334,13 @@ declare namespace X3D
        * Returns a new `MFString` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<any> | ArrayLike<any>): MFString;
+      static from (items: Iterable<string> | ArrayLike<string>): MFString;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => string, thisArg?: any): MFString;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: string []): MFString;
    }
 
    /**
@@ -3278,8 +3355,13 @@ declare namespace X3D
        * Returns a new `MFTime` field initialized with the values from the specified iterable.
        * @param items An iterable or array-like object to convert to an array.
        */
-      static from (items: Iterable<any> | ArrayLike<any>): MFTime;
+      static from (items: Iterable<number> | ArrayLike<number>): MFTime;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => number, thisArg?: any): MFTime;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFTime;
    }
 
    /**
@@ -3296,6 +3378,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFVec2d> | ArrayLike<SFVec2d>): MFVec2d;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec2d, thisArg?: any): MFVec2d;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec2d;
    }
 
    /**
@@ -3312,6 +3399,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFVec2f> | ArrayLike<SFVec2f>): MFVec2f;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec2f, thisArg?: any): MFVec2f;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec2f;
    }
 
    /**
@@ -3328,6 +3420,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFVec3d> | ArrayLike<SFVec3d>): MFVec3d;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec3d, thisArg?: any): MFVec3d;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec3d;
    }
 
    /**
@@ -3344,6 +3441,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFVec3f> | ArrayLike<SFVec3f>): MFVec3f;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec3f, thisArg?: any): MFVec3f;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec3f;
    }
 
    /**
@@ -3360,6 +3462,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFVec4d> | ArrayLike<SFVec4d>): MFVec4d;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec4d, thisArg?: any): MFVec4d;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec4d;
    }
 
    /**
@@ -3376,6 +3483,11 @@ declare namespace X3D
        */
       static from (items: Iterable<SFVec4f> | ArrayLike<SFVec4f>): MFVec4f;
       static from (items: Iterable<any> | ArrayLike<any>, mapFn: (element: any, index: number) => SFVec4f, thisArg?: any): MFVec4f;
+      /**
+       * Creates a new field of the corresponding type initialized with the values from the specified flat array. The array length must be multiple of the components size of one element.
+       * @param values A flat array of values.
+       */
+      static fromArray (values: number []): MFVec4f;
    }
 
    /**
@@ -10900,6 +11012,12 @@ declare namespace X3D
        * This field is of access type 'outputOnly' and type SFInt32.
        */
       readonly colorDepth: number;
+      /**
+       * If true, the texture is converted to the color space of the display.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      colorSpaceConversion: boolean;
       /**
        * Author-provided prose that describes intended purpose of the url asset.
        *

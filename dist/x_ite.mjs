@@ -1,7 +1,7 @@
-/* X_ITE v16.1.2 */
+/* X_ITE v16.1.3 */
 var __webpack_modules__ = ({
 
-/***/ 603
+/***/ 143
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 777
+/***/ 701
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 457
+/***/ 877
 (module) {
 
 /**
@@ -7094,10 +7094,6 @@ const Algorithm =
       n = (n & 0x33333333) + ((n >>> 2) & 0x33333333);
       return ((n + (n >>> 4) & 0xF0F0F0F) * 0x1010101) >>> 24;
    },
-   cmp (lhs, rhs)
-   {
-      return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
-   },
    less (lhs, rhs)
    {
       return lhs < rhs;
@@ -7110,19 +7106,17 @@ const Algorithm =
    {
       // https://en.cppreference.com/w/cpp/algorithm/lower_bound
 
-      let
-         index = 0,
-         step  = 0,
-         count = last - first;
+      let count = last - first;
 
       while (count > 0)
       {
-         step  = count >>> 1;
-         index = first + step;
+         const
+            step  = count >>> 1,
+            index = first + step;
 
          if (comp (array [index], value))
          {
-            first  = ++ index;
+            first  = index + 1;
             count -= step + 1;
          }
          else
@@ -7137,15 +7131,13 @@ const Algorithm =
    {
       // https://en.cppreference.com/w/cpp/algorithm/upper_bound
 
-      let
-         index = 0,
-         step  = 0,
-         count = last - first;
+      let count = last - first;
 
       while (count > 0)
       {
-         step  = count >>> 1;
-         index = first + step;
+         const
+            step  = count >>> 1,
+            index = first + step;
 
          if (comp (value, array [index]))
          {
@@ -7153,7 +7145,7 @@ const Algorithm =
          }
          else
          {
-            first  = ++ index;
+            first  = index + 1;
             count -= step + 1;
          }
       }
@@ -14374,10 +14366,10 @@ const SFNode_handler =
 
          if (field)
          {
-            // Specification conform would be: accessType & X3DConstants .outputOnly.
-            // But we allow read access to plain fields, too.
+            // Specification conform would be: `accessType & X3DConstants .outputOnly`.
+            // However, we also allow read access to initializeOnly fields.
             if (field .getAccessType () === Base_X3DConstants .inputOnly)
-               return undefined;
+               return;
 
             return field .valueOf ();
          }
@@ -14501,16 +14493,14 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, Base_X3DField .protot
    {
       const target = this [_target];
 
-      if (node)
-         return target .getValue () === node .getValue ();
+      if (node instanceof SFNode)
+         return target .getValue () === node [_target] .getValue ();
 
-      return target .getValue () === null;
+      return target .getValue () === node;
    },
    isDefaultValue ()
    {
-      const target = this [_target];
-
-      return target .getValue () === null;
+      return this [_target] .getValue () === null;
    },
    set (node)
    {
@@ -15731,6 +15721,17 @@ Object .defineProperties (X3DArrayField,
 
                   for (const v of Array .from (... args))
                      target .push (v);
+
+                  return array;
+               },
+            },
+            fromArray:
+            {
+               value (values)
+               {
+                  const array = new constructor ();
+
+                  array .setValue (values);
 
                   return array;
                },
@@ -17057,7 +17058,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, Base_X3DA
 
          const cmp = compareFn
             ? (a, b) => compareFn (valueType (a), valueType (b))
-            : Math_Algorithm .cmp;
+            : undefined;
 
          target .set (array .subarray (0, length) .sort (cmp));
       }
@@ -17681,6 +17682,49 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, Base_X3DObjectArrayF
    getSingleType ()
    {
       return Fields_SFImage;
+   },
+   setValue (value)
+   {
+      if (value .length && !(value [0] instanceof Fields_SFImage))
+      {
+         const
+            target = this .getTarget (),
+            array  = target .getValue ();
+
+         this .length = 0;
+
+         while (value .length)
+         {
+            const
+               width  = value .shift (),
+               height = value .shift (),
+               comp   = value .shift (),
+               pixels = value .splice (0, width * height),
+               field  = new Fields_SFImage (width, height, comp, pixels);
+
+            target .addChildObject (field);
+            array .push (field);
+         }
+
+         target .addEvent ();
+      }
+      else
+      {
+         Base_X3DObjectArrayField .prototype .setValue .call (this, value);
+      }
+   },
+   flat ()
+   {
+      return Array .from (this, element => Array .from (element)) .flat ();
+   },
+   sort (compareFn)
+   {
+      const target = this .getTarget ();
+
+      target .getValue () .sort (compareFn);
+      target .addEvent ();
+
+      return this;
    },
 });
 
@@ -18838,7 +18882,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.1.2";
+const BROWSER_VERSION_default_ = "16.1.3";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -24861,7 +24905,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
       for (const fieldDefinition of this [_protoNode] .getFieldDefinitions ())
          this .addPredefinedField (fieldDefinition);
 
-      // Reuse old fields, and therefor routes.
+      // Reuse old fields, and therefore routes.
 
       for (const protoField of this [_protoFields])
       {
@@ -26016,8 +26060,6 @@ Object .assign (X3DParser .prototype,
    },
    sanitizeName (name = "")
    {
-       
-
       // NonIdFirstChar
       name = name .replace (/^[\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/, "");
 
@@ -26031,8 +26073,6 @@ Object .assign (X3DParser .prototype,
       name = name .replace (/^-+|-+$/g, "");
 
       return name;
-
-       
    },
    renameExistingNode (name)
    {
@@ -30776,6 +30816,9 @@ Object .assign (X3DOptimizer .prototype,
       if (!node .getNodeType () .includes (Base_X3DConstants .X3DGroupingNode))
          return node;
 
+      if (!node .visible)
+         return node;
+
       const children = Array .from (node .children);
 
       removedNodes .push (this .removeChildren (node));
@@ -30855,9 +30898,6 @@ Object .assign (X3DOptimizer .prototype,
       if (node .children .length !== 1)
          return node;
 
-      if (!node .visible)
-         return node;
-
       const child = node .children [0];
 
       if (child .getValue () .getCloneCount () > 1)
@@ -30870,16 +30910,27 @@ Object .assign (X3DOptimizer .prototype,
       {
          case "Transform":
          case "HAnimHumanoid":
+         {
+            if (child .visible !== node .visible)
+               return node;
+
             return this .combineTransform (node, child, removedNodes);
+         }
          case "DirectionalLight":
          case "PointLight":
          case "SpotLight":
+         {
             return this .combineLight (node, child, removedNodes);
+         }
          case "Viewpoint":
          case "OrthoViewpoint":
+         {
             return this .combineViewpoint (node, child, removedNodes);
+         }
          default:
+         {
             return node;
+         }
       }
    },
    combineTransform (node, child, removedNodes)
@@ -31167,7 +31218,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(457);
+/* provided dependency */ var libtess = __webpack_require__(877);
 
 
 const Triangle3 =
@@ -43461,7 +43512,7 @@ function eventsProcessed ()
          return null;
 
       const textureTransformNodes = this .textureTransformNodes
-         .sort ((a, b) => Math_Algorithm .cmp (a ._mapping .getValue (), b ._mapping .getValue ()));
+         .sort ((a, b) => a ._mapping .getValue () .localeCompare (b ._mapping .getValue (), "en"));
 
       switch (textureTransformNodes .length)
       {
@@ -43876,7 +43927,7 @@ function eventsProcessed ()
          default:
          {
             const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
-               .sort ((a, b) => Math_Algorithm .cmp (a [0], b [0]))
+               .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
                .sort ((a, b) => a [1] - b [1])
                .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping));
 
@@ -47867,7 +47918,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(457);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(877);
 
 
 
@@ -51077,8 +51128,10 @@ function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
    this .executionContext = node .getExecutionContext ();
    this .target           = "";
    this .url              = [ ];
-   this .fileURL          = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
+   this .candidateURL     = "";
+   this .resolvedURL      = null;
+   this .attempts         = [ ];
 }
 
 Object .assign (FileLoader,
@@ -51108,10 +51161,6 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       this .url .length = 0;
 
       this .controller .abort ();
-   },
-   getURL ()
-   {
-      return this .fileURL;
    },
    getBaseURL ()
    {
@@ -51195,8 +51244,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       if (DEVELOPMENT)
       {
-         if (this .fileURL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .fileURL)}'.`);
+         if (this .resolvedURL .protocol !== "data:")
+            console .info (`Done loading scene '${decodeURI (this .resolvedURL)}'.`);
       }
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
@@ -51213,12 +51262,14 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       if (data === null)
          callback (null);
       else
-         this .createX3DFromString (this .fileURL, data, callback, this .loadDocumentError .bind (this));
+         this .createX3DFromString (this .resolvedURL, data, callback, this .loadDocumentError .bind (this));
    },
    loadDocument (url, callback)
    {
       this .url      = url .slice ();
       this .callback = callback;
+
+      this .attempts .length = 0;
 
       if (url .length === 0)
          return this .loadDocumentError ();
@@ -51228,8 +51279,15 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
    },
    async loadDocumentAsync (url)
    {
+      // Not every candidate reaches URL resolution, so resolvedURL stays null until it
+      // does. Diagnostics must not attribute the previous candidate's resolved URL to
+      // this one.
+
+      this .candidateURL = url;
+      this .resolvedURL  = null;
+
       if (!url .length)
-         return this .loadDocumentError ();
+         return this .loadDocumentError (new Error ("Empty URL."));
 
       // Script:
       {
@@ -51239,7 +51297,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
             return await this .callback (url .substring (result [0] .length));
       }
 
-      this .fileURL = new URL (url, this .getBaseURL ());
+      this .resolvedURL = new URL (url, this .getBaseURL ());
 
       // Handle data URLs that are not base64 decoded here:
       if (this .dataAsString)
@@ -51261,17 +51319,17 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       // Bind Viewpoint URLs:
 
-      if (this .fileURL .protocol !== "data:" && this .bindViewpoint)
+      if (this .resolvedURL .protocol !== "data:" && this .bindViewpoint)
       {
          const referer = new URL (this .getBaseURL ());
 
-         if (this .fileURL .protocol === referer .protocol &&
-             this .fileURL .hostname === referer .hostname &&
-             this .fileURL .port     === referer .port &&
-             this .fileURL .pathname === referer .pathname &&
-             this .fileURL .hash)
+         if (this .resolvedURL .protocol === referer .protocol &&
+             this .resolvedURL .hostname === referer .hostname &&
+             this .resolvedURL .port     === referer .port &&
+             this .resolvedURL .pathname === referer .pathname &&
+             this .resolvedURL .hash)
          {
-            return this .bindViewpoint (decodeURIComponent (this .fileURL .hash .substring (1)));
+            return this .bindViewpoint (decodeURIComponent (this .resolvedURL .hash .substring (1)));
          }
       }
 
@@ -51282,19 +51340,19 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          // Handle target
 
          if (this .target .length && this .target !== "_self")
-            return this .foreign (this .fileURL .href, this .target);
+            return this .foreign (this .resolvedURL .href, this .target);
 
          // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (this .fileURL .protocol !== "data:" && this .fileURL .href .match (/\.(?:html|htm|xhtml)$/))
-            return this .foreign (this .fileURL .href, this .target);
+         if (this .resolvedURL .protocol !== "data:" && this .resolvedURL .href .match (/\.(?:html|htm|xhtml)$/))
+            return this .foreign (this .resolvedURL .href, this .target);
       }
 
       // Cached scenes:
 
-      if (this .sceneCallback && this .cacheScene && !this .fileURL .search .length)
+      if (this .sceneCallback && this .cacheScene && !this .resolvedURL .search .length)
       {
-         const cacheURL = new URL (this .fileURL);
+         const cacheURL = new URL (this .resolvedURL);
 
          cacheURL .hash = "";
 
@@ -51304,7 +51362,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          {
             const scene = await promise;
 
-            scene .setWorldURL (this .fileURL .href);
+            scene .setWorldURL (this .resolvedURL .href);
 
             return this .sceneCallback (scene);
          }
@@ -51322,7 +51380,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       const
          options  = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
-         response = this .checkResponse (await fetch (this .fileURL, options)),
+         response = this .checkResponse (await fetch (this .resolvedURL, options)),
          mimeType = response .headers .get ("Content-Type") ?.replace (/;.*$/, "");
 
       if (this .foreign)
@@ -51330,10 +51388,10 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          // console .log (mimeType);
 
          if (foreignMimeType .has (mimeType))
-            return this .foreign (this .fileURL .href, this .target);
+            return this .foreign (this .resolvedURL .href, this .target);
       }
 
-      await this .callback (await helper.gunzip (await this .getBlob (response)), this .fileURL);
+      await this .callback (await helper.gunzip (await this .getBlob (response)), this .resolvedURL);
    },
    async getBlob (response)
    {
@@ -51373,7 +51431,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       if (response .ok)
          return response;
 
-      throw Error (response .statusText || response .status);
+      throw new Error (response .statusText || response .status);
    },
    loadDocumentError (error)
    {
@@ -51399,12 +51457,52 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       if (!error)
          return;
 
-      const typeName = this .node instanceof Execution_X3DWorld ? "" : ` for ${this .node .getTypeName ()}`;
+      // Candidates that are evaluated rather than fetched — an empty string, or a
+      // script URL — have no resolved URL, and are reported by their authored value.
 
-      if (this .fileURL .protocol === "data:")
-         console .error (`Couldn't load data URL${typeName}.`, error);
-      else
-         console .error (`Couldn't load URL '${helper.try (() => decodeURI (this .fileURL)) ?? this .fileURL}'${typeName}.`, error);
+      const
+         typeName = this .node instanceof Execution_X3DWorld ? "" : ` for ${this .node .getTypeName ()}`,
+         dataURL  = this .resolvedURL ?.protocol === "data:",
+         resolved = this .resolvedURL && !dataURL ? `${helper.try (() => decodeURI (this .resolvedURL)) ?? this .resolvedURL}` : "",
+         subject  = !this .candidateURL .length ? "empty URL"
+            : dataURL ? "data URL"
+            : `URL '${resolved || this .truncate (this .candidateURL)}'`;
+
+      this .attempts .push ({ url: this .candidateURL, resolved, error });
+
+      // A url field is a fallback list, so a failed candidate is not yet a failure of
+      // the resource: a later candidate may still succeed. Report the resource as
+      // failed only once every candidate has been tried.
+
+      if (this .url .length)
+         return console .warn (`Couldn't load ${subject}${typeName}, trying URL ${this .attempts .length + 1} of ${this .attempts .length + this .url .length}.`, error);
+
+      if (this .attempts .length === 1)
+         return console .error (`Couldn't load ${subject}${typeName}.`, error);
+
+      // Pass the errors themselves along with the summary, so their stacks and context
+      // stay inspectable.
+
+      console .error (`Couldn't load any of the ${this .attempts .length} URLs${typeName}, tried in this order:\n`
+         + this .attempts
+            .map (({ url, resolved, error }, i) =>
+               `  ${i + 1}. '${this .truncate (url)}'${resolved && resolved !== url ? ` → ${this .truncate (resolved)}` : ""}: ${this .describe (error)}`)
+            .join ("\n") + "\n",
+         ... this .attempts .map (({ error }) => error));
+   },
+   /**
+    * Keep diagnostics readable when a candidate is a long data URL.
+    */
+   truncate (string, length = 120)
+   {
+      return string .length > length ? `${string .substring (0, length)}…` : string;
+   },
+   /**
+    * Not every thrown value is an Error, so don't summarize one as [object Object].
+    */
+   describe (error)
+   {
+      return error ?.message ?? (typeof error === "object" ? helper.try (() => JSON .stringify (error)) : null) ?? String (error);
    },
 });
 
@@ -54566,7 +54664,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-FEmsQpL8R1dkzlxB19h2qi5U9Cuh8Zk2953YCudH0PTQSwiWiUovdIWVDBu3/YAc";
+         link .integrity   = "sha384-F+mssNuFiQHol3RT7fLg6krIVxgAio+0HtxiqkBJSZIYtVM6Z51XLEsu66xkirs/";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -71748,15 +71846,21 @@ const PeriodicWave_default_ = PeriodicWave;
 
 
 
+
+
 const
-   _audioElements       = Symbol (),
    _audioContext        = Symbol (),
+   _audioNodes          = Symbol (),
+   _audioElements       = Symbol (),
    _defaultPeriodicWave = Symbol (),
    _noSoundButton       = Symbol (),
    _noSoundButtonId     = Symbol ();
 
 function X3DSoundContext ()
 {
+   this .addChildObjects (Base_X3DConstants .outputOnly, "audio", new x_ite_Fields .SFBool ());
+
+   this [_audioNodes]    = new Set ();
    this [_audioElements] = new Map ();
 }
 
@@ -71794,16 +71898,17 @@ Object .assign (X3DSoundContext .prototype,
          return audioContext;
       })();
    },
-   getDefaultPeriodicWave ()
+   addAudioNode (element)
    {
-      return this [_defaultPeriodicWave] ??= (() =>
-      {
-         const defaultPeriodicWave = new Sound_PeriodicWave (this .getPrivateScene ());
+      this [_audioNodes] .add (element);
 
-         defaultPeriodicWave .setup ();
+      this ._audio = this [_audioNodes] .size;
+   },
+   removeAudioNode (element)
+   {
+      this [_audioNodes] .delete (element);
 
-         return defaultPeriodicWave;
-      })();
+      this ._audio = this [_audioNodes] .size;
    },
    startAudioElement (audioElement, functionName = "play")
    {
@@ -71879,6 +71984,17 @@ Object .assign (X3DSoundContext .prototype,
             this [_noSoundButton] .style .display = "none";
       },
       200);
+   },
+   getDefaultPeriodicWave ()
+   {
+      return this [_defaultPeriodicWave] ??= (() =>
+      {
+         const defaultPeriodicWave = new Sound_PeriodicWave (this .getPrivateScene ());
+
+         defaultPeriodicWave .setup ();
+
+         return defaultPeriodicWave;
+      })();
    },
 });
 
@@ -74904,9 +75020,12 @@ Object .assign (Object .setPrototypeOf (TextureBackground .prototype, Environmen
       this .set_texture__ (4, this ._topTexture);
       this .set_texture__ (5, this ._bottomTexture);
    },
-   set_texture__ (index, textureNode)
+   set_texture__ (index, node)
    {
-      EnvironmentalEffects_X3DBackgroundNode .prototype .set_texture__ .call (this, index, Base_X3DCast (Base_X3DConstants .X3DTextureNode, textureNode));
+      const textureNode = Base_X3DCast (Base_X3DConstants .X3DTexture2DNode, node)
+         ?? Base_X3DCast (Base_X3DConstants .MultiTexture, node);
+
+      EnvironmentalEffects_X3DBackgroundNode .prototype .set_texture__ .call (this, index, textureNode);
    },
    traverse (type, renderObject)
    {
@@ -88330,10 +88449,20 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Soun
    {
       // If enabled field is FALSE, the audio signal is blocked and does not pass through.
 
-      if (this ._enabled .getValue () && this .getLive () .getValue ())
+      const
+         browser = this .getBrowser (),
+         active  = this ._enabled .getValue () && this .getLive () .getValue ();
+
+      if (active)
+      {
          this .audioDestination .connect (this .getSoundDestination ());
+         browser .addAudioNode (this);
+      }
       else
+      {
          this .audioDestination .disconnect ();
+         browser .removeAudioNode (this);
+      }
 
       this ._isActive = this ._enabled;
    },
@@ -88455,6 +88584,8 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, Sound_X3DSo
    },
    set_enabled__ ()
    {
+      Sound_X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
+
       const
          browser = this .getBrowser (),
          active  = this ._enabled .getValue () && this .getLive () .getValue ();
@@ -88463,8 +88594,6 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, Sound_X3DSo
          browser .startAudioElement (this .audioElement);
       else
          browser .stopAudioElement (this .audioElement);
-
-      Sound_X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
    },
    set_mediaDeviceID__ ()
    {
@@ -90147,7 +90276,7 @@ function Sound (executionContext)
 
    this .addType (Base_X3DConstants .Sound);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "traversed", new x_ite_Fields .SFBool (true));
+   this .addChildObjects (Base_X3DConstants .outputOnly, "traversed", new x_ite_Fields .SFBool ());
 
    this .setVisibleObject (true);
 
@@ -90249,19 +90378,23 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
    },
    set_live__ ()
    {
+      const browser = this .getBrowser ();
+
       this .mergerNode .disconnect ();
 
       if (this .getLive () .getValue () && this ._traversed .getValue ())
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .getBrowser () .sensorEvents () .addInterest ("update", this);
-
          this .mergerNode .connect (audioContext .destination);
+
+         browser .addAudioNode (this);
+         browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
-         this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+         browser .removeAudioNode (this);
+         browser .sensorEvents () .removeInterest ("update", this);
       }
    },
    set_intensity__ ()
@@ -90502,7 +90635,7 @@ function SpatialSound (executionContext)
 
    this .addType (Base_X3DConstants .SpatialSound);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "traversed", new x_ite_Fields .SFBool (true));
+   this .addChildObjects (Base_X3DConstants .outputOnly, "traversed", new x_ite_Fields .SFBool ());
 
    this .setVisibleObject (true);
 
@@ -90592,19 +90725,23 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, Sound_X3DSoundN
    },
    set_live__ ()
    {
+      const browser = this .getBrowser ();
+
       this .pannerNode .disconnect ();
 
       if (this .getLive () .getValue () && this ._traversed .getValue ())
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .getBrowser () .sensorEvents () .addInterest ("update", this);
-
          this .pannerNode .connect (audioContext .destination);
+
+         browser .addAudioNode (this);
+         browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
-         this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+         browser .removeAudioNode (this);
+         browser .sensorEvents () .removeInterest ("update", this);
       }
    },
    set_spatialize__ ()
@@ -90708,6 +90845,8 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, Sound_X3DSoundN
 
       for (const childNode of this .childNodes)
          childNode .getAudioSource () .connect (this .gainNode);
+
+      this .setVisibleObject (this .childNodes .length);
    },
    update ()
    {
@@ -90812,11 +90951,10 @@ Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, Sound
    {
       return this .mediaStreamAudioDestinationNode;
    },
-   set_enabled__ () { /* remove this function if implemented */ },
+   set_enabled__ ()
+   { },
    set_mediaDeviceID__ ()
-   {
-
-   },
+   { },
 });
 
 Object .defineProperties (StreamAudioDestination,
@@ -91249,8 +91387,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(603);
-/* provided dependency */ var APNG = __webpack_require__(777);
+/* provided dependency */ var SuperGif = __webpack_require__(143);
+/* provided dependency */ var APNG = __webpack_require__(701);
 
 
 
@@ -92722,7 +92860,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
       if (profile)
          return profile;
 
-      throw Error (`Profile '${name}' is not supported.`);
+      throw new Error (`Profile '${name}' is not supported.`);
    },
    addSupportedProfile: function (profile)
    {
@@ -92766,7 +92904,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
             component .dependencies);
       }
 
-      throw Error (`Component '${name}' at level '${level}' is not supported.`);
+      throw new Error (`Component '${name}' at level '${level}' is not supported.`);
    },
    addSupportedComponent (component)
    {
@@ -93888,7 +94026,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(457);
+/* provided dependency */ var libtess_libtess = __webpack_require__(877);
 const libtess_default_ = libtess_libtess;
 ;
 
