@@ -1229,5 +1229,15 @@
       </InterfaceDefinition>
     </ConcreteNode>
 
+    <ConcreteNode name="ImageTexture">
+      <InterfaceDefinition>
+        <field name="colorSpaceConversion"
+          type="SFBool"
+          accessType="inputOutput"
+          default="true"
+          description="If true, the texture is converted to the color space of the display."/>
+      </InterfaceDefinition>
+    </ConcreteNode>
+
   </ConcreteNodes>
 </X3dUnifiedObjectModel>

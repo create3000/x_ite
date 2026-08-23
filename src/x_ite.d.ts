@@ -11013,6 +11013,12 @@ declare namespace X3D
        */
       readonly colorDepth: number;
       /**
+       * If true, the texture is converted to the color space of the display.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      colorSpaceConversion: boolean;
+      /**
        * Author-provided prose that describes intended purpose of the url asset.
        *
        * This field is of access type 'inputOutput' and type SFString.
