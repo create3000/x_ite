@@ -152,7 +152,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   {
                      destinationField .addReference (instance .getField (originalReference .getName ()));
                   }
-                  catch (error)
+                  catch
                   {
                      console .error (`No reference '${originalReference .getName ()}' inside execution context ${instance .getTypeName ()} '${instance .getName ()}'.`);
                   }
@@ -581,7 +581,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    [_metaDataCallbacks]: new Map (),
    addMetaDataCallback (key, path, callback)
    {
-      if (!this .hasOwnProperty (_metaDataCallbacks))
+      if (!Object .hasOwn (this, _metaDataCallbacks))
          this [_metaDataCallbacks] = new Map ();
 
       let map = this [_metaDataCallbacks] .get (path);

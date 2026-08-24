@@ -165,7 +165,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
          {
             const p = trimmedTriangles [t];
 
-            if (p .hasOwnProperty ("index"))
+            if (Object .hasOwn (p, "index"))
             {
                const
                   d  = p .index,

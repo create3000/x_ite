@@ -4,7 +4,7 @@ Object .defineProperty (Namespace, "add",
 {
    value (name, module)
    {
-      if (Namespace .hasOwnProperty (name))
+      if (Object .hasOwn (Namespace, name))
       {
          console .error (new Error (`Namespace: "${name}" already exists.`));
          return module;
