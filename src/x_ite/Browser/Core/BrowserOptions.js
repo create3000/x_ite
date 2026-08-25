@@ -373,14 +373,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    set_Mute__ (mute)
    {
-      const
-         browser      = this .getBrowser (),
-         audioContext = browser .getAudioContext ();
-
-      if (mute .getValue ())
-         browser .stopAudioElement (audioContext, "suspend");
-      else
-         browser .startAudioElement (audioContext, "resume");
+      for (const soundNode of this .getBrowser () .getSoundNodes ())
+         soundNode .getSoundDestination () .gain .value = !mute .getValue () * 1;
    },
    set_OrderIndependentTransparency__ ()
    {

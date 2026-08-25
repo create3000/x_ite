@@ -6,7 +6,7 @@ import _            from "../../../locale/gettext.js";
 
 const
    _audioContext        = Symbol (),
-   _audioNodes          = Symbol (),
+   _soundNodes          = Symbol (),
    _audioElements       = Symbol (),
    _defaultPeriodicWave = Symbol (),
    _noSoundButton       = Symbol (),
@@ -16,7 +16,7 @@ function X3DSoundContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "audio", new Fields .SFBool ());
 
-   this [_audioNodes]    = new Set ();
+   this [_soundNodes]    = new Set ();
    this [_audioElements] = new Map ();
 }
 
@@ -54,17 +54,23 @@ Object .assign (X3DSoundContext .prototype,
          return audioContext;
       })();
    },
-   addAudioNode (element)
+   addSoundNode (soundNode)
    {
-      this [_audioNodes] .add (element);
+      this [_soundNodes] .add (soundNode);
 
-      this ._audio = this [_audioNodes] .size;
+      soundNode .getSoundDestination () .gain .value = !this .getBrowserOption ("Mute") * 1;
+
+      this ._audio = this [_soundNodes] .size;
    },
-   removeAudioNode (element)
+   removeSoundNode (soundNode)
    {
-      this [_audioNodes] .delete (element);
+      this [_soundNodes] .delete (soundNode);
 
-      this ._audio = this [_audioNodes] .size;
+      this ._audio = this [_soundNodes] .size;
+   },
+   getSoundNodes ()
+   {
+      return this [_soundNodes];
    },
    startAudioElement (audioElement, functionName = "play")
    {

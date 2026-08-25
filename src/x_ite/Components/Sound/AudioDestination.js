@@ -16,6 +16,8 @@ function AudioDestination (executionContext)
    this .audioElement                    = new Audio ();
    this .mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode (audioContext);
    this .audioElement .srcObject         = this .mediaStreamAudioDestinationNode .stream;
+
+   this .getSoundDestination () .connect (this .mediaStreamAudioDestinationNode);
 }
 
 Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDestinationNode .prototype),
@@ -31,10 +33,6 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
       this ._maxChannelCount = audioContext .destination .maxChannelCount;
 
       this .set_mediaDeviceID__ ();
-   },
-   getSoundDestination ()
-   {
-      return this .mediaStreamAudioDestinationNode;
    },
    set_enabled__ ()
    {

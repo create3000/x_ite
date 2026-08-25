@@ -39,16 +39,18 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
       X3DSoundNode .prototype .initialize .call (this);
 
       const
-         audioContext = this .getBrowser () .getAudioContext (),
-         gainNode     = new GainNode (audioContext, { gain: 0 }),
-         pannerNode   = new PannerNode (audioContext);
+         audioContext     = this .getBrowser () .getAudioContext (),
+         gainNode         = new GainNode (audioContext, { gain: 0 }),
+         pannerNode       = new PannerNode (audioContext),
+         soundDestination = this .getSoundDestination ();
 
       gainNode .channelCount          = 2;
       gainNode .channelCountMode      = "explicit";
       gainNode .channelInterpretation = "speakers";
 
-      gainNode   .connect (pannerNode);
-      pannerNode .connect (audioContext .destination);
+      gainNode         .connect (pannerNode);
+      pannerNode       .connect (soundDestination);
+      soundDestination .connect (audioContext .destination);
 
       this .gainNode   = gainNode;
       this .pannerNode = pannerNode;
@@ -104,22 +106,23 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    },
    set_live__ ()
    {
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         active  = this .getLive () .getValue () && this ._traversed .getValue ();
 
-      this .pannerNode .disconnect ();
+      this .setEnabled (active);
+      this .getSoundDestination () .disconnect ();
 
-      if (this .getLive () .getValue () && this ._traversed .getValue ())
+      if (active)
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .pannerNode .connect (audioContext .destination);
+         this .getSoundDestination () .connect (audioContext .destination);
 
-         browser .addAudioNode (this);
          browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
-         browser .removeAudioNode (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
    },

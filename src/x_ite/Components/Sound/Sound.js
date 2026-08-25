@@ -44,6 +44,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
       const
          audioContext       = this .getBrowser () .getAudioContext (),
+         soundDestination   = this .getSoundDestination (),
          gainNode           = new GainNode (audioContext, { gain: 0 }),
          splitterNode       = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
          mergerNode         = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
@@ -65,7 +66,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       gainFrontRightNode .connect (mergerNode, 0, 1);
       gainBackLeftNode   .connect (mergerNode, 0, 0);
       gainBackRightNode  .connect (mergerNode, 0, 1);
-      mergerNode         .connect (audioContext .destination);
+      mergerNode         .connect (soundDestination);
+      soundDestination   .connect (audioContext .destination);
 
       this .gainNode           = gainNode;
       this .splitterNode       = splitterNode;
@@ -120,22 +122,23 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    },
    set_live__ ()
    {
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         active  = this .getLive () .getValue () && this ._traversed .getValue ();
 
-      this .mergerNode .disconnect ();
+      this .setEnabled (active);
+      this .getSoundDestination () .disconnect ();
 
-      if (this .getLive () .getValue () && this ._traversed .getValue ())
+      if (active)
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .mergerNode .connect (audioContext .destination);
+         this .getSoundDestination () .connect (audioContext .destination);
 
-         browser .addAudioNode (this);
          browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
-         browser .removeAudioNode (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
    },

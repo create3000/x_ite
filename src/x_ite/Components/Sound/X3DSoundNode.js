@@ -7,9 +7,30 @@ function X3DSoundNode (executionContext)
    X3DChildNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DSoundNode);
+
+   // Private properties
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .soundDestination = new GainNode (audioContext, { gain: 0 });
 }
 
-Object .setPrototypeOf (X3DSoundNode .prototype, X3DChildNode .prototype);
+Object .assign (Object .setPrototypeOf (X3DSoundNode .prototype, X3DChildNode .prototype),
+{
+   getSoundDestination ()
+   {
+      return this .soundDestination;
+   },
+   setEnabled (enabled)
+   {
+      const browser = this .getBrowser ();
+
+      if (enabled)
+         browser .addSoundNode (this);
+      else
+         browser .removeSoundNode (this);
+   }
+});
 
 Object .defineProperties (X3DSoundNode, X3DNode .getStaticProperties ("X3DSoundNode", "Sound", 1));
 

@@ -10,6 +10,8 @@ function X3DSoundDestinationNode (executionContext)
 
    this .addType (X3DConstants .X3DSoundDestinationNode);
 
+   // Private properties
+
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .childNodes       = [ ];
@@ -46,20 +48,14 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    {
       // If enabled field is FALSE, the audio signal is blocked and does not pass through.
 
-      const
-         browser = this .getBrowser (),
-         active  = this ._enabled .getValue () && this .getLive () .getValue ();
+      const active = this ._enabled .getValue () && this .getLive () .getValue ();
+
+      this .setEnabled (active);
 
       if (active)
-      {
          this .audioDestination .connect (this .getSoundDestination ());
-         browser .addAudioNode (this);
-      }
       else
-      {
          this .audioDestination .disconnect ();
-         browser .removeAudioNode (this);
-      }
 
       this ._isActive = this ._enabled;
    },
