@@ -1,6 +1,7 @@
 import X3DConstants from "../../Base/X3DConstants.js";
 import Fields       from "../../Fields.js";
 import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
+import Algorithm    from "../../../standard/Math/Algorithm.js";
 import $            from "../../../lib/helper.js";
 import _            from "../../../locale/gettext.js";
 
@@ -56,9 +57,11 @@ Object .assign (X3DSoundContext .prototype,
    },
    addSoundNode (soundNode)
    {
-      this [_soundNodes] .add (soundNode);
+      const gain = !this .getBrowserOption ("Mute") * Algorithm .clamp (this .getBrowserOption ("AudioIntensity"), 0, 1);
 
-      soundNode .getSoundDestination () .gain .value = !this .getBrowserOption ("Mute") * 1;
+      soundNode .getSoundDestination () .gain .value = gain;
+
+      this [_soundNodes] .add (soundNode);
 
       this ._audio = this [_soundNodes] .size;
    },
