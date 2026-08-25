@@ -44,14 +44,14 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
       const
          audioContext       = this .getBrowser () .getAudioContext (),
-         soundDestination   = this .getSoundDestination (),
          gainNode           = new GainNode (audioContext, { gain: 0 }),
          splitterNode       = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
-         mergerNode         = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
          gainFrontLeftNode  = new GainNode (audioContext, { gain: 0 }),
          gainFrontRightNode = new GainNode (audioContext, { gain: 0 }),
          gainBackLeftNode   = new GainNode (audioContext, { gain: 0 }),
-         gainBackRightNode  = new GainNode (audioContext, { gain: 0 });
+         gainBackRightNode  = new GainNode (audioContext, { gain: 0 }),
+         mergerNode         = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
+         soundDestination = new GainNode (audioContext, { gain: 0 });
 
       gainNode .channelCount          = 2;
       gainNode .channelCountMode      = "explicit";
@@ -76,6 +76,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       this .gainBackLeftNode   = gainBackLeftNode;
       this .gainBackRightNode  = gainBackRightNode;
       this .mergerNode         = mergerNode;
+      this .soundDestination   = soundDestination;
 
       this .getLive () .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
@@ -87,6 +88,10 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       this .set_live__ ();
       this .set_intensity__ ();
       this .set_children__ ();
+   },
+   getSoundDestination ()
+   {
+      return this .soundDestination;
    },
    setTraversed (value)
    {
@@ -126,19 +131,20 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          browser = this .getBrowser (),
          active  = this .getLive () .getValue () && this ._traversed .getValue ();
 
-      this .setEnabled (active);
-      this .getSoundDestination () .disconnect ();
+      this .soundDestination .disconnect ();
 
       if (active)
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .getSoundDestination () .connect (audioContext .destination);
+         this .soundDestination .connect (audioContext .destination);
 
+         browser .addSoundNode (this);
          browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
+         browser .removeSoundNode (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
    },
@@ -160,7 +166,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
       for (const child of this ._children)
       {
-         const childNode = X3DCast (X3DConstants .X3DChildNode, child);
+         const childNode = X3DCast (X3DConstants .X3DNode, child);
 
          if (!childNode)
             continue;

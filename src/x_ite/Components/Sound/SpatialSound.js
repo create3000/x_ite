@@ -42,7 +42,7 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
          audioContext     = this .getBrowser () .getAudioContext (),
          gainNode         = new GainNode (audioContext, { gain: 0 }),
          pannerNode       = new PannerNode (audioContext),
-         soundDestination = this .getSoundDestination ();
+         soundDestination = new GainNode (audioContext, { gain: 0 });
 
       gainNode .channelCount          = 2;
       gainNode .channelCountMode      = "explicit";
@@ -52,8 +52,9 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
       pannerNode       .connect (soundDestination);
       soundDestination .connect (audioContext .destination);
 
-      this .gainNode   = gainNode;
-      this .pannerNode = pannerNode;
+      this .gainNode         = gainNode;
+      this .pannerNode       = pannerNode;
+      this .soundDestination = soundDestination;
 
       this .getLive () .addInterest ("set_live__", this);
       this ._traversed .addInterest ("set_live__", this);
@@ -85,6 +86,10 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
       this .set_dopplerEnabled__ ();
       this .set_children__ ();
    },
+   getSoundDestination ()
+   {
+      return this .soundDestination;
+   },
    setTraversed (value)
    {
       if (value)
@@ -110,19 +115,20 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
          browser = this .getBrowser (),
          active  = this .getLive () .getValue () && this ._traversed .getValue ();
 
-      this .setEnabled (active);
-      this .getSoundDestination () .disconnect ();
+      this .soundDestination .disconnect ();
 
       if (active)
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .getSoundDestination () .connect (audioContext .destination);
+         this .soundDestination .connect (audioContext .destination);
 
+         browser .addSoundNode (this);
          browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
+         browser .removeSoundNode (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
    },
@@ -201,7 +207,7 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
 
       for (const child of this ._children)
       {
-         const childNode = X3DCast (X3DConstants .X3DChildNode, child);
+         const childNode = X3DCast (X3DConstants .X3DNode, child);
 
          if (!childNode)
             continue;

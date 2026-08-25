@@ -16,6 +16,7 @@ function X3DSoundDestinationNode (executionContext)
 
    this .childNodes       = [ ];
    this .audioDestination = new GainNode (audioContext, { gain: 0 });
+   this .soundDestination = new GainNode (audioContext, { gain: 0 });
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DSoundNode .prototype),
@@ -40,6 +41,10 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
       this .set_channelInterpretation__ ();
       this .set_children__ ();
    },
+   getSoundDestination ()
+   {
+      return this .soundDestination;
+   },
    getAudioDestination ()
    {
       return this .audioDestination;
@@ -48,14 +53,20 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    {
       // If enabled field is FALSE, the audio signal is blocked and does not pass through.
 
-      const active = this ._enabled .getValue () && this .getLive () .getValue ();
-
-      this .setEnabled (active);
+      const
+         browser = this .getBrowser (),
+         active  = this ._enabled .getValue () && this .getLive () .getValue ();
 
       if (active)
-         this .audioDestination .connect (this .getSoundDestination ());
+      {
+         browser .addSoundNode (this);
+         this .audioDestination .connect (this .soundDestination);
+      }
       else
+      {
+         browser .removeSoundNode (this);
          this .audioDestination .disconnect ();
+      }
 
       this ._isActive = this ._enabled;
    },
