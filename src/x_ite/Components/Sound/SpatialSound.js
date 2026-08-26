@@ -115,8 +115,6 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
          browser = this .getBrowser (),
          active  = this .getLive () .getValue () && this ._traversed .getValue ();
 
-      this .soundDestination .disconnect ();
-
       if (active)
       {
          const audioContext = this .getBrowser () .getAudioContext ();
@@ -128,6 +126,8 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
       }
       else
       {
+         this .soundDestination .disconnect ();
+
          browser .removeSoundNode (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
