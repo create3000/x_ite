@@ -252,6 +252,7 @@ print (Browser .getBrowserOption ("TextCompression"));
 | Shading | Specify shading mode for all objects. | POINT, WIREFRAME, FLAT, GOURAUD, PHONG | GOURAUD |
 | SplashScreen | Display browser splash screen on startup. | Boolean | true |
 | TextureQuality | Quality of texture map display. | LOW, MEDIUM, HIGH | MEDIUM |
+| AudioIntensity | Global intensity of audio output. <small class="blue">non-standard</small> | Float | 1 |
 | AutoUpdate | Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if the &lt;x3d-canvas&gt; element is not visible. <small class="blue">non-standard</small> | Boolean | false |
 | Cache | Whether or not files should be cached. <small class="blue">non-standard</small> | Boolean | true |
 | ColorSpace | The color space in which colors are defined and color calculations take place. <small class="blue">non-standard</small> | SRGB, LINEAR_WHEN_PHYSICAL_MATERIAL, LINEAR | LINEAR_WHEN_PHYSICAL_MATERIAL |
