@@ -400,7 +400,7 @@ declare namespace X3D
       AlwaysUpdateGeometries:       boolean,
       AutoUpdate:                   boolean,
       Cache:                        boolean,
-      ColorSpace:                   "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR",
+      ColorSpace:                   ColorSpaceTypes,
       ContentScale:                 number,
       ContextMenu:                  boolean,
       Debug:                        boolean,
@@ -423,6 +423,7 @@ declare namespace X3D
       XRSessionMode:                "NONE" | "IMMERSIVE_VR" | "IMMERSIVE_AR" | "INLINE",
    };
 
+   type ColorSpaceTypes   = "SRGB" | "LINEAR_WHEN_PHYSICAL_MATERIAL" | "LINEAR";
    type QualityLevelTypes = "LOW" | "MEDIUM" | "HIGH";
    type ShadingTypes      = "POINT" | "WIREFRAME" | "FLAT" | "GOURAUD" | "PHONG";
    type ToneMappingTypes  = "NONE" | "ACES_NARKOWICZ" | "ACES_HILL" | "ACES_HILL_EXPOSURE_BOOST" | "KHR_PBR_NEUTRAL";
