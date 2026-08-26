@@ -30,7 +30,7 @@ class Examples
 <div class="example">
    <p class="header"></p>
    <x3d-canvas contentScale="auto" update="auto"></x3d-canvas>
-   <p class="footer"><a class="zip" download>Download ZIP Archive</a><span class="dot"></span><a class="source">View Source in Playground</a> or <a class="copy-url">Copy URL</a> and Open in Editor</p>
+   <p class="footer"><a class="zip" download>Download ZIP Archive</a><span class="dot"></span><a class="source">View Source in Playground</a> or <a class="copy-url">Copy URL</a> to Open in Editor</p>
    <i class="close fas fa-solid fa-circle-xmark fa-fw"></i>
 </div>
       `;
