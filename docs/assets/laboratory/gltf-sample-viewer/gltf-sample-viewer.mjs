@@ -273,6 +273,7 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TextureTransformMultiTest/glTF/TextureTransformMultiTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TextureTransformTest/glTF/TextureTransformTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ToyCar/glTF/ToyCar.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TrafficCone/glTF/TrafficCone.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TransmissionOrderTest/glTF/TransmissionOrderTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TransmissionRoughnessTest/glTF/TransmissionRoughnessTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TransmissionTest/glTF/TransmissionTest.gltf",
