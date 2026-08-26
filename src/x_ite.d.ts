@@ -396,6 +396,7 @@ declare namespace X3D
       Shading:	                     ShadingTypes,
       MotionBlur:                   boolean,
       // Additional options:
+      AudioIntensity:               number,
       AlwaysUpdateGeometries:       boolean,
       AutoUpdate:                   boolean,
       Cache:                        boolean,
@@ -403,6 +404,7 @@ declare namespace X3D
       ContentScale:                 number,
       ContextMenu:                  boolean,
       Debug:                        boolean,
+      DisplayColorSpace:            "SRGB" | "DISPLAY_P3",
       Exposure:                     number,
       Gravity:                      number,
       LoadUrlObjects:               boolean,
