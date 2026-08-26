@@ -612,6 +612,7 @@ table.slim-table tbody tr td:has(img) {
 .example {
   z-index: 100;
   position: fixed;
+  width: min-content;
   bottom: 1rem;
   right: 1rem;
   background: var(--example-background-color);
@@ -684,6 +685,10 @@ table.slim-table tbody tr td:has(img) {
 .example .footer > .dot::before {
   content: "·";
   margin: 0 3px 0 4px;
+}
+
+.example .footer a {
+  cursor: pointer;
 }
 
 .example x3d-canvas {

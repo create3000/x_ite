@@ -30,7 +30,7 @@ class Examples
 <div class="example">
    <p class="header"></p>
    <x3d-canvas contentScale="auto" update="auto"></x3d-canvas>
-   <p class="footer"><a class="zip" download>Download ZIP Archive</a><span class="dot"></span><a class="source">View Source in Playground</a></p>
+   <p class="footer"><a class="zip" download>Download ZIP Archive</a><span class="dot"></span><a class="source">View Source in Playground</a> or <a class="copy-url">Copy URL</a> and Open in Editor</p>
    <i class="close fas fa-solid fa-circle-xmark fa-fw"></i>
 </div>
       `;
@@ -45,6 +45,9 @@ class Examples
       this .#browser = this .#canvas .browser;
       this .#zip     = this .#element .querySelector (".zip");
       this .#source  = this .#element .querySelector (".source");
+
+      this .#element .querySelector (".copy-url")
+         .addEventListener ("click", () => navigator .clipboard .writeText (this .#canvas .getAttribute ("src")));
 
       this .#element .querySelector (".close") .addEventListener ("click", () => this .hide ());
 
