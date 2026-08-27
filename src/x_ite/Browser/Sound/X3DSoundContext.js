@@ -53,7 +53,7 @@ Object .assign (X3DSoundContext .prototype,
    },
    addSoundDestination (soundDestinationNode)
    {
-      const gain = !this .getBrowserOption ("Mute") * Algorithm .clamp (this .getBrowserOption ("AudioIntensity"), 0, 1);
+      const gain = !this .getBrowserOption ("Mute") * Algorithm .clamp (this .getBrowserOption ("SoundIntensity"), 0, 1);
 
       soundDestinationNode .getSoundDestination () .gain .value = gain;
 

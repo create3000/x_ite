@@ -252,7 +252,6 @@ print (Browser .getBrowserOption ("TextCompression"));
 | Shading | Specify shading mode for all objects. | POINT, WIREFRAME, FLAT, GOURAUD, PHONG | GOURAUD |
 | SplashScreen | Display browser splash screen on startup. | Boolean | true |
 | TextureQuality | Quality of texture map display. | LOW, MEDIUM, HIGH | MEDIUM |
-| AudioIntensity | Global intensity of audio output. <small class="blue">non-standard</small> | Float | 1 |
 | AutoUpdate | Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if the &lt;x3d-canvas&gt; element is not visible. <small class="blue">non-standard</small> | Boolean | false |
 | Cache | Whether or not files should be cached. <small class="blue">non-standard</small> | Boolean | true |
 | ColorSpace | The color space in which colors are defined and color calculations take place. <small class="blue">non-standard</small> | SRGB, LINEAR_WHEN_PHYSICAL_MATERIAL, LINEAR | LINEAR_WHEN_PHYSICAL_MATERIAL |
@@ -269,6 +268,7 @@ print (Browser .getBrowserOption ("TextCompression"));
 | Mute | Whether to mute all audio. <small class="blue">non-standard</small> | Boolean | false |
 | Notifications | Whether or not notifications should be displayed. <small class="blue">non-standard</small> | Boolean | true |
 | OrderIndependentTransparency | Whether to use order independent transparency rendering technique. <small class="blue">non-standard</small> | Boolean | false |
+| SoundIntensity | Global intensity of sound destination nodes. <small class="blue">non-standard</small> | Float | 1 |
 | StraightenHorizon | Whether the Examine Viewer should straighten the horizon when navigating. <small class="blue">non-standard</small> | Boolean | true |
 | TextCompression | Controls how Text.*length* and Text.*maxExtent* are handled. Either by adjusting char spacing or by scaling text letters. <small class="blue">non-standard</small> | CHAR_SPACING, SCALING | CHAR_SPACING |
 | Timings | Whether browser timings should be displayed. <small class="blue">non-standard</small> | Boolean | false |

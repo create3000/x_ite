@@ -47,21 +47,21 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this ._TextureQuality               .addInterest ("set_TextureQuality__",               this);
       this ._Shading                      .addInterest ("set_Shading__",                      this);
       this ._StraightenHorizon            .addInterest ("set_StraightenHorizon__",            this);
-      this ._AudioIntensity               .addInterest ("set_AudioIntensity__",               this);
       this ._AutoUpdate                   .addInterest ("set_AutoUpdate__",                   this);
       this ._ContentScale                 .addInterest ("set_ContentScale__",                 this);
       this ._DisplayColorSpace            .addInterest ("set_DisplayColorSpace",              this);
       this ._Exposure                     .addInterest ("set_Exposure__",                     this);
       this ._LogarithmicDepthBuffer       .addInterest ("set_LogarithmicDepthBuffer__",       this);
       this ._Multisampling                .addInterest ("set_Multisampling__",                this);
-      this ._Mute                         .addInterest ("set_AudioIntensity__",               this);
+      this ._Mute                         .addInterest ("set_SoundIntensity__",               this);
       this ._OrderIndependentTransparency .addInterest ("set_OrderIndependentTransparency__", this);
+      this ._SoundIntensity               .addInterest ("set_SoundIntensity__",               this);
       this ._Timings                      .addInterest ("set_Timings__",                      this);
       this ._XRSessionMode                .addInterest ("set_XRSessionMode__",                this);
 
       this .set_Antialiased__                  (this ._Antialiased);
       this .set_Shading__                      (this ._Shading);
-      this .set_AudioIntensity__               ();
+      this .set_SoundIntensity__               ();
       this .set_AutoUpdate__                   (this ._AutoUpdate);
       this .set_ContentScale__                 (this ._ContentScale);
       this .set_DisplayColorSpace              (this ._DisplayColorSpace);
@@ -230,15 +230,6 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          browser .setShading (this .shading);
       };
    })(),
-   set_AudioIntensity__ ()
-   {
-      const
-         unmute = !this ._Mute .getValue (),
-         gain   = unmute * Algorithm .clamp (this ._AudioIntensity .getValue (), 0, 1);
-
-      for (const soundNode of this .getBrowser () .getSoundDestinations ())
-         soundNode .getSoundDestination () .gain .value = gain;
-   },
    set_AutoUpdate__ (autoUpdate)
    {
       document .removeEventListener ("visibilitychange", this .checkUpdateListener);
@@ -379,6 +370,15 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       this .getBrowser () .reshape ();
    },
+   set_SoundIntensity__ ()
+   {
+      const
+         unmute = !this ._Mute .getValue (),
+         gain   = unmute * Algorithm .clamp (this ._SoundIntensity .getValue (), 0, 1);
+
+      for (const soundNode of this .getBrowser () .getSoundDestinations ())
+         soundNode .getSoundDestination () .gain .value = gain;
+   },
    set_StraightenHorizon__ (straightenHorizon)
    {
       this .localStorage .StraightenHorizon = straightenHorizon .getValue ();
@@ -418,7 +418,6 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",                   new Fields .SFBool ()),
          // Additional options:
          // Always update geometries, even if browser is not live.
-         new X3DFieldDefinition (X3DConstants .inputOutput, "AudioIntensity",               new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "AlwaysUpdateGeometries",       new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "AutoUpdate",                   new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Cache",                        new Fields .SFBool (true)),
@@ -438,6 +437,7 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "Mute",                         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",                new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "OrderIndependentTransparency", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "SoundIntensity",               new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",            new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "TextCompression",              new Fields .SFString ("CHAR_SPACING")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                      new Fields .SFBool ()),
