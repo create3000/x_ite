@@ -33,6 +33,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
    unloadData ()
    {
       this .clearTexture ();
+      this .updateOutputs (0, 0, 0, 0);
    },
    loadData ()
    {

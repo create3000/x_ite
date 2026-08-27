@@ -58,6 +58,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       this .clearTexture ();
       this .setMediaElement (null);
+      this .updateOutputs (0, 0, 0, -1);
    },
    async loadData ()
    {

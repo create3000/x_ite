@@ -47,6 +47,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
    unloadData ()
    {
       this .clearTexture ();
+      this .updateOutputs (0, 0, 0, 0);
    },
    loadData ()
    {

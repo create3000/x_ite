@@ -43,6 +43,8 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    unloadData ()
    {
+      this ._duration_changed = -1;
+
       this .setMediaElement (null);
    },
    loadData ()

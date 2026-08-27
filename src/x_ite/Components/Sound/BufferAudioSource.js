@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, X3DSoundSo
       }
       else
       {
-         this ._bufferDuration = 0;
+         this ._bufferDuration = -1;
 
          this .setMediaElement (null);
       }
