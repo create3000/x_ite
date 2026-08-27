@@ -315,7 +315,8 @@ print (Browser .getRenderingProperty ("ContentScale"));
 | Antialiased | Boolean | `true` or `false` if the rendering is currently anti-aliased or not. |
 | ColorDepth | Integer | The number of bits of color depth supported by the screen. Allows for optimized selection of textures, particularly for lower color depth screen capabilities. |
 | TextureMemory | Float | The amount of memory in megabytes available for textures to be placed on the video card. |
-| ContentScale | Boolean | Currently used factor to scale content. <small class="blue">non-standard</small> |
+| Audio | Boolean | `true` if there are any audio destination nodes active, otherwise `false`. <small class="blue">non-standard</small> |
+| ContentScale | Float | Currently used factor to scale content. <small class="blue">non-standard</small> |
 | LogarithmicDepthBuffer | Boolean | `true` or `false` if the logarithmic depth buffer is currently enabled or not. <small class="blue">non-standard</small> |
 | MaxAnisotropicDegree | Float | The maximum number of available anisotropy. <small class="blue">non-standard</small> |
 | MaxSamples | Integer | The maximum number of samples supported for doing multisampling. <small class="blue">non-standard</small> |

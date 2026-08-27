@@ -15,8 +15,6 @@ const
 
 function X3DSoundContext ()
 {
-   this .addChildObjects (X3DConstants .outputOnly, "audio", new Fields .SFBool ());
-
    this [_soundNodes]    = new Set ();
    this [_audioElements] = new Map ();
 }
@@ -63,13 +61,13 @@ Object .assign (X3DSoundContext .prototype,
 
       this [_soundNodes] .add (soundNode);
 
-      this ._audio = this [_soundNodes] .size;
+      this .getRenderingProperties () ._Audio = this [_soundNodes] .size;
    },
    removeSoundNode (soundNode)
    {
       this [_soundNodes] .delete (soundNode);
 
-      this ._audio = this [_soundNodes] .size;
+      this .getRenderingProperties () ._Audio = this [_soundNodes] .size;
    },
    getSoundNodes ()
    {

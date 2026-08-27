@@ -66,6 +66,7 @@ Object .defineProperties (RenderingProperties,
          new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
          // non-standard fields
+         new X3DFieldDefinition (X3DConstants .outputOnly, "Audio",                  new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "ContentScale",           new Fields .SFDouble (1)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxAnisotropicDegree",   new Fields .SFFloat (1)),

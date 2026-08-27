@@ -436,6 +436,7 @@ declare namespace X3D
       Antialiased:            boolean,
       ColorDepth:             number,
       TextureMemory:          number,
+      Audio:                  boolean,
       ContentScale:           number,
       LogarithmicDepthBuffer: boolean,
       MaxAnisotropicDegree:   number,
