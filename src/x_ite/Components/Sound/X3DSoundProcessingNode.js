@@ -103,6 +103,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSo
       const channelCountModes = new Map ([
          ["MAX",         "max"],
          ["CLAMPED-MAX", "clamped-max"],
+         ["CLAMPED_MAX", "clamped-max"],
          ["EXPLICIT",    "explicit"],
       ]);
 

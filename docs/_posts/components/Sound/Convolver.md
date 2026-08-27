@@ -121,7 +121,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelcount)
 
-### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED-MAX", "EXPLICIT"]</small>
+### SFString [in, out] **channelCountMode** "MAX" <small>["MAX", "CLAMPED_MAX", "EXPLICIT"]</small>
 {: #fields-channelCountMode }
 
 *channelCountMode* determines how individual channels are counted when up-mixing and down-mixing connections to any inputs.
