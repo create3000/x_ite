@@ -1,5 +1,3 @@
-import X3DConstants from "../../Base/X3DConstants.js";
-import Fields       from "../../Fields.js";
 import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
 import Algorithm    from "../../../standard/Math/Algorithm.js";
 import $            from "../../../lib/helper.js";
