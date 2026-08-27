@@ -45,6 +45,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       const
          audioContext       = this .getBrowser () .getAudioContext (),
          gainNode           = new GainNode (audioContext, { gain: 0 }),
+         gainStereoNode     = new GainNode (audioContext, { gain: 0 }),
          splitterNode       = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
          gainFrontLeftNode  = new GainNode (audioContext, { gain: 0 }),
          gainFrontRightNode = new GainNode (audioContext, { gain: 0 }),
@@ -57,7 +58,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       gainNode .channelCountMode      = "explicit";
       gainNode .channelInterpretation = "speakers";
 
-      gainNode           .connect (splitterNode);
+      gainStereoNode     .connect (soundDestination);
       splitterNode       .connect (gainFrontLeftNode,  0);
       splitterNode       .connect (gainFrontRightNode, 1);
       splitterNode       .connect (gainBackRightNode, 0);
@@ -70,6 +71,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       soundDestination   .connect (audioContext .destination);
 
       this .gainNode           = gainNode;
+      this .gainStereoNode     = gainStereoNode;
       this .splitterNode       = splitterNode;
       this .gainFrontLeftNode  = gainFrontLeftNode;
       this .gainFrontRightNode = gainFrontRightNode;
@@ -82,11 +84,13 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       this ._traversed .addInterest ("set_enabled__", this);
       this ._enabled   .addInterest ("set_enabled__", this);
 
-      this ._intensity .addInterest ("set_intensity__", this);
-      this ._source    .addInterest ("set_children__",  this);
-      this ._children  .addInterest ("set_children__",  this);
+      this ._spatialize .addInterest ("set_spatialize__", this);
+      this ._intensity  .addInterest ("set_intensity__",  this);
+      this ._source     .addInterest ("set_children__",   this);
+      this ._children   .addInterest ("set_children__",   this);
 
       this .set_enabled__ ();
+      this .set_spatialize__ ();
       this .set_intensity__ ();
       this .set_children__ ();
    },
@@ -121,6 +125,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          rotationFront = 1 - rotation,
          rotationBack  = rotation;
 
+      this .gainStereoNode     .gain .value = gain;
       this .gainFrontLeftNode  .gain .value = gain * rotationFront * panLeft;
       this .gainFrontRightNode .gain .value = gain * rotationFront * panRight;
       this .gainBackLeftNode   .gain .value = gain * rotationBack  * panLeft;
@@ -148,6 +153,15 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
          browser .removeSoundDestination (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
+   },
+   set_spatialize__ ()
+   {
+      this .gainNode .disconnect ();
+
+      if (this ._spatialize .getValue ())
+         this .gainNode .connect (this .splitterNode);
+      else
+         this .gainNode .connect (this .gainStereoNode);
    },
    set_intensity__ ()
    {
