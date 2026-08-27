@@ -122,8 +122,8 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       const
          panLeft       = 1 - pan ** 2,
          panRight      = 1 - (1 - pan) ** 2,
-         rotationFront = (1 - rotation) ** 0.5,
-         rotationBack  = rotation ** 0.5;
+         rotationFront = 1 - rotation,
+         rotationBack  = rotation;
 
       this .gainStereoNode     .gain .value = gain;
       this .gainFrontLeftNode  .gain .value = gain * rotationFront * panLeft;
