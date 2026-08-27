@@ -40,7 +40,7 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
 
       const
          browser = this .getBrowser (),
-         active  = this ._enabled .getValue () && this .getLive () .getValue ();
+         active  = this .getLive () .getValue () && this ._enabled .getValue ();
 
       if (active)
          browser .startAudioElement (this .audioElement);

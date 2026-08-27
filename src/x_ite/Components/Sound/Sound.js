@@ -78,14 +78,15 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       this .mergerNode         = mergerNode;
       this .soundDestination   = soundDestination;
 
-      this .getLive () .addInterest ("set_live__", this);
-      this ._traversed .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_enabled__", this);
+      this ._traversed .addInterest ("set_enabled__", this);
+      this ._enabled   .addInterest ("set_enabled__", this);
 
       this ._intensity .addInterest ("set_intensity__", this);
       this ._source    .addInterest ("set_children__",  this);
       this ._children  .addInterest ("set_children__",  this);
 
-      this .set_live__ ();
+      this .set_enabled__ ();
       this .set_intensity__ ();
       this .set_children__ ();
    },
@@ -125,11 +126,11 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
       this .gainBackLeftNode   .gain .value = gain * rotationBack  * panLeft;
       this .gainBackRightNode  .gain .value = gain * rotationBack  * panRight;
    },
-   set_live__ ()
+   set_enabled__ ()
    {
       const
          browser = this .getBrowser (),
-         active  = this .getLive () .getValue () && this ._traversed .getValue ();
+         active  = this .getLive () .getValue () && this ._traversed .getValue () && this ._enabled .getValue ();
 
       if (active)
       {
@@ -137,14 +138,14 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
          this .soundDestination .connect (audioContext .destination);
 
-         browser .addSoundNode (this);
+         browser .addSoundDestination (this);
          browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
          this .soundDestination .disconnect ();
 
-         browser .removeSoundNode (this);
+         browser .removeSoundDestination (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
    },

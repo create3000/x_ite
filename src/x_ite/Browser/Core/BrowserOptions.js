@@ -236,7 +236,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          unmute = !this ._Mute .getValue (),
          gain   = unmute * Algorithm .clamp (this ._AudioIntensity .getValue (), 0, 1);
 
-      for (const soundNode of this .getBrowser () .getSoundNodes ())
+      for (const soundNode of this .getBrowser () .getSoundDestinations ())
          soundNode .getSoundDestination () .gain .value = gain;
    },
    set_AutoUpdate__ (autoUpdate)

@@ -55,16 +55,16 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
 
       const
          browser = this .getBrowser (),
-         active  = this ._enabled .getValue () && this .getLive () .getValue ();
+         active  = this .getLive () .getValue () && this ._enabled .getValue ();
 
       if (active)
       {
-         browser .addSoundNode (this);
+         browser .addSoundDestination (this);
          this .audioDestination .connect (this .soundDestination);
       }
       else
       {
-         browser .removeSoundNode (this);
+         browser .removeSoundDestination (this);
          this .audioDestination .disconnect ();
       }
 

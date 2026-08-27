@@ -436,13 +436,13 @@ declare namespace X3D
       Antialiased:            boolean,
       ColorDepth:             number,
       TextureMemory:          number,
-      Audio:                  boolean,
       ContentScale:           number,
       LogarithmicDepthBuffer: boolean,
       MaxAnisotropicDegree:   number,
       MaxSamples:             number,
       Multisampling:          number,
       PixelsPerPoint:         number,
+      SoundDestinations:      boolean,
       XRSession:              boolean,
    };
 

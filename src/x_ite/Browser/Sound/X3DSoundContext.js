@@ -5,7 +5,7 @@ import _            from "../../../locale/gettext.js";
 
 const
    _audioContext        = Symbol (),
-   _soundNodes          = Symbol (),
+   _soundDestinationNodes          = Symbol (),
    _audioElements       = Symbol (),
    _defaultPeriodicWave = Symbol (),
    _noSoundButton       = Symbol (),
@@ -13,7 +13,7 @@ const
 
 function X3DSoundContext ()
 {
-   this [_soundNodes]    = new Set ();
+   this [_soundDestinationNodes]    = new Set ();
    this [_audioElements] = new Map ();
 }
 
@@ -51,25 +51,25 @@ Object .assign (X3DSoundContext .prototype,
          return audioContext;
       })();
    },
-   addSoundNode (soundNode)
+   addSoundDestination (soundDestinationNode)
    {
       const gain = !this .getBrowserOption ("Mute") * Algorithm .clamp (this .getBrowserOption ("AudioIntensity"), 0, 1);
 
-      soundNode .getSoundDestination () .gain .value = gain;
+      soundDestinationNode .getSoundDestination () .gain .value = gain;
 
-      this [_soundNodes] .add (soundNode);
+      this [_soundDestinationNodes] .add (soundDestinationNode);
 
-      this .getRenderingProperties () ._Audio = this [_soundNodes] .size;
+      this .getRenderingProperties () ._SoundDestinations = this [_soundDestinationNodes] .size;
    },
-   removeSoundNode (soundNode)
+   removeSoundDestination (soundDestinationNode)
    {
-      this [_soundNodes] .delete (soundNode);
+      this [_soundDestinationNodes] .delete (soundDestinationNode);
 
-      this .getRenderingProperties () ._Audio = this [_soundNodes] .size;
+      this .getRenderingProperties () ._SoundDestinations = this [_soundDestinationNodes] .size;
    },
-   getSoundNodes ()
+   getSoundDestinations ()
    {
-      return this [_soundNodes];
+      return this [_soundDestinationNodes];
    },
    startAudioElement (audioElement, functionName = "play")
    {

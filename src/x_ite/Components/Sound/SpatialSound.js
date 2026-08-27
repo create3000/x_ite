@@ -56,8 +56,9 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
       this .pannerNode       = pannerNode;
       this .soundDestination = soundDestination;
 
-      this .getLive () .addInterest ("set_live__", this);
-      this ._traversed .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_enabled__", this);
+      this ._traversed .addInterest ("set_enabled__", this);
+      this ._enabled   .addInterest ("set_enabled__", this);
 
       this ._spatialize        .addInterest ("set_spatialize__",        this);
       this ._intensity         .addInterest ("set_intensity__",         this);
@@ -73,7 +74,7 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
       this ._rolloffFactor     .addInterest ("set_distanceModel__",     this);
       this ._children          .addInterest ("set_children__",          this);
 
-      this .set_live__ ();
+      this .set_enabled__ ();
       this .set_spatialize__ ();
       this .set_intensity__ ();
       this .set_coneOuterGain__ ();
@@ -109,11 +110,11 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
    {
       return this .currentTraversed;
    },
-   set_live__ ()
+   set_enabled__ ()
    {
       const
          browser = this .getBrowser (),
-         active  = this .getLive () .getValue () && this ._traversed .getValue ();
+         active  = this .getLive () .getValue () && this ._traversed .getValue () && this ._enabled .getValue ();
 
       if (active)
       {
@@ -121,14 +122,14 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, X3DSoundNode .p
 
          this .soundDestination .connect (audioContext .destination);
 
-         browser .addSoundNode (this);
+         browser .addSoundDestination (this);
          browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
          this .soundDestination .disconnect ();
 
-         browser .removeSoundNode (this);
+         browser .removeSoundDestination (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
    },
