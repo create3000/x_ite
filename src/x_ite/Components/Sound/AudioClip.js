@@ -49,7 +49,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    },
    loadData ()
    {
-      this .unloadData ();
+      this .setMediaElement (null);
 
       new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
