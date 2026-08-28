@@ -10,6 +10,7 @@ const
    _loadingTotal   = Symbol (),
    _loadingObjects = Symbol (),
    _browserLoading = Symbol (),
+   _browserTime    = Symbol (),
    _set_loadCount  = Symbol (),
    _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
@@ -70,6 +71,7 @@ Object .assign (X3DNetworkingContext .prototype,
    setBrowserLoading (value)
    {
       this [_browserLoading] = value;
+      this [_browserTime]    = Date .now ();
 
       if (value)
       {
@@ -132,12 +134,16 @@ Object .assign (X3DNetworkingContext .prototype,
       this [_loadingObjects] .add (object);
 
       this ._loadCount = this [_loadingObjects] .size;
+
+      this [_browserTime] = Date .now ();
    },
    removeLoadingObject (object)
    {
       this [_loadingObjects] .delete (object);
 
       this ._loadCount = this [_loadingObjects] .size;
+
+      this [_browserTime] = Date .now ();
    },
    getDisplayLoadCount ()
    {
@@ -190,6 +196,10 @@ Object .assign (X3DNetworkingContext .prototype,
          // Let the loading fractions 1/2 of the count.
          const fractions = 1 - (this ._loadCount .getValue () + loadFractions)
             / (this [_loadingTotal] + this [_loadFractions] .size);
+
+         // Show progress in % if loading takes too long.
+         if (Date .now () - this [_browserTime] > 6_000)
+            string += ` (${(100 * fractions) .toFixed (2)} %)`;
 
          this .getSplashScreen () .querySelector (".x_ite-private-spinner-text") .textContent     = string;
          this .getSplashScreen () .querySelector (".x_ite-private-progressbar div") .style .width = `${100 * fractions}%`;
