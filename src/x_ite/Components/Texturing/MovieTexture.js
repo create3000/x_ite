@@ -215,9 +215,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    hasAudioTracks (video)
    {
-      return video .mozHasAudio ||
-         Boolean (video .webkitAudioDecodedByteCount) ||
-         Boolean (video .audioTracks ?.length);
+      return !! (video .mozHasAudio || video .webkitAudioDecodedByteCount || video .audioTracks ?.length);
    },
    updateOutputs (width, height, colorDepth, hasSound, duration)
    {
