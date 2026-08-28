@@ -5,6 +5,9 @@ const
    fs                 = require ("fs"),
    { sh, systemSync } = require ("shell-tools");
 
+// curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '
+const size = parseInt (sh (`brotli -q 4 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000;
+
 function bump ()
 {
    const
@@ -38,16 +41,15 @@ function readme (version)
 {
    let readme = sh (`cat 'README.md'`);
 
-   readme = readme .replace (/x_ite@[\d.]+/sg, `x_ite@${version}`);
+   readme = readme
+      .replace (/x_ite@[\d.]+/sg, `x_ite@${version}`)
+      .replace (/[\d.]+ kB/, size .toFixed (1));
 
    fs .writeFileSync ("README.md", readme);
 }
 
 function docs (version)
 {
-   // curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '
-   const size = parseInt (sh (`brotli -q 4 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000;
-
    let config = sh (`cat 'docs/_config.yml'`);
 
    config = config .replace (/\x_ite_latest_version:\s*[\d.]+/sg, `x_ite_latest_version: ${version}`);
@@ -191,8 +193,6 @@ function release ()
       process .exit (1);
    }
 
-   console .log ("Waiting for confirmation ...");
-
    const version = sh (`npm pkg get version | sed 's/"//g'`) .trim ();
 
    systemSync (`npm run docs:table`);
@@ -211,6 +211,8 @@ function release ()
    }
 
    // confirm
+
+   console .log ("Waiting for confirmation ...");
 
    const result = systemSync (`zenity --question '--text=Do you really want to publish X_ITE X3D v${version} now?' --ok-label=Yes --cancel-label=No`);
 
