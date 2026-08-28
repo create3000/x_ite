@@ -26,7 +26,7 @@ x3d_latest_version: 4.1 # x3d latest version
 # x_ite settings
 x_ite_teaser: stars-dance-in-galaxy
 x_ite_latest_version: 16.1.3 # x_ite latest version
-x_ite_compressed_size: 272 # size in kb
+x_ite_compressed_size: 272.3 # size in kb
 x_ite_js_integrity: sha384-tJtfkZi1V5yZXl+9E9ZIGZtos82tNrrhRPkDS2kO05zC9l08ywyHpm3CvxIVykoZ
 x_ite_min_js_integrity: sha384-WxYZn54BmGGGSCIubiE4mqB4mcuKBjXNbOtHqQu2dkrpuyfy7w/iCtv+Sdla70PN
 x_ite_mjs_integrity: sha384-9Zr99o7Oz4ejqNIrfELkFv0iBBRz7wc2JjoE2uktiOAnAlJy1CBdoGqmRSxyhXPp

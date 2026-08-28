@@ -46,12 +46,12 @@ function readme (version)
 function docs (version)
 {
    // curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '
-   const size = Math .floor (parseInt (sh (`brotli -q 4 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000);
+   const size = parseInt (sh (`brotli -q 4 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000;
 
    let config = sh (`cat 'docs/_config.yml'`);
 
    config = config .replace (/\x_ite_latest_version:\s*[\d.]+/sg, `x_ite_latest_version: ${version}`);
-   config = config .replace (/\x_ite_compressed_size:\s*[\d.]+/sg, `x_ite_compressed_size: ${size}`);
+   config = config .replace (/\x_ite_compressed_size:\s*[\d.]+/sg, `x_ite_compressed_size: ${size .toFixed (1)}`);
 
    fs .writeFileSync ("docs/_config.yml", config);
 }
