@@ -128,6 +128,11 @@ Single intermittent output value determined by current key time and correspondin
 - [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting)
 - [X3D Event-Utility Node Diagrams](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting/X3dEventUtilityNodeEventDiagrams.pdf)
 
+### Warnings
+
+- Each sequencer node sends only one value_changed output event per each key[i] interval that is activated.
+- No interpolation occurs, and no streaming of identical repeated values occurs during a single key[i] time interval.
+
 ## Example
 
 <x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/EventUtilities/IntegerSequencer/IntegerSequencer.x3d" contentScale="auto" update="auto">
