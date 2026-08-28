@@ -43,7 +43,7 @@ function readme (version)
 
    readme = readme
       .replace (/x_ite@[\d.]+/sg, `x_ite@${version}`)
-      .replace (/[\d.]+ kB/, size .toFixed (1));
+      .replace (/[\d.]+%20kB/, `${size .toFixed (1)}%20kB`);
 
    fs .writeFileSync ("README.md", readme);
 }
