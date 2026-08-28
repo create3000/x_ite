@@ -17,6 +17,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 - [x] Implemented [Sound](/x_ite/components/sound/sound/) and [SpatialSound](/x_ite/components/sound/spatialsound/) *enabled* field.
 - [x] Added new [browser option](/x_ite/reference/browser-services/#browser-options) *SoundIntensity*.
 - [x] Added new [rendering property](/x_ite/reference/browser-services/#rendering-properties) *SoundDestinations*.
+- [x] Fixed outputs of textures when the texture is unloaded.
 
 ## X_ITE v16.1 Series
 
