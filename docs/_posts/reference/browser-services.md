@@ -321,7 +321,7 @@ print (Browser .getRenderingProperty ("ContentScale"));
 | MaxSamples | Integer | The maximum number of samples supported for doing multisampling. <small class="blue">non-standard</small> |
 | Multisampling | Integer | Number of samples currently used by multisampling. <small class="blue">non-standard</small> |
 | PixelsPerPoint | Float | Number of [pixels](https://developer.mozilla.org/en-US/docs/Glossary/CSS_pixel) per point. <small class="blue">non-standard</small> |
-| SoundDestinations | Boolean | `true` if there are any sound destination nodes active, otherwise `false`. <small class="blue">non-standard</small> |
+| SoundDestinations | Integer | The number of active sound destination nodes. <small class="blue">non-standard</small> |
 | XRSession | Boolean | `true` if a WebXR session is active, otherwise `false`. <small class="blue">non-standard</small> |
 
 <!--

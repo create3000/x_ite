@@ -442,7 +442,7 @@ declare namespace X3D
       MaxSamples:             number,
       Multisampling:          number,
       PixelsPerPoint:         number,
-      SoundDestinations:      boolean,
+      SoundDestinations:      number,
       XRSession:              boolean,
    };
 

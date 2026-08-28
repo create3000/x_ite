@@ -7,6 +7,17 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v16.2 Series
+
+**Leipzig, 30th August 2026:** The 16.2 series fixes and implements missing features for sound and audio support in X_ITE. The new features include the implementation of the *hasSound* output for [MovieTexture](/x_ite/components/texturing/movietexture/), as well as the *enabled* field for [Sound](/x_ite/components/sound/sound/) and [SpatialSound](/x_ite/components/sound/spatialsound/). Additionally, a new [browser option](/x_ite/reference/browser-services/#browser-options) called *SoundIntensity* has been added, along with a new [rendering property](/x_ite/reference/browser-services/#rendering-properties) called *SoundDestinations*. These enhancements provide developers with more control over audio playback and spatialization within X3D scenes.
+
+### Notable Changes
+
+- [x] Implemented [MovieTexture](/x_ite/components/texturing/movietexture/) *hasSound* output.
+- [x] Implemented [Sound](/x_ite/components/sound/sound/) and [SpatialSound](/x_ite/components/sound/spatialsound/) *enabled* field.
+- [x] Added new [browser option](/x_ite/reference/browser-services/#browser-options) *SoundIntensity*.
+- [x] Added new [rendering property](/x_ite/reference/browser-services/#rendering-properties) *SoundDestinations*.
+
 ## X_ITE v16.1 Series
 
 **Leipzig, 9th August 2026:** The 16.1 series of X_ITE introduces a fresh new splash-screen design, giving applications a more modern and polished appearance while content is loading. The updated design improves the first impression for users with cleaner visuals and smoother presentation, making startup feel more refined without affecting existing projects or workflows. This enhancement is part of X_ITE's ongoing effort to modernize the user experience while maintaining full compatibility and performance.
