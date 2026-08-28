@@ -197,12 +197,14 @@ Object .assign (X3DNetworkingContext .prototype,
          const fractions = 1 - (this ._loadCount .getValue () + loadFractions)
             / (this [_loadingTotal] + this [_loadFractions] .size);
 
+         const percent = fractions * 100;
+
          // Show progress in % if loading takes too long.
          if (Date .now () - this [_browserTime] > 6_000)
-            string += ` (${(100 * fractions) .toFixed (2)} %)`;
+            string += ` (${percent .toFixed (2)} %)`;
 
          this .getSplashScreen () .querySelector (".x_ite-private-spinner-text") .textContent     = string;
-         this .getSplashScreen () .querySelector (".x_ite-private-progressbar div") .style .width = `${100 * fractions}%`;
+         this .getSplashScreen () .querySelector (".x_ite-private-progressbar div") .style .width = `${percent}%`;
       }
       else
       {
