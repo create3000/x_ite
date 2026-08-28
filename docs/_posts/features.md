@@ -14,7 +14,7 @@ X_ITE is a fast, small, and feature-rich JavaScript library and VRML viewer for 
 - X_ITE is freely downloadable for any usage and licensed under the MIT license. You can use them for commercial and noncommercial purposes.
 - Runs completely standalone, i.e. there are no other library dependencies. You just need to include *x_ite.js* into your HTML page.
 - Competitive performance for most frequently used functions and nodes. All function within X_ITE are optimized to give your the best performance that JavaScript can offer.
-- The X_ITE package is optimized in size with Terser to achieve the smallest size we can reach. **X_ITE core module has only {{ site.x_ite_compressed_size }}KB in size minified and compressed**, all other modules are loaded on demand.
+- The X_ITE package is optimized in size with Terser to achieve the smallest size we can reach. **X_ITE core module has only {{ site.x_ite_compressed_size }} kB in size minified and compressed with Brotli**, all other modules are loaded on demand.
 - X_ITE is designed for optimal performance with event driven programming. The flow of the program is determined by events such as user actions (mouse clicks, key presses), sensor outputs, or messages from other scripts.
 
 All code is held by [CREATE3000](https://github.com/create3000) and all contributors are selected and all contributions become verified.
