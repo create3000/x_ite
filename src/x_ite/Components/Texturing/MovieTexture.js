@@ -58,7 +58,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    {
       this .clearTexture ();
       this .setMediaElement (null);
-      this .updateOutputs (0, 0, 0, -1);
+      this .updateOutputs (0, 0, 0, false, -1);
    },
    async loadData ()
    {
@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
       this .setMediaElement (null);
       this .clearTexture ();
-      this .updateOutputs (0, 0, 0, -1);
+      this .updateOutputs (0, 0, 0, false, -1);
       this .setLoadState (X3DConstants .FAILED_STATE);
    },
    loadDocument (fileURL)
@@ -174,7 +174,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
       this .setMediaElement (gif);
       this .setTextureData (width, height, true, false, gif .get_frames () [0] .data);
-      this .updateOutputs (width, height, 4, gif .duration);
+      this .updateOutputs (width, height, 4, false, gif .duration);
       this .setLoadState (X3DConstants .COMPLETE_STATE);
 
       this .set_speed__ ();
@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
       this .setMediaElement (apng);
       this .setTextureData (width, height, true, false, currentFrame);
-      this .updateOutputs (width, height, 4, duration);
+      this .updateOutputs (width, height, 4, false, duration);
       this .setLoadState (X3DConstants .COMPLETE_STATE);
 
       this .set_speed__ ();
@@ -208,16 +208,23 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
       this .setMediaElement (video);
       this .setTextureData (width, height, true, false, video);
-      this .updateOutputs (width, height, 3, video .duration);
+      this .updateOutputs (width, height, 3, this .hasAudioTracks (video), video .duration);
       this .setLoadState (X3DConstants .COMPLETE_STATE);
 
       this .set_speed__ ();
    },
-   updateOutputs (width, height, colorDepth, duration)
+   hasAudioTracks (video)
+   {
+      return video.mozHasAudio ||
+         Boolean (video .webkitAudioDecodedByteCount) ||
+         Boolean (video .audioTracks && video .audioTracks .length);
+   },
+   updateOutputs (width, height, colorDepth, hasSound, duration)
    {
       this ._width            = width;
       this ._height           = height;
       this ._colorDepth       = colorDepth;
+      this ._hasSound         = hasSound;
       this ._duration_changed = duration;
    },
    set_speed__ ()
