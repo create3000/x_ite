@@ -1,7 +1,7 @@
-/* X_ITE v16.1.3 */
+/* X_ITE v16.2.0 */
 var __webpack_modules__ = ({
 
-/***/ 143
+/***/ 627
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 701
+/***/ 249
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 877
+/***/ 289
 (module) {
 
 /**
@@ -6809,48 +6809,27 @@ if (true) {
 /******/ 
 /************************************************************************/
 /******/ /* webpack/runtime/define property getters */
-/******/ (() => {
-/******/ 	// define getter/value functions for harmony exports
-/******/ 	__webpack_require__.d = (exports, definition) => {
-/******/ 		if(Array.isArray(definition)) {
-/******/ 			var i = 0;
-/******/ 			while(i < definition.length) {
-/******/ 				var key = definition[i++];
-/******/ 				var binding = definition[i++];
-/******/ 				if(!__webpack_require__.o(exports, key)) {
-/******/ 					if(binding === 0) {
-/******/ 						Object.defineProperty(exports, key, { enumerable: true, value: definition[i++] });
-/******/ 					} else {
-/******/ 						Object.defineProperty(exports, key, { enumerable: true, get: binding });
-/******/ 					}
-/******/ 				} else if(binding === 0) { i++; }
-/******/ 			}
-/******/ 		} else {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
+/******/ // define getter/value functions for harmony exports
+/******/ __webpack_require__.d = (exports, definition) => {
+/******/ 	for(var key in definition) {
+/******/ 		if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 			Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
 /******/ 		}
-/******/ 	};
-/******/ })();
+/******/ 	}
+/******/ };
 /******/ 
 /******/ /* webpack/runtime/global */
-/******/ (() => {
-/******/ 	__webpack_require__.g = (function() {
-/******/ 		if (typeof globalThis === 'object') return globalThis;
-/******/ 		try {
-/******/ 			return this || new Function('return this')();
-/******/ 		} catch (e) {
-/******/ 			if (typeof window === 'object') return window;
-/******/ 		}
-/******/ 	})();
+/******/ __webpack_require__.g = (function() {
+/******/ 	if (typeof globalThis === 'object') return globalThis;
+/******/ 	try {
+/******/ 		return this || new Function('return this')();
+/******/ 	} catch (e) {
+/******/ 		if (typeof window === 'object') return window;
+/******/ 	}
 /******/ })();
 /******/ 
 /******/ /* webpack/runtime/hasOwnProperty shorthand */
-/******/ (() => {
-/******/ 	__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ })();
+/******/ __webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop));
 /******/ 
 /************************************************************************/
 
@@ -6861,7 +6840,7 @@ Object .defineProperty (Namespace, "add",
 {
    value (name, module)
    {
-      if (Namespace .hasOwnProperty (name))
+      if (Object .hasOwn (Namespace, name))
       {
          console .error (new Error (`Namespace: "${name}" already exists.`));
          return module;
@@ -6891,18 +6870,22 @@ Object .defineProperty (X3DConstants, "addConstant",
 {
    value (name, value)
    {
-      if (this .hasOwnProperty (name) || this .hasOwnProperty (value))
+      if (Object .hasOwn (this, name) || Object .hasOwn (this, value))
          return;
 
-      Object .defineProperty (this, name,
-      {
-         value: value ?? ++ CONSTANT_VALUE,
-         enumerable: true,
-      });
+      value ??= ++ CONSTANT_VALUE;
 
-      Object .defineProperty (this, this [name],
+      Object .defineProperties (this,
       {
-         value: name,
+         [name]:
+         {
+            value: value,
+            enumerable: true,
+         },
+         [value]:
+         {
+            value: name,
+         },
       });
    },
 });
@@ -18882,7 +18865,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.1.3";
+const BROWSER_VERSION_default_ = "16.2.0";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -18992,37 +18975,28 @@ const dictionary_default_ = [
    {
       en: "fps",
       de: "BpS",
-      fr: "",
    },
    {
       en: "Speed",
       de: "Geschwindigkeit",
-      fr: "Vélocité",
+      fr: "Vitesse",
    },
    {
       en: "m/s",
-      de: "",
-      fr: "",
    },
    {
       en: "km/h",
-      de: "",
-      fr: "",
    },
    {
       en: "Browser",
-      de: "",
       fr: "Navigateur",
    },
    {
       en: "ms",
-      de: "",
-      fr: "",
    },
    {
       en: "X3D total",
       de: "X3D gesamt",
-      fr: "X3D total",
    },
    {
       en: "Event Processing",
@@ -19047,12 +19021,12 @@ const dictionary_default_ = [
    {
       en: "Rendering",
       de: "Rendering",
-      fr: "Rendement",
+      fr: "Rendu",
    },
    {
       en: "Number of Primitives",
       de: "Anzahl der Grundobjekte",
-      fr: "Nombre d'Objets de Base",
+      fr: "Nombre de Primitives",
    },
    {
       en: "Number of Shapes",
@@ -19062,12 +19036,12 @@ const dictionary_default_ = [
    {
       en: "Number of Sensors",
       de: "Anzahl der Sensoren",
-      fr: "Nombre de Senseurs",
+      fr: "Nombre de Capteurs",
    },
    {
       en: "Browser Timings",
       de: "Zeitberechnung",
-      fr: "Calcul du Temps",
+      fr: "Temps du Navigateur",
    },
    {
       en: "Viewpoints",
@@ -19077,7 +19051,7 @@ const dictionary_default_ = [
    {
       en: "Available Viewers",
       de: "Verfügbare Betrachter",
-      fr: "Visionneurs disponibles",
+      fr:  "Visionneurs disponibles",
    },
    {
       en: "Straighten Horizon",
@@ -19087,17 +19061,17 @@ const dictionary_default_ = [
    {
       en: "Primitive Quality",
       de: "Qualität der Grundobjekte",
-      fr: "Qualité des Objets simples",
+      fr: "Qualité des Primitives",
    },
    {
       en: "High",
       de: "Hoch",
-      fr: "Haut",
+      fr: "Élevée",
    },
    {
       en: "high",
       de: "hoch",
-      fr: "haut",
+      fr: "élevée",
    },
    {
       en: "Medium",
@@ -19121,18 +19095,18 @@ const dictionary_default_ = [
    },
    {
       en: "Texture Quality",
-      de: "Textur Qualität",
+      de: "Texturqualität",
       fr: "Qualité des Textures",
    },
    {
       en: "Display Rubberband",
       de: "Gummiband anzeigen",
-      fr: "Présenter le Bande élastique",
+      fr: "Afficher la Sélection élastique",
    },
    {
       en: "Rubberband",
       de: "Gummiband",
-      fr: "Bande élastique",
+      fr: "Sélection élastique",
    },
    {
       en: "on",
@@ -19147,22 +19121,22 @@ const dictionary_default_ = [
    {
       en: "Mute Browser",
       de: "Browser stumm schalten",
-      fr: "Rendre Navigateur muet",
+      fr: "Couper le Son du Navigateur",
    },
    {
       en: "Browser muted",
-      de: "Browser stumm geschalten",
-      fr: "Navigateur muet",
+      de: "Browser stummgeschaltet",
+      fr: "Son du Navigateur coupé",
    },
    {
       en: "Browser unmuted",
-      de: "Browser Ton an",
-      fr: "Son de Navigateur réactivé",
+      de: "Browserton eingeschaltet",
+      fr: "Son du Navigateur rétabli",
    },
    {
       en: "Leave Fullscreen",
       de: "Vollbild verlassen",
-      fr: "Laisser le plein Écran",
+      fr: "Quitter le Plein Écran",
    },
    {
       en: "Fullscreen",
@@ -19207,7 +19181,6 @@ const dictionary_default_ = [
    {
       en: "Points",
       de: "Punkte",
-      fr: "",
    },
    {
       en: "Flat",
@@ -19216,7 +19189,7 @@ const dictionary_default_ = [
    },
    {
       en: "Wireframe",
-      de: "Drahtgittermodel",
+      de: "Drahtgittermodell",
       fr: "Image filaire",
    },
    {
@@ -19237,7 +19210,7 @@ const dictionary_default_ = [
    {
       en: "Failed loading world.",
       de: "Laden der Dateien fehlgeschlagen.",
-      fr: "Le chargement des Fichiers a échoué.",
+      fr: "Le chargement des fichiers a échoué.",
    },
    {
       en: "Show World Info",
@@ -19247,12 +19220,11 @@ const dictionary_default_ = [
    {
       en: "Viewpoint is copied to clipboard.",
       de: "Ansichtspunkt wurde in die Zwischenablage kopiert.",
-      fr: "Le point de Vue est copié dans le Presse-Papiers.",
+      fr: "Le point de vue a été copié dans le presse-papiers.",
    },
    {
       en: "Animations",
-      de: "Animationen",
-      fr: "",
+      fr: "Séquences animées",
    },
    {
       en: "All",
@@ -19266,18 +19238,18 @@ const dictionary_default_ = [
    },
    {
       en: "Start WebXR session.",
-      de: "Starte eine WebXR Session.",
-      fr: "Démarrez une session WebXR.",
+      de: "WebXR-Sitzung starten.",
+      fr: "Démarrer une session WebXR.",
    },
    {
       en: "Stop WebXR session.",
-      de: "Beende die WebXR Session.",
-      fr: "Terminez la session WebXR.",
+      de: "WebXR-Sitzung beenden.",
+      fr: "Terminer la session WebXR.",
    },
    {
       en: "Activate sound.",
-      de: "Activiere den Ton.",
-      fr: "Activez le son.",
+      de: "Ton aktivieren.",
+      fr: "Activer le son.",
    },
    {
       en: "Points; Lines; Triangles",
@@ -19286,7 +19258,7 @@ const dictionary_default_ = [
    },
    {
       en: "Opaque Shapes + Transparent Shapes",
-      de: "opaque Formen + transparente Formen",
+      de: "Undurchsichtige Formen + Transparente Formen",
       fr: "Formes opaques + Formes transparentes",
    },
 ];
@@ -19821,13 +19793,15 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
       this ._Exposure                     .addInterest ("set_Exposure__",                     this);
       this ._LogarithmicDepthBuffer       .addInterest ("set_LogarithmicDepthBuffer__",       this);
       this ._Multisampling                .addInterest ("set_Multisampling__",                this);
-      this ._Mute                         .addInterest ("set_Mute__",                         this);
+      this ._Mute                         .addInterest ("set_SoundIntensity__",               this);
       this ._OrderIndependentTransparency .addInterest ("set_OrderIndependentTransparency__", this);
+      this ._SoundIntensity               .addInterest ("set_SoundIntensity__",               this);
       this ._Timings                      .addInterest ("set_Timings__",                      this);
       this ._XRSessionMode                .addInterest ("set_XRSessionMode__",                this);
 
       this .set_Antialiased__                  (this ._Antialiased);
       this .set_Shading__                      (this ._Shading);
+      this .set_SoundIntensity__               ();
       this .set_AutoUpdate__                   (this ._AutoUpdate);
       this .set_ContentScale__                 (this ._ContentScale);
       this .set_DisplayColorSpace              (this ._DisplayColorSpace);
@@ -19996,13 +19970,6 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
          browser .setShading (this .shading);
       };
    })(),
-   set_StraightenHorizon__ (straightenHorizon)
-   {
-      this .localStorage .StraightenHorizon = straightenHorizon .getValue ();
-
-      if (straightenHorizon .getValue ())
-         this .getBrowser () .getActiveLayer () ?.straightenView ();
-   },
    set_AutoUpdate__ (autoUpdate)
    {
       document .removeEventListener ("visibilitychange", this .checkUpdateListener);
@@ -20139,20 +20106,25 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, Base_X3DBaseN
 
       browser .reshape ();
    },
-   set_Mute__ (mute)
-   {
-      const
-         browser      = this .getBrowser (),
-         audioContext = browser .getAudioContext ();
-
-      if (mute .getValue ())
-         browser .stopAudioElement (audioContext, "suspend");
-      else
-         browser .startAudioElement (audioContext, "resume");
-   },
    set_OrderIndependentTransparency__ ()
    {
       this .getBrowser () .reshape ();
+   },
+   set_SoundIntensity__ ()
+   {
+      const
+         unmute = !this ._Mute .getValue (),
+         gain   = unmute * Math_Algorithm .clamp (this ._SoundIntensity .getValue (), 0, 1);
+
+      for (const soundNode of this .getBrowser () .getSoundDestinations ())
+         soundNode .getSoundDestination () .gain .value = gain;
+   },
+   set_StraightenHorizon__ (straightenHorizon)
+   {
+      this .localStorage .StraightenHorizon = straightenHorizon .getValue ();
+
+      if (straightenHorizon .getValue ())
+         this .getBrowser () .getActiveLayer () ?.straightenView ();
    },
    set_Timings__ (timings)
    {
@@ -20205,6 +20177,7 @@ Object .defineProperties (BrowserOptions,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Mute",                         new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Notifications",                new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "OrderIndependentTransparency", new x_ite_Fields .SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "SoundIntensity",               new x_ite_Fields .SFFloat (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "StraightenHorizon",            new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "TextCompression",              new x_ite_Fields .SFString ("CHAR_SPACING")),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Timings",                      new x_ite_Fields .SFBool ()),
@@ -20338,6 +20311,7 @@ Object .defineProperties (RenderingProperties,
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "MaxSamples",             new x_ite_Fields .SFInt32 (0)),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "Multisampling",          new x_ite_Fields .SFInt32 (4)),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "PixelsPerPoint",         new x_ite_Fields .SFDouble (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "SoundDestinations",      new x_ite_Fields .SFInt32 ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly, "XRSession",              new x_ite_Fields .SFBool ()),
       ]),
       enumerable: true,
@@ -21581,7 +21555,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
                   {
                      destinationField .addReference (instance .getField (originalReference .getName ()));
                   }
-                  catch (error)
+                  catch
                   {
                      console .error (`No reference '${originalReference .getName ()}' inside execution context ${instance .getTypeName ()} '${instance .getName ()}'.`);
                   }
@@ -22010,7 +21984,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
    [_metaDataCallbacks]: new Map (),
    addMetaDataCallback (key, path, callback)
    {
-      if (!this .hasOwnProperty (_metaDataCallbacks))
+      if (!Object .hasOwn (this, _metaDataCallbacks))
          this [_metaDataCallbacks] = new Map ();
 
       let map = this [_metaDataCallbacks] .get (path);
@@ -31218,7 +31192,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(877);
+/* provided dependency */ var libtess = __webpack_require__(289);
 
 
 const Triangle3 =
@@ -47918,7 +47892,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(877);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(289);
 
 
 
@@ -54664,7 +54638,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-F+mssNuFiQHol3RT7fLg6krIVxgAio+0HtxiqkBJSZIYtVM6Z51XLEsu66xkirs/";
+         link .integrity   = "sha384-OncRzbLtLD5Caw7AMriMRlhuhJ/fW3gh5dFvrdeifrhlqF+YTzx/lbZh5l6JjYau";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -64060,6 +64034,7 @@ const
    _loadingTotal   = Symbol (),
    X3DNetworkingContext_loadingObjects = Symbol (),
    _browserLoading = Symbol (),
+   _browserTime    = Symbol (),
    _set_loadCount  = Symbol (),
    _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
@@ -64120,6 +64095,7 @@ Object .assign (X3DNetworkingContext .prototype,
    setBrowserLoading (value)
    {
       this [_browserLoading] = value;
+      this [_browserTime]    = Date .now ();
 
       if (value)
       {
@@ -64182,12 +64158,16 @@ Object .assign (X3DNetworkingContext .prototype,
       this [X3DNetworkingContext_loadingObjects] .add (object);
 
       this ._loadCount = this [X3DNetworkingContext_loadingObjects] .size;
+
+      this [_browserTime] = Date .now ();
    },
    removeLoadingObject (object)
    {
       this [X3DNetworkingContext_loadingObjects] .delete (object);
 
       this ._loadCount = this [X3DNetworkingContext_loadingObjects] .size;
+
+      this [_browserTime] = Date .now ();
    },
    getDisplayLoadCount ()
    {
@@ -64241,8 +64221,14 @@ Object .assign (X3DNetworkingContext .prototype,
          const fractions = 1 - (this ._loadCount .getValue () + loadFractions)
             / (this [_loadingTotal] + this [_loadFractions] .size);
 
+         const percent = fractions * 100;
+
+         // Show progress in % if loading takes too long.
+         if (Date .now () - this [_browserTime] > 8_000)
+            string += ` (${percent .toFixed (2)} %)`;
+
          this .getSplashScreen () .querySelector (".x_ite-private-spinner-text") .textContent     = string;
-         this .getSplashScreen () .querySelector (".x_ite-private-progressbar div") .style .width = `${100 * fractions}%`;
+         this .getSplashScreen () .querySelector (".x_ite-private-progressbar div") .style .width = `${percent}%`;
       }
       else
       {
@@ -71847,10 +71833,9 @@ const PeriodicWave_default_ = PeriodicWave;
 
 
 
-
 const
    _audioContext        = Symbol (),
-   _audioNodes          = Symbol (),
+   _soundDestinationNodes          = Symbol (),
    _audioElements       = Symbol (),
    _defaultPeriodicWave = Symbol (),
    _noSoundButton       = Symbol (),
@@ -71858,9 +71843,7 @@ const
 
 function X3DSoundContext ()
 {
-   this .addChildObjects (Base_X3DConstants .outputOnly, "audio", new x_ite_Fields .SFBool ());
-
-   this [_audioNodes]    = new Set ();
+   this [_soundDestinationNodes]    = new Set ();
    this [_audioElements] = new Map ();
 }
 
@@ -71898,17 +71881,25 @@ Object .assign (X3DSoundContext .prototype,
          return audioContext;
       })();
    },
-   addAudioNode (element)
+   addSoundDestination (soundDestinationNode)
    {
-      this [_audioNodes] .add (element);
+      const gain = !this .getBrowserOption ("Mute") * Math_Algorithm .clamp (this .getBrowserOption ("SoundIntensity"), 0, 1);
 
-      this ._audio = this [_audioNodes] .size;
+      soundDestinationNode .getSoundDestination () .gain .value = gain;
+
+      this [_soundDestinationNodes] .add (soundDestinationNode);
+
+      this .getRenderingProperties () ._SoundDestinations = this [_soundDestinationNodes] .size;
    },
-   removeAudioNode (element)
+   removeSoundDestination (soundDestinationNode)
    {
-      this [_audioNodes] .delete (element);
+      this [_soundDestinationNodes] .delete (soundDestinationNode);
 
-      this ._audio = this [_audioNodes] .size;
+      this .getRenderingProperties () ._SoundDestinations = this [_soundDestinationNodes] .size;
+   },
+   getSoundDestinations ()
+   {
+      return this [_soundDestinationNodes];
    },
    startAudioElement (audioElement, functionName = "play")
    {
@@ -72887,7 +72878,7 @@ const
    _animFrame      = Symbol (),
    _previousTime   = Symbol (),
    _systemTime     = Symbol (),
-   _browserTime    = Symbol (),
+   X3DBrowserContext_browserTime    = Symbol (),
    _cameraTime     = Symbol (),
    _collisionTime  = Symbol (),
    _displayTime    = Symbol (),
@@ -72939,7 +72930,7 @@ function X3DBrowserContext (element)
    this [_previousTime]   = 0;
    this [_renderCallback] = this [_traverse] .bind (this);
    this [_systemTime]     = new Time_StopWatch ();
-   this [_browserTime]    = new Time_StopWatch ();
+   this [X3DBrowserContext_browserTime]    = new Time_StopWatch ();
    this [_cameraTime]     = new Time_StopWatch ();
    this [_collisionTime]  = new Time_StopWatch ();
    this [_displayTime]    = new Time_StopWatch ();
@@ -73059,7 +73050,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
       // Start
 
       this [_systemTime] .stop ();
-      this [_browserTime] .start ();
+      this [X3DBrowserContext_browserTime] .start ();
 
       // Time
 
@@ -73120,7 +73111,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
 
       // Finish
 
-      this [_browserTime] .stop ();
+      this [X3DBrowserContext_browserTime] .stop ();
       this [_systemTime] .start ();
    },
    getSystemTime ()
@@ -73129,7 +73120,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
    },
    getBrowserTime ()
    {
-      return this [_browserTime];
+      return this [X3DBrowserContext_browserTime];
    },
    getCameraTime ()
    {
@@ -87739,6 +87730,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Sound
       const channelCountModes = new Map ([
          ["MAX",         "max"],
          ["CLAMPED-MAX", "clamped-max"],
+         ["CLAMPED_MAX", "clamped-max"],
          ["EXPLICIT",    "explicit"],
       ]);
 
@@ -88317,10 +88309,12 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, Sound_X3DSoundSour
    unloadData ()
    {
       this .setMediaElement (null);
+
+      this ._duration_changed = -1;
    },
    loadData ()
    {
-      this .unloadData ();
+      this .setMediaElement (null);
 
       new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
@@ -88413,10 +88407,13 @@ function X3DSoundDestinationNode (executionContext)
 
    this .addType (Base_X3DConstants .X3DSoundDestinationNode);
 
+   // Private properties
+
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .childNodes       = [ ];
    this .audioDestination = new GainNode (audioContext, { gain: 0 });
+   this .soundDestination = new GainNode (audioContext, { gain: 0 });
 }
 
 Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Sound_X3DSoundNode .prototype),
@@ -88441,6 +88438,10 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Soun
       this .set_channelInterpretation__ ();
       this .set_children__ ();
    },
+   getSoundDestination ()
+   {
+      return this .soundDestination;
+   },
    getAudioDestination ()
    {
       return this .audioDestination;
@@ -88451,17 +88452,17 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Soun
 
       const
          browser = this .getBrowser (),
-         active  = this ._enabled .getValue () && this .getLive () .getValue ();
+         active  = this .getLive () .getValue () && this ._enabled .getValue ();
 
       if (active)
       {
-         this .audioDestination .connect (this .getSoundDestination ());
-         browser .addAudioNode (this);
+         browser .addSoundDestination (this);
+         this .audioDestination .connect (this .soundDestination);
       }
       else
       {
+         browser .removeSoundDestination (this);
          this .audioDestination .disconnect ();
-         browser .removeAudioNode (this);
       }
 
       this ._isActive = this ._enabled;
@@ -88479,6 +88480,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, Soun
       const channelCountModes = new Map ([
          ["MAX",         "max"],
          ["CLAMPED-MAX", "clamped-max"],
+         ["CLAMPED_MAX", "clamped-max"],
          ["EXPLICIT",    "explicit"],
       ]);
 
@@ -88562,6 +88564,8 @@ function AudioDestination (executionContext)
    this .audioElement                    = new Audio ();
    this .mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode (audioContext);
    this .audioElement .srcObject         = this .mediaStreamAudioDestinationNode .stream;
+
+   this .getSoundDestination () .connect (this .mediaStreamAudioDestinationNode);
 }
 
 Object .assign (Object .setPrototypeOf (AudioDestination .prototype, Sound_X3DSoundDestinationNode .prototype),
@@ -88578,17 +88582,13 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, Sound_X3DSo
 
       this .set_mediaDeviceID__ ();
    },
-   getSoundDestination ()
-   {
-      return this .mediaStreamAudioDestinationNode;
-   },
    set_enabled__ ()
    {
       Sound_X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
 
       const
          browser = this .getBrowser (),
-         active  = this ._enabled .getValue () && this .getLive () .getValue ();
+         active  = this .getLive () .getValue () && this ._enabled .getValue ();
 
       if (active)
          browser .startAudioElement (this .audioElement);
@@ -88832,7 +88832,7 @@ Object .assign (Object .setPrototypeOf (BufferAudioSource .prototype, Sound_X3DS
       }
       else
       {
-         this ._bufferDuration = 0;
+         this ._bufferDuration = -1;
 
          this .setMediaElement (null);
       }
@@ -89070,6 +89070,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, Sound_X3
       const channelCountModes = new Map ([
          ["MAX",         "max"],
          ["CLAMPED-MAX", "clamped-max"],
+         ["CLAMPED_MAX", "clamped-max"],
          ["EXPLICIT",    "explicit"],
       ]);
 
@@ -89134,7 +89135,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, Sound_X3
       for (const [i, childNode] of this .childNodes .entries ())
          this .connectChildNode (i, childNode);
    },
-   setChildNodes (childNodes)
+   setChildNodes ()
    { },
    connectChildNode (i, childNode)
    {
@@ -90303,18 +90304,20 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
       const
          audioContext       = this .getBrowser () .getAudioContext (),
          gainNode           = new GainNode (audioContext, { gain: 0 }),
+         gainStereoNode     = new GainNode (audioContext, { gain: 0 }),
          splitterNode       = new ChannelSplitterNode (audioContext, { numberOfOutputs: 2 }),
-         mergerNode         = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
          gainFrontLeftNode  = new GainNode (audioContext, { gain: 0 }),
          gainFrontRightNode = new GainNode (audioContext, { gain: 0 }),
          gainBackLeftNode   = new GainNode (audioContext, { gain: 0 }),
-         gainBackRightNode  = new GainNode (audioContext, { gain: 0 });
+         gainBackRightNode  = new GainNode (audioContext, { gain: 0 }),
+         mergerNode         = new ChannelMergerNode (audioContext, { numberOfInputs: 2 }),
+         soundDestination = new GainNode (audioContext, { gain: 0 });
 
       gainNode .channelCount          = 2;
       gainNode .channelCountMode      = "explicit";
       gainNode .channelInterpretation = "speakers";
 
-      gainNode           .connect (splitterNode);
+      gainStereoNode     .connect (soundDestination);
       splitterNode       .connect (gainFrontLeftNode,  0);
       splitterNode       .connect (gainFrontRightNode, 1);
       splitterNode       .connect (gainBackRightNode, 0);
@@ -90323,26 +90326,36 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
       gainFrontRightNode .connect (mergerNode, 0, 1);
       gainBackLeftNode   .connect (mergerNode, 0, 0);
       gainBackRightNode  .connect (mergerNode, 0, 1);
-      mergerNode         .connect (audioContext .destination);
+      mergerNode         .connect (soundDestination);
+      soundDestination   .connect (audioContext .destination);
 
       this .gainNode           = gainNode;
+      this .gainStereoNode     = gainStereoNode;
       this .splitterNode       = splitterNode;
       this .gainFrontLeftNode  = gainFrontLeftNode;
       this .gainFrontRightNode = gainFrontRightNode;
       this .gainBackLeftNode   = gainBackLeftNode;
       this .gainBackRightNode  = gainBackRightNode;
       this .mergerNode         = mergerNode;
+      this .soundDestination   = soundDestination;
 
-      this .getLive () .addInterest ("set_live__", this);
-      this ._traversed .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_enabled__", this);
+      this ._traversed .addInterest ("set_enabled__", this);
+      this ._enabled   .addInterest ("set_enabled__", this);
 
-      this ._intensity .addInterest ("set_intensity__", this);
-      this ._source    .addInterest ("set_children__",  this);
-      this ._children  .addInterest ("set_children__",  this);
+      this ._spatialize .addInterest ("set_spatialize__", this);
+      this ._intensity  .addInterest ("set_intensity__",  this);
+      this ._source     .addInterest ("set_children__",   this);
+      this ._children   .addInterest ("set_children__",   this);
 
-      this .set_live__ ();
+      this .set_enabled__ ();
+      this .set_spatialize__ ();
       this .set_intensity__ ();
       this .set_children__ ();
+   },
+   getSoundDestination ()
+   {
+      return this .soundDestination;
    },
    setTraversed (value)
    {
@@ -90371,31 +90384,43 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
          rotationFront = 1 - rotation,
          rotationBack  = rotation;
 
+      this .gainStereoNode     .gain .value = gain;
       this .gainFrontLeftNode  .gain .value = gain * rotationFront * panLeft;
       this .gainFrontRightNode .gain .value = gain * rotationFront * panRight;
       this .gainBackLeftNode   .gain .value = gain * rotationBack  * panLeft;
       this .gainBackRightNode  .gain .value = gain * rotationBack  * panRight;
    },
-   set_live__ ()
+   set_enabled__ ()
    {
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         active  = this .getLive () .getValue () && this ._traversed .getValue () && this ._enabled .getValue ();
 
-      this .mergerNode .disconnect ();
-
-      if (this .getLive () .getValue () && this ._traversed .getValue ())
+      if (active)
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .mergerNode .connect (audioContext .destination);
+         this .soundDestination .connect (audioContext .destination);
 
-         browser .addAudioNode (this);
+         browser .addSoundDestination (this);
          browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
-         browser .removeAudioNode (this);
+         this .soundDestination .disconnect ();
+
+         browser .removeSoundDestination (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
+   },
+   set_spatialize__ ()
+   {
+      this .gainNode .disconnect ();
+
+      if (this ._spatialize .getValue ())
+         this .gainNode .connect (this .splitterNode);
+      else
+         this .gainNode .connect (this .gainStereoNode);
    },
    set_intensity__ ()
    {
@@ -90415,7 +90440,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
 
       for (const child of this ._children)
       {
-         const childNode = Base_X3DCast (Base_X3DConstants .X3DChildNode, child);
+         const childNode = Base_X3DCast (Base_X3DConstants .X3DNode, child);
 
          if (!childNode)
             continue;
@@ -90660,22 +90685,26 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, Sound_X3DSoundN
       Sound_X3DSoundNode .prototype .initialize .call (this);
 
       const
-         audioContext = this .getBrowser () .getAudioContext (),
-         gainNode     = new GainNode (audioContext, { gain: 0 }),
-         pannerNode   = new PannerNode (audioContext);
+         audioContext     = this .getBrowser () .getAudioContext (),
+         gainNode         = new GainNode (audioContext, { gain: 0 }),
+         pannerNode       = new PannerNode (audioContext),
+         soundDestination = new GainNode (audioContext, { gain: 0 });
 
       gainNode .channelCount          = 2;
       gainNode .channelCountMode      = "explicit";
       gainNode .channelInterpretation = "speakers";
 
-      gainNode   .connect (pannerNode);
-      pannerNode .connect (audioContext .destination);
+      gainNode         .connect (pannerNode);
+      pannerNode       .connect (soundDestination);
+      soundDestination .connect (audioContext .destination);
 
-      this .gainNode   = gainNode;
-      this .pannerNode = pannerNode;
+      this .gainNode         = gainNode;
+      this .pannerNode       = pannerNode;
+      this .soundDestination = soundDestination;
 
-      this .getLive () .addInterest ("set_live__", this);
-      this ._traversed .addInterest ("set_live__", this);
+      this .getLive () .addInterest ("set_enabled__", this);
+      this ._traversed .addInterest ("set_enabled__", this);
+      this ._enabled   .addInterest ("set_enabled__", this);
 
       this ._spatialize        .addInterest ("set_spatialize__",        this);
       this ._intensity         .addInterest ("set_intensity__",         this);
@@ -90691,7 +90720,7 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, Sound_X3DSoundN
       this ._rolloffFactor     .addInterest ("set_distanceModel__",     this);
       this ._children          .addInterest ("set_children__",          this);
 
-      this .set_live__ ();
+      this .set_enabled__ ();
       this .set_spatialize__ ();
       this .set_intensity__ ();
       this .set_coneOuterGain__ ();
@@ -90703,6 +90732,10 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, Sound_X3DSoundN
       this .set_enableHRTF__ ();
       this .set_dopplerEnabled__ ();
       this .set_children__ ();
+   },
+   getSoundDestination ()
+   {
+      return this .soundDestination;
    },
    setTraversed (value)
    {
@@ -90723,24 +90756,26 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, Sound_X3DSoundN
    {
       return this .currentTraversed;
    },
-   set_live__ ()
+   set_enabled__ ()
    {
-      const browser = this .getBrowser ();
+      const
+         browser = this .getBrowser (),
+         active  = this .getLive () .getValue () && this ._traversed .getValue () && this ._enabled .getValue ();
 
-      this .pannerNode .disconnect ();
-
-      if (this .getLive () .getValue () && this ._traversed .getValue ())
+      if (active)
       {
          const audioContext = this .getBrowser () .getAudioContext ();
 
-         this .pannerNode .connect (audioContext .destination);
+         this .soundDestination .connect (audioContext .destination);
 
-         browser .addAudioNode (this);
+         browser .addSoundDestination (this);
          browser .sensorEvents () .addInterest ("update", this);
       }
       else
       {
-         browser .removeAudioNode (this);
+         this .soundDestination .disconnect ();
+
+         browser .removeSoundDestination (this);
          browser .sensorEvents () .removeInterest ("update", this);
       }
    },
@@ -90819,7 +90854,7 @@ Object .assign (Object .setPrototypeOf (SpatialSound .prototype, Sound_X3DSoundN
 
       for (const child of this ._children)
       {
-         const childNode = Base_X3DCast (Base_X3DConstants .X3DChildNode, child);
+         const childNode = Base_X3DCast (Base_X3DConstants .X3DNode, child);
 
          if (!childNode)
             continue;
@@ -90932,9 +90967,13 @@ function StreamAudioDestination (executionContext)
 
    this .addType (Base_X3DConstants .StreamAudioDestination);
 
+   // Private properties
+
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode (audioContext);
+
+   this .getSoundDestination () .connect (this .mediaStreamAudioDestinationNode);
 }
 
 Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, Sound_X3DSoundDestinationNode .prototype),
@@ -90946,10 +90985,6 @@ Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, Sound
       this ._mediaDeviceID .addInterest ("set_mediaDeviceID__", this);
 
       this .set_mediaDeviceID__ ();
-   },
-   getSoundDestination ()
-   {
-      return this .mediaStreamAudioDestinationNode;
    },
    set_enabled__ ()
    { },
@@ -91387,8 +91422,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(143);
-/* provided dependency */ var APNG = __webpack_require__(701);
+/* provided dependency */ var SuperGif = __webpack_require__(627);
+/* provided dependency */ var APNG = __webpack_require__(249);
 
 
 
@@ -91449,6 +91484,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
    {
       this .clearTexture ();
       this .setMediaElement (null);
+      this .updateOutputs (0, 0, 0, false, -1);
    },
    async loadData ()
    {
@@ -91523,7 +91559,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
 
       this .setMediaElement (null);
       this .clearTexture ();
-      this .updateOutputs (0, 0, 0, -1);
+      this .updateOutputs (0, 0, 0, false, -1);
       this .setLoadState (Base_X3DConstants .FAILED_STATE);
    },
    loadDocument (fileURL)
@@ -91564,7 +91600,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
 
       this .setMediaElement (gif);
       this .setTextureData (width, height, true, false, gif .get_frames () [0] .data);
-      this .updateOutputs (width, height, 4, gif .duration);
+      this .updateOutputs (width, height, 4, false, gif .duration);
       this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
 
       this .set_speed__ ();
@@ -91577,7 +91613,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
 
       this .setMediaElement (apng);
       this .setTextureData (width, height, true, false, currentFrame);
-      this .updateOutputs (width, height, 4, duration);
+      this .updateOutputs (width, height, 4, false, duration);
       this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
 
       this .set_speed__ ();
@@ -91598,16 +91634,21 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
 
       this .setMediaElement (video);
       this .setTextureData (width, height, true, false, video);
-      this .updateOutputs (width, height, 3, video .duration);
+      this .updateOutputs (width, height, 3, this .hasAudioTracks (video), video .duration);
       this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
 
       this .set_speed__ ();
    },
-   updateOutputs (width, height, colorDepth, duration)
+   hasAudioTracks (video)
+   {
+      return !! (video .mozHasAudio || video .webkitAudioDecodedByteCount || video .audioTracks ?.length);
+   },
+   updateOutputs (width, height, colorDepth, hasSound, duration)
    {
       this ._width            = width;
       this ._height           = height;
       this ._colorDepth       = colorDepth;
+      this ._hasSound         = hasSound;
       this ._duration_changed = duration;
    },
    set_speed__ ()
@@ -94026,7 +94067,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(877);
+/* provided dependency */ var libtess_libtess = __webpack_require__(289);
 const libtess_default_ = libtess_libtess;
 ;
 

@@ -1,7 +1,7 @@
 # [X_ITE](https://create3000.github.io/x_ite/) X3D Browser
 
 [![npm Version](https://badgen.net/npm/v/x_ite)](https://www.npmjs.com/package/x_ite)
-[![Build Size](https://badgen.net/static/minified%20size%20(Brotli)/272.3%20kB/blue)](https://bundlephobia.com/package/x_ite)
+[![Build Size](https://badgen.net/static/minified%20size%20(Brotli)/272.4%20kB/blue)](https://bundlephobia.com/package/x_ite)
 [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/x_ite/badge?style=rounded)](https://create3000.github.io/jsdelivr-download-stats/?username=create3000&repository=x_ite)
 [![npm Downloads](https://badgen.net/npm/dm/x_ite)](https://npmtrends.com/x_ite)
 [![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447)
@@ -37,10 +37,10 @@ If you are going to use X_ITE in a production environment, you should use a fixe
 jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@16.1.3/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@16.2.0/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@16.1.3/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@16.2.0/dist/x_ite.min.mjs";
 </script>
 ```
 
@@ -71,7 +71,7 @@ The following code examples initialize an X3D canvas within an HTML page, config
 You can include an external file:
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@16.1.3/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@16.2.0/dist/x_ite.min.js"></script>
 <x3d-canvas
     src="box.x3d"
     contentScale="auto"
@@ -83,7 +83,7 @@ You can include an external file:
 However, you can also include and manipulate the XML directly:
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@16.1.3/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@16.2.0/dist/x_ite.min.js"></script>
 <x3d-canvas contentScale="auto" update="auto">
   <X3D profile='Interchange' version='4.1'>
     <head>
@@ -122,7 +122,7 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@16.1.3/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@16.2.0/dist/x_ite.min.mjs";
 
 const
   canvas  = document .createElement ("x3d-canvas"), // Or get an already inserted <x3d-canvas> element.
