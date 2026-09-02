@@ -57,6 +57,11 @@ struct MaterialInfo
 
    // KHR_materials_volume_scatter
    vec3 multiscatterColor;
+
+   // KHR_materials_retroreflection
+   #if defined (X3D_RETROREFLECTION_MATERIAL_EXT)
+      float retroreflectionFactor;
+   #endif
 };
 
 #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
@@ -447,6 +452,27 @@ getAnisotropyInfo (in MaterialInfo info, const in NormalInfo normalInfo)
    info .anisotropicT       = mat3 (normalInfo .t, normalInfo .b, normalInfo .n) * normalize (vec3 (direction, 0.0));
    info .anisotropicB       = cross (normalInfo .ng, info .anisotropicT);
    info .anisotropyStrength = clamp (x3d_AnisotropyEXT .z * strengthFactor, 0.0, 1.0);
+
+   return info;
+}
+#endif
+
+#if defined (X3D_RETROREFLECTION_MATERIAL_EXT)
+
+${MaterialTextures .texture ("x3d_RetroreflectionTextureEXT", "r")}
+
+uniform float x3d_RetroreflectionEXT;
+
+MaterialInfo
+getRetroreflectionInfo (in MaterialInfo info)
+{
+   float retroreflectionFactor = x3d_RetroreflectionEXT;
+
+   #if defined (X3D_RETROREFLECTION_TEXTURE_EXT)
+      retroreflectionFactor *= getRetroreflectionTextureEXT ();
+   #endif
+
+   info .retroreflectionFactor = retroreflectionFactor;
 
    return info;
 }
