@@ -33,10 +33,9 @@ The **RetroreflectionMaterialExtension** node belongs to the [X_ITE](/x_ite/comp
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| SFFloat | [in, out] | [anisotropyStrength](#fields-anisotropyStrength) | 0 |
-| SFFloat | [in, out] | [anisotropyRotation](#fields-anisotropyRotation) | 0 |
-| SFString | [in, out] | [anisotropyTextureMapping](#fields-anisotropyTextureMapping) | "" |
-| SFNode | [in, out] | [anisotropyTexture](#fields-anisotropyTexture) | NULL |
+| SFFloat | [in, out] | [retroreflection](#fields-retroreflection) | 0 |
+| SFString | [in, out] | [retroreflectionTextureMapping](#fields-retroreflectionTextureMapping) | "" |
+| SFNode | [in, out] | [retroreflectionTexture](#fields-retroreflectionTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
