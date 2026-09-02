@@ -9,6 +9,7 @@ const no_ibl = [
    "LightVisibility",
    "PlaysetLightTest",
    "PointLightIntensityTest",
+   "TrafficCone",
 ];
 
 // KHR_lights_punctual
@@ -21,6 +22,12 @@ const no_headlight = [
    "LightVisibility",
    "PlaysetLightTest",
    "PointLightIntensityTest",
+   "TrafficCone",
+];
+
+// KHR_lights_punctual
+const no_background = [
+   "TrafficCone",
 ];
 
 // SAMPLES_BEGIN
@@ -719,7 +726,7 @@ class SampleViewer
 
       $("#ibl") .on ("change", () =>
       {
-         this .setEnvironmentLight (!!$("#ibl") .val (), $("#ibl") .val () || undefined);
+         this .setEnvironmentLight (!!$("#ibl") .val (), this .localStorage .ibl = $("#ibl") .val () || undefined);
       });
 
       $("[for=headlight]") .on ("click", () =>
@@ -740,12 +747,12 @@ class SampleViewer
 
       $("#tone-mapping") .on ("change", () =>
       {
-         this .setToneMapping ($("#tone-mapping") .val ());
+         this .setToneMapping (this .localStorage .toneMapping = $("#tone-mapping") .val ());
       });
 
       $("[for=summer]") .on ("click", () =>
       {
-         this .setBackground (!$("#summer") .hasClass ("selected"));
+         this .setBackground (this .localStorage .background = !$("#summer") .hasClass ("selected"));
       });
 
       // Handle color scheme change.
@@ -897,7 +904,7 @@ class SampleViewer
       this .setEnvironmentLight (!no_ibl .some (name => filename .includes (name)));
       this .setHeadlight (!no_headlight .some (name => filename .includes (name)));
       this .setToneMapping (this .localStorage .toneMapping);
-      this .setBackground (this .localStorage .background);
+      this .setBackground (no_background .some (name => filename .includes (name)) ? false : this .localStorage .background);
       this .addScenes ();
       this .addViewpoints ();
       this .addMaterialVariants ();
@@ -927,8 +934,6 @@ class SampleViewer
 
    async setEnvironmentLight (on, ibl = this .localStorage .ibl)
    {
-      this .localStorage .ibl = ibl;
-
       $("#ibl") .val (on ? ibl : "");
 
       if (!on)
@@ -1010,15 +1015,11 @@ class SampleViewer
    {
       $("#tone-mapping") .val (value);
 
-      this .localStorage .toneMapping = value;
-
       this .browser .setBrowserOption ("ToneMapping", value);
    }
 
    async setBackground (on)
    {
-      this .localStorage .background = on;
-
       if (on)
       {
          $("#summer") .removeClass ("fa-xmark") .addClass ("fa-check");
