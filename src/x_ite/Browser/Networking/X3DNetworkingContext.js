@@ -179,8 +179,8 @@ Object .assign (X3DNetworkingContext .prototype,
       if (this ._loadCount .getValue () || this [_browserLoading])
       {
          string = ((loadingDisplay || 1) === 1
-            ? _ ("Loading %1 file")
-            : _ ("Loading %1 files")) .replace ("%1", loadingDisplay || 1);
+            ? _("Loading %1 file")
+            : _("Loading %1 files")) .replace ("%1", loadingDisplay || 1);
       }
       else
       {
@@ -200,8 +200,8 @@ Object .assign (X3DNetworkingContext .prototype,
          const percent = fractions * 100;
 
          // Show progress in % if loading takes too long.
-         if (Date .now () - this [_browserTime] > 8_000)
-            string += ` (${percent .toFixed (2)} %)`;
+         // if (Date .now () - this [_browserTime] > 8_000)
+            string += ` (${percent .toFixed (2)}\u202F%)`;
 
          this .getSplashScreen () .querySelector (".x_ite-private-spinner-text") .textContent     = string;
          this .getSplashScreen () .querySelector (".x_ite-private-progressbar div") .style .width = `${percent}%`;
