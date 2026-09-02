@@ -200,7 +200,7 @@ Object .assign (X3DNetworkingContext .prototype,
          const percent = fractions * 100;
 
          // Show progress in % if loading takes too long.
-         // if (Date .now () - this [_browserTime] > 8_000)
+         if (Date .now () - this [_browserTime] > 8_000)
             string += ` (${percent .toFixed (2)}\u202F%)`;
 
          this .getSplashScreen () .querySelector (".x_ite-private-spinner-text") .textContent     = string;
