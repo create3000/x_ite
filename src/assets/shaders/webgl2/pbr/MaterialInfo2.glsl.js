@@ -8,55 +8,78 @@ export default () => /* glsl */ `
 struct MaterialInfo
 {
    float ior;
-   float perceptualRoughness;      // roughness value, as authored by the model creator (input to shader)
-   vec3 f0_dielectric;             // full reflectance color (n incidence angle)
+   float perceptualRoughness; // roughness value, as authored by the model creator (input to shader)
+   vec3 f0_dielectric; // full reflectance color (n incidence angle)
 
-   float alphaRoughness;           // roughness mapped to a more linear change in the roughness (proposed by [2])
+   float alphaRoughness; // roughness mapped to a more linear change in the roughness (proposed by [2])
 
    float fresnel_w;
 
-   vec3 f90;                       // reflectance color at grazing angle
+   vec3 f90; // reflectance color at grazing angle
    vec3 f90_dielectric;
    float metallic;
 
    vec3 baseColor;
 
-   float sheenRoughnessFactor;
-   vec3 sheenColorFactor;
+   // KHR_materials_sheen
+   #if defined (X3D_SHEEN_MATERIAL_EXT)
+      float sheenRoughnessFactor;
+      vec3 sheenColorFactor;
+   #endif
 
-   vec3 clearcoatF0;
-   vec3 clearcoatF90;
-   float clearcoatFactor;
-   vec3 clearcoatNormal;
-   float clearcoatRoughness;
+   // KHR_materials_clearcoat
+   #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
+      vec3 clearcoatF0;
+      vec3 clearcoatF90;
+      float clearcoatFactor;
+      vec3 clearcoatNormal;
+      float clearcoatRoughness;
+   #endif
 
    // KHR_materials_specular
    float specularWeight; // product of specularFactor and specularTexture.a
 
-   float transmissionFactor;
+   // KHR_materials_transmission
+   #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      float transmissionFactor;
+   #endif
 
-   float thickness;
-   vec3 attenuationColor;
-   float attenuationDistance;
+   // KHR_materials_volume
+   #if defined (X3D_VOLUME_MATERIAL_EXT) || defined (X3D_TRANSMISSION_MATERIAL_EXT)
+      float thickness;
+      vec3 attenuationColor;
+      float attenuationDistance;
+   #endif
 
    // KHR_materials_iridescence
-   float iridescenceFactor;
-   float iridescenceIor;
-   float iridescenceThickness;
+   #if defined (X3D_IRIDESCENCE_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      float iridescenceFactor;
+      float iridescenceIor;
+      float iridescenceThickness;
+   #endif
 
-   float diffuseTransmissionFactor;
-   vec3 diffuseTransmissionColorFactor;
+   // KHR_materials_diffuse_transmission
+   #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+      float diffuseTransmissionFactor;
+      vec3 diffuseTransmissionColorFactor;
+   #endif
 
    // KHR_materials_anisotropy
-   vec3 anisotropicT;
-   vec3 anisotropicB;
-   float anisotropyStrength;
+   #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
+      vec3 anisotropicT;
+      vec3 anisotropicB;
+      float anisotropyStrength;
+   #endif
 
    // KHR_materials_dispersion
-   float dispersion;
+   #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+      float dispersion;
+   #endif
 
    // KHR_materials_volume_scatter
-   vec3 multiscatterColor;
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      vec3 multiscatterColor;
+   #endif
 };
 
 #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
