@@ -13,7 +13,7 @@ tags: [EmissiveStrengthMaterialExtension, X_ITE]
 
 ## Overview
 
-**EmissiveStrengthMaterialExtension** is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) and [SpecularGlossinessMaterial](../specularglossinessmaterial/) nodes.
+**EmissiveStrengthMaterialExtension** is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) node.
 
 The **EmissiveStrengthMaterialExtension** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
