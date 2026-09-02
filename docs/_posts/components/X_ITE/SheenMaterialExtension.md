@@ -13,7 +13,7 @@ tags: [SheenMaterialExtension, X_ITE]
 
 ## Overview
 
-**SheenMaterialExtension** is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) and [SpecularGlossinessMaterial](../specularglossinessmaterial/) nodes. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
+**SheenMaterialExtension** is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) node. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
 
 The **SheenMaterialExtension** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 

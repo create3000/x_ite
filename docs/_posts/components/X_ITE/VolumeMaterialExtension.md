@@ -13,7 +13,7 @@ tags: [VolumeMaterialExtension, X_ITE]
 
 ## Overview
 
-**VolumeMaterialExtension** is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) and [SpecularGlossinessMaterial](../specularglossinessmaterial/) nodes. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
+**VolumeMaterialExtension** is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) node. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
 
 The **VolumeMaterialExtension** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
