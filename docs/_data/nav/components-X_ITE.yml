@@ -20,6 +20,8 @@
       url: /components/x-ite/iormaterialextension/
     - title: "IridescenceMaterialExtension"
       url: /components/x-ite/iridescencematerialextension/
+    - title: "RetroreflectionMaterialExtension"
+      url: /components/x-ite/retroreflectionmaterialextension/
     - title: "SheenMaterialExtension"
       url: /components/x-ite/sheenmaterialextension/
     - title: "SpecularGlossinessMaterial"
