@@ -134,16 +134,12 @@ Object .assign (X3DNetworkingContext .prototype,
       this [_loadingObjects] .add (object);
 
       this ._loadCount = this [_loadingObjects] .size;
-
-      this [_browserTime] = Date .now ();
    },
    removeLoadingObject (object)
    {
       this [_loadingObjects] .delete (object);
 
       this ._loadCount = this [_loadingObjects] .size;
-
-      this [_browserTime] = Date .now ();
    },
    getDisplayLoadCount ()
    {
