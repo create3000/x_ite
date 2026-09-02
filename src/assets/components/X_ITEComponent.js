@@ -10,6 +10,7 @@ import EmissiveStrengthMaterialExtension    from "../../x_ite/Components/X_ITE/E
 import InstancedShape                       from "../../x_ite/Components/X_ITE/InstancedShape.js";
 import IORMaterialExtension                 from "../../x_ite/Components/X_ITE/IORMaterialExtension.js";
 import IridescenceMaterialExtension         from "../../x_ite/Components/X_ITE/IridescenceMaterialExtension.js";
+import RetroreflectionMaterialExtension     from "../../x_ite/Components/X_ITE/RetroreflectionMaterialExtension.js";
 import SheenMaterialExtension               from "../../x_ite/Components/X_ITE/SheenMaterialExtension.js";
 import SpecularGlossinessMaterial           from "../../x_ite/Components/X_ITE/SpecularGlossinessMaterial.js";
 import SpecularMaterialExtension            from "../../x_ite/Components/X_ITE/SpecularMaterialExtension.js";
@@ -32,6 +33,7 @@ Components .add ({
       InstancedShape,
       IORMaterialExtension,
       IridescenceMaterialExtension,
+      RetroreflectionMaterialExtension,
       SheenMaterialExtension,
       SpecularGlossinessMaterial,
       SpecularMaterialExtension,

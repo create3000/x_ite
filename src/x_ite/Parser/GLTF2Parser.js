@@ -267,6 +267,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_ior":
             case "KHR_materials_iridescence":
             case "KHR_materials_pbrSpecularGlossiness":
+            case "KHR_materials_retroreflection":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
@@ -1335,6 +1336,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_iridescence":
                this .khrMaterialsIridescenceObject (value, materialNode);
                break;
+            case "KHR_materials_retroreflection":
+               this .khrMaterialsRetroreflectionObject (value, materialNode);
+               break;
             case "KHR_materials_sheen":
                this .khrMaterialsSheenObject (value, materialNode);
                break;
@@ -1479,6 +1483,23 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension .setup ();
 
       KHR_materials_iridescence .pointers = [extension];
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsRetroreflectionObject (KHR_materials_retroreflection, materialNode)
+   {
+      if (!(KHR_materials_retroreflection instanceof Object))
+         return;
+
+      const extension = this .getScene () .createNode ("RetroreflectionMaterialExtension", false);
+
+      extension ._retroreflection               = this .numberValue (KHR_materials_retroreflection .retroreflectionFactor, 0);
+      extension ._retroreflectionTexture        = this .textureInfo (KHR_materials_retroreflection .retroreflectionTexture);
+      extension ._retroreflectionTextureMapping = this .textureMapping (KHR_materials_retroreflection .retroreflectionTexture);
+
+      extension .setup ();
+
+      KHR_materials_retroreflection .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
