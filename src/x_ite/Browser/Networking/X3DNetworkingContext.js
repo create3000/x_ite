@@ -15,6 +15,8 @@ const
    _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
 
+const PERCENT_TIME = 8_000;
+
 function getBaseURI (element)
 {
    const { baseURI } = element;
@@ -134,12 +136,18 @@ Object .assign (X3DNetworkingContext .prototype,
       this [_loadingObjects] .add (object);
 
       this ._loadCount = this [_loadingObjects] .size;
+
+      if (Date .now () - this [_browserTime] < PERCENT_TIME)
+         this [_browserTime] = Date .now ();
    },
    removeLoadingObject (object)
    {
       this [_loadingObjects] .delete (object);
 
       this ._loadCount = this [_loadingObjects] .size;
+
+      if (Date .now () - this [_browserTime] < PERCENT_TIME)
+         this [_browserTime] = Date .now ();
    },
    getDisplayLoadCount ()
    {
@@ -196,7 +204,7 @@ Object .assign (X3DNetworkingContext .prototype,
          const percent = fractions * 100;
 
          // Show progress in % if loading takes too long.
-         if (Date .now () - this [_browserTime] > 8_000)
+         if (Date .now () - this [_browserTime] > PERCENT_TIME)
             string += ` (${percent .toFixed (2)}\u202F%)`;
 
          this .getSplashScreen () .querySelector (".x_ite-private-spinner-text") .textContent     = string;
