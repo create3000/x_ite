@@ -10,7 +10,7 @@ const
    _loadingTotal   = Symbol (),
    _loadingObjects = Symbol (),
    _browserLoading = Symbol (),
-   _browserTime    = Symbol (),
+   _percentTime    = Symbol (),
    _set_loadCount  = Symbol (),
    _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
@@ -73,7 +73,7 @@ Object .assign (X3DNetworkingContext .prototype,
    setBrowserLoading (value)
    {
       this [_browserLoading] = value;
-      this [_browserTime]    = Date .now ();
+      this [_percentTime]    = Date .now ();
 
       if (value)
       {
@@ -137,8 +137,8 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      if (Date .now () - this [_browserTime] < PERCENT_TIME)
-         this [_browserTime] = Date .now ();
+      if (Date .now () - this [_percentTime] < PERCENT_TIME)
+         this [_percentTime] = Date .now ();
    },
    removeLoadingObject (object)
    {
@@ -146,8 +146,8 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this ._loadCount = this [_loadingObjects] .size;
 
-      if (Date .now () - this [_browserTime] < PERCENT_TIME)
-         this [_browserTime] = Date .now ();
+      if (Date .now () - this [_percentTime] < PERCENT_TIME)
+         this [_percentTime] = Date .now ();
    },
    getDisplayLoadCount ()
    {
@@ -204,7 +204,7 @@ Object .assign (X3DNetworkingContext .prototype,
          const percent = fractions * 100;
 
          // Show progress in % if loading takes too long.
-         if (Date .now () - this [_browserTime] > PERCENT_TIME)
+         if (Date .now () - this [_percentTime] > PERCENT_TIME)
             string += ` (${percent .toFixed (2)}\u202F%)`;
 
          this .getSplashScreen () .querySelector (".x_ite-private-spinner-text") .textContent     = string;
