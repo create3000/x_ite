@@ -127,7 +127,7 @@ Object .assign (Bookmarks .prototype,
          .on ("click", () => this .browser .viewAll (0))
          .appendTo ($("#toolbar"));
 
-      if (this .browser .currentScene .encoding === "GLTF")
+      if (this .browser .currentScene .encoding === "GLTF" && !this .browser .activeViewpoint)
          this .browser .viewAll (0);
 
       let

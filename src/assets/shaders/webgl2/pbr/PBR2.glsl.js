@@ -64,6 +64,11 @@ getMaterialColor (const in vec4 fragCoord)
 
       vec3  n     = normalInfo .n;
       float NdotV = clamp (dot (n, v), 0.0, 1.0);
+
+      #if defined (X3D_RETROREFLECTION_MATERIAL_EXT)
+         vec3  v_retro     = reflect (-v, n);
+         float NdotV_retro = clamp (dot (n, v_retro), 0.0, 1.0);
+      #endif
    #endif
 
    MaterialInfo materialInfo;
@@ -122,6 +127,10 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getAnisotropyInfo (materialInfo, normalInfo);
    #endif
 
+   #if defined (X3D_RETROREFLECTION_MATERIAL_EXT)
+      materialInfo = getRetroreflectionInfo (materialInfo);
+   #endif
+
    materialInfo .perceptualRoughness = clamp (materialInfo .perceptualRoughness, 0.0, 1.0);
    materialInfo .metallic            = clamp (materialInfo .metallic,            0.0, 1.0);
 
@@ -151,8 +160,39 @@ getMaterialColor (const in vec4 fragCoord)
    #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
    // Holger: Values are only used if X3D_USE_IBL or X3D_LIGHTING is defined.
    #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
-      vec3 iridescenceFresnel_dielectric = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, materialInfo .f0_dielectric);
-      vec3 iridescenceFresnel_metallic   = evalIridescence (1.0, materialInfo .iridescenceIor, NdotV, materialInfo .iridescenceThickness, baseColor .rgb);
+      vec3 iridescenceFresnel_dielectric =
+         evalIridescence (
+            1.0,
+            materialInfo .iridescenceIor,
+            NdotV,
+            materialInfo .iridescenceThickness,
+            materialInfo .f0_dielectric);
+
+      vec3 iridescenceFresnel_metallic =
+         evalIridescence (
+            1.0,
+            materialInfo .iridescenceIor,
+            NdotV,
+            materialInfo .iridescenceThickness,
+            baseColor .rgb);
+
+      #if defined (X3D_RETROREFLECTION_MATERIAL_EXT)
+         vec3 iridescenceFresnel_dielectric_retro =
+            evalIridescence (
+               1.0,
+               materialInfo .iridescenceIor,
+               NdotV_retro,
+               materialInfo .iridescenceThickness,
+               materialInfo .f0_dielectric);
+
+         vec3 iridescenceFresnel_metallic_retro =
+            evalIridescence (
+               1.0,
+               materialInfo .iridescenceIor,
+               NdotV_retro,
+               materialInfo .iridescenceThickness,
+               baseColor .rgb);
+      #endif
 
       if (materialInfo .iridescenceThickness == 0.0)
          materialInfo .iridescenceFactor = 0.0;
@@ -222,17 +262,101 @@ getMaterialColor (const in vec4 fragCoord)
 
       // Calculate fresnel mix for IBL
 
-      vec3 f_metal_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, baseColor .rgb, 1.0);
+      vec3 f_metal_fresnel_ibl =
+         getIBLGGXFresnel (
+            n,
+            v,
+            materialInfo .perceptualRoughness,
+            baseColor .rgb,
+            1.0);
 
       f_metal_brdf_ibl = f_metal_fresnel_ibl * f_specular_metal;
 
-      vec3 f_dielectric_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, materialInfo .f0_dielectric, materialInfo .specularWeight);
+      vec3 f_dielectric_fresnel_ibl =
+         getIBLGGXFresnel (
+            n,
+            v,
+            materialInfo .perceptualRoughness,
+            materialInfo .f0_dielectric,
+            materialInfo .specularWeight);
 
-      f_dielectric_brdf_ibl = mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl);
+      f_dielectric_brdf_ibl =
+         mix (
+            f_diffuse,
+            f_specular_dielectric,
+            f_dielectric_fresnel_ibl);
 
       #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
-         f_metal_brdf_ibl      = mix (f_metal_brdf_ibl, f_specular_metal * iridescenceFresnel_metallic, materialInfo .iridescenceFactor);
-         f_dielectric_brdf_ibl = mix (f_dielectric_brdf_ibl, rgb_mix (f_diffuse, f_specular_dielectric, iridescenceFresnel_dielectric), materialInfo .iridescenceFactor);
+         f_metal_brdf_ibl =
+            mix (
+               f_metal_brdf_ibl,
+               f_specular_metal * iridescenceFresnel_metallic,
+               materialInfo .iridescenceFactor);
+
+         f_dielectric_brdf_ibl =
+            mix (
+               f_dielectric_brdf_ibl,
+               rgb_mix (
+                  f_diffuse,
+                  f_specular_dielectric,
+                  iridescenceFresnel_dielectric),
+               materialInfo .iridescenceFactor);
+      #endif
+
+      #if defined (X3D_RETROREFLECTION_MATERIAL_EXT)
+         vec3 f_metal_fresnel_ibl_retro =
+            getIBLGGXFresnel (
+               n,
+               v_retro,
+               materialInfo .perceptualRoughness,
+               baseColor .rgb,
+               1.0);
+
+         vec3 f_dielectric_fresnel_ibl_retro =
+            getIBLGGXFresnel (
+               n,
+               v_retro,
+               materialInfo .perceptualRoughness,
+               materialInfo .f0_dielectric,
+               materialInfo .specularWeight);
+
+         vec3 f_metal_brdf_ibl_retro =
+            f_metal_fresnel_ibl_retro * f_specular_metal;
+
+         vec3 f_dielectric_brdf_ibl_retro =
+            mix (
+               f_diffuse,
+               f_specular_dielectric,
+               f_dielectric_fresnel_ibl_retro);
+
+         #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+            f_metal_brdf_ibl_retro =
+               mix (
+                  f_metal_brdf_ibl_retro,
+                  f_specular_metal * iridescenceFresnel_metallic_retro,
+                  materialInfo .iridescenceFactor);
+
+            f_dielectric_brdf_ibl_retro =
+               mix (
+                  f_dielectric_brdf_ibl_retro,
+                  rgb_mix (
+                     f_diffuse,
+                     f_specular_dielectric,
+                     iridescenceFresnel_dielectric_retro),
+                  materialInfo .iridescenceFactor);
+         #endif
+
+         f_metal_brdf_ibl =
+            mix (
+               f_metal_brdf_ibl,
+               f_metal_brdf_ibl_retro,
+               materialInfo .retroreflectionFactor);
+
+         f_dielectric_brdf_ibl =
+            mix (
+               f_dielectric_brdf_ibl,
+               f_dielectric_brdf_ibl_retro,
+               materialInfo .retroreflectionFactor);
       #endif
 
       #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
@@ -368,8 +492,103 @@ getMaterialColor (const in vec4 fragCoord)
          l_dielectric_brdf = mix (l_diffuse, l_specular_dielectric, dielectric_fresnel); // Do we need to handle vec3 fresnel here?
 
          #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
-            l_metal_brdf      = mix (l_metal_brdf, l_specular_metal * iridescenceFresnel_metallic, materialInfo .iridescenceFactor);
-            l_dielectric_brdf = mix (l_dielectric_brdf, rgb_mix (l_diffuse, l_specular_dielectric, iridescenceFresnel_dielectric), materialInfo .iridescenceFactor);
+            l_metal_brdf =
+               mix (
+                  l_metal_brdf,
+                  l_specular_metal * iridescenceFresnel_metallic,
+                  materialInfo .iridescenceFactor);
+
+            l_dielectric_brdf =
+               mix (
+                  l_dielectric_brdf,
+                  rgb_mix (
+                     l_diffuse,
+                     l_specular_dielectric,
+                     iridescenceFresnel_dielectric),
+                  materialInfo .iridescenceFactor);
+         #endif
+
+         #if defined (X3D_RETROREFLECTION_MATERIAL_EXT)
+            vec3 h_retro = normalize (l + v_retro);
+
+            float NdotH_retro = clamp (dot (n, h_retro), 0.0, 1.0);
+            float VdotH_retro = clamp (dot (v_retro, h_retro), 0.0, 1.0);
+
+            vec3 dielectric_fresnel_retro =
+               F_Schlick (
+                  materialInfo .f0_dielectric * materialInfo .specularWeight,
+                  materialInfo .f90_dielectric,
+                  abs (VdotH_retro));
+
+            vec3 metal_fresnel_retro =
+               F_Schlick (
+                  baseColor .rgb,
+                  vec3 (1.0),
+                  abs (VdotH_retro));
+
+            vec3 l_specular_metal_retro;
+
+            #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
+               l_specular_metal_retro =
+                  intensity * NdotL *
+                  BRDF_specularGGXAnisotropy (
+                     materialInfo .alphaRoughness,
+                     materialInfo .anisotropyStrength,
+                     n,
+                     v_retro,
+                     l,
+                     h_retro,
+                     materialInfo .anisotropicT,
+                     materialInfo .anisotropicB);
+            #else
+               l_specular_metal_retro =
+                  intensity * NdotL *
+                  BRDF_specularGGX (
+                     materialInfo .alphaRoughness,
+                     NdotL,
+                     NdotV_retro, // is this right or should it be NdotV
+                     NdotH_retro);
+            #endif
+
+            vec3 l_specular_dielectric_retro = l_specular_metal_retro;
+
+            vec3 l_metal_brdf_retro =
+               metal_fresnel_retro * l_specular_metal_retro;
+
+            vec3 l_dielectric_brdf_retro =
+               mix (
+                  l_diffuse,
+                  l_specular_dielectric_retro,
+                  dielectric_fresnel_retro);
+
+            #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+               l_metal_brdf_retro =
+                  mix (
+                     l_metal_brdf_retro,
+                     l_specular_metal * iridescenceFresnel_metallic_retro,
+                     materialInfo .iridescenceFactor);
+
+               l_dielectric_brdf_retro =
+                  mix (
+                     l_dielectric_brdf_retro,
+                     rgb_mix (
+                        l_diffuse,
+                        l_specular_dielectric,
+                        iridescenceFresnel_dielectric_retro),
+                     materialInfo .iridescenceFactor);
+            #endif
+
+            l_metal_brdf =
+               mix (
+                  l_metal_brdf,
+                  l_metal_brdf_retro,
+                  materialInfo .retroreflectionFactor);
+
+            l_dielectric_brdf =
+               mix (
+                  l_dielectric_brdf,
+                  l_dielectric_brdf_retro,
+                  materialInfo .retroreflectionFactor);
          #endif
 
          #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
