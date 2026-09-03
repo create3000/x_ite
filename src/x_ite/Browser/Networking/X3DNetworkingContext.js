@@ -15,7 +15,7 @@ const
    _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
 
-const PERCENT_TIME = 8_000;
+const PERCENT_TIME = 8_000; // in ms
 
 function getBaseURI (element)
 {
