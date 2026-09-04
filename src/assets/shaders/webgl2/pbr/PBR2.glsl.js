@@ -303,62 +303,6 @@ getMaterialColor (const in vec4 fragCoord)
                materialInfo .iridescenceFactor);
       #endif
 
-      #if defined (X3D_RETROREFLECTION_MATERIAL_EXT)
-         vec3 f_metal_fresnel_ibl_retro =
-            getIBLGGXFresnel (
-               n,
-               v_retro,
-               materialInfo .perceptualRoughness,
-               baseColor .rgb,
-               1.0);
-
-         vec3 f_dielectric_fresnel_ibl_retro =
-            getIBLGGXFresnel (
-               n,
-               v_retro,
-               materialInfo .perceptualRoughness,
-               materialInfo .f0_dielectric,
-               materialInfo .specularWeight);
-
-         vec3 f_metal_brdf_ibl_retro =
-            f_metal_fresnel_ibl_retro * f_specular_metal;
-
-         vec3 f_dielectric_brdf_ibl_retro =
-            mix (
-               f_diffuse,
-               f_specular_dielectric,
-               f_dielectric_fresnel_ibl_retro);
-
-         #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
-            f_metal_brdf_ibl_retro =
-               mix (
-                  f_metal_brdf_ibl_retro,
-                  f_specular_metal * iridescenceFresnel_metallic_retro,
-                  materialInfo .iridescenceFactor);
-
-            f_dielectric_brdf_ibl_retro =
-               mix (
-                  f_dielectric_brdf_ibl_retro,
-                  rgb_mix (
-                     f_diffuse,
-                     f_specular_dielectric,
-                     iridescenceFresnel_dielectric_retro),
-                  materialInfo .iridescenceFactor);
-         #endif
-
-         f_metal_brdf_ibl =
-            mix (
-               f_metal_brdf_ibl,
-               f_metal_brdf_ibl_retro,
-               materialInfo .retroreflectionFactor);
-
-         f_dielectric_brdf_ibl =
-            mix (
-               f_dielectric_brdf_ibl,
-               f_dielectric_brdf_ibl_retro,
-               materialInfo .retroreflectionFactor);
-      #endif
-
       #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
          clearcoat_brdf = getIBLRadianceGGX (materialInfo .clearcoatNormal, v, materialInfo .clearcoatRoughness);
       #endif
