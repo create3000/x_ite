@@ -22,69 +22,49 @@ struct MaterialInfo
    vec3 baseColor;
 
    // KHR_materials_sheen
-   #if defined (X3D_SHEEN_MATERIAL_EXT)
-      float sheenRoughnessFactor;
-      vec3 sheenColorFactor;
-   #endif
+   float sheenRoughnessFactor;
+   vec3 sheenColorFactor;
 
    // KHR_materials_clearcoat
-   #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
-      vec3 clearcoatF0;
-      vec3 clearcoatF90;
-      float clearcoatFactor;
-      vec3 clearcoatNormal;
-      float clearcoatRoughness;
-   #endif
+   vec3 clearcoatF0;
+   vec3 clearcoatF90;
+   float clearcoatFactor;
+   vec3 clearcoatNormal;
+   float clearcoatRoughness;
 
    // KHR_materials_specular
    float specularWeight; // product of specularFactor and specularTexture.a
 
    // KHR_materials_transmission
-   #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-      float transmissionFactor;
-   #endif
+   float transmissionFactor;
 
    // KHR_materials_volume
-   #if defined (X3D_VOLUME_MATERIAL_EXT) || defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-      float thickness;
-      vec3 attenuationColor;
-      float attenuationDistance;
-   #endif
+   float thickness;
+   vec3 attenuationColor;
+   float attenuationDistance;
 
    // KHR_materials_iridescence
-   #if defined (X3D_IRIDESCENCE_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-      float iridescenceFactor;
-      float iridescenceIor;
-      float iridescenceThickness;
-   #endif
+   float iridescenceFactor;
+   float iridescenceIor;
+   float iridescenceThickness;
 
    // KHR_materials_diffuse_transmission
-   #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-      float diffuseTransmissionFactor;
-      vec3 diffuseTransmissionColorFactor;
-   #endif
+   float diffuseTransmissionFactor;
+   vec3 diffuseTransmissionColorFactor;
 
    // KHR_materials_anisotropy
-   #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
-      vec3 anisotropicT;
-      vec3 anisotropicB;
-      float anisotropyStrength;
-   #endif
+   vec3 anisotropicT;
+   vec3 anisotropicB;
+   float anisotropyStrength;
 
    // KHR_materials_dispersion
-   #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
-      float dispersion;
-   #endif
+   float dispersion;
 
    // KHR_materials_volume_scatter
-   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-      vec3 multiscatterColor;
-   #endif
+   vec3 multiscatterColor;
 
    // KHR_materials_retroreflection
-   #if defined (X3D_RETROREFLECTION_MATERIAL_EXT)
-      float retroreflectionFactor;
-   #endif
+   float retroreflectionFactor;
 };
 
 #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
