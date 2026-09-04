@@ -45,7 +45,7 @@ struct MaterialInfo
    #endif
 
    // KHR_materials_volume
-   #if defined (X3D_VOLUME_MATERIAL_EXT) || defined (X3D_TRANSMISSION_MATERIAL_EXT)
+   #if defined (X3D_VOLUME_MATERIAL_EXT) || defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       float thickness;
       vec3 attenuationColor;
       float attenuationDistance;
@@ -59,7 +59,7 @@ struct MaterialInfo
    #endif
 
    // KHR_materials_diffuse_transmission
-   #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+   #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       float diffuseTransmissionFactor;
       vec3 diffuseTransmissionColorFactor;
    #endif
