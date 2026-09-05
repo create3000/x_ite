@@ -76,3 +76,4 @@ Per-texel multiplier for retroreflectionFactor, sampled from the R channel.
 ## See Also
 
 - [Khronos glTF Specification of the KHR_materials_retroreflection Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_retroreflection)
+- [Draft of Khronos glTF Specification of the KHR_materials_retroreflection Extension](https://github.com/mklefrancois/glTF/tree/c33751d337d98e2d2b9f48e51cff9efa4d487b8b/extensions/2.0/Khronos/KHR_materials_retroreflection)

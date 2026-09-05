@@ -7,6 +7,17 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v16.3 Series
+
+**Leipzig, 5th September 2026:** The 16.3 series of X_ITE introduces support for the glTF extension `KHR_materials_retroreflection`, enabling physically based retroreflective materials that reflect incoming light back toward its source. This extension brings realistic retroreflection effects to glTF materials and is fully integrated into X_ITE’s PBR rendering pipeline.
+
+Look at the [Traffic Cone Sample](/x_ite/laboratory/gltf-sample-viewer/?url=TrafficCone) to see how retroreflection works in practice. The sample demonstrates the retroreflective properties of a traffic cone material, which reflects light from a flashlight back toward the viewer, creating a realistic and visually striking effect.
+
+### Notable Changes
+
+- [x] Support for `KHR_materials_retroreflection` in glTF Parser.
+- [x] New [RetroreflectionMaterialExtension](/x_ite/components/x-ite/retroreflectionmaterialextension/) node.
+
 ## X_ITE v16.2 Series
 
 **Leipzig, 30th August 2026:** The 16.2 series fixes and implements missing features for sound and audio support in X_ITE. The new features include the implementation of the *hasSound* output for [MovieTexture](/x_ite/components/texturing/movietexture/), as well as the *enabled* field for [Sound](/x_ite/components/sound/sound/) and [SpatialSound](/x_ite/components/sound/spatialsound/). Additionally, a new [browser option](/x_ite/reference/browser-services/#browser-options) called *SoundIntensity* has been added, along with a new [rendering property](/x_ite/reference/browser-services/#rendering-properties) called *SoundDestinations*. These enhancements provide developers with more control over audio playback and spatialization within X3D scenes.
