@@ -1,5 +1,5 @@
 const
-   json   = require ("./browser-compatibility.json"),
+   json   = require ("./compatibility.json"),
    { sh } = require ("shell-tools"),
    fs     = require ("fs");
 
@@ -55,11 +55,12 @@ function browserCompatibility (js)
 
 `;
 
-   let md_f = sh ("cat", md);
+   const
+      md_f         = sh ("cat", md),
+      md_f_updated = md_f .replace (/## Browser Compatibility.*?(?=##\s)/s, replacement);
 
-   md_f = md_f .replace (/## Browser Compatibility.*?(?=##\s)/s, replacement);
-
-   fs .writeFileSync (md, md_f);
+   if (md_f !== md_f_updated)
+      fs .writeFileSync (md, md_f_updated);
 }
 
 /*

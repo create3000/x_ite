@@ -1235,6 +1235,12 @@
       "x3dom": true,
       "freewrl": false
    },
+   "RetroreflectionMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
    "RigidBody": {
       "x3d-edit": true,
       "castle": false,
