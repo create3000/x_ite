@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v16.3 Series
 
-**Leipzig, 5th September 2026:** The 16.3 series of X_ITE introduces support for the glTF extension `KHR_materials_retroreflection`, enabling physically based retroreflective materials that reflect incoming light back toward its source. This extension brings realistic retroreflection effects to glTF materials and is fully integrated into X_ITE’s PBR rendering pipeline.
+**Leipzig, 6th September 2026:** The 16.3 series of X_ITE introduces support for the glTF extension `KHR_materials_retroreflection`, enabling physically based retroreflective materials that reflect incoming light back toward its source. This extension brings realistic retroreflection effects to glTF materials and is fully integrated into X_ITE’s PBR rendering pipeline.
 
 Look at the [Traffic Cone Sample](/x_ite/laboratory/gltf-sample-viewer/?url=TrafficCone) to see how retroreflection works in practice. The sample demonstrates the retroreflective properties of a traffic cone material, which reflects light from a flashlight back toward the viewer, creating a realistic and visually striking effect.
 
