@@ -106,8 +106,9 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
             {
                this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-               this ._elapsedTime = this .getElapsedTime ();
-               this ._cycleTime   = time;
+               this ._elapsedTime   = this .getElapsedTime ();
+               this ._cycleComplete = time;
+               this ._cycleTime     = time;
 
                this .set_fraction (time);
             }
@@ -115,6 +116,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
          else
          {
             this ._elapsedTime      = this .getElapsedTime ();
+            this ._cycleComplete    = time;
             this ._fraction_changed = this .fraction = this .last;
 
             this .stop ();
@@ -152,6 +154,7 @@ Object .defineProperties (TimeSensor,
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",        new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleComplete",    new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "fraction_changed", new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "time",             new Fields .SFTime ()),
