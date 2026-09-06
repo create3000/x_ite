@@ -45,6 +45,7 @@ The **TimeSensor** node belongs to the [Time](/x_ite/components/overview/#time) 
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [cycleTime](#fields-cycleTime) |  |
+| SFTime | [out] | [cycleComplete](#fields-cycleComplete) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
 | SFFloat | [out] | [fraction_changed](#fields-fraction_changed) |  |
 | SFTime | [out] | [time](#fields-time) |  |
@@ -164,6 +165,15 @@ When *stopTime* becomes \<= time now, isActive becomes false and **TimeSensor** 
 {: #fields-cycleTime }
 
 *cycleTime* sends a time outputOnly at startTime, and also at the beginning of each new cycle (useful for synchronization with other time-based objects).
+
+#### Hints
+
+- The first *cycleTime* event for a **TimeSensor** node can be used as an alarm (single pulse at a specified time).
+- *cycleTime* is a nonnegative SFTime duration interval, not an absolute clock time.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **cycleComplete**
 {: #fields-cycleComplete }
