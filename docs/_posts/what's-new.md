@@ -17,6 +17,7 @@ Look at the [Traffic Cone Sample](/x_ite/laboratory/gltf-sample-viewer/?url=Traf
 
 - [x] Support for `KHR_materials_retroreflection` in glTF Parser.
 - [x] New [RetroreflectionMaterialExtension](/x_ite/components/x-ite/retroreflectionmaterialextension/) node.
+- [x] New field *cycleComplete* in [TimeSensor](/x_ite/components/time/timesensor/) node, which is triggered when a cycle completes.
 
 ## X_ITE v16.2 Series
 
