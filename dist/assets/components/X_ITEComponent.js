@@ -1,4 +1,4 @@
-/* X_ITE v16.2.0 */
+/* X_ITE v16.3.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1433,6 +1433,110 @@ const IridescenceMaterialExtension_default_ = IridescenceMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_IridescenceMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("IridescenceMaterialExtension", IridescenceMaterialExtension_default_));
+;// ./src/x_ite/Components/X_ITE/RetroreflectionMaterialExtension.js
+
+
+
+
+
+
+
+
+
+
+// Register key.
+
+X_ITE_ExtensionKeys .add ("RETROREFLECTION_MATERIAL_EXTENSION");
+
+// Register textures.
+
+
+
+external_X_ITE_X3D_MaterialTextures_default().add ("x3d_RetroreflectionTextureEXT");
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function RetroreflectionMaterialExtension (executionContext)
+{
+   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
+
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).RetroreflectionMaterialExtension);
+}
+
+Object .assign (Object .setPrototypeOf (RetroreflectionMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
+{
+   initialize ()
+   {
+      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._retroreflection        .addInterest ("set_retroreflection__",        this);
+      this ._retroreflectionTexture .addInterest ("set_retroreflectionTexture__", this);
+
+      this .set_retroreflection__ ();
+      this .set_retroreflectionTexture__ ();
+   },
+   set_retroreflection__ ()
+   {
+      this .retroreflection = external_X_ITE_X3D_Algorithm_default().clamp (this ._retroreflection .getValue (), 0, 1);
+   },
+   set_retroreflectionTexture__ ()
+   {
+      this .retroreflectionTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._retroreflectionTexture);
+
+      this .addTexture (0, this .retroreflectionTextureNode);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .RETROREFLECTION_MATERIAL_EXTENSION;
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_RETROREFLECTION_MATERIAL_EXT");
+
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      this .retroreflectionTextureNode ?.getShaderOptions (options, "RETROREFLECTION", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_RetroreflectionEXT");
+   },
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      gl .uniform1f (shaderObject .x3d_RetroreflectionEXT, this .retroreflection);
+
+      this .retroreflectionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject .x3d_RetroreflectionTextureEXT,
+         this ._retroreflectionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+   },
+});
+
+Object .defineProperties (RetroreflectionMaterialExtension,
+{
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("RetroreflectionMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
+   fieldDefinitions:
+   {
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                      new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "retroreflection",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "retroreflectionTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "retroreflectionTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const RetroreflectionMaterialExtension_default_ = RetroreflectionMaterialExtension;
+;
+
+/* harmony default export */ const X_ITE_RetroreflectionMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("RetroreflectionMaterialExtension", RetroreflectionMaterialExtension_default_));
 ;// ./src/x_ite/Components/X_ITE/SheenMaterialExtension.js
 
 
@@ -2693,6 +2797,7 @@ const VolumeScatterMaterialExtension_default_ = VolumeScatterMaterialExtension;
 
 
 
+
 external_X_ITE_X3D_Components_default().add ({
    name: "X_ITE",
    concreteNodes:
@@ -2707,6 +2812,7 @@ external_X_ITE_X3D_Components_default().add ({
       X_ITE_InstancedShape,
       X_ITE_IORMaterialExtension,
       X_ITE_IridescenceMaterialExtension,
+      X_ITE_RetroreflectionMaterialExtension,
       X_ITE_SheenMaterialExtension,
       X_ITE_SpecularGlossinessMaterial,
       X_ITE_SpecularMaterialExtension,

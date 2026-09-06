@@ -1,7 +1,7 @@
-/* X_ITE v16.2.0 */
+/* X_ITE v16.3.0 */
 var __webpack_modules__ = ({
 
-/***/ 627
+/***/ 133
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 249
+/***/ 991
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 289
+/***/ 643
 (module) {
 
 /**
@@ -18865,7 +18865,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.2.0";
+const BROWSER_VERSION_default_ = "16.3.0";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -31192,7 +31192,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(289);
+/* provided dependency */ var libtess = __webpack_require__(643);
 
 
 const Triangle3 =
@@ -39071,8 +39071,9 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, Core_X3DSensorNod
             {
                this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-               this ._elapsedTime = this .getElapsedTime ();
-               this ._cycleTime   = time;
+               this ._elapsedTime   = this .getElapsedTime ();
+               this ._cycleComplete = time;
+               this ._cycleTime     = time;
 
                this .set_fraction (time);
             }
@@ -39080,6 +39081,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, Core_X3DSensorNod
          else
          {
             this ._elapsedTime      = this .getElapsedTime ();
+            this ._cycleComplete    = time;
             this ._fraction_changed = this .fraction = this .last;
 
             this .stop ();
@@ -39117,6 +39119,7 @@ Object .defineProperties (TimeSensor,
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "isPaused",         new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "isActive",         new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "cycleTime",        new x_ite_Fields .SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "cycleComplete",    new x_ite_Fields .SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "elapsedTime",      new x_ite_Fields .SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "fraction_changed", new x_ite_Fields .SFFloat ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "time",             new x_ite_Fields .SFTime ()),
@@ -40663,6 +40666,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_ior":
             case "KHR_materials_iridescence":
             case "KHR_materials_pbrSpecularGlossiness":
+            case "KHR_materials_retroreflection":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
@@ -41731,6 +41735,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_iridescence":
                this .khrMaterialsIridescenceObject (value, materialNode);
                break;
+            case "KHR_materials_retroreflection":
+               this .khrMaterialsRetroreflectionObject (value, materialNode);
+               break;
             case "KHR_materials_sheen":
                this .khrMaterialsSheenObject (value, materialNode);
                break;
@@ -41875,6 +41882,23 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       extension .setup ();
 
       KHR_materials_iridescence .pointers = [extension];
+
+      materialNode ._extensions .push (extension);
+   },
+   khrMaterialsRetroreflectionObject (KHR_materials_retroreflection, materialNode)
+   {
+      if (!(KHR_materials_retroreflection instanceof Object))
+         return;
+
+      const extension = this .getScene () .createNode ("RetroreflectionMaterialExtension", false);
+
+      extension ._retroreflection               = this .numberValue (KHR_materials_retroreflection .retroreflectionFactor, 0);
+      extension ._retroreflectionTexture        = this .textureInfo (KHR_materials_retroreflection .retroreflectionTexture);
+      extension ._retroreflectionTextureMapping = this .textureMapping (KHR_materials_retroreflection .retroreflectionTexture);
+
+      extension .setup ();
+
+      KHR_materials_retroreflection .pointers = [extension];
 
       materialNode ._extensions .push (extension);
    },
@@ -47892,7 +47916,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(289);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(643);
 
 
 
@@ -54638,7 +54662,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-OncRzbLtLD5Caw7AMriMRlhuhJ/fW3gh5dFvrdeifrhlqF+YTzx/lbZh5l6JjYau";
+         link .integrity   = "sha384-dhnoOI+clBqqFYGBrUCL7KhjerG/JEhXRHWvaNS1qEwbCU/f0MWYgFRQj2esJwbi";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -64034,10 +64058,12 @@ const
    _loadingTotal   = Symbol (),
    X3DNetworkingContext_loadingObjects = Symbol (),
    _browserLoading = Symbol (),
-   _browserTime    = Symbol (),
+   _percentTime    = Symbol (),
    _set_loadCount  = Symbol (),
    _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
+
+const PERCENT_TIME = 8_000; // in ms
 
 function getBaseURI (element)
 {
@@ -64095,7 +64121,7 @@ Object .assign (X3DNetworkingContext .prototype,
    setBrowserLoading (value)
    {
       this [_browserLoading] = value;
-      this [_browserTime]    = Date .now ();
+      this [_percentTime]    = Date .now ();
 
       if (value)
       {
@@ -64159,7 +64185,8 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this ._loadCount = this [X3DNetworkingContext_loadingObjects] .size;
 
-      this [_browserTime] = Date .now ();
+      if (Date .now () - this [_percentTime] < PERCENT_TIME)
+         this [_percentTime] = Date .now ();
    },
    removeLoadingObject (object)
    {
@@ -64167,7 +64194,8 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this ._loadCount = this [X3DNetworkingContext_loadingObjects] .size;
 
-      this [_browserTime] = Date .now ();
+      if (Date .now () - this [_percentTime] < PERCENT_TIME)
+         this [_percentTime] = Date .now ();
    },
    getDisplayLoadCount ()
    {
@@ -64203,8 +64231,8 @@ Object .assign (X3DNetworkingContext .prototype,
       if (this ._loadCount .getValue () || this [_browserLoading])
       {
          string = ((loadingDisplay || 1) === 1
-            ? gettext ("Loading %1 file")
-            : gettext ("Loading %1 files")) .replace ("%1", loadingDisplay || 1);
+            ? gettext("Loading %1 file")
+            : gettext("Loading %1 files")) .replace ("%1", loadingDisplay || 1);
       }
       else
       {
@@ -64224,8 +64252,8 @@ Object .assign (X3DNetworkingContext .prototype,
          const percent = fractions * 100;
 
          // Show progress in % if loading takes too long.
-         if (Date .now () - this [_browserTime] > 8_000)
-            string += ` (${percent .toFixed (2)} %)`;
+         if (Date .now () - this [_percentTime] > PERCENT_TIME)
+            string += ` (${percent .toFixed (2)}\u202F%)`;
 
          this .getSplashScreen () .querySelector (".x_ite-private-spinner-text") .textContent     = string;
          this .getSplashScreen () .querySelector (".x_ite-private-progressbar div") .style .width = `${percent}%`;
@@ -67076,7 +67104,7 @@ vec3 getIBLRadianceCharlie(const in vec3 n,const in vec3 v,const in float sheenR
 
 
 const MaterialInfo2_glsl_default_ = () => /* glsl */ `
-struct MaterialInfo{float ior;float perceptualRoughness;vec3 f0_dielectric;float alphaRoughness;float fresnel_w;vec3 f90;vec3 f90_dielectric;float metallic;vec3 baseColor;float sheenRoughnessFactor;vec3 sheenColorFactor;vec3 clearcoatF0;vec3 clearcoatF90;float clearcoatFactor;vec3 clearcoatNormal;float clearcoatRoughness;float specularWeight;float transmissionFactor;float thickness;vec3 attenuationColor;float attenuationDistance;float iridescenceFactor;float iridescenceIor;float iridescenceThickness;float diffuseTransmissionFactor;vec3 diffuseTransmissionColorFactor;vec3 anisotropicT;vec3 anisotropicB;float anisotropyStrength;float dispersion;vec3 multiscatterColor;};
+struct MaterialInfo{float ior;float perceptualRoughness;vec3 f0_dielectric;float alphaRoughness;float fresnel_w;vec3 f90;vec3 f90_dielectric;float metallic;vec3 baseColor;float sheenRoughnessFactor;vec3 sheenColorFactor;vec3 clearcoatF0;vec3 clearcoatF90;float clearcoatFactor;vec3 clearcoatNormal;float clearcoatRoughness;float specularWeight;float transmissionFactor;float thickness;vec3 attenuationColor;float attenuationDistance;float iridescenceFactor;float iridescenceIor;float iridescenceThickness;float diffuseTransmissionFactor;vec3 diffuseTransmissionColorFactor;vec3 anisotropicT;vec3 anisotropicB;float anisotropyStrength;float dispersion;vec3 multiscatterColor;float retroreflectionFactor;};
 #if defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
 ${MaterialTextures .texture ("x3d_BaseTexture", "rgba", "linear")}
 vec4 getBaseColor(){float alpha=1.-x3d_Material.transparency;vec4 baseColor=vec4(x3d_Material.baseColor,alpha);
@@ -67241,6 +67269,14 @@ vec3 anisotropySample=getAnisotropyTextureEXT();direction=anisotropySample.xy*2.
 #endif
 vec2 directionRotation=x3d_AnisotropyEXT.xy;mat2 rotationMatrix=mat2(directionRotation.xy,-directionRotation.y,directionRotation.x);direction=rotationMatrix*direction;info.anisotropicT=mat3(normalInfo.t,normalInfo.b,normalInfo.n)*normalize(vec3(direction,0.));info.anisotropicB=cross(normalInfo.ng,info.anisotropicT);info.anisotropyStrength=clamp(x3d_AnisotropyEXT.z*strengthFactor,0.,1.);return info;}
 #endif
+#if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
+${MaterialTextures .texture ("x3d_RetroreflectionTextureEXT", "r")}
+uniform float x3d_RetroreflectionEXT;MaterialInfo getRetroreflectionInfo(in MaterialInfo info){float retroreflectionFactor=x3d_RetroreflectionEXT;
+#if defined(X3D_RETROREFLECTION_TEXTURE_EXT)
+retroreflectionFactor*=getRetroreflectionTextureEXT();
+#endif
+info.retroreflectionFactor=retroreflectionFactor;return info;}
+#endif
 `
 ;
 
@@ -67283,6 +67319,9 @@ baseColor.rgb*=getTextureProjectorColor();
 vec3 color=vec3(0);vec3 v=normalize(-vertex);
 #if defined(X3D_USE_IBL)||defined(X3D_LIGHTING)
 NormalInfo normalInfo=getNormalInfo(x3d_Material.normalScale);vec3 n=normalInfo.n;float NdotV=clamp(dot(n,v),0.,1.);
+#if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
+vec3 v_retro=reflect(-v,n);float NdotV_retro=clamp(dot(n,v_retro),0.,1.);
+#endif
 #endif
 MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0_dielectric=vec3(.04);materialInfo.specularWeight=1.;materialInfo.f90=vec3(1);materialInfo.f90_dielectric=materialInfo.f90;
 #if defined(X3D_IOR_MATERIAL_EXT)
@@ -67318,10 +67357,17 @@ materialInfo=getVolumeScatterInfo(materialInfo);
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
 materialInfo=getAnisotropyInfo(materialInfo,normalInfo);
 #endif
+#if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
+materialInfo=getRetroreflectionInfo(materialInfo);
+#endif
 materialInfo.perceptualRoughness=clamp(materialInfo.perceptualRoughness,0.,1.);materialInfo.metallic=clamp(materialInfo.metallic,0.,1.);materialInfo.alphaRoughness=materialInfo.perceptualRoughness*materialInfo.perceptualRoughness;vec3 f_specular_dielectric=vec3(0);vec3 f_specular_metal=vec3(0);vec3 f_diffuse=vec3(0);vec3 f_dielectric_brdf_ibl=vec3(0);vec3 f_metal_brdf_ibl=vec3(0);vec3 f_emissive=vec3(0);vec3 clearcoat_brdf=vec3(0);vec3 f_sheen=vec3(0);vec3 f_specular_transmission=vec3(0);vec3 f_diffuse_transmission=vec3(0);float clearcoatFactor=0.;vec3 clearcoatFresnel=vec3(0);float albedoSheenScaling=1.;float diffuseTransmissionThickness=1.;vec3 diffuseTransmissionIBL=vec3(0);
 #if defined(X3D_USE_IBL)||defined(X3D_LIGHTING)
 #if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
-vec3 iridescenceFresnel_dielectric=evalIridescence(1.,materialInfo.iridescenceIor,NdotV,materialInfo.iridescenceThickness,materialInfo.f0_dielectric);vec3 iridescenceFresnel_metallic=evalIridescence(1.,materialInfo.iridescenceIor,NdotV,materialInfo.iridescenceThickness,baseColor.rgb);if(materialInfo.iridescenceThickness==0.)materialInfo.iridescenceFactor=0.;
+vec3 iridescenceFresnel_dielectric=evalIridescence(1.,materialInfo.iridescenceIor,NdotV,materialInfo.iridescenceThickness,materialInfo.f0_dielectric);vec3 iridescenceFresnel_metallic=evalIridescence(1.,materialInfo.iridescenceIor,NdotV,materialInfo.iridescenceThickness,baseColor.rgb);
+#if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
+vec3 iridescenceFresnel_dielectric_retro=evalIridescence(1.,materialInfo.iridescenceIor,NdotV_retro,materialInfo.iridescenceThickness,materialInfo.f0_dielectric);vec3 iridescenceFresnel_metallic_retro=evalIridescence(1.,materialInfo.iridescenceIor,NdotV_retro,materialInfo.iridescenceThickness,baseColor.rgb);
+#endif
+if(materialInfo.iridescenceThickness==0.)materialInfo.iridescenceFactor=0.;
 #endif
 #endif
 #if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
@@ -67399,6 +67445,19 @@ l_specular_metal=intensity*NdotL*BRDF_specularGGX(materialInfo.alphaRoughness,Nd
 l_metal_brdf=metal_fresnel*l_specular_metal;l_dielectric_brdf=mix(l_diffuse,l_specular_dielectric,dielectric_fresnel);
 #if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
 l_metal_brdf=mix(l_metal_brdf,l_specular_metal*iridescenceFresnel_metallic,materialInfo.iridescenceFactor);l_dielectric_brdf=mix(l_dielectric_brdf,rgb_mix(l_diffuse,l_specular_dielectric,iridescenceFresnel_dielectric),materialInfo.iridescenceFactor);
+#endif
+#if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
+vec3 h_retro=normalize(l+v_retro);float NdotH_retro=clamp(dot(n,h_retro),0.,1.);float VdotH_retro=clamp(dot(v_retro,h_retro),0.,1.);vec3 dielectric_fresnel_retro=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(VdotH_retro));vec3 metal_fresnel_retro=F_Schlick(baseColor.rgb,vec3(1),abs(VdotH_retro));vec3 l_specular_metal_retro;
+#if defined(X3D_ANISOTROPY_MATERIAL_EXT)
+l_specular_metal_retro=intensity*NdotL*BRDF_specularGGXAnisotropy(materialInfo.alphaRoughness,materialInfo.anisotropyStrength,n,v_retro,l,h_retro,materialInfo.anisotropicT,materialInfo.anisotropicB);
+#else
+l_specular_metal_retro=intensity*NdotL*BRDF_specularGGX(materialInfo.alphaRoughness,NdotL,NdotV_retro,NdotH_retro);
+#endif
+vec3 l_specular_dielectric_retro=l_specular_metal_retro;vec3 l_metal_brdf_retro=metal_fresnel_retro*l_specular_metal_retro;vec3 l_dielectric_brdf_retro=mix(l_diffuse,l_specular_dielectric_retro,dielectric_fresnel_retro);
+#if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
+l_metal_brdf_retro=mix(l_metal_brdf_retro,l_specular_metal*iridescenceFresnel_metallic_retro,materialInfo.iridescenceFactor);l_dielectric_brdf_retro=mix(l_dielectric_brdf_retro,rgb_mix(l_diffuse,l_specular_dielectric,iridescenceFresnel_dielectric_retro),materialInfo.iridescenceFactor);
+#endif
+l_metal_brdf=mix(l_metal_brdf,l_metal_brdf_retro,materialInfo.retroreflectionFactor);l_dielectric_brdf=mix(l_dielectric_brdf,l_dielectric_brdf_retro,materialInfo.retroreflectionFactor);
 #endif
 #if defined(X3D_CLEARCOAT_MATERIAL_EXT)
 l_clearcoat_brdf=intensity*getPunctualRadianceClearCoat(materialInfo.clearcoatNormal,v,l,h,VdotH,materialInfo.clearcoatF0,materialInfo.clearcoatF90,materialInfo.clearcoatRoughness);
@@ -72878,7 +72937,7 @@ const
    _animFrame      = Symbol (),
    _previousTime   = Symbol (),
    _systemTime     = Symbol (),
-   X3DBrowserContext_browserTime    = Symbol (),
+   _browserTime    = Symbol (),
    _cameraTime     = Symbol (),
    _collisionTime  = Symbol (),
    _displayTime    = Symbol (),
@@ -72930,7 +72989,7 @@ function X3DBrowserContext (element)
    this [_previousTime]   = 0;
    this [_renderCallback] = this [_traverse] .bind (this);
    this [_systemTime]     = new Time_StopWatch ();
-   this [X3DBrowserContext_browserTime]    = new Time_StopWatch ();
+   this [_browserTime]    = new Time_StopWatch ();
    this [_cameraTime]     = new Time_StopWatch ();
    this [_collisionTime]  = new Time_StopWatch ();
    this [_displayTime]    = new Time_StopWatch ();
@@ -73050,7 +73109,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
       // Start
 
       this [_systemTime] .stop ();
-      this [X3DBrowserContext_browserTime] .start ();
+      this [_browserTime] .start ();
 
       // Time
 
@@ -73111,7 +73170,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
 
       // Finish
 
-      this [X3DBrowserContext_browserTime] .stop ();
+      this [_browserTime] .stop ();
       this [_systemTime] .start ();
    },
    getSystemTime ()
@@ -73120,7 +73179,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
    },
    getBrowserTime ()
    {
-      return this [X3DBrowserContext_browserTime];
+      return this [_browserTime];
    },
    getCameraTime ()
    {
@@ -87261,7 +87320,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, Shape_X3DOn
 
       this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes (Base_X3DConstants .TransmissionMaterialExtension)));
 
-      this .setVolumeScatter (extensionNodes .some (extensionNode => extensionNode .getType () .includes (Base_X3DConstants .VolumeScatterMaterialExtension)) && extensionNodes .some (extensionNode => extensionNode .getType () .includes (Base_X3DConstants .VolumeMaterialExtension)));
+      this .setVolumeScatter (extensionNodes .some (extensionNode => extensionNode .getType () .includes (Base_X3DConstants .VolumeScatterMaterialExtension)));
 
       this .set_extensionsKey__ ();
       this .set_renderedTextures__ ();
@@ -91422,8 +91481,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(627);
-/* provided dependency */ var APNG = __webpack_require__(249);
+/* provided dependency */ var SuperGif = __webpack_require__(133);
+/* provided dependency */ var APNG = __webpack_require__(991);
 
 
 
@@ -93374,7 +93433,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
                   {
                      const spinnerText = this .getSplashScreen () .querySelector (".x_ite-private-spinner-text");
 
-                     spinnerText .textContent = gettext ("Failed loading world.");
+                     spinnerText .textContent = gettext("Failed loading world.");
                   });
 
                   reject (new Error ("Couldn't load X3D file."));
@@ -94067,7 +94126,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(289);
+/* provided dependency */ var libtess_libtess = __webpack_require__(643);
 const libtess_default_ = libtess_libtess;
 ;
 
