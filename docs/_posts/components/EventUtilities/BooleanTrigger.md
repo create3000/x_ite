@@ -33,6 +33,7 @@ The **BooleanTrigger** node belongs to the [EventUtilities](/x_ite/components/ov
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFTime | [in] | [set_triggerTime](#fields-set_triggerTime) |  |
 | SFBool | [out] | [triggerTrue](#fields-triggerTrue) |  |
+| SFBool | [out] | [triggerFalse](#fields-triggerFalse) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -57,6 +58,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 {: #fields-triggerTrue }
 
 *triggerTrue* outputs a true value whenever a triggerTime event is received.
+
+### SFBool [out] **triggerFalse**
+{: #fields-triggerFalse }
+
+*triggerFalse* outputs a false value whenever a triggerTime event is received.
 
 #### Warning
 

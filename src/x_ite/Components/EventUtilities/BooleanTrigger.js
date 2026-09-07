@@ -22,7 +22,8 @@ Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, X3DTriggerNod
    },
    set_triggerTime__ ()
    {
-      this ._triggerTrue = true;
+      this ._triggerTrue  = true;
+      this ._triggerFalse = false;
    },
 });
 
@@ -35,6 +36,7 @@ Object .defineProperties (BooleanTrigger,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_triggerTime", new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTrue",     new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerFalse",    new Fields .SFBool ()),
       ]),
       enumerable: true,
    },
