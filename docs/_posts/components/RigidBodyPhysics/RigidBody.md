@@ -277,16 +277,6 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 The *geometry* field is used to connect the body modelled by the physics engine implementation to the real *geometry* of the scene through the use of collidable nodes. This allows the *geometry* to be connected directly to the physics model as well as collision detection. Collidable nodes have their location set to the same location as the body instance in which they are located.
 
-###  [] **size** 1 1 1 <small>(-∞,∞)</small> <small class="blue">non-standard</small>
-{: #fields-size }
-
-Input/Output field *size*.
-
-###  [] **scale** 1 1 1 <small>(-∞,∞)</small>
-{: #fields-scale }
-
-Input/Output field *scale*.
-
 ## Example
 
 <x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBody/RigidBody.x3d" contentScale="auto" update="auto">

@@ -88,7 +88,7 @@ Specifies algorithm for rate of increasing **Fog**, either LINEAR or EXPONENTIAL
 - Match [Background](/x_ite/components/environmentaleffects/background/) *color* to make objects fade away.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
-### SFFloat [in, out] **visibilityStart** 0 <small>[0,∞)</small> <small class="blue">non-standard</small>
+### SFFloat [in, out] **visibilityStart** 0 <small>[0,∞)</small>
 {: #fields-visibilityStart }
 
 Distance in meters where objects starts to be obscured by the fog, using local coordinate system.
