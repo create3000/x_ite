@@ -31,6 +31,8 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
    },
    set_start ()
    {
+      this ._elapsedTime = 0;
+
       if (!navigator .mediaDevices)
          return;
 
@@ -103,6 +105,8 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
    },
    set_stop (restore = false)
    {
+      this ._elapsedTime = this .getElapsedTime ();
+
       if (!this .mediaStreamAudioSourceNode)
          return;
 

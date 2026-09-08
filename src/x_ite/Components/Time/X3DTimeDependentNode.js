@@ -182,8 +182,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 
          // The event order below is very important.
 
-         this ._isActive    = true;
-         this ._elapsedTime = 0;
+         this ._isActive = true;
 
          this .set_start ();
 
@@ -248,8 +247,6 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
          // The event order below is very important.
 
          this .set_stop ();
-
-         this ._elapsedTime = this .getElapsedTime ();
 
          if (this ._isPaused .getValue ())
             this ._isPaused = false;

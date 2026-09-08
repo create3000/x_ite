@@ -94,6 +94,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
       if (!this .mediaElement)
          return;
 
+      this ._elapsedTime = 0;
+
       this .mediaElement .currentTime = 0;
 
       this .getBrowser () .startAudioElement (this .mediaElement);
@@ -109,6 +111,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, X3DSoundN
    set_stop ()
    {
       this .getBrowser () .stopAudioElement (this .mediaElement);
+
+      this ._elapsedTime = this .getElapsedTime ();
    },
    set_end ()
    {

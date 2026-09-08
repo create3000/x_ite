@@ -106,6 +106,8 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
 
       this .oscillatorNode .connect (this .getAudioSource ());
       this .oscillatorNode .start ();
+
+      this ._elapsedTime = 0;
    },
    set_pause ()
    {
@@ -119,6 +121,8 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    {
       this .oscillatorNode .stop ();
       this .oscillatorNode .disconnect ();
+
+      this ._elapsedTime = this .getElapsedTime ();
    },
    set_time ()
    {

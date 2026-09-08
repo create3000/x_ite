@@ -166,6 +166,14 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSo
       for (const childNode of this .childNodes)
          childNode .getAudioSource () .connect (this .audioDestination);
    },
+   set_start ()
+   {
+      this ._elapsedTime = 0;
+   },
+   set_stop ()
+   {
+      this ._elapsedTime = this .getElapsedTime ();
+   },
    set_time ()
    {
       this ._elapsedTime = this .getElapsedTime ();

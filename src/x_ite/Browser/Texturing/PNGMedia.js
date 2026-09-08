@@ -49,7 +49,7 @@ async function PNGMedia (apng, movieTexture)
       {
          get ()
          {
-            return Math .floor (movieTexture ._elapsedTime / this .duration);
+            return Math .floor (movieTexture ._elapsedTime .getValue () / this .duration);
          },
       },
       currentFrame:

@@ -50,6 +50,10 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       this .fraction = Algorithm .fract (fraction + this .offset);
       this .cycle    = currentTime - (this .fraction - this .first) * cycleInterval;
    },
+   getFraction (time)
+   {
+      return this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+   },
    set_cycleInterval__ ()
    {
       if (!this ._isActive .getValue ())
@@ -67,7 +71,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       if (this ._isPaused .getValue ())
          return;
 
-      this .set_fraction (this .getBrowser () .getCurrentTime ());
+      this ._fraction_changed = this .fraction = this .getFraction (this .getBrowser () .getCurrentTime ());
    },
    set_start ()
    {
@@ -77,8 +81,9 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
 
       const time = this .getBrowser () .getCurrentTime ();
 
-      this ._time             = time;
       this ._cycleTime        = time;
+      this ._time             = time;
+      this ._elapsedTime      = 0;
       this ._fraction_changed = this .fraction;
    },
    set_pause ()
@@ -94,13 +99,8 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    set_stop ()
    {
       this .getBrowser () .timePrepareEvents () .removeInterest ("set_prepare", this);
-   },
-   set_fraction (time)
-   {
-      const fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
 
-      this .fraction          = fraction;
-      this ._fraction_changed = fraction;
+      this ._elapsedTime = this .getElapsedTime ();
    },
    set_prepare ()
    {
@@ -126,11 +126,10 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
             {
                this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-               this ._cycleTime   = time;
-               this ._time        = time;
-               this ._elapsedTime = this .getElapsedTime ();
-
-               this .set_fraction (time);
+               this ._cycleTime        = time;
+               this ._time             = time;
+               this ._elapsedTime      = this .getElapsedTime ();
+               this ._fraction_changed = this .fraction = this .getFraction (time);
             }
          }
          else
@@ -145,10 +144,9 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       }
       else
       {
-         this ._time        = time;
-         this ._elapsedTime = this .getElapsedTime ();
-
-         this .set_fraction (time);
+         this ._time             = time;
+         this ._elapsedTime      = this .getElapsedTime ();
+         this ._fraction_changed = this .fraction = this .getFraction (time);
       }
    },
    dispose ()

@@ -14,7 +14,7 @@ function GifMedia (gif, movieTexture)
             if (!loop && cycle < this .cycle)
                return this .duration;
 
-            return (movieTexture ._elapsedTime * playbackRate) % this .duration;
+            return (movieTexture ._elapsedTime .getValue () * playbackRate) % this .duration;
          },
          set: Function .prototype,
       },
@@ -41,7 +41,7 @@ function GifMedia (gif, movieTexture)
       {
          get ()
          {
-            return Math .floor (movieTexture ._elapsedTime / this .duration);
+            return Math .floor (movieTexture ._elapsedTime .getValue () / this .duration);
          },
       },
       currentFrame:
