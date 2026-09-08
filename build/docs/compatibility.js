@@ -1,7 +1,9 @@
 const
-   json   = require ("./compatibility.json"),
-   { sh } = require ("shell-tools"),
-   fs     = require ("fs");
+   json        = require ("./compatibility.json"),
+   yargs       = require ("yargs"),
+   { hideBin } = require ("yargs/helpers"),
+   { sh }      = require ("shell-tools"),
+   fs          = require ("fs");
 
 // https://www.web3d.org/specifications/X3dNodeInventoryComparison.xlsx
 // https://castle-engine.io/apidoc/html/AllClasses.html
@@ -12,11 +14,38 @@ main ();
 
 function main ()
 {
-   console .log ("Update browser compatibility ...");
+   const args = yargs (hideBin (process .argv))
+   .scriptName ("compatibility")
+   .usage ("$0 [options]")
+   .wrap (yargs () .terminalWidth ())
+   .command ("Update browser compatibility tables.")
+   .alias ("v", "version")
+   .fail ((msg, error, yargs) =>
+   {
+      console .error (msg);
+      process .exit (1);
+   })
+   .option ("castle",
+   {
+      type: "boolean",
+      alias: "c",
+      description: "Update Castle nodes",
+   })
+   .help ()
+   .alias ("help", "h") .argv;
 
-   const files = sh ("ls -C1 src/x_ite/Components/**/*.js") .trim () .split ("\n");
+   if (args .castle)
+   {
+      console .log ("Update Castle nodes ...");
+   }
+   else
+   {
+      console .log ("Update browser compatibility ...");
 
-   files .forEach (filename => browserCompatibility (filename));
+      const files = sh ("ls -C1 src/x_ite/Components/**/*.js") .trim () .split ("\n");
+
+      files .forEach (filename => browserCompatibility (filename));
+   }
 }
 
 function browserCompatibility (js)

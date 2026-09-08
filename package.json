@@ -141,6 +141,7 @@
     "webpack-cli": "^7.2.3",
     "webpack-shell-plugin-next": "^2.3.3",
     "woff2-encoder": "^2.0.0",
-    "wrapper-webpack-plugin": "^2.2.2"
+    "wrapper-webpack-plugin": "^2.2.2",
+    "yargs": "^18.1.0"
   }
 }
