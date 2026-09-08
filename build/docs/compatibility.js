@@ -20,7 +20,7 @@ function main ()
    .wrap (yargs () .terminalWidth ())
    .command ("Update browser compatibility tables.")
    .alias ("v", "version")
-   .fail ((msg, error, yargs) =>
+   .fail ((msg) =>
    {
       console .error (msg);
       process .exit (1);
