@@ -100,6 +100,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
 
       this .oscillatorNode = new OscillatorNode (audioContext);
 
+      this .set_gain__ ();
       this .set_detune__ ();
       this .set_frequency__ ();
       this .set_type__ ();
@@ -119,8 +120,16 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
    },
    set_stop ()
    {
-      this .oscillatorNode .stop ();
-      this .oscillatorNode .disconnect ();
+      const
+         audioContext = this .getBrowser () .getAudioContext (),
+         gainNode     = this .getAudioSource (),
+         now          = audioContext .currentTime,
+         fadeDuration = 0.02;
+
+      gainNode .gain .setValueAtTime (gainNode .gain .value, now);
+      gainNode .gain .exponentialRampToValueAtTime (1e-5, now + fadeDuration);
+
+      this .oscillatorNode .stop (now + fadeDuration);
    },
    set_time ()
    {
