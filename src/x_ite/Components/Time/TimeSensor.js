@@ -104,6 +104,9 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    set_prepare ()
    {
+      if (!this ._loop .getValue ())
+         return;
+
       const time = this .getBrowser () .getCurrentTime ();
 
       if (time - this .cycle >= this .interval)
@@ -135,6 +138,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
          {
             this ._elapsedTime      = this .getElapsedTime ();
             this ._fraction_changed = this .fraction = this .last;
+            this ._cycleComplete    = time;
 
             this .stop ();
          }
