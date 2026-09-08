@@ -31,12 +31,22 @@ function main ()
       alias: "c",
       description: "Update Castle nodes",
    })
+   .option ("x3dom",
+   {
+      type: "boolean",
+      alias: "o",
+      description: "Update Castle nodes",
+   })
    .help ()
    .alias ("help", "h") .argv;
 
    if (args .castle)
    {
       castle ();
+   }
+   else if (args .x3dom)
+   {
+      x3dom ();
    }
    else
    {
@@ -103,6 +113,23 @@ async function castle ()
    for (const key in json)
    {
       json [key] .castle = text .includes (`T${key}Node`);
+   }
+
+   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (json, undefined, "  ") + "\n");
+}
+
+async function x3dom ()
+{
+   console .log ("Update X3DOM nodes ...");
+
+   const
+      response = await fetch ("https://doc.x3dom.org/developer/x3dom/nodeTypes/index.html"),
+      text     = await response .text ();
+
+   for (const key in json)
+   {
+      // Only add new nodes, don't delete.
+      json [key] .x3dom ||= !!text .match (new RegExp (`\\b${key}\\b`));
    }
 
    fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (json, undefined, "  ") + "\n");

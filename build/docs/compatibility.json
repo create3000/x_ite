@@ -1076,7 +1076,7 @@
   "PhysicalMaterial": {
     "x3d-edit": false,
     "castle": true,
-    "x3dom": false,
+    "x3dom": true,
     "freewrl": true
   },
   "PickableGroup": {
@@ -1124,7 +1124,7 @@
   "PointProperties": {
     "x3d-edit": false,
     "castle": true,
-    "x3dom": false,
+    "x3dom": true,
     "freewrl": true
   },
   "PointSet": {
