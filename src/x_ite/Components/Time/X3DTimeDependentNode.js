@@ -3,7 +3,7 @@ import X3DNode      from "../Core/X3DNode.js";
 import X3DChildNode from "../Core/X3DChildNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 
-function X3DTimeDependentNode (executionContext)
+function X3DTimeDependentNode (/* executionContext */)
 {
    this .addType (X3DConstants .X3DTimeDependentNode);
 
