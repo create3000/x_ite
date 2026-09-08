@@ -36,7 +36,7 @@ function main ()
 
    if (args .castle)
    {
-      console .log ("Update Castle nodes ...");
+      castle ();
    }
    else
    {
@@ -92,18 +92,24 @@ function browserCompatibility (js)
       fs .writeFileSync (md, md_f_updated);
 }
 
+async function castle ()
+{
+   console .log ("Update Castle nodes ...");
+
+   const
+      response = await fetch ("https://castle-engine.io/apidoc/html/AllClasses.html"),
+      text     = await response .text ();
+
+   for (const key in json)
+   {
+      json [key] .castle = text .includes (`T${key}Node`);
+   }
+
+   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (json, undefined, "  ") + "\n");
+}
+
 /*
 Warp prompt:
 
 Please make a json file from comparison.csv with the following objects "{ "node name": { "x3d-edit", true/false, castle": true/false, "x3dom": true/false, "freewrl": true/false }, "next node name": ... }"
 */
-
-
-// const t = ``;
-
-// for (const key in json)
-// {
-//    json [key] .castle = t .includes (`T${key}Node`);
-// }
-
-// fs .writeFileSync ("build/docs/browser-compatibility.json", JSON .stringify (json))
