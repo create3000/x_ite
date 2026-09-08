@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    set_start ()
    {
-      this .getBrowser () .prepareEvents () .addInterest ("set_prepare", this);
+      this .getBrowser () .timePrepareEvents () .addInterest ("set_prepare", this);
 
       this .setRange (this ._range [0], this ._range [1], this ._range [2], true);
 
@@ -83,17 +83,17 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    set_pause ()
    {
-      this .getBrowser () .prepareEvents () .removeInterest ("set_prepare", this);
+      this .getBrowser () .timePrepareEvents () .removeInterest ("set_prepare", this);
    },
    set_resume (/* pauseInterval */)
    {
-      this .getBrowser () .prepareEvents () .addInterest ("set_prepare", this);
+      this .getBrowser () .timePrepareEvents () .addInterest ("set_prepare", this);
 
       this .setRange (this .fraction, this ._range [1], this ._range [2], false);
    },
    set_stop ()
    {
-      this .getBrowser () .prepareEvents () .removeInterest ("set_prepare", this);
+      this .getBrowser () .timePrepareEvents () .removeInterest ("set_prepare", this);
    },
    set_fraction (time)
    {

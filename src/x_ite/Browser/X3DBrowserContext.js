@@ -72,15 +72,16 @@ function X3DBrowserContext (element)
    for (const browserContext of browserContexts)
       browserContext .call (this, element);
 
-   this .addChildObjects (X3DConstants .outputOnly, "initialized",    new Fields .SFTime (),
-                          X3DConstants .outputOnly, "shutdown",       new Fields .SFTime (),
-                          X3DConstants .outputOnly, "prepareEvents",  new Fields .SFTime (),
-                          X3DConstants .outputOnly, "timeEvents",     new Fields .SFTime (),
-                          X3DConstants .outputOnly, "cameraEvents",   new Fields .SFTime (),
-                          X3DConstants .outputOnly, "sensorEvents",   new Fields .SFTime (),
-                          X3DConstants .outputOnly, "displayEvents",  new Fields .SFTime (),
-                          X3DConstants .outputOnly, "finishedEvents", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "endEvents",      new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "initialized",       new Fields .SFTime (),
+                          X3DConstants .outputOnly, "shutdown",          new Fields .SFTime (),
+                          X3DConstants .outputOnly, "timePrepareEvents", new Fields .SFTime (),
+                          X3DConstants .outputOnly, "prepareEvents",     new Fields .SFTime (),
+                          X3DConstants .outputOnly, "timeEvents",        new Fields .SFTime (),
+                          X3DConstants .outputOnly, "cameraEvents",      new Fields .SFTime (),
+                          X3DConstants .outputOnly, "sensorEvents",      new Fields .SFTime (),
+                          X3DConstants .outputOnly, "displayEvents",     new Fields .SFTime (),
+                          X3DConstants .outputOnly, "finishedEvents",    new Fields .SFTime (),
+                          X3DConstants .outputOnly, "endEvents",         new Fields .SFTime ());
 
    this [_tainted]        = false;
    this [_previousTime]   = 0;
@@ -109,6 +110,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    shutdown ()
    {
       return this ._shutdown;
+   },
+   timePrepareEvents ()
+   {
+      return this ._timePrepareEvents;
    },
    prepareEvents ()
    {
@@ -213,6 +218,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .xrFrame (frame);
 
       // Prepare and Time Events
+
+      this .addTaintedField (this ._timePrepareEvents);
+      this [_processEvents] ();
 
       this .addTaintedField (this ._prepareEvents);
       this [_processEvents] ();
