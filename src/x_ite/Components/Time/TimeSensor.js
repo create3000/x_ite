@@ -118,8 +118,6 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
 
       const time = this .getBrowser () .getCurrentTime ();
 
-      this ._time = time;
-
       if (time - this .cycle >= this .interval)
       {
          if (this ._loop .getValue ())
@@ -129,6 +127,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
                this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
                this ._cycleTime   = time;
+               this ._time        = time;
                this ._elapsedTime = this .getElapsedTime ();
 
                this .set_fraction (time);
@@ -136,6 +135,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
          }
          else
          {
+            this ._time             = time;
             this ._elapsedTime      = this .getElapsedTime ();
             this ._fraction_changed = this .fraction = this .last;
             this ._cycleComplete    = time;
@@ -145,6 +145,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       }
       else
       {
+         this ._time        = time;
          this ._elapsedTime = this .getElapsedTime ();
 
          this .set_fraction (time);
