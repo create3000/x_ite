@@ -34,7 +34,7 @@ function main ()
    .option ("x3dom",
    {
       type: "boolean",
-      alias: "o",
+      alias: "x",
       description: "Update Castle nodes",
    })
    .help ()
