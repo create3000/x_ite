@@ -35,7 +35,13 @@ function main ()
    {
       type: "boolean",
       alias: "x",
-      description: "Update Castle nodes",
+      description: "Update X3DOM nodes",
+   })
+   .option ("freewrl",
+   {
+      type: "boolean",
+      alias: "f",
+      description: "Update FreeWRL nodes",
    })
    .help ()
    .alias ("help", "h") .argv;
@@ -47,6 +53,10 @@ function main ()
    else if (args .x3dom)
    {
       x3dom ();
+   }
+   else if (args .freewrl)
+   {
+      freewrl ();
    }
    else
    {
@@ -130,6 +140,28 @@ async function x3dom ()
    {
       // Only add new nodes, don't delete.
       json [key] .x3dom ||= !!text .match (new RegExp (`\\b${key}\\b`));
+   }
+
+   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (json, undefined, "  ") + "\n");
+}
+
+async function freewrl ()
+{
+   console .log ("Update FreeWRL nodes ...");
+
+   const response = await fetch ("https://freewrl.sourceforge.io/conformance.html");
+
+   let text = (await response .text ())
+      .replace ("Collidable Shape", "CollidableShape")
+      .replace ("PickPointSensor", "PointPickSensor")
+      .replace ("PrimitivePockSensor", "PrimitivePickSensor");
+
+   for (const key in json)
+   {
+      const match = text .match (new RegExp (`<td\\s*>${key}s?<?/td\\s*>.*?<td\\s*>(.*?)</td\\s*>`, "is"));
+
+      // Only add new nodes, don't delete.
+      json [key] .freewrl = match ? !match [1] .match (/not/i) : false;
    }
 
    fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (json, undefined, "  ") + "\n");

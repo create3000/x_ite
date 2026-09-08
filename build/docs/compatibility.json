@@ -351,7 +351,7 @@
     "x3d-edit": true,
     "castle": true,
     "x3dom": true,
-    "freewrl": true
+    "freewrl": false
   },
   "CoordinateInterpolator": {
     "x3d-edit": true,
@@ -867,7 +867,7 @@
     "x3d-edit": true,
     "castle": true,
     "x3dom": true,
-    "freewrl": true
+    "freewrl": false
   },
   "MetadataDouble": {
     "x3d-edit": true,
@@ -1695,7 +1695,7 @@
     "x3d-edit": true,
     "castle": false,
     "x3dom": false,
-    "freewrl": true
+    "freewrl": false
   },
   "WindPhysicsModel": {
     "x3d-edit": false,
@@ -1707,6 +1707,6 @@
     "x3d-edit": true,
     "castle": true,
     "x3dom": true,
-    "freewrl": true
+    "freewrl": false
   }
 }
