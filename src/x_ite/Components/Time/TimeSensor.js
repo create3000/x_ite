@@ -71,6 +71,8 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    set_start ()
    {
+      this .getBrowser () .prepareEvents () .addInterest ("set_prepare", this);
+
       this .setRange (this ._range [0], this ._range [1], this ._range [2], true);
 
       const time = this .getBrowser () .getCurrentTime ();
@@ -79,9 +81,19 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       this ._cycleTime        = time;
       this ._fraction_changed = this .fraction;
    },
+   set_pause ()
+   {
+      this .getBrowser () .prepareEvents () .removeInterest ("set_prepare", this);
+   },
    set_resume (/* pauseInterval */)
    {
+      this .getBrowser () .prepareEvents () .addInterest ("set_prepare", this);
+
       this .setRange (this .fraction, this ._range [1], this ._range [2], false);
+   },
+   set_stop ()
+   {
+      this .getBrowser () .prepareEvents () .removeInterest ("set_prepare", this);
    },
    set_fraction (time)
    {
@@ -89,6 +101,13 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
 
       this .fraction          = fraction;
       this ._fraction_changed = fraction;
+   },
+   set_prepare ()
+   {
+      const time = this .getBrowser () .getCurrentTime ();
+
+      if (time - this .cycle >= this .interval)
+         this ._cycleComplete = time;
    },
    set_time ()
    {
@@ -106,9 +125,8 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
             {
                this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-               this ._elapsedTime   = this .getElapsedTime ();
-               this ._cycleComplete = time;
-               this ._cycleTime     = time;
+               this ._cycleTime   = time;
+               this ._elapsedTime = this .getElapsedTime ();
 
                this .set_fraction (time);
             }
@@ -116,7 +134,6 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
          else
          {
             this ._elapsedTime      = this .getElapsedTime ();
-            this ._cycleComplete    = time;
             this ._fraction_changed = this .fraction = this .last;
 
             this .stop ();
