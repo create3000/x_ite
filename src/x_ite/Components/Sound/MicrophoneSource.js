@@ -31,8 +31,6 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
    },
    set_start ()
    {
-      this ._elapsedTime = 0;
-
       if (!navigator .mediaDevices)
          return;
 
@@ -49,6 +47,8 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
          const audioContext = this .getBrowser () .getAudioContext ();
 
          this .mediaStreamAudioSourceNode = new MediaStreamAudioSourceNode (audioContext, { mediaStream });
+
+         this ._elapsedTime = 0;
 
          if (this ._isActive .getValue ())
          {
@@ -105,8 +105,6 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
    },
    set_stop (restore = false)
    {
-      this ._elapsedTime = this .getElapsedTime ();
-
       if (!this .mediaStreamAudioSourceNode)
          return;
 
@@ -123,6 +121,9 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, X3DSoundSou
    },
    set_time ()
    {
+      if (!this .mediaStreamAudioSourceNode)
+         return;
+
       this ._elapsedTime = this .getElapsedTime ();
    },
 });

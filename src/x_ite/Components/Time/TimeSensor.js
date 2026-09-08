@@ -99,8 +99,6 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    set_stop ()
    {
       this .getBrowser () .timePrepareEvents () .removeInterest ("set_prepare", this);
-
-      this ._elapsedTime = this .getElapsedTime ();
    },
    set_prepare ()
    {

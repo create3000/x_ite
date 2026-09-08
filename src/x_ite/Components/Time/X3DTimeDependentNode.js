@@ -55,8 +55,10 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    },
    resetElapsedTime ()
    {
-      this .start         = this .getBrowser () .getCurrentTime ();
-      this .pause         = this .getBrowser () .getCurrentTime ();
+      const time = this .getBrowser () .getCurrentTime ();
+
+      this .start         = time;
+      this .pause         = time;
       this .pauseInterval = 0;
    },
    set_live__ ()

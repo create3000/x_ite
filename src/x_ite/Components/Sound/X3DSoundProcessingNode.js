@@ -170,10 +170,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, X3DSo
    {
       this ._elapsedTime = 0;
    },
-   set_stop ()
-   {
-      this ._elapsedTime = this .getElapsedTime ();
-   },
    set_time ()
    {
       this ._elapsedTime = this .getElapsedTime ();
