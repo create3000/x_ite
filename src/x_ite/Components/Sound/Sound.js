@@ -119,6 +119,9 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
    },
    setGain (gain, pan = 0.5, rotation = 0)
    {
+      // Given a pan value, left and right channel levels can be obtained using the equations from:
+      // https://www.web3d.org/documents/specifications/19775-1/V4.0/index.html
+
       const
          panLeft       = 1 - pan ** 2,
          panRight      = 1 - (1 - pan) ** 2,
