@@ -83,7 +83,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 - Decibel values shall not be used for this multiplicative factor.
 
-### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
+### SFFloat [in, out] **detune** 0 <small>(-∞,∞)</small>
 {: #fields-detune }
 
 The *detune* field, measured in cents, modulates the speed at which the the audio stream is rendered. It is an a-rate AudioParam representing detuning of oscillation.
