@@ -190,7 +190,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 
          if (this .getLive () .getValue ())
          {
-            this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+            this .getBrowser () .timeEvents () .addInterest ("set_time", this);
             this .getBrowser () .addBrowserEvent ();
          }
          else
@@ -216,7 +216,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 
       this .set_pause ();
 
-      this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+      this .getBrowser () .timeEvents () .removeInterest ("set_time", this);
    },
    do_resume ()
    {
@@ -256,7 +256,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 
          this ._isActive = false;
 
-         this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+         this .getBrowser () .timeEvents () .removeInterest ("set_time", this);
       }
    },
    addTimeout (name, callback, startTime)
