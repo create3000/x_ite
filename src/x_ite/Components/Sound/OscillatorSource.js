@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
          audioContext = this .getBrowser () .getAudioContext (),
          gainNode     = this .getAudioSource (),
          now          = audioContext .currentTime,
-         fadeDuration = 0.02;
+         fadeDuration = 0.03;
 
       gainNode .gain .setValueAtTime (gainNode .gain .value, now);
       gainNode .gain .exponentialRampToValueAtTime (1e-5, now + fadeDuration);
