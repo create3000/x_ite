@@ -32,7 +32,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
       if (!this .oscillatorNode)
          return;
 
-      this .oscillatorNode .detune .value = Math .max (this ._detune .getValue (), 0);
+      this .oscillatorNode .detune .value = this ._detune .getValue ();
    },
    set_frequency__ ()
    {
