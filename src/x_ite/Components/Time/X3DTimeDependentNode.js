@@ -284,12 +284,12 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 
       this [callback] ();
    },
-   set_loop: Function .prototype,
-   set_start: Function .prototype,
-   set_pause: Function .prototype,
-   set_resume: Function .prototype,
-   set_stop: Function .prototype,
-   set_time: Function .prototype,
+   set_loop () { },
+   set_start () { },
+   set_pause () { },
+   set_resume () { },
+   set_stop () { },
+   set_time () { },
    dispose ()
    {
       for (const name of [... this .timeouts .keys ()])
