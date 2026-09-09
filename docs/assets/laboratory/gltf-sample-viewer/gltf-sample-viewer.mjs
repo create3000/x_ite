@@ -649,6 +649,7 @@ const ktx = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnisotropyBarnLamp/glTF-KTX-BasisU/AnisotropyBarnLamp.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-KTX-BasisU/ChronographWatch.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/FlightHelmet/glTF-KTX-BasisU/FlightHelmet.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
 ];
 
