@@ -144,7 +144,8 @@ ul.is-collapsible {
   max-height: unset;
 }
 
-/* nav solo trigger */
+/* nav solo trigger and popover */
+
 #nav-solo-trigger {
   @extend #toc-solo-trigger;
 }
