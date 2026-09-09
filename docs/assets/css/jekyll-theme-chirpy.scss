@@ -139,6 +139,11 @@ html {
   @extend .mf;
 }
 
+/* tocbot navigation */
+ul.is-collapsible {
+  max-height: unset;
+}
+
 /* append your custom style below */
 
 .red {
