@@ -100,6 +100,10 @@ x3d-canvas {
   <div class="viewer-column1">
     <x3d-canvas class="buttons-tr" debug="true" contentScale="auto" update="auto" toneMapping="KHR_PBR_NEUTRAL"></x3d-canvas>
     <div id="options" style="display: none">
+      <div id="scenes"></div>
+      <div id="viewpoints"></div>
+      <div id="material-variants"></div>
+      <div id="animations"></div>
       <div id="lighting">
         <b>Image Based Lighting</b>
         <select id="ibl" class="select">
@@ -125,10 +129,6 @@ x3d-canvas {
         <b>Background</b>
         <button class="check" for="summer"><i id="summer" class="fa-solid fa-xmark"></i>Show Background</button>
       </div>
-      <div id="scenes"></div>
-      <div id="viewpoints"></div>
-      <div id="material-variants"></div>
-      <div id="animations"></div>
     </div>
   </div>
   <div class="viewer-column2"></div>
