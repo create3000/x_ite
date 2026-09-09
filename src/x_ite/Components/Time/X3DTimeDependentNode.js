@@ -191,6 +191,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
          if (this .getLive () .getValue ())
          {
             this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+            this .getBrowser () .addBrowserEvent ();
          }
          else
          {
