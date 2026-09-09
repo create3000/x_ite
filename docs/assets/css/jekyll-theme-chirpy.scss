@@ -144,6 +144,23 @@ ul.is-collapsible {
   max-height: unset;
 }
 
+/* nav solo trigger */
+#nav-solo-trigger {
+  @extend #toc-solo-trigger;
+}
+
+#nav-solo-trigger .label {
+  @extend .label;
+}
+
+#nav-popup {
+  @extend #toc-popup;
+}
+
+#nav-popup-content {
+  @extend #toc-popup-content;
+}
+
 /* append your custom style below */
 
 .red {
