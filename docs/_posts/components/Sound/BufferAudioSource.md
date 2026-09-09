@@ -49,11 +49,11 @@ The **BufferAudioSource** node belongs to the [Sound](/x_ite/components/overview
 | SFFloat | [in, out] | [gain](#fields-gain) | 1 |
 | SFFloat | [in, out] | [detune](#fields-detune) | 0 |
 | SFFloat | [in, out] | [playbackRate](#fields-playbackRate) | 1 |
-| SFTime | [in, out] | [loopStart](#fields-loopStart) | 0 |
-| SFTime | [in, out] | [loopEnd](#fields-loopEnd) | 0 |
 | SFInt32 | [in, out] | [channelCount](#fields-channelCount) |  |
 | SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX" |
 | SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS" |
+| SFTime | [in, out] | [loopStart](#fields-loopStart) | 0 |
+| SFTime | [in, out] | [loopEnd](#fields-loopEnd) | 0 |
 | SFBool | [in, out] | [loop](#fields-loop) | FALSE |
 | SFTime | [in, out] | [startTime](#fields-startTime) | 0 |
 | SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0 |
@@ -212,24 +212,6 @@ The *detune* field, measured in cents, modulates the speed at which the the audi
 
 - Negative values play in reverse.
 
-### SFTime [in, out] **loopStart** 0 <small>[0,∞)</small>
-{: #fields-loopStart }
-
-*loopStart* field is optional playhead position where looping begins if loop=true. If *loopStart* is greater than duration of buffer, looping starts at buffer end.
-
-#### Hint
-
-- *loopStart* represents a nonnegative SFTime duration interval, not an absolute clock time.
-
-### SFTime [in, out] **loopEnd** 0 <small>[0,∞)</small>
-{: #fields-loopEnd }
-
-*loopEnd* field is optional playhead position where looping ends if loop=true. If *loopEnd* value is zero, or if *loopEnd* is greater than duration of buffer, looping ends at buffer end.
-
-#### Hint
-
-- *loopEnd* represents a nonnegative SFTime duration interval, not an absolute clock time.
-
 ### SFInt32 [in, out] **channelCount**
 {: #fields-channelCount }
 
@@ -256,6 +238,24 @@ The *detune* field, measured in cents, modulates the speed at which the the audi
 #### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dom-audionode-channelinterpretation)
+
+### SFTime [in, out] **loopStart** 0 <small>[0,∞)</small>
+{: #fields-loopStart }
+
+*loopStart* field is optional playhead position where looping begins if loop=true. If *loopStart* is greater than duration of buffer, looping starts at buffer end.
+
+#### Hint
+
+- *loopStart* represents a nonnegative SFTime duration interval, not an absolute clock time.
+
+### SFTime [in, out] **loopEnd** 0 <small>[0,∞)</small>
+{: #fields-loopEnd }
+
+*loopEnd* field is optional playhead position where looping ends if loop=true. If *loopEnd* value is zero, or if *loopEnd* is greater than duration of buffer, looping ends at buffer end.
+
+#### Hint
+
+- *loopEnd* represents a nonnegative SFTime duration interval, not an absolute clock time.
 
 ### SFBool [in, out] **loop** FALSE
 {: #fields-loop }
