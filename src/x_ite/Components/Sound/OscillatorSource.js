@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, X3DSoundSou
          fadeDuration = 0.03;
 
       gainNode .gain .setValueAtTime (gainNode .gain .value, now);
-      gainNode .gain .exponentialRampToValueAtTime (1e-5, now + fadeDuration);
+      gainNode .gain .exponentialRampToValueAtTime (1e-3, now + fadeDuration);
 
       this .oscillatorNode .stop (now + fadeDuration);
    },
