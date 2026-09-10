@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
    },
    header ()
    {
-      const header = $.decodeText (this .arrayBuffer .slice (0, 80)) .trim ();
+      const header = $.decodeText (this .arrayBuffer .slice (0, 80)) .replace (/\u0000.*$/, "") .trim ();
 
       if (!header)
          return;

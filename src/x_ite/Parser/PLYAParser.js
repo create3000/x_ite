@@ -119,7 +119,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       {
          const value = this .result [0] .trim ();
 
-         this .comments .push (value);
+         if (value)
+            this .comments .push (value);
 
          this .mustRotateAxes ||= !! value .match (/\b(?:Blender|Artec|Polycam)\b/i);
 
