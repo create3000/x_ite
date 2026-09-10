@@ -221,12 +221,11 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    },
    getFieldDefinition (name)
    {
-      const fieldDefinition = this .getFieldDefinitions () .get (name);
+      const
+         target = this [_target],
+         node   = target .getValue ();
 
-      if (fieldDefinition)
-         return fieldDefinition;
-
-      throw new Error (`Unknown field '${name}' in node class ${this .getNodeTypeName ()}.`);
+      return node .getFieldDefinition (name);
    },
    getFieldDefinitions ()
    {

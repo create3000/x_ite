@@ -261,7 +261,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    getFieldDefinition (name)
    {
-      return this [_fieldDefinitions] .get (name);
+      const fieldDefinition = this [_fieldDefinitions] .get (name);
+
+      if (fieldDefinition)
+         return fieldDefinition;
+
+      throw new Error (`Unknown field '${name}' in node class ${this .getTypeName ()}.`);
    },
    getFieldDefinitions ()
    {

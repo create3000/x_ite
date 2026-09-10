@@ -816,12 +816,15 @@ When you assign to a field of type `SFBool`, `SFDouble`, `SFFloat`, `SFInt32`, `
 const scene    = Browser .currentScene;
 const material = scene .createNode ("Material");
 
-material .diffuseColor = new SFColor (1, 1, 1);
-material .transparency = 0.5;
+material .diffuseColor = new SFColor (0.1, 0.2, 0.3);
+material .transparency = 0.6;
 
+print (material .diffuseColor);
+print (material .transparency);
 print (material .toVRMLString ());
-// Expected output: Material { diffuseColor 1 1 1 transparency 0.5 }
-</pre>
+// Expected output: 0.1 0.2 0.3
+// Expected output: 0.6
+// Expected output: Material { diffuseColor 0.1 0.2 0.3 transparency 0.6 }</pre>
 </x3d-script-area>
 
 ### Methods
