@@ -46,8 +46,10 @@ The **TimeSensor** node belongs to the [Time](/x_ite/components/overview/#time) 
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [cycleTime](#fields-cycleTime) |  |
 | SFTime | [out] | [cycleComplete](#fields-cycleComplete) |  |
-| SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
+| SFTime | [out] | [cycleCompleteTime](#fields-cycleCompleteTime) |  |
+| SFInt32 | [out] | [cycleCount](#fields-cycleCount) |  |
 | SFFloat | [out] | [fraction_changed](#fields-fraction_changed) |  |
+| SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
 | SFTime | [out] | [time](#fields-time) |  |
 {: .fields }
 
@@ -175,10 +177,29 @@ When *stopTime* becomes \<= time now, isActive becomes false and **TimeSensor** 
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-### SFTime [out] **cycleComplete**
+### SFBool [out] **cycleComplete**
 {: #fields-cycleComplete }
 
 *cycleComplete* sends a time outputOnly when a cycle is completed.
+
+### SFTime [out] **cycleCompleteTime** <small class="blue">experimental</small>
+{: #fields-cycleCompleteTime }
+
+Output field *cycleCompleteTime*.
+
+### SFInt32 [out] **cycleCount** <small class="blue">experimental</small>
+{: #fields-cycleCount }
+
+Output field *cycleCount*.
+
+### SFFloat [out] **fraction_changed** <small class="blue">experimental</small>
+{: #fields-fraction_changed }
+
+*fraction_changed* continuously sends value in range [0,1] showing time progress in the current cycle.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **elapsedTime**
 {: #fields-elapsedTime }
@@ -192,15 +213,6 @@ Current elapsed time since **TimeSensor** activated/running, cumulative in secon
 #### Warnings
 
 - Not supported in VRML97.
-- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
-
-### SFFloat [out] **fraction_changed**
-{: #fields-fraction_changed }
-
-*fraction_changed* continuously sends value in range [0,1] showing time progress in the current cycle.
-
-#### Warning
-
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### SFTime [out] **time**

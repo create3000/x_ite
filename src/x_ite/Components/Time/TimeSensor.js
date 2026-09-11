@@ -85,6 +85,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       this ._time             = time;
       this ._elapsedTime      = 0;
       this ._cycleTime        = time;
+      this ._cycleCount       = 0;
       this ._fraction_changed = this .fraction;
    },
    set_pause ()
@@ -104,22 +105,24 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    set_prepare ()
    {
-      if (!this ._loop .getValue ())
-         return;
-
       const time = this .getBrowser () .getCurrentTime ();
 
-      if (time - this .cycle >= this .interval)
-         this ._cycleComplete = time;
+      this ._time        = time;
+      this ._elapsedTime = this .getElapsedTime ();
+
+      if (time - this .cycle < this .interval)
+         return;
+
+      this ._cycleComplete     = true;
+      this ._cycleCompleteTime = time;
+      this ._cycleCount        = this ._cycleCount .getValue () + 1;
+      this ._fraction_changed  = this .last;
    },
    set_time ()
    {
       // The event order below is very important.
 
       const time = this .getBrowser () .getCurrentTime ();
-
-      this ._time        = time;
-      this ._elapsedTime = this .getElapsedTime ();
 
       if (time - this .cycle >= this .interval)
       {
@@ -135,9 +138,6 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
          }
          else
          {
-            this ._fraction_changed = this .fraction = this .last;
-            this ._cycleComplete    = time;
-
             this .stop ();
          }
       }
@@ -159,22 +159,24 @@ Object .defineProperties (TimeSensor,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "description",      new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",    new Fields .SFTime (1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "loop",             new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",        new Fields .SFTime (0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",       new Fields .SFTime (0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",        new Fields .SFTime (0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",         new Fields .SFTime (0)),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",        new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleComplete",    new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "fraction_changed", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly,  "time",             new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",     new Fields .SFTime (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "loop",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",         new Fields .SFTime (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",        new Fields .SFTime (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",         new Fields .SFTime (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",          new Fields .SFTime (0)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",         new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleComplete",     new Fields .SFBool ()),  // experimental
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleCompleteTime", new Fields .SFTime ()),  // experimental
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleCount",        new Fields .SFInt32 ()), // experimental
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "fraction_changed",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",       new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "time",              new Fields .SFTime ()),
       ]),
       enumerable: true,
    },

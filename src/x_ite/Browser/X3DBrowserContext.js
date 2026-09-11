@@ -74,8 +74,8 @@ function X3DBrowserContext (element)
 
    this .addChildObjects (X3DConstants .outputOnly, "initialized",       new Fields .SFTime (),
                           X3DConstants .outputOnly, "shutdown",          new Fields .SFTime (),
-                          X3DConstants .outputOnly, "timePrepareEvents", new Fields .SFTime (),
                           X3DConstants .outputOnly, "prepareEvents",     new Fields .SFTime (),
+                          X3DConstants .outputOnly, "timePrepareEvents", new Fields .SFTime (),
                           X3DConstants .outputOnly, "timeEvents",        new Fields .SFTime (),
                           X3DConstants .outputOnly, "cameraEvents",      new Fields .SFTime (),
                           X3DConstants .outputOnly, "sensorEvents",      new Fields .SFTime (),
@@ -111,13 +111,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       return this ._shutdown;
    },
-   timePrepareEvents ()
-   {
-      return this ._timePrepareEvents;
-   },
    prepareEvents ()
    {
       return this ._prepareEvents;
+   },
+   timePrepareEvents ()
+   {
+      return this ._timePrepareEvents;
    },
    timeEvents ()
    {
@@ -219,10 +219,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       // Prepare and Time Events
 
-      this .addTaintedField (this ._timePrepareEvents);
+      this .addTaintedField (this ._prepareEvents);
       this [_processEvents] ();
 
-      this .addTaintedField (this ._prepareEvents);
+      this .addTaintedField (this ._timePrepareEvents);
       this [_processEvents] ();
 
       this .addTaintedField (this ._timeEvents);
