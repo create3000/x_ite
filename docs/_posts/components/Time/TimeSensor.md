@@ -180,17 +180,17 @@ When *stopTime* becomes \<= time now, isActive becomes false and **TimeSensor** 
 ### SFBool [out] **cycleComplete**
 {: #fields-cycleComplete }
 
-*cycleComplete* sends a time outputOnly when a cycle is completed.
+*cycleComplete* sends a `true` value when a cycle is completed.
 
 ### SFTime [out] **cycleCompleteTime** <small class="blue">experimental</small>
 {: #fields-cycleCompleteTime }
 
-Output field *cycleCompleteTime*.
+*cycleCompleteTime* sends the current time at the end of each cycle (useful for synchronization with other time-based objects).
 
 ### SFInt32 [out] **cycleCount** <small class="blue">experimental</small>
 {: #fields-cycleCount }
 
-Output field *cycleCount*.
+*cycleCount* sends the number of completed cycles since **TimeSensor** activated/running.
 
 ### SFFloat [out] **fraction_changed** <small class="blue">experimental</small>
 {: #fields-fraction_changed }
