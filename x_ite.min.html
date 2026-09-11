@@ -505,23 +505,21 @@ main.color-management #browser {
          <div>
             <form action="javascript:alert('form submitted')">
                <div id="transforms" style="transform-origin: 50% 50%;">
-                  <pre>
-                     <x3d-canvas
-                           id="browser"
-                           class="tr"
-                           cache="true"
-                           contentScale="auto"
-                           contextMenu="true"
-                           debug="true"
-                           xdisplayColorSpace="DISPLAY_P3"
-                           oninitialized="$('#file') .addClass ('loaded')"
-                           preserveDrawingBuffer="false"
-                           splashScreen="true"
-                           update="auto"
-                           xrSessionMode="IMMERSIVE_VR">
-                        <p class="fallback">Hang on tight.</p>
-                     </x3d-canvas>
-                  </pre>
+                  <pre><x3d-canvas
+                        id="browser"
+                        class="tr"
+                        cache="true"
+                        contentScale="auto"
+                        contextMenu="true"
+                        debug="true"
+                        xdisplayColorSpace="DISPLAY_P3"
+                        oninitialized="$('#file') .addClass ('loaded')"
+                        preserveDrawingBuffer="false"
+                        splashScreen="true"
+                        update="auto"
+                        xrSessionMode="IMMERSIVE_VR">
+                     <p class="fallback">Hang on tight.</p>
+                  </x3d-canvas></pre>
                 </div>
             </form>
             <div id="location-bar">

@@ -121,11 +121,6 @@ X3DCanvas {
   all: initial;
   display: inline-block;
   overflow: hidden;
-  outline: none;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
   width: 300px;
   height: 150px;
   -webkit-user-select: none;
