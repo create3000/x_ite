@@ -45,7 +45,7 @@ The **TimeSensor** node belongs to the [Time](/x_ite/components/overview/#time) 
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [cycleTime](#fields-cycleTime) |  |
-| SFTime | [out] | [cycleComplete](#fields-cycleComplete) |  |
+| SFBool | [out] | [cycleComplete](#fields-cycleComplete) |  |
 | SFTime | [out] | [cycleCompleteTime](#fields-cycleCompleteTime) |  |
 | SFInt32 | [out] | [cycleCount](#fields-cycleCount) |  |
 | SFFloat | [out] | [fraction_changed](#fields-fraction_changed) |  |
