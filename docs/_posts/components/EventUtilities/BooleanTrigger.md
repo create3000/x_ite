@@ -63,7 +63,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
-### SFBool [out] **triggerFalse** <small class="blue">non-standard</small>
+### SFBool [out] **triggerFalse** <small class="blue">experimental</small>
 {: #fields-triggerFalse }
 
 *triggerFalse* outputs a false value whenever a triggerTime event is received.
