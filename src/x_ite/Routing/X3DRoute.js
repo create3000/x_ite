@@ -20,7 +20,7 @@ function X3DRoute (executionContext, sourceNode, sourceFieldName, destinationNod
    X3DObject .call (this, executionContext);
 
    if (!(sourceNode instanceof X3DImportedNode || destinationNode instanceof X3DImportedNode))
-      this .checkRoute (sourceNode .getField (sourceFieldName), destinationNode .getField (destinationFieldName));
+      this .checkFields (sourceNode .getField (sourceFieldName), destinationNode .getField (destinationFieldName));
 
    this [_executionContext]     = executionContext;
    this [_sourceNode]           = sourceNode;
@@ -149,7 +149,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
       if (this [_sourceField] && this [_destinationField])
       {
-         this .checkRoute (this [_sourceField], this [_destinationField]);
+         this .checkFields (this [_sourceField], this [_destinationField]);
 
          this [_sourceField]      .addOutputRoute (this);
          this [_destinationField] .addInputRoute (this);
@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       this [_sourceField]      = null;
       this [_destinationField] = null;
    },
-   checkRoute (sourceField, destinationField)
+   checkFields (sourceField, destinationField)
    {
       if (sourceField .getType () !== destinationField .getType ())
          throw new Error (`Bad ROUTE specification: source field type must match destination field type of fields named "${sourceField .getName ()}" and "${destinationField .getName ()}".`);
