@@ -735,16 +735,16 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             destinationField    = xmlElement .getAttribute ("toField");
 
          if (sourceNodeName === null)
-            throw new Error ("Bad ROUTE statement: Expected fromNode attribute.");
+            throw new Error ("Bad ROUTE specification: Expected fromNode attribute.");
 
          if (sourceField === null)
-            throw new Error ("Bad ROUTE statement: Expected fromField attribute.");
+            throw new Error ("Bad ROUTE specification: Expected fromField attribute.");
 
          if (destinationNodeName === null)
-            throw new Error ("Bad ROUTE statement: Expected toNode attribute.");
+            throw new Error ("Bad ROUTE specification: Expected toNode attribute.");
 
          if (destinationField === null)
-            throw new Error ("Bad ROUTE statement: Expected toField attribute.");
+            throw new Error ("Bad ROUTE specification: Expected toField attribute.");
 
          const
             executionContext = this .getExecutionContext (),

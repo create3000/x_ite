@@ -612,54 +612,47 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    addRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
-      try
+      // Normalize arguments.
+
+      const
+         importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
+         importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
+
+      sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
+      sourceField      = String (sourceField);
+      destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
+      destinationField = String (destinationField);
+
+      // Check nodes.
+
+      if (!sourceNode)
+         throw new Error ("Bad ROUTE specification: source node must be of type X3DNode.");
+
+      if (!destinationNode)
+         throw new Error ("Bad ROUTE specification: destination node must be of type X3DNode.");
+
+      // Resolve imported source and destination node.
+
+      sourceNode      = this .getLocalizedNode (sourceNode);
+      destinationNode = this .getLocalizedNode (destinationNode);
+
+      // Add route.
+
+      const
+         id    = X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField),
+         route = this [_routes] .get (id);
+
+      if (route)
       {
-         // Normalize arguments.
-
-         const
-            importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
-            importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
-
-         sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
-         sourceField      = String (sourceField);
-         destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
-         destinationField = String (destinationField);
-
-         // Check nodes.
-
-         if (!sourceNode)
-            throw new Error ("source node must be of type X3DNode.");
-
-         if (!destinationNode)
-            throw new Error ("destination node must be of type X3DNode.");
-
-         // Resolve imported source and destination node.
-
-         sourceNode      = this .getLocalizedNode (sourceNode);
-         destinationNode = this .getLocalizedNode (destinationNode);
-
-         // Add route.
-
-         const
-            id    = X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField),
-            route = this [_routes] .get (id);
-
-         if (route)
-         {
-            return route;
-         }
-         else
-         {
-            const route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
-
-            this [_routes] .add (id, route);
-
-            return route;
-         }
+         return route;
       }
-      catch (error)
+      else
       {
-         throw new Error (`Bad ROUTE specification.`, { cause: error });
+         const route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
+
+         this [_routes] .add (id, route);
+
+         return route;
       }
    },
    deleteRoute (route)
