@@ -165,8 +165,8 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       this [_sourceField]      ?.removeOutputRoute (this);
       this [_destinationField] ?.removeInputRoute (this);
 
-      if (this [_sourceField] && this [_destinationField])
-         this [_sourceField] .removeFieldInterest (this [_destinationField]);
+      if (this [_destinationField])
+         this [_sourceField] ?.removeFieldInterest (this [_destinationField]);
 
       this [_sourceField]      = null;
       this [_destinationField] = null;
