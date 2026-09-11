@@ -118,6 +118,7 @@ X3DCanvas[theme=light] {
 
 :host,
 X3DCanvas {
+  all: initial;
   display: inline-block;
   overflow: hidden;
   outline: none;
@@ -572,7 +573,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu input {
-  all: revert;
+  all: initial;
   cursor: pointer;
   appearance: none;
 }
