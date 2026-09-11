@@ -75,12 +75,14 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    set_start ()
    {
-      this .getBrowser () .timePrepareEvents () .addInterest ("set_prepare", this);
-      this .getBrowser () .addBrowserEvent ();
+      const browser = this .getBrowser ();
+
+      browser .timePrepareEvents () .addInterest ("set_prepare", this);
+      browser .addBrowserEvent ();
 
       this .setRange (this ._range [0], this ._range [1], this ._range [2], true);
 
-      const time = this .getBrowser () .getCurrentTime ();
+      const time = browser .getCurrentTime ();
 
       this ._time             = time;
       this ._elapsedTime      = 0;
@@ -94,8 +96,10 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    set_resume (/* pauseInterval */)
    {
-      this .getBrowser () .timePrepareEvents () .addInterest ("set_prepare", this);
-      this .getBrowser () .addBrowserEvent ();
+      const browser = this .getBrowser ();
+
+      browser .timePrepareEvents () .addInterest ("set_prepare", this);
+      browser .addBrowserEvent ();
 
       this .setRange (this .fraction, this ._range [1], this ._range [2], false);
    },
