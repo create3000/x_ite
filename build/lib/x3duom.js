@@ -1,10 +1,17 @@
 "use strict";
 
-const { sh } = require ("shell-tools");
+const fs = require ("node:fs");
+const { sh, systemSync } = require ("shell-tools");
+
+const download = !fs .existsSync (`/tmp/X3DUOM.xml`)
+   || new Date () .getTime () - new Date (fs .statSync (`/tmp/tooltips.html`) .mtime) .getTime () > 86400_000;
+
+if (download)
+   systemSync (`wget -q -O - https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.1.xml > /tmp/X3DUOM.xml`);
 
 const
    excludes      = new Set (["ProtoInstance"]),
-   x3duom        = xml (sh (`wget`, `-q`, `-O`, `-`, `https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.1.xml`)),
+   x3duom        = xml (sh (`cat /tmp/X3DUOM.xml`)),
    experimental  = xml (sh (`cat`, `${__dirname}/../../src/X3DUOM.xml`)),
    concreteNodes = new Map (x3duom .X3dUnifiedObjectModel .ConcreteNodes .ConcreteNode
       .filter (node => node .InterfaceDefinition ?.componentInfo)
