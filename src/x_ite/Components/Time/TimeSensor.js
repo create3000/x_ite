@@ -14,7 +14,9 @@ function TimeSensor (executionContext)
 
    this .addType (X3DConstants .TimeSensor);
 
-   this .addChildObjects (X3DConstants .inputOutput, "range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
+   // Special non-public field:
+   // rangeFraction, rangeStart, rangeEnd (in fractions) - play range starting at rangeFraction
+   this .addChildObjects (X3DConstants .inputOutput, "range", new Fields .MFFloat (0, 0, 1));
 
    this .cycle    = 0;
    this .interval = 0;
