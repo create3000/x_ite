@@ -1181,9 +1181,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .nodeNameId ())
          {
-            const
-               fromNodeId = this .result [0],
-               fromNode   = this .getExecutionContext () .getLocalNode (fromNodeId);
+            const fromNodeId = this .result [0];
 
             this .comments ();
 
@@ -1199,9 +1197,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   {
                      if (this .nodeNameId ())
                      {
-                        const
-                           toNodeId = this .result [0],
-                           toNode   = this .getExecutionContext () .getLocalNode (toNodeId);
+                        const toNodeId = this .result [0];
 
                         this .comments ();
 
@@ -1212,6 +1208,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                               try
                               {
                                  const eventInId = this .result [0];
+
+                                 const
+                                    fromNode = this .getExecutionContext () .getLocalNode (fromNodeId),
+                                    toNode   = this .getExecutionContext () .getLocalNode (toNodeId);
 
                                  this .getExecutionContext () .addRoute (fromNode, eventOutId, toNode, eventInId);
                                  return true;
