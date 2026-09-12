@@ -1771,7 +1771,7 @@ Returns `true` if the passed MF* *array* of the same type is equals to this obje
 
 Common Array functions like `at`, `concat`, `entries`, `every`, `fill`, `filter`, `find`, `findIndex`, `findLast`, `findLastIndex`, `flat`, `flatMap`, `forEach`, `includes`, `indexOf`, `join`, `keys`, `lastIndexOf`, `map`, `pop`, `push`, `reduce`, `reduceRight`, `reverse`, `shift`, `slice`, `some`, `sort`, `splice`, `toReversed`, `toSorted`, `toSpliced`, `unshift`, `values`, `with` are also available.
 
-<x3d-script-area name="X3D ECMAScript Example: Common X3DArrayField functions">
+<x3d-script-area name="X3D ECMAScript Example: X3DArrayField functions">
 <pre>
 const array = new MFVec3f ();
 
