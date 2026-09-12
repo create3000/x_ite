@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       if (this [_disposed])
          return;
 
-      let firstError, secondError;
+      const errors = [ ];
 
       try
       {
@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       }
       catch (error)
       {
-         firstError = error;
+         errors .push (error);
       }
 
       try
@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       }
       catch (error)
       {
-         secondError = error;
+         errors .push (error);
       }
 
       if (this [_sourceField] && this [_destinationField])
@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       }
       else
       {
-         throw firstError ?? secondError;
+         throw new AggregateError (errors, "Couldn't connect route.");
       }
    },
    disconnect ()
