@@ -1771,6 +1771,20 @@ Returns `true` if the passed MF* *array* of the same type is equals to this obje
 
 Common Array functions like `at`, `concat`, `entries`, `every`, `fill`, `filter`, `find`, `findIndex`, `findLast`, `findLastIndex`, `flat`, `flatMap`, `forEach`, `includes`, `indexOf`, `join`, `keys`, `lastIndexOf`, `map`, `pop`, `push`, `reduce`, `reduceRight`, `reverse`, `shift`, `slice`, `some`, `sort`, `splice`, `toReversed`, `toSorted`, `toSpliced`, `unshift`, `values`, `with` are also available.
 
+<x3d-script-area name="X3D ECMAScript Example: Common X3DArrayField functions">
+<pre>
+const array = new MFVec3f ();
+
+array .push (new SFVec3f (1, 2, 3));
+array .push (new SFVec3f (4, 5, 6));
+
+print (array);
+print (array .at (0));
+// Expected output: [ 1 2 3, 4 5 6 ]
+// Expected output: 1 2 3
+</pre>
+</x3d-script-area>
+
 ## MFBool Object
 
 The MFBool object corresponds to an X3D MFBool field. It is used to store a one-dimensional array of SFBool objects.
