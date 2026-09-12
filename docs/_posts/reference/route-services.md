@@ -4,7 +4,17 @@ date: 2022-11-28
 nav: reference
 categories: [Reference]
 tags: [X3DRoute, ECMAScript, Javascript]
+jquery: true
+reference: true
 ---
+
+## Hierarchy
+
+```
++ X3DRoute
++ RouteArray
+```
+
 ## X3DRoute
 
 Routes are represented by the X3DRoute object. Routes can only be created through calls to the addRoute () function of X3DExecutionContext.

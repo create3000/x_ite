@@ -4,7 +4,57 @@ date: 2022-11-28
 nav: reference
 categories: [Reference]
 tags: [X3DField, ECMAScript, Javascript]
+jquery: true
+reference: true
 ---
+
+## Hierarchy
+
+```
++ X3DFieldDefinition
++ FieldDefinitionArray
++ X3DField
+  + SFColor
+  + SFColorRGBA
+  + SFImage
+  + SFMatrix3d
+  + SFMatrix3f
+  + SFMatrix4d
+  + SFMatrix4f
+  + SFNode
+  + SFQuaternion
+  + SFRotation
+  + SFVec2d
+  + SFVec2f
+  + SFVec3d
+  + SFVec3f
+  + SFVec4d
+  + SFVec4f
+  |
+  + X3DArrayField
+    + MFBool
+    + MFColor
+    + MFColorRGBA
+    + MFDouble
+    + MFFloat
+    + MFImage
+    + MFInt32
+    + MFMatrix3d
+    + MFMatrix3f
+    + MFMatrix4d
+    + MFMatrix4f
+    + MFNode
+    + MFQuaternion
+    + MFRotation
+    + MFString
+    + MFVec2d
+    + MFVec2f
+    + MFVec3d
+    + MFVec3f
+    + MFVec4d
+    + MFVec4f
+```
+
 ## X3DFieldDefinition
 
 The X3DFieldDefinition object represents all of the descriptive properties of a single field of a node.
@@ -75,51 +125,6 @@ An integer containing the number of elements in the array. This property is read
 ### Methods
 
 Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
-
-## Field Hierarchy
-
-```
-+ X3DField
-  + SFColor
-  + SFColorRGBA
-  + SFImage
-  + SFMatrix3d
-  + SFMatrix3f
-  + SFMatrix4d
-  + SFMatrix4f
-  + SFNode
-  + SFQuaternion
-  + SFRotation
-  + SFVec2d
-  + SFVec2f
-  + SFVec3d
-  + SFVec3f
-  + SFVec4d
-  + SFVec4f
-  |
-  + X3DArrayField
-    + MFBool
-    + MFColor
-    + MFColorRGBA
-    + MFDouble
-    + MFFloat
-    + MFImage
-    + MFInt32
-    + MFMatrix3d
-    + MFMatrix3f
-    + MFMatrix4d
-    + MFMatrix4f
-    + MFNode
-    + MFQuaternion
-    + MFRotation
-    + MFString
-    + MFVec2d
-    + MFVec2f
-    + MFVec3d
-    + MFVec3f
-    + MFVec4d
-    + MFVec4f
-```
 
 ## X3DField
 
@@ -1544,7 +1549,7 @@ Returns an SFVec3d/f object reflected at normal.
 
 Returns an SFVec3d/f whose value is the passed SFVec3d/f subtracted, componentwise, from the object.
 
-## SFVec4d/SFVec4d/f Object
+## SFVec4d/SFVec4f Object
 
 The SFVec4d/f object corresponds to an X3D SFVec4d/f field.
 

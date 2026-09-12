@@ -4,6 +4,8 @@ date: 2022-11-28
 nav: reference
 categories: [Reference]
 tags: [X3DScene, ECMAScript, Javascript]
+jquery: true
+reference: true
 ---
 
 ## Hierarchy
@@ -11,6 +13,16 @@ tags: [X3DScene, ECMAScript, Javascript]
 ```
 + X3DExecutionContext
   + X3DScene
++ ProfileInfo
++ ComponentInfo
++ UnitInfo
++ X3DImportedNode
++ X3DExportedNode
++ ProfileInfoArray
++ ComponentInfoArray
++ UnitInfoArray
++ ImportedNodesArray
++ ExportedNodesArray
 ```
 
 ## X3DExecutionContext

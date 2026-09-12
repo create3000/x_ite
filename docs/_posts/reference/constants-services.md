@@ -4,7 +4,16 @@ date: 2022-11-28
 nav: reference
 categories: [Reference]
 tags: [X3DConstants, ECMAScript, Javascript]
+jquery: true
+reference: true
 ---
+
+## Hierarchy
+
+```
++ X3DConstants
+```
+
 ## X3DConstants
 
 The X3DConstants object is used to define constants values used throughout this language binding. Each property is defined as a numeric, read-only value. The individual values are not specified; these are implementation-dependent. These constants can be used anywhere that a service request wishes to return some fixed value such as if or switch statements. The list of known values are defined in the table below.

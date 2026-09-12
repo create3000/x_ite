@@ -4,8 +4,21 @@ date: 2022-11-28
 nav: reference
 categories: [Reference]
 tags: [Browser, X3DBrowser, ECMAScript, Javascript, glTF, VRML]
+jquery: true
+reference: true
 ---
-## Browser Object
+
+## Hierarchy
+
+```
++ X3DBrowser
++ X3DConcreteNode
++ X3DAbstractNode
++ ConcreteNodesArray
++ AbstractNodesArray
+```
+
+## X3DBrowser Object
 
 This section lists the methods available in the *browser* object, which allows scripts to get and set browser information.
 

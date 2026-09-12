@@ -4,7 +4,19 @@ date: 2022-11-28
 nav: reference
 categories: [Reference]
 tags: [Prototype, ECMAScript, Javascript]
+jquery: true
+reference: true
 ---
+
+## Hierarchy
+
+```
++ X3DProtoDeclaration
++ X3DExternProtoDeclaration
++ ProtoDeclarationArray
++ ExternProtoDeclarationArray
+```
+
 ## X3DProtoDeclaration
 
 A PROTO declaration is represented by the X3DProtoDeclaration object. This object can only be fetched using the X3DExecutionContext object.
