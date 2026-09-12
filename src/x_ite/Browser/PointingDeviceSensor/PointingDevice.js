@@ -34,6 +34,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          browser = this .getBrowser (),
          surface = browser .getSurface ();
 
+      browser .getElement () .focus ({ preventScroll: true });
+
       if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
          return;
 
@@ -215,9 +217,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          browser .setCursor (this .grabbing && move ? "GRABBING" : "DEFAULT");
    },
    onmouseenter ()
-   {
-      this .getBrowser () .getElement () .focus ({ preventScroll: true });
-   },
+   { },
    onmouseout ()
    {
       this .getBrowser () .leaveNotifyEvent ();
