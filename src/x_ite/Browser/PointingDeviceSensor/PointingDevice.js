@@ -18,12 +18,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    {
       const surface = this .getBrowser () .getSurface ();
 
-      $.on (this, surface, "mousedown",  event => this .mousedown    (event));
-      $.on (this, surface, "mouseup",    event => this .mouseup      (event));
-      $.on (this, surface, "dblclick",   event => this .dblclick     (event));
-      $.on (this, surface, "mousemove",  event => this .mousemove    (event));
-      $.on (this, surface, "mouseenter", event => this .onmouseenter (event));
-      $.on (this, surface, "mouseout",   event => this .onmouseout   (event));
+      $.on (this, surface, "mousedown",  event => this .mousedown  (event));
+      $.on (this, surface, "mouseup",    event => this .mouseup    (event));
+      $.on (this, surface, "dblclick",   event => this .dblclick   (event));
+      $.on (this, surface, "mousemove",  event => this .mousemove  (event));
+      $.on (this, surface, "mouseout",   event => this .onmouseout (event));
 
       $.on (this, surface, "touchstart", event => this .touchstart (event));
       $.on (this, surface, "touchend",   event => this .touchend   (event));
@@ -216,8 +215,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       else
          browser .setCursor (this .grabbing && move ? "GRABBING" : "DEFAULT");
    },
-   onmouseenter ()
-   { },
    onmouseout ()
    {
       this .getBrowser () .leaveNotifyEvent ();
