@@ -1207,11 +1207,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                            {
                               try
                               {
-                                 const eventInId = this .result [0];
-
                                  const
-                                    fromNode = this .getExecutionContext () .getLocalNode (fromNodeId),
-                                    toNode   = this .getExecutionContext () .getLocalNode (toNodeId);
+                                    eventInId = this .result [0],
+                                    fromNode  = this .getExecutionContext () .getLocalNode (fromNodeId),
+                                    toNode    = this .getExecutionContext () .getLocalNode (toNodeId);
 
                                  this .getExecutionContext () .addRoute (fromNode, eventOutId, toNode, eventInId);
                                  return true;
