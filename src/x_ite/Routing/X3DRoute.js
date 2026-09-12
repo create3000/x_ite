@@ -19,9 +19,6 @@ function X3DRoute (executionContext, sourceNode, sourceFieldName, destinationNod
 {
    X3DObject .call (this, executionContext);
 
-   if (!(sourceNode instanceof X3DImportedNode || destinationNode instanceof X3DImportedNode))
-      this .checkFields (sourceNode .getField (sourceFieldName), destinationNode .getField (destinationFieldName));
-
    this [_executionContext]     = executionContext;
    this [_sourceNode]           = sourceNode;
    this [_sourceFieldName]      = sourceFieldName;
