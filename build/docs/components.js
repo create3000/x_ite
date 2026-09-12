@@ -198,7 +198,7 @@ function updateProfiles ()
       list += `${title}\n`;
       list += `{: .small }\n\n`;
 
-      supportedProfiles .match (new RegExp (`"${m [1]}".*?components:\\s*\\[\\s*(.*?)\\s*\\]`, "s")) [1] .split ("\n") .map (c => c.match (/"(.*?)",\s*(\d)/s)) .sort ((a, b) => a [1] .localeCompare (b [1], "en")) .forEach (([_, component, level]) =>
+      supportedProfiles .match (new RegExp (`"${m [1]}".*?components:\\s*\\[\\s*(.*?)\\s*\\]`, "s")) [1] .split ("\n") .map (c => c.match (/"(.*?)",\s*(\d)/s)) .sort ((a, b) => a [1] .localeCompare (b [1], "en")) .forEach (([, component, level]) =>
       {
          if (component === "Annotation")
             return;

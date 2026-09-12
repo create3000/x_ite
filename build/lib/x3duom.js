@@ -4,7 +4,8 @@ const fs = require ("node:fs");
 const { sh, systemSync } = require ("shell-tools");
 
 const download = !fs .existsSync (`/tmp/X3DUOM.xml`)
-   || new Date () .getTime () - new Date (fs .statSync (`/tmp/tooltips.html`) .mtime) .getTime () > 86400_000;
+   || new Date () .getTime () - new Date (fs .statSync (`/tmp/tooltips.html`) .mtime) .getTime () > 86400_000
+   || process .argv .includes ("--download");
 
 if (download)
    systemSync (`wget -q -O - https://www.web3d.org/specifications/X3dUnifiedObjectModel-4.1.xml > /tmp/X3DUOM.xml`);

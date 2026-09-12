@@ -197,8 +197,8 @@ function release ()
 
    systemSync (`npm run docs:table`);
    systemSync (`npm run docs:components`);
-   systemSync (`npm run docs:nodes -- --download-tooltips`);
-   systemSync (`npm run docs:reference`);
+   systemSync (`npm run docs:nodes -- --download`);
+   systemSync (`npm run docs:reference -- --download`);
 
    // docs
 
@@ -265,7 +265,7 @@ function main ()
    systemSync (`git config --global https.postBuffer 1000000000`);
 
    bump ();
-   systemSync ("npm run dist");
+   systemSync ("npm run dist -- --release");
    if (systemSync (`npm run test:release`)) process .exit (1);
    zip ();
 
