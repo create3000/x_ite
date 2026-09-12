@@ -19,9 +19,6 @@ function X3DRoute (executionContext, sourceNode, sourceFieldName, destinationNod
 {
    X3DObject .call (this, executionContext);
 
-   if (!(sourceNode instanceof X3DImportedNode || destinationNode instanceof X3DImportedNode))
-      this .checkFields (sourceNode .getField (sourceFieldName), destinationNode .getField (destinationFieldName));
-
    this [_executionContext]     = executionContext;
    this [_sourceNode]           = sourceNode;
    this [_sourceFieldName]      = sourceFieldName;
@@ -149,7 +146,14 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
       if (this [_sourceField] && this [_destinationField])
       {
-         this .checkFields (this [_sourceField], this [_destinationField]);
+         if (this [_sourceField] .getType () !== this [_destinationField] .getType ())
+            throw new Error (`Bad ROUTE specification: source field type must match destination field type of fields named "${this [_sourceField] .getName ()}" and "${this [_destinationField] .getName ()}".`);
+
+         if (!this [_sourceField] .isOutput ())
+            throw new Error (`Bad ROUTE specification: source field "${this [_sourceField] .getName ()}" must be an output.`);
+
+         if (!this [_destinationField] .isInput ())
+            throw new Error (`Bad ROUTE specification: destination field "${this [_destinationField] .getName ()}" must be an input.`);
 
          this [_sourceField]      .addOutputRoute (this);
          this [_destinationField] .addInputRoute (this);
@@ -170,17 +174,6 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
       this [_sourceField]      = null;
       this [_destinationField] = null;
-   },
-   checkFields (sourceField, destinationField)
-   {
-      if (sourceField .getType () !== destinationField .getType ())
-         throw new Error (`Bad ROUTE specification: source field type must match destination field type of fields named "${sourceField .getName ()}" and "${destinationField .getName ()}".`);
-
-      if (!sourceField .isOutput ())
-         throw new Error (`Bad ROUTE specification: source field "${sourceField .getName ()}" must be an output.`);
-
-      if (!destinationField .isInput ())
-         throw new Error (`Bad ROUTE specification: destination field "${destinationField .getName ()}" must be an input.`);
    },
    toVRMLStream (generator)
    {
