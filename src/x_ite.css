@@ -41,6 +41,7 @@
 :host,
 X3DCanvas {
   --red: #d71f1f;
+  --orange: #ff9230;
   --orange-filter:
     brightness(0)
     saturate(100%)
@@ -53,9 +54,8 @@ X3DCanvas {
   --text-color: white;
   --text-color-dark: white;
   --text-shadow-color: black;
-  --link-color: rgb(255, 146, 48);
+  --link-color: var(--orange);
   --progress-background: rgb(255, 255, 255);
-  --progress-color: var(--red);
   --splash-screen-background: rgb(15, 15, 15);
   --splash-screen-image: url(assets/images/background-dark.svg);
   --gradient: linear-gradient(to bottom, rgba(35, 37, 40, 0.553) 0%, rgba(13, 16, 21, 0.831) 100%);
@@ -81,7 +81,6 @@ X3DCanvas {
     --text-shadow-color: white;
     --link-color: var(--red);
     --progress-background: rgb(0, 0, 0);
-    --progress-color: var(--red);
     --splash-screen-background: rgb(252, 252, 252);
     --splash-screen-image: url(assets/images/background-light.svg);
     --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
@@ -107,7 +106,6 @@ X3DCanvas[theme=light] {
   --text-shadow-color: white;
   --link-color: var(--red);
   --progress-background: rgb(0, 0, 0);
-  --progress-color: var(--red);
   --splash-screen-background: rgb(252, 252, 252);
   --splash-screen-image: url(assets/images/background-light.svg);
   --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
@@ -723,7 +721,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: var(--splash-screen-image) var(--splash-screen-background) center;
 }
 
+/*
 .x_ite-private-spinner {
+  display: none;
   --offset-x: -222px;
   --offset-y: -98px;
   --size: 64px;
@@ -748,7 +748,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
     transform: rotate(360deg);
   }
 }
-
+ */
 
 .x_ite-private-progress {
   position: absolute;
@@ -779,15 +779,24 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-progressbar {
+  overflow: hidden;
   margin: 8px;
+  border-radius: 4px;
   background: var(--progress-background);
-  text-align: left;
+  height: 8px;
 }
 
 .x_ite-private-progressbar div {
   width: 0%;
-  height: 6px;
-  background: var(--progress-color);
+  height: 100%;
+  background: var(--red);
+  animation: progress 12s alternate infinite linear;
+}
+
+@keyframes progress {
+  0%  { background-color: #ffe32d }
+  50% { background-color: #ff9f2e }
+  to  { background-color: #d71f1f }
 }
 
 /* No Sound Button */
