@@ -54,7 +54,7 @@ function eventsProcessed ()
 {
    const translations = shape .translations;
 
-   translations .length = 0;
+   translations .length = xDimension * zDimension;
 
    for (let z = 0, t = 0; z < zDimension; ++ z)
    {
