@@ -794,7 +794,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 @keyframes progress {
-  0%  { background-color: #ffe32d }
+  0%  { background-color: #ffdd00 }
   50% { background-color: #ff9f2e }
   to  { background-color: #d71f1f }
 }
