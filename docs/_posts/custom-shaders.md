@@ -143,7 +143,9 @@ Once the X3D is defined we can now write the vertex and the fragment shader sour
 ```glsl
 #version 300 es
 
-precision mediump float;
+precision highp int;
+precision highp float;
+precision highp sampler2D;
 
 // Specify build-in uniforms and ins:
 
@@ -179,7 +181,9 @@ main ()
 ```glsl
 #version 300 es
 
-precision mediump float;
+precision highp int;
+precision highp float;
+precision highp sampler2D;
 
 // Specify build-in uniforms and ins:
 
