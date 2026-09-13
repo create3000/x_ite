@@ -520,7 +520,7 @@ Set cache to `false` for testing purposes and update to `auto` to disable animat
 
 ### More Options
 
-More options can be adjusted using the [Browser object](/x_ite/reference/browser-services/#browser-object) and [browser options](/x_ite/reference/browser-services/#browser-options) for scene specific adjustments.
+More options can be adjusted using the [Browser object](/x_ite/reference/browser-services/#x3dbrowser-object) and [browser options](/x_ite/reference/browser-services/#browser-options) for scene specific adjustments.
 
 ## Keyboard Shortcuts
 
