@@ -794,9 +794,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 @keyframes progress {
-  0%   { background-color: #ffdd00 }
+  0%   { background-color: #d71f1f }
   50%  { background-color: #ff9f2e }
-  100% { background-color: #d71f1f }
+  100% { background-color: #ffdd00 }
 }
 
 /* No Sound Button */
