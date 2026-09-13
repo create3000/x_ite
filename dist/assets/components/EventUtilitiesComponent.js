@@ -1,4 +1,4 @@
-/* X_ITE v16.3.0 */
+/* X_ITE v16.3.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -364,7 +364,8 @@ Object .assign (Object .setPrototypeOf (BooleanTrigger .prototype, EventUtilitie
    },
    set_triggerTime__ ()
    {
-      this ._triggerTrue = true;
+      this ._triggerTrue  = true;
+      this ._triggerFalse = false;
    },
 });
 
@@ -377,6 +378,7 @@ Object .defineProperties (BooleanTrigger,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_triggerTime", new (external_X_ITE_X3D_Fields_default()).SFTime ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "triggerTrue",     new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "triggerFalse",    new (external_X_ITE_X3D_Fields_default()).SFBool ()), // experimental
       ]),
       enumerable: true,
    },

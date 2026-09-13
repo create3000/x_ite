@@ -1,7 +1,7 @@
-/* X_ITE v16.3.0 */
+/* X_ITE v16.3.1 */
 var __webpack_modules__ = ({
 
-/***/ 133
+/***/ 617
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 991
+/***/ 851
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 643
+/***/ 775
 (module) {
 
 /**
@@ -14552,12 +14552,11 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, Base_X3DField .protot
    },
    getFieldDefinition (name)
    {
-      const fieldDefinition = this .getFieldDefinitions () .get (name);
+      const
+         target = this [_target],
+         node   = target .getValue ();
 
-      if (fieldDefinition)
-         return fieldDefinition;
-
-      throw new Error (`Unknown field '${name}' in node class ${this .getNodeTypeName ()}.`);
+      return node .getFieldDefinition (name);
    },
    getFieldDefinitions ()
    {
@@ -14587,7 +14586,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, Base_X3DField .protot
 
             Error .captureStackTrace (target, this .getField);
 
-            console .warn ("The use of sfnode.getField(name) is deprecated. Future versions of X_ITE may remove this feature. Instead, use the sfnode.{fieldName} syntax or sfnode.addFieldCallback(key, fieldName, callback).", target .stack);
+            console .warn ("The use of sfnode.getField(name) is deprecated. Future versions of X_ITE may remove this feature. Instead, use the sfnode.{fieldName} property syntax or sfnode.addFieldCallback(key, fieldName, callback).", target .stack);
          }
 
          const
@@ -18430,7 +18429,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
    },
    getFieldDefinition (name)
    {
-      return this [_fieldDefinitions] .get (name);
+      const fieldDefinition = this [_fieldDefinitions] .get (name);
+
+      if (fieldDefinition)
+         return fieldDefinition;
+
+      throw new Error (`Unknown field '${name}' in node class ${this .getTypeName ()}.`);
    },
    getFieldDefinitions ()
    {
@@ -18865,7 +18869,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.3.0";
+const BROWSER_VERSION_default_ = "16.3.1";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -27447,9 +27451,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
       {
          if (this .nodeNameId ())
          {
-            const
-               fromNodeId = this .result [0],
-               fromNode   = this .getExecutionContext () .getLocalNode (fromNodeId);
+            const fromNodeId = this .result [0];
 
             this .comments ();
 
@@ -27465,9 +27467,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
                   {
                      if (this .nodeNameId ())
                      {
-                        const
-                           toNodeId = this .result [0],
-                           toNode   = this .getExecutionContext () .getLocalNode (toNodeId);
+                        const toNodeId = this .result [0];
 
                         this .comments ();
 
@@ -27477,7 +27477,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
                            {
                               try
                               {
-                                 const eventInId = this .result [0];
+                                 const
+                                    eventInId = this .result [0],
+                                    fromNode  = this .getExecutionContext () .getLocalNode (fromNodeId),
+                                    toNode    = this .getExecutionContext () .getLocalNode (toNodeId);
 
                                  this .getExecutionContext () .addRoute (fromNode, eventOutId, toNode, eventInId);
                                  return true;
@@ -29762,16 +29765,16 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
             destinationField    = xmlElement .getAttribute ("toField");
 
          if (sourceNodeName === null)
-            throw new Error ("Bad ROUTE statement: Expected fromNode attribute.");
+            throw new Error ("Bad ROUTE specification: Expected fromNode attribute.");
 
          if (sourceField === null)
-            throw new Error ("Bad ROUTE statement: Expected fromField attribute.");
+            throw new Error ("Bad ROUTE specification: Expected fromField attribute.");
 
          if (destinationNodeName === null)
-            throw new Error ("Bad ROUTE statement: Expected toNode attribute.");
+            throw new Error ("Bad ROUTE specification: Expected toNode attribute.");
 
          if (destinationField === null)
-            throw new Error ("Bad ROUTE statement: Expected toField attribute.");
+            throw new Error ("Bad ROUTE specification: Expected toField attribute.");
 
          const
             executionContext = this .getExecutionContext (),
@@ -31192,7 +31195,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(643);
+/* provided dependency */ var libtess = __webpack_require__(775);
 
 
 const Triangle3 =
@@ -38661,7 +38664,7 @@ const X3DSensorNode_default_ = X3DSensorNode;
 
 
 
-function X3DTimeDependentNode (executionContext)
+function X3DTimeDependentNode (/* executionContext */)
 {
    this .addType (Base_X3DConstants .X3DTimeDependentNode);
 
@@ -38713,8 +38716,10 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, Core_X3
    },
    resetElapsedTime ()
    {
-      this .start         = this .getBrowser () .getCurrentTime ();
-      this .pause         = this .getBrowser () .getCurrentTime ();
+      const time = this .getBrowser () .getCurrentTime ();
+
+      this .start         = time;
+      this .pause         = time;
       this .pauseInterval = 0;
    },
    set_live__ ()
@@ -38840,14 +38845,14 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, Core_X3
 
          // The event order below is very important.
 
-         this ._isActive    = true;
-         this ._elapsedTime = 0;
+         this ._isActive = true;
 
          this .set_start ();
 
          if (this .getLive () .getValue ())
          {
-            this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+            this .getBrowser () .timeEvents () .addInterest ("set_time", this);
+            this .getBrowser () .addBrowserEvent ();
          }
          else
          {
@@ -38872,7 +38877,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, Core_X3
 
       this .set_pause ();
 
-      this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+      this .getBrowser () .timeEvents () .removeInterest ("set_time", this);
    },
    do_resume ()
    {
@@ -38907,14 +38912,12 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, Core_X3
 
          this .set_stop ();
 
-         this ._elapsedTime = this .getElapsedTime ();
-
          if (this ._isPaused .getValue ())
             this ._isPaused = false;
 
          this ._isActive = false;
 
-         this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+         this .getBrowser () .timeEvents () .removeInterest ("set_time", this);
       }
    },
    addTimeout (name, callback, startTime)
@@ -38936,19 +38939,16 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, Core_X3
       if (!this ._enabled .getValue ())
          return;
 
-      if (!(this .getLive () .getValue ()))
-         return;
-
       this .getBrowser () .advanceOnlyTime ();
 
       this [callback] ();
    },
-   set_loop: Function .prototype,
-   set_start: Function .prototype,
-   set_pause: Function .prototype,
-   set_resume: Function .prototype,
-   set_stop: Function .prototype,
-   set_time: Function .prototype,
+   set_loop () { },
+   set_start () { },
+   set_pause () { },
+   set_resume () { },
+   set_stop () { },
+   set_time () { },
    dispose ()
    {
       for (const name of [... this .timeouts .keys ()])
@@ -38979,7 +38979,9 @@ function TimeSensor (executionContext)
 
    this .addType (Base_X3DConstants .TimeSensor);
 
-   this .addChildObjects (Base_X3DConstants .inputOutput, "range", new x_ite_Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
+   // Special non-public field:
+   // rangeFraction, rangeStart, rangeEnd (in fractions) - play range starting at rangeFraction
+   this .addChildObjects (Base_X3DConstants .inputOutput, "range", new x_ite_Fields .MFFloat (0, 0, 1));
 
    this .cycle    = 0;
    this .interval = 0;
@@ -39015,6 +39017,10 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, Core_X3DSensorNod
       this .fraction = Math_Algorithm .fract (fraction + this .offset);
       this .cycle    = currentTime - (this .fraction - this .first) * cycleInterval;
    },
+   getFraction (time)
+   {
+      return this .first + (this .interval ? Math_Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+   },
    set_cycleInterval__ ()
    {
       if (!this ._isActive .getValue ())
@@ -39032,36 +39038,62 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, Core_X3DSensorNod
       if (this ._isPaused .getValue ())
          return;
 
-      this .set_fraction (this .getBrowser () .getCurrentTime ());
+      this ._fraction_changed = this .fraction = this .getFraction (this .getBrowser () .getCurrentTime ());
    },
    set_start ()
    {
+      const browser = this .getBrowser ();
+
+      browser .timePrepareEvents () .addInterest ("set_prepare", this);
+      browser .addBrowserEvent ();
+
       this .setRange (this ._range [0], this ._range [1], this ._range [2], true);
 
-      const time = this .getBrowser () .getCurrentTime ();
+      const time = browser .getCurrentTime ();
 
       this ._time             = time;
+      this ._elapsedTime      = 0;
       this ._cycleTime        = time;
       this ._fraction_changed = this .fraction;
+      this ._cycleCount       = 0;
+   },
+   set_pause ()
+   {
+      this .getBrowser () .timePrepareEvents () .removeInterest ("set_prepare", this);
    },
    set_resume (/* pauseInterval */)
    {
+      const browser = this .getBrowser ();
+
+      browser .timePrepareEvents () .addInterest ("set_prepare", this);
+      browser .addBrowserEvent ();
+
       this .setRange (this .fraction, this ._range [1], this ._range [2], false);
    },
-   set_fraction (time)
+   set_stop ()
    {
-      const fraction = this .first + (this .interval ? Math_Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+      this .getBrowser () .timePrepareEvents () .removeInterest ("set_prepare", this);
+   },
+   set_prepare ()
+   {
+      const time = this .getBrowser () .getCurrentTime ();
 
-      this .fraction          = fraction;
-      this ._fraction_changed = fraction;
+      this ._time        = time;
+      this ._elapsedTime = this .getElapsedTime ();
+
+      if (time - this .cycle < this .interval)
+         return;
+
+      this ._fraction_changed  = this .last;
+      this ._cycleCount        = this ._cycleCount .getValue () + 1;
+      this ._cycleComplete     = true;
+      this ._cycleCompleteTime = time;
    },
    set_time ()
    {
       // The event order below is very important.
 
       const time = this .getBrowser () .getCurrentTime ();
-
-      this ._time = time;
 
       if (time - this .cycle >= this .interval)
       {
@@ -39071,27 +39103,18 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, Core_X3DSensorNod
             {
                this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-               this ._elapsedTime   = this .getElapsedTime ();
-               this ._cycleComplete = time;
-               this ._cycleTime     = time;
-
-               this .set_fraction (time);
+               this ._cycleTime        = time;
+               this ._fraction_changed = this .fraction = this .getFraction (time);
             }
          }
          else
          {
-            this ._elapsedTime      = this .getElapsedTime ();
-            this ._cycleComplete    = time;
-            this ._fraction_changed = this .fraction = this .last;
-
             this .stop ();
          }
       }
       else
       {
-         this ._elapsedTime = this .getElapsedTime ();
-
-         this .set_fraction (time);
+         this ._fraction_changed = this .fraction = this .getFraction (time);
       }
    },
    dispose ()
@@ -39107,22 +39130,24 @@ Object .defineProperties (TimeSensor,
    fieldDefinitions:
    {
       value: new Base_FieldDefinitionArray ([
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",         new x_ite_Fields .SFNode ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "description",      new x_ite_Fields .SFString ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "enabled",          new x_ite_Fields .SFBool (true)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "cycleInterval",    new x_ite_Fields .SFTime (1)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "loop",             new x_ite_Fields .SFBool ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "startTime",        new x_ite_Fields .SFTime (0)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "resumeTime",       new x_ite_Fields .SFTime (0)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "pauseTime",        new x_ite_Fields .SFTime (0)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "stopTime",         new x_ite_Fields .SFTime (0)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "isPaused",         new x_ite_Fields .SFBool ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "isActive",         new x_ite_Fields .SFBool ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "cycleTime",        new x_ite_Fields .SFTime ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "cycleComplete",    new x_ite_Fields .SFTime ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "elapsedTime",      new x_ite_Fields .SFTime ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "fraction_changed", new x_ite_Fields .SFFloat ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "time",             new x_ite_Fields .SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "metadata",          new x_ite_Fields .SFNode ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "description",       new x_ite_Fields .SFString ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "enabled",           new x_ite_Fields .SFBool (true)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "cycleInterval",     new x_ite_Fields .SFTime (1)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "loop",              new x_ite_Fields .SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "startTime",         new x_ite_Fields .SFTime (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "resumeTime",        new x_ite_Fields .SFTime (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "pauseTime",         new x_ite_Fields .SFTime (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "stopTime",          new x_ite_Fields .SFTime (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "isPaused",          new x_ite_Fields .SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "isActive",          new x_ite_Fields .SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "cycleTime",         new x_ite_Fields .SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "cycleComplete",     new x_ite_Fields .SFBool ()),  // experimental
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "cycleCompleteTime", new x_ite_Fields .SFTime ()),  // experimental
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "cycleCount",        new x_ite_Fields .SFInt32 ()), // experimental
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "fraction_changed",  new x_ite_Fields .SFFloat ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "elapsedTime",       new x_ite_Fields .SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,  "time",              new x_ite_Fields .SFTime ()),
       ]),
       enumerable: true,
    },
@@ -46520,7 +46545,7 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, Parser_X3DParser 
    },
    header ()
    {
-      const header = helper.decodeText (this .arrayBuffer .slice (0, 80)) .trim ();
+      const header = helper.decodeText (this .arrayBuffer .slice (0, 80)) .replace (/\u0000.*$/, "") .trim ();
 
       if (!header)
          return;
@@ -46704,7 +46729,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
       {
          const value = this .result [0] .trim ();
 
-         this .comments .push (value);
+         if (value)
+            this .comments .push (value);
 
          this .mustRotateAxes ||= !! value .match (/\b(?:Blender|Artec|Polycam)\b/i);
 
@@ -47916,7 +47942,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(643);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(775);
 
 
 
@@ -52038,7 +52064,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       if (this [_disposed])
          return;
 
-      let firstError, secondError;
+      const errors = [ ];
 
       try
       {
@@ -52050,7 +52076,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       }
       catch (error)
       {
-         firstError = error;
+         errors .push (error);
       }
 
       try
@@ -52063,19 +52089,12 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       }
       catch (error)
       {
-         secondError = error;
+         errors .push (error);
       }
 
       if (this [_sourceField] && this [_destinationField])
       {
-         if (this [_sourceField] .getType () !== this [_destinationField] .getType ())
-            throw new Error (`Bad ROUTE statement: Source field type must match destination field type of fields named "${this [_sourceField] .getName ()}" and "${this [_destinationField] .getName ()}".`);
-
-         if (!this [_sourceField] .isOutput ())
-            throw new Error (`Bad ROUTE statement: Source field "${this [_sourceField] .getName ()}" must be an output.`);
-
-         if (!this [_destinationField] .isInput ())
-            throw new Error (`Bad ROUTE statement: Destination field "${this [_destinationField] .getName ()}" must be an input.`);
+         X3DRoute .checkFields (this [_sourceField], this [_destinationField]);
 
          this [_sourceField]      .addOutputRoute (this);
          this [_destinationField] .addInputRoute (this);
@@ -52083,7 +52102,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       }
       else
       {
-         throw firstError ?? secondError;
+         throw new AggregateError (errors, "Couldn't connect route.");
       }
    },
    disconnect ()
@@ -52091,8 +52110,8 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       this [_sourceField]      ?.removeOutputRoute (this);
       this [_destinationField] ?.removeInputRoute (this);
 
-      if (this [_sourceField] && this [_destinationField])
-         this [_sourceField] .removeFieldInterest (this [_destinationField]);
+      if (this [_destinationField])
+         this [_sourceField] ?.removeFieldInterest (this [_destinationField]);
 
       this [_sourceField]      = null;
       this [_destinationField] = null;
@@ -52253,6 +52272,8 @@ Object .assign (X3DRoute,
          ? destinationNode .getField (destinationFieldName)
          : helper.try (() => destinationNode .getExportedNode () .getField (destinationFieldName));
 
+      X3DRoute .checkFields (sourceField, destinationField);
+
       if (sourceField)
       {
          sourceFieldName = sourceField .getName ();
@@ -52270,6 +52291,26 @@ Object .assign (X3DRoute,
       }
 
       return `${sourceNode .getId ()}.${sourceFieldName}.${destinationNode .getId ()}.${destinationFieldName}`;
+   },
+   checkFields (sourceField, destinationField)
+   {
+      if (sourceField && destinationField)
+      {
+         if (sourceField .getType () !== destinationField .getType ())
+            throw new Error (`Bad ROUTE specification: source field type must match destination field type of fields named "${sourceField .getName ()}" and "${destinationField .getName ()}".`);
+      }
+
+      if (sourceField)
+      {
+         if (!sourceField .isOutput ())
+            throw new Error (`Bad ROUTE specification: source field "${sourceField .getName ()}" must be an output.`);
+      }
+
+      if (destinationField)
+      {
+         if (!destinationField .isInput ())
+            throw new Error (`Bad ROUTE specification: destination field "${destinationField .getName ()}" must be an input.`);
+      }
    },
 });
 
@@ -52919,54 +52960,47 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
    },
    addRoute (sourceNode, sourceField, destinationNode, destinationField)
    {
-      try
+      // Normalize arguments.
+
+      const
+         importedSourceNode      = sourceNode      instanceof Execution_X3DImportedNode ? sourceNode      : null,
+         importedDestinationNode = destinationNode instanceof Execution_X3DImportedNode ? destinationNode : null;
+
+      sourceNode       = Base_X3DCast (Base_X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
+      sourceField      = String (sourceField);
+      destinationNode  = Base_X3DCast (Base_X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
+      destinationField = String (destinationField);
+
+      // Check nodes.
+
+      if (!sourceNode)
+         throw new Error ("Bad ROUTE specification: source node must be of type X3DNode.");
+
+      if (!destinationNode)
+         throw new Error ("Bad ROUTE specification: destination node must be of type X3DNode.");
+
+      // Resolve imported source and destination node.
+
+      sourceNode      = this .getLocalizedNode (sourceNode);
+      destinationNode = this .getLocalizedNode (destinationNode);
+
+      // Add route.
+
+      const
+         id    = Routing_X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField),
+         route = this [_routes] .get (id);
+
+      if (route)
       {
-         // Normalize arguments.
-
-         const
-            importedSourceNode      = sourceNode      instanceof Execution_X3DImportedNode ? sourceNode      : null,
-            importedDestinationNode = destinationNode instanceof Execution_X3DImportedNode ? destinationNode : null;
-
-         sourceNode       = Base_X3DCast (Base_X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
-         sourceField      = String (sourceField);
-         destinationNode  = Base_X3DCast (Base_X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
-         destinationField = String (destinationField);
-
-         // Check nodes.
-
-         if (!sourceNode)
-            throw new Error ("source node must be of type X3DNode.");
-
-         if (!destinationNode)
-            throw new Error ("destination node must be of type X3DNode.");
-
-         // Resolve imported source and destination node.
-
-         sourceNode      = this .getLocalizedNode (sourceNode);
-         destinationNode = this .getLocalizedNode (destinationNode);
-
-         // Add route.
-
-         const
-            id    = Routing_X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField),
-            route = this [_routes] .get (id);
-
-         if (route)
-         {
-            return route;
-         }
-         else
-         {
-            const route = new Routing_X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
-
-            this [_routes] .add (id, route);
-
-            return route;
-         }
+         return route;
       }
-      catch (error)
+      else
       {
-         throw new Error (`Bad ROUTE specification.`, { cause: error });
+         const route = new Routing_X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
+
+         this [_routes] .add (id, route);
+
+         return route;
       }
    },
    deleteRoute (route)
@@ -54662,7 +54696,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-dhnoOI+clBqqFYGBrUCL7KhjerG/JEhXRHWvaNS1qEwbCU/f0MWYgFRQj2esJwbi";
+         link .integrity   = "sha384-x6y/hxdrQVgxMyDh++oW/v2xiaW7k1Rmjai5PMfLQ+DLzcx2odeW89DVDfzQkGs9";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -64396,12 +64430,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
    {
       const surface = this .getBrowser () .getSurface ();
 
-      helper.on (this, surface, "mousedown",  event => this .mousedown    (event));
-      helper.on (this, surface, "mouseup",    event => this .mouseup      (event));
-      helper.on (this, surface, "dblclick",   event => this .dblclick     (event));
-      helper.on (this, surface, "mousemove",  event => this .mousemove    (event));
-      helper.on (this, surface, "mouseenter", event => this .onmouseenter (event));
-      helper.on (this, surface, "mouseout",   event => this .onmouseout   (event));
+      helper.on (this, surface, "mousedown",  event => this .mousedown  (event));
+      helper.on (this, surface, "mouseup",    event => this .mouseup    (event));
+      helper.on (this, surface, "dblclick",   event => this .dblclick   (event));
+      helper.on (this, surface, "mousemove",  event => this .mousemove  (event));
+      helper.on (this, surface, "mouseout",   event => this .onmouseout (event));
 
       helper.on (this, surface, "touchstart", event => this .touchstart (event));
       helper.on (this, surface, "touchend",   event => this .touchend   (event));
@@ -64411,6 +64444,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
       const
          browser = this .getBrowser (),
          surface = browser .getSurface ();
+
+      browser .getElement () .focus ({ preventScroll: true });
 
       if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
          return;
@@ -64591,10 +64626,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, Base_X3DBaseN
          browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
       else
          browser .setCursor (this .grabbing && move ? "GRABBING" : "DEFAULT");
-   },
-   onmouseenter ()
-   {
-      this .getBrowser () .getElement () .focus ({ preventScroll: true });
    },
    onmouseout ()
    {
@@ -72975,15 +73006,16 @@ function X3DBrowserContext (element)
    for (const browserContext of browserContexts)
       browserContext .call (this, element);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "initialized",    new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "shutdown",       new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "prepareEvents",  new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "timeEvents",     new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "cameraEvents",   new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "sensorEvents",   new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "displayEvents",  new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "finishedEvents", new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "endEvents",      new x_ite_Fields .SFTime ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "initialized",       new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "shutdown",          new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "prepareEvents",     new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "timePrepareEvents", new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "timeEvents",        new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "cameraEvents",      new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "sensorEvents",      new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "displayEvents",     new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "finishedEvents",    new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "endEvents",         new x_ite_Fields .SFTime ());
 
    this [X3DBrowserContext_tainted]        = false;
    this [_previousTime]   = 0;
@@ -73016,6 +73048,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
    prepareEvents ()
    {
       return this ._prepareEvents;
+   },
+   timePrepareEvents ()
+   {
+      return this ._timePrepareEvents;
    },
    timeEvents ()
    {
@@ -73118,6 +73154,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
       // Prepare and Time Events
 
       this .addTaintedField (this ._prepareEvents);
+      this [X3DBrowserContext_processEvents] ();
+
+      this .addTaintedField (this ._timePrepareEvents);
       this [X3DBrowserContext_processEvents] ();
 
       this .addTaintedField (this ._timeEvents);
@@ -87852,6 +87891,10 @@ Object .assign (Object .setPrototypeOf (X3DSoundProcessingNode .prototype, Sound
       for (const childNode of this .childNodes)
          childNode .getAudioSource () .connect (this .audioDestination);
    },
+   set_start ()
+   {
+      this ._elapsedTime = 0;
+   },
    set_time ()
    {
       this ._elapsedTime = this .getElapsedTime ();
@@ -88104,6 +88147,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundSourceNode .prototype, Sound_X3D
    {
       if (!this .mediaElement)
          return;
+
+      this ._elapsedTime = 0;
 
       this .mediaElement .currentTime = 0;
 
@@ -89008,12 +89053,12 @@ Object .defineProperties (BufferAudioSource,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "gain",                  new x_ite_Fields .SFFloat (1)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "detune",                new x_ite_Fields .SFFloat ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "playbackRate",          new x_ite_Fields .SFFloat (1)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "loopStart",             new x_ite_Fields .SFTime (0)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "loopEnd",               new x_ite_Fields .SFTime (0)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "channelCount",          new x_ite_Fields .SFInt32 ()), // skip test
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "channelCountMode",      new x_ite_Fields .SFString ("MAX")),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "channelInterpretation", new x_ite_Fields .SFString ("SPEAKERS")),
 
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "loopStart",             new x_ite_Fields .SFTime (0)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "loopEnd",               new x_ite_Fields .SFTime (0)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "loop",                  new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "startTime",             new x_ite_Fields .SFTime (0)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "resumeTime",            new x_ite_Fields .SFTime (0)),
@@ -90051,6 +90096,8 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, Sound_X3DSo
 
          this .mediaStreamAudioSourceNode = new MediaStreamAudioSourceNode (audioContext, { mediaStream });
 
+         this ._elapsedTime = 0;
+
          if (this ._isActive .getValue ())
          {
             if (this ._isPaused .getValue () || !this .getLive () .getValue ())
@@ -90122,6 +90169,9 @@ Object .assign (Object .setPrototypeOf (MicrophoneSource .prototype, Sound_X3DSo
    },
    set_time ()
    {
+      if (!this .mediaStreamAudioSourceNode)
+         return;
+
       this ._elapsedTime = this .getElapsedTime ();
    },
 });
@@ -90190,7 +90240,7 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
       if (!this .oscillatorNode)
          return;
 
-      this .oscillatorNode .detune .value = Math .max (this ._detune .getValue (), 0);
+      this .oscillatorNode .detune .value = this ._detune .getValue ();
    },
    set_frequency__ ()
    {
@@ -90258,12 +90308,15 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
 
       this .oscillatorNode = new OscillatorNode (audioContext);
 
+      this .set_gain__ ();
       this .set_detune__ ();
       this .set_frequency__ ();
       this .set_type__ ();
 
       this .oscillatorNode .connect (this .getAudioSource ());
       this .oscillatorNode .start ();
+
+      this ._elapsedTime = 0;
    },
    set_pause ()
    {
@@ -90275,8 +90328,16 @@ Object .assign (Object .setPrototypeOf (OscillatorSource .prototype, Sound_X3DSo
    },
    set_stop ()
    {
-      this .oscillatorNode .stop ();
-      this .oscillatorNode .disconnect ();
+      const
+         audioContext = this .getBrowser () .getAudioContext (),
+         gainNode     = this .getAudioSource (),
+         now          = audioContext .currentTime,
+         fadeDuration = 0.03;
+
+      gainNode .gain .setValueAtTime (gainNode .gain .value, now);
+      gainNode .gain .exponentialRampToValueAtTime (1e-3, now + fadeDuration);
+
+      this .oscillatorNode .stop (now + fadeDuration);
    },
    set_time ()
    {
@@ -90437,6 +90498,9 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
    },
    setGain (gain, pan = 0.5, rotation = 0)
    {
+      // Given a pan value, left and right channel levels can be obtained using the equations from:
+      // https://www.web3d.org/documents/specifications/19775-1/V4.0/index.html
+
       const
          panLeft       = 1 - pan ** 2,
          panRight      = 1 - (1 - pan) ** 2,
@@ -91315,7 +91379,7 @@ function GifMedia (gif, movieTexture)
             if (!loop && cycle < this .cycle)
                return this .duration;
 
-            return (movieTexture ._elapsedTime * playbackRate) % this .duration;
+            return (movieTexture ._elapsedTime .getValue () * playbackRate) % this .duration;
          },
          set: Function .prototype,
       },
@@ -91342,7 +91406,7 @@ function GifMedia (gif, movieTexture)
       {
          get ()
          {
-            return Math .floor (movieTexture ._elapsedTime / this .duration);
+            return Math .floor (movieTexture ._elapsedTime .getValue () / this .duration);
          },
       },
       currentFrame:
@@ -91436,7 +91500,7 @@ async function PNGMedia (apng, movieTexture)
       {
          get ()
          {
-            return Math .floor (movieTexture ._elapsedTime / this .duration);
+            return Math .floor (movieTexture ._elapsedTime .getValue () / this .duration);
          },
       },
       currentFrame:
@@ -91481,8 +91545,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(133);
-/* provided dependency */ var APNG = __webpack_require__(991);
+/* provided dependency */ var SuperGif = __webpack_require__(617);
+/* provided dependency */ var APNG = __webpack_require__(851);
 
 
 
@@ -93749,7 +93813,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
    },
    print (... args)
    {
-      const string = args .map (String) .join (" ");
+      const string = args .join (" ");
 
       console .log (string);
 
@@ -93758,7 +93822,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
    },
    println (... args)
    {
-      const string = args .map (String) .join (" ");
+      const string = args .join (" ");
 
       console .log (string);
 
@@ -94126,7 +94190,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(643);
+/* provided dependency */ var libtess_libtess = __webpack_require__(775);
 const libtess_default_ = libtess_libtess;
 ;
 
