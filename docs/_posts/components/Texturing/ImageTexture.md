@@ -168,7 +168,7 @@ Any image file format supported by the web browser, but at least:
 | JPEG     | .jpeg, .jpg     | image/jpeg | lossy           |
 | GIF      | .gif            | image/gif  | lossy           |
 | SVG      | .svg            | image/svg  | vector graphics |
-| KTX2     | .ktx2, .ktx2.gz | image/ktx2 | TEXTURE_2D      |
+| KTX2     | .ktx2           | image/ktx2 | TEXTURE_2D      |
 
 ## Advice
 
