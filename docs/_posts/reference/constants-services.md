@@ -4,7 +4,6 @@ date: 2022-11-28
 nav: reference
 categories: [Reference]
 tags: [X3DConstants, ECMAScript, Javascript]
-jquery: true
 reference: true
 ---
 

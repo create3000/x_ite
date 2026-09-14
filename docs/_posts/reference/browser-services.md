@@ -4,7 +4,6 @@ date: 2022-11-28
 nav: reference
 categories: [Reference]
 tags: [Browser, X3DBrowser, ECMAScript, Javascript, glTF, VRML]
-jquery: true
 reference: true
 ---
 
