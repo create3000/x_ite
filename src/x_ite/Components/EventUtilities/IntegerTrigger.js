@@ -22,7 +22,8 @@ Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, X3DTriggerNod
    },
    set_boolean__ ()
    {
-      this ._triggerValue = this ._integerKey;
+      if (this ._set_boolean .getValue ())
+         this ._triggerValue = this ._integerKey;
    },
 });
 
