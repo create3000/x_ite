@@ -4,7 +4,7 @@ const fs = require ("node:fs");
 const { sh, systemSync } = require ("shell-tools");
 
 const download = !fs .existsSync (`/tmp/X3DUOM.xml`)
-   || new Date () .getTime () - new Date (fs .statSync (`/tmp/tooltips.html`) .mtime) .getTime () > 86400_000
+   || Date .now () - fs .statSync (`/tmp/X3DUOM.xml`) .mtimeMs > 86400_000
    || process .argv .includes ("--download");
 
 if (download)
