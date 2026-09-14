@@ -721,12 +721,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: var(--splash-screen-image) var(--splash-screen-background) center;
 }
 
-/*
 .x_ite-private-spinner {
-  display: none;
-  --offset-x: -222px;
-  --offset-y: -98px;
-  --size: 64px;
+  --offset-x: 100px;
+  --offset-y: -50px;
+  --size: 32px;
   --padding: 8px;
   --center-x: calc(458 / 1024 * var(--size) + var(--padding));
   --center-y: calc(539 / 1024 * var(--size) + var(--padding));
@@ -736,9 +734,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   width: var(--size);
   height: var(--size);
   padding: var(--padding);
-  background: url(assets/images/logo.svg) var(--splash-screen-background) no-repeat center;
+  background: url(assets/images/logo.svg) no-repeat center;
   background-size: var(--size) var(--size);
-  border-radius: 50%;
   animation: x_ite-spinner-animation 8s linear infinite;
   transform-origin: var(--center-x) var(--center-y);
 }
@@ -748,7 +745,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
     transform: rotate(360deg);
   }
 }
- */
 
 .x_ite-private-progress {
   position: absolute;
