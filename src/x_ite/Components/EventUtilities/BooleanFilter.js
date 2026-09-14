@@ -26,11 +26,10 @@ Object .assign (Object .setPrototypeOf (BooleanFilter .prototype, X3DChildNode .
 
       if (value)
          this ._inputTrue = true;
-
       else
          this ._inputFalse = false;
 
-      this ._inputNegate = ! value;
+      this ._inputNegate = !value;
    },
 });
 
