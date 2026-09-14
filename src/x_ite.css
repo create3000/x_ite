@@ -723,7 +723,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-spinner {
   --offset-x: 100px;
-  --offset-y: -50px;
+  --offset-y: -48px;
   --size: 32px;
   --padding: 8px;
   --center-x: calc(458 / 1024 * var(--size) + var(--padding));
