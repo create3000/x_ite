@@ -111,7 +111,20 @@ const geometry = Browser .currentScene .createNode ("IndexedTriangleSet");
 for (const fieldDefinition of geometry .getFieldDefinitions ())
   print (fieldDefinition .name);
 
-// Expected output: list of field names
+// Expected output: metadata
+// Expected output: set_index
+// Expected output: solid
+// Expected output: ccw
+// Expected output: colorPerVertex
+// Expected output: normalPerVertex
+// Expected output: index
+// Expected output: attrib
+// Expected output: fogCoord
+// Expected output: color
+// Expected output: texCoord
+// Expected output: tangent
+// Expected output: normal
+// Expected output: coord
 </pre>
 </x3d-script-area>
 
