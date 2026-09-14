@@ -22,7 +22,7 @@ Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, X3DTriggerNod
    },
    set_boolean__ ()
    {
-      if (this ._set_boolean .getValue ())
+      if (this ._set_boolean .getValue () || this .getExecutionContext () .getSpecificationVersion () <= 3.3)
          this ._triggerValue = this ._integerKey;
    },
 });

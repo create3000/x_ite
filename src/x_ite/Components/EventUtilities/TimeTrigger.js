@@ -22,7 +22,7 @@ Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, X3DTriggerNode .
    },
    set_boolean__ ()
    {
-      if (this ._set_boolean .getValue ())
+      if (this ._set_boolean .getValue () || this .getExecutionContext () .getSpecificationVersion () <= 3.3)
          this ._triggerTime = this .getBrowser () .getCurrentTime ();
    },
 });
