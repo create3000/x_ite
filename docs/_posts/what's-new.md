@@ -1520,4 +1520,4 @@ There are new URL's for cobweb.min.js and cobweb.css. Use the following location
 
 ## First Version
 
-The first version of X_ITE was created in April 2015. It was still called Cobweb.
+The first version of X_ITE was created in April 2015. At that time, it was still called Cobweb.
