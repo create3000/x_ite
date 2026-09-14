@@ -19,7 +19,18 @@ document .querySelector ("a[href='/x_ite/editor/']")
 </script>
 
 {% if page.reference %}
-<script type="module" src="/x_ite/assets/js/reference.js"></script>
+<script type="module">
+const hierarchy = document .querySelector ("#hierarchy + div .rouge-code pre");
+
+hierarchy .innerHTML = hierarchy .textContent .replace (/(\w+)/sg, (match, p1) =>
+{
+   const a = document .querySelector (`h2[id*="${p1 .toLowerCase ()}"]`);
+
+   return `<a href="#${a .getAttribute ("id")}">${p1}</a>`;
+});
+
+hierarchy .parentElement .classList .remove ("rouge-code");
+</script>
 {% endif %}
 
 {% if content contains '<x3d-canvas' or content contains '<x3d-script-area' or page.x_ite %}
