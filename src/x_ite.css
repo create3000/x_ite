@@ -786,13 +786,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   width: 0%;
   height: 100%;
   background: var(--red);
-  animation: progress 12s alternate infinite linear;
-}
-
-@keyframes progress {
-  0%   { background-color: #d71f1f }
-  50%  { background-color: #ff9f2e }
-  100% { background-color: #ffdd00 }
 }
 
 /* No Sound Button */
