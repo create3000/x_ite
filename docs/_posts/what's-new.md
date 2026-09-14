@@ -18,6 +18,7 @@ Look at the [Traffic Cone Sample](/x_ite/laboratory/gltf-sample-viewer/?url=Traf
 - [x] Support for `KHR_materials_retroreflection` in glTF Parser.
 - [x] New [RetroreflectionMaterialExtension](/x_ite/components/x-ite/retroreflectionmaterialextension/) node.
 - [x] Experimental implementation of new [TimeSensor](/x_ite/components/time/timesensor/) node fields.
+- [x] Fixed [BooleanTrigger](/x_ite/components/eventutilities/booleantrigger/) and [IntegerTrigger](/x_ite/components/eventutilities/integertrigger/) to only send events when a value `true` *set_boolean* event is received.
 
 ## X_ITE v16.2 Series
 
