@@ -467,7 +467,7 @@ Object .assign (Object .setPrototypeOf (IntegerTrigger .prototype, EventUtilitie
    },
    set_boolean__ ()
    {
-      if (this ._set_boolean .getValue ())
+      if (this ._set_boolean .getValue () || this .getExecutionContext () .getSpecificationVersion () <= 3.3)
          this ._triggerValue = this ._integerKey;
    },
 });
@@ -516,7 +516,7 @@ Object .assign (Object .setPrototypeOf (TimeTrigger .prototype, EventUtilities_X
    },
    set_boolean__ ()
    {
-      if (this ._set_boolean .getValue ())
+      if (this ._set_boolean .getValue () || this .getExecutionContext () .getSpecificationVersion () <= 3.3)
          this ._triggerTime = this .getBrowser () .getCurrentTime ();
    },
 });

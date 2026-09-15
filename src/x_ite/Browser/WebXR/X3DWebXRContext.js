@@ -38,6 +38,8 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
+      this [_xrButton] ?.remove ();
+
       this [_xrButton] = (() =>
       {
          const xrButton = document .createElement ("div");

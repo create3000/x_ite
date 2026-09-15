@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 572
+/***/ 127
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 702
+/***/ 805
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 942
+/***/ 277
 (module) {
 
 /**
@@ -31215,7 +31215,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(942);
+/* provided dependency */ var libtess = __webpack_require__(277);
 
 
 const Triangle3 =
@@ -47962,7 +47962,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(942);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(277);
 
 
 
@@ -54716,7 +54716,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-9kroNUxs7vvk5h7nMvFQTh6Qg80y7EDMbSx+X+YwE+sT8e0DaVcsix0DARjc91k3";
+         link .integrity   = "sha384-m/szRp8zsbjF6JKScCRFNI8wgM8dc7KLcXVhPmEugcfV9dSFzJu3el+zMyh1vOuj";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -72065,24 +72065,9 @@ Object .assign (X3DSoundContext .prototype,
             return noSoundButton;
          })();
 
-         const
-            count = !! this [_audioElements] .size,
-            fade  = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300";
+         const count = !! this [_audioElements] .size;
 
-         if (count)
-            this [_noSoundButton] .style .display = "";
-
-         this [_noSoundButton] .classList .add (fade);
-
-         await helper.sleep (400);
-
-         this [_noSoundButton] .classList .remove (fade);
-
-         if (count !== !! this [_audioElements] .size)
-            return;
-
-         if (!count)
-            this [_noSoundButton] .style .display = "none";
+         this [_noSoundButton] .style .display = count ? "" : "none";
       },
       200);
    },
@@ -91565,8 +91550,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(572);
-/* provided dependency */ var APNG = __webpack_require__(702);
+/* provided dependency */ var SuperGif = __webpack_require__(127);
+/* provided dependency */ var APNG = __webpack_require__(805);
 
 
 
@@ -94210,7 +94195,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(942);
+/* provided dependency */ var libtess_libtess = __webpack_require__(277);
 const libtess_default_ = libtess_libtess;
 ;
 

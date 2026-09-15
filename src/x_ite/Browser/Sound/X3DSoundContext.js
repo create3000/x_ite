@@ -125,24 +125,9 @@ Object .assign (X3DSoundContext .prototype,
             return noSoundButton;
          })();
 
-         const
-            count = !! this [_audioElements] .size,
-            fade  = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300";
+         const count = !! this [_audioElements] .size;
 
-         if (count)
-            this [_noSoundButton] .style .display = "";
-
-         this [_noSoundButton] .classList .add (fade);
-
-         await $.sleep (400);
-
-         this [_noSoundButton] .classList .remove (fade);
-
-         if (count !== !! this [_audioElements] .size)
-            return;
-
-         if (!count)
-            this [_noSoundButton] .style .display = "none";
+         this [_noSoundButton] .style .display = count ? "" : "none";
       },
       200);
    },
