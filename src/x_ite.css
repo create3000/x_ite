@@ -819,7 +819,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   height: 30px;
   background-size: 30px 30px;
   filter: var(--icon-filter);
-  transition: transform .2s ease-in-out;
+  transition: transform .2s ease-in-out, display 0s 300ms, opacity 300ms ease-in-out;
 }
 
 .x_ite-private-button:hover {

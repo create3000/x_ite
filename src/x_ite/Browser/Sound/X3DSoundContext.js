@@ -88,6 +88,8 @@ Object .assign (X3DSoundContext .prototype,
             .catch (Function .prototype)
             .finally (() => this .toggleNoSoundButton ());
       }
+
+      this .toggleNoSoundButton ();
    },
    stopAudioElement (audioElement, functionName = "pause")
    {
@@ -127,6 +129,7 @@ Object .assign (X3DSoundContext .prototype,
          const count = !! this [_audioElements] .size;
 
          this [_noSoundButton] .style .display = count ? "" : "none";
+         this [_noSoundButton] .style .opacity = count ? 1 : 0;
       },
       200);
    },
