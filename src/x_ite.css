@@ -87,9 +87,9 @@ X3DCanvas {
     --splash-screen-image: url(assets/images/background-light.svg);
     --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
     --border: 4px solid rgba(229, 229, 234, 0.66);
-    --button-border: 1px solid rgba(255, 255, 255, 0.55);
-    --tint-color: rgba(255, 255, 255, 0.38);
-    --tint-hover-color: rgba(255, 255, 255, 0.53);
+    --button-border: 1px solid rgba(255, 255, 255, 0.40);
+    --tint-color: rgba(255, 255, 255, 0.28);
+    --tint-hover-color: rgba(255, 255, 255, 0.43);
     --icon-filter: invert(100%);
   }
 }
@@ -114,9 +114,9 @@ X3DCanvas[theme=light] {
   --splash-screen-image: url(assets/images/background-light.svg);
   --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
   --border: 4px solid rgba(229, 229, 234, 0.66);
-  --button-border: 1px solid rgba(255, 255, 255, 0.55);
-  --tint-color: rgba(255, 255, 255, 0.38);
-  --tint-hover-color: rgba(255, 255, 255, 0.53);
+  --button-border: 1px solid rgba(255, 255, 255, 0.40);
+  --tint-color: rgba(255, 255, 255, 0.28);
+  --tint-hover-color: rgba(255, 255, 255, 0.43);
   --icon-filter: invert(100%);
 }
 
