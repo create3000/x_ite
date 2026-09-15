@@ -212,7 +212,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-clip: padding-box;
   border-top: var(--border);
   border-right: var(--border);
-  border-top-right-radius: 10px;
+  border-top-right-radius: 14px;
   padding: 7px 15px 10px 10px;
   color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
@@ -430,7 +430,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   margin: 0;
   margin-left: 1px;
   border: 4px solid transparent;
-  border-radius: 10px;
+  border-radius: 14px;
   padding: 5px 10px 4px 9px;
   color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
@@ -460,7 +460,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   margin: 0;
   margin-left: 1px;
   border: var(--border);
-  border-radius: 10px;
+  border-radius: 14px;
   padding: 5px 10px 9px 9px;
   background: var(--gradient);
   backdrop-filter: blur(8px);
@@ -470,8 +470,9 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu .context-menu-item {
   cursor: pointer;
   position: relative;
-  border-radius: 10px;
+  border-radius: 14px;
   margin: 0;
+  padding: 0px 2px;
   font-size: 10pt;
   line-height: 1;
   letter-spacing: unset;
@@ -519,7 +520,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   content: "";
   position: absolute;
   display: block;
-  right: 0;
+  right: 3px;
   top: 8px;
   margin-right: 2px;
   /* CSS triangle */
