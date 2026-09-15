@@ -531,7 +531,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   content: "";
   position: absolute;
   display: block;
-  right: 3px;
+  right: 4px;
   top: 8px;
   margin-right: 2px;
   /* CSS triangle */
