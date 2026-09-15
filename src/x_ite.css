@@ -89,7 +89,7 @@ X3DCanvas {
     --border: 4px solid rgba(229, 229, 234, 0.66);
     --button-border: 1px solid rgba(255, 255, 255, 0.40);
     --tint-color: rgba(255, 255, 255, 0.28);
-    --tint-hover-color: rgba(255, 255, 255, 0.43);
+    --tint-hover-color: rgba(255, 255, 255, 0.34);
     --icon-filter: invert(100%);
   }
 }
@@ -116,7 +116,7 @@ X3DCanvas[theme=light] {
   --border: 4px solid rgba(229, 229, 234, 0.66);
   --button-border: 1px solid rgba(255, 255, 255, 0.40);
   --tint-color: rgba(255, 255, 255, 0.28);
-  --tint-hover-color: rgba(255, 255, 255, 0.43);
+  --tint-hover-color: rgba(255, 255, 255, 0.34);
   --icon-filter: invert(100%);
 }
 
