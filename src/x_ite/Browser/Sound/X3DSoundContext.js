@@ -1,6 +1,5 @@
 import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
 import Algorithm    from "../../../standard/Math/Algorithm.js";
-import $            from "../../../lib/helper.js";
 import _            from "../../../locale/gettext.js";
 
 const
