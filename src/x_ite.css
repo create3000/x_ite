@@ -384,7 +384,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-world-info .x_ite-private-world-info-title {
   margin: 0.3em 0;
   font-weight: bold;
-  font-size: 21pt;
+  font-size: 16pt;
   overflow-wrap: break-word;
   word-break: break-word;
 }
@@ -392,7 +392,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-world-info .x_ite-private-world-info-info,
 .x_ite-private-world-info .x_ite-private-world-info-info p {
   margin: 0.5em 0 0.5em 0;
-  font-size: 14pt;
+  font-size: 11pt;
   overflow-wrap: break-word;
   word-break: break-word;
 }
@@ -412,7 +412,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 4pt;
   vertical-align: top;
   font-family: X_ITE PT Sans, sans-serif;
-  font-size: 12pt;
+  font-size: 11pt;
   color: var(--text-color);
   overflow-wrap: break-word;
   word-break: break-word;
