@@ -810,8 +810,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 /* No Sound Button */
 
 .x_ite-private-buttons {
-  display: none;
-  opacity: 0;
+  display: flex;
+  opacity: 1;
   gap: 16px;
   justify-content: center; /* Zentriert horizontal (Hauptachse) */
   align-items: center;     /* Zentriert vertikal (Querachse) */
@@ -823,15 +823,18 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   bottom: 10px;
   background: var(--gradient);
   background-clip: padding-box;
-  transition: display 0s 300ms, opacity 300ms ease-in-out;
-  transition-behavior: allow-discrete;
+  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
 }
 
-.x_ite-private-buttons:not(:empty):has(:not(.hidden)) {
-  display: flex;
-  opacity: 1;
-  transition: opacity 300ms ease-in-out;
-  transition-behavior: allow-discrete;
+@starting-style {
+  .x_ite-private-buttons {
+    opacity: 0;
+  }
+}
+
+.x_ite-private-buttons:is(:empty, :not(:has(:not(.hidden)))) {
+  display: none;
+  opacity: 0;
 }
 
 .x_ite-private-button {
@@ -843,15 +846,18 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   height: 30px;
   background-size: 30px 30px;
   filter: var(--icon-filter);
-  transition: transform .2s ease-in-out, opacity 300ms ease-in-out;
-  transition-behavior: allow-discrete;
+  transition: transform .2s ease-in-out, display 0s 300ms allow-discrete, opacity 300ms ease-in-out;
+}
+
+@starting-style {
+  .x_ite-private-button {
+    opacity: 0;
+  }
 }
 
 .x_ite-private-button.hidden {
   display: none;
   opacity: 0;
-  transition: display 0s 300ms, opacity 300ms ease-in-out;
-  transition-behavior: allow-discrete;
 }
 
 .x_ite-private-button:hover {
