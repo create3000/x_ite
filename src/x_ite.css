@@ -824,7 +824,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-clip: padding-box;
 }
 
-.x_ite-private-buttons:has(:not([style*=display])) {
+.x_ite-private-buttons:not(:empty):has(:not([style*=display])) {
   display: flex;
 }
 
