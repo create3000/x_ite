@@ -126,8 +126,10 @@ Object .assign (X3DSoundContext .prototype,
 
          const count = !! this [_audioElements] .size;
 
-         this [_noSoundButton] .style .display = count ? "" : "none";
-         this [_noSoundButton] .style .opacity = count ? 1 : 0;
+         if (count)
+            this [_noSoundButton] .classList .remove ("hidden");
+         else
+            this [_noSoundButton] .classList .add ("hidden");
       },
       200);
    },
