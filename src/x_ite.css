@@ -419,7 +419,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info td:first-child {
-  min-width: 60px;
+  min-width: 70px;
 }
 
 .x_ite-private-world-info a {
