@@ -19,10 +19,9 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
       {
          const element = document .createElement ("div");
 
-         element .style .visibility = "hidden";
+         element .classList .add ("x_ite-private-notification");
 
          element .append (document .createElement ("span"));
-         element .classList .add ("x_ite-private-notification");
 
          this .getBrowser () .getSurface () .append (element);
 
