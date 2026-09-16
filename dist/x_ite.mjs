@@ -1,7 +1,7 @@
 /* X_ITE v16.3.1 */
 var __webpack_modules__ = ({
 
-/***/ 983
+/***/ 24
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 637
+/***/ 618
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 613
+/***/ 498
 (module) {
 
 /**
@@ -31195,7 +31195,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(613);
+/* provided dependency */ var libtess = __webpack_require__(498);
 
 
 const Triangle3 =
@@ -47942,7 +47942,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(613);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(498);
 
 
 
@@ -54696,7 +54696,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-ehZhq8Y+I97CPE8yNKRIFOeA29a2m8nrhlPT8vrhx6G0aM2PZN2VuLcEhE6OPZeK";
+         link .integrity   = "sha384-aXvKaxGOEYkU2y0ZqL44gAovgXyyFuDwcAprZoJEhTAPowA2gO3abi3Qa9VlyP/R";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -91532,8 +91532,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(983);
-/* provided dependency */ var APNG = __webpack_require__(637);
+/* provided dependency */ var SuperGif = __webpack_require__(24);
+/* provided dependency */ var APNG = __webpack_require__(618);
 
 
 
@@ -94177,7 +94177,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(613);
+/* provided dependency */ var libtess_libtess = __webpack_require__(498);
 const libtess_default_ = libtess_libtess;
 ;
 
