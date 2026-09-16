@@ -408,10 +408,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-color: var(--tint-color);
 }
 
-.x_ite-private-world-info td:first-child {
-  min-width: 60px;
-}
-
 .x_ite-private-world-info td {
   padding: 4pt;
   vertical-align: top;
@@ -420,6 +416,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   overflow-wrap: break-word;
   word-break: break-word;
   font-family: X_ITE PT Sans, sans-serif;
+}
+
+.x_ite-private-world-info td:first-child {
+  min-width: 60px;
 }
 
 .x_ite-private-world-info a {
