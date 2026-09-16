@@ -63,6 +63,7 @@ X3DCanvas {
   --button-border: 1px solid rgb(255, 255, 255, 0.1);
   --tint-color: rgba(50, 50, 50, 0.44);
   --tint-hover-color: rgba(64, 64, 64, 0.44);
+  --table-tint-color: rgba(255, 255, 255, 0.083);
   --icon-filter: none;
 }
 
@@ -90,6 +91,7 @@ X3DCanvas {
     --button-border: 1px solid rgba(255, 255, 255, 0.49);
     --tint-color: rgba(255, 255, 255, 0.37);
     --tint-hover-color: rgba(255, 255, 255, 0.46);
+    --table-tint-color: var(--tint-color);
     --icon-filter: invert(100%);
   }
 }
@@ -117,6 +119,7 @@ X3DCanvas[theme=light] {
   --button-border: 1px solid rgba(255, 255, 255, 0.24);
   --tint-color: rgba(255, 255, 255, 0.14);
   --tint-hover-color: rgba(255, 255, 255, 0.22);
+  --table-tint-color: var(--tint-color);
   --icon-filter: invert(100%);
 }
 
@@ -336,7 +339,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info .x_ite-private-world-info-buttons {
-  border-bottom: 4px solid var(--tint-color);
+  border-bottom: 4px solid var(--table-tint-color);
   margin-bottom: 12pt;
 }
 
@@ -349,7 +352,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info button:hover {
-  background-color: var(--tint-color);
+  background-color: var(--table-tint-color);
 }
 
 .x_ite-private-world-info button.active {
@@ -405,7 +408,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info tr:nth-child(odd) {
-  background-color: var(--tint-color);
+  background-color: var(--table-tint-color);
 }
 
 .x_ite-private-world-info td {
@@ -807,7 +810,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 /* No Sound Button */
 
 .x_ite-private-buttons {
-  display: flex;
+  display: none;
   gap: 16px;
   justify-content: center; /* Zentriert horizontal (Hauptachse) */
   align-items: center;     /* Zentriert vertikal (Querachse) */
@@ -821,8 +824,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-clip: padding-box;
 }
 
-.x_ite-private-buttons:empty {
-  display: none;
+.x_ite-private-buttons:has(:not([style*=display])) {
+  display: flex;
 }
 
 .x_ite-private-button {
