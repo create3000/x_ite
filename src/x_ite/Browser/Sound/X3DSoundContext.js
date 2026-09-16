@@ -88,8 +88,6 @@ Object .assign (X3DSoundContext .prototype,
             .catch (Function .prototype)
             .finally (() => this .toggleNoSoundButton ());
       }
-
-      this .toggleNoSoundButton ();
    },
    stopAudioElement (audioElement, functionName = "pause")
    {

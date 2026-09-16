@@ -53,7 +53,10 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    },
    set_mediaDeviceID_impl__ ()
    {
-      const sinkId = this ._mediaDeviceID .getValue () || "default";
+      const sinkId = this ._mediaDeviceID .getValue ();
+
+      if (this .audioElement .sinkId === sinkId)
+         return Promise .resolve ();
 
       return this .audioElement .setSinkId ?.(sinkId) ?? Promise .resolve ();
    },
