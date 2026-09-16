@@ -758,11 +758,10 @@ class SampleViewer
 
       // Handle color scheme change.
 
-      const colorScheme = window .matchMedia ("(prefers-color-scheme: dark)");
+      window .matchMedia ("(prefers-color-scheme: dark)")
+         .addEventListener ("change", () => this .changeColorScheme ());
 
-      colorScheme .addEventListener ("change", event => this .changeColorScheme (event));
-
-      this .changeColorScheme (colorScheme);
+      this .changeColorScheme ();
 
       // Handle viewpoint change.
 
@@ -804,19 +803,16 @@ class SampleViewer
       }
    }
 
-   async changeColorScheme (event)
+   async changeColorScheme ()
    {
+      const html = document .querySelector ("html");
+
+      const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches
+         || html .getAttribute ("data-bs-theme") === "dark") && (html .getAttribute ("data-bs-theme") !== "light");
+
       const defaultBackground = await this .getDefaultBackground ();
 
-      let theme = !!event .matches;
-
-      if ($("html") .attr ("data-mode") === "light")
-         theme = 0;
-
-      if ($("html") .attr ("data-mode") === "dark")
-         theme = 1;
-
-      defaultBackground .skyColor = theme ? [0, 0, 0] : [1, 1, 1];
+      defaultBackground .skyColor = darkMode ? [0, 0, 0] : [1, 1, 1];
    }
 
    get scene ()

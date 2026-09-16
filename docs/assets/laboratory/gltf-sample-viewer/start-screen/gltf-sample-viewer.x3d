@@ -32,27 +32,21 @@
 
 function initialize ()
 {
-   const colorScheme = window .matchMedia ("(prefers-color-scheme: light)");
+    window .matchMedia ("(prefers-color-scheme: dark)")
+        .addEventListener ("change", changeColorScheme);
 
-   colorScheme .addEventListener ("change", event => changeColorScheme (event));
-
-   changeColorScheme (colorScheme);
+    changeColorScheme ();
 }
 
-function changeColorScheme (event)
+function changeColorScheme ()
 {
-   light = event .matches;
+    const html = document .querySelector ("html");
 
-   if (typeof $ !== "undefined")
-   {
-      if ($("html") .attr ("data-mode") === "light")
-         light = true;
+    const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches
+        || html .getAttribute ("data-bs-theme") === "dark") && (html .getAttribute ("data-bs-theme") !== "light");
 
-      if ($("html") .attr ("data-mode") === "dark")
-         light = false;
-   }
-
-   dark = !light;
+   light = !darkMode;
+   dark  = darkMode;
 }
 ]]>
         </Script>
