@@ -183,9 +183,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-notification {
+  visibility: hidden;
   position: absolute;
   top: 20px;
   right: 0px;
+  width: 0px;
   backdrop-filter: blur(8px);
   background: var(--gradient);
   background-clip: padding-box;
