@@ -104,7 +104,10 @@ class Playground
 
    changeColorScheme ()
    {
-      const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches || $("html") .attr ("data-mode") === "dark") && ($("html") .attr ("data-mode") !== "light");
+      const html = document .querySelector ("html");
+
+      const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches
+         || html .getAttribute ("data-bs-theme") === "dark") && (html .getAttribute ("data-bs-theme") !== "light");
 
       monaco .editor .setTheme (darkMode ? "vs-dark" : "vs-light");
    }

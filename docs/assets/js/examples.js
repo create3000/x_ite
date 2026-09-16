@@ -55,6 +55,8 @@ class Examples
       {
          window .location .reload ();
       });
+
+      this .changeColorScheme ();
    }
 
    show ()
@@ -91,5 +93,15 @@ class Examples
       }
 
       console .log (`Loading ${a .getAttribute ("title")} ...`);
+   }
+
+   changeColorScheme ()
+   {
+      const html = document .querySelector ("html");
+
+      const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches
+         || html .getAttribute ("data-bs-theme") === "dark") && (html .getAttribute ("data-bs-theme") !== "light");
+
+      this .#canvas .setAttribute ("theme", darkMode ? "dark" : "light");
    }
 }

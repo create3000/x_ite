@@ -36,6 +36,28 @@ hierarchy .parentElement .classList .remove ("rouge-code");
 <script defer src="https://weiputer/x_ite/dist/x_ite.min.js"></script>
 {% endif %}
 <script type="module">
+function changeColorScheme ()
+{
+   const html = document .querySelector ("html");
+
+   const darkMode = (window .matchMedia ?.("(prefers-color-scheme: dark)") .matches
+      || html .getAttribute ("data-bs-theme") === "dark") && (html .getAttribute ("data-bs-theme") !== "light");
+
+   for (const canvas of document .querySelectorAll ("x3d-canvas"))
+      canvas .setAttribute ("theme", darkMode ? "dark" : "light");
+}
+
+const observer = new MutationObserver (changeColorScheme);
+
+observer .observe (document .querySelector ("html"),
+{
+   attributes: true,
+   attributeFilter: ["data-bs-theme"],
+   attributeOldValue: false,
+});
+
+changeColorScheme ();
+
 for (const { browser } of document .querySelectorAll ("x3d-canvas"))
 {
    browser .addBrowserCallback ("check", X3D .X3DConstants .CONNECTION_ERROR, () =>
