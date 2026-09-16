@@ -811,6 +811,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-buttons {
   display: none;
+  opacity: 0;
   gap: 16px;
   justify-content: center; /* Zentriert horizontal (Hauptachse) */
   align-items: center;     /* Zentriert vertikal (Querachse) */
@@ -822,10 +823,13 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   bottom: 10px;
   background: var(--gradient);
   background-clip: padding-box;
+  transition: display 0s 300ms, opacity 300ms ease-in-out;
 }
 
 .x_ite-private-buttons:not(:empty):has(:not([style*=display])) {
   display: flex;
+  opacity: 1;
+  transition: opacity 300ms ease-in-out;
 }
 
 .x_ite-private-button {
