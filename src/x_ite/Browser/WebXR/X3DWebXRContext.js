@@ -38,9 +38,7 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      this [_xrButton] ?.remove ();
-
-      this [_xrButton] = (() =>
+      this [_xrButton] ??= (() =>
       {
          const xrButton = document .createElement ("div");
 
@@ -65,6 +63,8 @@ Object .assign (X3DWebXRContext .prototype,
 
          return xrButton;
       })();
+
+      this [_xrButton] .classList .remove ("hidden");
    },
    async xrStartSession ()
    {

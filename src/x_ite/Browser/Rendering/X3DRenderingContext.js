@@ -451,10 +451,16 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return Lock .acquire (this [_buttonLock], async () =>
       {
-         this .getSurface () .querySelector (".x_ite-private-xr-button") ?.remove ();
 
          if (!await this .xrCheckSupport ())
+         {
+            const button = this .getSurface () .querySelector (".x_ite-private-xr-button");
+
+            if (button)
+               button .classList .add ("hidden");
+
             return;
+         }
 
          await this .loadComponents (this .getComponent ("WebXR"), this .getComponent ("Geometry2D"));
 

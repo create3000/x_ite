@@ -824,12 +824,14 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: var(--gradient);
   background-clip: padding-box;
   transition: display 0s 300ms, opacity 300ms ease-in-out;
+  transition-behavior: allow-discrete;
 }
 
 .x_ite-private-buttons:not(:empty):has(:not(.hidden)) {
   display: flex;
   opacity: 1;
   transition: opacity 300ms ease-in-out;
+  transition-behavior: allow-discrete;
 }
 
 .x_ite-private-button {
@@ -842,12 +844,14 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-size: 30px 30px;
   filter: var(--icon-filter);
   transition: transform .2s ease-in-out, opacity 300ms ease-in-out;
+  transition-behavior: allow-discrete;
 }
 
 .x_ite-private-button.hidden {
   display: none;
   opacity: 0;
   transition: display 0s 300ms, opacity 300ms ease-in-out;
+  transition-behavior: allow-discrete;
 }
 
 .x_ite-private-button:hover {
