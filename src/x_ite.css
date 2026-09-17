@@ -146,20 +146,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   display: none;
 }
 
-.x_ite-private-browser {
-  all: revert;
-  overflow: hidden;
-  position: relative;
-  outline: none;
-  height: 100%;
-  -webkit-user-select: none;
-  user-select: none;
-}
+/* Revert all styles */
 
-.x_ite-private-browser * {
-  all: revert;
-}
-
+.x_ite-private-browser,
+.x_ite-private-browser *,
 .x_ite-private-menu,
 .x_ite-private-menu * {
   all: revert;
@@ -193,6 +183,15 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 /* Elements */
+
+.x_ite-private-browser {
+  overflow: hidden;
+  position: relative;
+  outline: none;
+  height: 100%;
+  -webkit-user-select: none;
+  user-select: none;
+}
 
 .x_ite-private-surface {
   height: 100%;
