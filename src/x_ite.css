@@ -123,6 +123,35 @@ X3DCanvas[theme=light] {
   --icon-filter: invert(100%);
 }
 
+/* Animations */
+
+.fade {
+  display: block;
+  opacity: 1;
+  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
+}
+
+.x_ite-private-splash-screen.fade {
+  transition: none;
+}
+
+@starting-style {
+  .fade {
+    opacity: 0;
+  }
+}
+
+.fade.hidden {
+  display: none;
+  opacity: 0;
+}
+
+.x_ite-private-splash-screen.fade.hidden {
+  transition: display 200ms allow-discrete, opacity 200ms ease-in-out;
+}
+
+/* Elements */
+
 :host,
 X3DCanvas {
   all: initial;
@@ -215,8 +244,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-browser-timings {
-  display: block;
-  opacity: 1;
   position: absolute;
   bottom: 0px;
   left: 0px;
@@ -232,18 +259,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-size: 9pt;
   white-space: pre;
   pointer-events: none;
-  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
-}
-
-@starting-style {
-  .x_ite-private-browser-timings {
-    opacity: 0;
-  }
-}
-
-.x_ite-private-browser-timings.hidden {
-  display: none;
-  opacity: 0;
 }
 
 .x_ite-private-browser-timings :is(table, thead, tbody, tfoot, tr, th, td) {
@@ -455,6 +470,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-menu.context-menu-list,
 .x_ite-private-menu .context-menu-list {
+  display: none;
   overscroll-behavior: none;
   box-sizing: border-box;
   min-width: 120px;
@@ -478,7 +494,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu .context-menu-list {
-  display: none;
   position: absolute;
   top: -13px;
 }
@@ -823,11 +838,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: var(--red);
 }
 
-/* No Sound Button */
+/* Button Bar [No Sound, WebXR] */
 
 .x_ite-private-buttons {
   display: flex;
-  opacity: 1;
   gap: 16px;
   justify-content: center; /* Zentriert horizontal (Hauptachse) */
   align-items: center;     /* Zentriert vertikal (Querachse) */
@@ -839,13 +853,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   bottom: 10px;
   background: var(--gradient);
   background-clip: padding-box;
-  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
-}
-
-@starting-style {
-  .x_ite-private-buttons {
-    opacity: 0;
-  }
 }
 
 .x_ite-private-buttons:is(:empty, :not(:has(:not(.hidden)))) {
@@ -854,30 +861,17 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-button {
-  display: block;
-  opacity: 1;
   background-repeat: no-repeat;
   cursor: pointer;
   width: 30px;
   height: 30px;
   background-size: 30px 30px;
   filter: var(--icon-filter);
-  transition: transform .2s ease-in-out, display 0s 300ms allow-discrete, opacity 300ms ease-in-out;
-}
-
-@starting-style {
-  .x_ite-private-button {
-    opacity: 0;
-  }
-}
-
-.x_ite-private-button.hidden {
-  display: none;
-  opacity: 0;
+  transition:display 0s 300ms allow-discrete, opacity 300ms ease-in-out, scale 200ms ease-in-out;
 }
 
 .x_ite-private-button:hover {
-  transform: scale(1.2);
+  scale: 1.2;
 }
 
 .x_ite-private-no-sound-button {
@@ -885,34 +879,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/no_sound.svg);
 }
 
-/* WebXR */
-
 .x_ite-private-xr-button {
   order: 2;
   background-image: url(assets/images/head_mounted_device.svg);
-}
-
-/* Animations */
-
-.x_ite-private-hidden {
-  visibility: hidden;
-  opacity: 0;
-}
-
-.x_ite-private-fade-out-splash-screen {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 200ms, opacity 200ms ease-in-out;
-}
-
-.x_ite-private-fade-in-300 {
-  visibility: visible;
-  opacity: 1;
-  transition: opacity 300ms ease-in-out;
-}
-
-.x_ite-private-fade-out-300 {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 300ms, opacity 300ms ease-in-out;
 }

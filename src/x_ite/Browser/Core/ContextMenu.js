@@ -84,12 +84,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          layer .remove ();
 
          for (const child of ul .children)
-         {
-            child .classList .remove ("x_ite-private-fade-in-300");
-            child .classList .add ("x_ite-private-fade-out-300");
-         }
+            child .classList .add ("hidden");
 
-         setTimeout (() => ul .remove (), 1000);
+         setTimeout (() => ul .remove (), 1_000);
 
          return false;
       };
@@ -99,8 +96,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       const ul = document .createElement ("ul");
 
       ul .classList .add ("context-menu-root", "context-menu-list", menu .className);
-
-      ul .style .display = "none";
 
       ul .addEventListener ("contextmenu", () => this .hide ());
 
@@ -119,15 +114,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       // Must animate children because of blurish background.
 
       for (const child of ul .children)
-         child .classList .add ("x_ite-private-hidden");
+         child .classList .add ("fade", "hidden");
 
       ul .style .display = "block";
 
       for (const child of ul .children)
-      {
-         child .classList .remove ("x_ite-private-hidden");
-         child .classList .add ("x_ite-private-fade-in-300");
-      }
+         child .classList .remove ("hidden");
 
       // Reposition menu if to right or to low.
 
@@ -556,8 +548,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   overlay .classList .add ("x_ite-private-world-info-overlay");
                   priv .append (overlay);
 
-                  div .style .display = "none";
-                  div .classList .add ("x_ite-private-world-info", "x_ite-private-hidden");
+                  div .classList .add ("x_ite-private-world-info", "fade", "hidden");
                   overlay .append (div);
 
                   const buttons = document .createElement ("div");
@@ -688,13 +679,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                   div .append (content);
 
-                  div .style .display = "block";
-                  div .classList .remove ("x_ite-private-hidden");
-                  div .classList .add ("x_ite-private-fade-in-300");
+                  div .classList .remove ("hidden");
 
                   overlay .addEventListener ("click", () =>
                   {
-                     div .classList .add ("x_ite-private-fade-out-300");
+                     div .classList .add ("hidden");
+
                      setTimeout (() => overlay .remove (), 300);
                   });
                },

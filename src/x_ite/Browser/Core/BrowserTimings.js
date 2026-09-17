@@ -28,7 +28,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       // HTML
 
       const html = /* html */ `
-<div class="x_ite-private-browser-timings hidden"><table>
+<div class="x_ite-private-browser-timings fade hidden"><table>
    <thead>
       <tr>
          <th colspan="2">${_("Browser Timings")}</th>

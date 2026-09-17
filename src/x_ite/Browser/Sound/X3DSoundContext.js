@@ -112,7 +112,7 @@ Object .assign (X3DSoundContext .prototype,
                noSoundButton      = document .createElement ("div"),
                startAudioElements = () => this .startAudioElements ();
 
-            noSoundButton .classList .add ("x_ite-private-no-sound-button", "x_ite-private-button");
+            noSoundButton .classList .add ("x_ite-private-no-sound-button", "x_ite-private-button", "fade");
             noSoundButton .part ?.add ("no-sound-button");
 
             noSoundButton .title      = _("Activate sound.");

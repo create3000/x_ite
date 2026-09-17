@@ -52,7 +52,7 @@ Object .assign (X3DWebXRContext .prototype,
                this .xrStopSession ();
          };
 
-         xrButton .classList .add ("x_ite-private-xr-button", "x_ite-private-button");
+         xrButton .classList .add ("x_ite-private-xr-button", "x_ite-private-button", "fade");
          xrButton .part ?.add ("xr-button");
 
          xrButton .title      = _("Start WebXR session.");

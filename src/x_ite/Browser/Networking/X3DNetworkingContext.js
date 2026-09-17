@@ -86,7 +86,7 @@ Object .assign (X3DNetworkingContext .prototype,
          {
             this .getContextMenu () .hide ();
             this .getCanvas () .style .display = "none";
-            this .getSplashScreen () .classList .remove ("x_ite-private-fade-out-splash-screen", "x_ite-private-hidden");
+            this .getSplashScreen () .classList .remove ("hidden");
          }
       }
       else
@@ -101,7 +101,7 @@ Object .assign (X3DNetworkingContext .prototype,
             setTimeout (() =>
             {
                if (!this [_browserLoading])
-                  this .getSplashScreen () .classList .add ("x_ite-private-fade-out-splash-screen");
+                  this .getSplashScreen () .classList .add ("hidden");
             });
          }
       }
