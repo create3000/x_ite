@@ -216,7 +216,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-family: X_ITE PT Sans, sans-serif;
   font-size: 10pt;
   letter-spacing: unset;
-  line-height: 1;
+  line-height: 1.1;
   white-space: pre;
   pointer-events: none;
 }
