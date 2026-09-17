@@ -243,7 +243,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-top: var(--border);
   border-right: var(--border);
   border-top-right-radius: 12px;
-  padding: 8px 10px 10px 12px;
+  padding: 8px 12px 10px 12px;
   color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: 9pt;
