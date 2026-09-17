@@ -174,24 +174,23 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-browser {
-  all: initial;
-  display: block;
+  all: revert;
   overflow: hidden;
   position: relative;
+  outline: none;
   height: 100%;
   -webkit-user-select: none;
   user-select: none;
 }
 
 .x_ite-private-surface {
-  all: initial;
-  display: block;
+  all: revert;
   height: 100%;
 }
 
 .x_ite-private-canvas {
-  all: initial;
-  display: block;
+  all: revert;
+  width: 100%;
   height: 100%;
 }
 
