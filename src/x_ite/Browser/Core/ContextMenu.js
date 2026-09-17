@@ -84,7 +84,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          layer .remove ();
 
          for (const child of ul .children)
-            child .classList .add ("hidden");
+            child .classList .add ("x_ite-private-hidden");
 
          setTimeout (() => ul .remove (), 1_000);
 
@@ -114,12 +114,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       // Must animate children because of blurish background.
 
       for (const child of ul .children)
-         child .classList .add ("fade", "hidden");
+         child .classList .add ("x_ite-private-fade", "x_ite-private-hidden");
 
       ul .style .display = "block";
 
       for (const child of ul .children)
-         child .classList .remove ("hidden");
+         child .classList .remove ("x_ite-private-hidden");
 
       // Reposition menu if to right or to low.
 
@@ -548,7 +548,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   overlay .classList .add ("x_ite-private-world-info-overlay");
                   priv .append (overlay);
 
-                  div .classList .add ("x_ite-private-world-info", "fade", "hidden");
+                  div .classList .add ("x_ite-private-world-info", "x_ite-private-fade", "x_ite-private-hidden");
                   overlay .append (div);
 
                   const buttons = document .createElement ("div");
@@ -679,11 +679,11 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                   div .append (content);
 
-                  div .classList .remove ("hidden");
+                  div .classList .remove ("x_ite-private-hidden");
 
                   overlay .addEventListener ("click", () =>
                   {
-                     div .classList .add ("hidden");
+                     div .classList .add ("x_ite-private-hidden");
 
                      setTimeout (() => overlay .remove (), 300);
                   });

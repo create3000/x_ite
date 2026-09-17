@@ -86,7 +86,7 @@ Object .assign (X3DNetworkingContext .prototype,
          {
             this .getContextMenu () .hide ();
             this .getCanvas () .style .display = "none";
-            this .getSplashScreen () .classList .remove ("hidden");
+            this .getSplashScreen () .classList .remove ("x_ite-private-hidden");
          }
       }
       else
@@ -101,7 +101,7 @@ Object .assign (X3DNetworkingContext .prototype,
             setTimeout (() =>
             {
                if (!this [_browserLoading])
-                  this .getSplashScreen () .classList .add ("hidden");
+                  this .getSplashScreen () .classList .add ("x_ite-private-hidden");
             });
          }
       }

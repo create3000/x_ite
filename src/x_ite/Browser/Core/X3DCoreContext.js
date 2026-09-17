@@ -54,9 +54,9 @@ function X3DCoreContext (element)
 <div class="x_ite-private-browser" part="browser" tabindex="0">
    <div class="x_ite-private-surface" part="surface">
       <canvas class="x_ite-private-canvas" part="canvas"></canvas>
-      <div class="x_ite-private-buttons fade" part="buttons"></div>
+      <div class="x_ite-private-buttons x_ite-private-fade" part="buttons"></div>
    </div>
-   <div class="x_ite-private-splash-screen fade hidden">
+   <div class="x_ite-private-splash-screen x_ite-private-fade x_ite-private-hidden">
       <div class="x_ite-private-spinner"></div>
       <div class="x_ite-private-progress">
          <div class="x_ite-private-x_ite">
@@ -379,7 +379,7 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("SplashScreen", this .parseBooleanAttribute (newValue) ?? true);
 
             if (!this .getBrowserOption ("SplashScreen"))
-               this .getSplashScreen () .classList .add ("hidden");
+               this .getSplashScreen () .classList .add ("x_ite-private-hidden");
 
             break;
          }

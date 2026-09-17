@@ -52,7 +52,7 @@ Object .assign (X3DWebXRContext .prototype,
                this .xrStopSession ();
          };
 
-         xrButton .classList .add ("x_ite-private-xr-button", "x_ite-private-button", "fade");
+         xrButton .classList .add ("x_ite-private-xr-button", "x_ite-private-button", "x_ite-private-fade");
          xrButton .part ?.add ("xr-button");
 
          xrButton .title      = _("Start WebXR session.");
@@ -64,7 +64,7 @@ Object .assign (X3DWebXRContext .prototype,
          return xrButton;
       })();
 
-      this [_xrButton] .classList .remove ("hidden");
+      this [_xrButton] .classList .remove ("x_ite-private-hidden");
    },
    async xrStartSession ()
    {

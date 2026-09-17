@@ -28,7 +28,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       // HTML
 
       const html = /* html */ `
-<div class="x_ite-private-browser-timings fade hidden"><table>
+<div class="x_ite-private-browser-timings x_ite-private-fade x_ite-private-hidden"><table>
    <thead>
       <tr>
          <th colspan="2">${_("Browser Timings")}</th>
@@ -131,7 +131,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
       if (this .getBrowser () .getBrowserOption ("Timings"))
       {
-         element .classList .remove ("hidden");
+         element .classList .remove ("x_ite-private-hidden");
 
          this .getBrowser () .addBrowserCallback (this, X3DConstants .INITIALIZED_EVENT, () => this .reset ());
          this .getBrowser () .prepareEvents () .addInterest ("update", this);
@@ -139,7 +139,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       }
       else
       {
-         element .classList .add ("hidden");
+         element .classList .add ("x_ite-private-hidden");
 
          this .getBrowser () .removeBrowserCallback (this, X3DConstants .INITIALIZED_EVENT);
          this .getBrowser () .prepareEvents () .removeInterest ("update", this);

@@ -457,7 +457,7 @@ Object .assign (X3DRenderingContext .prototype,
             const button = this .getSurface () .querySelector (".x_ite-private-xr-button");
 
             if (button)
-               button .classList .add ("hidden");
+               button .classList .add ("x_ite-private-hidden");
 
             return;
          }
