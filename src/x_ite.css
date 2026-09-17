@@ -215,6 +215,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-browser-timings {
+  display: block;
+  opacity: 1;
   position: absolute;
   bottom: 0px;
   left: 0px;
@@ -230,6 +232,18 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-size: 9pt;
   white-space: pre;
   pointer-events: none;
+  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
+}
+
+@starting-style {
+  .x_ite-private-browser-timings {
+    opacity: 0;
+  }
+}
+
+.x_ite-private-browser-timings.hidden {
+  display: none;
+  opacity: 0;
 }
 
 .x_ite-private-browser-timings :is(table, thead, tbody, tfoot, tr, th, td) {
