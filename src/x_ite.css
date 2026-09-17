@@ -183,13 +183,15 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   user-select: none;
 }
 
-.x_ite-private-surface {
+.x_ite-private-browser * {
   all: revert;
+}
+
+.x_ite-private-surface {
   height: 100%;
 }
 
 .x_ite-private-canvas {
-  all: revert;
   width: 100%;
   height: 100%;
 }
@@ -245,7 +247,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-browser-timings :is(table, thead, tbody, tfoot, tr, th, td) {
-  all: revert;
   box-sizing: border-box;
   color: var(--text-color);
   font-size: inherit;
@@ -366,7 +367,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info :is(.x_ite-private-world-info-top, .x_ite-private-world-info-title, .x_ite-private-world-info-info, p) {
-  all: revert;
   box-sizing: border-box;
   color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
@@ -433,6 +433,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 /* Context Menu */
 
 .x_ite-private-menu.context-menu-layer {
+  all: revert;
   position: fixed;
   z-index: 10000;
   inset: 0;
@@ -475,6 +476,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   min-width: 120px;
   margin: 0;
   margin-left: 1px;
+  outline: none;
   border: var(--border);
   border-radius: 12px;
   padding: 5px 10px 9px 9px;
@@ -585,7 +587,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-menu input {
-  all: initial;
   cursor: pointer;
   appearance: none;
 }
