@@ -215,7 +215,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: 10pt;
-  letter-spacing: unset;
   line-height: 1.1;
   white-space: pre;
   pointer-events: none;
@@ -317,7 +316,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-family: X_ITE PT Sans, sans-serif;
   font-style: italic;
   font-size: 9pt;
-  letter-spacing: unset;
   line-height: 1.1;
   text-align: center;
   pointer-events: all;
@@ -372,10 +370,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   box-sizing: border-box;
   color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
-  font-size: inherit;
-  font-weight: inherit;
   font-style: normal;
-  letter-spacing: unset;
   line-height: 1.3;
   text-align: left;
 }
@@ -499,7 +494,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding: 0px 2px;
   font-size: 10pt;
   line-height: 1;
-  letter-spacing: unset;
   text-align: left;
 }
 
@@ -571,7 +565,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   width: 100%;
   font-size: 10pt;
   font-weight: normal;
-  letter-spacing: unset;
   line-height: 1;
 }
 
@@ -588,7 +581,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-menu label > * {
   vertical-align: top;
   font-size: 10pt;
-  letter-spacing: unset;
   line-height: 1;
 }
 
