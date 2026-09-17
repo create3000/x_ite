@@ -123,33 +123,6 @@ X3DCanvas[theme=light] {
   --icon-filter: invert(100%);
 }
 
-/* Animations */
-
-.x_ite-private-fade {
-  display: block;
-  opacity: 1;
-  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
-}
-
-.x_ite-private-splash-screen.x_ite-private-fade {
-  transition: none;
-}
-
-@starting-style {
-  .x_ite-private-fade {
-    opacity: 0;
-  }
-}
-
-.x_ite-private-fade.x_ite-private-hidden {
-  display: none;
-  opacity: 0;
-}
-
-.x_ite-private-splash-screen.x_ite-private-fade.x_ite-private-hidden {
-  transition: display 200ms allow-discrete, opacity 200ms ease-in-out;
-}
-
 /* Elements */
 
 :host,
@@ -186,6 +159,35 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-browser * {
   all: revert;
 }
+
+/* Animations */
+
+.x_ite-private-fade {
+  display: block;
+  opacity: 1;
+  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
+}
+
+.x_ite-private-splash-screen.x_ite-private-fade {
+  transition: none;
+}
+
+@starting-style {
+  .x_ite-private-fade {
+    opacity: 0;
+  }
+}
+
+.x_ite-private-fade.x_ite-private-hidden {
+  display: none;
+  opacity: 0;
+}
+
+.x_ite-private-splash-screen.x_ite-private-fade.x_ite-private-hidden {
+  transition: display 200ms allow-discrete, opacity 200ms ease-in-out;
+}
+
+/* Elements */
 
 .x_ite-private-surface {
   height: 100%;
