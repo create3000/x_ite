@@ -434,8 +434,12 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 /* Context Menu */
 
-.x_ite-private-menu.context-menu-layer {
+.x_ite-private-menu,
+.x_ite-private-menu * {
   all: revert;
+}
+
+.x_ite-private-menu.context-menu-layer {
   position: fixed;
   z-index: 10000;
   inset: 0;
@@ -596,15 +600,14 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 /* position checkboxes and radios like icons */
 .x_ite-private-menu input[type=checkbox],
 .x_ite-private-menu input[type=radio] {
-  display: inline;
+  display: inline-block;
+  position: absolute;
+  top: 3px;
   width: 17px;
   height: 17px;
   margin: 0;
   margin-left: -22px;
   padding: 0;
-  display: inline-block;
-  position: absolute;
-  top: 3px;
   background: url(assets/images/radio_button_unchecked.svg) no-repeat left 0px top 0px;
   background-size: 17px 17px;
   filter: var(--icon-filter);
