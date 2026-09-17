@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 8
+/***/ 308
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 842
+/***/ 190
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 114
+/***/ 966
 (module) {
 
 /**
@@ -19346,7 +19346,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, Base_X3DBaseN
       // HTML
 
       const html = /* html */ `
-<div class="x_ite-private-browser-timings x_ite-private-hidden"><table>
+<div class="x_ite-private-browser-timings x_ite-private-fade x_ite-private-hidden"><table>
    <thead>
       <tr>
          <th colspan="2">${gettext("Browser Timings")}</th>
@@ -19449,8 +19449,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, Base_X3DBaseN
 
       if (this .getBrowser () .getBrowserOption ("Timings"))
       {
-         element .classList .remove ("x_ite-private-fade-out-300", "x_ite-private-hidden");
-         element .classList .add ("x_ite-private-fade-in-300");
+         element .classList .remove ("x_ite-private-hidden");
 
          this .getBrowser () .addBrowserCallback (this, Base_X3DConstants .INITIALIZED_EVENT, () => this .reset ());
          this .getBrowser () .prepareEvents () .addInterest ("update", this);
@@ -19458,8 +19457,7 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, Base_X3DBaseN
       }
       else
       {
-         element .classList .remove ("x_ite-private-fade-in-300");
-         element .classList .add ("x_ite-private-fade-out-300");
+         element .classList .add ("x_ite-private-hidden");
 
          this .getBrowser () .removeBrowserCallback (this, Base_X3DConstants .INITIALIZED_EVENT);
          this .getBrowser () .prepareEvents () .removeInterest ("update", this);
@@ -20368,10 +20366,9 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, Base_X3DBaseNod
       {
          const element = document .createElement ("div");
 
-         element .style .visibility = "hidden";
+         element .classList .add ("x_ite-private-notification");
 
          element .append (document .createElement ("span"));
-         element .classList .add ("x_ite-private-notification");
 
          this .getBrowser () .getSurface () .append (element);
 
@@ -20528,12 +20525,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
          layer .remove ();
 
          for (const child of ul .children)
-         {
-            child .classList .remove ("x_ite-private-fade-in-300");
-            child .classList .add ("x_ite-private-fade-out-300");
-         }
+            child .classList .add ("x_ite-private-hidden");
 
-         setTimeout (() => ul .remove (), 1000);
+         setTimeout (() => ul .remove (), 1_000);
 
          return false;
       };
@@ -20543,8 +20537,6 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
       const ul = document .createElement ("ul");
 
       ul .classList .add ("context-menu-root", "context-menu-list", menu .className);
-
-      ul .style .display = "none";
 
       ul .addEventListener ("contextmenu", () => this .hide ());
 
@@ -20563,15 +20555,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
       // Must animate children because of blurish background.
 
       for (const child of ul .children)
-         child .classList .add ("x_ite-private-hidden");
+         child .classList .add ("x_ite-private-fade", "x_ite-private-hidden");
 
       ul .style .display = "block";
 
       for (const child of ul .children)
-      {
          child .classList .remove ("x_ite-private-hidden");
-         child .classList .add ("x_ite-private-fade-in-300");
-      }
 
       // Reposition menu if to right or to low.
 
@@ -21000,8 +20989,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
                   overlay .classList .add ("x_ite-private-world-info-overlay");
                   priv .append (overlay);
 
-                  div .style .display = "none";
-                  div .classList .add ("x_ite-private-world-info", "x_ite-private-hidden");
+                  div .classList .add ("x_ite-private-world-info", "x_ite-private-fade", "x_ite-private-hidden");
                   overlay .append (div);
 
                   const buttons = document .createElement ("div");
@@ -21132,13 +21120,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
 
                   div .append (content);
 
-                  div .style .display = "block";
                   div .classList .remove ("x_ite-private-hidden");
-                  div .classList .add ("x_ite-private-fade-in-300");
 
                   overlay .addEventListener ("click", () =>
                   {
-                     div .classList .add ("x_ite-private-fade-out-300");
+                     div .classList .add ("x_ite-private-hidden");
+
                      setTimeout (() => overlay .remove (), 300);
                   });
                },
@@ -31215,7 +31202,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(114);
+/* provided dependency */ var libtess = __webpack_require__(966);
 
 
 const Triangle3 =
@@ -47962,7 +47949,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(114);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(966);
 
 
 
@@ -54690,9 +54677,9 @@ function X3DCoreContext (element)
 <div class="x_ite-private-browser" part="browser" tabindex="0">
    <div class="x_ite-private-surface" part="surface">
       <canvas class="x_ite-private-canvas" part="canvas"></canvas>
-      <div class="x_ite-private-buttons" part="buttons"></div>
+      <div class="x_ite-private-buttons x_ite-private-fade" part="buttons"></div>
    </div>
-   <div class="x_ite-private-splash-screen x_ite-private-hidden">
+   <div class="x_ite-private-splash-screen x_ite-private-fade x_ite-private-hidden">
       <div class="x_ite-private-spinner"></div>
       <div class="x_ite-private-progress">
          <div class="x_ite-private-x_ite">
@@ -54716,7 +54703,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-K+56v4CWcGQBQaBAviEdA4ggFpyx1V0rb6cqmF0Rart0Ef/xyMGE4uvcTVFjyebl";
+         link .integrity   = "sha384-EeIZ82FtH/17itINzWkmeabJVQ2rGc3YCcJmYwEVWbheSVW2NLi/7sQ8w9xKi6we";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -55015,12 +55002,7 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("SplashScreen", this .parseBooleanAttribute (newValue) ?? true);
 
             if (!this .getBrowserOption ("SplashScreen"))
-            {
-               this .getCanvas () .style .display = "block";
-
-               this .getSplashScreen () .classList .remove ("x_ite-private-fade-out-splash-screen");
                this .getSplashScreen () .classList .add ("x_ite-private-hidden");
-            }
 
             break;
          }
@@ -64188,7 +64170,7 @@ Object .assign (X3DNetworkingContext .prototype,
          {
             this .getContextMenu () .hide ();
             this .getCanvas () .style .display = "none";
-            this .getSplashScreen () .classList .remove ("x_ite-private-fade-out-splash-screen", "x_ite-private-hidden");
+            this .getSplashScreen () .classList .remove ("x_ite-private-hidden");
          }
       }
       else
@@ -64203,7 +64185,7 @@ Object .assign (X3DNetworkingContext .prototype,
             setTimeout (() =>
             {
                if (!this [_browserLoading])
-                  this .getSplashScreen () .classList .add ("x_ite-private-fade-out-splash-screen");
+                  this .getSplashScreen () .classList .add ("x_ite-private-hidden");
             });
          }
       }
@@ -66156,10 +66138,16 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return Utility_Lock .acquire (this [_buttonLock], async () =>
       {
-         this .getSurface () .querySelector (".x_ite-private-xr-button") ?.remove ();
 
          if (!await this .xrCheckSupport ())
+         {
+            const button = this .getSurface () .querySelector (".x_ite-private-xr-button");
+
+            if (button)
+               button .classList .add ("x_ite-private-hidden");
+
             return;
+         }
 
          await this .loadComponents (this .getComponent ("WebXR"), this .getComponent ("Geometry2D"));
 
@@ -72028,8 +72016,6 @@ Object .assign (X3DSoundContext .prototype,
             .catch (Function .prototype)
             .finally (() => this .toggleNoSoundButton ());
       }
-
-      this .toggleNoSoundButton ();
    },
    stopAudioElement (audioElement, functionName = "pause")
    {
@@ -72054,7 +72040,7 @@ Object .assign (X3DSoundContext .prototype,
                noSoundButton      = document .createElement ("div"),
                startAudioElements = () => this .startAudioElements ();
 
-            noSoundButton .classList .add ("x_ite-private-no-sound-button", "x_ite-private-button");
+            noSoundButton .classList .add ("x_ite-private-no-sound-button", "x_ite-private-button", "x_ite-private-fade");
             noSoundButton .part ?.add ("no-sound-button");
 
             noSoundButton .title      = gettext("Activate sound.");
@@ -72068,8 +72054,10 @@ Object .assign (X3DSoundContext .prototype,
 
          const count = !! this [_audioElements] .size;
 
-         this [_noSoundButton] .style .display = count ? "" : "none";
-         this [_noSoundButton] .style .opacity = count ? 1 : 0;
+         if (count)
+            this [_noSoundButton] .classList .remove ("x_ite-private-hidden");
+         else
+            this [_noSoundButton] .classList .add ("x_ite-private-hidden");
       },
       200);
    },
@@ -88712,7 +88700,10 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, Sound_X3DSo
    },
    set_mediaDeviceID_impl__ ()
    {
-      const sinkId = this ._mediaDeviceID .getValue () || "default";
+      const sinkId = this ._mediaDeviceID .getValue ();
+
+      if (this .audioElement .sinkId === sinkId)
+         return Promise .resolve ();
 
       return this .audioElement .setSinkId ?.(sinkId) ?? Promise .resolve ();
    },
@@ -91552,8 +91543,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(8);
-/* provided dependency */ var APNG = __webpack_require__(842);
+/* provided dependency */ var SuperGif = __webpack_require__(308);
+/* provided dependency */ var APNG = __webpack_require__(190);
 
 
 
@@ -94197,7 +94188,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(114);
+/* provided dependency */ var libtess_libtess = __webpack_require__(966);
 const libtess_default_ = libtess_libtess;
 ;
 

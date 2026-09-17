@@ -163,10 +163,6 @@ X3DCanvas {
   user-select: none;
 }
 
-:host([hidden]) {
-  display: none;
-}
-
 :host(.x_ite-fullscreen),
 X3DCanvas.x_ite-fullscreen {
   width: 100vw !important;
@@ -178,36 +174,24 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-browser {
+  all: initial;
+  display: block;
   overflow: hidden;
   position: relative;
-  outline: none;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  width: 100%;
   height: 100%;
   -webkit-user-select: none;
   user-select: none;
 }
 
 .x_ite-private-surface {
-  outline: none;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
+  all: initial;
+  display: block;
   height: 100%;
 }
 
 .x_ite-private-canvas {
+  all: initial;
   display: block;
-  outline: none;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  width: 100%;
   height: 100%;
 }
 
@@ -262,19 +246,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-browser-timings :is(table, thead, tbody, tfoot, tr, th, td) {
+  all: revert;
   box-sizing: border-box;
-  outline: 0;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  background: none;
   color: var(--text-color);
   font-size: inherit;
-  font-weight: normal;
-  font-style: normal;
-  letter-spacing: unset;
-  line-height: 1;
+  line-height: 1.1;
   text-align: left;
 }
 
@@ -289,7 +265,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-browser-timings thead th {
   padding-top: 3px;
-  background: url(assets/images/schedule.svg) no-repeat -1px -1px;
+  background: url(assets/images/schedule.svg) no-repeat -1px 1px;
   background-size: 17px 17px;
   padding-left: 20px;
   padding-bottom: 5px;
@@ -391,13 +367,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info :is(.x_ite-private-world-info-top, .x_ite-private-world-info-title, .x_ite-private-world-info-info, p) {
+  all: revert;
   box-sizing: border-box;
-  outline: 0;
-  margin: 0;
-  border: 0;
-  border-radius: 0;
-  padding: 0;
-  background: none;
   color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-size: inherit;
