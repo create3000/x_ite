@@ -179,6 +179,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   height: 100%;
 }
 
+/* Notification */
+
 .x_ite-private-notification {
   visibility: hidden;
   position: absolute;
@@ -209,6 +211,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: url(assets/images/logo.svg) no-repeat top -1px left 0px;
   background-size: 17px 17px;
 }
+
+/* Timings */
 
 .x_ite-private-browser-timings {
   position: absolute;
@@ -306,6 +310,8 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-browser-timings button:hover {
   background-color: var(--tint-hover-color);
 }
+
+/* World Info */
 
 .x_ite-private-world-info-overlay {
   position: absolute;
@@ -705,7 +711,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/info.svg);
 }
 
-/* Spinner */
+/* Splash Screen and Spinner */
 
 .x_ite-private-splash-screen {
   pointer-events: none;
