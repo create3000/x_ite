@@ -15,18 +15,18 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
    {
       X3DBaseNode .prototype .initialize .call (this);
 
-      this .element = (() =>
-      {
-         const element = document .createElement ("div");
+      const
+         element = document .createElement ("div"),
+         span    = document .createElement ("span");
 
-         element .classList .add ("x_ite-private-notification");
+      element .classList .add ("x_ite-private-notification");
 
-         element .append (document .createElement ("span"));
+      element .append (span);
 
-         this .getBrowser () .getSurface () .append (element);
+      this .getBrowser () .getSurface () .append (element);
 
-         return element;
-      })();
+      this .element = element;
+      this .span    = span;
 
       this ._string .addInterest ("set_string__", this);
    },
@@ -40,12 +40,12 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
 
       clearTimeout (this .timeoutId);
 
-      this .element .querySelector ("span") .textContent = this ._string .getValue ();
+      this .span .textContent = this ._string .getValue ();
 
       Object .assign (this .element .style,
       {
          visibility: "visible",
-         width: `${this .textWidth (this .element)}px`,
+         width: `${this .span .clientWidth}px`,
          transition: "width 300ms ease-in-out",
       });
 
@@ -59,22 +59,6 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, X3DBaseNode .pr
          });
       },
       5000);
-   },
-   textWidth (element)
-   {
-      const
-         children = Array .from (element .children),
-         span     = document .createElement ("span");
-
-      span .textContent = element .textContent;
-
-      element .replaceChildren (span);
-
-      const width = span .clientWidth;
-
-      element .replaceChildren (... children);
-
-      return width;
    },
 });
 
