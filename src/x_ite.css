@@ -835,15 +835,15 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 /* Animations */
 
+.x_ite-private-fade {
+  opacity: 1;
+  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
+}
+
 @starting-style {
   .x_ite-private-fade {
     opacity: 0;
   }
-}
-
-.x_ite-private-fade {
-  opacity: 1;
-  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
 }
 
 .x_ite-private-splash-screen.x_ite-private-fade {
