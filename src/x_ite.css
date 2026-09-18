@@ -846,19 +846,19 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   }
 }
 
-.x_ite-private-splash-screen.x_ite-private-fade {
-  transition: none;
-}
-
-.x_ite-private-button.x_ite-private-fade {
-  transition: display 0s 300ms allow-discrete, opacity 300ms ease-in-out, scale 200ms ease-in-out;
-}
-
 .x_ite-private-hidden {
   display: none;
   opacity: 0;
 }
 
+.x_ite-private-splash-screen.x_ite-private-fade {
+  transition: none;
+}
+
 .x_ite-private-splash-screen.x_ite-private-hidden {
   transition: display 200ms allow-discrete, opacity 200ms ease-in-out;
+}
+
+.x_ite-private-button.x_ite-private-fade {
+  transition: display 0s 300ms allow-discrete, opacity 300ms ease-in-out, scale 200ms ease-in-out;
 }
