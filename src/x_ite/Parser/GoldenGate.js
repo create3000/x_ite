@@ -45,11 +45,6 @@ class GoldenGate extends X3DParser
       return this .#parsers .slice ();
    }
 
-   /**
-    * @deprecated Use `GoldenGate.add/remove/getParsers`.
-    */
-   static get Parser () { return this .#parsers; }
-
    parseIntoScene (x3dSyntax, resolve, reject)
    {
       for (const Parser of GoldenGate .#parsers)
