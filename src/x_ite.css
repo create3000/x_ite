@@ -869,7 +869,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 @-moz-document url-prefix() {
   .x_ite-private-fade {
-    transition: all 300ms ease-in-out;
+    transition: visibility 300ms, opacity 300ms ease-in-out;
   }
 
   .x_ite-private-hidden {
