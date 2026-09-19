@@ -837,7 +837,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-fade {
   opacity: 1;
-  transition: all 300ms ease-in-out allow-discrete;
+  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
 }
 
 @starting-style {
@@ -856,7 +856,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-splash-screen.x_ite-private-hidden {
-  transition: all 200ms ease-in-out allow-discrete;
+  transition: display 200ms allow-discrete, opacity 200ms ease-in-out;
+}
+
+.x_ite-private-button.x_ite-private-fade {
+  transition: display 0s 300ms allow-discrete, opacity 300ms ease-in-out, scale 200ms ease-in-out;
 }
 
 /* Firefox specific animation rules, see:
