@@ -433,10 +433,12 @@ Object .assign (X3DRenderingContext .prototype,
    },
    async xrCheckSupport ()
    {
-      if (!("xr" in navigator))
-         return false;
+      // if (!("xr" in navigator))
+      //    return false;
 
       const mode = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-");
+
+      return mode !== "none";
 
       try
       {

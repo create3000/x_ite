@@ -837,7 +837,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-fade {
   opacity: 1;
-  transition: display 300ms allow-discrete, opacity 300ms ease-in-out;
+  transition: all 300ms ease-in-out allow-discrete;
 }
 
 @starting-style {
@@ -856,17 +856,12 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-splash-screen.x_ite-private-hidden {
-  transition: display 200ms allow-discrete, opacity 200ms ease-in-out;
-}
-
-.x_ite-private-button.x_ite-private-fade {
-  transition: display 0s 300ms allow-discrete, opacity 300ms ease-in-out, scale 200ms ease-in-out;
+  transition: all 200ms ease-in-out allow-discrete;
 }
 
 @-moz-document url-prefix() {
   .x_ite-private-fade {
-    visibility: visible;
-    transition: visibility 300ms, opacity 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
   }
 
   .x_ite-private-hidden {
@@ -877,13 +872,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
   .x_ite-private-splash-screen.x_ite-private-hidden {
     transition: visibility 0s 200ms, opacity 200ms ease-in-out;
-  }
-
-  .x_ite-private-buttons:is(:empty, :not(:has(:not(.x_ite-private-hidden)))) {
-    display: block;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 300ms, opacity 300ms ease-in-out;
   }
 
   .x_ite-private-button.x_ite-private-fade {
