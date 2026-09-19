@@ -294,7 +294,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border-radius: 10px;
   width: 100%;
   height: 14pt;
-  margin-top: 2px;;
+  margin-top: 2px;
   padding: 0;
   background: var(--tint-color);
   color: var(--text-color);

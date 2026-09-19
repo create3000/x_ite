@@ -188,7 +188,7 @@ Object .assign (X3DParser .prototype,
       if (!this .isInsideProtoDeclaration ())
          nodes .forEach (node => node .setup ());
 
-      nodes .length = 0;;
+      nodes .length = 0;
    },
    rotateAxes90 (array)
    {

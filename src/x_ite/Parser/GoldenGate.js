@@ -104,7 +104,7 @@ class GoldenGate extends X3DParser
          {
             case "STRING":
             {
-               const string = $.decodeText (x3dSyntax);;
+               const string = $.decodeText (x3dSyntax);
 
                if (x3dSyntax instanceof ArrayBuffer)
                {
