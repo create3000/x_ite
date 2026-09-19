@@ -859,6 +859,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   transition: all 200ms ease-in-out allow-discrete;
 }
 
+/* Firefox specific animation rules, see:
+ * https://bugzilla.mozilla.org/show_bug.cgi?id=1882408
+ */
+
 @-moz-document url-prefix() {
   .x_ite-private-fade {
     transition: all 300ms ease-in-out;
