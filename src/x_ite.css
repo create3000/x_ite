@@ -871,7 +871,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
   .x_ite-private-hidden {
     display: block;
-    pointer-events: none;
     visibility: hidden;
     transition: visibility 0s 300ms, opacity 300ms ease-in-out;
   }
@@ -882,7 +881,6 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
   .x_ite-private-buttons:is(:empty, :not(:has(:not(.x_ite-private-hidden)))) {
     display: block;
-    pointer-events: none;
     visibility: hidden;
     opacity: 0;
     transition: visibility 0s 300ms, opacity 300ms ease-in-out;
