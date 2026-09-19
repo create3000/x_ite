@@ -92,14 +92,7 @@ class GoldenGate extends X3DParser
       }
       else
       {
-         if (this .#inputs .has (encoding))
-            return this .#inputs .get (encoding);
-
-         const input = this .createInput (encoding, x3dSyntax);
-
-         this .#inputs .set (encoding, input);
-
-         return input;
+         return this .#inputs .getOrInsertComputed (encoding, () => this .createInput (encoding, x3dSyntax));
       }
    }
 
