@@ -55,29 +55,34 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    set_smooth__ ()
    {
-      if (!this .geometryNode)
+      const { geometryNode } = this;
+
+      if (!geometryNode)
          return;
 
-      if (this .geometryNode .getGeometryType () < 3)
+      if (geometryNode .getGeometryType () < 3)
+         return;
+
+      if (geometryNode ._normal ?.getValue ())
          return;
 
       const smooth = this ._smooth .getValue ();
 
-      if (this .geometryNode ._creaseAngle)
+      if (geometryNode ._creaseAngle)
       {
          const creaseAngle = smooth ? Math .PI : 0;
 
-         if (this .geometryNode ._creaseAngle .equals (creaseAngle))
+         if (geometryNode ._creaseAngle .equals (creaseAngle))
             return;
 
-         this .geometryNode ._creaseAngle = creaseAngle;
+         geometryNode ._creaseAngle = creaseAngle;
       }
-      else if (this .geometryNode ._normal && !this .geometryNode ._normal .getValue ())
+      else if (geometryNode ._normalPerVertex)
       {
-         if (this .geometryNode ._normalPerVertex .equals (smooth))
+         if (geometryNode ._normalPerVertex .equals (smooth))
             return;
 
-         this .geometryNode ._normalPerVertex = smooth;
+         geometryNode ._normalPerVertex = smooth;
       }
    },
    unloadData ()
