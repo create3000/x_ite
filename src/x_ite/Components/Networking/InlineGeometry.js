@@ -58,7 +58,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       if (!this .geometryNode)
          return;
 
-      if (this .geometryNode .getGeometryType () < 2)
+      if (this .geometryNode .getGeometryType () < 3)
          return;
 
       const smooth = this ._smooth .getValue ();
