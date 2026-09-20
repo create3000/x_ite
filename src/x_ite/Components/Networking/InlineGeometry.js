@@ -79,7 +79,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
          geometryNode ._creaseAngle = creaseAngle;
       }
-      else if (geometryNode ._normalPerVertex)
+
+      if (geometryNode ._normalPerVertex)
       {
          if (geometryNode ._normalPerVertex .equals (smooth))
             return;
