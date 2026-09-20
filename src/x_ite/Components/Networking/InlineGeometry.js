@@ -45,13 +45,15 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    set_solid__ ()
    {
-      if (!this .geometryNode)
+      const { geometryNode } = this;
+
+      if (!geometryNode)
          return;
 
-      if (this .geometryNode .getGeometryType () < 2)
+      if (geometryNode .getGeometryType () < 2)
          return;
 
-      this .geometryNode ._solid = this ._solid;
+      geometryNode ._solid = this ._solid;
    },
    set_smooth__ ()
    {
