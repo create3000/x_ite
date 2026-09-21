@@ -107,6 +107,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          this .scene ?.dispose ();
 
       // Set new scene.
+      // This scene should not be live.
 
       this .scene = scene;
 

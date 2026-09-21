@@ -94,6 +94,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          this [_scene] ?.dispose ();
 
       // Set new scene.
+      // This scene should not be live.
 
       this [_scene] = scene;
 
