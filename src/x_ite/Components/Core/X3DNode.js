@@ -35,6 +35,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    {
       if (instance ?.getType () .includes (X3DConstants .X3DExecutionContext) ?? true)
       {
+         // Make flat copy:
+
          const copy = this .create (instance);
 
          for (const field of this .getPredefinedFields ())
@@ -50,6 +52,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       }
       else
       {
+         // Make a copy for a X3DPrototypeInstance.
+         
          const executionContext = instance .getBody ();
 
          // First try to get a named node with the node's name.
