@@ -14,7 +14,9 @@ import FileLoader           from "../../InputOutput/FileLoader.js";
  * THIS NODE IS STILL EXPERIMENTAL.
  */
 
-const _cache = Symbol .for ("X_ITE.cache");
+const
+   _cache = Symbol .for ("X_ITE.cache"),
+   _lock  = Symbol ();
 
 function InlineGeometry (executionContext)
 {
@@ -95,11 +97,12 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    loadData ()
    {
-      const cache = this .getBrowser () .getBrowserOption ("Cache");
+      if (this .geometryNode)
+         this .geometryNode [_lock] = false;
 
       this .fileLoader ?.abort ();
 
-      this .fileLoader = new FileLoader (this, { cacheScene: cache })
+      this .fileLoader = new FileLoader (this, { cacheScene: true })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    setInternalScene (scene)
@@ -132,6 +135,17 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          if (!this .geometryNode)
             throw new Error ("No X3DGeometryNode found.");
 
+         if (this .geometryNode [_lock])
+         {
+            this .geometryNode = this .geometryNode .copy (this .getExecutionContext ());
+
+            this .geometryNode .setup ();
+         }
+         else
+         {
+            this .geometryNode [_lock] = true;
+         }
+
          this .scene .setExecutionContext (scene [_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
 
@@ -160,7 +174,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    getInnerNode ()
    {
       if (this .geometryNode)
-         return this .geometryNode;
+         return this .geometryNode .getInnerNode ();
 
       throw new Error ("Geometry node not available.");
    },
@@ -213,6 +227,9 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    { },
    dispose ()
    {
+      if (this .geometryNode)
+         this .geometryNode [_lock] = false;
+
       X3DUrlObject    .prototype .dispose .call (this);
       X3DGeometryNode .prototype .dispose .call (this);
    },

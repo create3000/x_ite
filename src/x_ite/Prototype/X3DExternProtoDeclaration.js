@@ -81,11 +81,9 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    async loadData ()
    {
-      const cache = this .getBrowser () .getBrowserOption ("Cache");
-
       this [_fileLoader] ?.abort ();
 
-      this [_fileLoader] = new FileLoader (this, { cacheScene: cache })
+      this [_fileLoader] = new FileLoader (this, { cacheScene: true })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    getInternalScene ()
