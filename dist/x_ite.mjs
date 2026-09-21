@@ -1,7 +1,7 @@
-/* X_ITE v16.3.1 */
+/* X_ITE v16.4.0 */
 var __webpack_modules__ = ({
 
-/***/ 472
+/***/ 530
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 834
+/***/ 504
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 442
+/***/ 780
 (module) {
 
 /**
@@ -18869,7 +18869,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.3.1";
+const BROWSER_VERSION_default_ = "16.4.0";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -20342,18 +20342,18 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, Base_X3DBaseNod
    {
       Base_X3DBaseNode .prototype .initialize .call (this);
 
-      this .element = (() =>
-      {
-         const element = document .createElement ("div");
+      const
+         element = document .createElement ("div"),
+         span    = document .createElement ("span");
 
-         element .classList .add ("x_ite-private-notification");
+      element .classList .add ("x_ite-private-notification");
 
-         element .append (document .createElement ("span"));
+      element .append (span);
 
-         this .getBrowser () .getSurface () .append (element);
+      this .getBrowser () .getSurface () .append (element);
 
-         return element;
-      })();
+      this .element = element;
+      this .span    = span;
 
       this ._string .addInterest ("set_string__", this);
    },
@@ -20367,12 +20367,12 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, Base_X3DBaseNod
 
       clearTimeout (this .timeoutId);
 
-      this .element .querySelector ("span") .textContent = this ._string .getValue ();
+      this .span .textContent = this ._string .getValue ();
 
       Object .assign (this .element .style,
       {
          visibility: "visible",
-         width: `${this .textWidth (this .element)}px`,
+         width: `${this .span .clientWidth}px`,
          transition: "width 300ms ease-in-out",
       });
 
@@ -20386,22 +20386,6 @@ Object .assign (Object .setPrototypeOf (Notification .prototype, Base_X3DBaseNod
          });
       },
       5000);
-   },
-   textWidth (element)
-   {
-      const
-         children = Array .from (element .children),
-         span     = document .createElement ("span");
-
-      span .textContent = element .textContent;
-
-      element .replaceChildren (span);
-
-      const width = span .clientWidth;
-
-      element .replaceChildren (... children);
-
-      return width;
    },
 });
 
@@ -21429,6 +21413,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
    {
       if (instance ?.getType () .includes (Base_X3DConstants .X3DExecutionContext) ?? true)
       {
+         // Make flat copy:
+
          const copy = this .create (instance);
 
          for (const field of this .getPredefinedFields ())
@@ -21444,6 +21430,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       }
       else
       {
+         // Make a copy for a X3DPrototypeInstance.
+         
          const executionContext = instance .getBody ();
 
          // First try to get a named node with the node's name.
@@ -26114,7 +26102,7 @@ Object .assign (X3DParser .prototype,
       if (!this .isInsideProtoDeclaration ())
          nodes .forEach (node => node .setup ());
 
-      nodes .length = 0;;
+      nodes .length = 0;
    },
    rotateAxes90 (array)
    {
@@ -31182,7 +31170,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(442);
+/* provided dependency */ var libtess = __webpack_require__(780);
 
 
 const Triangle3 =
@@ -47929,7 +47917,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(442);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(780);
 
 
 
@@ -50712,11 +50700,6 @@ class GoldenGate extends Parser_X3DParser
       return this .#parsers .slice ();
    }
 
-   /**
-    * @deprecated Use `GoldenGate.add/remove/getParsers`.
-    */
-   static get Parser () { return this .#parsers; }
-
    parseIntoScene (x3dSyntax, resolve, reject)
    {
       for (const Parser of GoldenGate .#parsers)
@@ -50764,14 +50747,7 @@ class GoldenGate extends Parser_X3DParser
       }
       else
       {
-         if (this .#inputs .has (encoding))
-            return this .#inputs .get (encoding);
-
-         const input = this .createInput (encoding, x3dSyntax);
-
-         this .#inputs .set (encoding, input);
-
-         return input;
+         return this .#inputs .getOrInsertComputed (encoding, () => this .createInput (encoding, x3dSyntax));
       }
    }
 
@@ -50783,7 +50759,7 @@ class GoldenGate extends Parser_X3DParser
          {
             case "STRING":
             {
-               const string = helper.decodeText (x3dSyntax);;
+               const string = helper.decodeText (x3dSyntax);
 
                if (x3dSyntax instanceof ArrayBuffer)
                {
@@ -54683,7 +54659,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-k8x3g3tmvMpjZjl/xmcWnkeyxPDatbyKwVUw9+kNlgfjrilznWJbf93DsfYc0RHS";
+         link .integrity   = "sha384-/SECsklivyOEI8wp6xcDS0QDczGbqmxoaXDzSZCmJLpGmYfD16XJmOZr0O2QNDmj";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -84023,7 +83999,9 @@ const Inline_default_ = Inline;
  * THIS NODE IS STILL EXPERIMENTAL.
  */
 
-const InlineGeometry_cache = Symbol .for ("X_ITE.cache");
+const
+   InlineGeometry_cache = Symbol .for ("X_ITE.cache"),
+   _lock  = Symbol ();
 
 function InlineGeometry (executionContext)
 {
@@ -84054,49 +84032,63 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
    },
    set_solid__ ()
    {
-      if (!this .geometryNode)
+      const { geometryNode } = this;
+
+      if (!geometryNode)
          return;
 
-      if (this .geometryNode .getGeometryType () < 2)
+      if (geometryNode .getGeometryType () < 2)
          return;
 
-      this .geometryNode ._solid = this ._solid;
+      geometryNode ._solid = this ._solid;
    },
    set_smooth__ ()
    {
-      if (!this .geometryNode)
+      const { geometryNode } = this;
+
+      if (!geometryNode)
          return;
 
-      if (this .geometryNode .getGeometryType () < 2)
+      if (geometryNode .getGeometryType () < 3)
+         return;
+
+      if (geometryNode ._normal ?.getValue ())
          return;
 
       const smooth = this ._smooth .getValue ();
 
-      if (this .geometryNode ._creaseAngle)
+      if (geometryNode ._creaseAngle)
       {
          const creaseAngle = smooth ? Math .PI : 0;
 
-         if (this .geometryNode ._creaseAngle .equals (creaseAngle))
+         if (geometryNode ._creaseAngle .equals (creaseAngle))
             return;
 
-         this .geometryNode ._creaseAngle = creaseAngle;
+         geometryNode ._creaseAngle = creaseAngle;
       }
-      else if (this .geometryNode ._normal && !this .geometryNode ._normal .getValue ())
+
+      if (geometryNode ._normalPerVertex)
       {
-         if (this .geometryNode ._normalPerVertex .equals (smooth))
+         if (geometryNode ._normalPerVertex .equals (smooth))
             return;
 
-         this .geometryNode ._normalPerVertex = smooth;
+         geometryNode ._normalPerVertex = smooth;
       }
    },
    unloadData ()
    {
+      if (this .geometryNode)
+         this .geometryNode [_lock] = false;
+
       this .fileLoader ?.abort ();
       this .setInternalScene (null);
    },
    loadData ()
    {
       const cache = this .getBrowser () .getBrowserOption ("Cache");
+
+      if (this .geometryNode)
+         this .geometryNode [_lock] = false;
 
       this .fileLoader ?.abort ();
 
@@ -84107,13 +84099,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
    {
       // Remove old scene.
 
-      if (this .scene)
-      {
-         this .getLive () .removeFieldInterest (this .scene .getLive ());
-
-         if (!this .scene [InlineGeometry_cache])
-            this .scene .dispose ();
-      }
+      if (!this .scene ?.[InlineGeometry_cache])
+         this .scene ?.dispose ();
 
       // Set new scene.
 
@@ -84132,6 +84119,19 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
 
          if (!this .geometryNode)
             throw new Error ("No X3DGeometryNode found.");
+
+         if (this .geometryNode [_lock])
+         {
+            this .geometryNode = this .geometryNode .copy (this .getExecutionContext ());
+
+            this .geometryNode .setup ();
+
+            // TODO: add routes.
+         }
+         else
+         {
+            this .geometryNode [_lock] = true;
+         }
 
          this .scene .setExecutionContext (scene [InlineGeometry_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
@@ -84214,6 +84214,9 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
    { },
    dispose ()
    {
+      if (this .geometryNode)
+         this .geometryNode [_lock] = false;
+
       Networking_X3DUrlObject    .prototype .dispose .call (this);
       Rendering_X3DGeometryNode .prototype .dispose .call (this);
    },
@@ -91523,8 +91526,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(472);
-/* provided dependency */ var APNG = __webpack_require__(834);
+/* provided dependency */ var SuperGif = __webpack_require__(530);
+/* provided dependency */ var APNG = __webpack_require__(504);
 
 
 
@@ -94168,7 +94171,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(442);
+/* provided dependency */ var libtess_libtess = __webpack_require__(780);
 const libtess_default_ = libtess_libtess;
 ;
 
