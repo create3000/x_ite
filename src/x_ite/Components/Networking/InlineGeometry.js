@@ -90,22 +90,24 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          geometryNode ._normalPerVertex = smooth;
       }
    },
-   unloadData ()
+   unlockGeometry ()
    {
       if (this .geometryNode)
          this .geometryNode [_lock] = false;
-
+   },
+   unloadData ()
+   {
       this .fileLoader ?.abort ();
+      this .unlockGeometry ();
       this .setInternalScene (null);
    },
    loadData ()
    {
       const cache = this .getBrowser () .getBrowserOption ("Cache");
 
-      if (this .geometryNode)
-         this .geometryNode [_lock] = false;
-
       this .fileLoader ?.abort ();
+
+      this .unlockGeometry ();
 
       this .fileLoader = new FileLoader (this, { cacheScene: cache })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
@@ -229,8 +231,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    { },
    dispose ()
    {
-      if (this .geometryNode)
-         this .geometryNode [_lock] = false;
+      this .unlockGeometry ();
 
       X3DUrlObject    .prototype .dispose .call (this);
       X3DGeometryNode .prototype .dispose .call (this);
