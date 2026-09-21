@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
          if (this .geometryNode [_lock])
          {
-            this .geometryNode = this .geometryNode .copy (this .getExecutionContext ());
+            this .geometryNode = this .geometryNode .copy ();
 
             this .geometryNode .setup ();
 
