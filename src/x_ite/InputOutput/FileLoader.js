@@ -357,7 +357,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       // script URL — have no resolved URL, and are reported by their authored value.
 
       const
-         typeName = this .node instanceof X3DWorld ? "" : ` for ${this .node .getTypeName ()}`,
+         typeName = this .node instanceof X3DWorld ? "" : `${this .node .getTypeName ()}: `,
          dataURL  = this .resolvedURL ?.protocol === "data:",
          resolved = this .resolvedURL && !dataURL ? `${$.try (() => decodeURI (this .resolvedURL)) ?? this .resolvedURL}` : "",
          subject  = !this .candidateURL .length ? "empty URL"
@@ -371,15 +371,15 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       // failed only once every candidate has been tried.
 
       if (this .url .length)
-         return console .warn (`Couldn't load ${subject}${typeName}, trying URL ${this .attempts .length + 1} of ${this .attempts .length + this .url .length}.`, error);
+         return console .warn (`${typeName}Couldn't load ${subject}, trying URL ${this .attempts .length + 1} of ${this .attempts .length + this .url .length}.`, error);
 
       if (this .attempts .length === 1)
-         return console .error (`Couldn't load ${subject}${typeName}.`, error);
+         return console .error (`${typeName}Couldn't load ${subject}.`, error);
 
       // Pass the errors themselves along with the summary, so their stacks and context
       // stay inspectable.
 
-      console .error (`Couldn't load any of the ${this .attempts .length} URLs${typeName}, tried in this order:\n`
+      console .error (`${typeName}Couldn't load any of the ${this .attempts .length} URLs, tried in this order:\n`
          + this .attempts
             .map (({ url, resolved, error }, i) =>
                `  ${i + 1}. '${this .truncate (url)}'${resolved && resolved !== url ? ` → ${this .truncate (resolved)}` : ""}: ${this .describe (error)}`)
