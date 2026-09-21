@@ -32,6 +32,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       X3DProtoDeclarationNode .prototype .initialize .call (this);
       X3DUrlObject            .prototype .initialize .call (this);
+
+      this .getLive () .addInterest ("set_live__", this);
+   },
+   set_live__ ()
+   {
+      this [_scene] ?.setLive (this .isLive ());
    },
    getAppInfo ()
    {
@@ -96,19 +102,22 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          this [_scene] ?.dispose ();
 
       // Set new scene.
-      // This scene should not be live.
 
       this [_scene] = scene;
 
       if (scene)
       {
          const
+            browser = this .getBrowser (),
             fileURL = new URL (scene .getWorldURL ()),
             hash    = fileURL .protocol !== "data:" ? fileURL .hash .substring (1) : "",
             proto   = hash ? scene .protos .get (hash) : scene .protos [0];
 
          if (!proto)
             throw new Error ("PROTO not found.");
+
+         scene .setExecutionContext (scene [_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
+         scene .setLive (true);
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .setProtoDeclaration (proto);
