@@ -34,16 +34,10 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       X3DGeometryNode .prototype .initialize .call (this);
       X3DUrlObject    .prototype .initialize .call (this);
 
-      this .getLive () .addInterest ("set_live__", this);
-
       this ._solid  .addInterest ("set_solid__",  this);
       this ._smooth .addInterest ("set_smooth__", this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
-   },
-   set_live__ ()
-   {
-      this .scene ?.setLive (this .isLive ());
    },
    set_solid__ ()
    {
@@ -109,13 +103,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    {
       // Remove old scene.
 
-      if (this .scene)
-      {
-         this .getLive () .removeFieldInterest (this .scene .getLive ());
-
-         if (!this .scene [_cache])
-            this .scene .dispose ();
-      }
+      if (!this .scene ?.[_cache])
+         this .scene ?.dispose ();
 
       // Set new scene.
 
@@ -124,7 +113,6 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       if (scene)
       {
          const
-            browser = this .getBrowser (),
             fileURL = new URL (scene .getWorldURL ()),
             hash    = fileURL .protocol !== "data:" ? fileURL .hash .substring (1) : "";
 
@@ -146,10 +134,6 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
             this .geometryNode [_lock] = true;
          }
 
-         this .scene .setExecutionContext (scene [_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
-         this .scene .setLive (true);
-
-         this .set_live__ ();
          this .set_solid__ ();
          this .set_smooth__ ();
 
