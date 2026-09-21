@@ -25,13 +25,13 @@ x3d_latest_version: 4.1 # x3d latest version
 
 # x_ite settings
 x_ite_teaser: stars-dance-in-galaxy
-x_ite_latest_version: 16.4.0 # x_ite latest version
+x_ite_latest_version: 16.4.1 # x_ite latest version
 x_ite_compressed_size: 273.4 # size in kb
-x_ite_js_integrity: sha384-PJ5BszHoiMMXlUVHmfDyYRYOGHwcIw+9DEu5KrRnCCQ2yfiOdKPRjESxp6vWoZ8c
-x_ite_min_js_integrity: sha384-6ghCAvM07+Y3ougXaG9/V/fhQ/UJLcJf8kUiYRCNPRAx47NMdtds4c1vb887T3Vr
-x_ite_mjs_integrity: sha384-9TQjCRElAf71BXePPOFzhGT2j/RFby+cxgtKV5OD9YbS4bIl4ehhIdqG3+SneQTd
-x_ite_min_mjs_integrity: sha384-djEl6RWCV8oeAHMM5NdmsmaRTqsvxTU1oxV8jll1ID+eS1N104RaoBTPTY2bPJqR
-x_ite_css_integrity: sha384-/SECsklivyOEI8wp6xcDS0QDczGbqmxoaXDzSZCmJLpGmYfD16XJmOZr0O2QNDmj
+x_ite_js_integrity: sha384-vHb2spfkDiV4kzMj729EuPqVyyZd7dpJXtg8AwrsGKsMY8GhzZSvWgCbLHSMMBZQ
+x_ite_min_js_integrity: sha384-f5bB0i+wXbv4JTdruHFEZH2A8gfe8CZHz38f6yg7cCfuWvhqqSHAynOP7GXN5LSn
+x_ite_mjs_integrity: sha384-61SKwSJxkCz8PjvH56Q6Mp9U/TZ5JejU5/tyOxXh5rwj87iN+S8LuWYvIEz+J7H/
+x_ite_min_mjs_integrity: sha384-wr51LRLJsNXbN9mNrkjVEKI7Qu0KHMStb+z4DkUUdgrce7yMvNU6IsysWTRoVlab
+x_ite_css_integrity: sha384-ghtkTig2bXHd5VgQPGzWUh9HuPE5g2Mb4S3c3Yap2DRcv41187XE74CWLQUKkwO2
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
