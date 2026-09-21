@@ -94,12 +94,14 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    loadData ()
    {
+      const cache = this .getBrowser () .getBrowserOption ("Cache");
+
       if (this .geometryNode)
          this .geometryNode [_lock] = false;
 
       this .fileLoader ?.abort ();
 
-      this .fileLoader = new FileLoader (this, { cacheScene: true })
+      this .fileLoader = new FileLoader (this, { cacheScene: cache })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    setInternalScene (scene)
