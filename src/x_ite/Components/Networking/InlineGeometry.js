@@ -86,6 +86,9 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    unloadData ()
    {
+      if (this .geometryNode)
+         this .geometryNode [_lock] = false;
+
       this .fileLoader ?.abort ();
       this .setInternalScene (null);
    },
