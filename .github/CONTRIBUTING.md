@@ -52,10 +52,6 @@ npm install
 * [x] Includes tests if applicable.
 * [x] You have signed off on your work (`git commit -s` is welcome but not required).
 
-## License
-
-By contributing, you agree that your contributions will be licensed under the same MIT License as the rest of the project.
-
 ## Contributor License Agreement (CLA)
 
 When you propose a pull request on this repository, you agree that your
