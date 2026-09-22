@@ -23,8 +23,11 @@ The **GeoPositionInterpolator** node belongs to the [Geospatial](/x_ite/componen
 + X3DNode
   + X3DChildNode
     + X3DInterpolatorNode
-      + GeoPositionInterpolator
+      + GeoPositionInterpolator (X3DGeospatialObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

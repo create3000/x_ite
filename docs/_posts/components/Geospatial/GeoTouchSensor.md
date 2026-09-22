@@ -25,8 +25,11 @@ The **GeoTouchSensor** node belongs to the [Geospatial](/x_ite/components/overvi
     + X3DSensorNode
       + X3DPointingDeviceSensorNode
         + X3DTouchSensorNode
-          + GeoTouchSensor
+          + GeoTouchSensor (X3DGeospatialObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

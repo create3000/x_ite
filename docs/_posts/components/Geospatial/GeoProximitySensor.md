@@ -24,8 +24,11 @@ The **GeoProximitySensor** node belongs to the [Geospatial](/x_ite/components/ov
   + X3DChildNode
     + X3DSensorNode
       + X3DEnvironmentalSensorNode
-        + GeoProximitySensor
+        + GeoProximitySensor (X3DGeospatialObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

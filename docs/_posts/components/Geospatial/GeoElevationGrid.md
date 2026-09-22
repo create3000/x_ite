@@ -22,8 +22,11 @@ The **GeoElevationGrid** node belongs to the [Geospatial](/x_ite/components/over
 ```
 + X3DNode
   + X3DGeometryNode
-    + GeoElevationGrid
+    + GeoElevationGrid (X3DGeospatialObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

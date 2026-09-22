@@ -23,7 +23,7 @@ The **GeoLocation** node belongs to the [Geospatial](/x_ite/components/overview/
 + X3DNode
   + X3DChildNode
     + X3DGroupingNode (X3DBoundedObject)*
-      + GeoLocation
+      + GeoLocation (X3DGeospatialObject)*
 ```
 
 \* Derived from multiple interfaces.

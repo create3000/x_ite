@@ -23,8 +23,11 @@ The **GeoCoordinate** node belongs to the [Geospatial](/x_ite/components/overvie
 + X3DNode
   + X3DGeometricPropertyNode
     + X3DCoordinateNode
-      + GeoCoordinate
+      + GeoCoordinate (X3DGeospatialObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

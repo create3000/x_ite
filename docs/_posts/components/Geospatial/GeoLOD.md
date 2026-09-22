@@ -22,7 +22,7 @@ The **GeoLOD** node belongs to the [Geospatial](/x_ite/components/overview/#geos
 ```
 + X3DNode
   + X3DChildNode
-    + GeoLOD (X3DBoundedObject)*
+    + GeoLOD (X3DBoundedObject, X3DGeospatialObject)*
 ```
 
 \* Derived from multiple interfaces.

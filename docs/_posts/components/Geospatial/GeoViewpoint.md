@@ -24,8 +24,11 @@ The **GeoViewpoint** node belongs to the [Geospatial](/x_ite/components/overview
   + X3DChildNode
     + X3DBindableNode
       + X3DViewpointNode
-        + GeoViewpoint
+        + GeoViewpoint (X3DGeospatialObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
