@@ -1,4 +1,3 @@
-import X3DObject    from "../Base/X3DObject.js";
 import Fields       from "../Fields.js";
 import GoldenGate   from "../Parser/GoldenGate.js";
 import X3DWorld     from "../Execution/X3DWorld.js";
@@ -6,34 +5,18 @@ import X3DScene     from "../Execution/X3DScene.js";
 import $            from "../../lib/helper.js";
 import DEVELOPMENT  from "../DEVELOPMENT.js";
 
-const foreignMimeType = new Set ([
+const MAX_CACHED_SCENES = 100;
+
+const FOREIGN_MIME_TYPES = new Set ([
    "text/html",
    "application/xhtml+xml",
 ]);
 
 const _cache = Symbol .for ("X_ITE.cache");
 
-function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
+class FileLoader
 {
-   X3DObject .call (this);
-
-   this .node             = node;
-   this .cacheScene       = cacheScene;
-   this .dataAsString     = dataAsString;
-   this .browser          = node .getBrowser ();
-   this .executionContext = node .getExecutionContext ();
-   this .target           = "";
-   this .url              = [ ];
-   this .controller       = new AbortController ();
-   this .candidateURL     = "";
-   this .resolvedURL      = null;
-   this .attempts         = [ ];
-}
-
-Object .assign (FileLoader,
-{
-   sceneCache: new Map (),
-   loadDocument (node, url, options)
+   static loadDocument (node, url, options)
    {
       return new Promise ((resolve, reject) => new FileLoader (node, options) .loadDocument (url, (data, fileURL) =>
       {
@@ -42,29 +25,63 @@ Object .assign (FileLoader,
 
          reject ();
       }));
-   },
-});
+   }
 
-Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .prototype),
-{
+   static #sceneCache = new Map ();
+
+   static addScene (url, promise)
+   {
+      if (this .#sceneCache .size >= MAX_CACHED_SCENES)
+         this .#sceneCache .delete (this .#sceneCache .keys () .next () .value);
+
+      this .#sceneCache .set (url, promise);
+   }
+
+   static getScene (url)
+   {
+      const promise = this .#sceneCache .get (url);
+
+      this .#sceneCache .delete (url);
+
+      return this .#sceneCache .getOrInsert (url, promise);
+   }
+
+   constructor (node, { cacheScene = false, dataAsString = true } = { })
+   {
+      this .node             = node;
+      this .cacheScene       = cacheScene;
+      this .dataAsString     = dataAsString;
+      this .browser          = node .getBrowser ();
+      this .executionContext = node .getExecutionContext ();
+      this .target           = "";
+      this .url              = [ ];
+      this .controller       = new AbortController ();
+      this .candidateURL     = "";
+      this .resolvedURL      = null;
+      this .attempts         = [ ];
+   }
+
    isPrivate ()
    {
       // Don't count for loading objects.
       return true;
-   },
+   }
+
    abort ()
    {
       this .url .length = 0;
 
       this .controller .abort ();
-   },
+   }
+
    getBaseURL ()
    {
       if (this .node instanceof X3DWorld)
          return this .browser .getBaseURL ();
 
       return this .executionContext .getBaseURL ();
-   },
+   }
+
    getTarget (parameters)
    {
       for (const parameter of parameters)
@@ -79,7 +96,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       }
 
       return "";
-   },
+   }
+
    createX3DFromString (worldURL, string = "", resolve, reject)
    {
       try
@@ -105,12 +123,14 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          else
             throw error;
       }
-   },
+   }
+
    setScene (scene, resolve, reject)
    {
       scene ._loadCount .addInterest ("set_loadCount__", this, scene, resolve, reject);
       scene ._loadCount .addEvent ();
-   },
+   }
+
    async set_loadCount__ (scene, resolve, reject)
    {
       try
@@ -143,7 +163,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          if (this .resolvedURL .protocol !== "data:")
             console .info (`Done loading scene '${decodeURI (this .resolvedURL)}'.`);
       }
-   },
+   }
+
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
    {
       this .sceneCallback = callback;
@@ -152,14 +173,16 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       this .target        = this .getTarget (parameter || new Fields .MFString ());
 
       return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
-   },
+   }
+
    createX3DFromURLAsync (callback, data)
    {
       if (data === null)
          callback (null);
       else
          this .createX3DFromString (this .resolvedURL, data, callback, this .loadDocumentError .bind (this));
-   },
+   }
+
    loadDocument (url, callback)
    {
       this .url      = url .slice ();
@@ -172,7 +195,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       this .loadDocumentAsync (String (this .url .shift ()))
          .catch (this .loadDocumentError .bind (this));
-   },
+   }
+
    async loadDocumentAsync (url)
    {
       // Not every candidate reaches URL resolution, so resolvedURL stays null until it
@@ -252,7 +276,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          cacheURL .hash = "";
 
-         const promise = FileLoader .sceneCache .get (cacheURL .href);
+         const promise = FileLoader .getScene (cacheURL .href);
 
          if (promise)
          {
@@ -268,7 +292,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
             this .resolve = resolve;
 
-            FileLoader .sceneCache .set (cacheURL .href, promise);
+            FileLoader .addScene (cacheURL .href, promise);
          }
       }
 
@@ -283,12 +307,13 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       {
          // console .log (mimeType);
 
-         if (foreignMimeType .has (mimeType))
+         if (FOREIGN_MIME_TYPES .has (mimeType))
             return this .foreign (this .resolvedURL .href, this .target);
       }
 
       await this .callback (await $.gunzip (await this .getBlob (response)), this .resolvedURL);
-   },
+   }
+
    async getBlob (response)
    {
       const contentLength = parseInt (response .headers .get ("x-file-size"))
@@ -321,14 +346,16 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       }
 
       return await new Blob (values);
-   },
+   }
+
    checkResponse (response)
    {
       if (response .ok)
          return response;
 
       throw new Error (response .statusText || response .status);
-   },
+   }
+
    loadDocumentError (error)
    {
       // Output error.
@@ -347,7 +374,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          this .resolve ?.(null);
          this .callback (null);
       }
-   },
+   }
+
    printError (error)
    {
       if (!error)
@@ -385,24 +413,23 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
                `  ${i + 1}. '${this .truncate (url)}'${resolved && resolved !== url ? ` → ${this .truncate (resolved)}` : ""}: ${this .describe (error)}`)
             .join ("\n") + "\n",
          ... this .attempts .map (({ error }) => error));
-   },
+   }
+
    /**
     * Keep diagnostics readable when a candidate is a long data URL.
     */
    truncate (string, length = 120)
    {
       return string .length > length ? `${string .substring (0, length)}…` : string;
-   },
+   }
+
    /**
     * Not every thrown value is an Error, so don't summarize one as [object Object].
     */
    describe (error)
    {
       return error ?.message ?? (typeof error === "object" ? $.try (() => JSON .stringify (error)) : null) ?? String (error);
-   },
-});
-
-for (const key of Object .keys (FileLoader .prototype))
-   Object .defineProperty (FileLoader .prototype, key, { enumerable: false });
+   }
+}
 
 export default FileLoader;
