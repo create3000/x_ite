@@ -57,7 +57,7 @@ npm install
 
 When you propose a pull request on this repository, you agree that your
 contributions will be licensed under the same MIT License as the rest of the
-project and you confirm you own your work and are granting CREATE3000 the
+project and you confirm you own your work and are granting create3000 the
 necessary permissions to redistribute it under our licenses.
 
 ## AI-Assisted Contributions
