@@ -27,7 +27,7 @@ function createIndex ()
 
    for (const filename of filenames)
    {
-      const m = filename .match (/([^\/]+)\/([^\/]+)\.js$/);
+      const m = filename .match (/([^/]+)\/([^/]+)\.js$/);
 
       if (m [1] === "Annotation")
          continue;
@@ -46,19 +46,19 @@ function createIndex ()
    return index;
 }
 
-function getSpecificationRange (component, node)
-{
-   const
-      filename = `${components}/${component}/${node}.js`,
-      file     = fs .readFileSync (filename) .toString (),
-      match    = file .match (/getSpecificationRange.*?(\[.*?\])/s),
-      range    = eval (match [1]);
+// function getSpecificationRange (component, node)
+// {
+//    const
+//       filename = `${components}/${component}/${node}.js`,
+//       file     = fs .readFileSync (filename) .toString (),
+//       match    = file .match (/getSpecificationRange.*?(\[.*?\])/s),
+//       range    = eval (match [1]);
 
-   if (range [1] == Infinity)
-      return range [0];
+//    if (range [1] == Infinity)
+//       return range [0];
 
-   return `${range [0]} - ${range [1]}`;
-}
+//    return `${range [0]} - ${range [1]}`;
+// }
 
 function updateNav ()
 {
