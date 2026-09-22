@@ -189,8 +189,8 @@ class FileLoader
 
    loadDocument (url, callback)
    {
-      this .url      = url .slice ();
-      this .callback = callback;
+      this .url          = url .slice ();
+      this .dataCallback = callback;
 
       this .attempts .length = 0;
 
@@ -218,7 +218,7 @@ class FileLoader
          const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript):/s);
 
          if (result)
-            return await this .callback (url .substring (result [0] .length));
+            return await this .dataCallback (url .substring (result [0] .length));
       }
 
       this .resolvedURL = new URL (url, this .getBaseURL ());
@@ -237,7 +237,7 @@ class FileLoader
             data = $.try (() => decodeURIComponent (data)) ?? data; // Decode data.
             data = data .replace (/^ï»¿/, "");                      // Remove BOM.
 
-            return await this .callback (data);
+            return await this .dataCallback (data);
          }
       }
 
@@ -286,7 +286,7 @@ class FileLoader
          {
             const scene = await promise;
 
-            scene .setWorldURL (this .resolvedURL .href);
+            scene .setWorldURL (this .resolvedURL);
 
             return this .sceneCallback (scene);
          }
@@ -315,7 +315,7 @@ class FileLoader
             return this .foreign (this .resolvedURL .href, this .target);
       }
 
-      await this .callback (await $.gunzip (await this .getBlob (response)), this .resolvedURL);
+      await this .dataCallback (await $.gunzip (await this .getBlob (response)), this .resolvedURL);
    }
 
    async getBlob (response)
@@ -376,7 +376,7 @@ class FileLoader
       else
       {
          this .resolve ?.(null);
-         this .callback (null);
+         this .dataCallback (null);
       }
    }
 
