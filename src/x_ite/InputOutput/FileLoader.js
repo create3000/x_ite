@@ -42,8 +42,9 @@ class FileLoader
       const promise = this .#sceneCache .get (url);
 
       this .#sceneCache .delete (url);
+      this .#sceneCache .set (url, promise);
 
-      return this .#sceneCache .getOrInsert (url, promise);
+      return promise;
    }
 
    constructor (node, { cacheScene = false, dataAsString = true } = { })
