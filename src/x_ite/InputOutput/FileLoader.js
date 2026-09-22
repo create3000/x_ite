@@ -151,7 +151,7 @@ class FileLoader
          if (this .cacheScene)
             scene [_cache] = true;
 
-         this .resolve ?.(scene);
+         this .cacheResolve ?.(scene);
          resolve (scene);
       }
       catch (error)
@@ -294,7 +294,7 @@ class FileLoader
          {
             const { promise, resolve } = Promise .withResolvers ();
 
-            this .resolve = resolve;
+            this .cacheResolve = resolve;
 
             FileLoader .addScene (cacheURL .href, promise);
          }
@@ -375,7 +375,7 @@ class FileLoader
       }
       else
       {
-         this .resolve ?.(null);
+         this .cacheResolve ?.(null);
          this .dataCallback (null);
       }
    }
