@@ -9,7 +9,7 @@ This document outlines how to get involved.
 
 ## Getting Started
 
-1. Have macOS or Linux (Windows is not supported for development).
+1. Have macOS or Linux (Windows is not really supported for development).
 2. **Fork** the repository and clone your fork.
 3. Install [Node.js](https://nodejs.org/) (LTS version recommended).
 4. Install dependencies:
