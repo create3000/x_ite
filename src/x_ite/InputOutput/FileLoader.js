@@ -5,7 +5,7 @@ import X3DScene     from "../Execution/X3DScene.js";
 import $            from "../../lib/helper.js";
 import DEVELOPMENT  from "../DEVELOPMENT.js";
 
-const MAX_CACHED_SCENES = 100;
+const MAX_CACHED_SCENES = 64;
 
 const FOREIGN_MIME_TYPES = new Set ([
    "text/html",
