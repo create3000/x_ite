@@ -33,7 +33,7 @@ npm install
 * Bug fixes in X3D nodes, rendering, parsing, etc.
 * Improvement in existing classes or functions.
 * Performance optimizations in scene graph traversal or shaders.
-* New examples and demos. 🥰
+* New tests, examples and demos. 🥰
 
 ## Reporting Issues
 
