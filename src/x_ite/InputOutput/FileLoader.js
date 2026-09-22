@@ -31,9 +31,11 @@ class FileLoader
 
    static addScene (url, promise)
    {
+      // Delete last used scene.
       if (this .#sceneCache .size >= MAX_CACHED_SCENES)
          this .#sceneCache .delete (this .#sceneCache .keys () .next () .value);
 
+      // Add new scene.
       this .#sceneCache .set (url, promise);
    }
 
@@ -41,6 +43,7 @@ class FileLoader
    {
       const promise = this .#sceneCache .get (url);
 
+      // Move scene to the end of the list.
       this .#sceneCache .delete (url);
       this .#sceneCache .set (url, promise);
 
