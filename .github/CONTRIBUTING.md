@@ -19,7 +19,7 @@ npm install
 
 4. Start the local development server:
    * [Setup a localhost server](https://create3000.github.io/x_ite/setup-a-localhost-server/).
-5. Visit http://localhost:****/ to run and test your changes.
+5. Visit http://localhost:****/ to run and test your changes. Try `src/x_ite.html` for a simple test page.
 
 ## Code Contributions
 
