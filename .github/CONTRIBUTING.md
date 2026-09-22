@@ -11,16 +11,17 @@ This document outlines how to get involved.
 
 1. Have macOS or Linux (Windows is not really supported for development).
 2. **Fork** the repository and clone your fork.
-3. Install [Node.js](https://nodejs.org/) (LTS version recommended).
-4. Install dependencies:
+3. Checkout the `development` branch.
+4. Install [Node.js](https://nodejs.org/) (LTS version recommended).
+5. Install dependencies:
 
 ```sh
 npm install
 ```
 
-4. Start the local development server:
+6. Start the local development server:
    * [Setup a localhost server](https://create3000.github.io/x_ite/setup-a-localhost-server/).
-5. Visit http://localhost:****/ to run and test your changes. Try `src/x_ite.html` for a simple test page.
+7. Visit http://localhost:****/ to run and test your changes. Try `src/x_ite.html` for a simple test page.
 
 ## Code Contributions
 
