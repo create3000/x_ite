@@ -31,9 +31,9 @@ npm install
 ## Suggested Improvements
 
 * Bug fixes in X3D nodes, rendering, parsing, etc.
-* Support for more X3D components and profiles.
+* Improvement in existing classes or functions.
 * Performance optimizations in scene graph traversal or shaders.
-* New examples and demos.
+* New examples and demos. 🥰
 
 ## Reporting Issues
 
