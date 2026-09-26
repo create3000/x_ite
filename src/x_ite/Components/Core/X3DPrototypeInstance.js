@@ -285,7 +285,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       const oldProtoNode = this [_protoNode];
 
-      oldProtoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+      oldProtoNode .name_changed .removeFieldInterest (this .typeName_changed);
       oldProtoNode ._updateInstances .removeInterest ("construct", this);
       oldProtoNode ._updateInstances .removeInterest ("update",    this);
 
@@ -295,7 +295,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
       this [_protoFields]      = Array .from (protoNode .getUserDefinedFields ());
 
-      protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
+      protoNode .name_changed .addFieldInterest (this .typeName_changed);
 
       construct ? this .construct () : this .update ();
    },
@@ -722,7 +722,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       const protoNode = this [_protoNode];
 
-      protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+      protoNode .name_changed .removeFieldInterest (this .typeName_changed);
       protoNode ._updateInstances .removeInterest ("construct", this);
       protoNode ._updateInstances .removeInterest ("update",    this);
 

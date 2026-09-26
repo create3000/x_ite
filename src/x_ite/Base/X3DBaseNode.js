@@ -44,12 +44,6 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addPredefinedField (fieldDefinition);
-
-   // Create events.
-
-   this .addChildObjects (X3DConstants .outputOnly, "name_changed",     new Fields .SFTime (),
-                          X3DConstants .outputOnly, "typeName_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "parents_changed",  new Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .prototype),
@@ -59,7 +53,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       X3DChildObject .prototype .setName .call (this, value);
 
-      this ._name_changed = Date .now () / 1000;
+      this ._name_changed ?.setValue (Date .now () / 1000);
    },
    getBrowser ()
    {
@@ -175,7 +169,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
          // Add isLive event.
 
-         this .addChildObjects (X3DConstants .outputOnly, "live", new Fields .SFBool (this .checkLiveState ()));
+         this .addChildObject (X3DConstants .outputOnly, "live", new Fields .SFBool (this .checkLiveState ()));
 
          // Event processing is done manually and immediately, so:
          this ._live .removeParent (this);
@@ -235,17 +229,21 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       this [_childObjects] .push (field);
 
       field .setPrivate (true);
-      field .setTainted (true);
+      field .setTainted (!this [_initialized]);
       field .addParent (this);
       field .setName (name);
       field .setAccessType (accessType);
 
-      Object .defineProperty (this, `_${name}`,
+      const propertyName = `_${name}`;
+
+      Object .defineProperty (this, propertyName,
       {
          get () { return field; },
          set (value) { field .setValue (value); },
          configurable: true,
       });
+
+      return this [propertyName];
    },
    getFieldDefinition (name)
    {
@@ -534,7 +532,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          this [_executionContext] ._bbox_changed       = time;
       }
 
-      this ._parents_changed = time;
+      this ._parents_changed ?.setValue (time);
    },
    dispose ()
    {
@@ -601,15 +599,27 @@ Object .defineProperties (X3DBaseNode .prototype,
 {
    name_changed:
    {
-      get () { return this ._name_changed; },
+      get ()
+      {
+         return this ._name_changed
+            ?? this .addChildObject (X3DConstants .outputOnly, "name_changed", new Fields .SFTime ());
+      },
    },
    typeName_changed:
    {
-      get () { return this ._typeName_changed; },
+      get ()
+      {
+         return this ._typeName_changed
+            ?? this .addChildObject (X3DConstants .outputOnly, "typeName_changed", new Fields .SFTime ());
+      },
    },
    parents_changed:
    {
-      get () { return this ._parents_changed; },
+      get ()
+      {
+         return this ._parents_changed
+            ?? this .addChildObject (X3DConstants .outputOnly, "parents_changed", new Fields .SFTime ());
+      },
    },
 });
 

@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    {
       this [_importedName] = value;
 
-      this ._name_changed = Date .now () / 1000;
+      this ._name_changed ?.setValue (Date .now () / 1000);
    },
    ... Object .fromEntries ([
       ["getComponentInfo",      "componentInfo"],
@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
       if (this [_importedNode] ?.getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
          this [_type] = this .getSharedNode () ?.constructor ?? this [_type];
 
-      this ._typeName_changed = Date .now () / 1000;
+      this ._typeName_changed ?.setValue (Date .now () / 1000);
 
       X3DChildObject .prototype .addEvent .call (this);
    },
