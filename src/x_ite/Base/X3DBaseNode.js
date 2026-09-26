@@ -144,7 +144,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       ///  Sets the own live state of this node.  Setting the live state to false
       ///  temporarily disables this node completely.
 
-      this [_live] = !!value .valueOf ();
+      value = !! value .valueOf ();
+
+      if (this [_live] === value)
+         return;
+
+      this [_live] = value;
 
       this [_set_live__] ();
    },
