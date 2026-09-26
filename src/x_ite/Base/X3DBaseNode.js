@@ -218,22 +218,10 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       if (!live)
          return;
 
-      if (this .checkLiveState ())
-      {
-         if (live .getValue ())
-            return;
+      // Get informed when `isLive ()` and `getLive () .getValue ()` change.
 
-         live .set (true);
-         live .processEvent ();
-      }
-      else
-      {
-         if (live .getValue ())
-         {
-            live .set (false);
-            live .processEvent ();
-         }
-      }
+      live .set (this .checkLiveState ());
+      live .processEvent ();
    },
    addChildObjects (... args /* accessType, name, field, ... */)
    {
