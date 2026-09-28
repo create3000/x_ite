@@ -77,7 +77,7 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 #### Hints
 
 - *loa* value of -1 indicates that no LOA conformance is provided.
-- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation)
+- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/Architecture/concepts.html#LevelsOfArticulation)
 
 ### SFBool [in, out] **enabled** TRUE
 {: #fields-enabled }
@@ -150,10 +150,7 @@ The *children* field lists all [HAnimJoint](/x_ite/components/hanim/hanimjoint/)
 
 - [HAnim Architecture draft version 2.1, clause 4.10.3 Poses](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/concepts.html#Poses)
 - [HAnim Architecture draft version 2.1, 6.5 Pose](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Pose)
-
-### Warning
-
-- X3D Architecture version 4.1 draft is experimental and not fully implemented.
+- [X3D HAnim component draft version 4.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/hanim.html#HAnimPose)
 
 ## Browser Compatibility
 

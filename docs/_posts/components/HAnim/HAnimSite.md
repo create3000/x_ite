@@ -76,12 +76,12 @@ Unique *name* attribute must be defined so that **HAnimSite** node can be identi
 #### Hints
 
 - **HAnimSite** names are typically based on feature point names, though other author-defined names are also allowed.
-- Https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/FeaturePoints.html
+- Https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/Architecture/FeaturePoints.html
 - **HAnimSite** nodes used as end effectors have '_tip' suffix appended to the *name*.
 - **HAnimSite** nodes containing a [Viewpoint](/x_ite/components/navigation/viewpoint/) location have '_view' suffix appended to the *name*.
 - **HAnimSite** nodes serving other purposes have '_pt' suffix appended to the *name*.
 - Additional example *name* bases (such as cervicale l_infraorbitale supramenton etc.) are listed in HAnim Specification.
-- [HAnim Specification part 1, LOA-3 default Site object translations](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/BodyDimensionsAndLOAs.html#LOA3DefaultSiteTranslations)
+- [HAnim Specification part 1, LOA-3 default Site object translations](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/Architecture/BodyDimensionsAndLOAs.html#LOA3DefaultSiteTranslations)
 - Well-defined names can simplify design and debugging through improved author understanding.
 - [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions)
 - [HAnim2 Names HAnim1 Alias Tables](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2NameHAnim1AliasTables.txt)
@@ -197,9 +197,8 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - **HAnimSite** nodes are stored as children of an [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node.
 - [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Site)
-- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
-- [HAnim Specification part 1, Site](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Site)
-- [HAnim Specification part 1, Annex B, Feature points for the human body](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/FeaturePoints.html)
+- [X3D HAnim component draft version 4.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/hanim.html#HAnimSite)
+- [HAnim Specification part 1, Annex B, Feature points for the human body](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/Architecture/FeaturePoints.html)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
 - [HAnim2 default values for Joint and Site (feature point) nodes](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2DefaultValuesJointsFeaturePoints.txt)
 

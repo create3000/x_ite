@@ -76,7 +76,7 @@ Unique *name* attribute must be defined so that **HAnimSegment** node can be ide
 #### Hints
 
 - For arbitrary humanoids, **HAnimSegment** *name* can describe geometry between parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) and sibling [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes (for example LeftHip_to_LeftKnee).
-- [HAnim Specification part 1, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#Hierarchy)
+- [HAnim Specification part 1, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/Architecture/concepts.html#Hierarchy)
 - Well-defined names can simplify design and debugging through improved author understanding.
 - [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions)
 - [HAnim2 Names HAnim1 Alias Tables](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2NameHAnim1AliasTables.txt)
@@ -196,8 +196,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - **HAnimSegment** can contain [Shape](/x_ite/components/shape/shape/) geometry and [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes for a parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node.
 - [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Segment)
-- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
-- [HAnim Specification part 1, Segment](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Segment)
+- [X3D HAnim component draft version 4.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/hanim.html#HAnimSegment)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
 
 ### Warnings

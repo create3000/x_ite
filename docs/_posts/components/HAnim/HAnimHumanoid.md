@@ -131,7 +131,7 @@ Models sharing a common skeletal configuration can share animations and binding 
 
 #### Hint
 
-- [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#ModellingOfHumanoids)
+- [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/Architecture/concepts.html#ModellingOfHumanoids)
 
 ### SFInt32 [in, out] **loa** -1 <small>[-1,5]</small>
 {: #fields-loa }
@@ -141,7 +141,7 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 #### Hints
 
 - *loa* value of -1 indicates that no LOA conformance is provided.
-- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation)
+- [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/Architecture/concepts.html#LevelsOfArticulation)
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-translation }
@@ -437,9 +437,7 @@ List of one or more indexed mesh definitions (such as [IndexedFaceSet](/x_ite/co
 - MFNode arrays for the joints, segments, sites, and viewpoints fields provide lists for all HAnim nodes found in the skeleton hierarchy and thus only contain USE node references.
 - [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Humanoid)
 - [HAnim Architecture draft version 2.1, 6.4 Extended definition of Humanoid object](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/MotionDataAnimation/MotionNodes.html#HumanoidObjectExtension)
-- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
-- [HAnim Specification part 1, Humanoid](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Humanoid)
-- [HAnim Specification part 2, clause 6.4 Extended definition of Humanoid object](https://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#HumanoidObjectExtension)
+- [X3D HAnim component draft version 4.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/hanim.html#HAnimJHumanoid)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
 
 ### Warnings

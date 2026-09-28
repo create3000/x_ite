@@ -84,7 +84,7 @@ Unique *name* attribute must be defined so that **HAnimJoint** node can be ident
 
 #### Hints
 
-- [HAnim Specification part 1, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#Hierarchy)
+- [HAnim Specification part 1, Humanoid Joint-Segment Hierarchy](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/Architecture/concepts.html#Hierarchy)
 - Well-defined names can simplify design and debugging through improved author understanding.
 - [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions)
 - [HAnim2 Names HAnim1 Alias Tables](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2NameHAnim1AliasTables.txt)
@@ -94,7 +94,7 @@ Unique *name* attribute must be defined so that **HAnimJoint** node can be ident
 
 - *name* prefix must match ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) *name* followed by underscore character, if more than one humanoid appears within a scene file. For example, 'Nancy_' prepended before location *name*.
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches. Examples: humanoid_root sacroiliac l_hip l_knee l_ankle etc. as listed in HAnim Specification.
-- [Note precise spelling of special **HAnimJoint** *name*='humanoid_root' according to](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#TheBody)
+- [Note precise spelling of special **HAnimJoint** *name*='humanoid_root' according to](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/Architecture/concepts.html#TheBody)
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-translation }
@@ -302,8 +302,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 - **HAnimJoint** may only get inserted as one (or more) root nodes of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skeleton field, as a child of another **HAnimJoint** node, or as a USE node in the [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) joints field.
 - Visualization shapes for **HAnimJoint** nodes can be placed in child [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes.
 - [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Joint)
-- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
-- [HAnim Specification part 1, Joint](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Joint)
+- [X3D HAnim component draft version 4.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/hanim.html#HAnimJoint)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
 - [HAnim2 default values for Joint and Site (feature point) nodes](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2DefaultValuesJointsFeaturePoints.txt)
 

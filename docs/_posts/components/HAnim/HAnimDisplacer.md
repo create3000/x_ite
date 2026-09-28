@@ -13,7 +13,7 @@ tags: [HAnimDisplacer, HAnim]
 
 ## Overview
 
-**HAnimDisplacer** nodes alter the shape of coordinate-based geometry within parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) or [HAnimSegment](/x_ite/components/hanim/hanimsegment/) nodes. Displacer effects are scaled by the corresponding weight field.
+**HAnimDisplacer** nodes alter the shape of coordinate-based geometry within parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) nodes. Displacer effects are scaled by the corresponding weight field.
 
 The **HAnimDisplacer** node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **1,** its default container field is *displacers.* It is available from X3D version 3.0 or higher.
 
@@ -63,7 +63,7 @@ Unique *name* attribute must be defined so that **HAnimDisplacer** node can be i
 #### Hints
 
 - **HAnimDisplacer** names are based on feature point names.
-- Https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/FeaturePoints.html
+- Https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/Architecture/FeaturePoints.html
 - Well-defined names can simplify design and debugging through improved author understanding.
 - [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions)
 - [HAnim2 Names HAnim1 Alias Tables](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2NameHAnim1AliasTables.txt)
@@ -83,10 +83,14 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 
 - Apply a non-zero *weight* factor to see the effect of **HAnimDisplacer** displacements.
 
+#### Warning
+
+- *weight* values that are negative or have magnitude significantly greater than 1 might produce unnatural displacements.
+
 ### MFInt32 [in, out] **coordIndex** [ ] <small>[0,∞) or -1</small>
 {: #fields-coordIndex }
 
-Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or HAnimBody/[HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) coordinate array for the mesh of vertices affected by this **HAnimDisplacer**. Values start at index 0.
+Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) coordinate array for the mesh of vertices affected by this **HAnimDisplacer**. Values start at index 0.
 
 #### Warning
 
@@ -107,10 +111,10 @@ Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hani
 ### Hints
 
 - **HAnimDisplacer** can be used in three different ways: (a) identify vertices corresponding to a particular feature in a parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node, (b) represent a particular muscular action for a parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node by displacing corresponding [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin vertices in various directions (linearly or radially), or (c) represent a complete configuration of coordinate vertices in parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes. Example: in the case of a face, there might be a separate **HAnimDisplacer** node for each facial expression.
+- Allowed parent nodes for **HAnimDisplacer** are [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/), [HAnimJoint](/x_ite/components/hanim/hanimjoint/), and [HAnimSegment](/x_ite/components/hanim/hanimsegment/).
 - Multiple **HAnimDisplacer** nodes must appear consecutively inside parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) for proper content validation in XML encoding.
 - [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Displacer)
-- [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
-- [HAnim Specification part 1, Displacer](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Displacer)
+- [X3D HAnim component draft version 4.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/hanim.html#HAnimDisplacer)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
 
 ### Warnings
