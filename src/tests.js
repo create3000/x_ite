@@ -507,6 +507,7 @@ const X_ITE_TESTS = [
    { path: "Time/Clock.x3d" },
    { path: "Time/CycleInterval.x3d" },
    { path: "Time/TimeProto.x3d" },
+   { path: "Time/Timer.x3d" },
    { component: "VolumeRendering" },
    { path: "VolumeRendering/BasicInternals.x3d" },
    { path: "VolumeRendering/BlendedBodyInternals.x3d" },
