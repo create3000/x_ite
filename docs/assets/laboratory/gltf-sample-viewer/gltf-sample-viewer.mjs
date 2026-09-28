@@ -486,6 +486,7 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TextureSettingsTest/glTF-Binary/TextureSettingsTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TextureTransformMultiTest/glTF-Binary/TextureTransformMultiTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ToyCar/glTF-Binary/ToyCar.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TrafficCone/glTF-Binary/TrafficCone.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TransmissionOrderTest/glTF-Binary/TransmissionOrderTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TransmissionRoughnessTest/glTF-Binary/TransmissionRoughnessTest.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/TransmissionTest/glTF-Binary/TransmissionTest.glb",
