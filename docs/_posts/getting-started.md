@@ -544,7 +544,7 @@ If the \<x3d-canvas\> element is focused, the following keyboard shortcuts are a
 <kbd>Shift</kbd>+<kbd>F8</kbd>
 : Copy the the current viewpoint of the active layer to clipboard.
 
-<kbd>Ctrl</kbd>+<kbd>s</kbd>
+<kbd>Ctrl</kbd>+<kbd>S</kbd>
 : If \<x3d-canvas\> attribute *debug* is `true`, toggle begin/end update of browser.
 
 <kbd>Ctrl</kbd>+<kbd>1</kbd>
