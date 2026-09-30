@@ -16,7 +16,7 @@
           <MetadataString DEF='pages'
               name='pages'
               reference='https://create3000.github.io/sunrize/'
-              value='"[{\"title\":\"New Logic 1\",\"nodes\":[{\"x\":40,\"y\":80,\"path\":\"rootNodes:2:children:0:children:0\"},{\"x\":340,\"y\":80,\"path\":\"rootNodes:2:children:0:children:1\"},{\"x\":740,\"y\":80,\"path\":\"rootNodes:2:children:5:appearance:material\"}],\"scrollLeft\":0,\"scrollTop\":14}]"'/>
+              value='"[{\"title\":\"New Logic 1\",\"nodes\":[{\"x\":65.6038647342995,\"y\":98.40579710144927,\"path\":\"rootNodes:2:children:0:children:0\"},{\"x\":365.60386473429946,\"y\":98.40579710144927,\"path\":\"rootNodes:2:children:0:children:1\"},{\"x\":765.6038647342996,\"y\":98.40579710144927,\"path\":\"rootNodes:2:children:5:appearance:material\"}],\"scrollLeft\":0,\"scrollTop\":0,\"scale\":0.6097201767304861}]"'/>
         </MetadataSet>
       </MetadataSet>
     </WorldInfo>
@@ -76,7 +76,7 @@
           <LineProperties USE='_1'/>
           <UnlitMaterial DEF='gMaterial'
               emissiveColor='0.1607843 0.5254902 0.8'
-              transparency='0.773194'/>
+              transparency='0.592807'/>
         </Appearance>
         <InlineGeometry
             url='"playground.svg#g-Stroke"'/>

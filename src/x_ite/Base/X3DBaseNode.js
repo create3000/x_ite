@@ -153,33 +153,21 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
       this [_set_live__] ();
    },
-   getLive: (() =>
+   getLive ()
    {
-      function getLive ()
+      ///  Returns the live event of this node.
+
+      if (!this ._live)
       {
-         return this ._live;
-      }
-
-      return function ()
-      {
-         ///  Returns the live event of this node.
-
-         // Change function.
-
-         Object .defineProperty (this, "getLive",
-         {
-            value: getLive,
-            configurable: true,
-         });
-
          // Add isLive event.
 
          this .addChildObject (X3DConstants .outputOnly, "live", new Fields .SFBool (this .checkLiveState ()));
 
          // Event processing is done manually and immediately, so:
+
          this ._live .removeParent (this);
 
-         // Connect to execution context.
+         // Connect interests.
 
          if (this .getOuterNode ?.())
             this .getOuterNode () .getLive () .addInterest (_set_live__, this);
@@ -189,12 +177,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
          else if (!this [_executionContext] && this !== this [_browser])
             this [_browser] .getLive () .addInterest (_set_live__, this);
+      }
 
-         // Return field.
+      // Return field.
 
-         return this ._live;
-      };
-   })(),
+      return this ._live;
+   },
    checkLiveState ()
    {
       ///  Determines the live state of this node.
@@ -210,16 +198,21 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
       return this [_live];
    },
-   [_set_live__] ()
+   [_set_live__] (event)
    {
       const live = this ._live;
 
       if (!live)
          return;
 
-      // Get informed when `isLive ()` and `getLive () .getValue ()` change.
+      const state = this .checkLiveState ();
 
-      live .set (this .checkLiveState ());
+      if (event && live .equals (state))
+         return;
+
+      // Get informed when `isLive ()` and `getLive().getValue()` change.
+
+      live .set (state);
       live .processEvent ();
    },
    addChildObjects (... args /* accessType, name, field, ... */)
