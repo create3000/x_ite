@@ -476,7 +476,7 @@ Loses the WebGL context.
 
 #### **nextFrame** (): Promise\<void\> <small class="blue">non-standard</small>
 
-Returns a Promise that resolves when the next frame is rendered. This can be used to synchronize with the rendering loop.
+Returns a Promise that resolves when the next frame has been rendered. This can be used to synchronize with the rendering loop.
 
 ```js
 await browser .loadURL (new X3D .MFString (fileURL));
