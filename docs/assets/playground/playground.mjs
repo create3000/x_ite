@@ -88,18 +88,32 @@ class Playground
 
       browser .baseURL = url;
 
+      browser .addBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT, () => this .sceneLoaded ());
+
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+
+      model .onDidChangeContent (event => this .onDidChangeContent (event));
+
+      // Keyboard shortcuts.
+
+      $("#editor") .on ("keydown", event => this .onKeyDown (event));
+   }
+
+   sceneLoaded ()
+   {
+      const
+         browser = this .browser,
+         model   = this .model;
+
+      browser .removeBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT);
+
+      browser .baseURL = browser .getWorldURL ();
 
       const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
 
       this .updateLanguage (encoding);
 
       model .setValue (browser .currentScene [`to${encoding}String`] ());
-      model .onDidChangeContent (event => this .onDidChangeContent (event));
-
-      // Keyboard shortcuts.
-
-      $("#editor") .on ("keydown", event => this .onKeyDown (event));
    }
 
    changeColorScheme ()
