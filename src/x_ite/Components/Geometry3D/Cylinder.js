@@ -123,19 +123,16 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, X3DGeometryNode .pr
          this .getMin () .set (0);
          this .getMax () .set (0);
       }
-
       else if (!this ._top .getValue () && !this ._side .getValue ())
       {
          this .getMin () .set (-radius, y2, -radius);
          this .getMax () .set ( radius, y2,  radius);
       }
-
       else if (!this ._bottom .getValue () && !this ._side .getValue ())
       {
          this .getMin () .set (-radius, y1, -radius);
          this .getMax () .set ( radius, y1,  radius);
       }
-
       else
       {
          this .getMin () .set (-radius, y2, -radius);

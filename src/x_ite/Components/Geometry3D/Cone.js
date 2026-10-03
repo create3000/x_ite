@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, X3DGeometryNode .protot
       else
       {
          this .getMin () .set (-bottomRadius, y2, -bottomRadius);
-         this .getMax () .set ( bottomRadius, y1, bottomRadius);
+         this .getMax () .set ( bottomRadius, y1,  bottomRadius);
       }
    },
 });
