@@ -1,7 +1,6 @@
 import PrimitiveQuality from "../Core/PrimitiveQuality.js";
 import X3DTextGeometry  from "./X3DTextGeometry.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
 import Bezier           from "../../../standard/Math/Algorithms/Bezier.js";
 import libtess          from "../../../lib/libtess.js";
 
@@ -277,7 +276,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
          triangles .push (point);
       }
 
-      function combineCallback (coords, data, weight)
+      function combineCallback (coords /* , data, weight */)
       {
          return new Vector3 (... coords);
       }

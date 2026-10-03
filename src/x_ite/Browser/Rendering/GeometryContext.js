@@ -1,6 +1,5 @@
 import X3DGeometryNode from "../../Components/Rendering/X3DGeometryNode.js";
 import AlphaMode       from "../Shape/AlphaMode.js";
-import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 
 function GeometryContext (options = { })
 {
