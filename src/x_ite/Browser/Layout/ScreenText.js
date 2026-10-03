@@ -86,8 +86,6 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
          this .getBBox () .setExtents (min, max);
 
-         this .matrix .assign (Matrix4 .ZERO);
-
          // Scale origin, text and line bounds by contentScale.
 
          text ._origin .x = min .x / contentScale;
