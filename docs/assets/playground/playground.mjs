@@ -97,17 +97,16 @@ class Playground
          this .updateLanguage (encoding);
 
          model .setValue (browser .currentScene [`to${encoding}String`] ());
+         model .onDidChangeContent (event => this .onDidChangeContent (event));
+
+         // Keyboard shortcuts.
+
+         $("#editor") .on ("keydown", event => this .onKeyDown (event));
       });
 
       browser .baseURL = url;
 
-      await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
-
-      model .onDidChangeContent (event => this .onDidChangeContent (event));
-
-      // Keyboard shortcuts.
-
-      $("#editor") .on ("keydown", event => this .onKeyDown (event));
+      browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
    }
 
    changeColorScheme ()
