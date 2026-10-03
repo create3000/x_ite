@@ -86,9 +86,20 @@ class Playground
 
       // Handle url parameter.
 
-      browser .baseURL = url;
+      browser .addBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT, () =>
+      {
+         browser .removeBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT);
 
-      browser .addBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT, () => this .sceneLoaded ());
+         browser .baseURL = browser .getWorldURL ();
+
+         const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
+
+         this .updateLanguage (encoding);
+
+         model .setValue (browser .currentScene [`to${encoding}String`] ());
+      });
+
+      browser .baseURL = url;
 
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
@@ -97,23 +108,6 @@ class Playground
       // Keyboard shortcuts.
 
       $("#editor") .on ("keydown", event => this .onKeyDown (event));
-   }
-
-   sceneLoaded ()
-   {
-      const
-         browser = this .browser,
-         model   = this .model;
-
-      browser .removeBrowserCallback (this, X3D .X3DConstants .INITIALIZED_EVENT);
-
-      browser .baseURL = browser .getWorldURL ();
-
-      const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
-
-      this .updateLanguage (encoding);
-
-      model .setValue (browser .currentScene [`to${encoding}String`] ());
    }
 
    changeColorScheme ()
