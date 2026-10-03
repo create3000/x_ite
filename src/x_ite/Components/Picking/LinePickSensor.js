@@ -242,19 +242,15 @@ Object .assign (X3DGeometryNode .prototype,
    intersectsLine: (() =>
    {
       const
-         invModelViewMatrix = new Matrix4 (),
-         uvt                = { u: 0, v: 0, t: 0 },
-         v0                 = new Vector3 (),
-         v1                 = new Vector3 (),
-         v2                 = new Vector3 ();
+         uvt = { u: 0, v: 0, t: 0 },
+         v0  = new Vector3 (),
+         v1  = new Vector3 (),
+         v2  = new Vector3 ();
 
       return function (hitRay, intersections)
       {
          if (!this .intersectsBBox (hitRay))
             return intersections .length;
-
-         // Apply transformations from geometry primitives and Text with ScreenFontStyle.
-         hitRay .multLineMatrix (invModelViewMatrix .assign (this .getMatrix ()) .inverse ());
 
          const
             texCoords   = this .multiTexCoords [0] .getValue (),
@@ -291,10 +287,10 @@ Object .assign (X3DGeometryNode .prototype,
             const i3 = i * 3;
 
             const normal = new Vector3 (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
-                                          u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
-                                          u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
+                                        u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
+                                        u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
 
-            intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
+            intersections .push ({ texCoord, normal, point });
          }
 
          return intersections .length;
