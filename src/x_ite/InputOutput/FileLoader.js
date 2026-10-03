@@ -164,7 +164,7 @@ class FileLoader
 
       if (DEVELOPMENT)
       {
-         if (this .resolvedURL .protocol !== "data:")
+         if (this .resolvedURL ?.protocol !== "data:")
             console .info (`Done loading scene '${decodeURI (this .resolvedURL)}'.`);
       }
    }
