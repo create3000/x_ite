@@ -548,16 +548,16 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          vertices     = this .vertices .getValue (),
          { min, max } = this;
 
-      if (vertices .length)
+      if (min .x === Number .POSITIVE_INFINITY)
       {
-         if (min .x === Number .POSITIVE_INFINITY)
+         if (vertices .length)
             this .bbox .setArray (vertices, 4) .getExtents (min, max);
          else
-            this .bbox .setExtents (min, max);
+            this .bbox .setExtents (min .set (0), max .set (0));
       }
       else
       {
-         this .bbox .setExtents (min .set (0), max .set (0));
+         this .bbox .setExtents (min, max);
       }
 
       for (let i = 0; i < 5; ++ i)
