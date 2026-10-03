@@ -31,13 +31,6 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
 
       this .set_fontStyle__ ();
    },
-   getLength (index)
-   {
-      if (index < this ._length .length)
-         return Math .max (0, this ._length [index]);
-
-      return 0;
-   },
    set_live__ ()
    {
       const
@@ -67,6 +60,17 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
       this .fontStyleNode .addInterest ("requestRebuild", this);
 
       this .textGeometry = this .fontStyleNode .createTextGeometry (this);
+   },
+   getBBox ()
+   {
+      return this .textGeometry .getBBox ();
+   },
+   getLength (index)
+   {
+      if (index < this ._length .length)
+         return Math .max (0, this ._length [index]);
+
+      return 0;
    },
    build ()
    {
