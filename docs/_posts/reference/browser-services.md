@@ -357,13 +357,13 @@ Removes a rendering property callback function associated with *key* and *name* 
 
 Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. If *event* is omitted, the callback function is added to all events. The signature of the callback function is `function (event)`, where event is one of the **Browser Event Constants** defined in the [X3DConstants](/x_ite/reference/constants-services/#browser-event-constants) object:
 
-| Event                           | Description                           |
-|---------------------------------|---------------------------------------|
-| X3DConstants .BROWSER_EVENT     | not used                              |
-| X3DConstants .CONNECTION_ERROR  | Fired when WebGL context is lost.     |
-| X3DConstants .INITIALIZED_ERROR | Fired when scene could not be loaded. |
-| X3DConstants .INITIALIZED_EVENT | Fired after scene is loaded.          |
-| X3DConstants .SHUTDOWN_EVENT    | Fired before scene is unloaded.       |
+| Event                           | Description                             |
+|---------------------------------|-----------------------------------------|
+| X3DConstants .BROWSER_EVENT     | not used                                |
+| X3DConstants .CONNECTION_ERROR  | Fired when the WebGL context is lost.   |
+| X3DConstants .INITIALIZED_ERROR | Fired when a scene could not be loaded. |
+| X3DConstants .INITIALIZED_EVENT | Fired after a scene is loaded.          |
+| X3DConstants .SHUTDOWN_EVENT    | Fired before a scene is unloaded.       |
 
 <x3d-script-area name="X3D ECMAScript Example: X3DBrowser addBrowserCallback" style="height: 630px">
 <pre>
