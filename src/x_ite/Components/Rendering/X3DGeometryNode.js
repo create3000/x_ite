@@ -160,22 +160,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       // With screen matrix applied.
       return this .bbox;
    },
-   setBBox (bbox)
-   {
-      if (bbox .equals (this .bbox))
-         return;
-
-      const { min, max } = this;
-
-      bbox .getExtents (min, max);
-
-      this .bbox .assign (bbox);
-      this .planes .forEach ((plane, i) => plane .set (i % 2 ? min : max, boxNormals [i]));
-
-      this ._bbox_changed .addEvent ();
-
-      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
-   },
    getMin ()
    {
       // With screen matrix applied.

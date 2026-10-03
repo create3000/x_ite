@@ -61,10 +61,6 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
 
       this .textGeometry = this .fontStyleNode .createTextGeometry (this);
    },
-   getBBox ()
-   {
-      return this .textGeometry .getBBox ();
-   },
    getLength (index)
    {
       if (index < this ._length .length)

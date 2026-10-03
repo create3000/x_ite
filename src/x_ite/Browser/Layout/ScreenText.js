@@ -3,7 +3,6 @@ import TextAlignment   from "../Text/TextAlignment.js";
 import PixelTexture    from "../../Components/Texturing/PixelTexture.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
-import Box3            from "../../../standard/Math/Geometry/Box3.js";
 
 function ScreenText (text, fontStyle)
 {
@@ -340,37 +339,15 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
       min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
       max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);
    },
-   traverseBefore: (() =>
+   traverseBefore (type, renderObject, shapeNode)
    {
-      const
-         bbox   = new Box3 (),
-         matrix = new Matrix4 ();
+      this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
 
-      return function (type, renderObject, shapeNode)
-      {
-         this .getBrowser () .getScreenScaleMatrix (renderObject, matrix, 1, true);
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (matrix);
-
-         if (matrix .equals (this .matrix))
-            return;
-
-         this .matrix .assign (matrix);
-
-         // Update Text bbox.
-
-         bbox .assign (this .getBBox ()) .multRight (this .matrix);
-
-         this .getText () .setBBox (bbox);
-
-         // Immediately update X3DShapeNode bbox.
-
-         shapeNode .set_bbox__ ();
-      };
-   })(),
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .matrix);
+   },
    traverseAfter (type, renderObject)
    {
       renderObject .getModelViewMatrix () .pop ();
