@@ -359,11 +359,11 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 
 | Event                           | Description                           |
 |---------------------------------|---------------------------------------|
-| X3DConstants .CONNECTION_ERROR  | Fired when WebGL context is lost.     |
 | X3DConstants .BROWSER_EVENT     | not used                              |
+| X3DConstants .CONNECTION_ERROR  | Fired when WebGL context is lost.     |
+| X3DConstants .INITIALIZED_ERROR | Fired when scene could not be loaded. |
 | X3DConstants .INITIALIZED_EVENT | Fired after scene is loaded.          |
 | X3DConstants .SHUTDOWN_EVENT    | Fired before scene is unloaded.       |
-| X3DConstants .INITIALIZED_ERROR | Fired when scene could not be loaded. |
 
 <x3d-script-area name="X3D ECMAScript Example: X3DBrowser addBrowserCallback" style="height: 630px">
 <pre>
