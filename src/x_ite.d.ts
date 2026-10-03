@@ -273,7 +273,7 @@ declare namespace X3D
        */
       loseContext (): void;
       /**
-       * Returns a Promise that resolves when the next frame is rendered. This can be used to synchronize with the rendering loop.
+       * Returns a Promise that resolves when the next frame has been rendered. This can be used to synchronize with the rendering loop.
        */
       nextFrame (): Promise <void>;
 
