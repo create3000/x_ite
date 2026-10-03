@@ -72,16 +72,16 @@ function X3DBrowserContext (element)
    for (const browserContext of browserContexts)
       browserContext .call (this, element);
 
-   this .addChildObjects (X3DConstants .outputOnly, "initialized",       new Fields .SFTime (),
-                          X3DConstants .outputOnly, "shutdown",          new Fields .SFTime (),
-                          X3DConstants .outputOnly, "prepareEvents",     new Fields .SFTime (),
-                          X3DConstants .outputOnly, "timePrepareEvents", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "timeEvents",        new Fields .SFTime (),
-                          X3DConstants .outputOnly, "cameraEvents",      new Fields .SFTime (),
-                          X3DConstants .outputOnly, "sensorEvents",      new Fields .SFTime (),
-                          X3DConstants .outputOnly, "displayEvents",     new Fields .SFTime (),
-                          X3DConstants .outputOnly, "finishedEvents",    new Fields .SFTime (),
-                          X3DConstants .outputOnly, "endEvents",         new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .outputOnly, "initialized",          new Fields .SFTime (),
+                          X3DConstants .outputOnly, "shutdown",             new Fields .SFTime (),
+                          X3DConstants .outputOnly, "prepareEvents",        new Fields .SFTime (),
+                          X3DConstants .outputOnly, "timePrepareEvents",    new Fields .SFTime (),
+                          X3DConstants .outputOnly, "timeEvents",           new Fields .SFTime (),
+                          X3DConstants .outputOnly, "cameraEvents",         new Fields .SFTime (),
+                          X3DConstants .outputOnly, "sensorEvents",         new Fields .SFTime (),
+                          X3DConstants .outputOnly, "displayEvents",        new Fields .SFTime (),
+                          X3DConstants .outputOnly, "displayFinishEvents",  new Fields .SFTime (),
+                          X3DConstants .outputOnly, "finishEvents",         new Fields .SFTime ());
 
    this [_tainted]        = false;
    this [_previousTime]   = 0;
@@ -135,13 +135,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       return this ._displayEvents;
    },
-   finishedEvents ()
+   displayFinishEvents ()
    {
-      return this ._finishedEvents;
+      return this ._displayFinishEvents;
    },
-   endEvents ()
+   finishEvents ()
    {
-      return this ._endEvents;
+      return this ._finishEvents;
    },
    getBrowser ()
    {
@@ -189,9 +189,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
          this .addBrowserEvent ();
 
-         this ._endEvents .addFieldCallback (key, () =>
+         this ._finishEvents .addFieldCallback (key, () =>
          {
-            this ._endEvents .removeFieldCallback (key);
+            this ._finishEvents .removeFieldCallback (key);
             resolve ();
          });
       });
@@ -262,7 +262,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this [_world] .traverse (TraverseType .DISPLAY);
 
-      this .addTaintedField (this ._finishedEvents);
+      this .addTaintedField (this ._displayFinishEvents);
       this [_processEvents] ();
 
       for (const frameBuffer of this .getFramebuffers ())
@@ -270,7 +270,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this [_displayTime] .stop ();
 
-      this .addTaintedField (this ._endEvents);
+      this .addTaintedField (this ._finishEvents);
       this [_processEvents] ();
 
       // Finish
