@@ -16,10 +16,6 @@ function PolygonText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry .prototype),
 {
-   getMatrix ()
-   {
-      return Matrix4 .IDENTITY;
-   },
    getTextureNode ()
    {
       return null;

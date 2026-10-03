@@ -186,10 +186,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       // With screen matrix applied.
       return this .max;
    },
-   getMatrix ()
-   {
-      return Matrix4 .IDENTITY;
-   },
    isSolid ()
    {
       return this .solid;

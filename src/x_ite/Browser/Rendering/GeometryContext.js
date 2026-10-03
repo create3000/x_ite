@@ -24,10 +24,6 @@ function GeometryContext (options = { })
 
 Object .assign (GeometryContext .prototype,
 {
-   getMatrix ()
-   {
-      return Matrix4 .IDENTITY;
-   },
    getTextureCoordinateMapping ()
    {
       return this .textureCoordinateMapping;

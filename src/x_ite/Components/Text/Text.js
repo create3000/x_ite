@@ -31,10 +31,6 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
 
       this .set_fontStyle__ ();
    },
-   getMatrix ()
-   {
-      return this .textGeometry .getMatrix ();
-   },
    getLength (index)
    {
       if (index < this ._length .length)

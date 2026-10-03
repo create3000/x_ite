@@ -23,10 +23,6 @@ function ScreenText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .prototype),
 {
-   getMatrix ()
-   {
-      return this .matrix;
-   },
    getTextureNode ()
    {
       return this .textureNode;
