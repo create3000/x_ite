@@ -187,13 +187,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       {
          const key = Symbol ();
 
-         this .addBrowserEvent ();
-
          this ._finishEvents .addFieldCallback (key, () =>
          {
             this ._finishEvents .removeFieldCallback (key);
             resolve ();
          });
+
+         this .addBrowserEvent ();
       });
    },
    [_traverse] (now, frame)
