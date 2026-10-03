@@ -23,6 +23,12 @@ class Playground
 
    async setup ()
    {
+      // Console
+
+      this .redirectConsoleMessages ();
+
+      console .info (X3D .getBrowser () .getWelcomeMessage ());
+
       // Handle color scheme changes.
       // Must be done at first.
 
@@ -94,12 +100,6 @@ class Playground
       // Keyboard shortcuts.
 
       $("#editor") .on ("keydown", event => this .onKeyDown (event));
-
-      // Console
-
-      this .redirectConsoleMessages ();
-
-      console .info (X3D .getBrowser () .getWelcomeMessage ());
    }
 
    changeColorScheme ()
