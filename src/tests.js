@@ -196,6 +196,7 @@ const X_ITE_TESTS = [
    { path: "Layout/library/Rotor.x3dv" },
    { path: "Layout/ScreenFontStyle.x3dv" },
    { path: "Layout/ScreenGroup.x3d" },
+   { path: "Layout/ScreenTextParticles.x3d" },
    { component: "Lighting" },
    { path: "Lighting/DamagedHelmet.x3d" },
    { path: "Lighting/DamagedHelmetKTX2.x3d" },
