@@ -94,6 +94,14 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
 
       renderContext .textureNode = null;
    },
+   displayInstanced (gl, renderContext, shapeNode)
+   {
+      renderContext .textureNode = this .textGeometry .getTextureNode ();
+
+      X3DGeometryNode .prototype .display .call (this, gl, renderContext, shapeNode);
+
+      renderContext .textureNode = null;
+   },
 });
 
 Object .defineProperties (Text,
