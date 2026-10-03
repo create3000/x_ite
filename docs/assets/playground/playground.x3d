@@ -5,21 +5,6 @@
     <component name='Networking' level='4'/>
   </head>
   <Scene>
-    <WorldInfo
-        title='playground'>
-      <MetadataSet DEF='Sunrize_1' containerField='metadata'
-          name='Sunrize'
-          reference='https://create3000.github.io/sunrize/'>
-        <MetadataSet DEF='RouteGraph_1'
-            name='RouteGraph'
-            reference='https://create3000.github.io/sunrize/'>
-          <MetadataString DEF='pages_1'
-              name='pages'
-              reference='https://create3000.github.io/sunrize/'
-              value='"[{\"title\":\"New Logic 1\",\"nodes\":[{\"x\":65.6038647342995,\"y\":98.40579710144927,\"path\":\"rootNodes,2,children,0,children,0\"},{\"x\":365.60386473429946,\"y\":98.40579710144927,\"path\":\"rootNodes,2,children,0,children,1\"},{\"x\":765.6038647342996,\"y\":98.40579710144927,\"path\":\"rootNodes,2,children,5,appearance,material\"}],\"scrollLeft\":0,\"scrollTop\":0,\"scale\":0.6097201767304861}]"'/>
-        </MetadataSet>
-      </MetadataSet>
-    </WorldInfo>
     <Viewpoint
         position='100.3924 -79.72891 141.733'
         centerOfRotation='100.3924 -79.72891 0'/>
@@ -75,7 +60,8 @@
         <Appearance>
           <LineProperties USE='_1'/>
           <UnlitMaterial DEF='gMaterial'
-              emissiveColor='0.1607843 0.5254902 0.8'/>
+              emissiveColor='0.1607843 0.5254902 0.8'
+              transparency='0.184271'/>
         </Appearance>
         <InlineGeometry
             url='"playground.svg#g-Stroke"'/>
