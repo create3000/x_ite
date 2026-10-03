@@ -162,10 +162,10 @@ class FileLoader
             throw error;
       }
 
-      if (DEVELOPMENT && this .resolvedURL)
+      if (DEVELOPMENT)
       {
-         if (this .resolvedURL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .resolvedURL)}'.`);
+         if (this .resolvedURL ?.protocol !== "data:")
+            console .info (`Done loading scene '${decodeURI (this .resolvedURL ?? "<inline scene>")}'.`);
       }
    }
 
