@@ -1,4 +1,4 @@
-/* X_ITE v16.4.1 */
+/* X_ITE v16.4.2 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -714,19 +714,15 @@ Object .assign ((external_X_ITE_X3D_X3DGeometryNode_default()).prototype,
    intersectsLine: (() =>
    {
       const
-         invModelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) (),
-         uvt                = { u: 0, v: 0, t: 0 },
-         v0                 = new (external_X_ITE_X3D_Vector3_default()) (),
-         v1                 = new (external_X_ITE_X3D_Vector3_default()) (),
-         v2                 = new (external_X_ITE_X3D_Vector3_default()) ();
+         uvt = { u: 0, v: 0, t: 0 },
+         v0  = new (external_X_ITE_X3D_Vector3_default()) (),
+         v1  = new (external_X_ITE_X3D_Vector3_default()) (),
+         v2  = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (hitRay, intersections)
       {
          if (!this .intersectsBBox (hitRay))
             return intersections .length;
-
-         // Apply transformations from geometry primitives and Text with ScreenFontStyle.
-         hitRay .multLineMatrix (invModelViewMatrix .assign (this .getMatrix ()) .inverse ());
 
          const
             texCoords   = this .multiTexCoords [0] .getValue (),
@@ -763,10 +759,10 @@ Object .assign ((external_X_ITE_X3D_X3DGeometryNode_default()).prototype,
             const i3 = i * 3;
 
             const normal = new (external_X_ITE_X3D_Vector3_default()) (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
-                                          u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
-                                          u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
+                                        u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
+                                        u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
 
-            intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
+            intersections .push ({ texCoord, normal, point });
          }
 
          return intersections .length;

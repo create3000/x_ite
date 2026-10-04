@@ -273,7 +273,7 @@ declare namespace X3D
        */
       loseContext (): void;
       /**
-       * Returns a Promise that resolves when the next frame is rendered. This can be used to synchronize with the rendering loop.
+       * Returns a Promise that resolves when the next frame has been rendered. This can be used to synchronize with the rendering loop.
        */
       nextFrame (): Promise <void>;
 
@@ -10194,11 +10194,11 @@ declare namespace X3D
       visible: boolean;
    }
 
-   /** HAnimDisplacer nodes alter the shape of coordinate-based geometry within parent HAnimJoint or HAnimSegment nodes. */
+   /** HAnimDisplacer nodes alter the shape of coordinate-based geometry within parent HAnimSegment or ancestor HAnimHumanoid nodes. */
    interface HAnimDisplacerProxy extends X3DGeometricPropertyNodeProxy
    {
       /**
-       * Defines index values into the parent HAnimSegment or HAnimBody/HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer.
+       * Defines index values into the parent HAnimSegment or ancestor HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer.
        *
        * This field is of access type 'inputOutput' and type MFInt32.
        */
@@ -10274,6 +10274,10 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFString.
        */
       description: string;
+      /**
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      displacers: MFNode <HAnimDisplacerProxy>;
       /**
        * Contains metadata keyword=value pairs, where approved keyword terms are humanoidVersion authorName authorEmail copyright creationDate usageRestrictions age gender height and weight.
        *
@@ -10413,7 +10417,7 @@ declare namespace X3D
        */
       translation: SFVec3f;
       /**
-       * HAnimHumanoid version, where allowed value is 2.
+       * HAnimHumanoid version is required, where allowed value is 2.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */

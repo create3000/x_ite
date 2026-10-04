@@ -1,7 +1,7 @@
-/* X_ITE v16.4.1 */
+/* X_ITE v16.4.2 */
 var __webpack_modules__ = ({
 
-/***/ 16
+/***/ 8
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 698
+/***/ 618
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 402
+/***/ 981
 (module) {
 
 /**
@@ -18212,12 +18212,6 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
 
    for (const fieldDefinition of this [_fieldDefinitions])
       this .addPredefinedField (fieldDefinition);
-
-   // Create events.
-
-   this .addChildObjects (Base_X3DConstants .outputOnly, "name_changed",     new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "typeName_changed", new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "parents_changed",  new x_ite_Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObject .prototype),
@@ -18227,7 +18221,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
    {
       Base_X3DChildObject .prototype .setName .call (this, value);
 
-      this ._name_changed = Date .now () / 1000;
+      this ._name_changed ?.setValue (Date .now () / 1000);
    },
    getBrowser ()
    {
@@ -18318,37 +18312,30 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
       ///  Sets the own live state of this node.  Setting the live state to false
       ///  temporarily disables this node completely.
 
-      this [_live] = !!value .valueOf ();
+      value = !! value .valueOf ();
+
+      if (this [_live] === value)
+         return;
+
+      this [_live] = value;
 
       this [_set_live__] ();
    },
-   getLive: (() =>
+   getLive ()
    {
-      function getLive ()
+      ///  Returns the live event of this node.
+
+      if (!this ._live)
       {
-         return this ._live;
-      }
-
-      return function ()
-      {
-         ///  Returns the live event of this node.
-
-         // Change function.
-
-         Object .defineProperty (this, "getLive",
-         {
-            value: getLive,
-            configurable: true,
-         });
-
          // Add isLive event.
 
-         this .addChildObjects (Base_X3DConstants .outputOnly, "live", new x_ite_Fields .SFBool (this .checkLiveState ()));
+         this .addChildObject (Base_X3DConstants .outputOnly, "live", new x_ite_Fields .SFBool (this .checkLiveState ()));
 
          // Event processing is done manually and immediately, so:
+
          this ._live .removeParent (this);
 
-         // Connect to execution context.
+         // Connect interests.
 
          if (this .getOuterNode ?.())
             this .getOuterNode () .getLive () .addInterest (_set_live__, this);
@@ -18358,12 +18345,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
 
          else if (!this [_executionContext] && this !== this [_browser])
             this [_browser] .getLive () .addInterest (_set_live__, this);
+      }
 
-         // Return field.
+      // Return field.
 
-         return this ._live;
-      };
-   })(),
+      return this ._live;
+   },
    checkLiveState ()
    {
       ///  Determines the live state of this node.
@@ -18379,29 +18366,22 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
 
       return this [_live];
    },
-   [_set_live__] ()
+   [_set_live__] (event)
    {
       const live = this ._live;
 
       if (!live)
          return;
 
-      if (this .checkLiveState ())
-      {
-         if (live .getValue ())
-            return;
+      const state = this .checkLiveState ();
 
-         live .set (true);
-         live .processEvent ();
-      }
-      else
-      {
-         if (live .getValue ())
-         {
-            live .set (false);
-            live .processEvent ();
-         }
-      }
+      if (event && live .equals (state))
+         return;
+
+      // Get informed when `isLive ()` and `getLive().getValue()` change.
+
+      live .set (state);
+      live .processEvent ();
    },
    addChildObjects (... args /* accessType, name, field, ... */)
    {
@@ -18415,17 +18395,21 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
       this [_childObjects] .push (field);
 
       field .setPrivate (true);
-      field .setTainted (true);
+      field .setTainted (!this [_initialized]);
       field .addParent (this);
       field .setName (name);
       field .setAccessType (accessType);
 
-      Object .defineProperty (this, `_${name}`,
+      const propertyName = `_${name}`;
+
+      Object .defineProperty (this, propertyName,
       {
          get () { return field; },
          set (value) { field .setValue (value); },
          configurable: true,
       });
+
+      return this [propertyName];
    },
    getFieldDefinition (name)
    {
@@ -18714,7 +18698,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
          this [_executionContext] ._bbox_changed       = time;
       }
 
-      this ._parents_changed = time;
+      this ._parents_changed ?.setValue (time);
    },
    dispose ()
    {
@@ -18781,15 +18765,27 @@ Object .defineProperties (X3DBaseNode .prototype,
 {
    name_changed:
    {
-      get () { return this ._name_changed; },
+      get ()
+      {
+         return this ._name_changed
+            ?? this .addChildObject (Base_X3DConstants .outputOnly, "name_changed", new x_ite_Fields .SFTime ());
+      },
    },
    typeName_changed:
    {
-      get () { return this ._typeName_changed; },
+      get ()
+      {
+         return this ._typeName_changed
+            ?? this .addChildObject (Base_X3DConstants .outputOnly, "typeName_changed", new x_ite_Fields .SFTime ());
+      },
    },
    parents_changed:
    {
-      get () { return this ._parents_changed; },
+      get ()
+      {
+         return this ._parents_changed
+            ?? this .addChildObject (Base_X3DConstants .outputOnly, "parents_changed", new x_ite_Fields .SFTime ());
+      },
    },
 });
 
@@ -18869,7 +18865,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.4.1";
+const BROWSER_VERSION_default_ = "16.4.2";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -24063,7 +24059,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, Core_X3
    {
       this [_importedName] = value;
 
-      this ._name_changed = Date .now () / 1000;
+      this ._name_changed ?.setValue (Date .now () / 1000);
    },
    ... Object .fromEntries ([
       ["getComponentInfo",      "componentInfo"],
@@ -24110,7 +24106,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, Core_X3
       if (this [_importedNode] ?.getInlineNode () .checkLoadState () === Base_X3DConstants .COMPLETE_STATE)
          this [X3DImportedNodeProxy_type] = this .getSharedNode () ?.constructor ?? this [X3DImportedNodeProxy_type];
 
-      this ._typeName_changed = Date .now () / 1000;
+      this ._typeName_changed ?.setValue (Date .now () / 1000);
 
       Base_X3DChildObject .prototype .addEvent .call (this);
    },
@@ -24964,7 +24960,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
 
       const oldProtoNode = this [_protoNode];
 
-      oldProtoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+      oldProtoNode .name_changed .removeFieldInterest (this .typeName_changed);
       oldProtoNode ._updateInstances .removeInterest ("construct", this);
       oldProtoNode ._updateInstances .removeInterest ("update",    this);
 
@@ -24974,7 +24970,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
       this [X3DPrototypeInstance_fieldDefinitions] = protoNode .getFieldDefinitions ();
       this [_protoFields]      = Array .from (protoNode .getUserDefinedFields ());
 
-      protoNode ._name_changed .addFieldInterest (this ._typeName_changed);
+      protoNode .name_changed .addFieldInterest (this .typeName_changed);
 
       construct ? this .construct () : this .update ();
    },
@@ -25401,7 +25397,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, Core_X3
    {
       const protoNode = this [_protoNode];
 
-      protoNode ._name_changed .removeFieldInterest (this ._typeName_changed);
+      protoNode .name_changed .removeFieldInterest (this .typeName_changed);
       protoNode ._updateInstances .removeInterest ("construct", this);
       protoNode ._updateInstances .removeInterest ("update",    this);
 
@@ -31170,7 +31166,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(402);
+/* provided dependency */ var libtess = __webpack_require__(981);
 
 
 const Triangle3 =
@@ -35525,22 +35521,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       // With screen matrix applied.
       return this .bbox;
    },
-   setBBox (bbox)
-   {
-      if (bbox .equals (this .bbox))
-         return;
-
-      const { min, max } = this;
-
-      bbox .getExtents (min, max);
-
-      this .bbox .assign (bbox);
-      this .planes .forEach ((plane, i) => plane .set (i % 2 ? min : max, boxNormals [i]));
-
-      this ._bbox_changed .addEvent ();
-
-      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
-   },
    getMin ()
    {
       // With screen matrix applied.
@@ -35550,10 +35530,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    {
       // With screen matrix applied.
       return this .max;
-   },
-   getMatrix ()
-   {
-      return Numbers_Matrix4 .IDENTITY;
    },
    isSolid ()
    {
@@ -35913,16 +35889,16 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
          vertices     = this .vertices .getValue (),
          { min, max } = this;
 
-      if (vertices .length)
+      if (min .x === Number .POSITIVE_INFINITY)
       {
-         if (min .x === Number .POSITIVE_INFINITY)
+         if (vertices .length)
             this .bbox .setArray (vertices, 4) .getExtents (min, max);
          else
-            this .bbox .setExtents (min, max);
+            this .bbox .setExtents (min .set (0), max .set (0));
       }
       else
       {
-         this .bbox .setExtents (min .set (0), max .set (0));
+         this .bbox .setExtents (min, max);
       }
 
       for (let i = 0; i < 5; ++ i)
@@ -36510,7 +36486,6 @@ const AlphaMode_default_ = Object .assign (new Map (Object .entries (AlphaMode))
 
 
 
-
 function GeometryContext (options = { })
 {
    Object .assign (this,
@@ -36533,10 +36508,6 @@ function GeometryContext (options = { })
 
 Object .assign (GeometryContext .prototype,
 {
-   getMatrix ()
-   {
-      return Numbers_Matrix4 .IDENTITY;
-   },
    getTextureCoordinateMapping ()
    {
       return this .textureCoordinateMapping;
@@ -47917,7 +47888,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(402);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(981);
 
 
 
@@ -51096,35 +51067,18 @@ const X3DWorld_default_ = X3DWorld;
 
 
 
+const MAX_CACHED_SCENES = 64;
 
-const foreignMimeType = new Set ([
+const FOREIGN_MIME_TYPES = new Set ([
    "text/html",
    "application/xhtml+xml",
 ]);
 
 const FileLoader_cache = Symbol .for ("X_ITE.cache");
 
-function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
+class FileLoader
 {
-   Base_X3DObject .call (this);
-
-   this .node             = node;
-   this .cacheScene       = cacheScene;
-   this .dataAsString     = dataAsString;
-   this .browser          = node .getBrowser ();
-   this .executionContext = node .getExecutionContext ();
-   this .target           = "";
-   this .url              = [ ];
-   this .controller       = new AbortController ();
-   this .candidateURL     = "";
-   this .resolvedURL      = null;
-   this .attempts         = [ ];
-}
-
-Object .assign (FileLoader,
-{
-   sceneCache: new Map (),
-   loadDocument (node, url, options)
+   static loadDocument (node, url, options)
    {
       return new Promise ((resolve, reject) => new FileLoader (node, options) .loadDocument (url, (data, fileURL) =>
       {
@@ -51133,29 +51087,67 @@ Object .assign (FileLoader,
 
          reject ();
       }));
-   },
-});
+   }
 
-Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .prototype),
-{
+   static #sceneCache = new Map ();
+
+   static addScene (url, promise)
+   {
+      // Delete last used scene.
+      if (this .#sceneCache .size >= MAX_CACHED_SCENES)
+         this .#sceneCache .delete (this .#sceneCache .keys () .next () .value);
+
+      // Add new scene.
+      this .#sceneCache .set (url, promise);
+   }
+
+   static getScene (url)
+   {
+      const promise = this .#sceneCache .get (url);
+
+      // Move scene to the end of the list.
+      this .#sceneCache .delete (url);
+      this .#sceneCache .set (url, promise);
+
+      return promise;
+   }
+
+   constructor (node, { cacheScene = false, dataAsString = true } = { })
+   {
+      this .node             = node;
+      this .cacheScene       = cacheScene;
+      this .dataAsString     = dataAsString;
+      this .browser          = node .getBrowser ();
+      this .executionContext = node .getExecutionContext ();
+      this .target           = "";
+      this .url              = [ ];
+      this .controller       = new AbortController ();
+      this .candidateURL     = "";
+      this .resolvedURL      = null;
+      this .attempts         = [ ];
+   }
+
    isPrivate ()
    {
       // Don't count for loading objects.
       return true;
-   },
+   }
+
    abort ()
    {
       this .url .length = 0;
 
       this .controller .abort ();
-   },
+   }
+
    getBaseURL ()
    {
       if (this .node instanceof Execution_X3DWorld)
          return this .browser .getBaseURL ();
 
       return this .executionContext .getBaseURL ();
-   },
+   }
+
    getTarget (parameters)
    {
       for (const parameter of parameters)
@@ -51170,7 +51162,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       }
 
       return "";
-   },
+   }
+
    createX3DFromString (worldURL, string = "", resolve, reject)
    {
       try
@@ -51196,12 +51189,14 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          else
             throw error;
       }
-   },
+   }
+
    setScene (scene, resolve, reject)
    {
       scene ._loadCount .addInterest ("set_loadCount__", this, scene, resolve, reject);
       scene ._loadCount .addEvent ();
-   },
+   }
+
    async set_loadCount__ (scene, resolve, reject)
    {
       try
@@ -51218,7 +51213,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          if (this .cacheScene)
             scene [FileLoader_cache] = true;
 
-         this .resolve ?.(scene);
+         this .cacheResolve ?.(scene);
          resolve (scene);
       }
       catch (error)
@@ -51231,10 +51226,11 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       if (DEVELOPMENT)
       {
-         if (this .resolvedURL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .resolvedURL)}'.`);
+         if (this .resolvedURL ?.protocol !== "data:")
+            console .info (`Done loading scene '${decodeURI (this .resolvedURL ?? "<inline scene>")}'.`);
       }
-   },
+   }
+
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
    {
       this .sceneCallback = callback;
@@ -51243,18 +51239,20 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       this .target        = this .getTarget (parameter || new x_ite_Fields .MFString ());
 
       return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
-   },
+   }
+
    createX3DFromURLAsync (callback, data)
    {
       if (data === null)
          callback (null);
       else
          this .createX3DFromString (this .resolvedURL, data, callback, this .loadDocumentError .bind (this));
-   },
+   }
+
    loadDocument (url, callback)
    {
-      this .url      = url .slice ();
-      this .callback = callback;
+      this .url          = url .slice ();
+      this .dataCallback = callback;
 
       this .attempts .length = 0;
 
@@ -51263,7 +51261,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       this .loadDocumentAsync (String (this .url .shift ()))
          .catch (this .loadDocumentError .bind (this));
-   },
+   }
+
    async loadDocumentAsync (url)
    {
       // Not every candidate reaches URL resolution, so resolvedURL stays null until it
@@ -51281,7 +51280,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript):/s);
 
          if (result)
-            return await this .callback (url .substring (result [0] .length));
+            return await this .dataCallback (url .substring (result [0] .length));
       }
 
       this .resolvedURL = new URL (url, this .getBaseURL ());
@@ -51300,7 +51299,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
             data = helper.try (() => decodeURIComponent (data)) ?? data; // Decode data.
             data = data .replace (/^ï»¿/, "");                      // Remove BOM.
 
-            return await this .callback (data);
+            return await this .dataCallback (data);
          }
       }
 
@@ -51343,13 +51342,13 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
          cacheURL .hash = "";
 
-         const promise = FileLoader .sceneCache .get (cacheURL .href);
+         const promise = FileLoader .getScene (cacheURL .href);
 
          if (promise)
          {
             const scene = await promise;
 
-            scene .setWorldURL (this .resolvedURL .href);
+            scene .setWorldURL (this .resolvedURL);
 
             return this .sceneCallback (scene);
          }
@@ -51357,9 +51356,9 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          {
             const { promise, resolve } = Promise .withResolvers ();
 
-            this .resolve = resolve;
+            this .cacheResolve = resolve;
 
-            FileLoader .sceneCache .set (cacheURL .href, promise);
+            FileLoader .addScene (cacheURL .href, promise);
          }
       }
 
@@ -51374,12 +51373,13 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       {
          // console .log (mimeType);
 
-         if (foreignMimeType .has (mimeType))
+         if (FOREIGN_MIME_TYPES .has (mimeType))
             return this .foreign (this .resolvedURL .href, this .target);
       }
 
-      await this .callback (await helper.gunzip (await this .getBlob (response)), this .resolvedURL);
-   },
+      await this .dataCallback (await helper.gunzip (await this .getBlob (response)), this .resolvedURL);
+   }
+
    async getBlob (response)
    {
       const contentLength = parseInt (response .headers .get ("x-file-size"))
@@ -51412,14 +51412,16 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       }
 
       return await new Blob (values);
-   },
+   }
+
    checkResponse (response)
    {
       if (response .ok)
          return response;
 
       throw new Error (response .statusText || response .status);
-   },
+   }
+
    loadDocumentError (error)
    {
       // Output error.
@@ -51435,10 +51437,11 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       }
       else
       {
-         this .resolve ?.(null);
-         this .callback (null);
+         this .cacheResolve ?.(null);
+         this .dataCallback (null);
       }
-   },
+   }
+
    printError (error)
    {
       if (!error)
@@ -51448,7 +51451,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       // script URL — have no resolved URL, and are reported by their authored value.
 
       const
-         typeName = this .node instanceof Execution_X3DWorld ? "" : ` for ${this .node .getTypeName ()}`,
+         typeName = this .node instanceof Execution_X3DWorld ? "" : `${this .node .getTypeName ()}: `,
          dataURL  = this .resolvedURL ?.protocol === "data:",
          resolved = this .resolvedURL && !dataURL ? `${helper.try (() => decodeURI (this .resolvedURL)) ?? this .resolvedURL}` : "",
          subject  = !this .candidateURL .length ? "empty URL"
@@ -51462,39 +51465,38 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       // failed only once every candidate has been tried.
 
       if (this .url .length)
-         return console .warn (`Couldn't load ${subject}${typeName}, trying URL ${this .attempts .length + 1} of ${this .attempts .length + this .url .length}.`, error);
+         return console .warn (`${typeName}Couldn't load ${subject}, trying URL ${this .attempts .length + 1} of ${this .attempts .length + this .url .length}.`, error);
 
       if (this .attempts .length === 1)
-         return console .error (`Couldn't load ${subject}${typeName}.`, error);
+         return console .error (`${typeName}Couldn't load ${subject}.`, error);
 
       // Pass the errors themselves along with the summary, so their stacks and context
       // stay inspectable.
 
-      console .error (`Couldn't load any of the ${this .attempts .length} URLs${typeName}, tried in this order:\n`
+      console .error (`${typeName}Couldn't load any of the ${this .attempts .length} URLs, tried in this order:\n`
          + this .attempts
             .map (({ url, resolved, error }, i) =>
                `  ${i + 1}. '${this .truncate (url)}'${resolved && resolved !== url ? ` → ${this .truncate (resolved)}` : ""}: ${this .describe (error)}`)
             .join ("\n") + "\n",
          ... this .attempts .map (({ error }) => error));
-   },
+   }
+
    /**
     * Keep diagnostics readable when a candidate is a long data URL.
     */
    truncate (string, length = 120)
    {
       return string .length > length ? `${string .substring (0, length)}…` : string;
-   },
+   }
+
    /**
     * Not every thrown value is an Error, so don't summarize one as [object Object].
     */
    describe (error)
    {
       return error ?.message ?? (typeof error === "object" ? helper.try (() => JSON .stringify (error)) : null) ?? String (error);
-   },
-});
-
-for (const key of Object .keys (FileLoader .prototype))
-   Object .defineProperty (FileLoader .prototype, key, { enumerable: false });
+   }
+}
 
 const FileLoader_default_ = FileLoader;
 ;
@@ -54659,7 +54661,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-ghtkTig2bXHd5VgQPGzWUh9HuPE5g2Mb4S3c3Yap2DRcv41187XE74CWLQUKkwO2";
+         link .integrity   = "sha384-fEzovT4J83tA9kKXGV4bUgl6uLo/jpIuUjb7ogp7mj1miyDlddDqWywNrpuG5Yzv";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -61893,7 +61895,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
                this .addFly ();
 
                if (browser .getBrowserOption ("Rubberband"))
-                  browser .finishedEvents () .addInterest ("display", this, MOVE);
+                  browser .displayFinishEvents () .addInterest ("display", this, MOVE);
             }
 
             this ._isActive = true;
@@ -61923,7 +61925,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
             this .addPan ();
 
             if (browser .getBrowserOption ("Rubberband"))
-               browser .finishedEvents () .addInterest ("display", this, PAN);
+               browser .displayFinishEvents () .addInterest ("display", this, PAN);
 
             this ._isActive = true;
             break;
@@ -62389,9 +62391,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
 
       browser .addBrowserEvent ();
 
-      browser .prepareEvents ()  .removeInterest ("fly", this);
-      browser .prepareEvents ()  .removeInterest ("pan", this);
-      browser .finishedEvents () .removeInterest ("display", this);
+      browser .prepareEvents ()    .removeInterest ("fly",     this);
+      browser .prepareEvents ()    .removeInterest ("pan",     this);
+      browser .displayFinishEvents () .removeInterest ("display", this);
 
       this .orientationChaser ._value_changed .removeInterest ("set_orientationOffset__", this);
 
@@ -65047,7 +65049,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .shapeNode = shapeNode;
 
          hit .viewMatrix      .assign (renderObject .getViewpoint () .getViewMatrix ());
-         hit .modelViewMatrix .assign (geometryContext .getMatrix ()) .inverse () .multRight (modelViewMatrix);
+         hit .modelViewMatrix .assign (modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.
          // Hit normal must be normalized if used.
@@ -72957,16 +72959,16 @@ function X3DBrowserContext (element)
    for (const browserContext of browserContexts)
       browserContext .call (this, element);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "initialized",       new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "shutdown",          new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "prepareEvents",     new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "timePrepareEvents", new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "timeEvents",        new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "cameraEvents",      new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "sensorEvents",      new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "displayEvents",     new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "finishedEvents",    new x_ite_Fields .SFTime (),
-                          Base_X3DConstants .outputOnly, "endEvents",         new x_ite_Fields .SFTime ());
+   this .addChildObjects (Base_X3DConstants .outputOnly, "initialized",          new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "shutdown",             new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "prepareEvents",        new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "timePrepareEvents",    new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "timeEvents",           new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "cameraEvents",         new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "sensorEvents",         new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "displayEvents",        new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "displayFinishEvents",  new x_ite_Fields .SFTime (),
+                          Base_X3DConstants .outputOnly, "finishEvents",         new x_ite_Fields .SFTime ());
 
    this [X3DBrowserContext_tainted]        = false;
    this [_previousTime]   = 0;
@@ -73020,13 +73022,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
    {
       return this ._displayEvents;
    },
-   finishedEvents ()
+   displayFinishEvents ()
    {
-      return this ._finishedEvents;
+      return this ._displayFinishEvents;
    },
-   endEvents ()
+   finishEvents ()
    {
-      return this ._endEvents;
+      return this ._finishEvents;
    },
    getBrowser ()
    {
@@ -73072,13 +73074,13 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
       {
          const key = Symbol ();
 
-         this .addBrowserEvent ();
-
-         this ._endEvents .addFieldCallback (key, () =>
+         this ._finishEvents .addFieldCallback (key, () =>
          {
-            this ._endEvents .removeFieldCallback (key);
+            this ._finishEvents .removeFieldCallback (key);
             resolve ();
          });
+
+         this .addBrowserEvent ();
       });
    },
    [_traverse] (now, frame)
@@ -73147,7 +73149,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
 
       this [_world] .traverse (Rendering_TraverseType .DISPLAY);
 
-      this .addTaintedField (this ._finishedEvents);
+      this .addTaintedField (this ._displayFinishEvents);
       this [X3DBrowserContext_processEvents] ();
 
       for (const frameBuffer of this .getFramebuffers ())
@@ -73155,7 +73157,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
 
       this [_displayTime] .stop ();
 
-      this .addTaintedField (this ._endEvents);
+      this .addTaintedField (this ._finishEvents);
       this [X3DBrowserContext_processEvents] ();
 
       // Finish
@@ -77083,7 +77085,7 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, Rendering_X3DGeometryNo
       else
       {
          this .getMin () .set (-bottomRadius, y2, -bottomRadius);
-         this .getMax () .set ( bottomRadius, y1, bottomRadius);
+         this .getMax () .set ( bottomRadius, y1,  bottomRadius);
       }
    },
 });
@@ -77235,19 +77237,16 @@ Object .assign (Object .setPrototypeOf (Cylinder .prototype, Rendering_X3DGeomet
          this .getMin () .set (0);
          this .getMax () .set (0);
       }
-
       else if (!this ._top .getValue () && !this ._side .getValue ())
       {
          this .getMin () .set (-radius, y2, -radius);
          this .getMax () .set ( radius, y2,  radius);
       }
-
       else if (!this ._bottom .getValue () && !this ._side .getValue ())
       {
          this .getMin () .set (-radius, y1, -radius);
          this .getMax () .set ( radius, y1,  radius);
       }
-
       else
       {
          this .getMin () .set (-radius, y2, -radius);
@@ -84075,22 +84074,24 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
          geometryNode ._normalPerVertex = smooth;
       }
    },
-   unloadData ()
+   unlockGeometry ()
    {
       if (this .geometryNode)
          this .geometryNode [_lock] = false;
-
+   },
+   unloadData ()
+   {
       this .fileLoader ?.abort ();
+      this .unlockGeometry ();
       this .setInternalScene (null);
    },
    loadData ()
    {
       const cache = this .getBrowser () .getBrowserOption ("Cache");
 
-      if (this .geometryNode)
-         this .geometryNode [_lock] = false;
-
       this .fileLoader ?.abort ();
+
+      this .unlockGeometry ();
 
       this .fileLoader = new InputOutput_FileLoader (this, { cacheScene: cache })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
@@ -84214,8 +84215,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
    { },
    dispose ()
    {
-      if (this .geometryNode)
-         this .geometryNode [_lock] = false;
+      this .unlockGeometry ();
 
       Networking_X3DUrlObject    .prototype .dispose .call (this);
       Rendering_X3DGeometryNode .prototype .dispose .call (this);
@@ -91526,8 +91526,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(16);
-/* provided dependency */ var APNG = __webpack_require__(698);
+/* provided dependency */ var SuperGif = __webpack_require__(8);
+/* provided dependency */ var APNG = __webpack_require__(618);
 
 
 
@@ -94171,7 +94171,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(402);
+/* provided dependency */ var libtess_libtess = __webpack_require__(981);
 const libtess_default_ = libtess_libtess;
 ;
 

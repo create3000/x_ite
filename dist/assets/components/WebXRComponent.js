@@ -1,4 +1,4 @@
-/* X_ITE v16.4.1 */
+/* X_ITE v16.4.2 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -463,7 +463,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          await gl .makeXRCompatible ();
 
-         this .finishedEvents () .addInterest ("xrUpdatePointers", this);
+         this .displayFinishEvents () .addInterest ("xrUpdatePointers", this);
 
          session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
          session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
@@ -520,7 +520,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          await this .getSession () .end () .catch (Function .prototype);
 
-         this .finishedEvents () .removeInterest ("xrUpdatePointers", this);
+         this .displayFinishEvents () .removeInterest ("xrUpdatePointers", this);
 
          this .setSession (window);
          this .setDefaultFramebuffer (null);

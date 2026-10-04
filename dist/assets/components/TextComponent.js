@@ -1,4 +1,4 @@
-/* X_ITE v16.4.1 */
+/* X_ITE v16.4.2 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -982,9 +982,6 @@ const X3DTextGeometry_default_ = X3DTextGeometry;
 ;
 
 /* harmony default export */ const Text_X3DTextGeometry = (external_X_ITE_X3D_Namespace_default().add ("X3DTextGeometry", X3DTextGeometry_default_));
-;// external "__X_ITE_X3D__ .Matrix4"
-const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
-var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
 ;// external "__X_ITE_X3D__ .Bezier"
 const external_X_ITE_X3D_Bezier_namespaceObject = __X_ITE_X3D__ .Bezier;
 var external_X_ITE_X3D_Bezier_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Bezier_namespaceObject);
@@ -992,7 +989,6 @@ var external_X_ITE_X3D_Bezier_default = /*#__PURE__*/__webpack_require__.n(exter
 const external_X_ITE_X3D_libtess_namespaceObject = __X_ITE_X3D__ .libtess;
 var external_X_ITE_X3D_libtess_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_libtess_namespaceObject);
 ;// ./src/x_ite/Browser/Text/PolygonText.js
-
 
 
 
@@ -1010,10 +1006,6 @@ function PolygonText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeometry .prototype),
 {
-   getMatrix ()
-   {
-      return (external_X_ITE_X3D_Matrix4_default()).IDENTITY;
-   },
    getTextureNode ()
    {
       return null;
@@ -1275,7 +1267,7 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
          triangles .push (point);
       }
 
-      function combineCallback (coords, data, weight)
+      function combineCallback (coords /* , data, weight */)
       {
          return new (external_X_ITE_X3D_Vector3_default()) (... coords);
       }
@@ -18033,17 +18025,6 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
 
       this .set_fontStyle__ ();
    },
-   getMatrix ()
-   {
-      return this .textGeometry .getMatrix ();
-   },
-   getLength (index)
-   {
-      if (index < this ._length .length)
-         return Math .max (0, this ._length [index]);
-
-      return 0;
-   },
    set_live__ ()
    {
       const
@@ -18074,6 +18055,13 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
 
       this .textGeometry = this .fontStyleNode .createTextGeometry (this);
    },
+   getLength (index)
+   {
+      if (index < this ._length .length)
+         return Math .max (0, this ._length [index]);
+
+      return 0;
+   },
    build ()
    {
       this .textGeometry .update ();
@@ -18093,6 +18081,14 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
       renderContext .textureNode = this .textGeometry .getTextureNode ();
 
       external_X_ITE_X3D_X3DGeometryNode_default().prototype .display .call (this, gl, renderContext);
+
+      renderContext .textureNode = null;
+   },
+   displayInstanced (gl, renderContext, shapeNode)
+   {
+      renderContext .textureNode = this .textGeometry .getTextureNode ();
+
+      external_X_ITE_X3D_X3DGeometryNode_default().prototype .displayInstanced .call (this, gl, renderContext, shapeNode);
 
       renderContext .textureNode = null;
    },

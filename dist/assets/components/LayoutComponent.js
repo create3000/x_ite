@@ -1,4 +1,4 @@
-/* X_ITE v16.4.1 */
+/* X_ITE v16.4.2 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -907,11 +907,7 @@ var external_X_ITE_X3D_TextAlignment_default = /*#__PURE__*/__webpack_require__.
 ;// external "__X_ITE_X3D__ .PixelTexture"
 const external_X_ITE_X3D_PixelTexture_namespaceObject = __X_ITE_X3D__ .PixelTexture;
 var external_X_ITE_X3D_PixelTexture_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PixelTexture_namespaceObject);
-;// external "__X_ITE_X3D__ .Box3"
-const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
-var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
 ;// ./src/x_ite/Browser/Layout/ScreenText.js
-
 
 
 
@@ -936,10 +932,6 @@ function ScreenText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X3D_X3DTextGeometry_default()).prototype),
 {
-   getMatrix ()
-   {
-      return this .matrix;
-   },
    getTextureNode ()
    {
       return this .textureNode;
@@ -1003,8 +995,6 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
          }
 
          this .getBBox () .setExtents (min, max);
-
-         this .matrix .assign ((external_X_ITE_X3D_Matrix4_default()).ZERO);
 
          // Scale origin, text and line bounds by contentScale.
 
@@ -1257,37 +1247,15 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
       min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
       max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);
    },
-   traverseBefore: (() =>
+   traverseBefore (type, renderObject, shapeNode)
    {
-      const
-         bbox   = new (external_X_ITE_X3D_Box3_default()) (),
-         matrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+      this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
 
-      return function (type, renderObject, shapeNode)
-      {
-         this .getBrowser () .getScreenScaleMatrix (renderObject, matrix, 1, true);
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-         const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-         modelViewMatrix .push ();
-         modelViewMatrix .multLeft (matrix);
-
-         if (matrix .equals (this .matrix))
-            return;
-
-         this .matrix .assign (matrix);
-
-         // Update Text bbox.
-
-         bbox .assign (this .getBBox ()) .multRight (this .matrix);
-
-         this .getText () .setBBox (bbox);
-
-         // Immediately update X3DShapeNode bbox.
-
-         shapeNode .set_bbox__ ();
-      };
-   })(),
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .matrix);
+   },
    traverseAfter (type, renderObject)
    {
       renderObject .getModelViewMatrix () .pop ();
