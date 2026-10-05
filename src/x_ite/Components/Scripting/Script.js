@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       const handler =
       {
-         get (target, key, receiver)
+         get (target, key)
          {
             switch (key)
             {
@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
                case "currentScene":
                   return getScriptNode () .getExecutionContext ();
                default:
-                  return Reflect .get (target, key, receiver);
+                  return Reflect .get (target, key);
             }
          },
       };

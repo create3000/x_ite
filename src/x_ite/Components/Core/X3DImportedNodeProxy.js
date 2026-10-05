@@ -11,16 +11,16 @@ const
 
 const handler =
 {
-   get (target, key, receiver)
+   get (target, key)
    {
       if (Reflect .has (target, key))
-         return Reflect .get (target, key, receiver);
+         return Reflect .get (target, key);
 
       const node = target .getSharedNode ();
 
       if (node)
       {
-         const property = Reflect .get (node, key, receiver);
+         const property = Reflect .get (node, key);
 
          if (typeof property === "function")
          {
@@ -37,18 +37,18 @@ const handler =
          return property;
       }
    },
-   set (target, key, value, receiver)
+   set (target, key, value)
    {
       if (Reflect .has (target, key))
       {
-         return Reflect .set (target, key, value, receiver);
+         return Reflect .set (target, key, value);
       }
       else
       {
          const node = target .getSharedNode ();
 
          if (node)
-            return Reflect .set (node, key, value, receiver);
+            return Reflect .set (node, key, value);
 
          return false;
       }
@@ -168,7 +168,13 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    set_loadState__ ()
    {
       if (this [_importedNode] ?.getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
-         this [_type] = this .getSharedNode () ?.constructor ?? this [_type];
+      {
+         const sharedNode = this .getSharedNode ();
+
+         this [_type] = sharedNode ?.constructor ?? this [_type];
+
+         sharedNode ?.addInterest ("addNodeEvent", this);
+      }
 
       this ._typeName_changed ?.setValue (Date .now () / 1000);
 

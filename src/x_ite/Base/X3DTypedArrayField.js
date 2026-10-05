@@ -14,7 +14,7 @@ const
 
 const handler =
 {
-   get (target, key, receiver)
+   get (target, key)
    {
       if (typeof key === "string")
       {
@@ -44,9 +44,9 @@ const handler =
          }
       }
 
-      return Reflect .get (target, key, receiver);
+      return Reflect .get (target, key);
    },
-   set (target, key, value, receiver)
+   set (target, key, value)
    {
       if (typeof key === "string")
       {
@@ -81,7 +81,7 @@ const handler =
          }
       }
 
-      return Reflect .set (target, key, value, receiver);
+      return Reflect .set (target, key, value);
    },
    has (target, key)
    {
