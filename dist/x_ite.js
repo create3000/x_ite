@@ -1,4 +1,4 @@
-/* X_ITE v16.4.2 */
+/* X_ITE v16.4.3 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 8
+/***/ 802
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 618
+/***/ 528
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 362
+/***/ 628
 (module) {
 
 /**
@@ -8869,7 +8869,7 @@ const
 
 const handler =
 {
-   get (target, key, receiver)
+   get (target, key)
    {
       if (typeof key === "string")
       {
@@ -8879,9 +8879,9 @@ const handler =
             return target [_array] [index];
       }
 
-      return Reflect .get (target, key, receiver);
+      return Reflect .get (target, key);
    },
-   set (target, key, value, receiver)
+   set (target, key, value)
    {
       if (typeof key === "string")
       {
@@ -8891,7 +8891,7 @@ const handler =
             return false;
       }
 
-      return Reflect .set (target, key, value, receiver);
+      return Reflect .set (target, key, value);
    },
    has (target, key)
    {
@@ -14359,7 +14359,7 @@ const
 
 const SFNode_handler =
 {
-   get (target, key, receiver)
+   get (target, key)
    {
       if (typeof key === "string")
       {
@@ -14378,9 +14378,9 @@ const SFNode_handler =
          }
       }
 
-      return Reflect .get (target, key, receiver);
+      return Reflect .get (target, key);
    },
-   set (target, key, value, receiver)
+   set (target, key, value)
    {
       if (typeof key === "string")
       {
@@ -14398,7 +14398,7 @@ const SFNode_handler =
          }
       }
 
-      return Reflect .set (target, key, value, receiver);
+      return Reflect .set (target, key, value);
    },
    has (target, key)
    {
@@ -15759,7 +15759,7 @@ const
 
 const X3DObjectArrayField_handler =
 {
-   get (target, key, receiver)
+   get (target, key)
    {
       if (typeof key === "string")
       {
@@ -15776,9 +15776,9 @@ const X3DObjectArrayField_handler =
          }
       }
 
-      return Reflect .get (target, key, receiver);
+      return Reflect .get (target, key);
    },
-   set (target, key, value, receiver)
+   set (target, key, value)
    {
       if (typeof key === "string")
       {
@@ -15797,7 +15797,7 @@ const X3DObjectArrayField_handler =
          }
       }
 
-      return Reflect .set (target, key, value, receiver);
+      return Reflect .set (target, key, value);
    },
    has (target, key)
    {
@@ -16284,7 +16284,7 @@ const
 
 const X3DTypedArrayField_handler =
 {
-   get (target, key, receiver)
+   get (target, key)
    {
       if (typeof key === "string")
       {
@@ -16314,9 +16314,9 @@ const X3DTypedArrayField_handler =
          }
       }
 
-      return Reflect .get (target, key, receiver);
+      return Reflect .get (target, key);
    },
-   set (target, key, value, receiver)
+   set (target, key, value)
    {
       if (typeof key === "string")
       {
@@ -16351,7 +16351,7 @@ const X3DTypedArrayField_handler =
          }
       }
 
-      return Reflect .set (target, key, value, receiver);
+      return Reflect .set (target, key, value);
    },
    has (target, key)
    {
@@ -18885,7 +18885,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.4.2";
+const BROWSER_VERSION_default_ = "16.4.3";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -23967,16 +23967,16 @@ const
 
 const X3DImportedNodeProxy_handler =
 {
-   get (target, key, receiver)
+   get (target, key)
    {
       if (Reflect .has (target, key))
-         return Reflect .get (target, key, receiver);
+         return Reflect .get (target, key);
 
       const node = target .getSharedNode ();
 
       if (node)
       {
-         const property = Reflect .get (node, key, receiver);
+         const property = Reflect .get (node, key);
 
          if (typeof property === "function")
          {
@@ -23993,18 +23993,18 @@ const X3DImportedNodeProxy_handler =
          return property;
       }
    },
-   set (target, key, value, receiver)
+   set (target, key, value)
    {
       if (Reflect .has (target, key))
       {
-         return Reflect .set (target, key, value, receiver);
+         return Reflect .set (target, key, value);
       }
       else
       {
          const node = target .getSharedNode ();
 
          if (node)
-            return Reflect .set (node, key, value, receiver);
+            return Reflect .set (node, key, value);
 
          return false;
       }
@@ -24124,7 +24124,13 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, Core_X3
    set_loadState__ ()
    {
       if (this [_importedNode] ?.getInlineNode () .checkLoadState () === Base_X3DConstants .COMPLETE_STATE)
-         this [X3DImportedNodeProxy_type] = this .getSharedNode () ?.constructor ?? this [X3DImportedNodeProxy_type];
+      {
+         const sharedNode = this .getSharedNode ();
+
+         this [X3DImportedNodeProxy_type] = sharedNode ?.constructor ?? this [X3DImportedNodeProxy_type];
+
+         sharedNode ?.addInterest ("addNodeEvent", this);
+      }
 
       this ._typeName_changed ?.setValue (Date .now () / 1000);
 
@@ -31186,7 +31192,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(362);
+/* provided dependency */ var libtess = __webpack_require__(628);
 
 
 const Triangle3 =
@@ -47908,7 +47914,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(362);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(628);
 
 
 
@@ -54681,7 +54687,7 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-fEzovT4J83tA9kKXGV4bUgl6uLo/jpIuUjb7ogp7mj1miyDlddDqWywNrpuG5Yzv";
+         link .integrity   = "sha384-r+Z33c1QviLoOgodJzYHRhRIxsvRFnZVj3GbeoohZ//iR51ZK8cK/Jq4mcMi8WV6";
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -67337,7 +67343,7 @@ vec3 color=vec3(0);vec3 v=normalize(-vertex);
 #if defined(X3D_USE_IBL)||defined(X3D_LIGHTING)
 NormalInfo normalInfo=getNormalInfo(x3d_Material.normalScale);vec3 n=normalInfo.n;float NdotV=clamp(dot(n,v),0.,1.);
 #if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
-vec3 v_retro=reflect(-v,n);float NdotV_retro=clamp(dot(n,v_retro),0.,1.);
+vec3 v_retro=normalize(reflect(-v,n));
 #endif
 #endif
 MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0_dielectric=vec3(.04);materialInfo.specularWeight=1.;materialInfo.f90=vec3(1);materialInfo.f90_dielectric=materialInfo.f90;
@@ -67365,6 +67371,9 @@ materialInfo=getVolumeInfo(materialInfo);
 #if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
 materialInfo=getIridescenceInfo(materialInfo);
 #endif
+#if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
+materialInfo=getRetroreflectionInfo(materialInfo);
+#endif
 #if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
 materialInfo=getDiffuseTransmissionInfo(materialInfo);
 #endif
@@ -67374,17 +67383,10 @@ materialInfo=getVolumeScatterInfo(materialInfo);
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
 materialInfo=getAnisotropyInfo(materialInfo,normalInfo);
 #endif
-#if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
-materialInfo=getRetroreflectionInfo(materialInfo);
-#endif
 materialInfo.perceptualRoughness=clamp(materialInfo.perceptualRoughness,0.,1.);materialInfo.metallic=clamp(materialInfo.metallic,0.,1.);materialInfo.alphaRoughness=materialInfo.perceptualRoughness*materialInfo.perceptualRoughness;vec3 f_specular_dielectric=vec3(0);vec3 f_specular_metal=vec3(0);vec3 f_diffuse=vec3(0);vec3 f_dielectric_brdf_ibl=vec3(0);vec3 f_metal_brdf_ibl=vec3(0);vec3 f_emissive=vec3(0);vec3 clearcoat_brdf=vec3(0);vec3 f_sheen=vec3(0);vec3 f_specular_transmission=vec3(0);vec3 f_diffuse_transmission=vec3(0);float clearcoatFactor=0.;vec3 clearcoatFresnel=vec3(0);float albedoSheenScaling=1.;float diffuseTransmissionThickness=1.;vec3 diffuseTransmissionIBL=vec3(0);
 #if defined(X3D_USE_IBL)||defined(X3D_LIGHTING)
 #if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
-vec3 iridescenceFresnel_dielectric=evalIridescence(1.,materialInfo.iridescenceIor,NdotV,materialInfo.iridescenceThickness,materialInfo.f0_dielectric);vec3 iridescenceFresnel_metallic=evalIridescence(1.,materialInfo.iridescenceIor,NdotV,materialInfo.iridescenceThickness,baseColor.rgb);
-#if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
-vec3 iridescenceFresnel_dielectric_retro=evalIridescence(1.,materialInfo.iridescenceIor,NdotV_retro,materialInfo.iridescenceThickness,materialInfo.f0_dielectric);vec3 iridescenceFresnel_metallic_retro=evalIridescence(1.,materialInfo.iridescenceIor,NdotV_retro,materialInfo.iridescenceThickness,baseColor.rgb);
-#endif
-if(materialInfo.iridescenceThickness==0.)materialInfo.iridescenceFactor=0.;
+vec3 iridescenceFresnel_dielectric=evalIridescence(1.,materialInfo.iridescenceIor,NdotV,materialInfo.iridescenceThickness,materialInfo.f0_dielectric);vec3 iridescenceFresnel_metallic=evalIridescence(1.,materialInfo.iridescenceIor,NdotV,materialInfo.iridescenceThickness,baseColor.rgb);if(materialInfo.iridescenceThickness==0.)materialInfo.iridescenceFactor=0.;
 #endif
 #endif
 #if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
@@ -67421,6 +67423,18 @@ f_specular_metal=getIBLRadianceGGX(n,v,materialInfo.perceptualRoughness);f_specu
 vec3 f_metal_fresnel_ibl=getIBLGGXFresnel(n,v,materialInfo.perceptualRoughness,baseColor.rgb,1.);f_metal_brdf_ibl=f_metal_fresnel_ibl*f_specular_metal;vec3 f_dielectric_fresnel_ibl=getIBLGGXFresnel(n,v,materialInfo.perceptualRoughness,materialInfo.f0_dielectric,materialInfo.specularWeight);f_dielectric_brdf_ibl=mix(f_diffuse,f_specular_dielectric,f_dielectric_fresnel_ibl);
 #if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
 f_metal_brdf_ibl=mix(f_metal_brdf_ibl,f_specular_metal*iridescenceFresnel_metallic,materialInfo.iridescenceFactor);f_dielectric_brdf_ibl=mix(f_dielectric_brdf_ibl,rgb_mix(f_diffuse,f_specular_dielectric,iridescenceFresnel_dielectric),materialInfo.iridescenceFactor);
+#endif
+#if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
+#if defined(X3D_ANISOTROPY_MATERIAL_EXT)
+vec3 f_specular_retro=getIBLRadianceAnisotropy(n,v_retro,materialInfo.perceptualRoughness,materialInfo.anisotropyStrength,materialInfo.anisotropicB);
+#else
+vec3 f_specular_retro=getIBLRadianceGGX(n,v_retro,materialInfo.perceptualRoughness);
+#endif
+vec3 f_metal_brdf_retro=f_metal_fresnel_ibl*f_specular_retro;vec3 f_dielectric_brdf_retro=mix(f_diffuse,f_specular_retro,f_dielectric_fresnel_ibl);
+#if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
+f_metal_brdf_retro=mix(f_metal_brdf_retro,f_specular_retro*iridescenceFresnel_metallic,materialInfo.iridescenceFactor);f_dielectric_brdf_retro=mix(f_dielectric_brdf_retro,rgb_mix(f_diffuse,f_specular_retro,iridescenceFresnel_dielectric),materialInfo.iridescenceFactor);
+#endif
+f_metal_brdf_ibl=mix(f_metal_brdf_ibl,f_metal_brdf_retro,materialInfo.retroreflectionFactor);f_dielectric_brdf_ibl=mix(f_dielectric_brdf_ibl,f_dielectric_brdf_retro,materialInfo.retroreflectionFactor);
 #endif
 #if defined(X3D_CLEARCOAT_MATERIAL_EXT)
 clearcoat_brdf=getIBLRadianceGGX(materialInfo.clearcoatNormal,v,materialInfo.clearcoatRoughness);
@@ -67464,15 +67478,15 @@ l_metal_brdf=metal_fresnel*l_specular_metal;l_dielectric_brdf=mix(l_diffuse,l_sp
 l_metal_brdf=mix(l_metal_brdf,l_specular_metal*iridescenceFresnel_metallic,materialInfo.iridescenceFactor);l_dielectric_brdf=mix(l_dielectric_brdf,rgb_mix(l_diffuse,l_specular_dielectric,iridescenceFresnel_dielectric),materialInfo.iridescenceFactor);
 #endif
 #if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
-vec3 h_retro=normalize(l+v_retro);float NdotH_retro=clamp(dot(n,h_retro),0.,1.);float VdotH_retro=clamp(dot(v_retro,h_retro),0.,1.);vec3 dielectric_fresnel_retro=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(VdotH_retro));vec3 metal_fresnel_retro=F_Schlick(baseColor.rgb,vec3(1),abs(VdotH_retro));vec3 l_specular_metal_retro;
+vec3 h_retro=normalize(l+v_retro);float NdotH_retro=clamp(dot(n,h_retro),0.,1.);float VdotH_retro=clamp(dot(v_retro,h_retro),0.,1.);vec3 dielectric_fresnel_retro=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(VdotH_retro));vec3 metal_fresnel_retro=F_Schlick(baseColor.rgb,vec3(1),abs(VdotH_retro));
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
-l_specular_metal_retro=intensity*NdotL*BRDF_specularGGXAnisotropy(materialInfo.alphaRoughness,materialInfo.anisotropyStrength,n,v_retro,l,h_retro,materialInfo.anisotropicT,materialInfo.anisotropicB);
+vec3 l_specular_retro=intensity*NdotL*BRDF_specularGGXAnisotropy(materialInfo.alphaRoughness,materialInfo.anisotropyStrength,n,v_retro,l,h_retro,materialInfo.anisotropicT,materialInfo.anisotropicB);
 #else
-l_specular_metal_retro=intensity*NdotL*BRDF_specularGGX(materialInfo.alphaRoughness,NdotL,NdotV_retro,NdotH_retro);
+vec3 l_specular_retro=intensity*NdotL*BRDF_specularGGX(materialInfo.alphaRoughness,NdotL,NdotV,NdotH_retro);
 #endif
-vec3 l_specular_dielectric_retro=l_specular_metal_retro;vec3 l_metal_brdf_retro=metal_fresnel_retro*l_specular_metal_retro;vec3 l_dielectric_brdf_retro=mix(l_diffuse,l_specular_dielectric_retro,dielectric_fresnel_retro);
+vec3 l_metal_brdf_retro=metal_fresnel_retro*l_specular_retro;vec3 l_dielectric_brdf_retro=mix(l_diffuse,l_specular_retro,dielectric_fresnel_retro);
 #if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
-l_metal_brdf_retro=mix(l_metal_brdf_retro,l_specular_metal*iridescenceFresnel_metallic_retro,materialInfo.iridescenceFactor);l_dielectric_brdf_retro=mix(l_dielectric_brdf_retro,rgb_mix(l_diffuse,l_specular_dielectric,iridescenceFresnel_dielectric_retro),materialInfo.iridescenceFactor);
+l_metal_brdf_retro=mix(l_metal_brdf_retro,l_specular_retro*iridescenceFresnel_metallic,materialInfo.iridescenceFactor);l_dielectric_brdf_retro=mix(l_dielectric_brdf_retro,rgb_mix(l_diffuse,l_specular_retro,iridescenceFresnel_dielectric),materialInfo.iridescenceFactor);
 #endif
 l_metal_brdf=mix(l_metal_brdf,l_metal_brdf_retro,materialInfo.retroreflectionFactor);l_dielectric_brdf=mix(l_dielectric_brdf,l_dielectric_brdf_retro,materialInfo.retroreflectionFactor);
 #endif
@@ -91546,8 +91560,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(8);
-/* provided dependency */ var APNG = __webpack_require__(618);
+/* provided dependency */ var SuperGif = __webpack_require__(802);
+/* provided dependency */ var APNG = __webpack_require__(528);
 
 
 
@@ -94191,7 +94205,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(362);
+/* provided dependency */ var libtess_libtess = __webpack_require__(628);
 const libtess_default_ = libtess_libtess;
 ;
 

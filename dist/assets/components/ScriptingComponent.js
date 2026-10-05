@@ -1,4 +1,4 @@
-/* X_ITE v16.4.2 */
+/* X_ITE v16.4.3 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -343,7 +343,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       const handler =
       {
-         get (target, key, receiver)
+         get (target, key)
          {
             switch (key)
             {
@@ -352,7 +352,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
                case "currentScene":
                   return getScriptNode () .getExecutionContext ();
                default:
-                  return Reflect .get (target, key, receiver);
+                  return Reflect .get (target, key);
             }
          },
       };
