@@ -162,16 +162,14 @@ function other ()
 
    const cwd = process .cwd ();
 
-   systemSync (`npm cache clean --force`);
-   systemSync (`countdown 120s`);
+   waitUntilOnlineAvailable (); // x_ite
 
    process .chdir (`${cwd}/../media`);
    systemSync (`npm run release`);
 
    process .chdir (`${cwd}/../x_ite-node`);
    systemSync (`npm run release`);
-   systemSync (`npm cache clean --force`);
-   systemSync (`countdown 120s`);
+   waitUntilOnlineAvailable ();
 
    process .chdir (`${cwd}/../x3d-tidy`);
    systemSync (`npm run release`);
@@ -183,6 +181,25 @@ function other ()
    systemSync (`npm run release`);
 
    process .chdir (cwd);
+}
+
+function waitUntilOnlineAvailable ()
+{
+   const
+      cwd     = process .cwd (),
+      name    = require (`${cwd}/package.json`) .name,
+      version = sh (`npm pkg get version | sed 's/"//g'`) .trim ();
+
+   let online;
+
+   do
+   {
+      systemSync (`countdown 60s`);
+      systemSync (`npm cache clean --force`);
+
+      online = sh (`npm view ${name} version`) .trim ();
+   }
+   while (version !== online);
 }
 
 function release ()
