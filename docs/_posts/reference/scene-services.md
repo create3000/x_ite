@@ -496,6 +496,10 @@ The SFNode object of the exported node. This property is read-only.
 
 A string of the imported name. This property is read-only.
 
+#### **instance**: SFNode
+
+The SFNode object of the instance node. This node can be added to the scene graph. This property is read-only.
+
 #### **description**: string
 
 An optional simple DESCRIPTION of intended purpose for the node provided via IMPORT.
