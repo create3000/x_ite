@@ -703,7 +703,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
          if (sourceField)
          {
-            if ($.try (() => route .getSourceNode () .getField (route .getSourceField ())) !== sourceField)
+            if ($.try (() => sourceNode .getField (route .getSourceField ())) !== sourceField)
                return false;
          }
          else
@@ -721,7 +721,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
          if (destinationField)
          {
-            if ($.try (() => route .getDestinationNode () .getField (route .getDestinationField ())) !== destinationField)
+            if ($.try (() => destinationNode .getField (route .getDestinationField ())) !== destinationField)
                return false;
          }
          else
