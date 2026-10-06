@@ -7,8 +7,8 @@ const
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
    _importedName     = Symbol (),
-   _description      = Symbol (),
-   _instances    = Symbol ();
+   _instance         = Symbol (),
+   _description      = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName, description)
 {
@@ -20,8 +20,10 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
+   this [_instance]         = new X3DImportedNodeInstance (this .getExecutionContext (), this);
    this [_description]      = description;
-   this [_instances]        = executionContext [_instances] ??= new Map ();
+
+   this [_instance] .setup ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
@@ -53,30 +55,13 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    setImportName (importedName)
    {
-      const
-         instances = this [_instances],
-         instance  = instances .get (this [_importedName]);
-
-      instances .delete (this [_importedName]);
-
-      if (instance)
-      {
-         instances .set (importedName, instance);
-         instance .setName (importedName);
-      }
+      this [_instance] ?.setName (importedName);
 
       this [_importedName] = importedName;
    },
    getInstance ()
    {
-      return this [_instances] .getOrInsertComputed (this [_importedName], () =>
-      {
-         const instance = new X3DImportedNodeInstance (this .getExecutionContext (), this);
-
-         instance .setup ();
-
-         return instance;
-      });
+      return this [_instance];
    },
    getDescription ()
    {
@@ -167,8 +152,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    dispose ()
    {
-      this [_instances] .delete (this [_importedName]);
-
       for (const route of Array .from (this [_executionContext] .getRoutes ()))
       {
          if (route .getSourceNode () === this)
