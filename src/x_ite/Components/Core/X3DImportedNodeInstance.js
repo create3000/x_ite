@@ -22,7 +22,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DN
    {
       X3DNode .prototype .initialize .call (this);
 
-      this .update ();
+      this [_importedNode] .getInlineNode () ._loadState .addInterest ("set_loadState__", this);
+
+      this .set_loadState__ ();
    },
    getExtendedEventHandling ()
    {
@@ -68,17 +70,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DN
       return $.try (() => this .getInnerNode ()) ?.[fn] (... args)
          ?? X3DNode .prototype [fn] .call (this, ... args);
    }])),
-   update ()
-   {
-      this [_importedNode] .getInlineNode () ._loadState .removeInterest ("set_loadState__", this);
-
-      this [_importedNode] = this .getExecutionContext () .getImportedNodes () .get (this [_importedNode] .getImportedName ())
-         ?? null;
-
-      this [_importedNode] .getInlineNode () ._loadState .addInterest ("set_loadState__", this);
-
-      this .set_loadState__ ();
-   },
    set_loadState__ ()
    {
       if (this [_importedNode] ?.getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
