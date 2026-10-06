@@ -680,6 +680,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       sourceNode      = this .getNodeOrImportedNode (sourceNode);
       destinationNode = this .getNodeOrImportedNode (destinationNode);
 
+      // Get fields if possible.
+
       const sourceField = sourceNode instanceof X3DImportedNodeInstance
          ? $.try (() => sourceNode .getField (sourceFieldName))
          : sourceNode .getField (sourceFieldName);
