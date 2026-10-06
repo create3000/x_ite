@@ -46,7 +46,7 @@ class Placeholder extends X3DNode
          localNode = this .#namedNodes .get (name) ?? this .#importedNodes .get (name);
 
       const node = localNode instanceof X3DImportedNode
-         ? localNode .getExportedNode (this .#type)
+         ? localNode .getInstance ()
          : localNode;
 
       if (node)

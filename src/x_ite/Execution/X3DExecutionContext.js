@@ -5,7 +5,7 @@ import { getUniqueName }           from "./NamedNodesHandling.js";
 import NamedNodesArray             from "./NamedNodesArray.js";
 import X3DImportedNode             from "./X3DImportedNode.js";
 import ImportedNodesArray          from "./ImportedNodesArray.js";
-import X3DImportedNodeProxy        from "../Components/Core/X3DImportedNodeProxy.js";
+import X3DImportedNodeInstance     from "../Components/Core/X3DImportedNodeInstance.js";
 import ExternProtoDeclarationArray from "../Prototype/ExternProtoDeclarationArray.js";
 import ProtoDeclarationArray       from "../Prototype/ProtoDeclarationArray.js";
 import X3DProtoDeclaration         from "../Prototype/X3DProtoDeclaration.js";
@@ -336,7 +336,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_importedNodes] .add (importedName, importedNode);
 
-      importedNode .updateExportedNode ();
+      importedNode .getInstance () ?.update ();
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },
@@ -350,7 +350,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (this [_importedNodes] .get (newImportedName))
          throw new Error ("Couldn't rename imported node: new imported name does already exists.");
 
-      importedNode [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (newImportedName);
+      importedNode .setImportName (newImportedName);
 
       this [_importedNodes] .update (oldImportedName, newImportedName, importedNode);
 
@@ -378,7 +378,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       const importedNode = this [_importedNodes] .get (importedName);
 
       if (importedNode)
-         return importedNode .exportedNode;
+         return importedNode .instance;
 
       throw new Error (`Imported node '${importedName}' not found.`);
    },
@@ -423,7 +423,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (node .getExecutionContext () === this)
       {
-         if (node instanceof X3DImportedNodeProxy)
+         if (node instanceof X3DImportedNodeInstance)
             return node .getImportedNode ();
 
          return node;
@@ -433,7 +433,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          try
          {
-            if (importedNode .getSharedNode () === node)
+            if (importedNode .getInnerNode () === node)
                return importedNode;
          }
          catch

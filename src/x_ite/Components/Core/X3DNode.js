@@ -53,7 +53,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       else
       {
          // Make a copy for a X3DPrototypeInstance.
-         
+
          const executionContext = instance .getBody ();
 
          // First try to get a named node with the node's name.
@@ -1414,7 +1414,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          if (parentContext)
          {
             for (const importedNode of parentContext .getImportedNodes ())
-               importedNode .getExportedNode () .update ();
+               importedNode .getInstance () .update ();
          }
       }
 

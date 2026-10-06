@@ -691,7 +691,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                const localNode = this .getExecutionContext () .getLocalNode (nodeNameId);
 
                return localNode instanceof X3DImportedNode
-                  ? localNode .getExportedNode ()
+                  ? localNode .getInstance ()
                   : localNode .getValue ();
             }
             catch

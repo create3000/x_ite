@@ -1,7 +1,7 @@
 /* X_ITE v16.4.3 */
 var __webpack_modules__ = ({
 
-/***/ 802
+/***/ 970
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 528
+/***/ 720
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 628
+/***/ 36
 (module) {
 
 /**
@@ -21427,7 +21427,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       else
       {
          // Make a copy for a X3DPrototypeInstance.
-         
+
          const executionContext = instance .getBody ();
 
          // First try to get a named node with the node's name.
@@ -22788,7 +22788,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
          if (parentContext)
          {
             for (const importedNode of parentContext .getImportedNodes ())
-               importedNode .getExportedNode () .update ();
+               importedNode .getInstance () .update ();
          }
       }
 
@@ -23933,7 +23933,7 @@ const NamedNodesArray_default_ = NamedNodesArray;
 ;
 
 /* harmony default export */ const Execution_NamedNodesArray = (x_ite_Namespace .add ("NamedNodesArray", NamedNodesArray_default_));
-;// ./src/x_ite/Components/Core/X3DImportedNodeProxy.js
+;// ./src/x_ite/Components/Core/X3DImportedNodeInstance.js
 
 
 
@@ -23941,87 +23941,20 @@ const NamedNodesArray_default_ = NamedNodesArray;
 
 const
    _importedName = Symbol (),
-   _importedNode = Symbol (),
-   X3DImportedNodeProxy_type         = Symbol (),
-   _functions    = Symbol ();
+   _importedNode = Symbol ();
 
-const X3DImportedNodeProxy_handler =
-{
-   get (target, key)
-   {
-      if (Reflect .has (target, key))
-         return Reflect .get (target, key);
-
-      const node = target .getSharedNode ();
-
-      if (node)
-      {
-         const property = Reflect .get (node, key);
-
-         if (typeof property === "function")
-         {
-            return target [_functions] .get (key) ?? (() =>
-            {
-               const func = property .bind (node);
-
-               target [_functions] .set (key, func);
-
-               return func;
-            })();
-         }
-
-         return property;
-      }
-   },
-   set (target, key, value)
-   {
-      if (Reflect .has (target, key))
-      {
-         return Reflect .set (target, key, value);
-      }
-      else
-      {
-         const node = target .getSharedNode ();
-
-         if (node)
-            return Reflect .set (node, key, value);
-
-         return false;
-      }
-   },
-   has (target, key)
-   {
-      return Reflect .has (target, key)
-         || Reflect .has (target .getSharedNode () ?? { }, key);
-   },
-   ownKeys (target)
-   {
-      return Array .from (new Set (Reflect .ownKeys (target)
-         .concat (Reflect .ownKeys (target .getSharedNode () ?? { }))));
-   },
-   getOwnPropertyDescriptor (target, key)
-   {
-      return Reflect .getOwnPropertyDescriptor (target, key)
-         ?? Reflect .getOwnPropertyDescriptor (target .getSharedNode () ?? { }, key);
-   },
-};
-
-function X3DImportedNodeProxy (executionContext, importedName, type)
+function X3DImportedNodeInstance (executionContext, importedName)
 {
    Core_X3DNode .call (this, executionContext);
 
-   const proxy = new Proxy (this, X3DImportedNodeProxy_handler);
+   this .addType (Base_X3DConstants .X3DImportedNodeInstance);
+
+   // Private properties
 
    this [_importedName] = importedName;
-   this [X3DImportedNodeProxy_type]         = type;
-   this [_functions]    = new Map ();
-
-   this .setup ();
-
-   return proxy;
 }
 
-Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, Core_X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, Core_X3DNode .prototype),
 {
    initialize ()
    {
@@ -24035,21 +23968,17 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, Core_X3
    {
       return false;
    },
-   setTypeHint (value)
+   getInnerNode ()
    {
-      this [X3DImportedNodeProxy_type] ??= value;
+      return this [_importedNode] .getExportedNode () .getInnerNode ();
    },
-   getSharedNode ()
+   getExportedNode ()
    {
-      return helper.try (() => this [_importedNode] .getSharedNode ()) ?? null;
+      return helper.try (() => this [_importedNode] .getExportedNode ()) ?? null;
    },
    getImportedNode ()
    {
       return this [_importedNode];
-   },
-   getInnerNode ()
-   {
-      return this [_importedNode] .getSharedNode () .getInnerNode ();
    },
    getName ()
    {
@@ -24069,7 +23998,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, Core_X3
    ]
    .map (([fn, property]) => [fn, function ()
    {
-      return this .getSharedNode () ?.[fn] () ?? this .constructor [property];
+      return this .getExportedNode () ?.[fn] () ?? this .constructor [property];
    }])),
    ... Object .fromEntries ([
       "getType",
@@ -24086,16 +24015,13 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, Core_X3
    ]
    .map (fn => [fn, function (... args)
    {
-      return this .getSharedNode () ?.[fn] (... args) ?? Core_X3DNode .prototype [fn] .call (this, ... args);
+      return this .getExportedNode () ?.[fn] (... args) ?? Core_X3DNode .prototype [fn] .call (this, ... args);
    }])),
    update ()
    {
-      const importedNode = this .getExecutionContext () .getImportedNodes () .get (this [_importedName])
-         ?? null;
-
       this [_importedNode] ?.getInlineNode () ._loadState .removeInterest ("set_loadState__", this);
 
-      this [_importedNode] = importedNode;
+      this [_importedNode] = this .getExecutionContext () .getImportedNodes () .get (this [_importedName]) ?? null;
 
       this [_importedNode] ?.getInlineNode () ._loadState .addInterest ("set_loadState__", this);
 
@@ -24104,13 +24030,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, Core_X3
    set_loadState__ ()
    {
       if (this [_importedNode] ?.getInlineNode () .checkLoadState () === Base_X3DConstants .COMPLETE_STATE)
-      {
-         const sharedNode = this .getSharedNode ();
-
-         this [X3DImportedNodeProxy_type] = sharedNode ?.constructor ?? this [X3DImportedNodeProxy_type];
-
-         sharedNode ?.addInterest ("addNodeEvent", this);
-      }
+          this .getExportedNode () ?.addInterest ("addNodeEvent", this);
 
       this ._typeName_changed ?.setValue (Date .now () / 1000);
 
@@ -24144,23 +24064,12 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, Core_X3
    },
 });
 
-Object .defineProperties (X3DImportedNodeProxy .prototype,
-{
-   constructor:
-   {
-      get ()
-      {
-         return this [X3DImportedNodeProxy_type] ?? Core_X3DNode;
-      },
-   }
-});
+Object .defineProperties (X3DImportedNodeInstance, Core_X3DNode .getStaticProperties ("X3DImportedNodeInstance", "Core", 2, "children", "4.1"));
 
-Object .defineProperties (X3DImportedNodeProxy, Core_X3DNode .getStaticProperties ("X3DImportedNodeProxy", "Core", 2, "children", "4.1"));
-
-const X3DImportedNodeProxy_default_ = X3DImportedNodeProxy;
+const X3DImportedNodeInstance_default_ = X3DImportedNodeInstance;
 ;
 
-/* harmony default export */ const Core_X3DImportedNodeProxy = (x_ite_Namespace .add ("X3DImportedNodeProxy", X3DImportedNodeProxy_default_));
+/* harmony default export */ const Core_X3DImportedNodeInstance = (x_ite_Namespace .add ("X3DImportedNodeInstance", X3DImportedNodeInstance_default_));
 ;// ./src/x_ite/Execution/X3DImportedNode.js
 
 
@@ -24172,7 +24081,7 @@ const
    _exportedName     = Symbol (),
    X3DImportedNode_importedName     = Symbol (),
    _description      = Symbol (),
-   _exportedNodes    = Symbol ();
+   _instances    = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName, description)
 {
@@ -24183,7 +24092,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_exportedName]     = exportedName;
    this [X3DImportedNode_importedName]     = importedName;
    this [_description]      = description;
-   this [_exportedNodes]    = executionContext [_exportedNodes] ??= new Map ();
+   this [_instances]    = executionContext [_instances] ??= new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, Base_X3DObject .prototype),
@@ -24200,27 +24109,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, Base_X3DObje
    {
       return this [_exportedName];
    },
-   getExportedNode (type)
-   {
-      const exportedNode = this [_exportedNodes] .get (this [X3DImportedNode_importedName]);
-
-      exportedNode ?.setTypeHint (type);
-
-      return exportedNode ?? this .createExportedNode (type);
-   },
-   createExportedNode (type)
-   {
-      const exportedNode = new Core_X3DImportedNodeProxy (this .getExecutionContext (), this [X3DImportedNode_importedName], type);
-
-      this [_exportedNodes] .set (this [X3DImportedNode_importedName], exportedNode);
-
-      return exportedNode;
-   },
-   updateExportedNode ()
-   {
-      this [_exportedNodes] .get (this [X3DImportedNode_importedName]) ?.update ();
-   },
-   getSharedNode ()
+   getExportedNode ()
    {
       const exportedNode = this .getInlineNode () .getInternalScene () .getExportedNodes () .get (this [_exportedName]);
 
@@ -24233,18 +24122,38 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, Base_X3DObje
    {
       return this [X3DImportedNode_importedName];
    },
-   [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importedName)
+   setImportName (importedName)
    {
       const
-         exportedNode  = this .getExportedNode (),
-         exportedNodes = this [_exportedNodes];
+         instance  = this .getInstance (),
+         instances = this [_instances];
 
-      exportedNodes .delete (this [X3DImportedNode_importedName]);
-      exportedNodes .set (importedName, exportedNode);
+      instances .delete (this [X3DImportedNode_importedName]);
+      instances .set (importedName, instance);
 
       this [X3DImportedNode_importedName] = importedName;
 
-      exportedNode .setName (importedName);
+      instance .setName (importedName);
+   },
+   getInstance ()
+   {
+      const instance = this [_instances] .get (this [X3DImportedNode_importedName]);
+
+      return instance ?? this .createInstance ();
+   },
+   createInstance ()
+   {
+      const instance = new Core_X3DImportedNodeInstance (this .getExecutionContext (), this [X3DImportedNode_importedName]);
+
+      instance .setup ();
+
+      this [_instances] .set (this [X3DImportedNode_importedName], instance);
+
+      return instance;
+   },
+   updateInstance ()
+   {
+      this [_instances] .get (this [X3DImportedNode_importedName]) ?.update ();
    },
    getDescription ()
    {
@@ -24383,6 +24292,14 @@ Object .defineProperties (X3DImportedNode .prototype,
    importedName:
    {
       get: X3DImportedNode .prototype .getImportedName,
+      enumerable: true,
+   },
+   instance:
+   {
+      get ()
+      {
+         return Fields_SFNodeCache .get (this .getInstance ());
+      },
       enumerable: true,
    },
    description:
@@ -26216,7 +26133,7 @@ class Placeholder extends Core_X3DNode
          localNode = this .#namedNodes .get (name) ?? this .#importedNodes .get (name);
 
       const node = localNode instanceof Execution_X3DImportedNode
-         ? localNode .getExportedNode (this .#type)
+         ? localNode .getInstance ()
          : localNode;
 
       if (node)
@@ -26938,7 +26855,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
                const localNode = this .getExecutionContext () .getLocalNode (nodeNameId);
 
                return localNode instanceof Execution_X3DImportedNode
-                  ? localNode .getExportedNode ()
+                  ? localNode .getInstance ()
                   : localNode .getValue ();
             }
             catch
@@ -29021,6 +28938,7 @@ const VRMLParser_default_ = VRMLParser;
 
 
 
+
 const
    _x3d  = Symbol .for ("X_ITE.X3DElement"),
    _node = Symbol .for ("X_ITE.NodeElement");
@@ -29868,7 +29786,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
             const localNode = this .getExecutionContext () .getLocalNode (name);
 
             const node = localNode instanceof Execution_X3DImportedNode
-               ? localNode .getExportedNode (type)
+               ? localNode .getInstance ()
                : localNode .getValue ();
 
             this .checkNodeType (node, name, type, typeName);
@@ -29898,6 +29816,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
    },
    checkNodeType (node, name, type, typeName)
    {
+      if (node instanceof Core_X3DImportedNodeInstance)
+         return;
+
       if (type === Core_X3DNode)
          return;
 
@@ -31172,7 +31093,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(628);
+/* provided dependency */ var libtess = __webpack_require__(36);
 
 
 const Triangle3 =
@@ -47894,7 +47815,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(628);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(36);
 
 
 
@@ -51968,7 +51889,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       ///  SAI
 
       if (this [_sourceNode] instanceof Execution_X3DImportedNode)
-         return this [_sourceNode] .getExportedNode ();
+         return this [_sourceNode] .getInstance ();
 
       return this [_sourceNode];
    },
@@ -51993,7 +51914,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       ///  SAI
 
       if (this [_destinationNode] instanceof Execution_X3DImportedNode)
-         return this [_destinationNode] .getExportedNode ();
+         return this [_destinationNode] .getInstance ();
 
       return this [_destinationNode];
    },
@@ -52041,7 +51962,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       {
          const sourceNode = this [_sourceNode] instanceof Core_X3DNode
             ? this [_sourceNode]
-            : this [_sourceNode] .getExportedNode ();
+            : this [_sourceNode] .getInstance ();
 
          this [_sourceField] = sourceNode .getField (this [_sourceFieldName]);
       }
@@ -52054,7 +51975,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       {
          const destinationNode = this [_destinationNode] instanceof Core_X3DNode
             ? this [_destinationNode]
-            : this [_destinationNode] .getExportedNode ();
+            : this [_destinationNode] .getInstance ();
 
          this [_destinationField] = destinationNode .getField (this [_destinationFieldName]);
       }
@@ -52237,11 +52158,11 @@ Object .assign (X3DRoute,
    {
       const sourceField = sourceNode instanceof Core_X3DNode
          ? sourceNode .getField (sourceFieldName)
-         : helper.try (() => sourceNode .getExportedNode () .getField (sourceFieldName));
+         : helper.try (() => sourceNode .getInstance () .getField (sourceFieldName));
 
       const destinationField = destinationNode instanceof Core_X3DNode
          ? destinationNode .getField (destinationFieldName)
-         : helper.try (() => destinationNode .getExportedNode () .getField (destinationFieldName));
+         : helper.try (() => destinationNode .getInstance () .getField (destinationFieldName));
 
       X3DRoute .checkFields (sourceField, destinationField);
 
@@ -52655,7 +52576,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
 
       this [_importedNodes] .add (importedName, importedNode);
 
-      importedNode .updateExportedNode ();
+      importedNode .updateInstance ();
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },
@@ -52669,7 +52590,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
       if (this [_importedNodes] .get (newImportedName))
          throw new Error ("Couldn't rename imported node: new imported name does already exists.");
 
-      importedNode [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (newImportedName);
+      importedNode .setImportName (newImportedName);
 
       this [_importedNodes] .update (oldImportedName, newImportedName, importedNode);
 
@@ -52697,7 +52618,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
       const importedNode = this [_importedNodes] .get (importedName);
 
       if (importedNode)
-         return importedNode .exportedNode;
+         return importedNode .instance;
 
       throw new Error (`Imported node '${importedName}' not found.`);
    },
@@ -52742,7 +52663,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
 
       if (node .getExecutionContext () === this)
       {
-         if (node instanceof Core_X3DImportedNodeProxy)
+         if (node instanceof Core_X3DImportedNodeInstance)
             return node .getImportedNode ();
 
          return node;
@@ -52752,7 +52673,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, Base_X3D
       {
          try
          {
-            if (importedNode .getSharedNode () === node)
+            if (importedNode .getInnerNode () === node)
                return importedNode;
          }
          catch
@@ -53682,7 +53603,7 @@ const
    _worldURL             = Symbol (),
    _units                = Symbol (),
    _metadata             = Symbol (),
-   X3DScene_exportedNodes        = Symbol (),
+   _exportedNodes        = Symbol (),
    _loadingObjects       = Symbol ();
 
 function X3DScene (browser)
@@ -53714,12 +53635,12 @@ function X3DScene (browser)
    this [_units] .add ("mass",   new Configuration_UnitInfo ("mass",   "kilogram", 1));
 
    this [_metadata]       = [ ];
-   this [X3DScene_exportedNodes]  = new Execution_ExportedNodesArray ();
+   this [_exportedNodes]  = new Execution_ExportedNodesArray ();
    this [_loadingObjects] = new Set ();
 
    this [_components]    .addParent (this);
    this [_units]         .addParent (this);
-   this [X3DScene_exportedNodes] .addParent (this);
+   this [_exportedNodes] .addParent (this);
 }
 
 Object .assign (Object .setPrototypeOf (X3DScene .prototype, Execution_X3DExecutionContext .prototype),
@@ -53775,7 +53696,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, Execution_X3DExecut
    hasComponent (name, level = 0)
    {
       if (name instanceof Configuration_ComponentInfo)
-         var { name, level } = name;
+         ({ name, level } = name);
 
       const
          browser = this .getBrowser (),
@@ -53946,7 +53867,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, Execution_X3DExecut
    {
       exportedName = String (exportedName);
 
-      if (this [X3DScene_exportedNodes] .has (exportedName))
+      if (this [_exportedNodes] .has (exportedName))
          throw new Error (`Couldn't add exported node: exported name '${exportedName}' already in use.`);
 
       this .updateExportedNode (exportedName, node, description);
@@ -53970,7 +53891,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, Execution_X3DExecut
 
       const exportedNode = new Execution_X3DExportedNode (this, exportedName, node, description);
 
-      this [X3DScene_exportedNodes] .update (exportedName, exportedName, exportedNode);
+      this [_exportedNodes] .update (exportedName, exportedName, exportedNode);
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },
@@ -53978,7 +53899,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, Execution_X3DExecut
    {
       exportedName = String (exportedName);
 
-      this [X3DScene_exportedNodes] .remove (exportedName);
+      this [_exportedNodes] .remove (exportedName);
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },
@@ -53986,7 +53907,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, Execution_X3DExecut
    {
       exportedName = String (exportedName);
 
-      const exportedNode = this [X3DScene_exportedNodes] .get (exportedName);
+      const exportedNode = this [_exportedNodes] .get (exportedName);
 
       if (exportedNode)
          return exportedNode .localNode;
@@ -53995,11 +53916,11 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, Execution_X3DExecut
    },
    getExportedNodes ()
    {
-      return this [X3DScene_exportedNodes];
+      return this [_exportedNodes];
    },
    getUniqueExportName (name)
    {
-      return getUniqueName (this [X3DScene_exportedNodes], name);
+      return getUniqueName (this [_exportedNodes], name);
    },
    addRootNode (node)
    {
@@ -74871,7 +74792,7 @@ const CoreComponent_default_ = {
    [
       Core_X3DBindableNode,
       Core_X3DChildNode,
-      Core_X3DImportedNodeProxy,
+      Core_X3DImportedNodeInstance,
       Core_X3DInfoNode,
       Core_X3DMetadataObject,
       Core_X3DNode,
@@ -91540,8 +91461,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(802);
-/* provided dependency */ var APNG = __webpack_require__(528);
+/* provided dependency */ var SuperGif = __webpack_require__(970);
+/* provided dependency */ var APNG = __webpack_require__(720);
 
 
 
@@ -94185,7 +94106,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(628);
+/* provided dependency */ var libtess_libtess = __webpack_require__(36);
 const libtess_default_ = libtess_libtess;
 ;
 

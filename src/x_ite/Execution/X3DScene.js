@@ -113,7 +113,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    hasComponent (name, level = 0)
    {
       if (name instanceof ComponentInfo)
-         var { name, level } = name;
+         ({ name, level } = name);
 
       const
          browser = this .getBrowser (),

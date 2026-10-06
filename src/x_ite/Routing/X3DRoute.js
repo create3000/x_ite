@@ -49,7 +49,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       ///  SAI
 
       if (this [_sourceNode] instanceof X3DImportedNode)
-         return this [_sourceNode] .getExportedNode ();
+         return this [_sourceNode] .getInstance ();
 
       return this [_sourceNode];
    },
@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       ///  SAI
 
       if (this [_destinationNode] instanceof X3DImportedNode)
-         return this [_destinationNode] .getExportedNode ();
+         return this [_destinationNode] .getInstance ();
 
       return this [_destinationNode];
    },
@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       {
          const sourceNode = this [_sourceNode] instanceof X3DNode
             ? this [_sourceNode]
-            : this [_sourceNode] .getExportedNode ();
+            : this [_sourceNode] .getInstance ();
 
          this [_sourceField] = sourceNode .getField (this [_sourceFieldName]);
       }
@@ -135,7 +135,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       {
          const destinationNode = this [_destinationNode] instanceof X3DNode
             ? this [_destinationNode]
-            : this [_destinationNode] .getExportedNode ();
+            : this [_destinationNode] .getInstance ();
 
          this [_destinationField] = destinationNode .getField (this [_destinationFieldName]);
       }
@@ -318,11 +318,11 @@ Object .assign (X3DRoute,
    {
       const sourceField = sourceNode instanceof X3DNode
          ? sourceNode .getField (sourceFieldName)
-         : $.try (() => sourceNode .getExportedNode () .getField (sourceFieldName));
+         : $.try (() => sourceNode .getInstance () .getField (sourceFieldName));
 
       const destinationField = destinationNode instanceof X3DNode
          ? destinationNode .getField (destinationFieldName)
-         : $.try (() => destinationNode .getExportedNode () .getField (destinationFieldName));
+         : $.try (() => destinationNode .getInstance () .getField (destinationFieldName));
 
       X3DRoute .checkFields (sourceField, destinationField);
 
