@@ -411,7 +411,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
     * @param {SFNode|X3DNode|X3DImportedNode} node
     * @returns either an X3DImportedNode if possible or X3DNode
     */
-   getLocalizedNode (node)
+   getNodeOrImportedNode (node)
    {
       node = X3DCast (X3DConstants .X3DNode, node, false)
          ?? (node instanceof X3DImportedNode ? node : null);
@@ -631,8 +631,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Resolve imported source and destination node.
 
-      sourceNode      = this .getLocalizedNode (sourceNode);
-      destinationNode = this .getLocalizedNode (destinationNode);
+      sourceNode      = this .getNodeOrImportedNode (sourceNode);
+      destinationNode = this .getNodeOrImportedNode (destinationNode);
 
       // Add route.
 
@@ -692,8 +692,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Resolve imported source and destination node.
 
-      sourceNode      = this .getLocalizedNode (sourceNode);
-      destinationNode = this .getLocalizedNode (destinationNode);
+      sourceNode      = this .getNodeOrImportedNode (sourceNode);
+      destinationNode = this .getNodeOrImportedNode (destinationNode);
 
       // Return route.
 
