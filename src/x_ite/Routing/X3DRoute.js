@@ -2,7 +2,6 @@ import X3DObject               from "../Base/X3DObject.js";
 import X3DConstants            from "../Base/X3DConstants.js";
 import SFNodeCache             from "../Fields/SFNodeCache.js";
 import X3DImportedNodeInstance from "../Components/Core/X3DImportedNodeInstance.js";
-import $                       from "../../lib/helper.js";
 
 const
    _executionContext     = Symbol (),
