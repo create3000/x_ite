@@ -15,6 +15,7 @@ import X3DRoute                    from "../Routing/X3DRoute.js";
 import X3DCast                     from "../Base/X3DCast.js";
 import X3DConstants                from "../Base/X3DConstants.js";
 import SFNodeCache                 from "../Fields/SFNodeCache.js";
+import $                           from "../../lib/helper.js";
 
 const
    _outerNode     = Symbol (),
@@ -629,9 +630,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Add route.
 
-      const
-         id    = X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField),
-         route = this [_routes] .get (id);
+      const route = this .getRoute (sourceNode, sourceField, destinationNode, destinationField);
 
       if (route)
       {
@@ -641,7 +640,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          const route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
-         this [_routes] .add (id, route);
+         this [_routes] .add (route .getId (), route);
 
          return route;
       }
@@ -655,25 +654,18 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (!(route instanceof X3DRoute))
          return;
 
-      if (this [_routes] .get (route .getRouteId ()) !== route)
-         return;
-
-      this [_routes] .remove (route .getRouteId ());
+      this [_routes] .remove (route .getId ());
 
       route .dispose ();
    },
-   getRoute (sourceNode, sourceField, destinationNode, destinationField)
+   getRoute (sourceNode, sourceFieldName, destinationNode, destinationFieldName)
    {
       // Normalize arguments.
 
-      const
-         importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
-         importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
-
-      sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
-      sourceField      = String (sourceField);
-      destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
-      destinationField = String (destinationField);
+      sourceNode           = X3DCast (X3DConstants .X3DNode, sourceNode, false);
+      sourceFieldName      = String (sourceFieldName);
+      destinationNode      = X3DCast (X3DConstants .X3DNode, destinationNode, false);
+      destinationFieldName = String (destinationFieldName);
 
       // Check nodes.
 
@@ -688,9 +680,54 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       sourceNode      = this .getNodeOrImportedNode (sourceNode);
       destinationNode = this .getNodeOrImportedNode (destinationNode);
 
+      const sourceField = sourceNode instanceof X3DImportedNodeInstance
+         ? $.try (() => sourceNode .getField (sourceFieldName))
+         : sourceNode .getField (sourceFieldName);
+
+      const destinationField = destinationNode instanceof X3DImportedNodeInstance
+         ? $.try (() => destinationNode .getField (destinationFieldName))
+         : destinationNode .getField (destinationFieldName);
+
+      X3DRoute .checkFields (sourceField, destinationField);
+
       // Return route.
 
-      return this [_routes] .get (X3DRoute .getRouteId (sourceNode, sourceField, destinationNode, destinationField));
+      return this [_routes] .find (route =>
+      {
+         if (route .getSourceNode () !== sourceNode)
+            return false;
+
+         if (route .getDestinationNode () !== destinationNode)
+            return false;
+
+         if (!sourceField)
+         {
+            if (sourceNode instanceof X3DImportedNodeInstance)
+            {
+               if (route .getSourceField () !== sourceFieldName)
+                  return false;
+            }
+            else
+            {
+               return false;
+            }
+         }
+
+         if (!destinationField)
+         {
+            if (destinationNode instanceof X3DImportedNodeInstance)
+            {
+               if (route .getDestinationField () !== destinationFieldName)
+                  return false;
+            }
+            else
+            {
+               return false;
+            }
+         }
+
+         return true;
+      });
    },
    getRoutes ()
    {

@@ -39,10 +39,6 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    {
       return this [_executionContext];
    },
-   getRouteId ()
-   {
-      return X3DRoute .getRouteId (this [_sourceNode], this [_sourceFieldName], this [_destinationNode], this [_destinationFieldName]);
-   },
    getSourceNode ()
    {
       return this [_sourceNode];
@@ -295,36 +291,6 @@ Object .defineProperties (X3DRoute,
 
 Object .assign (X3DRoute,
 {
-   getRouteId (sourceNode, sourceFieldName, destinationNode, destinationFieldName)
-   {
-      const sourceField = sourceNode instanceof X3DImportedNodeInstance
-         ? $.try (() => sourceNode .getField (sourceFieldName))
-         : sourceNode .getField (sourceFieldName);
-
-      const destinationField = destinationNode instanceof X3DImportedNodeInstance
-         ? $.try (() => destinationNode .getField (destinationFieldName))
-         : destinationNode .getField (destinationFieldName);
-
-      X3DRoute .checkFields (sourceField, destinationField);
-
-      if (sourceField)
-      {
-         sourceFieldName = sourceField .getName ();
-
-         if (sourceField .getAccessType () === X3DConstants .inputOutput)
-            sourceFieldName += "_changed";
-      }
-
-      if (destinationField)
-      {
-         destinationFieldName = destinationField .getName ();
-
-         if (destinationField .getAccessType () === X3DConstants .inputOutput)
-            destinationFieldName = "set_" + destinationFieldName;
-      }
-
-      return `${sourceNode .getId ()}.${sourceFieldName}.${destinationNode .getId ()}.${destinationFieldName}`;
-   },
    checkFields (sourceField, destinationField)
    {
       if (sourceField && destinationField)
