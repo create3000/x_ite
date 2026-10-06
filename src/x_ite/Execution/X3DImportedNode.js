@@ -14,14 +14,14 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
 {
    X3DObject .call (this);
 
+   // Private properties
+
    this [_executionContext] = executionContext;
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
    this [_description]      = description;
    this [_instances]        = executionContext [_instances] ??= new Map ();
-
-   this .updateInstance ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
