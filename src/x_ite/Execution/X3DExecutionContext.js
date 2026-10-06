@@ -3,6 +3,7 @@ import X3DBaseNode                 from "../Base/X3DBaseNode.js";
 import X3DBoundedObject            from "../Components/Grouping/X3DBoundedObject.js";
 import { getUniqueName }           from "./NamedNodesHandling.js";
 import NamedNodesArray             from "./NamedNodesArray.js";
+import X3DImportedNodeInstance     from "../Components/Core/X3DImportedNodeInstance.js";
 import X3DImportedNode             from "./X3DImportedNode.js";
 import ImportedNodesArray          from "./ImportedNodesArray.js";
 import ExternProtoDeclarationArray from "../Prototype/ExternProtoDeclarationArray.js";
@@ -223,10 +224,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (!node)
          throw new Error ("Couldn't add named node: node must be of type X3DNode.");
 
+      if (node instanceof X3DImportedNodeInstance)
+         throw new Error ("Couldn't add named node: node cannot be of type X3DImportedNodeInstance.");
+
       if (node .getExecutionContext () !== this)
          throw new Error ("Couldn't add named node: node does not belong to this execution context.");
 
-      if (name .length === 0)
+      if (!name)
          throw new Error ("Couldn't add named node: node name is empty.");
 
       if (this [_namedNodes] .has (name))
@@ -249,10 +253,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (!node)
          throw new Error ("Couldn't update named node: node must be of type X3DNode.");
 
+      if (node instanceof X3DImportedNodeInstance)
+         throw new Error ("Couldn't add named node: node cannot be of type X3DImportedNodeInstance.");
+
       if (node .getExecutionContext () !== this)
          throw new Error ("Couldn't update named node: node does not belong to this execution context.");
 
-      if (name .length === 0)
+      if (!name)
          throw new Error ("Couldn't update named node: node name is empty.");
 
       // Remove named node.
@@ -321,10 +328,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (inlineNode .getExecutionContext () !== this)
          throw new Error ("Couldn't update imported node: Inline node does not belong to this execution context.");
 
-      if (exportedName .length === 0)
+      if (!exportedName)
          throw new Error ("Couldn't update imported node: exported name is empty.");
 
-      if (importedName .length === 0)
+      if (!importedName)
          throw new Error ("Couldn't update imported node: imported name is empty.");
 
       // Update imported node.
@@ -463,7 +470,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (this [_protos] .get (proto .getName ()) === proto)
          throw new Error (`Couldn't add proto declaration: proto '${proto .getName ()}' already added.`);
 
-      if (name .length === 0)
+      if (!name)
          throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
       if (this [_externprotos] .has (name))
@@ -487,7 +494,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (proto .getExecutionContext () !== this)
          throw new Error ("Couldn't update proto declaration: proto does not belong to this execution context.");
 
-      if (name .length === 0)
+      if (!name)
          throw new Error ("Couldn't update proto declaration: proto name is empty.");
 
       if (this [_externprotos] .has (name))
@@ -544,7 +551,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (this [_externprotos] .get (externproto .getName ()) === externproto)
          throw new Error (`Couldn't add extern proto declaration: extern proto '${externproto .getName ()}' already added.`);
 
-      if (name .length === 0)
+      if (!name)
          throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
 
       if (this [_protos] .has (name))
@@ -568,7 +575,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (externproto .getExecutionContext () !== this)
          throw new Error ("Couldn't update extern proto declaration: extern proto does not belong to this execution context.");
 
-      if (name .length === 0)
+      if (!name)
          throw new Error ("Couldn't update extern proto declaration: extern proto name is empty.");
 
       if (this [_protos] .has (name))

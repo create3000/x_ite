@@ -1,16 +1,17 @@
-import Fields              from "../Fields.js";
-import X3DExecutionContext from "./X3DExecutionContext.js";
-import { getUniqueName }   from "./NamedNodesHandling.js";
-import ComponentInfo       from "../Configuration/ComponentInfo.js";
-import ComponentInfoArray  from "../Configuration/ComponentInfoArray.js";
-import UnitInfo            from "../Configuration/UnitInfo.js";
-import UnitInfoArray       from "../Configuration/UnitInfoArray.js";
-import X3DExportedNode     from "./X3DExportedNode.js";
-import ExportedNodesArray  from "./ExportedNodesArray.js";
-import X3DCast             from "../Base/X3DCast.js";
-import X3DConstants        from "../Base/X3DConstants.js";
-import SFNodeCache         from "../Fields/SFNodeCache.js";
-import LATEST_VERSION      from "../LATEST_VERSION.js";
+import Fields                  from "../Fields.js";
+import X3DExecutionContext     from "./X3DExecutionContext.js";
+import { getUniqueName }       from "./NamedNodesHandling.js";
+import ComponentInfo           from "../Configuration/ComponentInfo.js";
+import ComponentInfoArray      from "../Configuration/ComponentInfoArray.js";
+import UnitInfo                from "../Configuration/UnitInfo.js";
+import UnitInfoArray           from "../Configuration/UnitInfoArray.js";
+import X3DImportedNodeInstance from "../Components/Core/X3DImportedNodeInstance.js";
+import X3DExportedNode         from "./X3DExportedNode.js";
+import ExportedNodesArray      from "./ExportedNodesArray.js";
+import X3DCast                 from "../Base/X3DCast.js";
+import X3DConstants            from "../Base/X3DConstants.js";
+import SFNodeCache             from "../Fields/SFNodeCache.js";
+import LATEST_VERSION          from "../LATEST_VERSION.js";
 
 const
    _specificationVersion = Symbol (),
@@ -297,14 +298,17 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       node         = X3DCast (X3DConstants .X3DNode, node, false);
       description  = String (description);
 
-      if (exportedName .length === 0)
-         throw new Error ("Couldn't update exported node: node exported name is empty.");
-
       if (!node)
          throw new Error ("Couldn't update exported node: node must be of type X3DNode.");
 
-      //if (node .getExecutionContext () !== this)
-      //   throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
+      if (node instanceof X3DImportedNodeInstance)
+         throw new Error ("Couldn't update exported node: node cannot be of type X3DImportedNodeInstance.");
+
+      if (node .getExecutionContext () !== this)
+        throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
+
+      if (!exportedName)
+         throw new Error ("Couldn't update exported node: node exported name is empty.");
 
       const exportedNode = new X3DExportedNode (this, exportedName, node, description);
 
