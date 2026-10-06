@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       return this [_instances] .getOrInsertComputed (this [_importedName], () =>
       {
-         const instance = new X3DImportedNodeInstance (this .getExecutionContext (), this [_importedName]);
+         const instance = new X3DImportedNodeInstance (this .getExecutionContext (), this);
 
          instance .setup ();
 
@@ -167,6 +167,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    dispose ()
    {
+      this [_instances] .delete (this [_importedName]);
+
       for (const route of Array .from (this [_executionContext] .getRoutes ()))
       {
          if (route .getSourceNode () === this)

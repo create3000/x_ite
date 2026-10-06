@@ -336,7 +336,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_importedNodes] .add (importedName, importedNode);
 
-      importedNode .getInstance () ?.update ();
+      importedNode .getInstance () .update ();
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },
@@ -433,7 +433,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          try
          {
-            if (importedNode .getInnerNode () === node)
+            if (importedNode .getExportedNode () === node)
                return importedNode;
          }
          catch
