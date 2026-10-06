@@ -7,7 +7,6 @@ import Fields                    from "../Fields.js";
 import X3DParser                 from "./X3DParser.js";
 import VRMLParser                from "./VRMLParser.js";
 import HTMLSupport               from "./HTMLSupport.js";
-import X3DImportedNode           from "../Execution/X3DImportedNode.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
@@ -859,11 +858,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          try
          {
-            const localNode = this .getExecutionContext () .getLocalNode (name);
-
-            const node = localNode instanceof X3DImportedNode
-               ? localNode .getInstance ()
-               : localNode .getValue ();
+            const node = this .getExecutionContext () .getLocalNode (name) .getValue ();
 
             this .checkNodeType (node, name, type, typeName);
             this .addNode (xmlElement, node);

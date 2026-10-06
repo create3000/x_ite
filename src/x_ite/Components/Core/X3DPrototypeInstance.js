@@ -372,13 +372,9 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       {
          try
          {
-            const sourceNode = route .getSourceNode () instanceof X3DNode
-               ? this [_body] .getLocalNode (route .getSourceNode () .getName ())
-               : this [_body] .getLocalNode (route .getSourceNode () .getImportedName ());
-
-            const destinationNode = route .getDestinationNode () instanceof X3DNode
-               ? this [_body] .getLocalNode (route .getDestinationNode () .getName ())
-               : this [_body] .getLocalNode (route .getDestinationNode () .getImportedName ());
+            const
+               sourceNode      = this [_body] .getLocalNode (route .getSourceNode () .getName ()),
+               destinationNode = this [_body] .getLocalNode (route .getDestinationNode () .getName ());
 
             this [_body] .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
          }

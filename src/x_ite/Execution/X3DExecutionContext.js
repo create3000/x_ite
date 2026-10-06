@@ -401,7 +401,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          const importedNode = this [_importedNodes] .get (name);
 
          if (importedNode)
-            return importedNode;
+            return importedNode .instance;
 
          throw new Error (`Unknown named or imported node '${name}'.`);
       }
@@ -413,26 +413,17 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
     */
    getNodeOrImportedNode (node)
    {
-      node = X3DCast (X3DConstants .X3DNode, node, false)
-         ?? (node instanceof X3DImportedNode ? node : null);
+      node = X3DCast (X3DConstants .X3DNode, node, false);
 
       if (!node)
          throw new Error ("Couldn't get localized node: node must be of type X3DNode.");
-
-      if (node .getExecutionContext () === this)
-      {
-         if (node instanceof X3DImportedNodeInstance)
-            return node .getImportedNode ();
-
-         return node;
-      }
 
       for (const importedNode of this [_importedNodes])
       {
          try
          {
             if (importedNode .getExportedNode () === node)
-               return importedNode;
+               return importedNode .getInstance ();
          }
          catch
          { }
@@ -612,13 +603,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       // Normalize arguments.
 
-      const
-         importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
-         importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
-
-      sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
+      sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
       sourceField      = String (sourceField);
-      destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
+      destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false);
       destinationField = String (destinationField);
 
       // Check nodes.
