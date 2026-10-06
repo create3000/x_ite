@@ -54,15 +54,18 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    setImportName (importedName)
    {
       const
-         instance  = this .getInstance (),
-         instances = this [_instances];
-
-      instances .delete (this [_importedName]);
-      instances .set (importedName, instance);
+         instances = this [_instances],
+         instance  = instances .get (this [_importedName]);
 
       this [_importedName] = importedName;
 
-      instance .setName (importedName);
+      instances .delete (this [_importedName]);
+
+      if (instance)
+      {
+         instances .set (importedName, instance);
+         instance .setName (importedName);
+      }
    },
    getInstance ()
    {
