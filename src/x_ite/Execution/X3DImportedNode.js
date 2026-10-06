@@ -69,16 +69,14 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    getInstance ()
    {
-      return this [_instances] .get (this [_importedName]) ?? (() =>
+      return this [_instances] .getOrInsertComputed (this [_importedName], () =>
       {
          const instance = new X3DImportedNodeInstance (this .getExecutionContext (), this [_importedName]);
 
          instance .setup ();
 
-         this [_instances] .set (this [_importedName], instance);
-
          return instance;
-      })();
+      });
    },
    getDescription ()
    {
