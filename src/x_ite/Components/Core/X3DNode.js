@@ -60,10 +60,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          if (this .getName () .length)
          {
-            const namedNode = executionContext .getNamedNodes () .get (this .getName ());
-
-            if (namedNode)
-               return namedNode .getValue ();
+            try
+            {
+               return executionContext .getLocalNode (this .getName ()) .getValue ();
+            }
+            catch
+            { }
          }
 
          // Create copy.
