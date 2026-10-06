@@ -629,7 +629,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       destinationNode = this .getNodeOrImportedNode (destinationNode);
 
       // Add route.
-
       const route = this .getRoute (sourceNode, sourceField, destinationNode, destinationField);
 
       if (route)
@@ -702,7 +701,12 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (route .getDestinationNode () !== destinationNode)
             return false;
 
-         if (!sourceField)
+         if (sourceField)
+         {
+            if ($.try (() => route .getSourceNode () .getField (route .getSourceField ())) !== sourceField)
+               return false;
+         }
+         else
          {
             if (sourceNode instanceof X3DImportedNodeInstance)
             {
@@ -715,7 +719,12 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
             }
          }
 
-         if (!destinationField)
+         if (destinationField)
+         {
+            if ($.try (() => route .getDestinationNode () .getField (route .getDestinationField ())) !== destinationField)
+               return false;
+         }
+         else
          {
             if (destinationNode instanceof X3DImportedNodeInstance)
             {
