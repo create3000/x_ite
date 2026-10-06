@@ -5,7 +5,6 @@ import { getUniqueName }           from "./NamedNodesHandling.js";
 import NamedNodesArray             from "./NamedNodesArray.js";
 import X3DImportedNode             from "./X3DImportedNode.js";
 import ImportedNodesArray          from "./ImportedNodesArray.js";
-import X3DImportedNodeInstance     from "../Components/Core/X3DImportedNodeInstance.js";
 import ExternProtoDeclarationArray from "../Prototype/ExternProtoDeclarationArray.js";
 import ProtoDeclarationArray       from "../Prototype/ProtoDeclarationArray.js";
 import X3DProtoDeclaration         from "../Prototype/X3DProtoDeclaration.js";

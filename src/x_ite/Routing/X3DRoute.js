@@ -297,9 +297,13 @@ Object .assign (X3DRoute,
 {
    getRouteId (sourceNode, sourceFieldName, destinationNode, destinationFieldName)
    {
-      const
-         sourceField      = $.try (() => sourceNode .getField (sourceFieldName)),
-         destinationField = $.try (() => destinationNode .getInstance () .getField (destinationFieldName));
+      const sourceField = sourceNode instanceof X3DImportedNodeInstance
+         ? $.try (() => sourceNode .getField (sourceFieldName))
+         : sourceNode .getField (sourceFieldName);
+
+      const destinationField = destinationNode instanceof X3DImportedNodeInstance
+         ? $.try (() => destinationNode .getField (destinationFieldName))
+         : destinationNode .getField (destinationFieldName);
 
       X3DRoute .checkFields (sourceField, destinationField);
 

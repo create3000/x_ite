@@ -10,14 +10,14 @@ const handler =
 {
    get (target, key)
    {
-      if (typeof key === "string")
+      try
       {
-         const
-            node  = target .getValue (),
-            field = node ?.getField (key, false);
-
-         if (field)
+         if (typeof key === "string")
          {
+            const
+               node  = target .getValue (),
+               field = node ?.getField (key);
+
             // Specification conform would be: `accessType & X3DConstants .outputOnly`.
             // However, we also allow read access to initializeOnly fields.
             if (field .getAccessType () === X3DConstants .inputOnly)
@@ -26,19 +26,21 @@ const handler =
             return field .valueOf ();
          }
       }
+      catch
+      { }
 
       return Reflect .get (target, key);
    },
    set (target, key, value)
    {
-      if (typeof key === "string")
+      try
       {
-         const
-            node  = target .getValue (),
-            field = node ?.getField (key, false);
-
-         if (field)
+         if (typeof key === "string")
          {
+            const
+               node  = target .getValue (),
+               field = node ?.getField (key);
+
             if (field .getAccessType () === X3DConstants .outputOnly)
                return false;
 
@@ -46,13 +48,21 @@ const handler =
             return true;
          }
       }
+      catch
+      { }
 
       return Reflect .set (target, key, value);
    },
    has (target, key)
    {
-      return Boolean (target .getValue () ?.getField (key, false))
-         || Reflect .has (target, key);
+      try
+      {
+         return Boolean (target .getValue () ?.getField (key));
+      }
+      catch
+      {
+         return Reflect .has (target, key);
+      }
    },
    ownKeys (target)
    {

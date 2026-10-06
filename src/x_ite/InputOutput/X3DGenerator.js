@@ -369,21 +369,21 @@ Object .assign (Generator .prototype,
 
       return false;
    },
-   ImportedName (importedNode)
+   ImportedName (importedNodeInstance)
    {
       const importedNames = this .importedNames .get (this .ExecutionContext ());
 
-      if (importedNames .has (importedNode))
-         return importedNames .get (importedNode);
+      if (importedNames .has (importedNodeInstance))
+         return importedNames .get (importedNodeInstance);
 
       const
          names   = this .names .get (this .ExecutionContext ()),
-         newName = getUniqueName (names, importedNode .getImportedName ());
+         newName = getUniqueName (names, importedNodeInstance .getName ());
 
       // Add to indices.
 
       names .add (newName);
-      importedNames .set (importedNode, newName);
+      importedNames .set (importedNodeInstance, newName);
 
       return newName;
    },

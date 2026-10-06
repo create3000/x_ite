@@ -57,8 +57,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          instances = this [_instances],
          instance  = instances .get (this [_importedName]);
 
-      this [_importedName] = importedName;
-
       instances .delete (this [_importedName]);
 
       if (instance)
@@ -66,6 +64,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          instances .set (importedName, instance);
          instance .setName (importedName);
       }
+
+      this [_importedName] = importedName;
    },
    getInstance ()
    {
@@ -91,9 +91,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toVRMLStream: Inline node does not exist.");
 
-      generator .AddRouteNode (this);
+      generator .AddRouteNode (this .getInstance ());
 
-      const importedName = generator .ImportedName (this);
+      const importedName = generator .ImportedName (this .getInstance ());
 
       generator .Indent ();
       generator .string += "IMPORT";
@@ -125,9 +125,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
 
-      generator .AddRouteNode (this);
+      generator .AddRouteNode (this .getInstance ());
 
-      const importedName = generator .ImportedName (this);
+      const importedName = generator .ImportedName (this .getInstance ());
 
       generator .openTag ("IMPORT");
       generator .attribute ("inlineDEF",   generator .Name (this .getInlineNode ()));
@@ -149,12 +149,12 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       generator .TidyBreak ();
       generator .Indent ();
 
-      generator .AddRouteNode (this);
+      generator .AddRouteNode (this .getInstance ());
       generator .beginObject ("IMPORT", false, true);
       generator .stringProperty ("@inlineDEF",   generator .Name (this .getInlineNode ()), false);
       generator .stringProperty ("@importedDEF", this .getExportedName ());
 
-      const importedName = generator .ImportedName (this);
+      const importedName = generator .ImportedName (this .getInstance ());
 
       if (importedName !== this .getExportedName ())
          generator .stringProperty ("@AS", importedName);

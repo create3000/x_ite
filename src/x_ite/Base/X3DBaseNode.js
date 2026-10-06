@@ -256,7 +256,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       return this [_fieldDefinitions];
    },
-   getField (name, _throw = true)
+   getField (name)
    {
       const field = getFieldFromArray (this [_userDefinedFields], name)
          ?? getFieldFromArray (this [_predefinedFields], name);
@@ -264,8 +264,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       if (field)
          return field;
 
-      if (_throw)
-         throw new Error (`Unknown field '${name}' in node class ${this .getTypeName ()}.`);
+      throw new Error (`Unknown field '${name}' in node class ${this .getTypeName ()}.`);
    },
    getFields ()
    {
