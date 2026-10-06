@@ -43,17 +43,11 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DN
       return this [_importedNode] .getImportedName ();
    },
    ... Object .fromEntries ([
-      ["getComponentInfo",      "componentInfo"],
-      ["getContainerField",     "containerField"],
-      ["getSpecificationRange", "specificationRange"],
-      ["getTypeName",           "typeName"],
-   ]
-   .map (([fn, property]) => [fn, function ()
-   {
-      return $.try (() => this .getInnerNode ()) ?.[fn] () ?? this .constructor [property];
-   }])),
-   ... Object .fromEntries ([
+      "getTypeName",
       "getType",
+      "getComponentInfo",
+      "getContainerField",
+      "getSpecificationRange",
       "getFieldDefinitions",
       "getPredefinedField",
       "getPredefinedFields",
@@ -67,13 +61,13 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DN
    ]
    .map (fn => [fn, function (... args)
    {
-      return $.try (() => this .getInnerNode ()) ?.[fn] (... args)
+      return $.try (() => this [_importedNode] .getExportedNode ()) ?.[fn] (... args)
          ?? X3DNode .prototype [fn] .call (this, ... args);
    }])),
    set_loadState__ ()
    {
-      if (this [_importedNode] ?.getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
-          $.try (() => this .getInnerNode ()) ?.addInterest ("addNodeEvent", this);
+      if (this [_importedNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
+          $.try (() => this [_importedNode] .getExportedNode ()) ?.addInterest ("addNodeEvent", this);
 
       this ._typeName_changed ?.setValue (Date .now () / 1000);
 
