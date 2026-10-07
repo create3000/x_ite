@@ -16,6 +16,7 @@ import Vector2                   from "../../standard/Math/Numbers/Vector2.js";
 import Vector3                   from "../../standard/Math/Numbers/Vector3.js";
 import Vector4                   from "../../standard/Math/Numbers/Vector4.js";
 import $                         from "../../lib/helper.js";
+import DEVELOPMENT               from "../DEVELOPMENT.js";
 
 /*
  *  Grammar
@@ -180,6 +181,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       }
       catch (error)
       {
+         if (DEVELOPMENT)
+            console .error (error);
+
          throw new Error (this .getError (error), { cause: error });
       }
    },
@@ -333,6 +337,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                }
                catch (error)
                {
+                  if (DEVELOPMENT)
+                     console .error (error);
+
                   throw new Error (this .getError (error), { cause: error });
                }
             })

@@ -65,11 +65,14 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       this .set_live__ ();
 
-      this .importExternProtos  (proto .getBody () .externprotos);
-      this .importProtos        (proto .getBody () .protos);
-      this .copyRootNodes       (proto .getBody () .rootNodes);
-      this .importImportedNodes (proto .getBody () .importedNodes);
-      this .copyRoutes          (proto .getBody () .routes);
+      const protoBody = proto .getBody ();
+
+      this .addExternProtos   (protoBody .externprotos);
+      this .addProtos         (protoBody .protos);
+      this .copyNamedNodes    (protoBody .namedNodes);
+      this .copyImportedNodes (protoBody .importedNodes);
+      this .copyRootNodes     (protoBody .rootNodes);
+      this .copyRoutes        (protoBody .routes);
 
       // Propagate events.
 
@@ -329,28 +332,33 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       return X3DNode .prototype .isDefaultValue .call (this, field);
    },
-   importExternProtos (externprotos1)
+   addExternProtos (externprotos1)
    {
       const externprotos2 = this [_body] .externprotos;
 
       for (const externproto of externprotos1)
          externprotos2 .add (externproto .getName (), externproto);
    },
-   importProtos (protos1)
+   addProtos (protos1)
    {
       const protos2 = this [_body] .protos;
 
       for (const proto of protos1)
          protos2 .add (proto .getName (), proto);
    },
+   copyNamedNodes (namedNodes)
+   {
+      for (const node of namedNodes)
+         node .copy (this);
+   },
    copyRootNodes (rootNodes1)
    {
       const rootNodes2 = this [_body] .getRootNodes ();
 
-      for (const node of rootNodes1 .getValue ())
+      for (const node of rootNodes1)
          rootNodes2 .push (node .copy (this));
    },
-   importImportedNodes (importedNodes)
+   copyImportedNodes (importedNodes)
    {
       for (const importedNode of importedNodes)
       {
