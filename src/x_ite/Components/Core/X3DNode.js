@@ -1433,6 +1433,17 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const importedNode of importedNodes)
             importedNode .getInstance () .update ();
+
+         // Update routes after the exported nodes are removed.
+
+         for (const field of this .getFields ())
+         {
+            for (const route of field .getInputRoutes ())
+               route .reconnect ();
+
+            for (const route of field .getOutputRoutes ())
+               route .reconnect ();
+         }
       }
 
       // Remove node from entire scene graph.
