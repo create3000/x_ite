@@ -31,13 +31,13 @@ Object .assign (X3DObject .prototype,
    {
       return this .constructor .typeName;
    },
-   setName (value)
-   {
-      this [_name] = value;
-   },
    getName ()
    {
       return this [_name];
+   },
+   setName (value)
+   {
+      this [_name] = value;
    },
    getDisplayName ()
    {

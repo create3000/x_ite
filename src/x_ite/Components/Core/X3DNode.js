@@ -58,7 +58,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          // First try to get a named node with the node's name.
 
-         if (this .getName () .length)
+         if (this .getName ())
          {
             try
             {
@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          if (this .getNeedsName ())
             this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (), this);
 
-         if (this .getName () .length)
+         if (this .getName ())
             executionContext .updateNamedNode (this .getName (), copy);
 
          // Default fields
@@ -177,7 +177,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    },
    getNeedsName ()
    {
-      if (this .getName () .length)
+      if (this .getName ())
          return false;
 
       if (this .getCloneCount () > 1)
