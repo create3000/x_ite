@@ -67,7 +67,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (this [_instance] && !this [_executionContext] .getImportedNodes () .has (this [_importedName]))
          return;
 
-      this [_instance] = new X3DImportedNodeInstance (this .getExecutionContext (), this);
+      this [_instance] = new X3DImportedNodeInstance (this [_executionContext], this);
 
       this [_instance] .setup ();
    },
