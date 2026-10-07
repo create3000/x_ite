@@ -1438,7 +1438,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const field of this .getFields ())
          {
-            for (const route of [... field .getInputRoutes (), ... field .getOutputRoutes ()])
+            for (const route of Array .from (field .getInputRoutes ()))
+               route .reconnect ();
+
+            for (const route of Array .from (field .getOutputRoutes ()))
                route .reconnect ();
          }
       }
