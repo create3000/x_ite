@@ -118,7 +118,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DN
          }
       }
 
-      executionContext .removeImportedNode (this .getImportedNode () .getImportedName ());
+      this .getImportedNode () .refreshInstance ();
 
       X3DNode .prototype .dispose .call (this);
    },

@@ -20,10 +20,9 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
-   this [_instance]         = new X3DImportedNodeInstance (this .getExecutionContext (), this);
    this [_description]      = description;
 
-   this [_instance] .setup ();
+   this .refreshInstance ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
@@ -55,13 +54,22 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    setImportName (importedName)
    {
-      this [_instance] ?.setName (importedName);
+      this [_instance] .setName (importedName);
 
       this [_importedName] = importedName;
    },
    getInstance ()
    {
       return this [_instance];
+   },
+   refreshInstance ()
+   {
+      if (this [_instance] && !this [_executionContext] .getImportedNodes () .has (this [_importedName]))
+         return;
+
+      this [_instance] = new X3DImportedNodeInstance (this .getExecutionContext (), this);
+
+      this [_instance] .setup ();
    },
    getDescription ()
    {
@@ -152,6 +160,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    dispose ()
    {
+      this [_executionContext] .removeImportedNode (this [_importedName]);
+
       this .instance .dispose ();
 
       X3DObject .prototype .dispose .call (this);
