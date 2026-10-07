@@ -7,6 +7,18 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v16.5 Series
+
+**Leipzig, 11th October 2026:** The 16.5 series of X_ITE brings improved handling of imported nodes, with particular attention to imported node instances that can now be added directly to the scene graph.
+
+This release also provides **full support for imported nodes in PROTO declarations**, making it possible to use imported nodes reliably within reusable X3D prototypes.
+
+### Notable Changes
+
+- [x] Reworked imported nodes handling, especially for imported node instances, which can be added to the scene graph.
+- [x] Full support for imported nodes in proto declarations.
+- [x] Improved imported nodes handling in the Outline Editor of [Sunrize](/sunrize/).
+
 ## X_ITE v16.3 Series
 
 **Leipzig, 6th September 2026:** The 16.3 series of X_ITE introduces support for the glTF extension `KHR_materials_retroreflection`, enabling physically based retroreflective materials that reflect incoming light back toward its source. This extension brings realistic retroreflection effects to glTF materials and is fully integrated into X_ITE’s PBR rendering pipeline.
