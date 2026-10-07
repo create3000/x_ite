@@ -1402,19 +1402,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       if (executionContext .isScene)
       {
-         const parentContext = executionContext .getExecutionContext ();
-
-         if (parentContext)
-         {
-            // Remove imported node in parent context if any.
-
-            for (const importedNode of Array .from (parentContext .getImportedNodes ()))
-            {
-               if ($.try (() => importedNode .getExportedNode ()) === this)
-                  parentContext .removeImportedNode (importedNode .getImportedName ());
-            }
-         }
-
          // Remove exported node if any.
 
          for (const exportedNode of Array .from (executionContext .getExportedNodes ()))
@@ -1423,6 +1410,19 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                continue;
 
             executionContext .removeExportedNode (exportedNode .getExportedName ());
+         }
+
+         // Remove imported node in parent context if any.
+
+         const parentContext = executionContext .getExecutionContext ();
+
+         if (parentContext)
+         {
+            for (const importedNode of Array .from (parentContext .getImportedNodes ()))
+            {
+               if ($.try (() => importedNode .getExportedNode ()) === this)
+                  importedNode .getInstance () .update ();
+            }
          }
       }
 

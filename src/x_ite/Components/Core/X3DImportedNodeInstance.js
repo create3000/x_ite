@@ -22,9 +22,18 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DN
    {
       X3DNode .prototype .initialize .call (this);
 
-      this [_importedNode] .getInlineNode () ._loadState .addInterest ("set_loadState__", this);
+      this [_importedNode] .getInlineNode () ._loadState .addInterest ("update", this);
 
-      this .set_loadState__ ();
+      this .update ();
+   },
+   update ()
+   {
+      if (this [_importedNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
+          $.try (() => this [_importedNode] .getExportedNode ()) ?.addInterest ("addNodeEvent", this);
+
+      this ._typeName_changed ?.setValue (Date .now () / 1000);
+
+      X3DChildObject .prototype .addEvent .call (this);
    },
    getExtendedEventHandling ()
    {
@@ -64,15 +73,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DN
       return $.try (() => this [_importedNode] .getExportedNode ()) ?.[fn] (... args)
          ?? X3DNode .prototype [fn] .call (this, ... args);
    }])),
-   set_loadState__ ()
-   {
-      if (this [_importedNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
-          $.try (() => this [_importedNode] .getExportedNode ()) ?.addInterest ("addNodeEvent", this);
-
-      this ._typeName_changed ?.setValue (Date .now () / 1000);
-
-      X3DChildObject .prototype .addEvent .call (this);
-   },
    toVRMLStream (generator)
    {
       generator .CheckSpace ();
