@@ -167,6 +167,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          }
       }
 
+      this .instance .dispose ();
+
       X3DObject .prototype .dispose .call (this);
    },
 });
