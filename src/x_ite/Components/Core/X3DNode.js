@@ -3,6 +3,7 @@ import X3DBaseNode  from "../../Base/X3DBaseNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import X3DField     from "../../Base/X3DField.js";
 import SFNodeCache  from "../../Fields/SFNodeCache.js";
+import $            from "../../../lib/helper.js";
 
 const _metaDataCallbacks = Symbol ();
 
@@ -1401,22 +1402,27 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       if (executionContext .isScene)
       {
-         // Remove exported node if any.
-
-         for (const exportedNode of Array .from (executionContext .getExportedNodes ()))
-         {
-            if (exportedNode .getLocalNode () === this)
-               executionContext .removeExportedNode (exportedNode .getExportedName ());
-         }
-
-         // Remove imported node if any.
-
          const parentContext = executionContext .getExecutionContext ();
 
          if (parentContext)
          {
-            for (const importedNode of parentContext .getImportedNodes ())
-               importedNode .getInstance () .update ();
+            // Remove imported node in parent context if any.
+
+            for (const importedNode of Array .from (parentContext .getImportedNodes ()))
+            {
+               if ($.try (() => importedNode .getExportedNode ()) === this)
+                  parentContext .removeImportedNode (importedNode .getImportedName ());
+            }
+         }
+
+         // Remove exported node if any.
+
+         for (const exportedNode of Array .from (executionContext .getExportedNodes ()))
+         {
+            if (exportedNode .getLocalNode () !== this)
+               continue;
+
+            executionContext .removeExportedNode (exportedNode .getExportedName ());
          }
       }
 

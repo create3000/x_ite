@@ -108,9 +108,6 @@ class FileLoader
       {
          const scene = new X3DScene (this .browser);
 
-         if (!(this .node instanceof X3DWorld))
-            scene .setExecutionContext (this .executionContext);
-
          scene .setWorldURL (new URL (worldURL, this .getBaseURL ()));
          scene .setup ();
 
