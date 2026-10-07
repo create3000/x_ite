@@ -370,9 +370,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (!importedNode)
          return;
 
-      importedNode .dispose ();
-
       this [_importedNodes] .remove (importedName);
+
+      importedNode .dispose ();
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },

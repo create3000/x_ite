@@ -99,6 +99,29 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DN
       generator .endObject ();
       generator .endObject ();
    },
+   dispose ()
+   {
+      const executionContext = this .getExecutionContext ();
+
+      for (const route of Array .from (executionContext .getRoutes ()))
+      {
+         if (route .getSourceNode () === this)
+         {
+            executionContext .deleteRoute (route);
+            continue;
+         }
+
+         if (route .getDestinationNode () === this)
+         {
+            executionContext .deleteRoute (route);
+            continue;
+         }
+      }
+
+      executionContext .removeImportedNode (this .getImportedNode () .getImportedName ());
+
+      X3DNode .prototype .dispose .call (this);
+   },
 });
 
 Object .defineProperties (X3DImportedNodeInstance, X3DNode .getStaticProperties ("X3DImportedNodeInstance", "Core", 2, "children", "4.1"));

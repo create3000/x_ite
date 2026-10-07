@@ -100,6 +100,12 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
       generator .endObject ();
       generator .endObject ();
    },
+   dispose ()
+   {
+      this [_executionContext] .removeExportedNode (this [_exportedName]);
+
+      X3DObject .prototype .dispose .call (this);
+   },
 });
 
 for (const key of Object .keys (X3DExportedNode .prototype))
