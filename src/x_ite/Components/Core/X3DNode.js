@@ -1411,7 +1411,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          if (parentContext)
          {
-            for (const importedNode of Array .from (parentContext .getImportedNodes ()))
+            for (const importedNode of parentContext .getImportedNodes ())
             {
                if ($.try (() => importedNode .getExportedNode ()) === this)
                   importedNodes .push (importedNode);
