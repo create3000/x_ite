@@ -1402,7 +1402,23 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       if (executionContext .isScene)
       {
-         // Remove exported node if any.
+         // Collect imported nodes in parent context.
+         // This must be done before the exported nodes are removed.
+
+         const
+            parentContext = executionContext .getExecutionContext (),
+            importedNodes = [ ];
+
+         if (parentContext)
+         {
+            for (const importedNode of Array .from (parentContext .getImportedNodes ()))
+            {
+               if ($.try (() => importedNode .getExportedNode ()) === this)
+                  importedNodes .push (importedNode);
+            }
+         }
+
+         // Remove exported nodes if any.
 
          for (const exportedNode of Array .from (executionContext .getExportedNodes ()))
          {
@@ -1412,18 +1428,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             executionContext .removeExportedNode (exportedNode .getExportedName ());
          }
 
-         // Remove imported node in parent context if any.
+         // Update imported node instances in parent context if any.
+         // This must be done after the exported nodes are removed.
 
-         const parentContext = executionContext .getExecutionContext ();
-
-         if (parentContext)
-         {
-            for (const importedNode of Array .from (parentContext .getImportedNodes ()))
-            {
-               if ($.try (() => importedNode .getExportedNode ()) === this)
-                  importedNode .getInstance () .update ();
-            }
-         }
+         for (const importedNode of importedNodes)
+            importedNode .getInstance () .update ();
       }
 
       // Remove node from entire scene graph.
