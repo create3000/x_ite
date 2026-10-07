@@ -360,13 +360,15 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
    copyImportedNodes (importedNodes)
    {
+      const body = this [_body];
+
       for (const importedNode of importedNodes)
       {
          try
          {
-            const inlineNode = this [_body] .getNamedNode (importedNode .getInlineNode () .getName ());
+            const inlineNode = body .getNamedNode (importedNode .getInlineNode () .getName ());
 
-            this [_body] .addImportedNode (inlineNode, importedNode .getExportedName (), importedNode .getImportedName ());
+            body .addImportedNode (inlineNode, importedNode .getExportedName (), importedNode .getImportedName ());
          }
          catch (error)
          {
@@ -376,15 +378,17 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    },
    copyRoutes (routes)
    {
+      const body = this [_body];
+
       for (const route of routes)
       {
          try
          {
             const
-               sourceNode      = this [_body] .getLocalNode (route .getSourceNode () .getName ()),
-               destinationNode = this [_body] .getLocalNode (route .getDestinationNode () .getName ());
+               sourceNode      = body .getLocalNode (route .getSourceNode () .getName ()),
+               destinationNode = body .getLocalNode (route .getDestinationNode () .getName ());
 
-            this [_body] .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
+            body .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
          }
          catch (error)
          {
