@@ -320,7 +320,14 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       exportedName = String (exportedName);
 
+      const exportedNode = this [_exportedNodes] .get (exportedName);
+
+      if (!exportedNode)
+         return;
+
       this [_exportedNodes] .remove (exportedName);
+
+      exportedNode .dispose ();
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },
