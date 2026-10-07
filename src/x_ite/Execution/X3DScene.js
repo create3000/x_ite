@@ -624,7 +624,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
             generator .endArray ();
 
-            headLastProperty = true;
+            // headLastProperty = true;
          }
 
          // Head end
