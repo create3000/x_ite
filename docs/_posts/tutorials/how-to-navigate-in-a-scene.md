@@ -72,6 +72,10 @@ The other viewer, called the Walk Viewer, lets you navigate through a scene by m
 >**Note:** Gravity is always enabled when in Walk Viewer mode. Put a floor under the viewer to prevent falling down.
 {: .prompt-info }
 
+### WASD Controls
+
+A community-developed plugin for X_ITE is available on GitHub that adds WASD navigation controls for exploring 3D scenes. The [X3D Orbital Navigation plugin](https://github.com/npolys/x3d_orbital_nav) provides an alternative way to navigate X3D environments, making it easier to move around scenes using familiar keyboard controls.
+
 ## Fly Viewer
 
 The Fly Viewer work the same way like the Walk Viewer except gravity is always turned off and sliding up and down is enabled.
