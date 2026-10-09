@@ -56,12 +56,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       $.on (this, window, "orientationchange", () => this .reshape ());
 
-      this [_resizer] = new ResizeObserver (() =>
-      {
-         this .reshape ();
-
-         this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
-      });
+      this [_resizer] = new ResizeObserver (() => this .reshape ());
 
       this [_resizer] .observe (this .getSurface ());
 
