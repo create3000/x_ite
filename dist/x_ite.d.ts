@@ -905,6 +905,10 @@ declare namespace X3D
        */
       readonly importedName: string;
       /**
+       * The SFNode object of the instance node. This node can be added to the scene graph. This property is read-only.
+       */
+      readonly instance: SFNode;
+      /**
        * An optional simple DESCRIPTION of intended purpose for the node provided via IMPORT.
        */
       description: string;
