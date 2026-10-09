@@ -1737,8 +1737,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          const color = this .convertColor (this .result [0] .replace (/^0x/i, "#"));
 
-         if (!this .checkColorName (color, this .result [0]))
-            return false;
+         this .checkColorName (color, this .result [0]);
 
          field .r = color [0];
          field .g = color [1];
@@ -1752,11 +1751,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    checkColorName (color, name)
    {
       if (color .every (v => v === 1) && name .toLowerCase () !== "white" && name .match (/^[a-zA-Z]+$/))
-      {
-         return false;
-      }
-
-      return true;
+         throw new Error ("Invalid color name.");
    },
    mfcolorValue (field)
    {
@@ -1845,8 +1840,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          const color = this .convertColor (this .result [0] .replace (/^0x/i, "#"));
 
-         if (!this .checkColorName (color, this .result [0]))
-            return false;
+         this .checkColorName (color, this .result [0]);
 
          field .r = color [0];
          field .g = color [1];
