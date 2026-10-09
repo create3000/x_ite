@@ -202,7 +202,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this [_tainted] = false;
 
-      if (now >= 0 && !this .advanceTime ())
+      if (!this .advanceTime () && now >= 0)
       {
          this .addBrowserEvent ();
          return;
