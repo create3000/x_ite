@@ -11,6 +11,7 @@ const
    _defaultFramebuffer  = Symbol (),
    _textureBuffers      = Symbol (),
    _resizer             = Symbol (),
+   _traverse            = Symbol .for ("X_ITE.X3DBrowserContext.traverse"),
    _localObjects        = Symbol (),
    _fullscreenArray     = Symbol (),
    _fullscreenBuffer    = Symbol (),
@@ -336,6 +337,9 @@ Object .assign (X3DRenderingContext .prototype,
       canvas .height = height;
 
       this .reshapeFramebuffer (0, 0, 0, width, height);
+
+      if (this .getWorld ())
+         this [_traverse] (-1);
 
       this .addBrowserEvent ();
    },
