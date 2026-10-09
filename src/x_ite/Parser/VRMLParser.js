@@ -1735,7 +1735,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .HTMLColor .parse (this))
       {
-         const color = this .convertColor (this .result [0] .replace (/0x/i, "#"));
+         const color = this .convertColor (this .result [0] .replace (/^0x/i, "#"));
+
+         if (!this .checkColorName (color, this .result [0]))
+            return false;
 
          field .r = color [0];
          field .g = color [1];
@@ -1745,6 +1748,15 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       }
 
       return false;
+   },
+   checkColorName (color, name)
+   {
+      if (color .every (v => v === 1) && name .toLowerCase () !== "white" && name .match (/^[a-zA-Z]+$/))
+      {
+         return false;
+      }
+
+      return true;
    },
    mfcolorValue (field)
    {
@@ -1831,7 +1843,10 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .HTMLColor .parse (this))
       {
-         const color = this .convertColor (this .result [0] .replace (/0x/i, "#"));
+         const color = this .convertColor (this .result [0] .replace (/^0x/i, "#"));
+
+         if (!this .checkColorName (color, this .result [0]))
+            return false;
 
          field .r = color [0];
          field .g = color [1];
