@@ -84,7 +84,7 @@ const Grammar = Expressions ({
    noDoubleQuotes: /[^"]+/y,
 
    CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI(?:2|1_4|2_4|3_4|4_4|5_4|6_4|7_4|8_4|1_2|2_2|3_2|4_2|1_3|2_3|3_3|4_3|5_3|6_3)?|SQRT(?:1_2|2))\b/iy,
-   HTMLColor: /0[xX][\da-fA-F]+|[a-zA-Z]+\([^)]*\)|[a-zA-Z]+/y,
+   HTMLColor: /0[xX][\da-fA-F]+|[a-zA-Z]+\([^)[\]]*\)|[a-zA-Z]+/y,
 });
 
 /*
@@ -1768,12 +1768,27 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       return false;
    },
+   sfColor: new Fields .SFColor (),
    sfcolorValues (field)
    {
       const array = [ ];
 
-      while (this .double ())
-         array .push (this .value);
+      for (;;)
+      {
+         if (this .double ())
+         {
+            array .push (this .value);
+            continue;
+         }
+
+         if (this .sfcolorValue (this .sfColor))
+         {
+            array .push (... this .sfColor);
+            continue;
+         }
+
+         break;
+      }
 
       field .setValue (array);
 
@@ -1840,7 +1855,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfcolorValues (field);
+         this .sfcolorrgbaValues (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -1849,6 +1864,32 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       }
 
       return false;
+   },
+   sfColorRGBA: new Fields .SFColorRGBA (),
+   sfcolorrgbaValues (field)
+   {
+      const array = [ ];
+
+      for (;;)
+      {
+         if (this .double ())
+         {
+            array .push (this .value);
+            continue;
+         }
+
+         if (this .sfcolorrgbaValue (this .sfColorRGBA))
+         {
+            array .push (... this .sfColorRGBA);
+            continue;
+         }
+
+         break;
+      }
+
+      field .setValue (array);
+
+      return field .length !== 0;
    },
    sfdoubleValue (field)
    {
