@@ -79,7 +79,7 @@ const Grammar = Expressions ({
 
    // Values
    int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   double: /(?!0[xX])[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
    doubleQuotes: /"/y,
    noDoubleQuotes: /[^"]+/y,
 
