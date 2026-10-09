@@ -1748,11 +1748,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
       return false;
    },
-   checkColorName (color, name)
-   {
-      if (color .every (v => v === 1) && name .toLowerCase () !== "white" && name .match (/^[a-zA-Z]+$/))
-         throw new Error ("Invalid color name.");
-   },
    mfcolorValue (field)
    {
       field .length = 0;
