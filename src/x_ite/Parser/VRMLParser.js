@@ -1783,6 +1783,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             continue;
          }
 
+         // Try parse HTML/CSS color values.
          if (this .sfcolorValue (this .sfColor))
          {
             array .push (... this .sfColor);
@@ -1882,6 +1883,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             continue;
          }
 
+         // Try parse HTML/CSS color values.
          if (this .sfcolorrgbaValue (this .sfColorRGBA))
          {
             array .push (... this .sfColorRGBA);
