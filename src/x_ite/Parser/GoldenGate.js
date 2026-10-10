@@ -124,6 +124,11 @@ class GoldenGate extends X3DParser
                if (string .match (/^\s*$/s))
                   return "";
 
+               // XML must start with markup. Do not try DOMParser on other input, because
+               // some browsers (Firefox) log a parsing error to the console when it fails.
+               if (!string .match (/^\s*</))
+                  return;
+
                return $.parseXML (string);
             }
             case "JSON":
