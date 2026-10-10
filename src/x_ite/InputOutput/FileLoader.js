@@ -212,7 +212,7 @@ class FileLoader
 
       // Script:
       {
-         const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript):/s);
+         const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript):/);
 
          if (result)
             return await this .dataCallback (url .substring (result [0] .length));
@@ -223,7 +223,7 @@ class FileLoader
       // Handle data URLs that are not base64 decoded here:
       if (this .dataAsString)
       {
-         const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
+         const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/);
 
          if (result && result [3] !== "base64")
          {

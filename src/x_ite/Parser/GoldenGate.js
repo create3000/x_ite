@@ -121,7 +121,8 @@ class GoldenGate extends X3DParser
                if (string === undefined)
                   return;
 
-               if (string .match (/^\s*$/s))
+               // An empty string should result in an empty XML (encoding) scene.
+               if (string .match (/^\s*$/))
                   return "";
 
                // XML must start with markup. Do not try DOMParser on other input, because
