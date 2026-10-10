@@ -14,6 +14,7 @@ import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
 import Legacy              from "../Legacy.js";
 import _                   from "../../../locale/gettext.js";
+import DEVELOPMENT         from "../../DEVELOPMENT.js";
 
 import "./Fonts.js";
 
@@ -80,7 +81,9 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "integrity:x_ite.css";
+         if (!DEVELOPMENT)
+            link .integrity = "integrity:x_ite.css";
+
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
