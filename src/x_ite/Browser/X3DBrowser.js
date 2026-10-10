@@ -28,7 +28,7 @@ import "../Components.js";
 
 /* eslint no-undef: "off"
    --------
-   no-undef: global variable is used here for use in node projects.
+   no-undef: `global` variable is used here for use in node projects.
  */
 
 const
