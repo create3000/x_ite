@@ -202,7 +202,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this [_tainted] = false;
 
-      if (!this .advanceTime () && now >= 0)
+      // If now is negative, don't check framerate.
+      // Now can be negative when reshape is called.
+      if (!this .advanceTime (now >= 0))
       {
          this .addBrowserEvent ();
          return;
