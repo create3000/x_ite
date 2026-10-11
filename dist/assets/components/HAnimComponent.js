@@ -1188,7 +1188,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
    },
    set_joints__ ()
    {
-      this .joints = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s);
+      this .joints = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/g, "") .split (/[\s,]+/);
 
       this .disconnectJoints ();
    },
@@ -1208,9 +1208,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
          // Create interpolators.
 
          const channels = this ._channels .getValue ()
-            .replace (/^[\s,\d]+|[\s,\d]+$/sg, "")
-            .split (/[\s,]+\d+[\s,]+/s)
-            .map (string => string .split (/[\s,]+/s));
+            .replace (/^[\s,\d]+|[\s,\d]+$/g, "")
+            .split (/[\s,]+\d+[\s,]+/)
+            .map (string => string .split (/[\s,]+/));
 
          // console .time ("set_interpolators__");
 

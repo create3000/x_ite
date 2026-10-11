@@ -1,7 +1,7 @@
 /* X_ITE v16.5.0 */
 var __webpack_modules__ = ({
 
-/***/ 678
+/***/ 829
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 236
+/***/ 247
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 280
+/***/ 67
 (module) {
 
 /**
@@ -7800,7 +7800,7 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
    },
    RemoveComma ()
    {
-      this .string = this .string .replace (/,\s*$/s, "");
+      this .string = this .string .replace (/,\s*$/, "");
    },
    stringProperty (key, value, comma = true)
    {
@@ -22287,7 +22287,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       if (cdata ?.length === 0)
          cdata = null;
 
-      if (!cdata ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)))
+      if (!cdata ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/)))
          cdata = null;
 
       generator .IncIndent ();
@@ -22566,7 +22566,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       if (sourceText ?.length !== 1)
          sourceText = null;
 
-      if (!sourceText ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/s)))
+      if (!sourceText ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/)))
          sourceText = null;
 
       // Predefined fields
@@ -25949,6 +25949,11 @@ Object .assign (X3DParser .prototype,
 
       return values;
    },
+   checkColorName (color, name)
+   {
+      if (color .every (v => v === 1) && name .toLowerCase () !== "white" && name .match (/^[a-zA-Z]+$/))
+         throw new Error ("Invalid color name.");
+   },
    sanitizeName (name = "")
    {
       // NonIdFirstChar
@@ -26262,7 +26267,7 @@ const Grammar = Parser_Expressions ({
 
    // Values
    int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   double: /(?!0[xX])[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
    doubleQuotes: /"/y,
    noDoubleQuotes: /[^"]+/y,
 
@@ -27918,7 +27923,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
 
       if (Grammar .HTMLColor .parse (this))
       {
-         const color = this .convertColor (this .result [0] .replace (/0x/i, "#"));
+         const color = this .convertColor (this .result [0] .replace (/^0x/i, "#"));
+
+         this .checkColorName (color, this .result [0]);
 
          field .r = color [0];
          field .g = color [1];
@@ -27951,12 +27958,28 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
 
       return false;
    },
+   sfColor: new x_ite_Fields .SFColor (),
    sfcolorValues (field)
    {
       const array = [ ];
 
-      while (this .double ())
-         array .push (this .value);
+      for (;;)
+      {
+         if (this .double ())
+         {
+            array .push (this .value);
+            continue;
+         }
+
+         // Try parse HTML/CSS color values.
+         if (this .sfcolorValue (this .sfColor))
+         {
+            array .push (... this .sfColor);
+            continue;
+         }
+
+         break;
+      }
 
       field .setValue (array);
 
@@ -27999,7 +28022,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
 
       if (Grammar .HTMLColor .parse (this))
       {
-         const color = this .convertColor (this .result [0] .replace (/0x/i, "#"));
+         const color = this .convertColor (this .result [0] .replace (/^0x/i, "#"));
+
+         this .checkColorName (color, this .result [0]);
 
          field .r = color [0];
          field .g = color [1];
@@ -28023,7 +28048,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
 
       if (Grammar .OpenBracket .parse (this))
       {
-         this .sfcolorValues (field);
+         this .sfcolorrgbaValues (field);
 
          if (Grammar .CloseBracket .parse (this))
             return true;
@@ -28032,6 +28057,33 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
       }
 
       return false;
+   },
+   sfColorRGBA: new x_ite_Fields .SFColorRGBA (),
+   sfcolorrgbaValues (field)
+   {
+      const array = [ ];
+
+      for (;;)
+      {
+         if (this .double ())
+         {
+            array .push (this .value);
+            continue;
+         }
+
+         // Try parse HTML/CSS color values.
+         if (this .sfcolorrgbaValue (this .sfColorRGBA))
+         {
+            array .push (... this .sfColorRGBA);
+            continue;
+         }
+
+         break;
+      }
+
+      field .setValue (array);
+
+      return field .length !== 0;
    },
    sfdoubleValue (field)
    {
@@ -31109,7 +31161,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(280);
+/* provided dependency */ var libtess = __webpack_require__(67);
 
 
 const Triangle3 =
@@ -37803,7 +37855,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
          {
             fileURL = new URL (fileURL);
 
-            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
+            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^\s*data:image\/ktx2[;,]/))
             {
                this .setLinear (true);
                this .setMipMaps (false);
@@ -47831,7 +47883,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(280);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(67);
 
 
 
@@ -50690,8 +50742,14 @@ class GoldenGate extends Parser_X3DParser
                if (string === undefined)
                   return;
 
-               if (string .match (/^\s*$/s))
+               // An empty string should result in an empty XML (encoding) scene.
+               if (string .match (/^\s*$/))
                   return "";
+
+               // XML must start with markup. Do not try DOMParser on other input, because
+               // some browsers (Firefox) log a parsing error to the console when it fails.
+               if (!string .match (/^\s*</))
+                  return;
 
                return helper.parseXML (string);
             }
@@ -51217,7 +51275,7 @@ class FileLoader
 
       // Script:
       {
-         const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript):/s);
+         const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript):/);
 
          if (result)
             return await this .dataCallback (url .substring (result [0] .length));
@@ -51228,7 +51286,7 @@ class FileLoader
       // Handle data URLs that are not base64 decoded here:
       if (this .dataAsString)
       {
-         const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
+         const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/);
 
          if (result && result [3] !== "base64")
          {
@@ -54534,6 +54592,7 @@ Fonts_add ("PT_Sans/PTSans-Italic.woff2",     false, true);
 
 
 
+
 const
    _instanceId          = Symbol (),
    _element             = Symbol (),
@@ -54597,7 +54656,9 @@ function X3DCoreContext (element)
       {
          const link = document .createElement ("link");
 
-         link .integrity   = "sha384-PV+KMMYFFsD4yJSRNZxR5SQtB1+/svusY5D4rmCUw1HodNYMj3Nx2fKast5z9E0g";
+         if (!DEVELOPMENT)
+            link .integrity = "sha384-PV+KMMYFFsD4yJSRNZxR5SQtB1+/svusY5D4rmCUw1HodNYMj3Nx2fKast5z9E0g";
+
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
          link .onload      = resolve;
@@ -65637,12 +65698,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       helper.on (this, window, "orientationchange", () => this .reshape ());
 
-      this [_resizer] = new ResizeObserver (() =>
-      {
-         this .reshape ();
-
-         this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
-      });
+      this [_resizer] = new ResizeObserver (() => this .reshape ());
 
       this [_resizer] .observe (this .getSurface ());
 
@@ -72615,14 +72671,14 @@ Object .assign (X3DTimeContext .prototype,
    {
       const lastPosition = new Numbers_Vector3 ();
 
-      return function ()
+      return function (checkFrameRate)
       {
          const
             time          = Date .now () / 1000,
             interval      = time - this [_lastTime],
             viewpointNode = this .getActiveViewpoint ();
 
-         if (interval <= 1 / Math .max (this .getBrowserOption ("MaximumFrameRate"), 1))
+         if (checkFrameRate && interval <= 1 / Math .max (this .getBrowserOption ("MaximumFrameRate"), 1))
             return false;
 
          this [_lastTime]         = time;
@@ -73037,7 +73093,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
 
       this [X3DBrowserContext_tainted] = false;
 
-      if (!this .advanceTime () && now >= 0)
+      // If now is negative, don't check framerate.
+      // Now can be negative when reshape is called.
+      if (!this .advanceTime (now >= 0))
       {
          this .addBrowserEvent ();
          return;
@@ -91474,8 +91532,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(678);
-/* provided dependency */ var APNG = __webpack_require__(236);
+/* provided dependency */ var SuperGif = __webpack_require__(829);
+/* provided dependency */ var APNG = __webpack_require__(247);
 
 
 
@@ -91548,7 +91606,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
 
          try
          {
-            if (fileURL .pathname .endsWith (".gif") || fileURL .href .match (/^\s*data:image\/gif[;,]/s))
+            if (fileURL .pathname .endsWith (".gif") || fileURL .href .match (/^\s*data:image\/gif[;,]/))
             {
                const
                   data = await this .loadDocument (fileURL),
@@ -91567,7 +91625,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
                this .setGif (gif);
                return;
             }
-            else if (fileURL .pathname .endsWith (".png") || fileURL .href .match (/^\s*data:image\/png[;,]/s))
+            else if (fileURL .pathname .endsWith (".png") || fileURL .href .match (/^\s*data:image\/png[;,]/))
             {
                const
                   data      = await this .loadDocument (fileURL),
@@ -92826,7 +92884,7 @@ const Components_default_ = Components;
 
 /* eslint no-undef: "off"
    --------
-   no-undef: global variable is used here for use in node projects.
+   no-undef: node `global` variable is used here for use in node projects.
  */
 
 const
@@ -94119,7 +94177,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(280);
+/* provided dependency */ var libtess_libtess = __webpack_require__(67);
 const libtess_default_ = libtess_libtess;
 ;
 
