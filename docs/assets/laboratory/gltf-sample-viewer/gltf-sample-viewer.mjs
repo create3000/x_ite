@@ -894,6 +894,7 @@ class SampleViewer
    async loadURL (filename)
    {
       this .showOptions (false);
+      this .setEnvironmentLight (!no_ibl .some (name => filename .includes (name)));
 
       await this .browser .loadURL (new X3D .MFString (filename));
 
