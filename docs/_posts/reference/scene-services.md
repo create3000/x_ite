@@ -278,13 +278,13 @@ Adds the metadata with *name* and *values.* There must be at least one value in 
 
 Removes the metadata *name.*
 
-#### **addRootNode** (*node: SFNode*): void
+#### **addRootNode** (*node: SFNode | null*): void
 
 Adds *node* to the list of root nodes. If the node already exists, the function silently returns.
 
-#### **removeRootNode** (*node: SFNode*): void
+#### **removeRootNode** (*node: SFNode | null*): void
 
-Removes *node* from the list of root nodes.
+Removes all occurrences of *node* from the list of root nodes.
 
 #### **getExportedNode** (*exportedName: string*): SFNode
 
