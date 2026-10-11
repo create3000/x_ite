@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 343
+/***/ 648
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 925
+/***/ 794
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 485
+/***/ 282
 (module) {
 
 /**
@@ -31181,7 +31181,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(485);
+/* provided dependency */ var libtess = __webpack_require__(282);
 
 
 const Triangle3 =
@@ -47903,7 +47903,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(485);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(282);
 
 
 
@@ -54011,12 +54011,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, Execution_X3DExecut
    },
    addRootNode (node)
    {
-      node = Base_X3DCast (Base_X3DConstants .X3DNode, node, false);
-
-      if (!node)
-         throw new Error ("Couldn't add root node: node must be of type X3DNode.");
-
-      node = Fields_SFNodeCache .get (node);
+      node   = Base_X3DCast (Base_X3DConstants .X3DNode, node, false);
+      node &&= Fields_SFNodeCache .get (node);
 
       const rootNodes = this .getRootNodes ();
 
@@ -91558,8 +91554,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(343);
-/* provided dependency */ var APNG = __webpack_require__(925);
+/* provided dependency */ var SuperGif = __webpack_require__(648);
+/* provided dependency */ var APNG = __webpack_require__(794);
 
 
 
@@ -94203,7 +94199,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(485);
+/* provided dependency */ var libtess_libtess = __webpack_require__(282);
 const libtess_default_ = libtess_libtess;
 ;
 

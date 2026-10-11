@@ -352,12 +352,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    addRootNode (node)
    {
-      node = X3DCast (X3DConstants .X3DNode, node, false);
-
-      if (!node)
-         throw new Error ("Couldn't add root node: node must be of type X3DNode.");
-
-      node = SFNodeCache .get (node);
+      node   = X3DCast (X3DConstants .X3DNode, node, false);
+      node &&= SFNodeCache .get (node);
 
       const rootNodes = this .getRootNodes ();
 
