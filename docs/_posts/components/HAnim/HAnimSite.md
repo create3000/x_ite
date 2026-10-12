@@ -36,15 +36,15 @@ The **HAnimSite** node belongs to the [HAnim](/x_ite/components/overview/#hanim)
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFString | [in, out] | [purpose](#fields-purpose) |  |
+| SFString | [in, out] | [purpose](#fields-purpose) | "" |
 | SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0 |
 | SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0 |
 | SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1 |
 | SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0 |
 | SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
-| SFInt32 | [in, out] | [meshVertexIndex](#fields-meshVertexIndex) |  |
-| SFNode | [in, out] | [coord](#fields-coord) |  |
-| MFNode | [in, out] | [displacers](#fields-displacers) |  |
+| SFInt32 | [in, out] | [meshVertexIndex](#fields-meshVertexIndex) | -1 |
+| SFNode | [in, out] | [coord](#fields-coord) | NULL |
+| MFNode | [in, out] | [displacers](#fields-displacers) | [ ] |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
