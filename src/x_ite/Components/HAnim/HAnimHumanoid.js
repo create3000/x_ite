@@ -387,15 +387,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       {
          const skinCoordWeight = jointNode ._skinCoordWeight .getValue ();
 
-         for (const [i, index] of jointNode ._skinCoordIndex .entries ())
+         for (const [i, coordIndex] of jointNode ._skinCoordIndex .entries ())
          {
             const weight = skinCoordWeight [i];
 
             if (!weight)
                continue;
 
-            joints  [index] ?.push (jointIndex);
-            weights [index] ?.push (weight);
+            joints  [coordIndex] ?.push (jointIndex);
+            weights [coordIndex] ?.push (weight);
          }
       }
 
