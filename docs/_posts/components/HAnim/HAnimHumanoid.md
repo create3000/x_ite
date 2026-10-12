@@ -56,7 +56,7 @@ The **HAnimHumanoid** node belongs to the [HAnim](/x_ite/components/overview/#ha
 | MFNode | [in, out] | [segments](#fields-segments) | [ ] |
 | MFNode | [in, out] | [sites](#fields-sites) | [ ] |
 | MFNode | [in, out] | [viewpoints](#fields-viewpoints) | [ ] |
-| MFNode | [in, out] | [displacers](#fields-displacers) |  |
+| MFNode | [in, out] | [displacers](#fields-displacers) | [ ] |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 | MFBool | [in, out] | [motionsEnabled](#fields-motionsEnabled) | [ ] |
 | MFNode | [in, out] | [motions](#fields-motions) | [ ] |
