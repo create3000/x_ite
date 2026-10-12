@@ -18,7 +18,7 @@ function HAnimJoint (executionContext)
                           X3DConstants .outputOnly, "displacementWeights", new Fields .SFTime ());
 
    this .setVisibleObject (true);
-   this .addAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSegment);
+   this .addAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSegment, X3DConstants .X3DGroupingNode, X3DConstants .Shape);
 
    // Units
 
@@ -31,6 +31,8 @@ function HAnimJoint (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAllowedTypes (X3DConstants .HAnimSite);
+   else if (executionContext .getSpecificationVersion () <= 4.0)
+      this .addAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSegment);
 
    // Private properties
 

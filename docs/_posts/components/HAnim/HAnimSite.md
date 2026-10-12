@@ -36,11 +36,15 @@ The **HAnimSite** node belongs to the [HAnim](/x_ite/components/overview/#hanim)
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
+| SFString | [in, out] | [purpose](#fields-purpose) |  |
 | SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0 |
 | SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0 |
 | SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1 |
 | SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0 |
 | SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
+| SFInt32 | [in, out] | [meshVertexIndex](#fields-meshVertexIndex) |  |
+| SFNode | [in, out] | [coord](#fields-coord) |  |
+| MFNode | [in, out] | [displacers](#fields-displacers) |  |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
@@ -93,6 +97,11 @@ Unique *name* attribute must be defined so that **HAnimSite** node can be identi
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches.
 - **HAnimSite** *name* must end in '_tip' or '_view' or '_pt' suffix.
 
+### SFString [in, out] **purpose** "" <small>["TIP", "POINT", "VIEW", "CONNECTION", ...]</small>
+{: #fields-purpose }
+
+Input/Output field *purpose*.
+
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-translation }
 
@@ -126,6 +135,21 @@ Default location of this **HAnimSite**, i.e. offset of *center* from origin of l
 #### Hint
 
 - *center* field indicates default origin relative to overall humanoid body and is rarely modified. For **HAnimSite** animation, ROUTE position-change events to translation field instead.
+
+### SFInt32 [in, out] **meshVertexIndex** -1 <small>[0,∞) or −1</small>
+{: #fields-meshVertexIndex }
+
+Input/Output field *meshVertexIndex*.
+
+### SFNode [in, out] **coord** NULL <small>[Coordinate, CoordinateDouble]</small>
+{: #fields-coord }
+
+Input/Output field *coord*.
+
+### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
+{: #fields-displacers }
+
+Input/Output field *displacers*.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }

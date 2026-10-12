@@ -17,9 +17,16 @@ function HAnimSegment (executionContext)
    this .addChildObjects (X3DConstants .outputOnly, "displacementsTexture",       new Fields .SFTime (),
                           X3DConstants .outputOnly, "displacementWeightsTexture", new Fields .SFTime ());
 
+   this .addAllowedTypes (X3DConstants .HAnimSite, X3DConstants .X3DGroupingNode);
+
    // Units
 
    this ._mass .setUnit ("mass");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 4.0)
+      this .addAllowedTypes (X3DConstants .X3DChildNode);
 
    // Private properties
 

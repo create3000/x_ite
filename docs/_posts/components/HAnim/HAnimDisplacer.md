@@ -13,7 +13,7 @@ tags: [HAnimDisplacer, HAnim]
 
 ## Overview
 
-**HAnimDisplacer** nodes alter the shape of coordinate-based geometry within parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) nodes. Displacer effects are scaled by the corresponding weight field.
+**HAnimDisplacer** nodes alter the shape of coordinate-based geometry within HAnim nodes. Allowed parent nodes for **HAnimDisplacer** are [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) or [HAnimJoint](/x_ite/components/hanim/hanimjoint/) (where animations affect the [Coordinate](/x_ite/components/rendering/coordinate/) node the ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skinCoord field) and [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimSite](/x_ite/components/hanim/hanimsite/) (where animations affect the [Coordinate](/x_ite/components/rendering/coordinate/) node in the coord field of the local parent node). Displacer effects are scaled by the corresponding weight field, and no output ROUTE is needed for animation effects.
 
 The **HAnimDisplacer** node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **1,** its default container field is *displacers.* It is available from X3D version 3.0 or higher.
 
@@ -90,10 +90,15 @@ The weigh factor has typical range [0,1] and defines the scale factor applied to
 ### MFInt32 [in, out] **coordIndex** [ ] <small>[0,∞) or -1</small>
 {: #fields-coordIndex }
 
-Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) coordinate array for the mesh of vertices affected by this **HAnimDisplacer**. Values start at index 0.
+Defines index values into the parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) or ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) coordinate array for the mesh of vertices affected by this **HAnimDisplacer**. Alternatively can modify coord node of a parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimSite](/x_ite/components/hanim/hanimsite/). Index values start at index 0.
 
-#### Warning
+#### Hint
 
+- Multiple Displacer objects can coexist without mutual interference if each is modifying different *coordIndex* values (and thus different vertices).
+
+#### Warnings
+
+- Do not simultaneously modify a specific vertex with multiple **HAnimDisplacer** nodes.
 - -1 sentinel values are not allowed.
 
 ### MFVec3f [in, out] **displacements** [ ]
@@ -110,12 +115,13 @@ Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hani
 
 ### Hints
 
-- **HAnimDisplacer** can be used in three different ways: (a) identify vertices corresponding to a particular feature in a parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node, (b) represent a particular muscular action for a parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node by displacing corresponding [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin vertices in various directions (linearly or radially), or (c) represent a complete configuration of coordinate vertices in parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes. Example: in the case of a face, there might be a separate **HAnimDisplacer** node for each facial expression.
-- Allowed parent nodes for **HAnimDisplacer** are [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/), [HAnimJoint](/x_ite/components/hanim/hanimjoint/), and [HAnimSegment](/x_ite/components/hanim/hanimsegment/).
+- **HAnimDisplacer** can be used in several different ways, for example: (a) identify vertices corresponding to a particular feature in a parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node, (b) represent a particular muscular action for a parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node by displacing corresponding [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin vertices in various directions (linearly or radially), or (c) represent a complete configuration of coordinate vertices in parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes. Example: in the case of a face, there might be a separate **HAnimDisplacer** node for each facial expression.
+- Multiple Displacer objects can coexist without mutual interference if each is modifying different coordIndex values (and thus different vertices).
 - Multiple **HAnimDisplacer** nodes must appear consecutively inside parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) for proper content validation in XML encoding.
 - [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Displacer)
 - [X3D HAnim component draft version 4.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/hanim.html#HAnimDisplacer)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
+- [Wikipedia, Morph target animation](https://en.wikipedia.org/wiki/Morph_target_animation)
 
 ### Warnings
 
