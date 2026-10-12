@@ -56,6 +56,7 @@ The **HAnimHumanoid** node belongs to the [HAnim](/x_ite/components/overview/#ha
 | MFNode | [in, out] | [segments](#fields-segments) | [ ] |
 | MFNode | [in, out] | [sites](#fields-sites) | [ ] |
 | MFNode | [in, out] | [viewpoints](#fields-viewpoints) | [ ] |
+| MFNode | [in, out] | [displacers](#fields-displacers) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 | MFBool | [in, out] | [motionsEnabled](#fields-motionsEnabled) | [ ] |
 | MFNode | [in, out] | [motions](#fields-motions) | [ ] |
@@ -335,6 +336,11 @@ List of [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes containing [Viewpo
 
 - These are actual node declarations, not USE nodes.
 - Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes (in turn containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes) must include `containerField='viewpoints'` for proper validation and operation.
+
+### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
+{: #fields-displacers }
+
+Input/Output field *displacers*.
 
 ### MFNode [in, out] **children** [ ] <small>[HAnimPose]</small>
 {: #fields-children }
