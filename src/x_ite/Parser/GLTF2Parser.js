@@ -2381,7 +2381,7 @@ function eventsProcessed ()
                if (childNode .getType () .at (-1) !== X3DConstants .HAnimJoint)
                {
                   const
-                     siteNode    = scene .createNode ("HAnimSite", false),
+                     siteNode    = scene .createNode ("HAnimSite",    false),
                      segmentNode = scene .createNode ("HAnimSegment", false);
 
                   siteNode    ._children .push (childNode);
