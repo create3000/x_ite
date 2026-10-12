@@ -383,7 +383,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          joints  = Array .from ({ length }, () => [ ]),
          weights = Array .from ({ length }, () => [ ]);
 
-      for (const [joint, jointNode] of this .jointNodes .entries ())
+      for (const [jointIndex, jointNode] of this .jointNodes .entries ())
       {
          const skinCoordWeight = jointNode ._skinCoordWeight .getValue ();
 
@@ -394,7 +394,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             if (weight === 0)
                continue;
 
-            joints  [index] ?.push (joint);
+            joints  [index] ?.push (jointIndex);
             weights [index] ?.push (weight);
          }
       }
@@ -439,7 +439,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       this .displacementWeights .length = 0;
 
-      for (const [joint, jointNode] of this .jointNodes .entries ())
+      for (const [jointIndex, jointNode] of this .jointNodes .entries ())
       {
          for (const { _weight, _coordIndex, _displacements } of jointNode .getDisplacers ())
          {
@@ -450,7 +450,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             this .displacementWeights .push (_weight, 0, 0, 0);
 
             for (const [i, index] of _coordIndex .entries ())
-               displacements [index] ?.push (... _displacements [i], joint, displacer, 0, 0, 0);
+               displacements [index] ?.push (... _displacements [i], jointIndex, displacer, 0, 0, 0);
 
             ++ displacer;
          }
