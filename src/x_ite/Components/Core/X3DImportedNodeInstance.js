@@ -5,6 +5,57 @@ import $              from "../../../lib/helper.js";
 
 const _importedNode = Symbol ();
 
+const handler =
+{
+   get (target, key)
+   {
+      if (Reflect .has (target, key))
+         return Reflect .get (target, key);
+
+      const exportedNode = $.try (() => target [_importedNode] .getExportedNode ());
+
+      if (exportedNode)
+         return Reflect .get (exportedNode, key);
+   },
+   set (target, key, value)
+   {
+      if (Reflect .has (target, key))
+         return Reflect .set (target, key, value);
+
+      const exportedNode = $.try (() => target [_importedNode] .getExportedNode ());
+
+      if (exportedNode)
+         return Reflect .set (exportedNode, key, value);
+
+      return false;
+   },
+   has (target, key)
+   {
+      const exportedNode = $.try (() => target [_importedNode] .getExportedNode ());
+
+      return Reflect .has (target, key)
+         || (exportedNode && Reflect .has (exportedNode, key));
+   },
+   ownKeys (target)
+   {
+      let keys = Reflect .ownKeys (target);
+
+      const exportedNode = $.try (() => target [_importedNode] .getExportedNode ());
+
+      if (exportedNode)
+         keys = keys .concat (Reflect .ownKeys (exportedNode));
+
+      return Array .from (new Set (keys));
+   },
+   getOwnPropertyDescriptor (target, key)
+   {
+      const exportedNode = $.try (() => target [_importedNode] .getExportedNode ());
+
+      return Reflect .getOwnPropertyDescriptor (target, key)
+         ?? (exportedNode && Reflect .getOwnPropertyDescriptor (exportedNode, key));
+   },
+};
+
 function X3DImportedNodeInstance (executionContext, importedNode)
 {
    X3DNode .call (this, executionContext);
@@ -14,6 +65,8 @@ function X3DImportedNodeInstance (executionContext, importedNode)
    // Private properties
 
    this [_importedNode] = importedNode;
+
+   return new Proxy (this, handler);
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DNode .prototype),
@@ -53,6 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DN
    },
    ... Object .fromEntries ([
       "getTypeName",
+      "getType",
       "getComponentInfo",
       "getContainerField",
       "getSpecificationRange",
