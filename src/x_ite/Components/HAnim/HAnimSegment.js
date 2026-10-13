@@ -8,6 +8,8 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
+const _hAnimNodes = Symbol .for ("X_ITE.HAnimNodes");
+
 function HAnimSegment (executionContext)
 {
    X3DGroupingNode .call (this, executionContext);
@@ -218,7 +220,7 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    {
       if (this .coordNode && this .numDisplacements)
       {
-         const hAnimNodes = renderObject .getHAnimNodes () .getOrInsert (this .coordNode, this .hAnimNodes);
+         const hAnimNodes = this .coordNode [_hAnimNodes] ??= [ ];
 
          hAnimNodes .push (this);
 

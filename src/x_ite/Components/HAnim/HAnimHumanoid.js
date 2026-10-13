@@ -671,24 +671,24 @@ Object .defineProperties (HAnimHumanoid,
    },
 });
 
+const _hAnimNodes = Symbol .for ("X_ITE.HAnimNodes");
+
 class Skin extends Group
 {
    #humanoidNode;
-   #hAnimNodes;
 
    constructor (executionContext, humanoidNode)
    {
       super (executionContext);
 
       this .#humanoidNode = humanoidNode;
-      this .#hAnimNodes   = [ ];
    }
 
    traverse (type, renderObject)
    {
       const
          coordNode  = this .#humanoidNode .getSkinCoord (),
-         hAnimNodes = renderObject .getHAnimNodes () .getOrInsert (coordNode, this .#hAnimNodes);
+         hAnimNodes = coordNode [_hAnimNodes] ??= [ ];
 
       hAnimNodes .push (this .#humanoidNode);
 
