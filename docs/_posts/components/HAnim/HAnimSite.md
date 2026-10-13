@@ -43,8 +43,8 @@ The **HAnimSite** node belongs to the [HAnim](/x_ite/components/overview/#hanim)
 | SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0 |
 | SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
 | SFInt32 | [in, out] | [meshVertexIndex](#fields-meshVertexIndex) | -1 |
-| SFNode | [in, out] | [coord](#fields-coord) | NULL |
 | MFNode | [in, out] | [displacers](#fields-displacers) | [ ] |
+| SFNode | [in, out] | [coord](#fields-coord) | NULL |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
@@ -141,15 +141,15 @@ Default location of this **HAnimSite**, i.e. offset of *center* from origin of l
 
 Input/Output field *meshVertexIndex*.
 
-### SFNode [in, out] **coord** NULL <small>[Coordinate, CoordinateDouble]</small>
-{: #fields-coord }
-
-Input/Output field *coord*.
-
 ### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
 {: #fields-displacers }
 
 Input/Output field *displacers*.
+
+### SFNode [in, out] **coord** NULL <small>[Coordinate, CoordinateDouble]</small>
+{: #fields-coord }
+
+Input/Output field *coord*.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
