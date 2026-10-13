@@ -217,13 +217,13 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    {
       if (this .coordNode && this .numDisplacements)
       {
-         renderObject .getHAnimNode () .push (this);
+         renderObject .getHAnimNodes () .set (this .coordNode, this);
 
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
          this .skinning (type, renderObject);
 
-         renderObject .getHAnimNode () .pop ();
+         renderObject .getHAnimNodes () .delete (this .coordNode);
       }
       else
       {

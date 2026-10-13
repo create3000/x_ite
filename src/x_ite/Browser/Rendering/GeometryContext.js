@@ -31,6 +31,10 @@ Object .assign (GeometryContext .prototype,
    {
       return this .textureCoordinateNode;
    },
+   getCoord ()
+   {
+      return null;
+   },
    updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
 });
 

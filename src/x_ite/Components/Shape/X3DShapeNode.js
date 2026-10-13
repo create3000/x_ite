@@ -275,7 +275,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       {
          case TraverseType .POINTER:
          {
-            renderObject .addPointingShape (this);
+            renderObject .addPointingShape (this, geometryContext);
             break;
          }
          case TraverseType .PICKING:
@@ -285,20 +285,20 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          }
          case TraverseType .COLLISION:
          {
-            renderObject .addCollisionShape (this);
+            renderObject .addCollisionShape (this, geometryContext);
             break;
          }
          case TraverseType .DEPTH:
          case TraverseType .SHADOW:
          {
-            renderObject .addDepthShape (this);
+            renderObject .addDepthShape (this, geometryContext);
             break;
          }
          case TraverseType .DISPLAY:
          {
             // X3DAppearanceNode traverse is needed for rendered textures.
 
-            if (renderObject .addDisplayShape (this))
+            if (renderObject .addDisplayShape (this, geometryContext))
                this .appearanceNode .traverse (type, renderObject);
 
             break;

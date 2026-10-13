@@ -53,7 +53,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, X3DN
    },
    ... Object .fromEntries ([
       "getTypeName",
-      "getType",
       "getComponentInfo",
       "getContainerField",
       "getSpecificationRange",

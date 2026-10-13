@@ -48,7 +48,7 @@ function X3DRenderObject (executionContext)
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
    this .layoutRectangles         = [ ];
-   this .hAnimNode                = [ null ];
+   this .hAnimNodes               = new Map ();
    this .invHumanoidMatrix        = new MatrixStack (Matrix4);
    this .renderedTextures         = new Set ();
    this .collisions               = [ ];
@@ -307,9 +307,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .layoutRectangles;
    },
-   getHAnimNode ()
+   getHAnimNodes ()
    {
-      return this .hAnimNode;
+      return this .hAnimNodes;
    },
    getInvHumanoidMatrix ()
    {
@@ -587,7 +587,7 @@ Object .assign (X3DRenderObject .prototype,
          bboxSize   = new Vector3 (),
          bboxCenter = new Vector3 ();
 
-      return function (shapeNode)
+      return function (shapeNode, geometryContext)
       {
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
@@ -621,7 +621,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = this .hAnimNode .at (-1);
+         renderContext .hAnimNode = this .hAnimNodes .get (geometryContext .getCoord ());
          renderContext .shapeNode = shapeNode;
 
          // Clip planes & sensors
@@ -638,7 +638,7 @@ Object .assign (X3DRenderObject .prototype,
          bboxSize   = new Vector3 (),
          bboxCenter = new Vector3 ();
 
-      return function (shapeNode)
+      return function (shapeNode, geometryContext)
       {
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
@@ -672,7 +672,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = this .hAnimNode .at (-1);
+         renderContext .hAnimNode = this .hAnimNodes .get (geometryContext .getCoord ());
          renderContext .shapeNode = shapeNode;
 
          // Clip planes & Collision nodes
@@ -689,7 +689,7 @@ Object .assign (X3DRenderObject .prototype,
          bboxSize   = new Vector3 (),
          bboxCenter = new Vector3 ();
 
-      return function (shapeNode)
+      return function (shapeNode, geometryContext)
       {
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
@@ -722,7 +722,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = this .hAnimNode .at (-1);
+         renderContext .hAnimNode = this .hAnimNodes .get (geometryContext .getCoord ());
          renderContext .shapeNode = shapeNode;
 
          // Clip planes
@@ -738,7 +738,7 @@ Object .assign (X3DRenderObject .prototype,
          bboxSize   = new Vector3 (),
          bboxCenter = new Vector3 ();
 
-      return function (shapeNode)
+      return function (shapeNode, geometryContext)
       {
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
@@ -782,7 +782,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .shadows        = this .localShadows .at (-1);
          renderContext .fogNode        = this .localFogs .at (-1);
-         renderContext .hAnimNode      = this .hAnimNode .at (-1);
+         renderContext .hAnimNode      = this .hAnimNodes .get (geometryContext .getCoord ());
          renderContext .shapeNode      = shapeNode;
          renderContext .appearanceNode = shapeNode .getAppearance ();
 

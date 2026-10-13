@@ -197,6 +197,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       return this .humanoidKey;
    },
+   getSkinCoord ()
+   {
+      return this .skinCoordNode;
+   },
    set_humanoidKey__ ()
    {
       this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
@@ -680,11 +684,13 @@ class Skin extends Group
 
    traverse (type, renderObject)
    {
-      renderObject .getHAnimNode () .push (this .#humanoidNode);
+      const coordNode = this .#humanoidNode .getSkinCoord ();
+
+      renderObject .getHAnimNodes () .set (coordNode, this .#humanoidNode);
 
       super .traverse (type, renderObject);
 
-      renderObject .getHAnimNode () .pop ();
+      renderObject .getHAnimNodes () .delete (coordNode);
    }
 }
 
