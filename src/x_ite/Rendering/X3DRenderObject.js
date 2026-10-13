@@ -14,7 +14,7 @@ import MatrixStack   from "../../standard/Math/Utility/MatrixStack.js";
 import Plane3        from "../../standard/Math/Geometry/Plane3.js";
 import StopWatch     from "../../standard/Time/StopWatch.js";
 
-const _hAnimNodes = Symbol .for ("X_ITE.HAnimNodes");
+const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
 
 const DEPTH_BUFFER_SIZE = 16;
 

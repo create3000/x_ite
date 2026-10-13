@@ -671,7 +671,7 @@ Object .defineProperties (HAnimHumanoid,
    },
 });
 
-const _hAnimNodes = Symbol .for ("X_ITE.HAnimNodes");
+const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
 
 class Skin extends Group
 {

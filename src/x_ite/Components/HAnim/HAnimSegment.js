@@ -8,7 +8,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
-const _hAnimNodes = Symbol .for ("X_ITE.HAnimNodes");
+const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
 
 function HAnimSegment (executionContext)
 {
@@ -39,7 +39,6 @@ function HAnimSegment (executionContext)
    this .displacerNodes      = [ ];
    this .displacementWeights = [ ];
    this .jointMatricesArray  = new Float32Array (size * size * 4);
-   this .hAnimNodes          = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode .prototype),
