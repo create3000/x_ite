@@ -37,6 +37,7 @@ function HAnimSegment (executionContext)
    this .displacerNodes      = [ ];
    this .displacementWeights = [ ];
    this .jointMatricesArray  = new Float32Array (size * size * 4);
+   this .hAnimNodes          = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode .prototype),
@@ -217,13 +218,15 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    {
       if (this .coordNode && this .numDisplacements)
       {
-         renderObject .getHAnimNodes () .set (this .coordNode, this);
+         const hAnimNodes = renderObject .getHAnimNodes () .getOrInsert (this .coordNode, this .hAnimNodes);
+
+         hAnimNodes .push (this);
 
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
          this .skinning (type, renderObject);
 
-         renderObject .getHAnimNodes () .delete (this .coordNode);
+         hAnimNodes .pop ();
       }
       else
       {

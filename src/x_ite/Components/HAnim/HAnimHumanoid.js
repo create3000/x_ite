@@ -674,23 +674,27 @@ Object .defineProperties (HAnimHumanoid,
 class Skin extends Group
 {
    #humanoidNode;
+   #hAnimNodes;
 
    constructor (executionContext, humanoidNode)
    {
       super (executionContext);
 
       this .#humanoidNode = humanoidNode;
+      this .#hAnimNodes   = [ ];
    }
 
    traverse (type, renderObject)
    {
-      const coordNode = this .#humanoidNode .getSkinCoord ();
+      const
+         coordNode  = this .#humanoidNode .getSkinCoord (),
+         hAnimNodes = renderObject .getHAnimNodes () .getOrInsert (coordNode, this .#hAnimNodes);
 
-      renderObject .getHAnimNodes () .set (coordNode, this .#humanoidNode);
+      hAnimNodes .push (this .#humanoidNode);
 
       super .traverse (type, renderObject);
 
-      renderObject .getHAnimNodes () .delete (coordNode);
+      hAnimNodes .pop ();
    }
 }
 

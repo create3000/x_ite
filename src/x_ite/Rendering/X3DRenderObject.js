@@ -48,7 +48,7 @@ function X3DRenderObject (executionContext)
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
    this .layoutRectangles         = [ ];
-   this .hAnimNodes               = new Map ();
+   this .hAnimNodes               = new WeakMap ();
    this .invHumanoidMatrix        = new MatrixStack (Matrix4);
    this .renderedTextures         = new Set ();
    this .collisions               = [ ];
@@ -621,7 +621,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = this .hAnimNodes .get (geometryContext .getCoord ());
+         renderContext .hAnimNode = this .hAnimNodes .get (geometryContext .getCoord ()) ?.at (-1);
          renderContext .shapeNode = shapeNode;
 
          // Clip planes & sensors
@@ -672,7 +672,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = this .hAnimNodes .get (geometryContext .getCoord ());
+         renderContext .hAnimNode = this .hAnimNodes .get (geometryContext .getCoord ()) ?.at (-1);
          renderContext .shapeNode = shapeNode;
 
          // Clip planes & Collision nodes
@@ -722,7 +722,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = this .hAnimNodes .get (geometryContext .getCoord ());
+         renderContext .hAnimNode = this .hAnimNodes .get (geometryContext .getCoord ()) ?.at (-1);
          renderContext .shapeNode = shapeNode;
 
          // Clip planes
@@ -782,7 +782,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .shadows        = this .localShadows .at (-1);
          renderContext .fogNode        = this .localFogs .at (-1);
-         renderContext .hAnimNode      = this .hAnimNodes .get (geometryContext .getCoord ());
+         renderContext .hAnimNode      = this .hAnimNodes .get (geometryContext .getCoord ()) ?.at (-1);
          renderContext .shapeNode      = shapeNode;
          renderContext .appearanceNode = shapeNode .getAppearance ();
 
