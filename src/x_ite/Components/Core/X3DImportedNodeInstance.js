@@ -66,6 +66,8 @@ function X3DImportedNodeInstance (executionContext, importedNode)
 
    this [_importedNode] = importedNode;
 
+   // Return Proxy
+
    return new Proxy (this, handler);
 }
 
