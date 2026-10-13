@@ -572,11 +572,11 @@ declare namespace X3D
       /**
        * Adds *node* to the list of root nodes. If the node already exists, the function silently returns.
        */
-      addRootNode (node: SFNode): void;
+      addRootNode (node: SFNode | null): void;
       /**
-       * Removes *node* from the list of root nodes.
+       * Removes all occurrences of *node* from the list of root nodes.
        */
-      removeRootNode (node: SFNode): void;
+      removeRootNode (node: SFNode | null): void;
       /**
        * Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
        */
