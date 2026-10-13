@@ -1,4 +1,4 @@
-/* X_ITE v16.5.0 */
+/* X_ITE v16.5.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -573,19 +573,19 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
          joints  = Array .from ({ length }, () => [ ]),
          weights = Array .from ({ length }, () => [ ]);
 
-      for (const [joint, jointNode] of this .jointNodes .entries ())
+      for (const [jointIndex, jointNode] of this .jointNodes .entries ())
       {
          const skinCoordWeight = jointNode ._skinCoordWeight .getValue ();
 
-         for (const [i, index] of jointNode ._skinCoordIndex .entries ())
+         for (const [i, coordIndex] of jointNode ._skinCoordIndex .entries ())
          {
             const weight = skinCoordWeight [i];
 
-            if (weight === 0)
+            if (!weight)
                continue;
 
-            joints  [index] ?.push (joint);
-            weights [index] ?.push (weight);
+            joints  [coordIndex] ?.push (jointIndex);
+            weights [coordIndex] ?.push (weight);
          }
       }
 
@@ -629,7 +629,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       this .displacementWeights .length = 0;
 
-      for (const [joint, jointNode] of this .jointNodes .entries ())
+      for (const [jointIndex, jointNode] of this .jointNodes .entries ())
       {
          for (const { _weight, _coordIndex, _displacements } of jointNode .getDisplacers ())
          {
@@ -640,7 +640,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
             this .displacementWeights .push (_weight, 0, 0, 0);
 
             for (const [i, index] of _coordIndex .entries ())
-               displacements [index] ?.push (... _displacements [i], joint, displacer, 0, 0, 0);
+               displacements [index] ?.push (... _displacements [i], jointIndex, displacer, 0, 0, 0);
 
             ++ displacer;
          }
@@ -843,6 +843,7 @@ Object .defineProperties (HAnimHumanoid,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "segments",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sites",                 new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "viewpoints",            new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "displacers",            new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motionsEnabled",        new (external_X_ITE_X3D_Fields_default()).MFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motions",               new (external_X_ITE_X3D_Fields_default()).MFNode ()),
@@ -924,7 +925,7 @@ function HAnimJoint (executionContext)
                           (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeights", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    this .setVisibleObject (true);
-   this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment);
+   this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment, (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode, (external_X_ITE_X3D_X3DConstants_default()).Shape);
 
    // Units
 
@@ -937,6 +938,8 @@ function HAnimJoint (executionContext)
 
    if (executionContext .getSpecificationVersion () <= 3.3)
       this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
+   else if (executionContext .getSpecificationVersion () <= 4.0)
+      this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment);
 
    // Private properties
 
@@ -1706,9 +1709,16 @@ function HAnimSegment (executionContext)
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementsTexture",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
                           (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeightsTexture", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
+   this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite, (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode);
+
    // Units
 
    this ._mass .setUnit ("mass");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 4.0)
+      this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).X3DChildNode);
 
    // Private properties
 
@@ -2027,11 +2037,15 @@ Object .defineProperties (HAnimSite,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",             new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "purpose",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translation",      new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "rotation",         new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scale",            new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 1, 1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scaleOrientation", new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "center",           new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "meshVertexIndex",  new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "displacers",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "coord",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),

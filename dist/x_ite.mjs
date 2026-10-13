@@ -1,7 +1,7 @@
-/* X_ITE v16.5.0 */
+/* X_ITE v16.5.1 */
 var __webpack_modules__ = ({
 
-/***/ 648
+/***/ 971
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 794
+/***/ 697
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 282
+/***/ 617
 (module) {
 
 /**
@@ -18874,7 +18874,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.5.0";
+const BROWSER_VERSION_default_ = "16.5.1";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -23978,6 +23978,57 @@ const NamedNodesArray_default_ = NamedNodesArray;
 
 const _importedNode = Symbol ();
 
+const X3DImportedNodeInstance_handler =
+{
+   get (target, key)
+   {
+      if (Reflect .has (target, key))
+         return Reflect .get (target, key);
+
+      const exportedNode = helper.try (() => target [_importedNode] .getExportedNode ());
+
+      if (exportedNode)
+         return Reflect .get (exportedNode, key);
+   },
+   set (target, key, value)
+   {
+      if (Reflect .has (target, key))
+         return Reflect .set (target, key, value);
+
+      const exportedNode = helper.try (() => target [_importedNode] .getExportedNode ());
+
+      if (exportedNode)
+         return Reflect .set (exportedNode, key, value);
+
+      return false;
+   },
+   has (target, key)
+   {
+      const exportedNode = helper.try (() => target [_importedNode] .getExportedNode ());
+
+      return Reflect .has (target, key)
+         || (exportedNode && Reflect .has (exportedNode, key));
+   },
+   ownKeys (target)
+   {
+      let keys = Reflect .ownKeys (target);
+
+      const exportedNode = helper.try (() => target [_importedNode] .getExportedNode ());
+
+      if (exportedNode)
+         keys = keys .concat (Reflect .ownKeys (exportedNode));
+
+      return Array .from (new Set (keys));
+   },
+   getOwnPropertyDescriptor (target, key)
+   {
+      const exportedNode = helper.try (() => target [_importedNode] .getExportedNode ());
+
+      return Reflect .getOwnPropertyDescriptor (target, key)
+         ?? (exportedNode && Reflect .getOwnPropertyDescriptor (exportedNode, key));
+   },
+};
+
 function X3DImportedNodeInstance (executionContext, importedNode)
 {
    Core_X3DNode .call (this, executionContext);
@@ -23987,6 +24038,10 @@ function X3DImportedNodeInstance (executionContext, importedNode)
    // Private properties
 
    this [_importedNode] = importedNode;
+
+   // Return Proxy
+
+   return new Proxy (this, X3DImportedNodeInstance_handler);
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, Core_X3DNode .prototype),
@@ -31161,7 +31216,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(282);
+/* provided dependency */ var libtess = __webpack_require__(617);
 
 
 const Triangle3 =
@@ -42745,10 +42800,14 @@ function eventsProcessed ()
             {
                if (childNode .getType () .at (-1) !== Base_X3DConstants .HAnimJoint)
                {
-                  const segmentNode = scene .createNode ("HAnimSegment", false);
+                  const
+                     siteNode    = scene .createNode ("HAnimSite",    false),
+                     segmentNode = scene .createNode ("HAnimSegment", false);
 
-                  segmentNode ._children .push (childNode);
+                  siteNode    ._children .push (childNode);
+                  segmentNode ._children .push (siteNode);
 
+                  siteNode    .setup ();
                   segmentNode .setup ();
 
                   return segmentNode;
@@ -47883,7 +47942,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(282);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(617);
 
 
 
@@ -54659,7 +54718,7 @@ function X3DCoreContext (element)
          const link = document .createElement ("link");
 
          if (!DEVELOPMENT)
-            link .integrity = "sha384-PV+KMMYFFsD4yJSRNZxR5SQtB1+/svusY5D4rmCUw1HodNYMj3Nx2fKast5z9E0g";
+            link .integrity = "sha384-VPxo0vBo7nOYn5iBj9X6adcmFfaP8csYQCFin8ZxqaXZgqdt2cZzgydvtXxB0JTm";
 
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
@@ -91534,8 +91593,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(648);
-/* provided dependency */ var APNG = __webpack_require__(794);
+/* provided dependency */ var SuperGif = __webpack_require__(971);
+/* provided dependency */ var APNG = __webpack_require__(697);
 
 
 
@@ -94179,7 +94238,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(282);
+/* provided dependency */ var libtess_libtess = __webpack_require__(617);
 const libtess_default_ = libtess_libtess;
 ;
 
