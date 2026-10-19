@@ -122,6 +122,7 @@
     "apng-js": "^1.1.5",
     "CharLS.js": "^2.0.1",
     "dicom-parser": "^1.8.21",
+    "draco3d": "^1.5.9",
     "eslint": "^10.13.0",
     "fast-xml-parser": "^5.11.2",
     "globals": "^17.13.0",
