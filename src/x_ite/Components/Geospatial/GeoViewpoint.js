@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
 
       return function ()
       {
-         return this .getCoord (this ._position .getValue (), position);
+         return this .getLocalCoord (this ._position .getValue (), position);
       };
    })(),
    setPosition: (() =>
@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
 
       return function ()
       {
-         this .getCoord (this ._position .getValue (), position);
+         this .getLocalCoord (this ._position .getValue (), position);
 
          this .elevation = this .getGeoElevation (position .add (this ._positionOffset .getValue ()));
       };
@@ -150,7 +150,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
 
       return function ()
       {
-         return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
+         return this .getLocalCoord (this ._centerOfRotation .getValue (), centerOfRotation);
       };
    })(),
    setCenterOfRotation: (() =>
@@ -176,7 +176,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, X3DViewpointNod
       {
          if (!dynamic || this .getUserPosition () .norm () < 6.5e6)
          {
-            this .getCoord (this ._position .getValue (), position);
+            this .getLocalCoord (this ._position .getValue (), position);
 
             return this .getGeoUpVector (position .add (this ._positionOffset .getValue ()), upVector);
          }

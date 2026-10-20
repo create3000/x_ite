@@ -45,7 +45,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
 
             index *= 3;
 
-            return this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), result);
+            return this .getLocalCoord (p .set (point [index], point [index + 1], point [index + 2]), result);
          }
          else
          {
@@ -67,7 +67,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
 
             index *= 3;
 
-            this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
+            this .getLocalCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
 
             array .push (g [0], g [1], g [2], 1);
          }
@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
 
          for (let index = 0; index < length; index += 3)
          {
-            this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
+            this .getLocalCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
 
             array .push (g [0], g [1], g [2], 1);
          }

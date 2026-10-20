@@ -107,14 +107,14 @@ Object .assign (X3DGeospatialObject .prototype,
    {
       if (this .geoOriginNode && this .geoOriginNode ._rotateYUp .getValue ())
       {
-         this .getCoord          = getCoordRotateYUp;
+         this .getLocalCoord     = getLocalCoordRotateYUp;
          this .getGeoCoord       = getGeoCoordRotateYUp;
          this .getGeoUpVector    = getGeoUpVectorRotateYUp;
          this .getLocationMatrix = getLocationMatrixRotateYUp;
       }
       else
       {
-         delete this .getCoord;
+         delete this .getLocalCoord;
          delete this .getGeoCoord;
          delete this .getGeoUpVector;
          delete this .getLocationMatrix;
@@ -128,7 +128,7 @@ Object .assign (X3DGeospatialObject .prototype,
    {
       return this .standardOrder;
    },
-   getCoord (geoPoint, result)
+   getLocalCoord (geoPoint, result)
    {
       return this .referenceFrame .convert (geoPoint, result) .subtract (this .origin);
    },
@@ -161,7 +161,7 @@ Object .assign (X3DGeospatialObject .prototype,
    { },
 });
 
-function getCoordRotateYUp (geoPoint, result)
+function getLocalCoordRotateYUp (geoPoint, result)
 {
    return this .invOriginMatrix .multVecMatrix (this .referenceFrame .convert (geoPoint, result));
 }

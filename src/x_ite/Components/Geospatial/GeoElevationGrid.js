@@ -160,7 +160,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
                                           (height [x + z * xDimension] ?? 0) * yScale);
 
                point .add (this ._geoGridOrigin .getValue ());
-               points .push (this .getCoord (point, point));
+               points .push (this .getLocalCoord (point, point));
             }
          }
       }
@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, X3DGeometry
                                           (height [x + z * xDimension] ?? 0) * yScale);
 
                point .add (this ._geoGridOrigin .getValue ());
-               points .push (this .getCoord (point, point));
+               points .push (this .getLocalCoord (point, point));
             }
          }
       }

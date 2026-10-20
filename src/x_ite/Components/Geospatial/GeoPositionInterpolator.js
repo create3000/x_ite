@@ -57,8 +57,8 @@ Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, X3DI
 
       return function (index0, index1, weight)
       {
-         this .getCoord (this ._keyValue [index0] .getValue (), keyValue0);
-         this .getCoord (this ._keyValue [index1] .getValue (), keyValue1);
+         this .getLocalCoord (this ._keyValue [index0] .getValue (), keyValue0);
+         this .getLocalCoord (this ._keyValue [index1] .getValue (), keyValue1);
 
          const coord = this .geocentric .slerp (keyValue0, keyValue1, weight);
 
