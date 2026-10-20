@@ -259,10 +259,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       return this .vertices;
    },
-   getCoord ()
-   {
-      return null;
-   },
    updateVertexArrays ()
    {
       this .vertexArrayObject .update ();
