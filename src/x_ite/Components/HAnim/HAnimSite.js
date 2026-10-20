@@ -135,7 +135,7 @@ Object .assign (Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .
    },
    groupTraverse (type, renderObject)
    {
-      if (this .coordNode ?.numDisplacements)
+      if (this .coordNode ?.getNumDisplacements ())
       {
          if (type === TraverseType .DISPLAY)
          {

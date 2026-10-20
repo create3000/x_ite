@@ -113,7 +113,7 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    },
    traverse (type, renderObject)
    {
-      if (this .coordNode ?.numDisplacements)
+      if (this .coordNode ?.getNumDisplacements ())
       {
          if (type === TraverseType .DISPLAY)
          {
@@ -190,6 +190,10 @@ Object .assign (X3DCoordinateNode .prototype,
    set_humanoidKey__ ()
    {
       this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
+   },
+   getNumDisplacements ()
+   {
+      return this .numDisplacements;
    },
    initHAnimDisplacers ()
    {
