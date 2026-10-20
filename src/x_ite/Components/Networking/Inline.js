@@ -138,13 +138,14 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
             else
             {
                const
-                  globalLights    = renderObject .getGlobalLights (),
-                  globalShadows   = renderObject .getGlobalShadows (),
-                  globalsBegin    = globalLights .length,
-                  shadowsBegin    = globalShadows .length,
-                  localLights     = this .localLights,
-                  numLocalObjects = localLights .length,
-                  lightsKeys      = localLights .map (c => c .lightNode .getLightKey ());
+                  globalLights     = renderObject .getGlobalLights (),
+                  globalLightsKeys = renderObject .getGlobalLightsKeys (),
+                  globalShadows    = renderObject .getGlobalShadows (),
+                  globalsBegin     = globalLights .length,
+                  shadowsBegin     = globalShadows .length,
+                  localLights      = this .localLights,
+                  numLocalObjects  = localLights .length,
+                  lightsKeys       = localLights .map (c => c .lightNode .getLightKey ());
 
                if (numLocalObjects)
                {
@@ -189,8 +190,9 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
                localLights .length = numGlobalLights;
                this .localShadows  = globalShadows .at (-1);
 
-               globalLights  .length = globalsBegin;
-               globalShadows .length = shadowsBegin;
+               globalLights     .length = globalsBegin;
+               globalLightsKeys .length = globalsBegin;
+               globalShadows    .length = shadowsBegin;
             }
 
             return;
