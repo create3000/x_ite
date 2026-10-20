@@ -6,6 +6,7 @@ import X3DChildNode         from "../Core/X3DChildNode.js";
 import Group                from "../Grouping/Group.js";
 import Transform            from "../Grouping/Transform.js";
 import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
+import HAnimJoint           from "./HAnimJoint.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
@@ -52,7 +53,7 @@ function HAnimHumanoid (executionContext)
 
    // Private properties
 
-   this .skeletonNode         = new Group (executionContext);
+   this .skeletonNode         = new HAnimJoint (executionContext);
    this .viewpointsNode       = new Group (executionContext);
    this .skinNode             = new Skin (executionContext, this);
    this .transformNode        = new Transform (executionContext);
@@ -80,13 +81,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this .skeletonNode   .addAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSite);
       this .viewpointsNode .addAllowedTypes (X3DConstants .HAnimSite);
 
+      this ._displacers .addFieldInterest (this .skeletonNode   ._displacers);
       this ._skeleton   .addFieldInterest (this .skeletonNode   ._children);
       this ._viewpoints .addFieldInterest (this .viewpointsNode ._children);
       this ._skin       .addFieldInterest (this .skinNode       ._children);
 
-      this .skeletonNode   ._children = this ._skeleton;
-      this .viewpointsNode ._children = this ._viewpoints;
-      this .skinNode       ._children = this ._skin;
+      this .skeletonNode   ._displacers = this ._displacers;
+      this .skeletonNode   ._children   = this ._skeleton;
+      this .viewpointsNode ._children   = this ._viewpoints;
+      this .skinNode       ._children   = this ._skin;
 
       this .skeletonNode   .setPrivate (true);
       this .viewpointsNode .setPrivate (true);
@@ -338,6 +341,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       jointNodes           .length = 0;
       jointBindingMatrices .length = 0;
+
+      jointNodes           .push (this .skeletonNode);
+      jointBindingMatrices .push (Matrix4 .IDENTITY);
 
       for (const [i, node] of this ._joints .entries ())
       {
