@@ -8,6 +8,8 @@ import X3DCast              from "../../Base/X3DCast.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
+const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
+
 function HAnimSite (executionContext)
 {
    X3DTransformNode .call (this, executionContext);
@@ -119,7 +121,7 @@ Object .assign (Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .
             this .coordNode .updateSkin ();
          }
 
-         const hAnimNodes = this .coordNode .getHAnimNodes ();
+         const hAnimNodes = this .coordNode [_hAnimNodes] ??= [ ];
 
          hAnimNodes .push (this);
 
@@ -148,7 +150,7 @@ Object .assign (Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .
             this .coordNode .updateSkin ();
          }
 
-         const hAnimNodes = this .coordNode .getHAnimNodes ();
+         const hAnimNodes = this .coordNode [_hAnimNodes] ??= [ ];
 
          hAnimNodes .push (this);
 

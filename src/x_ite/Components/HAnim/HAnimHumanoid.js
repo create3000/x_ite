@@ -23,6 +23,8 @@ ShaderRegistry .addIncludeFile ("Skin", Skin2);
  * HAnimHumanoid
  */
 
+const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
+
 function HAnimHumanoid (executionContext)
 {
    X3DChildNode     .call (this, executionContext);
@@ -686,7 +688,7 @@ class Skin extends Group
    {
       const
          coordNode  = this .#humanoidNode .getSkinCoord (),
-         hAnimNodes = coordNode .getHAnimNodes ();
+         hAnimNodes = coordNode [_hAnimNodes] ??= [ ];
 
       hAnimNodes .push (this .#humanoidNode);
 

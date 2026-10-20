@@ -9,6 +9,8 @@ import X3DCast              from "../../Base/X3DCast.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
+const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
+
 function HAnimSegment (executionContext)
 {
    X3DGroupingNode .call (this, executionContext);
@@ -126,7 +128,7 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
             this .coordNode .updateSkin ();
          }
 
-         const hAnimNodes = this .coordNode .getHAnimNodes ();
+         const hAnimNodes = this .coordNode [_hAnimNodes] ??= [ ];
 
          hAnimNodes .push (this);
 
@@ -179,10 +181,6 @@ export default HAnimSegment;
 
 Object .assign (X3DCoordinateNode .prototype,
 {
-   getHAnimNodes ()
-   {
-      return this .hAnimNodes ??= [ ];
-   },
    getHAnimKey ()
    {
       return this .humanoidKey;
