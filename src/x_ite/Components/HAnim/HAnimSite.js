@@ -113,7 +113,7 @@ Object .assign (Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .
             const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
 
             this .jointMatrix
-               .multRight (modelViewMatrix .get ())
+               .assign (modelViewMatrix .get ())
                .multRight (invHumanoidMatrix);
 
             this .coordNode .updateSkin ();
@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .
             const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
 
             this .jointMatrix
-               .multRight (renderObject .getModelViewMatrix () .get ())
+               .assign (renderObject .getModelViewMatrix () .get ())
                .multRight (invHumanoidMatrix);
 
             this .coordNode .updateSkin ();

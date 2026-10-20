@@ -119,7 +119,9 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
          {
             const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
 
-            this .jointMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (invHumanoidMatrix);
+            this .jointMatrix
+               .assign (renderObject .getModelViewMatrix () .get ())
+               .multRight (invHumanoidMatrix);
 
             this .coordNode .updateSkin ();
          }
