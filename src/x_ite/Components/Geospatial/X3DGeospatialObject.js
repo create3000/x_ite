@@ -13,7 +13,7 @@ const
    y      = new Vector3 (),
    z      = new Vector3 ();
 
-function X3DGeospatialObject (executionContext)
+function X3DGeospatialObject (/* executionContext */)
 {
    this .addType (X3DConstants .X3DGeospatialObject);
 
