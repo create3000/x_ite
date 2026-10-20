@@ -4,15 +4,139 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DTransformNode     from "../Grouping/X3DTransformNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+
+const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
 
 function HAnimSite (executionContext)
 {
    X3DTransformNode .call (this, executionContext);
 
    this .addType (X3DConstants .HAnimSite);
+
+   // Private properties
+
+   this .displacerNodes = [ ];
+   this .jointMatrix    = new Matrix4 ();
 }
 
-Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .prototype);
+Object .assign (Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .prototype),
+{
+   initialize ()
+   {
+      X3DTransformNode .prototype .initialize .call (this);
+
+      // Events
+
+      this ._displacers .addInterest ("set_displacers__", this);
+      this ._coord      .addInterest ("set_coord__",      this);
+
+      this .set_displacers__ ();
+      this .set_coord__ ();
+   },
+   getHAnimKey ()
+   {
+      return this .coordNode .getHAnimKey ();
+   },
+   getDisplacers ()
+   {
+      return this .displacerNodes;
+   },
+   getJointMatrix ()
+   {
+      return this .jointMatrix;
+   },
+   set_displacers__ ()
+   {
+      const displacerNodes = this .displacerNodes;
+
+      for (const displacerNode of displacerNodes)
+      {
+         displacerNode ._coordIndex    .removeInterest ("set_displacementsTexture__",       this);
+         displacerNode ._displacements .removeInterest ("set_displacementsTexture__",       this);
+         displacerNode ._coordIndex    .removeInterest ("set_displacementWeightsTexture__", this);
+         displacerNode ._weight        .removeInterest ("set_displacementWeightsTexture__", this);
+      }
+
+      displacerNodes .length = 0;
+
+      for (const node of this ._displacers)
+      {
+         const displacerNode = X3DCast (X3DConstants .HAnimDisplacer, node);
+
+         if (displacerNode)
+            displacerNodes .push (displacerNode);
+      }
+
+      for (const displacerNode of displacerNodes)
+      {
+         displacerNode ._coordIndex    .addInterest ("set_displacementsTexture__",       this);
+         displacerNode ._displacements .addInterest ("set_displacementsTexture__",       this);
+         displacerNode ._coordIndex    .addInterest ("set_displacementWeightsTexture__", this);
+         displacerNode ._weight        .addInterest ("set_displacementWeightsTexture__", this);
+      }
+
+      this .set_displacementsTexture__ ();
+      this .set_displacementWeightsTexture__ ();
+   },
+   set_displacementsTexture__ ()
+   {
+      this .coordNode ?._displacementsTexture .addEvent ();
+   },
+   set_displacementWeightsTexture__ ()
+   {
+      this .coordNode ?._displacementWeightsTexture .addEvent ();
+   },
+   set_coord__ ()
+   {
+      this .coordNode ?.removeHAnimDisplacers (this);
+
+      this .coordNode = X3DCast (X3DConstants .Coordinate, this ._coord)
+         ?? X3DCast (X3DConstants .CoordinateDouble, this ._coord);
+
+      this .coordNode ?.addHAnimDisplacers (this);
+
+      this .set_displacementsTexture__ ();
+      this .set_displacementWeightsTexture__ ();
+   },
+   traverse (type, renderObject)
+   {
+      if (this .coordNode ?.numDisplacements)
+      {
+         if (type === TraverseType .DISPLAY)
+         {
+            const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
+
+            this .jointMatrix
+               .assign (this .getMatrix ())
+               .multRight (renderObject .getModelViewMatrix () .get ())
+               .multRight (invHumanoidMatrix);
+         }
+
+         const hAnimNodes = this .coordNode [_hAnimNodes] ??= [ ];
+
+         hAnimNodes .push (this);
+
+         X3DTransformNode .prototype .traverse .call (this, type, renderObject);
+
+         hAnimNodes .pop ();
+      }
+      else
+      {
+         X3DTransformNode .prototype .traverse .call (this, type, renderObject);
+      }
+   },
+   getShaderOptions (options)
+   {
+      this .coordNode .getHAnimShaderOptions (options);
+   },
+   setShaderUniforms (gl, shaderObject)
+   {
+      this .coordNode .setHAnimShaderUniforms (gl, shaderObject);
+   },
+});
 
 Object .defineProperties (HAnimSite,
 {

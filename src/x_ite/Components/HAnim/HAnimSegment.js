@@ -66,10 +66,10 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
 
       for (const displacerNode of displacerNodes)
       {
-         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacementsTexture);
-         displacerNode ._displacements .removeInterest ("addEvent", this ._displacementsTexture);
-         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacementWeightsTexture);
-         displacerNode ._weight        .removeInterest ("addEvent", this ._displacementWeightsTexture);
+         displacerNode ._coordIndex    .removeInterest ("set_displacementsTexture__",       this);
+         displacerNode ._displacements .removeInterest ("set_displacementsTexture__",       this);
+         displacerNode ._coordIndex    .removeInterest ("set_displacementWeightsTexture__", this);
+         displacerNode ._weight        .removeInterest ("set_displacementWeightsTexture__", this);
       }
 
       displacerNodes .length = 0;
@@ -188,7 +188,7 @@ Object .assign (X3DCoordinateNode .prototype,
    initHAnimDisplacers ()
    {
       this .addChildObjects (X3DConstants .outputOnly, "displacementsTexture",       new Fields .SFTime (),
-                              X3DConstants .outputOnly, "displacementWeightsTexture", new Fields .SFTime ());
+                             X3DConstants .outputOnly, "displacementWeightsTexture", new Fields .SFTime ());
 
       // Private properties
 
@@ -234,6 +234,9 @@ Object .assign (X3DCoordinateNode .prototype,
 
       this .addInterest ("addEvent", this ._displacementsTexture);
       this .addInterest ("addEvent", this ._displacementWeightsTexture);
+
+      this ._displacementsTexture       .addEvent ();
+      this ._displacementWeightsTexture .addEvent ();
    },
    removeHAnimDisplacers (hAnimNode)
    {
@@ -248,6 +251,9 @@ Object .assign (X3DCoordinateNode .prototype,
          this .removeInterest ("addEvent", this ._displacementsTexture);
          this .removeInterest ("addEvent", this ._displacementWeightsTexture);
       }
+
+      this ._displacementsTexture       .addEvent ();
+      this ._displacementWeightsTexture .addEvent ();
    },
    set_displacementsTexture__ ()
    {
