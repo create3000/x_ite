@@ -6,6 +6,7 @@ import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
 import X3DCoordinateNode    from "../Rendering/X3DCoordinateNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
@@ -116,9 +117,12 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    {
       if (this .coordNode ?.numDisplacements)
       {
-         const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
+         if (type === TraverseType .DISPLAY)
+         {
+            const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
 
-         this .jointMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (invHumanoidMatrix);
+            this .jointMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (invHumanoidMatrix);
+         }
 
          const hAnimNodes = this .coordNode [_hAnimNodes] ??= [ ];
 
@@ -175,7 +179,11 @@ Object .assign (X3DCoordinateNode .prototype,
 {
    getHAnimKey ()
    {
-      return `[${this .numJoints}.${this .numDisplacements}]`;
+      return this .humanoidKey;
+   },
+   set_humanoidKey__ ()
+   {
+      this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
    },
    initHAnimDisplacers ()
    {
@@ -184,7 +192,7 @@ Object .assign (X3DCoordinateNode .prototype,
 
       // Private properties
 
-      this .jointNodes = new Set ();
+      this .jointNodes = new Set (); // HAnimSegment, HAnimSite
 
       this .numJoints           = 0;
       this .numDisplacements    = 0;
@@ -297,6 +305,10 @@ Object .assign (X3DCoordinateNode .prototype,
 
       this .displacementWeightsSize  = Math .ceil (Math .sqrt (displacer));
       this .displacementWeightsArray = new Float32Array (this .displacementWeightsSize * this .displacementWeightsSize * 4);
+
+      // Trigger update.
+
+      this .set_humanoidKey__ ();
    },
    set_displacementWeightsTexture__ ()
    {
@@ -353,7 +365,7 @@ Object .assign (X3DCoordinateNode .prototype,
       for (const jointNode of this .jointNodes)
       {
          jointMatricesArray .set (jointNode .getJointMatrix (), i * 32);
-         jointMatricesArray .set (Matrix4 .IDENTITY,            i * 32 + 16);
+         // No need for jointNormalMatrix.
          ++ i;
       }
 
