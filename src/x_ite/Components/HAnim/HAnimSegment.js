@@ -3,7 +3,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
-import TraverseType         from "../../Rendering/TraverseType.js";
+import X3DCoordinateNode    from "../Rendering/X3DCoordinateNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
@@ -16,29 +16,21 @@ function HAnimSegment (executionContext)
 
    this .addType (X3DConstants .HAnimSegment);
 
-   this .addChildObjects (X3DConstants .outputOnly, "displacementsTexture",       new Fields .SFTime (),
-                          X3DConstants .outputOnly, "displacementWeightsTexture", new Fields .SFTime ());
-
    this .addAllowedTypes (X3DConstants .HAnimSite, X3DConstants .X3DGroupingNode);
 
    // Units
 
    this ._mass .setUnit ("mass");
 
+   // Private properties
+
+   this .displacerNodes = [ ];
+   this .jointMatrix    = new Matrix4 ();
+
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 4.0)
       this .addAllowedTypes (X3DConstants .X3DChildNode);
-
-   // Private properties
-
-   const size = Math .ceil (Math .sqrt (1 * 8));
-
-   this .numJoints           = 0;
-   this .numDisplacements    = 0;
-   this .displacerNodes      = [ ];
-   this .displacementWeights = [ ];
-   this .jointMatricesArray  = new Float32Array (size * size * 4);
 }
 
 Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode .prototype),
@@ -47,44 +39,25 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    {
       X3DGroupingNode .prototype .initialize .call (this);
 
-      // Textures
-
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
-
-      this .displacementsTexture       = gl .createTexture ();
-      this .displacementWeightsTexture = gl .createTexture ();
-      this .jointMatricesTexture       = gl .createTexture ();
-
-      for (const texture of [this .displacementsTexture, this .displacementWeightsTexture, this .jointMatricesTexture])
-      {
-         gl .bindTexture (gl .TEXTURE_2D, texture);
-
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-      }
-
       // Events
 
       this ._displacers .addInterest ("set_displacers__", this);
       this ._coord      .addInterest ("set_coord__",      this);
-
-      this ._displacementsTexture       .addInterest ("set_displacementsTexture__",       this);
-      this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
 
       this .set_displacers__ ();
       this .set_coord__ ();
    },
    getHAnimKey ()
    {
-      return this .humanoidKey;
+      return this .coordNode .getHAnimKey ();
    },
-   set_humanoidKey__ ()
+   getDisplacers ()
    {
-      this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
+      return this .displacerNodes;
+   },
+   getJointMatrix ()
+   {
+      return this .jointMatrix;
    },
    set_displacers__ ()
    {
@@ -110,122 +83,48 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
 
       for (const displacerNode of displacerNodes)
       {
-         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacementsTexture);
-         displacerNode ._displacements .addInterest ("addEvent", this ._displacementsTexture);
-         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacementWeightsTexture);
-         displacerNode ._weight        .addInterest ("addEvent", this ._displacementWeightsTexture);
+         displacerNode ._coordIndex    .addInterest ("set_displacementsTexture__",       this);
+         displacerNode ._displacements .addInterest ("set_displacementsTexture__",       this);
+         displacerNode ._coordIndex    .addInterest ("set_displacementWeightsTexture__", this);
+         displacerNode ._weight        .addInterest ("set_displacementWeightsTexture__", this);
       }
 
-      this ._displacementsTexture       .addEvent ();
-      this ._displacementWeightsTexture .addEvent ();
+      this .set_displacementsTexture__ ();
+      this .set_displacementWeightsTexture__ ();
    },
    set_displacementsTexture__ ()
    {
-      // Create array.
-
-      const
-         length        = this .coordNode ?._point .length || 1,
-         displacements = Array .from ({ length }, () => [ ]);
-
-      let displacer = 0;
-
-      this .displacementWeights .length = 0;
-
-      for (const { _weight, _coordIndex, _displacements } of this .displacerNodes)
-      {
-         if (!_coordIndex .length)
-            continue;
-
-         // Store reference to weight SFFloat.
-         this .displacementWeights .push (_weight, 0, 0, 0);
-
-         for (const [i, index] of _coordIndex .entries ())
-            displacements [index] ?.push (... _displacements [i], 0, displacer, 0, 0, 0);
-
-         ++ displacer;
-      }
-
-      const
-         numDisplacements   = displacements .reduce ((p, n) => Math .max (p, n .length), 0) / 8,
-         numElements        = numDisplacements * 8,
-         size               = Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1,
-         displacementsArray = new Float32Array (size * size * 4);
-
-      for (let i = 0; i < length; ++ i)
-         displacementsArray .set (displacements [i], i * numElements);
-
-      // Number of displacements per coord index.
-      this .numDisplacements = numDisplacements;
-
-      // Upload texture.
-
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
-
-      gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, displacementsArray);
-
-      // Weights
-
-      this .displacementWeightsSize  = Math .ceil (Math .sqrt (displacer));
-      this .displacementWeightsArray = new Float32Array (this .displacementWeightsSize * this .displacementWeightsSize * 4);
-
-      // Trigger update.
-
-      this .set_humanoidKey__ ();
+      this .coordNode ?._displacementsTexture .addEvent ();
    },
    set_displacementWeightsTexture__ ()
    {
-      // Upload texture.
-
-      const
-         gl    = this .getBrowser () .getContext (),
-         size  = this .displacementWeightsSize,
-         array = this .displacementWeightsArray;
-
-      array .set (this .displacementWeights);
-
-      gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, array);
+      this .coordNode ?._displacementWeightsTexture .addEvent ();
    },
    set_coord__ ()
    {
-      if (this .coordNode)
-      {
-         this .coordNode .removeInterest ("addEvent", this ._displacementsTexture);
-         this .coordNode .removeInterest ("addEvent", this ._displacementWeightsTexture);
-      }
+      this .coordNode ?.removeHAnimDisplacers (this);
 
       this .coordNode = X3DCast (X3DConstants .Coordinate, this ._coord)
          ?? X3DCast (X3DConstants .CoordinateDouble, this ._coord);
 
-      if (this .coordNode)
-      {
-         delete this .skinning;
+      this .coordNode ?.addHAnimDisplacers (this);
 
-         this .coordNode .addInterest ("addEvent", this ._displacementsTexture);
-         this .coordNode .addInterest ("addEvent", this ._displacementWeightsTexture);
-      }
-      else
-      {
-         this .skinning = Function .prototype;
-      }
-
-      this ._displacementsTexture       .addEvent ();
-      this ._displacementWeightsTexture .addEvent ();
+      this .set_displacementsTexture__ ();
+      this .set_displacementWeightsTexture__ ();
    },
    traverse (type, renderObject)
    {
-      if (this .coordNode && this .numDisplacements)
+      if (this .coordNode ?.numDisplacements)
       {
+         const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
+
+         this .jointMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (invHumanoidMatrix);
+
          const hAnimNodes = this .coordNode [_hAnimNodes] ??= [ ];
 
          hAnimNodes .push (this);
 
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-
-         this .skinning (type, renderObject);
 
          hAnimNodes .pop ();
       }
@@ -234,62 +133,13 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
       }
    },
-   skinning: (() =>
-   {
-      const modelViewMatrix = new Matrix4 ();
-
-      return function (type, renderObject)
-      {
-         if (type !== TraverseType .DISPLAY)
-            return;
-
-         // Create joint matrices.
-
-         const
-            invHumanoidMatrix  = renderObject .getInvHumanoidMatrix () .get (),
-            jointMatricesArray = this .jointMatricesArray,
-            size               = Math .ceil (Math .sqrt (1 * 8));
-
-         const jointMatrix = modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (invHumanoidMatrix);
-
-         jointMatricesArray .set (jointMatrix, 0);
-         // No need for jointNormalMatrix.
-
-         // Upload textures.
-
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
-
-         gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
-      };
-   })(),
    getShaderOptions (options)
    {
-      options .push ("X3D_SKINNING");
-      options .push (`X3D_NUM_JOINT_SETS ${this .numJoints / 4}`);
-      options .push (`X3D_NUM_DISPLACEMENTS ${this .numDisplacements}`);
+      this .coordNode .getHAnimShaderOptions (options);
    },
    setShaderUniforms (gl, shaderObject)
    {
-      const
-         browser                               = this .getBrowser (),
-         jointMatricesTextureUnit              = browser .popTextureUnit (),
-         displacementsTextureTextureUnit       = browser .popTextureUnit (),
-         displacementWeightsTextureTextureUnit = browser .popTextureUnit ();
-
-      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
-      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
-
-      gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
-      gl .uniform1i (shaderObject .x3d_DisplacementsTexture, displacementsTextureTextureUnit);
-
-      gl .activeTexture (gl .TEXTURE0 + displacementWeightsTextureTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
-      gl .uniform1i (shaderObject .x3d_DisplacementWeightsTexture, displacementWeightsTextureTextureUnit);
+      this .coordNode .setHAnimShaderUniforms (gl, shaderObject);
    },
 });
 
@@ -320,3 +170,200 @@ Object .defineProperties (HAnimSegment,
 });
 
 export default HAnimSegment;
+
+Object .assign (X3DCoordinateNode .prototype,
+{
+   getHAnimKey ()
+   {
+      return `[${this .numJoints}.${this .numDisplacements}]`;
+   },
+   initHAnimDisplacers ()
+   {
+      this .addChildObjects (X3DConstants .outputOnly, "displacementsTexture",       new Fields .SFTime (),
+                              X3DConstants .outputOnly, "displacementWeightsTexture", new Fields .SFTime ());
+
+      // Private properties
+
+      this .jointNodes = new Set ();
+
+      this .numJoints           = 0;
+      this .numDisplacements    = 0;
+      this .displacementWeights = [ ];
+
+      // Textures
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      this .displacementsTexture       = gl .createTexture ();
+      this .displacementWeightsTexture = gl .createTexture ();
+      this .jointMatricesTexture       = gl .createTexture ();
+
+      for (const texture of [this .displacementsTexture, this .displacementWeightsTexture, this .jointMatricesTexture])
+      {
+         gl .bindTexture (gl .TEXTURE_2D, texture);
+
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+      }
+
+      this ._displacementsTexture       .addInterest ("set_displacementsTexture__",       this);
+      this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
+   },
+   addHAnimDisplacers (hAnimNode)
+   {
+      if (!this .jointNodes)
+         this .initHAnimDisplacers ();
+
+      this .jointNodes .add (hAnimNode);
+
+      const size = Math .ceil (Math .sqrt (this .jointNodes .size * 8));
+
+      this .jointMatricesArray = new Float32Array (size * size * 4);
+
+      this .addInterest ("addEvent", this ._displacementsTexture);
+      this .addInterest ("addEvent", this ._displacementWeightsTexture);
+   },
+   removeHAnimDisplacers (hAnimNode)
+   {
+      this .jointNodes .delete (hAnimNode);
+
+      const size = Math .ceil (Math .sqrt (this .jointNodes .size * 8));
+
+      this .jointMatricesArray = new Float32Array (size * size * 4);
+
+      if (!this .jointNodes .size)
+      {
+         this .removeInterest ("addEvent", this ._displacementsTexture);
+         this .removeInterest ("addEvent", this ._displacementWeightsTexture);
+      }
+   },
+   set_displacementsTexture__ ()
+   {
+      // Create array.
+
+      const
+         length        = this ._point .length || 1,
+         displacements = Array .from ({ length }, () => [ ]);
+
+      let jointIndex = 0, displacer = 0;
+
+      this .displacementWeights .length = 0;
+
+      for (const jointNode of this .jointNodes)
+      {
+         for (const { _weight, _coordIndex, _displacements } of jointNode .getDisplacers ())
+         {
+            if (!_coordIndex .length)
+               continue;
+
+            // Store reference to weight SFFloat.
+            this .displacementWeights .push (_weight, 0, 0, 0);
+
+            for (const [i, index] of _coordIndex .entries ())
+               displacements [index] ?.push (... _displacements [i], jointIndex, displacer, 0, 0, 0);
+
+            ++ displacer;
+         }
+
+         ++ jointIndex;
+      }
+
+      const
+         numDisplacements   = displacements .reduce ((p, n) => Math .max (p, n .length), 0) / 8,
+         numElements        = numDisplacements * 8,
+         size               = Math .ceil (Math .sqrt (length * numDisplacements * 2)) || 1,
+         displacementsArray = new Float32Array (size * size * 4);
+
+      for (let i = 0; i < length; ++ i)
+         displacementsArray .set (displacements [i], i * numElements);
+
+      // Number of displacements per coord index.
+      this .numDisplacements = numDisplacements;
+
+      // Upload texture.
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, displacementsArray);
+
+      // Weights
+
+      this .displacementWeightsSize  = Math .ceil (Math .sqrt (displacer));
+      this .displacementWeightsArray = new Float32Array (this .displacementWeightsSize * this .displacementWeightsSize * 4);
+   },
+   set_displacementWeightsTexture__ ()
+   {
+      // Upload texture.
+
+      const
+         gl    = this .getBrowser () .getContext (),
+         size  = this .displacementWeightsSize,
+         array = this .displacementWeightsArray;
+
+      array .set (this .displacementWeights);
+
+      gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, array);
+   },
+   getHAnimShaderOptions (options)
+   {
+      options .push ("X3D_SKINNING");
+      options .push (`X3D_NUM_JOINT_SETS ${this .numJoints / 4}`);
+      options .push (`X3D_NUM_DISPLACEMENTS ${this .numDisplacements}`);
+   },
+   setHAnimShaderUniforms (gl, shaderObject)
+   {
+      const
+         browser                               = this .getBrowser (),
+         jointMatricesTextureUnit              = browser .popTextureUnit (),
+         displacementsTextureTextureUnit       = browser .popTextureUnit (),
+         displacementWeightsTextureTextureUnit = browser .popTextureUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
+
+      this .skinning ();
+
+      gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
+      gl .uniform1i (shaderObject .x3d_DisplacementsTexture, displacementsTextureTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + displacementWeightsTextureTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
+      gl .uniform1i (shaderObject .x3d_DisplacementWeightsTexture, displacementWeightsTextureTextureUnit);
+   },
+   skinning ()
+   {
+      // Create joint matrices.
+
+      const
+         jointMatricesArray = this .jointMatricesArray,
+         size               = Math .ceil (Math .sqrt (this .jointNodes .size * 8));
+
+      let i = 0;
+
+      for (const jointNode of this .jointNodes)
+      {
+         jointMatricesArray .set (jointNode .getJointMatrix (), i * 32);
+         jointMatricesArray .set (Matrix4 .IDENTITY,            i * 32 + 16);
+         ++ i;
+      }
+
+      // Upload textures.
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
+   },
+});
