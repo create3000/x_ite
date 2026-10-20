@@ -598,9 +598,7 @@ Object .assign (X3DRenderObject .prototype,
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
-         const num = this .numPointingShapes ++;
-
-         const renderContext = this .pointingShapes [num] ??= {
+         const renderContext = this .pointingShapes [this .numPointingShapes ++] ??= {
             renderObject: this,
             modelViewMatrix: new Float32Array (16),
             viewport: new Vector4 (),
@@ -642,9 +640,7 @@ Object .assign (X3DRenderObject .prototype,
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
-         const num = this .numCollisionShapes ++;
-
-         const renderContext = this .collisionShapes [num] ??= {
+         const renderContext = this .collisionShapes [this .numCollisionShapes ++] ??= {
             renderObject: this,
             viewport: new Vector4 (),
             clipPlanes: [ ],
@@ -686,9 +682,7 @@ Object .assign (X3DRenderObject .prototype,
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
-         const num = this .numDepthShapes ++;
-
-         const renderContext = this .depthShapes [num] ??= {
+         const renderContext = this .depthShapes [this .numDepthShapes ++] ??= {
             renderObject: this,
             viewport: new Vector4 (),
             clipPlanes: [ ],
@@ -732,17 +726,15 @@ Object .assign (X3DRenderObject .prototype,
 
          if (shapeNode .isTransparent ())
          {
-            const num = this .numTransparentShapes ++;
-
-            renderContext = this .transparentShapes [num] ??= this .createRenderContext (true);
+            renderContext = this .transparentShapes [this .numTransparentShapes ++]
+               ??= this .createRenderContext (true);
 
             renderContext .distance = bboxCenter .z;
          }
          else
          {
-            const num = this .numOpaqueShapes ++;
-
-            renderContext = this .opaqueShapes [num] ??= this .createRenderContext (false);
+            renderContext = this .opaqueShapes [this .numOpaqueShapes ++]
+               ??= this .createRenderContext (false);
          }
 
          this .renderPasses |= shapeNode .getRenderPasses ();
