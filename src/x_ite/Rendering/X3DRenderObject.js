@@ -600,21 +600,14 @@ Object .assign (X3DRenderObject .prototype,
 
          const num = this .numPointingShapes ++;
 
-         if (num === this .pointingShapes .length)
-         {
-            const renderContext = {
-               renderObject: this,
-               modelViewMatrix: new Float32Array (16),
-               viewport: new Vector4 (),
-               clipPlanes: [ ],
-               sensors: [ ],
-               get renderContext () { return this; },
-            };
-
-            this .pointingShapes .push (renderContext);
-         }
-
-         const renderContext = this .pointingShapes [num];
+         const renderContext = this .pointingShapes [num] ??= {
+            renderObject: this,
+            modelViewMatrix: new Float32Array (16),
+            viewport: new Vector4 (),
+            clipPlanes: [ ],
+            sensors: [ ],
+            get renderContext () { return this; },
+         };
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
@@ -651,21 +644,14 @@ Object .assign (X3DRenderObject .prototype,
 
          const num = this .numCollisionShapes ++;
 
-         if (num === this .collisionShapes .length)
-         {
-            const renderContext = {
-               renderObject: this,
-               viewport: new Vector4 (),
-               clipPlanes: [ ],
-               collisions: [ ],
-               modelViewMatrix: new Float32Array (16),
-               get renderContext () { return this; },
-            };
-
-            this .collisionShapes .push (renderContext);
-         }
-
-         const renderContext = this .collisionShapes [num];
+         const renderContext = this .collisionShapes [num] ??= {
+            renderObject: this,
+            viewport: new Vector4 (),
+            clipPlanes: [ ],
+            collisions: [ ],
+            modelViewMatrix: new Float32Array (16),
+            get renderContext () { return this; },
+         };
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
@@ -702,20 +688,13 @@ Object .assign (X3DRenderObject .prototype,
 
          const num = this .numDepthShapes ++;
 
-         if (num === this .depthShapes .length)
-         {
-            const renderContext = {
-               renderObject: this,
-               viewport: new Vector4 (),
-               clipPlanes: [ ],
-               modelViewMatrix: new Float32Array (16),
-               get renderContext () { return this; },
-            };
-
-            this .depthShapes .push (renderContext);
-         }
-
-         const renderContext = this .depthShapes [num];
+         const renderContext = this .depthShapes [num] ??= {
+            renderObject: this,
+            viewport: new Vector4 (),
+            clipPlanes: [ ],
+            modelViewMatrix: new Float32Array (16),
+            get renderContext () { return this; },
+         };
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
@@ -755,10 +734,7 @@ Object .assign (X3DRenderObject .prototype,
          {
             const num = this .numTransparentShapes ++;
 
-            if (num === this .transparentShapes .length)
-               this .transparentShapes .push (this .createRenderContext (true));
-
-            renderContext = this .transparentShapes [num];
+            renderContext = this .transparentShapes [num] ??= this .createRenderContext (true);
 
             renderContext .distance = bboxCenter .z;
          }
@@ -766,10 +742,7 @@ Object .assign (X3DRenderObject .prototype,
          {
             const num = this .numOpaqueShapes ++;
 
-            if (num === this .opaqueShapes .length)
-               this .opaqueShapes .push (this .createRenderContext (false));
-
-            renderContext = this .opaqueShapes [num];
+            renderContext = this .opaqueShapes [num] ??= this .createRenderContext (false);
          }
 
          this .renderPasses |= shapeNode .getRenderPasses ();
