@@ -242,8 +242,11 @@ Object .assign (X3DCoordinateNode .prototype,
 
       this .jointMatricesArray = new Float32Array (size * size * 4);
 
-      this .addInterest ("addEvent", this ._displacementsTexture);
-      this .addInterest ("addEvent", this ._displacementWeightsTexture);
+      if (this .jointNodes .size === 1)
+      {
+         this .addInterest ("addEvent", this ._displacementsTexture);
+         this .addInterest ("addEvent", this ._displacementWeightsTexture);
+      }
 
       this ._displacementsTexture       .addEvent ();
       this ._displacementWeightsTexture .addEvent ();
