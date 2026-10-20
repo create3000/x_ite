@@ -8,8 +8,6 @@ import X3DCast              from "../../Base/X3DCast.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
-const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
-
 function HAnimSite (executionContext)
 {
    X3DTransformNode .call (this, executionContext);
@@ -105,27 +103,62 @@ Object .assign (Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .
    {
       if (this .coordNode ?.numDisplacements)
       {
+         const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+         modelViewMatrix .push ();
+         modelViewMatrix .multLeft (this .getMatrix ());
+
          if (type === TraverseType .DISPLAY)
          {
             const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
 
             this .jointMatrix
-               .assign (this .getMatrix ())
-               .multRight (renderObject .getModelViewMatrix () .get ())
+               .multRight (modelViewMatrix .get ())
                .multRight (invHumanoidMatrix);
+
+            this .coordNode .updateSkin ();
          }
 
-         const hAnimNodes = this .coordNode [_hAnimNodes] ??= [ ];
+         const hAnimNodes = this .coordNode .getHAnimNodes ();
 
          hAnimNodes .push (this);
 
+         X3DTransformNode .prototype .groupTraverse .call (this, type, renderObject);
+
+         hAnimNodes .pop ();
+         modelViewMatrix .pop ();
+      }
+      else
+      {
          X3DTransformNode .prototype .traverse .call (this, type, renderObject);
+      }
+   },
+   groupTraverse (type, renderObject)
+   {
+      if (this .coordNode ?.numDisplacements)
+      {
+         if (type === TraverseType .DISPLAY)
+         {
+            const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
+
+            this .jointMatrix
+               .multRight (renderObject .getModelViewMatrix () .get ())
+               .multRight (invHumanoidMatrix);
+
+            this .coordNode .updateSkin ();
+         }
+
+         const hAnimNodes = this .coordNode .getHAnimNodes ();
+
+         hAnimNodes .push (this);
+
+         X3DTransformNode .prototype .groupTraverse .call (this, type, renderObject);
 
          hAnimNodes .pop ();
       }
       else
       {
-         X3DTransformNode .prototype .traverse .call (this, type, renderObject);
+         X3DTransformNode .prototype .groupTraverse .call (this, type, renderObject);
       }
    },
    getShaderOptions (options)

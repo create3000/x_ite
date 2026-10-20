@@ -671,8 +671,6 @@ Object .defineProperties (HAnimHumanoid,
    },
 });
 
-const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
-
 class Skin extends Group
 {
    #humanoidNode;
@@ -688,7 +686,7 @@ class Skin extends Group
    {
       const
          coordNode  = this .#humanoidNode .getSkinCoord (),
-         hAnimNodes = coordNode [_hAnimNodes] ??= [ ];
+         hAnimNodes = coordNode .getHAnimNodes ();
 
       hAnimNodes .push (this .#humanoidNode);
 

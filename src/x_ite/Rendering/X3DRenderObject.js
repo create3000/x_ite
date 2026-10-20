@@ -14,8 +14,6 @@ import MatrixStack   from "../../standard/Math/Utility/MatrixStack.js";
 import Plane3        from "../../standard/Math/Geometry/Plane3.js";
 import StopWatch     from "../../standard/Time/StopWatch.js";
 
-const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
-
 const DEPTH_BUFFER_SIZE = 16;
 
 function X3DRenderObject (executionContext)
@@ -618,7 +616,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
+         renderContext .hAnimNode = geometryContext .getCoord () ?.getHAnimNodes ?.() .at (-1);
          renderContext .shapeNode = shapeNode;
 
          // Clip planes & sensors
@@ -669,7 +667,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
+         renderContext .hAnimNode = geometryContext .getCoord () ?.getHAnimNodes ?.() .at (-1);
          renderContext .shapeNode = shapeNode;
 
          // Clip planes & Collision nodes
@@ -719,7 +717,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
+         renderContext .hAnimNode = geometryContext .getCoord () ?.getHAnimNodes ?.() .at (-1);
          renderContext .shapeNode = shapeNode;
 
          // Clip planes
@@ -779,7 +777,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .shadows        = this .localShadows .at (-1);
          renderContext .fogNode        = this .localFogs .at (-1);
-         renderContext .hAnimNode      = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
+         renderContext .hAnimNode      = geometryContext .getCoord () ?.getHAnimNodes ?.() .at (-1);
          renderContext .shapeNode      = shapeNode;
          renderContext .appearanceNode = shapeNode .getAppearance ();
 

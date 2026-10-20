@@ -9,8 +9,6 @@ import X3DCast              from "../../Base/X3DCast.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
-const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
-
 function HAnimSegment (executionContext)
 {
    X3DGroupingNode .call (this, executionContext);
@@ -122,9 +120,11 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
             const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
 
             this .jointMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (invHumanoidMatrix);
+
+            this .coordNode .updateSkin ();
          }
 
-         const hAnimNodes = this .coordNode [_hAnimNodes] ??= [ ];
+         const hAnimNodes = this .coordNode .getHAnimNodes ();
 
          hAnimNodes .push (this);
 
@@ -177,6 +177,10 @@ export default HAnimSegment;
 
 Object .assign (X3DCoordinateNode .prototype,
 {
+   getHAnimNodes ()
+   {
+      return this .hAnimNodes ??= [ ];
+   },
    getHAnimKey ()
    {
       return this .humanoidKey;
@@ -360,6 +364,11 @@ Object .assign (X3DCoordinateNode .prototype,
    },
    skinning ()
    {
+      if (!this .updateSkinTexture)
+         return;
+
+      this .updateSkinTexture = false;
+
       // Create joint matrices.
 
       const
@@ -383,5 +392,9 @@ Object .assign (X3DCoordinateNode .prototype,
 
       gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
+   },
+   updateSkin ()
+   {
+      this .updateSkinTexture = true;
    },
 });
