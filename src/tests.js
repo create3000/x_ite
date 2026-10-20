@@ -160,6 +160,7 @@ const X_ITE_TESTS = [
    { path: "HAnim/Displacers.x3d" },
    { path: "HAnim/HAnimMotion.x3d" },
    { path: "HAnim/HAnimPose.x3d" },
+   { path: "HAnim/HAnimSegment.x3d" },
    { path: "HAnim/MouthMorpher.x3d" },
    { path: "HAnim/Tongue.x3d" },
    { component: "Interpolation" },
