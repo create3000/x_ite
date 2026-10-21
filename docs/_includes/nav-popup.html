@@ -5,12 +5,12 @@
 
 {% if enable_nav %}
 {% for item in site.data.nav[page.nav] %}
-<button id="nav-solo-trigger" type="button" class="nav-trigger btn btn-outline-secondary btn-sm">
+<button id="toc-solo-trigger" type="button" class="nav-trigger btn btn-outline-secondary btn-sm">
   <span class="label ps-2 pe-1">Pages</span>
   <i class="fa-solid fa-angle-right fa-fw"></i>
 </button>
 
-<dialog id="nav-popup" class="p-0" closedby="any">
+<dialog id="toc-popup" class="p-0 nav-popup" closedby="any">
   <div class="header d-flex flex-row align-items-center justify-content-between">
     <div class="label text-truncate py-2 ms-4">{{- item.title -}}</div>
     <button id="nav-popup-close" type="button" class="btn-close btn-sm mx-3" aria-label="Close"></button>
@@ -28,8 +28,8 @@
 
 <script type="module">
 const
-  dialog   = document .getElementById ("nav-popup"),
-  openBtn  = document .getElementById ("nav-solo-trigger"),
+  dialog   = document .querySelector (".nav-popup"),
+  openBtn  = document .querySelector (".nav-trigger"),
   closeBtn = document .getElementById ("nav-popup-close");
 
 openBtn .addEventListener ("click", () =>
