@@ -763,7 +763,7 @@ table.slim-table tbody tr td:has(img) {
 
 .platform {
   display: inline-block;
-  margin-right: 0;
+  margin-right: 1em;
   border: 1px solid !important;
   border-radius: .625rem;
   padding: 1rem;
