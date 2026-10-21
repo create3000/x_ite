@@ -157,7 +157,7 @@ ul.is-collapsible {
   text-transform: uppercase;
 }
 
-li.nav-item:has(> a[href="/sunrize/tags/"]) {
+li.nav-item:has(> a[href="/x_ite/tags/"]) {
   display: none;
 }
 
