@@ -2,7 +2,7 @@
  * Common rules start here
  */
 
-:host {
+:root {
   /* Colors */
 
   --system-red: rgb(255, 66, 69);
@@ -42,7 +42,7 @@
   --playground-console-background: rgba(0, 0, 0, 0.2);
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
   :host {
     /* Colors */
 
