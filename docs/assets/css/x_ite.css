@@ -2,7 +2,45 @@
  * Common rules start here
  */
 
-:root {
+:root:not([data-bs-theme=dark]) {
+  /* Colors */
+
+  --system-red: rgb(255, 56, 60);
+  --system-orange: rgb(255, 141, 40);
+  --system-yellow: rgb(255, 204, 0);
+  --system-green: rgb(52, 199, 89);
+  --system-mint: rgb(0, 200, 179);
+  --system-teal: rgb(0, 195, 208);
+  --system-cyan: rgb(0, 192, 232);
+  --system-blue: rgb(0, 136, 255);
+  --system-indigo: rgb(88, 86, 214);
+  --system-purple: rgb(97, 85, 245);
+  --system-pink: rgb(255, 45, 85);
+  --system-brown: rgb(172, 127, 94);
+
+  --system-gray0: rgb(72, 72, 77);
+  --system-gray1: rgb(142, 142, 147);
+  --system-gray2: rgb(174, 174, 178);
+  --system-gray3: rgb(199, 199, 204);
+  --system-gray4: rgb(209, 209, 214);
+  --system-gray5: rgb(229, 229, 234);
+  --system-gray6: rgb(242, 242, 247);
+  --system-gray7: rgb(249, 249, 255);
+  --system-gray8: rgb(255, 255, 255);
+
+  --h2-color: rgb(189, 0, 0);
+  --h3-color: rgb(159, 103, 34);;
+  --h3-color-strong: rgb(173, 81, 0);
+  --h4-color: rgb(29, 80, 163);
+  --h4-color-strong: rgb(10, 80, 144);
+  --h4-color-strong-writable: rgb(97, 29, 163);
+
+  --color-filter: filter: brightness(0) saturate(100%) invert(22%) sepia(7%) saturate(669%) hue-rotate(201deg) brightness(89%) contrast(97%);
+  --example-background-color: rgba(235, 235, 255, 0.644);
+  --playground-console-background: rgb(0, 0, 0, 0.02);
+}
+
+:root:not([data-bs-theme=light]) {
   /* Colors */
 
   --system-red: rgb(255, 66, 69);
@@ -40,66 +78,6 @@
   --color-filter: filter: brightness(0) saturate(100%) invert(78%) sepia(0%) saturate(301%) hue-rotate(279deg) brightness(92%) contrast(89%);
   --example-background-color: rgba(0, 0, 0, 0.471);
   --playground-console-background: rgba(0, 0, 0, 0.2);
-}
-
-@media (prefers-color-scheme: dark) {
-  :host {
-    /* Colors */
-
-    --system-red: rgb(255, 56, 60);
-    --system-orange: rgb(255, 141, 40);
-    --system-yellow: rgb(255, 204, 0);
-    --system-green: rgb(52, 199, 89);
-    --system-mint: rgb(0, 200, 179);
-    --system-teal: rgb(0, 195, 208);
-    --system-cyan: rgb(0, 192, 232);
-    --system-blue: rgb(0, 136, 255);
-    --system-indigo: rgb(88, 86, 214);
-    --system-purple: rgb(97, 85, 245);
-    --system-pink: rgb(255, 45, 85);
-    --system-brown: rgb(172, 127, 94);
-
-    --system-gray0: rgb(72, 72, 77);
-    --system-gray1: rgb(142, 142, 147);
-    --system-gray2: rgb(174, 174, 178);
-    --system-gray3: rgb(199, 199, 204);
-    --system-gray4: rgb(209, 209, 214);
-    --system-gray5: rgb(229, 229, 234);
-    --system-gray6: rgb(242, 242, 247);
-    --system-gray7: rgb(249, 249, 255);
-    --system-gray8: rgb(255, 255, 255);
-
-    --h2-color: rgb(189, 0, 0);
-    --h3-color: rgb(159, 103, 34);;
-    --h3-color-strong: rgb(173, 81, 0);
-    --h4-color: rgb(29, 80, 163);
-    --h4-color-strong: rgb(10, 80, 144);
-    --h4-color-strong-writable: rgb(97, 29, 163);
-
-    --color-filter: filter: brightness(0) saturate(100%) invert(22%) sepia(7%) saturate(669%) hue-rotate(201deg) brightness(89%) contrast(97%);
-    --example-background-color: rgba(235, 235, 255, 0.644);
-    --playground-console-background: rgb(0, 0, 0, 0.02);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  html:not([data-bs-theme]), html[data-bs-theme=dark] {
-    @include x_ite-dark-scheme;
-  }
-
-  html[data-bs-theme=light] {
-    @include x_ite-light-scheme;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  html[data-bs-theme=dark] {
-    @include x_ite-dark-scheme;
-  }
-
-  html:not([data-bs-theme]), html[data-bs-theme=light] {
-    @include x_ite-light-scheme;
-  }
 }
 
 @media all and not (max-width: 1199px) {
