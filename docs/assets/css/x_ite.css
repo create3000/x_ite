@@ -759,13 +759,6 @@ table.slim-table tbody tr td:has(img) {
   margin: 0 7px 0 4px;
 }
 
-/* monaco editor */
-
-.monaco-editor,
-.monaco-editor * {
-  all: revert;
-}
-
 /* Platform link  */
 
 .platform {
