@@ -1,4 +1,4 @@
-/* X_ITE v16.5.1 */
+/* X_ITE v16.6.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -684,7 +684,7 @@ const
    y      = new (external_X_ITE_X3D_Vector3_default()) (),
    z      = new (external_X_ITE_X3D_Vector3_default()) ();
 
-function X3DGeospatialObject (executionContext)
+function X3DGeospatialObject (/* executionContext */)
 {
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DGeospatialObject);
 
@@ -778,14 +778,14 @@ Object .assign (X3DGeospatialObject .prototype,
    {
       if (this .geoOriginNode && this .geoOriginNode ._rotateYUp .getValue ())
       {
-         this .getCoord          = getCoordRotateYUp;
+         this .getLocalCoord     = getLocalCoordRotateYUp;
          this .getGeoCoord       = getGeoCoordRotateYUp;
          this .getGeoUpVector    = getGeoUpVectorRotateYUp;
          this .getLocationMatrix = getLocationMatrixRotateYUp;
       }
       else
       {
-         delete this .getCoord;
+         delete this .getLocalCoord;
          delete this .getGeoCoord;
          delete this .getGeoUpVector;
          delete this .getLocationMatrix;
@@ -799,7 +799,7 @@ Object .assign (X3DGeospatialObject .prototype,
    {
       return this .standardOrder;
    },
-   getCoord (geoPoint, result)
+   getLocalCoord (geoPoint, result)
    {
       return this .referenceFrame .convert (geoPoint, result) .subtract (this .origin);
    },
@@ -832,7 +832,7 @@ Object .assign (X3DGeospatialObject .prototype,
    { },
 });
 
-function getCoordRotateYUp (geoPoint, result)
+function getLocalCoordRotateYUp (geoPoint, result)
 {
    return this .invOriginMatrix .multVecMatrix (this .referenceFrame .convert (geoPoint, result));
 }
@@ -938,7 +938,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
 
             index *= 3;
 
-            return this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), result);
+            return this .getLocalCoord (p .set (point [index], point [index + 1], point [index + 2]), result);
          }
          else
          {
@@ -960,7 +960,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
 
             index *= 3;
 
-            this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
+            this .getLocalCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
 
             array .push (g [0], g [1], g [2], 1);
          }
@@ -984,7 +984,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
 
          for (let index = 0; index < length; index += 3)
          {
-            this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
+            this .getLocalCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
 
             array .push (g [0], g [1], g [2], 1);
          }
@@ -1250,7 +1250,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
                                           (height [x + z * xDimension] ?? 0) * yScale);
 
                point .add (this ._geoGridOrigin .getValue ());
-               points .push (this .getCoord (point, point));
+               points .push (this .getLocalCoord (point, point));
             }
          }
       }
@@ -1265,7 +1265,7 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
                                           (height [x + z * xDimension] ?? 0) * yScale);
 
                point .add (this ._geoGridOrigin .getValue ());
-               points .push (this .getCoord (point, point));
+               points .push (this .getLocalCoord (point, point));
             }
          }
       }
@@ -1616,7 +1616,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
       return function (modelViewMatrix)
       {
-         modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
+         modelViewMatrix .translate (this .getLocalCoord (this ._center .getValue (), center));
 
          const distance = modelViewMatrix .origin .norm ();
 
@@ -2040,8 +2040,8 @@ Object .assign (Object .setPrototypeOf (GeoPositionInterpolator .prototype, (ext
 
       return function (index0, index1, weight)
       {
-         this .getCoord (this ._keyValue [index0] .getValue (), keyValue0);
-         this .getCoord (this ._keyValue [index1] .getValue (), keyValue1);
+         this .getLocalCoord (this ._keyValue [index0] .getValue (), keyValue0);
+         this .getLocalCoord (this ._keyValue [index1] .getValue (), keyValue1);
 
          const coord = this .geocentric .slerp (keyValue0, keyValue1, weight);
 
@@ -2464,7 +2464,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
 
       return function ()
       {
-         return this .getCoord (this ._position .getValue (), position);
+         return this .getLocalCoord (this ._position .getValue (), position);
       };
    })(),
    setPosition: (() =>
@@ -2482,7 +2482,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
 
       return function ()
       {
-         this .getCoord (this ._position .getValue (), position);
+         this .getLocalCoord (this ._position .getValue (), position);
 
          this .elevation = this .getGeoElevation (position .add (this ._positionOffset .getValue ()));
       };
@@ -2527,7 +2527,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
 
       return function ()
       {
-         return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
+         return this .getLocalCoord (this ._centerOfRotation .getValue (), centerOfRotation);
       };
    })(),
    setCenterOfRotation: (() =>
@@ -2553,7 +2553,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
       {
          if (!dynamic || this .getUserPosition () .norm () < 6.5e6)
          {
-            this .getCoord (this ._position .getValue (), position);
+            this .getLocalCoord (this ._position .getValue (), position);
 
             return this .getGeoUpVector (position .add (this ._positionOffset .getValue ()), upVector);
          }

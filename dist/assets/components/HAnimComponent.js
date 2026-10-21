@@ -1,4 +1,4 @@
-/* X_ITE v16.5.1 */
+/* X_ITE v16.6.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -111,6 +111,9 @@ var external_X_ITE_X3D_Transform_default = /*#__PURE__*/__webpack_require__.n(ex
 ;// external "__X_ITE_X3D__ .X3DBoundedObject"
 const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
 var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBoundedObject_namespaceObject);
+;// external "__X_ITE_X3D__ .X3DTransformNode"
+const external_X_ITE_X3D_X3DTransformNode_namespaceObject = __X_ITE_X3D__ .X3DTransformNode;
+var external_X_ITE_X3D_X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DTransformNode_namespaceObject);
 ;// external "__X_ITE_X3D__ .TraverseType"
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
@@ -120,6 +123,164 @@ var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(exte
 ;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
+;// ./src/x_ite/Components/HAnim/HAnimJoint.js
+
+
+
+
+
+
+
+
+
+
+function HAnimJoint (executionContext)
+{
+   external_X_ITE_X3D_X3DTransformNode_default().call (this, executionContext);
+
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint);
+
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacements",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
+                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeights", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+
+   this .setVisibleObject (true);
+   this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment, (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode, (external_X_ITE_X3D_X3DConstants_default()).Shape);
+
+   // Units
+
+   this ._llimit   .setUnit ("angle");
+   this ._ulimit   .setUnit ("angle");
+   this ._minAngle .setUnit ("angle");
+   this ._maxAngle .setUnit ("angle");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 3.3)
+      this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
+   else if (executionContext .getSpecificationVersion () <= 4.0)
+      this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment);
+
+   // Private properties
+
+   this .displacerNodes  = [ ];
+   this .modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+}
+
+Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (external_X_ITE_X3D_X3DTransformNode_default()).prototype),
+{
+   initialize ()
+   {
+      external_X_ITE_X3D_X3DTransformNode_default().prototype .initialize .call (this);
+
+      this ._displacers .addInterest ("set_displacers__", this);
+
+      this .set_displacers__ ();
+   },
+   getModelViewMatrix ()
+   {
+      return this .modelViewMatrix;
+   },
+   getDisplacers ()
+   {
+      return this .displacerNodes;
+   },
+   set_visibleObjects__ ()
+   { },
+   set_displacers__ ()
+   {
+      const displacerNodes = this .displacerNodes;
+
+      for (const displacerNode of displacerNodes)
+      {
+         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacements);
+         displacerNode ._displacements .removeInterest ("addEvent", this ._displacements);
+         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacementWeights);
+         displacerNode ._weight        .removeInterest ("addEvent", this ._displacementWeights);
+      }
+
+      displacerNodes .length = 0;
+
+      for (const node of this ._displacers)
+      {
+         const displacerNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).HAnimDisplacer, node);
+
+         if (displacerNode)
+            displacerNodes .push (displacerNode);
+      }
+
+      for (const displacerNode of displacerNodes)
+      {
+         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacements);
+         displacerNode ._displacements .addInterest ("addEvent", this ._displacements);
+         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacementWeights);
+         displacerNode ._weight        .addInterest ("addEvent", this ._displacementWeights);
+      }
+
+      this ._displacements       .addEvent ();
+      this ._displacementWeights .addEvent ();
+   },
+   traverse (type, renderObject)
+   {
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+      modelViewMatrix .push ();
+      modelViewMatrix .multLeft (this .getMatrix ());
+
+      if (type === (external_X_ITE_X3D_TraverseType_default()).DISPLAY)
+         this .modelViewMatrix .assign (modelViewMatrix .get ());
+
+      external_X_ITE_X3D_X3DTransformNode_default().prototype .groupTraverse .call (this, type, renderObject);
+
+      modelViewMatrix .pop ();
+   },
+   groupTraverse (type, renderObject)
+   {
+      if (type === (external_X_ITE_X3D_TraverseType_default()).DISPLAY)
+         this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
+
+      external_X_ITE_X3D_X3DTransformNode_default().prototype .groupTraverse .call (this, type, renderObject);
+   },
+});
+
+Object .defineProperties (HAnimJoint,
+{
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimJoint", "HAnim", 1, "children", "3.0"),
+   fieldDefinitions:
+   {
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",             new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translation",      new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "rotation",         new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scale",            new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scaleOrientation", new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "center",           new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "limitOrientation", new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "llimit",           new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "ulimit",           new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "minAngle",         new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "maxAngle",         new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "stiffness",        new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skinCoordIndex",   new (external_X_ITE_X3D_Fields_default()).MFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skinCoordWeight",  new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "displacers",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",       new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addChildren",      new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeChildren",   new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",         new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const HAnimJoint_default_ = HAnimJoint;
+;
+
+/* harmony default export */ const HAnim_HAnimJoint = (external_X_ITE_X3D_Namespace_default().add ("HAnimJoint", HAnimJoint_default_));
 ;// external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
@@ -202,6 +363,7 @@ return skin;}
 
 
 
+
 // Register shaders.
 
 
@@ -212,6 +374,8 @@ external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile ("Skin", Skin2_glsl);
 /**
  * HAnimHumanoid
  */
+
+const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
 
 function HAnimHumanoid (executionContext)
 {
@@ -240,7 +404,7 @@ function HAnimHumanoid (executionContext)
 
    // Private properties
 
-   this .skeletonNode         = new (external_X_ITE_X3D_Group_default()) (executionContext);
+   this .skeletonNode         = new HAnim_HAnimJoint (executionContext);
    this .viewpointsNode       = new (external_X_ITE_X3D_Group_default()) (executionContext);
    this .skinNode             = new Skin (executionContext, this);
    this .transformNode        = new (external_X_ITE_X3D_Transform_default()) (executionContext);
@@ -268,13 +432,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this .skeletonNode   .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
       this .viewpointsNode .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
 
+      this ._displacers .addFieldInterest (this .skeletonNode   ._displacers);
       this ._skeleton   .addFieldInterest (this .skeletonNode   ._children);
       this ._viewpoints .addFieldInterest (this .viewpointsNode ._children);
       this ._skin       .addFieldInterest (this .skinNode       ._children);
 
-      this .skeletonNode   ._children = this ._skeleton;
-      this .viewpointsNode ._children = this ._viewpoints;
-      this .skinNode       ._children = this ._skin;
+      this .skeletonNode   ._displacers = this ._displacers;
+      this .skeletonNode   ._children   = this ._skeleton;
+      this .viewpointsNode ._children   = this ._viewpoints;
+      this .skinNode       ._children   = this ._skin;
 
       this .skeletonNode   .setPrivate (true);
       this .viewpointsNode .setPrivate (true);
@@ -386,6 +552,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
    getHAnimKey ()
    {
       return this .humanoidKey;
+   },
+   getSkinCoord ()
+   {
+      return this .skinCoordNode;
    },
    set_humanoidKey__ ()
    {
@@ -522,6 +692,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       jointNodes           .length = 0;
       jointBindingMatrices .length = 0;
+
+      jointNodes           .push (this .skeletonNode);
+      jointBindingMatrices .push ((external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 
       for (const [i, node] of this ._joints .entries ())
       {
@@ -870,11 +1043,15 @@ class Skin extends (external_X_ITE_X3D_Group_default())
 
    traverse (type, renderObject)
    {
-      renderObject .getHAnimNode () .push (this .#humanoidNode);
+      const
+         coordNode  = this .#humanoidNode .getSkinCoord (),
+         hAnimNodes = coordNode [_hAnimNodes] ??= [ ];
+
+      hAnimNodes .push (this .#humanoidNode);
 
       super .traverse (type, renderObject);
 
-      renderObject .getHAnimNode () .pop ();
+      hAnimNodes .pop ();
    }
 }
 
@@ -901,167 +1078,6 @@ const HAnimHumanoid_default_ = HAnimHumanoid;
 ;
 
 /* harmony default export */ const HAnim_HAnimHumanoid = (external_X_ITE_X3D_Namespace_default().add ("HAnimHumanoid", HAnimHumanoid_default_));
-;// external "__X_ITE_X3D__ .X3DTransformNode"
-const external_X_ITE_X3D_X3DTransformNode_namespaceObject = __X_ITE_X3D__ .X3DTransformNode;
-var external_X_ITE_X3D_X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DTransformNode_namespaceObject);
-;// ./src/x_ite/Components/HAnim/HAnimJoint.js
-
-
-
-
-
-
-
-
-
-
-function HAnimJoint (executionContext)
-{
-   external_X_ITE_X3D_X3DTransformNode_default().call (this, executionContext);
-
-   this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint);
-
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacements",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
-                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeights", new (external_X_ITE_X3D_Fields_default()).SFTime ());
-
-   this .setVisibleObject (true);
-   this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment, (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode, (external_X_ITE_X3D_X3DConstants_default()).Shape);
-
-   // Units
-
-   // this ._llimit .setUnit ("angle"); // TODO: seems to be angle, but is it in radians or degrees?
-   // this ._ulimit .setUnit ("angle"); // TODO: seems to be angle, but is it in radians or degrees?
-   this ._minAngle .setUnit ("angle");
-   this ._maxAngle .setUnit ("angle");
-
-   // Legacy
-
-   if (executionContext .getSpecificationVersion () <= 3.3)
-      this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
-   else if (executionContext .getSpecificationVersion () <= 4.0)
-      this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment);
-
-   // Private properties
-
-   this .displacerNodes  = [ ];
-   this .modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
-}
-
-Object .assign (Object .setPrototypeOf (HAnimJoint .prototype, (external_X_ITE_X3D_X3DTransformNode_default()).prototype),
-{
-   initialize ()
-   {
-      external_X_ITE_X3D_X3DTransformNode_default().prototype .initialize .call (this);
-
-      this ._displacers .addInterest ("set_displacers__", this);
-
-      this .set_displacers__ ();
-   },
-   getModelViewMatrix ()
-   {
-      return this .modelViewMatrix;
-   },
-   getDisplacers ()
-   {
-      return this .displacerNodes;
-   },
-   set_visibleObjects__ ()
-   { },
-   set_displacers__ ()
-   {
-      const displacerNodes = this .displacerNodes;
-
-      for (const displacerNode of displacerNodes)
-      {
-         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacements);
-         displacerNode ._displacements .removeInterest ("addEvent", this ._displacements);
-         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacementWeights);
-         displacerNode ._weight        .removeInterest ("addEvent", this ._displacementWeights);
-      }
-
-      displacerNodes .length = 0;
-
-      for (const node of this ._displacers)
-      {
-         const displacerNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).HAnimDisplacer, node);
-
-         if (displacerNode)
-            displacerNodes .push (displacerNode);
-      }
-
-      for (const displacerNode of displacerNodes)
-      {
-         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacements);
-         displacerNode ._displacements .addInterest ("addEvent", this ._displacements);
-         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacementWeights);
-         displacerNode ._weight        .addInterest ("addEvent", this ._displacementWeights);
-      }
-
-      this ._displacements       .addEvent ();
-      this ._displacementWeights .addEvent ();
-   },
-   traverse (type, renderObject)
-   {
-      const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-      modelViewMatrix .push ();
-      modelViewMatrix .multLeft (this .getMatrix ());
-
-      if (type === (external_X_ITE_X3D_TraverseType_default()).DISPLAY)
-         this .modelViewMatrix .assign (modelViewMatrix .get ());
-
-      external_X_ITE_X3D_X3DTransformNode_default().prototype .groupTraverse .call (this, type, renderObject);
-
-      modelViewMatrix .pop ();
-   },
-   groupTraverse (type, renderObject)
-   {
-      if (type === (external_X_ITE_X3D_TraverseType_default()).DISPLAY)
-         this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ());
-
-      external_X_ITE_X3D_X3DTransformNode_default().prototype .groupTraverse .call (this, type, renderObject);
-   },
-});
-
-Object .defineProperties (HAnimJoint,
-{
-   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimJoint", "HAnim", 1, "children", "3.0"),
-   fieldDefinitions:
-   {
-      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",             new (external_X_ITE_X3D_Fields_default()).SFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translation",      new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "rotation",         new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scale",            new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 1, 1)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scaleOrientation", new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "center",           new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "limitOrientation", new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "llimit",           new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "ulimit",           new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "minAngle",         new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "maxAngle",         new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "stiffness",        new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skinCoordIndex",   new (external_X_ITE_X3D_Fields_default()).MFInt32 ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skinCoordWeight",  new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "displacers",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",       new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addChildren",      new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeChildren",   new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",         new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-      ]),
-      enumerable: true,
-   },
-});
-
-const HAnimJoint_default_ = HAnimJoint;
-;
-
-/* harmony default export */ const HAnim_HAnimJoint = (external_X_ITE_X3D_Namespace_default().add ("HAnimJoint", HAnimJoint_default_));
 ;// external "__X_ITE_X3D__ .TimeSensor"
 const external_X_ITE_X3D_TimeSensor_namespaceObject = __X_ITE_X3D__ .TimeSensor;
 var external_X_ITE_X3D_TimeSensor_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TimeSensor_namespaceObject);
@@ -1689,6 +1705,9 @@ const HAnimPose_default_ = HAnimPose;
 ;// external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
+;// external "__X_ITE_X3D__ .X3DCoordinateNode"
+const external_X_ITE_X3D_X3DCoordinateNode_namespaceObject = __X_ITE_X3D__ .X3DCoordinateNode;
+var external_X_ITE_X3D_X3DCoordinateNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCoordinateNode_namespaceObject);
 ;// ./src/x_ite/Components/HAnim/HAnimSegment.js
 
 
@@ -1700,14 +1719,14 @@ var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require_
 
 
 
+
+const HAnimSegment_hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
+
 function HAnimSegment (executionContext)
 {
    external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimSegment);
-
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementsTexture",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
-                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeightsTexture", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite, (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode);
 
@@ -1715,20 +1734,15 @@ function HAnimSegment (executionContext)
 
    this ._mass .setUnit ("mass");
 
+   // Private properties
+
+   this .displacerNodes = [ ];
+   this .jointMatrix    = new (external_X_ITE_X3D_Matrix4_default()) ();
+
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 4.0)
       this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).X3DChildNode);
-
-   // Private properties
-
-   const size = Math .ceil (Math .sqrt (1 * 8));
-
-   this .numJoints           = 0;
-   this .numDisplacements    = 0;
-   this .displacerNodes      = [ ];
-   this .displacementWeights = [ ];
-   this .jointMatricesArray  = new Float32Array (size * size * 4);
 }
 
 Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
@@ -1736,6 +1750,172 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
    initialize ()
    {
       external_X_ITE_X3D_X3DGroupingNode_default().prototype .initialize .call (this);
+
+      // Events
+
+      this ._displacers .addInterest ("set_displacers__", this);
+      this ._coord      .addInterest ("set_coord__",      this);
+
+      this .set_displacers__ ();
+      this .set_coord__ ();
+   },
+   getHAnimKey ()
+   {
+      return this .coordNode .getHAnimKey ();
+   },
+   getDisplacers ()
+   {
+      return this .displacerNodes;
+   },
+   getJointMatrix ()
+   {
+      return this .jointMatrix;
+   },
+   set_displacers__ ()
+   {
+      const displacerNodes = this .displacerNodes;
+
+      for (const displacerNode of displacerNodes)
+      {
+         displacerNode ._coordIndex    .removeInterest ("set_displacementsTexture__",       this);
+         displacerNode ._displacements .removeInterest ("set_displacementsTexture__",       this);
+         displacerNode ._coordIndex    .removeInterest ("set_displacementWeightsTexture__", this);
+         displacerNode ._weight        .removeInterest ("set_displacementWeightsTexture__", this);
+      }
+
+      displacerNodes .length = 0;
+
+      for (const node of this ._displacers)
+      {
+         const displacerNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).HAnimDisplacer, node);
+
+         if (displacerNode)
+            displacerNodes .push (displacerNode);
+      }
+
+      for (const displacerNode of displacerNodes)
+      {
+         displacerNode ._coordIndex    .addInterest ("set_displacementsTexture__",       this);
+         displacerNode ._displacements .addInterest ("set_displacementsTexture__",       this);
+         displacerNode ._coordIndex    .addInterest ("set_displacementWeightsTexture__", this);
+         displacerNode ._weight        .addInterest ("set_displacementWeightsTexture__", this);
+      }
+
+      this .set_displacementsTexture__ ();
+      this .set_displacementWeightsTexture__ ();
+   },
+   set_displacementsTexture__ ()
+   {
+      this .coordNode ?._displacementsTexture .addEvent ();
+   },
+   set_displacementWeightsTexture__ ()
+   {
+      this .coordNode ?._displacementWeightsTexture .addEvent ();
+   },
+   set_coord__ ()
+   {
+      this .coordNode ?.removeHAnimDisplacers (this);
+
+      this .coordNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).Coordinate, this ._coord)
+         ?? external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).CoordinateDouble, this ._coord);
+
+      this .coordNode ?.addHAnimDisplacers (this);
+
+      this .set_displacementsTexture__ ();
+      this .set_displacementWeightsTexture__ ();
+   },
+   traverse (type, renderObject)
+   {
+      if (this .coordNode ?.getNumDisplacements ())
+      {
+         if (type === (external_X_ITE_X3D_TraverseType_default()).DISPLAY)
+         {
+            const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
+
+            this .jointMatrix
+               .assign (renderObject .getModelViewMatrix () .get ())
+               .multRight (invHumanoidMatrix);
+
+            this .coordNode .updateSkin ();
+         }
+
+         const hAnimNodes = this .coordNode [HAnimSegment_hAnimNodes] ??= [ ];
+
+         hAnimNodes .push (this);
+
+         external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+
+         hAnimNodes .pop ();
+      }
+      else
+      {
+         external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+      }
+   },
+   getShaderOptions (options)
+   {
+      this .coordNode .getHAnimShaderOptions (options);
+   },
+   setShaderUniforms (gl, shaderObject)
+   {
+      this .coordNode .setHAnimShaderUniforms (gl, shaderObject);
+   },
+});
+
+Object .defineProperties (HAnimSegment,
+{
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimSegment", "HAnim", 1, "children", "3.0"),
+   fieldDefinitions:
+   {
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",             new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "mass",             new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "centerOfMass",     new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "momentsOfInertia", new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0, 0, 0, 0, 0, 0, 0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "displacers",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "coord",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",       new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addChildren",      new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeChildren",   new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",         new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const HAnimSegment_default_ = HAnimSegment;
+
+Object .assign ((external_X_ITE_X3D_X3DCoordinateNode_default()).prototype,
+{
+   getHAnimKey ()
+   {
+      return this .humanoidKey;
+   },
+   set_humanoidKey__ ()
+   {
+      this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
+   },
+   getNumDisplacements ()
+   {
+      return this .numDisplacements;
+   },
+   initHAnimDisplacers ()
+   {
+      this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementsTexture",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
+                             (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeightsTexture", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+
+      // Private properties
+
+      this .jointNodes = new Set (); // HAnimSegment, HAnimSite
+
+      this .numJoints           = 0;
+      this .numDisplacements    = 0;
+      this .displacementWeights = [ ];
 
       // Textures
 
@@ -1757,53 +1937,41 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
       }
 
-      // Events
-
-      this ._displacers .addInterest ("set_displacers__", this);
-      this ._coord      .addInterest ("set_coord__",      this);
-
       this ._displacementsTexture       .addInterest ("set_displacementsTexture__",       this);
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
+   },
+   addHAnimDisplacers (hAnimNode)
+   {
+      if (!this .jointNodes)
+         this .initHAnimDisplacers ();
 
-      this .set_displacers__ ();
-      this .set_coord__ ();
-   },
-   getHAnimKey ()
-   {
-      return this .humanoidKey;
-   },
-   set_humanoidKey__ ()
-   {
-      this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
-   },
-   set_displacers__ ()
-   {
-      const displacerNodes = this .displacerNodes;
+      this .jointNodes .add (hAnimNode);
 
-      for (const displacerNode of displacerNodes)
+      const size = Math .ceil (Math .sqrt (this .jointNodes .size * 8));
+
+      this .jointMatricesArray = new Float32Array (size * size * 4);
+
+      if (this .jointNodes .size === 1)
       {
-         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacementsTexture);
-         displacerNode ._displacements .removeInterest ("addEvent", this ._displacementsTexture);
-         displacerNode ._coordIndex    .removeInterest ("addEvent", this ._displacementWeightsTexture);
-         displacerNode ._weight        .removeInterest ("addEvent", this ._displacementWeightsTexture);
+         this .addInterest ("addEvent", this ._displacementsTexture);
+         this .addInterest ("addEvent", this ._displacementWeightsTexture);
       }
 
-      displacerNodes .length = 0;
+      this ._displacementsTexture       .addEvent ();
+      this ._displacementWeightsTexture .addEvent ();
+   },
+   removeHAnimDisplacers (hAnimNode)
+   {
+      this .jointNodes .delete (hAnimNode);
 
-      for (const node of this ._displacers)
+      const size = Math .ceil (Math .sqrt (this .jointNodes .size * 8));
+
+      this .jointMatricesArray = new Float32Array (size * size * 4);
+
+      if (!this .jointNodes .size)
       {
-         const displacerNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).HAnimDisplacer, node);
-
-         if (displacerNode)
-            displacerNodes .push (displacerNode);
-      }
-
-      for (const displacerNode of displacerNodes)
-      {
-         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacementsTexture);
-         displacerNode ._displacements .addInterest ("addEvent", this ._displacementsTexture);
-         displacerNode ._coordIndex    .addInterest ("addEvent", this ._displacementWeightsTexture);
-         displacerNode ._weight        .addInterest ("addEvent", this ._displacementWeightsTexture);
+         this .removeInterest ("addEvent", this ._displacementsTexture);
+         this .removeInterest ("addEvent", this ._displacementWeightsTexture);
       }
 
       this ._displacementsTexture       .addEvent ();
@@ -1814,25 +1982,30 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
       // Create array.
 
       const
-         length        = this .coordNode ?._point .length || 1,
+         length        = this ._point .length || 1,
          displacements = Array .from ({ length }, () => [ ]);
 
-      let displacer = 0;
+      let jointIndex = 0, displacer = 0;
 
       this .displacementWeights .length = 0;
 
-      for (const { _weight, _coordIndex, _displacements } of this .displacerNodes)
+      for (const jointNode of this .jointNodes)
       {
-         if (!_coordIndex .length)
-            continue;
+         for (const { _weight, _coordIndex, _displacements } of jointNode .getDisplacers ())
+         {
+            if (!_coordIndex .length)
+               continue;
 
-         // Store reference to weight SFFloat.
-         this .displacementWeights .push (_weight, 0, 0, 0);
+            // Store reference to weight SFFloat.
+            this .displacementWeights .push (_weight, 0, 0, 0);
 
-         for (const [i, index] of _coordIndex .entries ())
-            displacements [index] ?.push (... _displacements [i], 0, displacer, 0, 0, 0);
+            for (const [i, index] of _coordIndex .entries ())
+               displacements [index] ?.push (... _displacements [i], jointIndex, displacer, 0, 0, 0);
 
-         ++ displacer;
+            ++ displacer;
+         }
+
+         ++ jointIndex;
       }
 
       const
@@ -1879,87 +2052,13 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
       gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, array);
    },
-   set_coord__ ()
-   {
-      if (this .coordNode)
-      {
-         this .coordNode .removeInterest ("addEvent", this ._displacementsTexture);
-         this .coordNode .removeInterest ("addEvent", this ._displacementWeightsTexture);
-      }
-
-      this .coordNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).Coordinate, this ._coord)
-         ?? external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).CoordinateDouble, this ._coord);
-
-      if (this .coordNode)
-      {
-         delete this .skinning;
-
-         this .coordNode .addInterest ("addEvent", this ._displacementsTexture);
-         this .coordNode .addInterest ("addEvent", this ._displacementWeightsTexture);
-      }
-      else
-      {
-         this .skinning = Function .prototype;
-      }
-
-      this ._displacementsTexture       .addEvent ();
-      this ._displacementWeightsTexture .addEvent ();
-   },
-   traverse (type, renderObject)
-   {
-      if (this .coordNode && this .numDisplacements)
-      {
-         renderObject .getHAnimNode () .push (this);
-
-         external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-
-         this .skinning (type, renderObject);
-
-         renderObject .getHAnimNode () .pop ();
-      }
-      else
-      {
-         external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
-      }
-   },
-   skinning: (() =>
-   {
-      const modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
-
-      return function (type, renderObject)
-      {
-         if (type !== (external_X_ITE_X3D_TraverseType_default()).DISPLAY)
-            return;
-
-         // Create joint matrices.
-
-         const
-            invHumanoidMatrix  = renderObject .getInvHumanoidMatrix () .get (),
-            jointMatricesArray = this .jointMatricesArray,
-            size               = Math .ceil (Math .sqrt (1 * 8));
-
-         const jointMatrix = modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (invHumanoidMatrix);
-
-         jointMatricesArray .set (jointMatrix, 0);
-         // No need for jointNormalMatrix.
-
-         // Upload textures.
-
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
-
-         gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
-      };
-   })(),
-   getShaderOptions (options)
+   getHAnimShaderOptions (options)
    {
       options .push ("X3D_SKINNING");
       options .push (`X3D_NUM_JOINT_SETS ${this .numJoints / 4}`);
       options .push (`X3D_NUM_DISPLACEMENTS ${this .numDisplacements}`);
    },
-   setShaderUniforms (gl, shaderObject)
+   setHAnimShaderUniforms (gl, shaderObject)
    {
       const
          browser                               = this .getBrowser (),
@@ -1971,6 +2070,8 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
       gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
       gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
 
+      this .skinning ();
+
       gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
       gl .uniform1i (shaderObject .x3d_DisplacementsTexture, displacementsTextureTextureUnit);
@@ -1979,35 +2080,42 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
       gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
       gl .uniform1i (shaderObject .x3d_DisplacementWeightsTexture, displacementWeightsTextureTextureUnit);
    },
-});
-
-Object .defineProperties (HAnimSegment,
-{
-   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimSegment", "HAnim", 1, "children", "3.0"),
-   fieldDefinitions:
+   skinning ()
    {
-      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",         new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",             new (external_X_ITE_X3D_Fields_default()).SFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "mass",             new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "centerOfMass",     new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "momentsOfInertia", new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0, 0, 0, 0, 0, 0, 0)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "displacers",       new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "coord",            new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",          new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",      new (external_X_ITE_X3D_Fields_default()).SFBool ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",       new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "addChildren",      new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,      "removeChildren",   new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",         new (external_X_ITE_X3D_Fields_default()).MFNode ()),
-      ]),
-      enumerable: true,
+      if (!this .updateSkinTexture)
+         return;
+
+      this .updateSkinTexture = false;
+
+      // Create joint matrices.
+
+      const
+         jointMatricesArray = this .jointMatricesArray,
+         size               = Math .ceil (Math .sqrt (this .jointNodes .size * 8));
+
+      let i = 0;
+
+      for (const jointNode of this .jointNodes)
+      {
+         jointMatricesArray .set (jointNode .getJointMatrix (), i * 32);
+         // No need for jointNormalMatrix.
+         ++ i;
+      }
+
+      // Upload textures.
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
+   },
+   updateSkin ()
+   {
+      this .updateSkinTexture = true;
    },
 });
-
-const HAnimSegment_default_ = HAnimSegment;
 ;
 
 /* harmony default export */ const HAnim_HAnimSegment = (external_X_ITE_X3D_Namespace_default().add ("HAnimSegment", HAnimSegment_default_));
@@ -2019,14 +2127,173 @@ const HAnimSegment_default_ = HAnimSegment;
 
 
 
+
+
+
+const HAnimSite_hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
+
 function HAnimSite (executionContext)
 {
    external_X_ITE_X3D_X3DTransformNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
+
+   // Private properties
+
+   this .displacerNodes = [ ];
+   this .jointMatrix    = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
 
-Object .setPrototypeOf (HAnimSite .prototype, (external_X_ITE_X3D_X3DTransformNode_default()).prototype);
+Object .assign (Object .setPrototypeOf (HAnimSite .prototype, (external_X_ITE_X3D_X3DTransformNode_default()).prototype),
+{
+   initialize ()
+   {
+      external_X_ITE_X3D_X3DTransformNode_default().prototype .initialize .call (this);
+
+      // Events
+
+      this ._displacers .addInterest ("set_displacers__", this);
+      this ._coord      .addInterest ("set_coord__",      this);
+
+      this .set_displacers__ ();
+      this .set_coord__ ();
+   },
+   getHAnimKey ()
+   {
+      return this .coordNode .getHAnimKey ();
+   },
+   getDisplacers ()
+   {
+      return this .displacerNodes;
+   },
+   getJointMatrix ()
+   {
+      return this .jointMatrix;
+   },
+   set_displacers__ ()
+   {
+      const displacerNodes = this .displacerNodes;
+
+      for (const displacerNode of displacerNodes)
+      {
+         displacerNode ._coordIndex    .removeInterest ("set_displacementsTexture__",       this);
+         displacerNode ._displacements .removeInterest ("set_displacementsTexture__",       this);
+         displacerNode ._coordIndex    .removeInterest ("set_displacementWeightsTexture__", this);
+         displacerNode ._weight        .removeInterest ("set_displacementWeightsTexture__", this);
+      }
+
+      displacerNodes .length = 0;
+
+      for (const node of this ._displacers)
+      {
+         const displacerNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).HAnimDisplacer, node);
+
+         if (displacerNode)
+            displacerNodes .push (displacerNode);
+      }
+
+      for (const displacerNode of displacerNodes)
+      {
+         displacerNode ._coordIndex    .addInterest ("set_displacementsTexture__",       this);
+         displacerNode ._displacements .addInterest ("set_displacementsTexture__",       this);
+         displacerNode ._coordIndex    .addInterest ("set_displacementWeightsTexture__", this);
+         displacerNode ._weight        .addInterest ("set_displacementWeightsTexture__", this);
+      }
+
+      this .set_displacementsTexture__ ();
+      this .set_displacementWeightsTexture__ ();
+   },
+   set_displacementsTexture__ ()
+   {
+      this .coordNode ?._displacementsTexture .addEvent ();
+   },
+   set_displacementWeightsTexture__ ()
+   {
+      this .coordNode ?._displacementWeightsTexture .addEvent ();
+   },
+   set_coord__ ()
+   {
+      this .coordNode ?.removeHAnimDisplacers (this);
+
+      this .coordNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).Coordinate, this ._coord)
+         ?? external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).CoordinateDouble, this ._coord);
+
+      this .coordNode ?.addHAnimDisplacers (this);
+
+      this .set_displacementsTexture__ ();
+      this .set_displacementWeightsTexture__ ();
+   },
+   traverse (type, renderObject)
+   {
+      if (this .coordNode ?.numDisplacements)
+      {
+         const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+         modelViewMatrix .push ();
+         modelViewMatrix .multLeft (this .getMatrix ());
+
+         if (type === (external_X_ITE_X3D_TraverseType_default()).DISPLAY)
+         {
+            const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
+
+            this .jointMatrix
+               .assign (modelViewMatrix .get ())
+               .multRight (invHumanoidMatrix);
+
+            this .coordNode .updateSkin ();
+         }
+
+         const hAnimNodes = this .coordNode [HAnimSite_hAnimNodes] ??= [ ];
+
+         hAnimNodes .push (this);
+
+         external_X_ITE_X3D_X3DTransformNode_default().prototype .groupTraverse .call (this, type, renderObject);
+
+         hAnimNodes .pop ();
+         modelViewMatrix .pop ();
+      }
+      else
+      {
+         external_X_ITE_X3D_X3DTransformNode_default().prototype .traverse .call (this, type, renderObject);
+      }
+   },
+   groupTraverse (type, renderObject)
+   {
+      if (this .coordNode ?.getNumDisplacements ())
+      {
+         if (type === (external_X_ITE_X3D_TraverseType_default()).DISPLAY)
+         {
+            const invHumanoidMatrix = renderObject .getInvHumanoidMatrix () .get ();
+
+            this .jointMatrix
+               .assign (renderObject .getModelViewMatrix () .get ())
+               .multRight (invHumanoidMatrix);
+
+            this .coordNode .updateSkin ();
+         }
+
+         const hAnimNodes = this .coordNode [HAnimSite_hAnimNodes] ??= [ ];
+
+         hAnimNodes .push (this);
+
+         external_X_ITE_X3D_X3DTransformNode_default().prototype .groupTraverse .call (this, type, renderObject);
+
+         hAnimNodes .pop ();
+      }
+      else
+      {
+         external_X_ITE_X3D_X3DTransformNode_default().prototype .groupTraverse .call (this, type, renderObject);
+      }
+   },
+   getShaderOptions (options)
+   {
+      this .coordNode .getHAnimShaderOptions (options);
+   },
+   setShaderUniforms (gl, shaderObject)
+   {
+      this .coordNode .setHAnimShaderUniforms (gl, shaderObject);
+   },
+});
 
 Object .defineProperties (HAnimSite,
 {

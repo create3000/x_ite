@@ -1,4 +1,4 @@
-/* X_ITE v16.5.1 */
+/* X_ITE v16.6.0 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 996
+/***/ 23
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 526
+/***/ 197
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 870
+/***/ 901
 (module) {
 
 /**
@@ -18894,7 +18894,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.5.1";
+const BROWSER_VERSION_default_ = "16.6.0";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -24101,7 +24101,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeInstance .prototype, Core
    },
    ... Object .fromEntries ([
       "getTypeName",
-      "getType",
       "getComponentInfo",
       "getContainerField",
       "getSpecificationRange",
@@ -31236,7 +31235,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(870);
+/* provided dependency */ var libtess = __webpack_require__(901);
 
 
 const Triangle3 =
@@ -32351,6 +32350,8 @@ const MatrixStack_default_ = MatrixStack;
 
 
 
+const _hAnimNodes = Symbol .for ("X_ITE.HAnim.hAnimNodes");
+
 const DEPTH_BUFFER_SIZE = 16;
 
 function X3DRenderObject (executionContext)
@@ -32385,7 +32386,6 @@ function X3DRenderObject (executionContext)
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
    this .layoutRectangles         = [ ];
-   this .hAnimNode                = [ null ];
    this .invHumanoidMatrix        = new Utility_MatrixStack (Numbers_Matrix4);
    this .renderedTextures         = new Set ();
    this .collisions               = [ ];
@@ -32643,10 +32643,6 @@ Object .assign (X3DRenderObject .prototype,
    getLayoutRectangles ()
    {
       return this .layoutRectangles;
-   },
-   getHAnimNode ()
-   {
-      return this .hAnimNode;
    },
    getInvHumanoidMatrix ()
    {
@@ -32924,7 +32920,7 @@ Object .assign (X3DRenderObject .prototype,
          bboxSize   = new Numbers_Vector3 (),
          bboxCenter = new Numbers_Vector3 ();
 
-      return function (shapeNode)
+      return function (shapeNode, geometryContext)
       {
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
@@ -32938,27 +32934,18 @@ Object .assign (X3DRenderObject .prototype,
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
-         const num = this .numPointingShapes ++;
-
-         if (num === this .pointingShapes .length)
-         {
-            const renderContext = {
-               renderObject: this,
-               modelViewMatrix: new Float32Array (16),
-               viewport: new Numbers_Vector4 (),
-               clipPlanes: [ ],
-               sensors: [ ],
-               get renderContext () { return this; },
-            };
-
-            this .pointingShapes .push (renderContext);
-         }
-
-         const renderContext = this .pointingShapes [num];
+         const renderContext = this .pointingShapes [this .numPointingShapes ++] ??= {
+            renderObject: this,
+            modelViewMatrix: new Float32Array (16),
+            viewport: new Numbers_Vector4 (),
+            clipPlanes: [ ],
+            sensors: [ ],
+            get renderContext () { return this; },
+         };
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = this .hAnimNode .at (-1);
+         renderContext .hAnimNode = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
          renderContext .shapeNode = shapeNode;
 
          // Clip planes & sensors
@@ -32975,7 +32962,7 @@ Object .assign (X3DRenderObject .prototype,
          bboxSize   = new Numbers_Vector3 (),
          bboxCenter = new Numbers_Vector3 ();
 
-      return function (shapeNode)
+      return function (shapeNode, geometryContext)
       {
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
@@ -32989,27 +32976,18 @@ Object .assign (X3DRenderObject .prototype,
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
-         const num = this .numCollisionShapes ++;
-
-         if (num === this .collisionShapes .length)
-         {
-            const renderContext = {
-               renderObject: this,
-               viewport: new Numbers_Vector4 (),
-               clipPlanes: [ ],
-               collisions: [ ],
-               modelViewMatrix: new Float32Array (16),
-               get renderContext () { return this; },
-            };
-
-            this .collisionShapes .push (renderContext);
-         }
-
-         const renderContext = this .collisionShapes [num];
+         const renderContext = this .collisionShapes [this .numCollisionShapes ++] ??= {
+            renderObject: this,
+            viewport: new Numbers_Vector4 (),
+            clipPlanes: [ ],
+            collisions: [ ],
+            modelViewMatrix: new Float32Array (16),
+            get renderContext () { return this; },
+         };
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = this .hAnimNode .at (-1);
+         renderContext .hAnimNode = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
          renderContext .shapeNode = shapeNode;
 
          // Clip planes & Collision nodes
@@ -33026,7 +33004,7 @@ Object .assign (X3DRenderObject .prototype,
          bboxSize   = new Numbers_Vector3 (),
          bboxCenter = new Numbers_Vector3 ();
 
-      return function (shapeNode)
+      return function (shapeNode, geometryContext)
       {
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
@@ -33040,26 +33018,17 @@ Object .assign (X3DRenderObject .prototype,
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
-         const num = this .numDepthShapes ++;
-
-         if (num === this .depthShapes .length)
-         {
-            const renderContext = {
-               renderObject: this,
-               viewport: new Numbers_Vector4 (),
-               clipPlanes: [ ],
-               modelViewMatrix: new Float32Array (16),
-               get renderContext () { return this; },
-            };
-
-            this .depthShapes .push (renderContext);
-         }
-
-         const renderContext = this .depthShapes [num];
+         const renderContext = this .depthShapes [this .numDepthShapes ++] ??= {
+            renderObject: this,
+            viewport: new Numbers_Vector4 (),
+            clipPlanes: [ ],
+            modelViewMatrix: new Float32Array (16),
+            get renderContext () { return this; },
+         };
 
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
-         renderContext .hAnimNode = this .hAnimNode .at (-1);
+         renderContext .hAnimNode = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
          renderContext .shapeNode = shapeNode;
 
          // Clip planes
@@ -33075,7 +33044,7 @@ Object .assign (X3DRenderObject .prototype,
          bboxSize   = new Numbers_Vector3 (),
          bboxCenter = new Numbers_Vector3 ();
 
-      return function (shapeNode)
+      return function (shapeNode, geometryContext)
       {
          const modelViewMatrix = this .getModelViewMatrix () .get ();
 
@@ -33093,23 +33062,15 @@ Object .assign (X3DRenderObject .prototype,
 
          if (shapeNode .isTransparent ())
          {
-            const num = this .numTransparentShapes ++;
-
-            if (num === this .transparentShapes .length)
-               this .transparentShapes .push (this .createRenderContext (true));
-
-            renderContext = this .transparentShapes [num];
+            renderContext = this .transparentShapes [this .numTransparentShapes ++]
+               ??= this .createRenderContext (true);
 
             renderContext .distance = bboxCenter .z;
          }
          else
          {
-            const num = this .numOpaqueShapes ++;
-
-            if (num === this .opaqueShapes .length)
-               this .opaqueShapes .push (this .createRenderContext (false));
-
-            renderContext = this .opaqueShapes [num];
+            renderContext = this .opaqueShapes [this .numOpaqueShapes ++]
+               ??= this .createRenderContext (false);
          }
 
          this .renderPasses |= shapeNode .getRenderPasses ();
@@ -33119,7 +33080,7 @@ Object .assign (X3DRenderObject .prototype,
 
          renderContext .shadows        = this .localShadows .at (-1);
          renderContext .fogNode        = this .localFogs .at (-1);
-         renderContext .hAnimNode      = this .hAnimNode .at (-1);
+         renderContext .hAnimNode      = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
          renderContext .shapeNode      = shapeNode;
          renderContext .appearanceNode = shapeNode .getAppearance ();
 
@@ -36585,6 +36546,10 @@ Object .assign (GeometryContext .prototype,
    getTextureCoordinate ()
    {
       return this .textureCoordinateNode;
+   },
+   getCoord ()
+   {
+      return null;
    },
    updateGeometryKey: Rendering_X3DGeometryNode .prototype .updateGeometryKey,
 });
@@ -42820,17 +42785,13 @@ function eventsProcessed ()
             {
                if (childNode .getType () .at (-1) !== Base_X3DConstants .HAnimJoint)
                {
-                  const
-                     siteNode    = scene .createNode ("HAnimSite",    false),
-                     segmentNode = scene .createNode ("HAnimSegment", false);
+                  const siteNode = scene .createNode ("HAnimSite", false);
 
-                  siteNode    ._children .push (childNode);
-                  segmentNode ._children .push (siteNode);
+                  siteNode ._children .push (childNode);
 
-                  siteNode    .setup ();
-                  segmentNode .setup ();
+                  siteNode .setup ();
 
-                  return segmentNode;
+                  return siteNode;
                }
                else
                {
@@ -47962,7 +47923,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(870);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(901);
 
 
 
@@ -54738,7 +54699,7 @@ function X3DCoreContext (element)
          const link = document .createElement ("link");
 
          if (!DEVELOPMENT)
-            link .integrity = "sha384-VPxo0vBo7nOYn5iBj9X6adcmFfaP8csYQCFin8ZxqaXZgqdt2cZzgydvtXxB0JTm";
+            link .integrity = "sha384-6OXJlHzXsf/wUqb6nZzYEmTdwO5SKkQn/PDr8Ax82LGFXKZqL7ojVZCBBNFnuYOt";
 
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
@@ -57973,7 +57934,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
       {
          case Rendering_TraverseType .POINTER:
          {
-            renderObject .addPointingShape (this);
+            renderObject .addPointingShape (this, geometryContext);
             break;
          }
          case Rendering_TraverseType .PICKING:
@@ -57983,20 +57944,20 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
          }
          case Rendering_TraverseType .COLLISION:
          {
-            renderObject .addCollisionShape (this);
+            renderObject .addCollisionShape (this, geometryContext);
             break;
          }
          case Rendering_TraverseType .DEPTH:
          case Rendering_TraverseType .SHADOW:
          {
-            renderObject .addDepthShape (this);
+            renderObject .addDepthShape (this, geometryContext);
             break;
          }
          case Rendering_TraverseType .DISPLAY:
          {
             // X3DAppearanceNode traverse is needed for rendered textures.
 
-            if (renderObject .addDisplayShape (this))
+            if (renderObject .addDisplayShape (this, geometryContext))
                this .appearanceNode .traverse (type, renderObject);
 
             break;
@@ -83960,13 +83921,14 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, Core_X3DChildNode .pr
             else
             {
                const
-                  globalLights    = renderObject .getGlobalLights (),
-                  globalShadows   = renderObject .getGlobalShadows (),
-                  globalsBegin    = globalLights .length,
-                  shadowsBegin    = globalShadows .length,
-                  localLights     = this .localLights,
-                  numLocalObjects = localLights .length,
-                  lightsKeys      = localLights .map (c => c .lightNode .getLightKey ());
+                  globalLights     = renderObject .getGlobalLights (),
+                  globalLightsKeys = renderObject .getGlobalLightsKeys (),
+                  globalShadows    = renderObject .getGlobalShadows (),
+                  globalsBegin     = globalLights .length,
+                  shadowsBegin     = globalShadows .length,
+                  localLights      = this .localLights,
+                  numLocalObjects  = localLights .length,
+                  lightsKeys       = localLights .map (c => c .lightNode .getLightKey ());
 
                if (numLocalObjects)
                {
@@ -84011,8 +83973,9 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, Core_X3DChildNode .pr
                localLights .length = numGlobalLights;
                this .localShadows  = globalShadows .at (-1);
 
-               globalLights  .length = globalsBegin;
-               globalShadows .length = shadowsBegin;
+               globalLights     .length = globalsBegin;
+               globalLightsKeys .length = globalsBegin;
+               globalShadows    .length = shadowsBegin;
             }
 
             return;
@@ -91613,8 +91576,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(996);
-/* provided dependency */ var APNG = __webpack_require__(526);
+/* provided dependency */ var SuperGif = __webpack_require__(23);
+/* provided dependency */ var APNG = __webpack_require__(197);
 
 
 
@@ -94258,7 +94221,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(870);
+/* provided dependency */ var libtess_libtess = __webpack_require__(901);
 const libtess_default_ = libtess_libtess;
 ;
 
