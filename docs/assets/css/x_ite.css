@@ -1,19 +1,8 @@
----
----
-
-@use 'main
-{%- if jekyll.environment == 'production' -%}
-  .bundle
-{%- endif -%}
-';
-
-/* append your custom style below */
-
 /*
  * Common rules start here
  */
 
-@mixin x_ite-dark-scheme {
+:host {
   /* Colors */
 
   --system-red: rgb(255, 66, 69);
@@ -53,42 +42,44 @@
   --playground-console-background: rgba(0, 0, 0, 0.2);
 }
 
-@mixin x_ite-light-scheme {
-  /* Colors */
+@media (prefers-color-scheme: light) {
+  :host {
+    /* Colors */
 
-  --system-red: rgb(255, 56, 60);
-  --system-orange: rgb(255, 141, 40);
-  --system-yellow: rgb(255, 204, 0);
-  --system-green: rgb(52, 199, 89);
-  --system-mint: rgb(0, 200, 179);
-  --system-teal: rgb(0, 195, 208);
-  --system-cyan: rgb(0, 192, 232);
-  --system-blue: rgb(0, 136, 255);
-  --system-indigo: rgb(88, 86, 214);
-  --system-purple: rgb(97, 85, 245);
-  --system-pink: rgb(255, 45, 85);
-  --system-brown: rgb(172, 127, 94);
+    --system-red: rgb(255, 56, 60);
+    --system-orange: rgb(255, 141, 40);
+    --system-yellow: rgb(255, 204, 0);
+    --system-green: rgb(52, 199, 89);
+    --system-mint: rgb(0, 200, 179);
+    --system-teal: rgb(0, 195, 208);
+    --system-cyan: rgb(0, 192, 232);
+    --system-blue: rgb(0, 136, 255);
+    --system-indigo: rgb(88, 86, 214);
+    --system-purple: rgb(97, 85, 245);
+    --system-pink: rgb(255, 45, 85);
+    --system-brown: rgb(172, 127, 94);
 
-  --system-gray0: rgb(72, 72, 77);
-  --system-gray1: rgb(142, 142, 147);
-  --system-gray2: rgb(174, 174, 178);
-  --system-gray3: rgb(199, 199, 204);
-  --system-gray4: rgb(209, 209, 214);
-  --system-gray5: rgb(229, 229, 234);
-  --system-gray6: rgb(242, 242, 247);
-  --system-gray7: rgb(249, 249, 255);
-  --system-gray8: rgb(255, 255, 255);
+    --system-gray0: rgb(72, 72, 77);
+    --system-gray1: rgb(142, 142, 147);
+    --system-gray2: rgb(174, 174, 178);
+    --system-gray3: rgb(199, 199, 204);
+    --system-gray4: rgb(209, 209, 214);
+    --system-gray5: rgb(229, 229, 234);
+    --system-gray6: rgb(242, 242, 247);
+    --system-gray7: rgb(249, 249, 255);
+    --system-gray8: rgb(255, 255, 255);
 
-  --h2-color: rgb(189, 0, 0);
-  --h3-color: rgb(159, 103, 34);;
-  --h3-color-strong: rgb(173, 81, 0);
-  --h4-color: rgb(29, 80, 163);
-  --h4-color-strong: rgb(10, 80, 144);
-  --h4-color-strong-writable: rgb(97, 29, 163);
+    --h2-color: rgb(189, 0, 0);
+    --h3-color: rgb(159, 103, 34);;
+    --h3-color-strong: rgb(173, 81, 0);
+    --h4-color: rgb(29, 80, 163);
+    --h4-color-strong: rgb(10, 80, 144);
+    --h4-color-strong-writable: rgb(97, 29, 163);
 
-  --color-filter: filter: brightness(0) saturate(100%) invert(22%) sepia(7%) saturate(669%) hue-rotate(201deg) brightness(89%) contrast(97%);
-  --example-background-color: rgba(235, 235, 255, 0.644);
-  --playground-console-background: rgb(0, 0, 0, 0.02);
+    --color-filter: filter: brightness(0) saturate(100%) invert(22%) sepia(7%) saturate(669%) hue-rotate(201deg) brightness(89%) contrast(97%);
+    --example-background-color: rgba(235, 235, 255, 0.644);
+    --playground-console-background: rgb(0, 0, 0, 0.02);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -188,7 +179,7 @@ ul.is-collapsible {
   text-transform: uppercase;
 }
 
-li.nav-item:has(> a[href="/x_ite/tags/"]) {
+li.nav-item:has(> a[href="/sunrize/tags/"]) {
   display: none;
 }
 
@@ -795,4 +786,20 @@ table.slim-table tbody tr td:has(img) {
 .monaco-editor,
 .monaco-editor * {
   all: revert;
+}
+
+/* Platform link  */
+
+.platform {
+  display: inline-block;
+  margin-right: 0;
+  border: 1px solid !important;
+  border-radius: .625rem;
+  padding: 1rem;
+  text-align: center;
+  font-size: 1.54rem;
+}
+
+.platform i {
+  font-size: 3rem;
 }
