@@ -92,7 +92,24 @@ html {
   overflow: auto;
 }
 
-/* tocbot navigation */
+/* Rouge sh */
+
+/* rest of text */
+.language-sh .highlight :is(pre, .o) {
+  color: #4a6983;
+}
+
+:root:not([data-bs-theme=light]) .language-sh .highlight :is(pre, .o) {
+  color: #a5d5fe;
+}
+
+/* some parameter */
+.language-sh .highlight .nb {
+  color: #fefdc2;
+}
+
+/* TocBot Side Navigation */
+
 ul.is-collapsible {
   max-height: unset;
 }
