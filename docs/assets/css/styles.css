@@ -4,7 +4,7 @@
  * Common rules start here
  */
 
-:root:not([data-bs-theme=dark]) {
+html[data-bs-theme=light] {
   /* Colors */
 
   --system-red: rgb(255, 56, 60);
@@ -42,7 +42,7 @@
   --playground-console-background: rgb(0, 0, 0, 0.02);
 }
 
-:root:not([data-bs-theme=light]) {
+html[data-bs-theme=dark] {
   /* Colors */
 
   --system-red: rgb(255, 66, 69);
@@ -99,7 +99,7 @@ html {
   color: #4a6983;
 }
 
-:root:not([data-bs-theme=light]) .language-sh .highlight :is(pre, .o) {
+html[data-bs-theme=dark] .language-sh .highlight :is(pre, .o) {
   color: #a5d5fe;
 }
 
