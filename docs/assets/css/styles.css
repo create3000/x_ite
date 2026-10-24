@@ -724,19 +724,3 @@ table.slim-table tbody tr td:has(img) {
   content: "·";
   margin: 0 7px 0 4px;
 }
-
-/* Platform link  */
-
-.platform {
-  display: inline-block;
-  margin-right: 1em;
-  border: 1px solid !important;
-  border-radius: .625rem;
-  padding: 1rem;
-  text-align: center;
-  font-size: 1.54rem;
-}
-
-.platform i {
-  font-size: 3rem;
-}
