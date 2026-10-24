@@ -310,16 +310,16 @@ You can find more information about X_ITE on its [npm page](https://www.npmjs.co
 
 To install, use the following command:
 
-```console
-$ npm install x_ite
+```sh
+npm install x_ite
 ```
 
 Maybe you are curious now [how to use X_ITE with Electron](/x_ite/how-to-use-x-ite-with-electron/)?
 
 Also try [x_ite-node](https://www.npmjs.com/package/x_ite-node), a pure Node.js version, without any dependencies on Electron or any browser. Suitable for just reading 3D files, analyzing, processing them and generating X3D again.
 
-```console
-$ npm install x_ite-node
+```sh
+npm install x_ite-node
 ```
 
 ### VS Code and Open VSX Extensions

@@ -39,15 +39,15 @@ If you have [Python](https://www.python.org) installed, then it is quite easy to
 
 Just open a Terminal and go to the directory you want to make available.
 
-```console
-$ # Let's make the Desktop directory available.
-$ cd Desktop
+```sh
+# Let's make the Desktop directory available.
+cd Desktop
 ```
 
 Type in the following command to start the server.
 
-```console
-$ python3 -m http.server 80
+```sh
+python3 -m http.server 80
 ```
 
 By default, this will run the contents of the directory on a local web server, on port 80. You can go to this server by going to the URL http://**localhost** in your web browser. Here you'll see the contents of the directory listed — click the HTML file you want to run.
