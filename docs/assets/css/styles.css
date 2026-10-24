@@ -92,24 +92,6 @@ html {
   overflow: auto;
 }
 
-/* rouge console */
-
-/* rest of text */
-.language-console .highlight pre,
-.language-console .highlight .o {
-  @extend .na;
-}
-
-/* $ */
-.language-console .highlight .gp {
-  @extend .k;
-}
-
-/* some parameter */
-.language-console .highlight .nb {
-  @extend .mf;
-}
-
 /* tocbot navigation */
 ul.is-collapsible {
   max-height: unset;
