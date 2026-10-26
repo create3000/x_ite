@@ -17,12 +17,19 @@ function HAnimSegment (executionContext)
 
    this .addType (X3DConstants .HAnimSegment);
 
-   this .setAllowedTypes ([
-      X3DConstants .HAnimSite,
-      X3DConstants .Inline,
-      X3DConstants .Shape,
-      X3DConstants .X3DGroupingNode,
-   ]);
+   if (executionContext .getSpecificationVersion () >= 4.1)
+   {
+      this .setAllowedTypes ([
+         X3DConstants .HAnimSite,
+         X3DConstants .Inline,
+         X3DConstants .Shape,
+         X3DConstants .X3DGroupingNode,
+      ]);
+   }
+   else
+   {
+      this .setAllowedTypes ([ ]);
+   }
 
    // Units
 
@@ -32,11 +39,6 @@ function HAnimSegment (executionContext)
 
    this .displacerNodes = [ ];
    this .jointMatrix    = new Matrix4 ();
-
-   // Legacy
-
-   if (executionContext .getSpecificationVersion () <= 4.0)
-      this .setAllowedTypes ([ ]);
 }
 
 Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode .prototype),

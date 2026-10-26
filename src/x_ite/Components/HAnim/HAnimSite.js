@@ -16,17 +16,15 @@ function HAnimSite (executionContext)
 
    this .addType (X3DConstants .HAnimSite);
 
-   this .setAllowedTypes ([X3DConstants .Inline, X3DConstants .Shape, X3DConstants .X3DGroupingNode]);
+   if (executionContext .getSpecificationVersion () >= 4.1)
+      this .setAllowedTypes ([X3DConstants .Inline, X3DConstants .Shape, X3DConstants .X3DGroupingNode]);
+   else
+      this .setAllowedTypes ([ ]);
 
    // Private properties
 
    this .displacerNodes = [ ];
    this .jointMatrix    = new Matrix4 ();
-
-   // Legacy
-
-   if (executionContext .getSpecificationVersion () <= 4.0)
-      this .setAllowedTypes ([ ]);
 }
 
 Object .assign (Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .prototype),

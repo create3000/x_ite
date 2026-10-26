@@ -19,13 +19,24 @@ function HAnimJoint (executionContext)
 
    this .setVisibleObject (true);
 
-   this .setAllowedTypes ([
-      X3DConstants .HAnimJoint,
-      X3DConstants .HAnimSegment,
-      X3DConstants .Inline,
-      X3DConstants .Shape,
-      X3DConstants .X3DGroupingNode,
-   ]);
+   if (executionContext .getSpecificationVersion () >= 4.1)
+   {
+      this .setAllowedTypes ([
+         X3DConstants .HAnimJoint,
+         X3DConstants .HAnimSegment,
+         X3DConstants .Inline,
+         X3DConstants .Shape,
+         X3DConstants .X3DGroupingNode,
+      ]);
+   }
+   else if (executionContext .getSpecificationVersion () >= 4.0)
+   {
+      this .setAllowedTypes ([X3DConstants .HAnimJoint, X3DConstants .HAnimSegment]);
+   }
+   else
+   {
+      this .setAllowedTypes ([X3DConstants .HAnimSite]);
+   }
 
    // Units
 
@@ -33,13 +44,6 @@ function HAnimJoint (executionContext)
    this ._ulimit   .setUnit ("angle");
    this ._minAngle .setUnit ("angle");
    this ._maxAngle .setUnit ("angle");
-
-   // Legacy
-
-   if (executionContext .getSpecificationVersion () <= 3.3)
-      this .setAllowedTypes ([X3DConstants .HAnimSite]);
-   else if (executionContext .getSpecificationVersion () <= 4.0)
-      this .setAllowedTypes ([X3DConstants .HAnimJoint, X3DConstants .HAnimSegment]);
 
    // Private properties
 
