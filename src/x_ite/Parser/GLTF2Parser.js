@@ -2380,13 +2380,13 @@ function eventsProcessed ()
             {
                if (childNode .getType () .at (-1) !== X3DConstants .HAnimJoint)
                {
-                  const siteNode = scene .createNode ("HAnimSite", false);
+                  const groupNode = scene .createNode ("Group", false);
 
-                  siteNode ._children .push (childNode);
+                  groupNode ._children .push (childNode);
 
-                  siteNode .setup ();
+                  groupNode .setup ();
 
-                  return siteNode;
+                  return groupNode;
                }
                else
                {

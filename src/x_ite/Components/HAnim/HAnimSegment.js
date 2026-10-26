@@ -17,7 +17,7 @@ function HAnimSegment (executionContext)
 
    this .addType (X3DConstants .HAnimSegment);
 
-   this .addAllowedTypes (X3DConstants .HAnimSite, X3DConstants .X3DGroupingNode);
+   this .addAllowedTypes (X3DConstants .HAnimSite, X3DConstants .Inline, X3DConstants .Shape, X3DConstants .X3DGroupingNode);
 
    // Units
 

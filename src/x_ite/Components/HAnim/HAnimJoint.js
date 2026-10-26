@@ -18,7 +18,7 @@ function HAnimJoint (executionContext)
                           X3DConstants .outputOnly, "displacementWeights", new Fields .SFTime ());
 
    this .setVisibleObject (true);
-   this .addAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSegment, X3DConstants .X3DGroupingNode, X3DConstants .Shape);
+   this .addAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSegment, X3DConstants .Inline, X3DConstants .Shape, X3DConstants .X3DGroupingNode);
 
    // Units
 
