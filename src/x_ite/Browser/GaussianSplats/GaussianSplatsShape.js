@@ -538,7 +538,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       const
          browser = this .getBrowser (),
-         scene   = this .getScene (),
          gl      = browser .getContext (),
          content = `import "${URLs .getLibraryURL ("mkkellogg-sort.worker.js")}";`,
          url     = URL .createObjectURL (new Blob ([content], { type: "text/javascript" }));
