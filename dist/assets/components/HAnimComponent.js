@@ -144,7 +144,25 @@ function HAnimJoint (executionContext)
                           (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeights", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
    this .setVisibleObject (true);
-   this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment, (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode, (external_X_ITE_X3D_X3DConstants_default()).Shape);
+
+   if (executionContext .getSpecificationVersion () >= 4.1)
+   {
+      this .setAllowedTypes ([
+         (external_X_ITE_X3D_X3DConstants_default()).HAnimJoint,
+         (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment,
+         (external_X_ITE_X3D_X3DConstants_default()).Inline,
+         (external_X_ITE_X3D_X3DConstants_default()).Shape,
+         (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode,
+      ]);
+   }
+   else if (executionContext .getSpecificationVersion () >= 4.0)
+   {
+      this .setAllowedTypes ([(external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment]);
+   }
+   else
+   {
+      this .setAllowedTypes ([(external_X_ITE_X3D_X3DConstants_default()).HAnimSite]);
+   }
 
    // Units
 
@@ -152,13 +170,6 @@ function HAnimJoint (executionContext)
    this ._ulimit   .setUnit ("angle");
    this ._minAngle .setUnit ("angle");
    this ._maxAngle .setUnit ("angle");
-
-   // Legacy
-
-   if (executionContext .getSpecificationVersion () <= 3.3)
-      this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
-   else if (executionContext .getSpecificationVersion () <= 4.0)
-      this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment);
 
    // Private properties
 
@@ -429,8 +440,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       // Groups
 
-      this .skeletonNode   .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
-      this .viewpointsNode .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
+      this .skeletonNode   .setAllowedTypes ([(external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSite]);
+      this .viewpointsNode .setAllowedTypes ([(external_X_ITE_X3D_X3DConstants_default()).HAnimSite]);
 
       this ._displacers .addFieldInterest (this .skeletonNode   ._displacers);
       this ._skeleton   .addFieldInterest (this .skeletonNode   ._children);
@@ -1728,7 +1739,19 @@ function HAnimSegment (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimSegment);
 
-   this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite, (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode);
+   if (executionContext .getSpecificationVersion () >= 4.1)
+   {
+      this .setAllowedTypes ([
+         (external_X_ITE_X3D_X3DConstants_default()).HAnimSite,
+         (external_X_ITE_X3D_X3DConstants_default()).Inline,
+         (external_X_ITE_X3D_X3DConstants_default()).Shape,
+         (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode,
+      ]);
+   }
+   else
+   {
+      this .setAllowedTypes ([ ]);
+   }
 
    // Units
 
@@ -1738,11 +1761,6 @@ function HAnimSegment (executionContext)
 
    this .displacerNodes = [ ];
    this .jointMatrix    = new (external_X_ITE_X3D_Matrix4_default()) ();
-
-   // Legacy
-
-   if (executionContext .getSpecificationVersion () <= 4.0)
-      this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).X3DChildNode);
 }
 
 Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
@@ -2137,6 +2155,11 @@ function HAnimSite (executionContext)
    external_X_ITE_X3D_X3DTransformNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
+
+   if (executionContext .getSpecificationVersion () >= 4.1)
+      this .setAllowedTypes ([(external_X_ITE_X3D_X3DConstants_default()).Inline, (external_X_ITE_X3D_X3DConstants_default()).Shape, (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode]);
+   else
+      this .setAllowedTypes ([ ]);
 
    // Private properties
 

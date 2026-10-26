@@ -1,7 +1,7 @@
 /* X_ITE v16.6.0 */
 var __webpack_modules__ = ({
 
-/***/ 23
+/***/ 578
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 197
+/***/ 728
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 901
+/***/ 828
 (module) {
 
 /**
@@ -31215,7 +31215,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(901);
+/* provided dependency */ var libtess = __webpack_require__(828);
 
 
 const Triangle3 =
@@ -34048,10 +34048,9 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
 
       this .set_children__ ();
    },
-   addAllowedTypes (... types)
+   setAllowedTypes (types)
    {
-      for (const type of types)
-         this .allowedTypes .add (type);
+      this .allowedTypes = new Set (types);
    },
    getBBox (bbox, shadows)
    {
@@ -42765,13 +42764,13 @@ function eventsProcessed ()
             {
                if (childNode .getType () .at (-1) !== Base_X3DConstants .HAnimJoint)
                {
-                  const siteNode = scene .createNode ("HAnimSite", false);
+                  const groupNode = scene .createNode ("Group", false);
 
-                  siteNode ._children .push (childNode);
+                  groupNode ._children .push (childNode);
 
-                  siteNode .setup ();
+                  groupNode .setup ();
 
-                  return siteNode;
+                  return groupNode;
                }
                else
                {
@@ -47903,7 +47902,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(901);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(828);
 
 
 
@@ -91556,8 +91555,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(23);
-/* provided dependency */ var APNG = __webpack_require__(197);
+/* provided dependency */ var SuperGif = __webpack_require__(578);
+/* provided dependency */ var APNG = __webpack_require__(728);
 
 
 
@@ -94201,7 +94200,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(901);
+/* provided dependency */ var libtess_libtess = __webpack_require__(828);
 const libtess_default_ = libtess_libtess;
 ;
 
