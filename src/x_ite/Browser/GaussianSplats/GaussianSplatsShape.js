@@ -561,6 +561,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          {
             case "ready":
             {
+               console .log ("ready", this .getId ())
                this .sortModelViewMatrix .fill (0);
 
                scene .removeLoadingObject (this);
@@ -590,22 +591,22 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          this .sortPending = false;
       };
 
-      const loading = event =>
+      const loading = async event =>
       {
          switch (event .data .type)
          {
             case "ready":
             {
-               browser .loading () .then (() =>
-               {
-                  if (event .target .sorted)
-                     return;
+               if (event .target .sorted)
+                  return;
 
-                  scene .addLoadingObject (this);
-               });
+               await browser .loading ();
+
+               scene .addLoadingObject (this);
                break;
             }
             case "sorted":
+            case "error":
             {
                scene .removeLoadingObject (this);
                event .target .removeEventListener ("message", loading);
