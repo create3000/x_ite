@@ -57,7 +57,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
       this .set_children__ ();
    },
-   setAllowedTypes (... types)
+   setAllowedTypes (types)
    {
       this .allowedTypes = new Set (types);
    },

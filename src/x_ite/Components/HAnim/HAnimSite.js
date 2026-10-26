@@ -16,7 +16,7 @@ function HAnimSite (executionContext)
 
    this .addType (X3DConstants .HAnimSite);
 
-   this .setAllowedTypes (X3DConstants .Inline, X3DConstants .Shape, X3DConstants .X3DGroupingNode);
+   this .setAllowedTypes ([X3DConstants .Inline, X3DConstants .Shape, X3DConstants .X3DGroupingNode]);
 
    // Private properties
 
@@ -26,7 +26,7 @@ function HAnimSite (executionContext)
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 4.0)
-      this .setAllowedTypes (X3DConstants .X3DChildNode);
+      this .setAllowedTypes ([ ]);
 }
 
 Object .assign (Object .setPrototypeOf (HAnimSite .prototype, X3DTransformNode .prototype),
