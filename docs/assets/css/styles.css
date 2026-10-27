@@ -753,5 +753,5 @@ table.slim-table tbody tr td:has(img) {
 
 .monaco-editor :is(.left, .right) {
   float: unset;
-  margin: 0px !important;
+  margin: 0px;
 }
