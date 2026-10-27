@@ -3,8 +3,8 @@ import GLTF2Parser from "./GLTF2Parser.js";
 import $           from "../../lib/helper.js";
 
 const
-   MAGIC_OFFSET         = 0,
    MAGIC                = 0x46546C67, // glTF
+   MAGIC_OFFSET         = 0,
    VERSION_OFFSET       = 4,
    LENGTH_OFFSET        = 8,
    CHUNK_ENCODING_PLAIN = 0x00000000,
