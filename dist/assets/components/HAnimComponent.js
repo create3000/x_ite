@@ -1,4 +1,4 @@
-/* X_ITE v16.6.0 */
+/* X_ITE v16.6.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -2157,9 +2157,18 @@ function HAnimSite (executionContext)
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimSite);
 
    if (executionContext .getSpecificationVersion () >= 4.1)
-      this .setAllowedTypes ([(external_X_ITE_X3D_X3DConstants_default()).Inline, (external_X_ITE_X3D_X3DConstants_default()).Shape, (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode]);
+   {
+      this .setAllowedTypes ([
+         (external_X_ITE_X3D_X3DConstants_default()).Inline,
+         (external_X_ITE_X3D_X3DConstants_default()).Shape,
+         (external_X_ITE_X3D_X3DConstants_default()).X3DGroupingNode,
+         (external_X_ITE_X3D_X3DConstants_default()).X3DViewpointNode,
+      ]);
+   }
    else
+   {
       this .setAllowedTypes ([ ]);
+   }
 
    // Private properties
 

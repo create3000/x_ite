@@ -1,4 +1,4 @@
-/* X_ITE v16.6.0 */
+/* X_ITE v16.6.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -808,7 +808,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       const
          browser = this .getBrowser (),
-         scene   = this .getScene (),
          gl      = browser .getContext (),
          content = `import "${external_X_ITE_X3D_URLs_default().getLibraryURL ("mkkellogg-sort.worker.js")}";`,
          url     = URL .createObjectURL (new Blob ([content], { type: "text/javascript" }));
