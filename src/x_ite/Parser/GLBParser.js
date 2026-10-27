@@ -3,12 +3,13 @@ import GLTF2Parser from "./GLTF2Parser.js";
 import $           from "../../lib/helper.js";
 
 const
-   MAGIC_OFFSET   = 0,
-   MAGIC          = 0x46546C67, // glTF
-   VERSION_OFFSET = 4,
-   LENGTH_OFFSET  = 8,
-   JSON_CHUNK     = 0x4e4f534a,
-   BUFFER_CHUNK   = 0x004e4942;
+   MAGIC_OFFSET         = 0,
+   MAGIC                = 0x46546C67, // glTF
+   VERSION_OFFSET       = 4,
+   LENGTH_OFFSET        = 8,
+   CHUNK_ENCODING_PLAIN = 0x00000000,
+   JSON_CHUNK           = 0x4e4f534a,
+   BUFFER_CHUNK         = 0x004e4942;
 
 const VERSION_LAYOUT = {
    2: { headerLength: 12, chunkHeaderLength: 8,  alignment: 4 },
@@ -105,17 +106,20 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
 
          i += layout .chunkHeaderLength;
 
-         switch (type)
+         if (encoding === CHUNK_ENCODING_PLAIN)
          {
-            case JSON_CHUNK: // Structured JSON Content
+            switch (type)
             {
-               json .push ($.decodeText (arrayBuffer .slice (i, i + length)));
-               break;
-            }
-            case BUFFER_CHUNK: // Binary Buffer
-            {
-               buffers .push (arrayBuffer .slice (i, i + length));
-               break;
+               case JSON_CHUNK: // Structured JSON Content
+               {
+                  json .push ($.decodeText (arrayBuffer .slice (i, i + length)));
+                  break;
+               }
+               case BUFFER_CHUNK: // Binary Buffer
+               {
+                  buffers .push (arrayBuffer .slice (i, i + length));
+                  break;
+               }
             }
          }
 
@@ -137,7 +141,7 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
       {
          const
             length   = dataView .getUint32 (i, true),
-            encoding = undefined,
+            encoding = CHUNK_ENCODING_PLAIN,
             type     = dataView .getUint32 (i + 4, true);
 
          return { type, encoding, length };
