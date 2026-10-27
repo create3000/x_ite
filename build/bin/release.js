@@ -6,7 +6,7 @@ const
    { sh, systemSync } = require ("shell-tools");
 
 // curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '
-const size = parseInt (sh (`brotli -q 4 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000;
+const size = parseInt (sh (`brotli -q 11 dist/x_ite.min.mjs --stdout | wc -c`) .trim ()) / 1000;
 
 function bump ()
 {

@@ -53,7 +53,7 @@ function main ()
    // Output package sizes:
 
    const online = sh (`curl -H "Accept-Encoding: br" -s "https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js" | wc -c | tr -d ' '`) .trim ();
-   const local  = sh (`brotli -4 dist/x_ite.min.mjs --stdout | wc -c | tr -d ' '`) .trim ();
+   const local  = sh (`brotli -q 11 dist/x_ite.min.mjs --stdout | wc -c | tr -d ' '`) .trim ();
    const min    = sh (`cat dist/x_ite.min.js | wc -c | tr -d ' '`) .trim ();
 
    console .log (`Online: ${online .toLocaleString ("en")} bytes`);
