@@ -97,13 +97,13 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
    },
    chunks ()
    {
-      const { dataView, arrayBuffer, json, buffers } = this;
+      const { layout, dataView, arrayBuffer, json, buffers } = this;
 
-      for (let i = this .layout .headerLength; i < dataView .byteLength;)
+      for (let i = layout .headerLength; i < dataView .byteLength;)
       {
          const { type, encoding, length } = this .chunkHeader (dataView, i);
 
-         i += this .layout .chunkHeaderLength;
+         i += layout .chunkHeaderLength;
 
          switch (type)
          {
