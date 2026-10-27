@@ -17,9 +17,18 @@ function HAnimSite (executionContext)
    this .addType (X3DConstants .HAnimSite);
 
    if (executionContext .getSpecificationVersion () >= 4.1)
-      this .setAllowedTypes ([X3DConstants .Inline, X3DConstants .Shape, X3DConstants .X3DGroupingNode]);
+   {
+      this .setAllowedTypes ([
+         X3DConstants .Inline,
+         X3DConstants .Shape,
+         X3DConstants .X3DGroupingNode,
+         X3DConstants .X3DViewpointNode,
+      ]);
+   }
    else
+   {
       this .setAllowedTypes ([ ]);
+   }
 
    // Private properties
 

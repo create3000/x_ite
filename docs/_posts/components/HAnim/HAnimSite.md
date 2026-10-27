@@ -203,7 +203,7 @@ Input field *addChildren*.
 
 Input field *removeChildren*.
 
-### MFNode [in, out] **children** [ ] <small>[Inline, Shape, X3DGroupingNode]</small>
+### MFNode [in, out] **children** [ ] <small>[Inline, Shape, X3DGroupingNode, X3DViewpointNode]</small>
 {: #fields-children }
 
 Grouping nodes contain an ordered list of *children* nodes.
