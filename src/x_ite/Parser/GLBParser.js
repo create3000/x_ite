@@ -12,8 +12,8 @@ const
    BUFFER_CHUNK         = 0x004e4942;
 
 const VERSION_LAYOUT = {
-   2: { headerLength: 12, chunkHeaderLength: 8  },
-   3: { headerLength: 16, chunkHeaderLength: 16 },
+   2: { headerLength: 12, chunkHeaderLength: 8,  alignment: 4 },
+   3: { headerLength: 16, chunkHeaderLength: 16, alignment: 8 },
 };
 
 function GLB2Parser (scene)
@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
             }
          }
 
-         i += length;
+         i = this .alignUp (i + length, layout .alignment);
       }
    },
    chunkHeader (dataView, i)
@@ -146,6 +146,10 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
 
          return { type, encoding, length };
       }
+   },
+   alignUp (value, alignment)
+   {
+      return Math .ceil (value / alignment) * alignment;
    },
 });
 
