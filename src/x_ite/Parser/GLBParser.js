@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
       for (let i = layout .headerLength; i < dataView .byteLength;)
       {
          if (i + layout .chunkHeaderLength > dataView .byteLength)
-            throw new Error ("GLB Parser: Invalid header length.");
+            throw new Error ("GLB Parser: Invalid chuck header length.");
 
          const { type, encoding, length } = this .chunkHeader (dataView, i);
 
