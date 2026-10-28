@@ -92,13 +92,6 @@ html {
   overflow: auto;
 }
 
-/* Logo */
-
-#sidebar #avatar {
-  box-shadow: none;
-  border-radius: 0px !important;
-}
-
 /* Rouge sh */
 
 /* rest of text */
