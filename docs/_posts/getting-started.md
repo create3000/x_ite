@@ -419,7 +419,7 @@ For example, we could provide a text description of the X3D element or provide a
 
 ## Attributes of the \<x3d-canvas\> Element
 
-The HTML **\<x3d-canvas\>** element defines the main content of the X3D document. The \<x3d-canvas\> element has several attributes that define different behaviors. All of these attributes are optional and all can be changed during runtime except *preserveDrawingBuffer*.
+The HTML **\<x3d-canvas\>** element defines the main content of the X3D document. The \<x3d-canvas\> element has several attributes that define different behaviors.
 
 antialiased
 : A Boolean value (`true` or `false`) to indicate whether rendering should use hardware antialiasing if available. The default value for the *antialiased* attribute is `true`.
@@ -475,7 +475,7 @@ onshutdown
 : Type: script code. This event handler will be called on the \<x3d-canvas\> element when a scene is unloaded or replaced by another world.
 
 preserveDrawingBuffer
-: A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to `true` if you want to save images from the internal canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications.
+: A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for the *preserveDrawingBuffer* attribute is `false`. Set *preserveDrawingBuffer* to `true` if you want to save images from the internal canvas. Keep in mind setting *preserveDrawingBuffer* to true can have performance implications. This must be set at initialization and cannot be changed during runtime.
 
 orderIndependentTransparency
 : A Boolean value (`true` or `false`) to indicate whether order independent transparency rendering technique should be used. The default value for the *orderIndependentTransparency* attribute is `false`.
