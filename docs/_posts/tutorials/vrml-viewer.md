@@ -17,6 +17,26 @@ Although VRML was once envisioned as a common way to experience interactive 3D c
 <x3d-canvas class="buttons-br" src="https://create3000.github.io/media/tutorials/vrml/windmill.x3d" contentScale="auto" update="auto">
 </x3d-canvas>
 
+### Code of a VRML Scene
+
+```vrml
+#VRML V2.0 utf8
+
+Transform {
+  translation 0 0 0
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.8 0.8 0.8
+        }
+      }
+      geometry Box { size 2 2 2 }
+    }
+  ]
+}
+```
+
 ## Using X_ITE as a VRML Viewer
 
 And here comes X_ITE, because it can also be used effectively as a VRML viewer, providing support for classic VRML97 content alongside modern X3D features. Because X3D is a direct successor to VRML, X_ITE is capable of loading and rendering `.wrl` files, allowing users to view, interact with, and even integrate legacy VRML scenes into web-based applications without conversion. This makes X_ITE a practical and lightweight solution for visualizing older VRML assets within contemporary web environments using WebGL.
