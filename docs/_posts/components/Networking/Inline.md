@@ -193,7 +193,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
   [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
   [3]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
-  [4]: /x_ite/features/#vrml-viewer
+  [4]: /x_ite/tutorials/vrml-viewer/
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
   [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
@@ -249,4 +249,4 @@ Load the scene using [`Browser.createX3DFromURL(...)`](/x_ite/reference/browser-
 ## See Also
 
 - [X3D Specification of Inline Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline)
-- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)
+- [X_ITE VRML Viewer](/x_ite/tutorials/vrml-viewer/)

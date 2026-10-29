@@ -73,6 +73,10 @@ Some words about optimizing a scene
 - [Increasing Rendering Speed](/x_ite/tutorials/increasing-rendering-speed/)
   - Using WebGL and JavaScript needs to look at speed all the time. Learn ways to increase rendering speed.
 
+The history of X3D
+
+- [VRML Viewer](/x_ite/tutorials/vrml-viewer/)
+
 ### See Also
 
 - [Script Node Authoring Interface](/x_ite/reference/script-node-authoring-interface/)

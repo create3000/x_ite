@@ -382,7 +382,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
   [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
   [3]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
-  [4]: /x_ite/features/#vrml-viewer
+  [4]: /x_ite/tutorials/vrml-viewer/
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
   [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
