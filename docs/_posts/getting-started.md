@@ -363,34 +363,34 @@ To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. O
 
 X_ITE can load several file formats, either directly as the source of the \<x3d-canvas\> element or as the source of an Inline node, as well as using API methods of the [Browser object](/x_ite/reference/browser-services/). Foreign formats such as glTF are converted internally to X3D and then made available to the scene graph.
 
-| Encoding         | File Extension | MIME Type         | Comment                         |
-|------------------|----------------|-------------------|---------------------------------|
-| X3D XML          | .x3d, .x3dz    | model/x3d+xml     | [X3D Encoding: XML][1]          |
-| X3D JSON         | .x3dj, .x3djz  | model/x3d+json    | [X3D Encoding: JSON][2]         |
-| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml    | [X3D Encoding: Classic VRML][3] |
-| VRML 2.0         | .wrl, .wrz     | model/vrml        | [VRML Viewer][4]                |
-| VRML 1.0         | .wrl, .vrml    | model/vrml        | [By Using an Extension][5]      |
-| glTF             | .gltf, .glb    | model/gltf+json   | [glTF Support][6]               |
-| VRM              | .vrm           | model/vrm         | [About VRM][7]                  |
-| Wavefront OBJ    | .obj           | model/obj         |                                 |
-| STL              | .stl           | model/stl         | ASCII & Binary                  |
-| PLY              | .ply           | model/ply         | ASCII & Binary, [3DGS][8]       |
-| SOG              | .sog           | model/sog         | [By Using an Extension][9]      |
-| SPZ              | .spz           | model/spz         | [By Using an Extension][10]     |
-| OFF              | .off           | model/off         | [By Using an Extension][11]     |
-| SVG Document     | .svg, .svgz    | image/svg+xml     | Basic Support                   |
+| Encoding         | File Extension | MIME Type         | Comment                            |
+|------------------|----------------|-------------------|------------------------------------|
+| X3D XML          | .x3d, .x3dz    | model/x3d+xml     | [X3D Encoding: XML][X3D]           |
+| X3D JSON         | .x3dj, .x3djz  | model/x3d+json    | [X3D Encoding: JSON][X3DJ]         |
+| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml    | [X3D Encoding: Classic VRML][X3DV] |
+| VRML 2.0         | .wrl, .wrz     | model/vrml        | [VRML Viewer][VRML2]               |
+| VRML 1.0         | .wrl, .vrml    | model/vrml        | <i class="fa-solid fa-puzzle-piece"></i> [By Using an Extension][VRML1] |
+| glTF             | .gltf, .glb    | model/gltf+json   | [glTF Support][glTF]               |
+| VRM              | .vrm           | model/vrm         | [About VRM][VRM]                   |
+| Wavefront OBJ    | .obj           | model/obj         |                                    |
+| STL              | .stl           | model/stl         | ASCII & Binary                     |
+| PLY              | .ply           | model/ply         | ASCII & Binary, [3DGS][3DGS]       |
+| SOG              | .sog           | model/sog         | <i class="fa-solid fa-puzzle-piece"></i> [By Using an Extension][SOG] |
+| SPZ              | .spz           | model/spz         | <i class="fa-solid fa-puzzle-piece"></i> [By Using an Extension][SPZ] |
+| OFF              | .off           | model/off         | <i class="fa-solid fa-puzzle-piece"></i> [By Using an Extension][OFF] |
+| SVG Document     | .svg, .svgz    | image/svg+xml     | Basic Support                      |
 
-  [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
-  [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
-  [3]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
-  [4]: /x_ite/tutorials/vrml-viewer/
-  [5]: https://www.npmjs.com/package/x_ite-vrml1-parser
-  [6]: /x_ite/features/#gltf-support
-  [7]: https://vrm.dev/en/vrm/vrm_about/
-  [8]: https://en.wikipedia.org/wiki/Gaussian_splatting
-  [9]: https://www.npmjs.com/package/x_ite-sog-parser
-  [10]: https://www.npmjs.com/package/x_ite-spz-parser
-  [11]: https://www.npmjs.com/package/x_ite-off-parser
+  [X3D]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
+  [X3DJ]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
+  [X3DV]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
+  [VRML2]: /x_ite/tutorials/vrml-viewer/
+  [VRML1]: https://www.npmjs.com/package/x_ite-vrml1-parser
+  [glTF]: /x_ite/features/#gltf-support
+  [VRM]: https://vrm.dev/en/vrm/vrm_about/
+  [3DGS]: https://en.wikipedia.org/wiki/Gaussian_splatting
+  [SOG]: https://www.npmjs.com/package/x_ite-sog-parser
+  [SPZ]: https://www.npmjs.com/package/x_ite-spz-parser
+  [OFF]: https://www.npmjs.com/package/x_ite-off-parser
 
 All files, including media files, can be compressed using GZip compression (usually denoted by a `z` at the end of the filename suffix or by appending `.gz`). This saves bandwidth and speeds up download times.
 
