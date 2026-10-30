@@ -110,7 +110,7 @@ declare namespace X3D
       /**
        * Returns a list of all field type classes that are supported by this browser. This property is read-only.
        */
-      readonly fieldTypes: FieldTypesArray;
+      readonly supportedFields: SupportedFieldsArray;
       /**
        * A String value which can be read and written, containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
        */
@@ -789,9 +789,9 @@ declare namespace X3D
    }
 
    /**
-    * FieldTypesArray is an object that represents an array of classes derived from X3DField. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *FieldTypesArray*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+    * SupportedFieldsArray is an object that represents an array of classes derived from X3DField. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *SupportedFieldsArray*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
     */
-   class FieldTypesArray extends X3DInfoArray <X3DField> { }
+   class SupportedFieldsArray extends X3DInfoArray <X3DField> { }
 
    /**
     * ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).

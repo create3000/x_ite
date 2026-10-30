@@ -12,7 +12,7 @@ import SupportedProfiles    from "../Configuration/SupportedProfiles.js";
 import SupportedComponents  from "../Configuration/SupportedComponents.js";
 import AbstractNodes        from "../Configuration/AbstractNodes.js";
 import ConcreteNodes        from "../Configuration/ConcreteNodes.js";
-import FieldTypes           from "../Configuration/FieldTypes.js";
+import SupportedFields      from "../Configuration/SupportedFields.js";
 import X3DScene             from "../Execution/X3DScene.js";
 import FileLoader           from "../InputOutput/FileLoader.js";
 import XMLParser            from "../Parser/XMLParser.js";
@@ -37,7 +37,7 @@ const
    _supportedComponents = Symbol (),
    _concreteNodes       = Symbol (),
    _abstractNodes       = Symbol (),
-   _fieldTypes          = Symbol (),
+   _supportedFields     = Symbol (),
    _reject              = Symbol (),
    _fileLoader          = Symbol (),
    _browserCallbacks    = Symbol (),
@@ -54,7 +54,7 @@ function X3DBrowser (element)
    this [_supportedComponents] = SupportedComponents .copy ();
    this [_concreteNodes]       = ConcreteNodes .copy ();
    this [_abstractNodes]       = AbstractNodes .copy ();
-   this [_fieldTypes]          = FieldTypes .copy ();
+   this [_supportedFields]     = SupportedFields .copy ();
    this [_console]             = document .getElementsByClassName ("x_ite-console");
 
    this [_browserCallbacks] = new Map ([
@@ -334,18 +334,18 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       return this [_abstractNodes];
    },
-   getFieldType (typeName)
+   getSupportedField (typeName)
    {
-      const fieldType = this [_fieldTypes] .get (String (typeName));
+      const fieldType = this [_supportedFields] .get (String (typeName));
 
       if (fieldType)
          return fieldType;
 
       throw new Error (`Field type '${typeName}' does not exists.`);
    },
-   getFieldTypes ()
+   getSupportedFields ()
    {
-      return this [_fieldTypes];
+      return this [_supportedFields];
    },
    async createScene (profile, ... components)
    {
@@ -1052,9 +1052,9 @@ Object .defineProperties (X3DBrowser .prototype,
       get: X3DBrowser .prototype .getAbstractNodes,
       enumerable: true,
    },
-   fieldTypes:
+   supportedFields:
    {
-      get: X3DBrowser .prototype .getFieldTypes,
+      get: X3DBrowser .prototype .getSupportedFields,
       enumerable: true,
    },
    currentScene:
