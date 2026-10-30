@@ -36,12 +36,16 @@ Transform {
 }
 ```
 
+### See Also
+
+* [VRML Specification](https://www.web3d.org/documents/specifications/14772/V2.0/)
+
 ## Using X_ITE as a VRML Viewer
 
 And here comes X_ITE, because it can also be used effectively as a VRML viewer, providing support for classic VRML97 content alongside modern X3D features. Because X3D is a direct successor to VRML, X_ITE is capable of loading and rendering `.wrl` files, allowing users to view, interact with, and even integrate legacy VRML scenes into web-based applications without conversion. This makes X_ITE a practical and lightweight solution for visualizing older VRML assets within contemporary web environments using WebGL.
 
 If you want to update your files, you can use [x3d-tidy](https://www.npmjs.com/package/x3d-tidy) or our [online X3D file format converter](/x_ite/laboratory/x3d-file-converter/). That way, you'll be up to date again.
 
-## See Also
+### VRML 1.0 Support
 
-* [VRML Specification](https://www.web3d.org/documents/specifications/14772/V2.0/)
+Although X_ITE natively supports VRML 2.0, it can also load and display legacy VRML 1.0 files with the help of the [x_ite-vrml1-parser](https://www.npmjs.com/package/x_ite-vrml1-parser) extension. This parser translates VRML 1.0 scene descriptions into X3D, allowing you to revisit and preserve 3D content created in the early days of the Web. Simply include the extension in your project to bring older VRML worlds back to life without having to convert them manually.
