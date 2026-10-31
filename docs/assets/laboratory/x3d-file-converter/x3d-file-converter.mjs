@@ -2,6 +2,7 @@ import "https://cdn.jsdelivr.net/npm/x_ite-sog-parser@latest/dist/x_ite-sog-pars
 import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-4.min.js";
 import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-123.min.js";
 import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@latest/dist/x_ite-off-parser.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-vrml1-parser@latest/dist/x_ite-vrml1-parser.min.js";
 
 $("#drop-zone") .on ("dragover", event =>
 {
