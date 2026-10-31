@@ -53,7 +53,7 @@ EOT
 
 sub tests
 {
-   my @files = sort { "\U$a" cmp "\U$b" } grep !m|/\.|, `find /Volumes/Home/Projekte/Library/Tests -type f -name "*.x3d" -o -name "*.x3dz" -o -name "*.x3dj" -o -name "*.x3djz" -o -name "*.x3dv" -o -name "*.x3dvz" -o -name "*.wrl" -o -name "*.ply"`;
+   my @files = sort { "\U$a" cmp "\U$b" } grep !m|/\.|, `find ../Library/Tests -type f -name "*.x3d" -o -name "*.x3dz" -o -name "*.x3dj" -o -name "*.x3djz" -o -name "*.x3dv" -o -name "*.x3dvz" -o -name "*.wrl" -o -name "*.ply"`;
 
    chomp @files;
 
@@ -66,7 +66,7 @@ sub tests
    {
       next unless $file =~ /Components/;
 
-      $file =~ s|/Volumes/Home/Projekte/Library/Tests/Components/||;
+      $file =~ s|\.\./Library/Tests/Components/||;
       $file =~ m|^([^/]+)|;
 
       if ($component ne $1)

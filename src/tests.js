@@ -11,7 +11,6 @@ const X_ITE_TESTS = [
    { path: "Core/Comment.x3d" },
    { path: "Core/DataURL.x3d" },
    { path: "Core/EXPORT.wrl" },
-   { path: "Core/EXPORT.x3d" },
    { path: "Core/export.x3d" },
    { path: "Core/EXPORT.x3dv" },
    { path: "Core/IMPORT.x3d" },
