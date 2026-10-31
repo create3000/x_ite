@@ -110,7 +110,7 @@ declare namespace X3D
       /**
        * Returns a list of all field type classes that are supported by this browser. This property is read-only.
        */
-      readonly fieldTypes: FieldTypesArray;
+      readonly supportedFields: SupportedFieldsArray;
       /**
        * A String value which can be read and written, containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
        */
@@ -789,9 +789,9 @@ declare namespace X3D
    }
 
    /**
-    * FieldTypesArray is an object that represents an array of classes derived from X3DField. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *FieldTypesArray*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
+    * SupportedFieldsArray is an object that represents an array of classes derived from X3DField. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *SupportedFieldsArray*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
     */
-   class FieldTypesArray extends X3DInfoArray <X3DField> { }
+   class SupportedFieldsArray extends X3DInfoArray <X3DField> { }
 
    /**
     * ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*[*index*], where *index* is an integer-valued expression with 0\<=*index*\<length and length is the number of elements in the array).
@@ -10198,11 +10198,11 @@ declare namespace X3D
       visible: boolean;
    }
 
-   /** HAnimDisplacer nodes alter the shape of coordinate-based geometry within parent HAnimSegment or ancestor HAnimHumanoid nodes. */
+   /** HAnimDisplacer nodes alter the shape of coordinate-based geometry within HAnim nodes. */
    interface HAnimDisplacerProxy extends X3DGeometricPropertyNodeProxy
    {
       /**
-       * Defines index values into the parent HAnimSegment or ancestor HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer.
+       * Defines index values into the parent HAnimJoint or ancestor HAnimHumanoid coordinate array for the mesh of vertices affected by this HAnimDisplacer.
        *
        * This field is of access type 'inputOutput' and type MFInt32.
        */
@@ -10441,12 +10441,12 @@ declare namespace X3D
    }
 
    /** HAnimJoint node can represent each joint in a body. */
-   interface HAnimJointProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
+   interface HAnimJointProxy extends X3DGroupingNodeProxy, X3DBoundedObjectProxy
    {
       /**
        * This field is of access type 'inputOnly' and type MFNode.
        */
-      addChildren: MFNode <HAnimJointProxy | HAnimSegmentProxy>;
+      addChildren: MFNode <X3DChildNodeProxy>;
       /**
        * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
        *
@@ -10476,7 +10476,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
-      children: MFNode <HAnimJointProxy | HAnimSegmentProxy>;
+      children: MFNode <X3DChildNodeProxy>;
       /**
        * Author-provided prose that describes intended purpose of this node.
        *
@@ -10516,7 +10516,7 @@ declare namespace X3D
       /**
        * This field is of access type 'inputOnly' and type MFNode.
        */
-      removeChildren: MFNode <HAnimJointProxy | HAnimSegmentProxy>;
+      removeChildren: MFNode <X3DChildNodeProxy>;
       /**
        * Orientation of children relative to local coordinate system.
        *
@@ -10904,11 +10904,19 @@ declare namespace X3D
        */
       children: MFNode <X3DChildNodeProxy>;
       /**
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      coord: X3DCoordinateNodeProxy | null;
+      /**
        * Author-provided prose that describes intended purpose of this node.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
       description: string;
+      /**
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      displacers: MFNode <HAnimDisplacerProxy>;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *

@@ -1,4 +1,4 @@
-/* X_ITE v16.6.1 */
+/* X_ITE v16.7.0 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 292
+/***/ 23
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 686
+/***/ 701
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 470
+/***/ 301
 (module) {
 
 /**
@@ -18894,7 +18894,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.6.1";
+const BROWSER_VERSION_default_ = "16.7.0";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -26358,6 +26358,24 @@ function VRMLParser (scene)
    Parser_X3DParser .call (this, scene, "Parser");
 }
 
+Object .assign (VRMLParser,
+{
+   getEncoding ()
+   {
+      return "STRING";
+   },
+   isValid (input)
+   {
+      if (typeof input !== "string")
+         return false;
+
+      if (input .match (/^#VRML V1.0/))
+         return false;
+
+      return !! input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*(?:PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*\{|$))/s);
+   },
+});
+
 Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser .prototype),
 {
    accessTypes: new Map ([
@@ -26410,25 +26428,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, Parser_X3DParser 
       ["SQRT2",   Math .SQRT2],
    ]),
    unknownLevel: 0,
-   getEncoding ()
-   {
-      return "STRING";
-   },
    setInput (vrmlSyntax)
    {
       this .input      = vrmlSyntax;
       this .lineNumber = 1;
       this .lastIndex  = 0;
-   },
-   isValid ()
-   {
-      if (typeof this .input !== "string")
-         return false;
-
-      if (this .input .match (/^#VRML V1.0/))
-         return false;
-
-      return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*(?:PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*\{|$))/s);
    },
    parseIntoScene (resolve, reject)
    {
@@ -29111,12 +29115,32 @@ function XMLParser (scene)
    this .parser .setUnits (!!scene);
 }
 
-Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .prototype),
+Object .assign (XMLParser,
 {
    getEncoding ()
    {
       return "XML";
    },
+   isValid (input)
+   {
+      if (input instanceof XMLDocument)
+         return input .documentElement .nodeName === "X3D";
+
+      if (input instanceof HTMLElement)
+         return true;
+
+      if (input === null)
+         return true;
+
+      if (input === "")
+         return true;
+
+      return false;
+   },
+});
+
+Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .prototype),
+{
    setInput (xmlElement)
    {
       try
@@ -29134,21 +29158,6 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, Parser_X3DParser .
       {
          this .input = null;
       }
-   },
-   isValid ()
-   {
-      const { input } = this;
-
-      if (input instanceof XMLDocument)
-         return input .documentElement .nodeName === "X3D";
-
-      if (input instanceof HTMLElement)
-         return true;
-
-      if (input === null)
-         return true;
-
-      return false;
    },
    isXML (element)
    {
@@ -30304,12 +30313,23 @@ function JSONParser (scene)
    this .namespace = "http://www.web3d.org/specifications/x3d-namespace";
 }
 
-Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser .prototype),
+Object .assign (JSONParser,
 {
    getEncoding ()
    {
       return "JSON";
    },
+   isValid (input)
+   {
+      if (!Object .keys (input) .every (key => key === "X3D"))
+         return false;
+
+      return true;
+   },
+});
+
+Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser .prototype),
+{
    setInput (json)
    {
       try
@@ -30323,16 +30343,6 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, Parser_X3DParser 
       {
          this .input = undefined;
       }
-   },
-   isValid ()
-   {
-      if (!(this .input instanceof Object))
-         return false;
-
-      if (!Object .keys (this .input) .every (key => key === "X3D"))
-         return false;
-
-      return true;
    },
    parseIntoScene (resolve, reject)
    {
@@ -31235,7 +31245,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(470);
+/* provided dependency */ var libtess = __webpack_require__(301);
 
 
 const Triangle3 =
@@ -40462,26 +40472,11 @@ function GLTF2Parser (scene)
    this .physicsNodes          = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser .prototype),
-   Parser_X3DOptimizer .prototype,
+Object .assign (GLTF2Parser,
 {
    getEncoding ()
    {
       return "JSON";
-   },
-   setInput (json)
-   {
-      try
-      {
-         if (typeof json === "string")
-            json = JSON .parse (json);
-
-         this .input = json;
-      }
-      catch
-      {
-         this .input = undefined;
-      }
    },
    isValid: (() =>
    {
@@ -40507,20 +40502,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          "textures",
       ]);
 
-      return function ()
+      return function (input)
       {
-         if (!(this .input instanceof Object))
+         if (!(input instanceof Object))
             return false;
 
-         if (!Object .keys (this .input) .every (key => keys .has (key)))
+         if (!Object .keys (input) .every (key => keys .has (key)))
             return false;
 
-         if (!(this .input .asset ?.version >= 2.0))
+         if (!(input .asset ?.version >= 2.0))
             return false;
 
          return true;
       };
    })(),
+});
+
+Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser .prototype),
+   Parser_X3DOptimizer .prototype,
+{
+   setInput (json)
+   {
+      this .input = json;
+   },
    setBuffers (buffers)
    {
       this .buffers = buffers;
@@ -44874,12 +44878,26 @@ const GLTF2Parser_default_ = GLTF2Parser;
 ;
 
 /* harmony default export */ const Parser_GLTF2Parser = (x_ite_Namespace .add ("GLTF2Parser", GLTF2Parser_default_));
-;// ./src/x_ite/Parser/GLB2Parser.js
+;// ./src/x_ite/Parser/GLBParser.js
 
 
 
 
-function GLB2Parser (scene)
+const
+   MAGIC                = 0x46546C67, // glTF
+   MAGIC_OFFSET         = 0,
+   VERSION_OFFSET       = 4,
+   LENGTH_OFFSET        = 8,
+   CHUNK_ENCODING_PLAIN = 0x00000000,
+   JSON_CHUNK           = 0x4e4f534a,
+   BUFFER_CHUNK         = 0x004e4942;
+
+const VERSION_LAYOUT = {
+   2: { headerLength: 12, chunkHeaderLength: 8,  alignment: 4 },
+   3: { headerLength: 16, chunkHeaderLength: 16, alignment: 8 },
+};
+
+function GLBParser (scene)
 {
    Parser_X3DParser .call (this, scene);
 
@@ -44887,37 +44905,58 @@ function GLB2Parser (scene)
    this .buffers = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, Parser_X3DParser .prototype),
+Object .assign (GLBParser,
 {
    getEncoding ()
    {
       return "ARRAY_BUFFER";
    },
+   isValid (input)
+   {
+      const
+         arrayBuffer = input,
+         dataView    = new DataView (input);
+
+      if (!(arrayBuffer instanceof ArrayBuffer))
+         return false;
+
+      if (dataView .byteLength < 8)
+         return false;
+
+      if (dataView .getUint32 (MAGIC_OFFSET, true) !== MAGIC) // glTF
+         return false;
+
+      const
+         version = dataView .getUint32 (VERSION_OFFSET, true),
+         layout  = VERSION_LAYOUT [version];
+
+      if (!layout) // Version
+         return false;
+
+      if (dataView .byteLength < layout .headerLength)
+         return false;
+
+      if (version >= 3)
+      {
+         if (Number (dataView .getBigUint64 (LENGTH_OFFSET, true)) !== dataView .byteLength)
+            return false;
+      }
+      else
+      {
+         if (dataView .getUint32 (LENGTH_OFFSET, true) !== dataView .byteLength)
+            return false;
+      }
+
+      return true;
+   },
+});
+
+Object .assign (Object .setPrototypeOf (GLBParser .prototype, Parser_X3DParser .prototype),
+{
    setInput (input)
    {
       this .arrayBuffer = input;
       this .dataView    = new DataView (input);
-   },
-   isValid ()
-   {
-      if (!(this .arrayBuffer instanceof ArrayBuffer))
-         return false;
-
-      const { dataView } = this;
-
-      if (dataView .byteLength < 12)
-         return false;
-
-      if (dataView .getUint32 (0, true) !== 0x46546C67) // glTF
-         return false;
-
-      if (dataView .getUint32 (4, true) !== 2) // Version
-         return false;
-
-      if (dataView .getUint32 (8, true) !== dataView .byteLength)
-         return false;
-
-      return true;
    },
    parseIntoScene (resolve, reject)
    {
@@ -44927,59 +44966,103 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, Parser_X3DParser 
    },
    async glb ()
    {
+      this .version = this .dataView .getUint32 (VERSION_OFFSET, true);
+      this .layout  = VERSION_LAYOUT [this .version];
+
       this .chunks ();
 
       const parser = new Parser_GLTF2Parser (this .getScene ());
 
       parser .setBuffers (this .buffers);
 
-      for (const json of this .json)
+      for (const string of this .json)
       {
-         parser .setInput (json);
+         try
+         {
+            const json = JSON .parse (string);
 
-         if (!parser .isValid ())
+            if (!Parser_GLTF2Parser .isValid (json))
+               continue;
+
+            parser .setInput (json);
+
+            await parser .rootObject (parser .input);
+         }
+         catch
+         {
             continue;
-
-         await parser .rootObject (parser .input);
+         }
       }
 
       return this .getScene ();
    },
    chunks ()
    {
-      const { dataView, arrayBuffer, json, buffers } = this;
+      const { layout, dataView, arrayBuffer, json, buffers } = this;
 
-      for (let i = 12; i < dataView .byteLength;)
+      for (let i = layout .headerLength; i < dataView .byteLength;)
       {
-         const
-            length = dataView .getUint32 (i, true),
-            type   = dataView .getUint32 (i + 4, true);
+         if (i + layout .chunkHeaderLength > dataView .byteLength)
+            throw new Error ("GLB Parser: Invalid chuck header length.");
 
-         i += 8;
+         const { type, encoding, length } = this .chunkHeader (dataView, i);
 
-         switch (type)
+         i += layout .chunkHeaderLength;
+
+         if (i + length > dataView .byteLength)
+            throw new Error ("GLB Parser: Invalid chunk length.");
+
+         if (encoding === CHUNK_ENCODING_PLAIN)
          {
-            case 0x4e4f534a: // Structured JSON content
+            switch (type)
             {
-               json .push (helper.decodeText (arrayBuffer .slice (i, i + length)));
-               break;
-            }
-            case 0x004e4942: // Binary buffer
-            {
-               buffers .push (arrayBuffer .slice (i, i + length));
-               break;
+               case JSON_CHUNK: // Structured JSON Content
+               {
+                  json .push (helper.decodeText (arrayBuffer .slice (i, i + length)));
+                  break;
+               }
+               case BUFFER_CHUNK: // Binary Buffer
+               {
+                  buffers .push (arrayBuffer .slice (i, i + length));
+                  break;
+               }
             }
          }
 
-         i += length;
+         i = this .alignUp (i + length, layout .alignment);
       }
+   },
+   chunkHeader (dataView, i)
+   {
+      if (this .version >= 3)
+      {
+         const
+            type     = dataView .getUint32 (i, true),
+            encoding = dataView .getUint32 (i + 4, true),
+            length   = Number (dataView .getBigUint64 (i + 8, true));
+
+         return { type, encoding, length };
+      }
+      else
+      {
+         const
+            length   = dataView .getUint32 (i, true),
+            encoding = CHUNK_ENCODING_PLAIN,
+            type     = dataView .getUint32 (i + 4, true);
+
+         return { type, encoding, length };
+      }
+   },
+   alignUp (value, alignment)
+   {
+      return Math .ceil (value / alignment) * alignment;
    },
 });
 
-const GLB2Parser_default_ = GLB2Parser;
+const GLBParser_default_ = GLBParser;
 ;
 
-/* harmony default export */ const Parser_GLB2Parser = (x_ite_Namespace .add ("GLB2Parser", GLB2Parser_default_));
+/* harmony default export */ const Parser_GLBParser = (x_ite_Namespace .add ("GLBParser", GLBParser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
 
 
@@ -45061,6 +45144,18 @@ function OBJParser (scene)
    this .lastIndex       = 0;
 }
 
+Object .assign (OBJParser,
+{
+   getEncoding ()
+   {
+      return "STRING";
+   },
+   isValid (input)
+   {
+      return !! input .match (/^(?:[\x20\n\t\r]|#[^\r\n]*[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
+   },
+});
+
 Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .prototype),
    Parser_X3DOptimizer .prototype,
 {
@@ -45069,20 +45164,9 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   getEncoding ()
-   {
-      return "STRING";
-   },
    setInput (string)
    {
       this .input = string;
-   },
-   isValid ()
-   {
-      if (typeof this .input !== "string")
-         return false;
-
-      return !! this .input .match (/^(?:[\x20\n\t\r]|#[^\r\n]*[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
    },
    parseIntoScene (resolve, reject)
    {
@@ -46155,6 +46239,18 @@ function STLAParser (scene)
    Parser_X3DParser .call (this, scene);
 }
 
+Object .assign (STLAParser,
+{
+   getEncoding ()
+   {
+      return "STRING";
+   },
+   isValid (input)
+   {
+      return !! input .match (/^(?:[\x20\n\t\r]|;[^\r\n]*[\r\n])*\bsolid\b.*?\bendsolid\b/s);
+   },
+});
+
 Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser .prototype),
 {
    CONSTANTS: new Map ([
@@ -46162,20 +46258,9 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, Parser_X3DParser 
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   getEncoding ()
-   {
-      return "STRING";
-   },
    setInput (string)
    {
       this .input = string;
-   },
-   isValid ()
-   {
-      if (typeof this .input !== "string")
-         return false;
-
-      return !! this .input .match (/^(?:[\x20\n\t\r]|;[^\r\n]*[\r\n])*\bsolid\b.*?\bendsolid\b/s);
    },
    parseIntoScene (resolve, reject)
    {
@@ -46464,30 +46549,38 @@ function STLBParser (scene)
    Parser_X3DParser .call (this, scene);
 }
 
-Object .assign (Object .setPrototypeOf (STLBParser .prototype, Parser_X3DParser .prototype),
+Object .assign (STLBParser,
 {
    getEncoding ()
    {
       return "ARRAY_BUFFER";
    },
+   isValid (input)
+   {
+      const
+         arrayBuffer = input,
+         dataView    = new DataView (input);
+
+      if (!(arrayBuffer instanceof ArrayBuffer))
+         return false;
+
+      if (dataView .byteLength < 84)
+         return false;
+
+      const
+         numFaces   = dataView .getUint32 (80, true),
+         byteLength = numFaces * 50 + 84;
+
+      return byteLength === dataView .byteLength;
+   },
+});
+
+Object .assign (Object .setPrototypeOf (STLBParser .prototype, Parser_X3DParser .prototype),
+{
    setInput (input)
    {
       this .arrayBuffer = input;
       this .dataView    = new DataView (input);
-   },
-   isValid ()
-   {
-      if (!(this .arrayBuffer instanceof ArrayBuffer))
-         return false;
-
-      if (this .dataView .byteLength < 84)
-         return false;
-
-      const
-         numFaces   = this .dataView .getUint32 (80, true),
-         byteLength = numFaces * 50 + 84;
-
-      return byteLength === this .dataView .byteLength;
    },
    parseIntoScene (resolve, reject)
    {
@@ -46651,19 +46744,23 @@ function PLYAParser (scene)
    ]);
 }
 
-Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser .prototype),
+Object .assign (PLYAParser,
 {
    getEncoding ()
    {
       return "STRING";
    },
+   isValid (input)
+   {
+      return input .match (/^ply\r?\nformat ascii 1.0/);
+   },
+});
+
+Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser .prototype),
+{
    setInput (input)
    {
       this .input = input;
-   },
-   isValid ()
-   {
-      return this .input .match (/^ply\r?\nformat ascii 1.0/);
    },
    parseIntoScene (resolve, reject)
    {
@@ -47346,6 +47443,8 @@ const PLYAParser_default_ = PLYAParser;
 
 
 
+const MAX_TEXT_LENGTH = 4096;
+
 function PLYBParser (scene)
 {
    Parser_PLYAParser .call (this, scene);
@@ -47379,27 +47478,32 @@ function PLYBParser (scene)
    this .binaryFloat64 .bytes = 8;
 }
 
-Object .assign (Object .setPrototypeOf (PLYBParser .prototype, Parser_PLYAParser .prototype),
+Object .assign (PLYBParser,
 {
    getEncoding ()
    {
       return "ARRAY_BUFFER";
    },
+   isValid (input)
+   {
+      const
+         text  = helper.decodeText (input .slice (0, MAX_TEXT_LENGTH)),
+         magic = text .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
+
+      return !! magic;
+   },
+});
+
+Object .assign (Object .setPrototypeOf (PLYBParser .prototype, Parser_PLYAParser .prototype),
+{
    setInput (input)
    {
       this .arrayBuffer  = input;
       this .dataView     = new DataView (this .arrayBuffer);
-      this .input        = helper.decodeText (input .slice (0, 4096));
+      this .input        = helper.decodeText (input .slice (0, MAX_TEXT_LENGTH));
       this .magic        = this .input .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
       this .byteOffset   = this .magic ?.[0] .length;
       this .littleEndian = this .magic ?.[1] === "binary_little_endian";
-   },
-   isValid ()
-   {
-      if (!(this .arrayBuffer instanceof ArrayBuffer))
-         return false;
-
-      return !! this .magic;
    },
    binaryInt8 ()
    {
@@ -47922,7 +48026,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(470);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(301);
 
 
 
@@ -48071,6 +48175,24 @@ function SVGParser (scene)
    this .context .canvas .height = this .GRADIENT_SIZE;
 }
 
+Object .assign (SVGParser,
+{
+   getEncoding ()
+   {
+      return "XML";
+   },
+   isValid (input)
+   {
+      if (input instanceof XMLDocument)
+         return input .documentElement .nodeName === "svg";
+
+      if (input ?.nodeName === "svg")
+         return true;
+
+      return false;
+   },
+});
+
 Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .prototype),
    Parser_X3DOptimizer .prototype,
 {
@@ -48079,10 +48201,6 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   getEncoding ()
-   {
-      return "XML";
-   },
    setInput (xmlElement)
    {
       try
@@ -48096,18 +48214,6 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
       {
          this .input = undefined;
       }
-   },
-   isValid ()
-   {
-      const { input } = this;
-
-      if (input instanceof XMLDocument)
-         return input .documentElement .nodeName === "svg";
-
-      if (input ?.nodeName === "svg")
-         return true;
-
-      return false;
    },
    parseIntoScene (resolve, reject)
    {
@@ -50681,7 +50787,7 @@ class GoldenGate extends Parser_X3DParser
       Parser_VRMLParser,
       Parser_JSONParser,
       Parser_GLTF2Parser,
-      Parser_GLB2Parser,
+      Parser_GLBParser,
       Parser_OBJParser,
       Parser_STLAParser,
       Parser_STLBParser,
@@ -50711,18 +50817,17 @@ class GoldenGate extends Parser_X3DParser
       {
          try
          {
-            const
-               parser = new Parser (this .getScene ()),
-               input  = this .getInput (parser .getEncoding (), x3dSyntax);
+            const input = this .getInput (Parser .getEncoding (), x3dSyntax);
 
             if (Array .isArray (input) ? input .some (i => i === undefined) : input === undefined)
                continue;
 
-            parser .setInput (input);
-
-            if (!parser .isValid ())
+            if (!Parser .isValid (input))
                continue;
 
+            const parser = new Parser (this .getScene ());
+
+            parser .setInput (input);
             parser .pushExecutionContext (this .getExecutionContext ());
             parser .parseIntoScene (resolve, reject);
             return;
@@ -54698,7 +54803,7 @@ function X3DCoreContext (element)
          const link = document .createElement ("link");
 
          if (!DEVELOPMENT)
-            link .integrity = "sha384-5QNytsGOR+x4Lktk2H3BZeSjaKh++ePfGfqaf4XbJLRO+qI+1HF1HNSBW6XKzqK2";
+            link .integrity = "sha384-FJsf4cbe6iyzs4pjkkDmFsCiYVJgLa2BvbYqQk1S/mA+iQj1PJ8k38Hpo/btTA3y";
 
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
@@ -91575,8 +91680,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(292);
-/* provided dependency */ var APNG = __webpack_require__(686);
+/* provided dependency */ var SuperGif = __webpack_require__(23);
+/* provided dependency */ var APNG = __webpack_require__(701);
 
 
 
@@ -94220,7 +94325,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(470);
+/* provided dependency */ var libtess_libtess = __webpack_require__(301);
 const libtess_default_ = libtess_libtess;
 ;
 
