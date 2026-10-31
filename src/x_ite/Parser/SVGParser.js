@@ -69,6 +69,81 @@ function SVGParser (scene)
 {
    X3DParser    .call (this, scene);
    X3DOptimizer .call (this);
+
+   // Optimizer
+
+   this .removeEmptyGroups    = true;
+   this .combineGroupingNodes = true;
+
+   // Options
+
+   this .solid = false; // Are 2D primitives solid?
+
+   // Globals
+
+   this .viewBox          = new Vector4 (0, 0, 100, 100);
+   this .modelMatrix      = new MatrixStack (Matrix4);
+   this .fillGeometries   = new Map ();
+   this .strokeGeometries = new Map ();
+   this .lineProperties   = new Map ();
+   this .tessy            = this .createTesselator ();
+   this .context          = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
+   this .numSwitchNodes   = 0;
+
+   this .styles = [{
+      display: "inline",
+      fillType: "COLOR",
+      fillColor: Color4 .BLACK,
+      fillURL: "",
+      fillOpacity: 1,
+      fillRule: "nonzero",
+      strokeType: "none",
+      strokeColor: Color4 .BLACK,
+      strokeURL: "",
+      strokeOpacity: 1,
+      strokeWidth: 1,
+      opacity: 1,
+      stopColor: Color4 .BLACK,
+      stopOpacity: 1,
+      vectorEffect: "none",
+   }];
+
+   // Constants
+
+   const browser = scene .getBrowser ();
+
+   switch (browser .getBrowserOption ("PrimitiveQuality"))
+   {
+      case "LOW":
+         this .BEZIER_STEPS = 9;  // Subdivisions of a span.
+         this .CIRCLE_STEPS = 20; // Subdivisions of a circle, used for arc and rounded rect.
+         break;
+      case "HIGH":
+         this .BEZIER_STEPS = 15; // Subdivisions of a span.
+         this .CIRCLE_STEPS = 64; // Subdivisions of a circle, used for arc and rounded rect.
+         break;
+      default:
+         this .BEZIER_STEPS = 12;  // Subdivisions of a span.
+         this .CIRCLE_STEPS = 32; // Subdivisions of a circle, used for arc and rounded rect.
+         break;
+   }
+
+   switch (browser .getBrowserOption ("TextureQuality"))
+   {
+      case "LOW":
+         this .GRADIENT_SIZE = 128; // In pixels.
+         break;
+      case "HIGH":
+         this .GRADIENT_SIZE = 512; // In pixels.
+         break;
+      default:
+         this .GRADIENT_SIZE = 256; // In pixels.
+         break;
+   }
+
+   // Use .canvas to support foreign 2d libs.
+   this .context .canvas .width  = this .GRADIENT_SIZE;
+   this .context .canvas .height = this .GRADIENT_SIZE;
 }
 
 Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototype),
@@ -79,83 +154,6 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   construct ()
-   {
-      // Optimizer
-
-      this .removeEmptyGroups    = true;
-      this .combineGroupingNodes = true;
-
-      // Options
-
-      this .solid = false; // Are 2D primitives solid?
-
-      // Globals
-
-      this .viewBox          = new Vector4 (0, 0, 100, 100);
-      this .modelMatrix      = new MatrixStack (Matrix4);
-      this .fillGeometries   = new Map ();
-      this .strokeGeometries = new Map ();
-      this .lineProperties   = new Map ();
-      this .tessy            = this .createTesselator ();
-      this .context          = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
-      this .numSwitchNodes   = 0;
-
-      this .styles = [{
-         display: "inline",
-         fillType: "COLOR",
-         fillColor: Color4 .BLACK,
-         fillURL: "",
-         fillOpacity: 1,
-         fillRule: "nonzero",
-         strokeType: "none",
-         strokeColor: Color4 .BLACK,
-         strokeURL: "",
-         strokeOpacity: 1,
-         strokeWidth: 1,
-         opacity: 1,
-         stopColor: Color4 .BLACK,
-         stopOpacity: 1,
-         vectorEffect: "none",
-      }];
-
-      // Constants
-
-      const browser = this .getScene () .getBrowser ();
-
-      switch (browser .getBrowserOption ("PrimitiveQuality"))
-      {
-         case "LOW":
-            this .BEZIER_STEPS = 9;  // Subdivisions of a span.
-            this .CIRCLE_STEPS = 20; // Subdivisions of a circle, used for arc and rounded rect.
-            break;
-         case "HIGH":
-            this .BEZIER_STEPS = 15; // Subdivisions of a span.
-            this .CIRCLE_STEPS = 64; // Subdivisions of a circle, used for arc and rounded rect.
-            break;
-         default:
-            this .BEZIER_STEPS = 12;  // Subdivisions of a span.
-            this .CIRCLE_STEPS = 32; // Subdivisions of a circle, used for arc and rounded rect.
-            break;
-      }
-
-      switch (browser .getBrowserOption ("TextureQuality"))
-      {
-         case "LOW":
-            this .GRADIENT_SIZE = 128; // In pixels.
-            break;
-         case "HIGH":
-            this .GRADIENT_SIZE = 512; // In pixels.
-            break;
-         default:
-            this .GRADIENT_SIZE = 256; // In pixels.
-            break;
-      }
-
-      // Use .canvas to support foreign 2d libs.
-      this .context .canvas .width  = this .GRADIENT_SIZE;
-      this .context .canvas .height = this .GRADIENT_SIZE;
-   },
    getEncoding ()
    {
       return "XML";
@@ -188,8 +186,6 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
    },
    parseIntoScene (resolve, reject)
    {
-      this .construct ();
-
       this .xmlElement (this .input)
          .then (resolve)
          .catch (reject);

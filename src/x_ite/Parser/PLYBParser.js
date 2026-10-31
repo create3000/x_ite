@@ -4,42 +4,38 @@ import $          from "../../lib/helper.js";
 function PLYBParser (scene)
 {
    PLYAParser .call (this, scene);
+
+   this .typeMapping = new Map ([
+      ["char",    this .binaryInt8],
+      ["uchar",   this .binaryUint8],
+      ["short",   this .binaryInt16],
+      ["ushort",  this .binaryUint16],
+      ["int",     this .binaryInt32],
+      ["uint",    this .binaryUint32],
+      ["float",   this .binaryFloat32],
+      ["double",  this .binaryFloat64],
+      ["int8",    this .binaryInt8],
+      ["uint8",   this .binaryUint8],
+      ["int16",   this .binaryInt16],
+      ["uint16",  this .binaryUint16],
+      ["int32",   this .binaryInt32],
+      ["uint32",  this .binaryUint32],
+      ["float32", this .binaryFloat32],
+      ["float64", this .binaryFloat64],
+   ]);
+
+   this .binaryInt8    .bytes = 1;
+   this .binaryUint8   .bytes = 1;
+   this .binaryInt16   .bytes = 2;
+   this .binaryUint16  .bytes = 2;
+   this .binaryInt32   .bytes = 4;
+   this .binaryUint32  .bytes = 4;
+   this .binaryFloat32 .bytes = 4;
+   this .binaryFloat64 .bytes = 8;
 }
 
 Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .prototype),
 {
-   construct ()
-   {
-      PLYAParser .prototype .construct .call (this);
-
-      this .typeMapping = new Map ([
-         ["char",    this .binaryInt8],
-         ["uchar",   this .binaryUint8],
-         ["short",   this .binaryInt16],
-         ["ushort",  this .binaryUint16],
-         ["int",     this .binaryInt32],
-         ["uint",    this .binaryUint32],
-         ["float",   this .binaryFloat32],
-         ["double",  this .binaryFloat64],
-         ["int8",    this .binaryInt8],
-         ["uint8",   this .binaryUint8],
-         ["int16",   this .binaryInt16],
-         ["uint16",  this .binaryUint16],
-         ["int32",   this .binaryInt32],
-         ["uint32",  this .binaryUint32],
-         ["float32", this .binaryFloat32],
-         ["float64", this .binaryFloat64],
-      ]);
-
-      this .binaryInt8    .bytes = 1;
-      this .binaryUint8   .bytes = 1;
-      this .binaryInt16   .bytes = 2;
-      this .binaryUint16  .bytes = 2;
-      this .binaryInt32   .bytes = 4;
-      this .binaryUint32  .bytes = 4;
-      this .binaryFloat32 .bytes = 4;
-      this .binaryFloat64 .bytes = 8;
-   },
    getEncoding ()
    {
       return "ARRAY_BUFFER";

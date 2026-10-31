@@ -26,43 +26,41 @@ function GLTF2Parser (scene)
 {
    X3DParser    .call (this, scene);
    X3DOptimizer .call (this);
+
+   // Optimizer
+
+   this .removeEmptyGroups     = true;
+   this .combineGroupingNodes  = true;
+   this .optimizeInterpolators = true;
+
+   // Globals
+
+   this .extensions            = new Set ();
+   this .envLights             = [ ];
+   this .lights                = [ ];
+   this .materialVariants      = [ ];
+   this .materialVariantNodes  = [ ];
+   this .buffers               = [ ];
+   this .bufferViews           = [ ];
+   this .accessors             = [ ];
+   this .samplers              = [ ];
+   this .textureCache          = new Map ();
+   this .materials             = [ ];
+   this .textureTransformNodes = [ ];
+   this .meshes                = [ ];
+   this .cameras               = [ ];
+   this .nodes                 = [ ];
+   this .skins                 = [ ];
+   this .skeletons             = new Map ();
+   this .joints                = new Set ();
+   this .pointerAliases        = new Map ();
+   this .animationScripts      = [ ];
+   this .physicsNodes          = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
    X3DOptimizer .prototype,
 {
-   construct ()
-   {
-      // Optimizer
-
-      this .removeEmptyGroups     = true;
-      this .combineGroupingNodes  = true;
-      this .optimizeInterpolators = true;
-
-      // Globals
-
-      this .extensions            = new Set ();
-      this .envLights             = [ ];
-      this .lights                = [ ];
-      this .materialVariants      = [ ];
-      this .materialVariantNodes  = [ ];
-      this .buffers               = [ ];
-      this .bufferViews           = [ ];
-      this .accessors             = [ ];
-      this .samplers              = [ ];
-      this .textureCache          = new Map ();
-      this .materials             = [ ];
-      this .textureTransformNodes = [ ];
-      this .meshes                = [ ];
-      this .cameras               = [ ];
-      this .nodes                 = [ ];
-      this .skins                 = [ ];
-      this .skeletons             = new Map ();
-      this .joints                = new Set ();
-      this .pointerAliases        = new Map ();
-      this .animationScripts      = [ ];
-      this .physicsNodes          = [ ];
-   },
    getEncoding ()
    {
       return "JSON";
@@ -125,8 +123,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    parseIntoScene (resolve, reject)
    {
-      this .construct ();
-
       this .rootObject (this .input)
          .then (resolve)
          .catch (reject);

@@ -16,18 +16,16 @@ const VERSION_LAYOUT = {
    3: { headerLength: 16, chunkHeaderLength: 16, alignment: 8 },
 };
 
-function GLBParser (scene)
+function GLB2Parser (scene)
 {
    X3DParser .call (this, scene);
+
+   this .json    = [ ];
+   this .buffers = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (GLBParser .prototype, X3DParser .prototype),
+Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .prototype),
 {
-   construct ()
-   {
-      this .json    = [ ];
-      this .buffers = [ ];
-   },
    getEncoding ()
    {
       return "ARRAY_BUFFER";
@@ -74,8 +72,6 @@ Object .assign (Object .setPrototypeOf (GLBParser .prototype, X3DParser .prototy
    },
    parseIntoScene (resolve, reject)
    {
-      this .construct ();
-
       this .glb ()
          .then (resolve)
          .catch (reject);
@@ -86,7 +82,6 @@ Object .assign (Object .setPrototypeOf (GLBParser .prototype, X3DParser .prototy
 
       const parser = new GLTF2Parser (this .getScene ());
 
-      parser .construct ();
       parser .setBuffers (this .buffers);
 
       for (const json of this .json)
@@ -164,4 +159,4 @@ Object .assign (Object .setPrototypeOf (GLBParser .prototype, X3DParser .prototy
    },
 });
 
-export default GLBParser;
+export default GLB2Parser;

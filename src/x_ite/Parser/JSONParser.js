@@ -5,14 +5,12 @@ import $         from "../../lib/helper.js";
 function JSONParser (scene)
 {
    X3DParser .call (this, scene);
+
+   this .namespace = "http://www.web3d.org/specifications/x3d-namespace";
 }
 
 Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .prototype),
 {
-   construct ()
-   {
-      this .namespace = "http://www.web3d.org/specifications/x3d-namespace";
-   },
    getEncoding ()
    {
       return "JSON";
@@ -43,8 +41,6 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
    },
    parseIntoScene (resolve, reject)
    {
-      this .construct ();
-
       /**
        * Load X3D JSON into an element.
        * json - the JavaScript object to convert to DOM.

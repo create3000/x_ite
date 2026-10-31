@@ -37,34 +37,32 @@ const Grammar = Expressions ({
 function PLYAParser (scene)
 {
    X3DParser .call (this, scene);
+
+   this .triangles = true;
+   this .comments  = [ ];
+
+   this .typeMapping = new Map ([
+      ["char",    this .int32],
+      ["uchar",   this .int32],
+      ["short",   this .int32],
+      ["ushort",  this .int32],
+      ["int",     this .int32],
+      ["uint",    this .int32],
+      ["float",   this .double],
+      ["double",  this .double],
+      ["int8",    this .int32],
+      ["uint8",   this .int32],
+      ["int16",   this .int32],
+      ["uint16",  this .int32],
+      ["int32",   this .int32],
+      ["uint32",  this .int32],
+      ["float32", this .double],
+      ["float64", this .double],
+   ]);
 }
 
 Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .prototype),
 {
-   construct ()
-   {
-      this .triangles = true;
-      this .comments  = [ ];
-
-      this .typeMapping = new Map ([
-         ["char",    this .int32],
-         ["uchar",   this .int32],
-         ["short",   this .int32],
-         ["ushort",  this .int32],
-         ["int",     this .int32],
-         ["uint",    this .int32],
-         ["float",   this .double],
-         ["double",  this .double],
-         ["int8",    this .int32],
-         ["uint8",   this .int32],
-         ["int16",   this .int32],
-         ["uint16",  this .int32],
-         ["int32",   this .int32],
-         ["uint32",  this .int32],
-         ["float32", this .double],
-         ["float64", this .double],
-      ]);
-   },
    getEncoding ()
    {
       return "STRING";
@@ -79,8 +77,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    parseIntoScene (resolve, reject)
    {
-      this .construct ();
-
       this .ply ()
          .then (resolve)
          .catch (reject);
