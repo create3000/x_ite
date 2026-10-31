@@ -146,6 +146,24 @@ function SVGParser (scene)
    this .context .canvas .height = this .GRADIENT_SIZE;
 }
 
+Object .assign (SVGParser,
+{
+   getEncoding ()
+   {
+      return "XML";
+   },
+   isValid (input)
+   {
+      if (input instanceof XMLDocument)
+         return input .documentElement .nodeName === "svg";
+
+      if (input ?.nodeName === "svg")
+         return true;
+
+      return false;
+   },
+});
+
 Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototype),
    X3DOptimizer .prototype,
 {
@@ -154,10 +172,6 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   getEncoding ()
-   {
-      return "XML";
-   },
    setInput (xmlElement)
    {
       try
@@ -171,18 +185,6 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       {
          this .input = undefined;
       }
-   },
-   isValid ()
-   {
-      const { input } = this;
-
-      if (input instanceof XMLDocument)
-         return input .documentElement .nodeName === "svg";
-
-      if (input ?.nodeName === "svg")
-         return true;
-
-      return false;
    },
    parseIntoScene (resolve, reject)
    {

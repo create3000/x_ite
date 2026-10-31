@@ -40,12 +40,32 @@ function XMLParser (scene)
    this .parser .setUnits (!!scene);
 }
 
-Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototype),
+Object .assign (XMLParser,
 {
    getEncoding ()
    {
       return "XML";
    },
+   isValid (input)
+   {
+      if (input instanceof XMLDocument)
+         return input .documentElement .nodeName === "X3D";
+
+      if (input instanceof HTMLElement)
+         return true;
+
+      if (input === null)
+         return true;
+
+      if (input === "")
+         return true;
+
+      return false;
+   },
+});
+
+Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototype),
+{
    setInput (xmlElement)
    {
       try
@@ -63,21 +83,6 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          this .input = null;
       }
-   },
-   isValid ()
-   {
-      const { input } = this;
-
-      if (input instanceof XMLDocument)
-         return input .documentElement .nodeName === "X3D";
-
-      if (input instanceof HTMLElement)
-         return true;
-
-      if (input === null)
-         return true;
-
-      return false;
    },
    isXML (element)
    {

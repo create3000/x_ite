@@ -9,12 +9,23 @@ function JSONParser (scene)
    this .namespace = "http://www.web3d.org/specifications/x3d-namespace";
 }
 
-Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .prototype),
+Object .assign (JSONParser,
 {
    getEncoding ()
    {
       return "JSON";
    },
+   isValid (input)
+   {
+      if (!Object .keys (input) .every (key => key === "X3D"))
+         return false;
+
+      return true;
+   },
+});
+
+Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .prototype),
+{
    setInput (json)
    {
       try
@@ -28,16 +39,6 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
       {
          this .input = undefined;
       }
-   },
-   isValid ()
-   {
-      if (!(this .input instanceof Object))
-         return false;
-
-      if (!Object .keys (this .input) .every (key => key === "X3D"))
-         return false;
-
-      return true;
    },
    parseIntoScene (resolve, reject)
    {

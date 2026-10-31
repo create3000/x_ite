@@ -14,30 +14,38 @@ function STLBParser (scene)
    X3DParser .call (this, scene);
 }
 
-Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .prototype),
+Object .assign (STLBParser,
 {
    getEncoding ()
    {
       return "ARRAY_BUFFER";
    },
+   isValid (input)
+   {
+      const
+         arrayBuffer = input,
+         dataView    = new DataView (input);
+
+      if (!(arrayBuffer instanceof ArrayBuffer))
+         return false;
+
+      if (dataView .byteLength < 84)
+         return false;
+
+      const
+         numFaces   = dataView .getUint32 (80, true),
+         byteLength = numFaces * 50 + 84;
+
+      return byteLength === dataView .byteLength;
+   },
+});
+
+Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .prototype),
+{
    setInput (input)
    {
       this .arrayBuffer = input;
       this .dataView    = new DataView (input);
-   },
-   isValid ()
-   {
-      if (!(this .arrayBuffer instanceof ArrayBuffer))
-         return false;
-
-      if (this .dataView .byteLength < 84)
-         return false;
-
-      const
-         numFaces   = this .dataView .getUint32 (80, true),
-         byteLength = numFaces * 50 + 84;
-
-      return byteLength === this .dataView .byteLength;
    },
    parseIntoScene (resolve, reject)
    {

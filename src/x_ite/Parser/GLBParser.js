@@ -16,7 +16,7 @@ const VERSION_LAYOUT = {
    3: { headerLength: 16, chunkHeaderLength: 16, alignment: 8 },
 };
 
-function GLB2Parser (scene)
+function GLBParser (scene)
 {
    X3DParser .call (this, scene);
 
@@ -24,23 +24,20 @@ function GLB2Parser (scene)
    this .buffers = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .prototype),
+Object .assign (GLBParser,
 {
    getEncoding ()
    {
       return "ARRAY_BUFFER";
    },
-   setInput (input)
+   isValid (input)
    {
-      this .arrayBuffer = input;
-      this .dataView    = new DataView (input);
-   },
-   isValid ()
-   {
-      if (!(this .arrayBuffer instanceof ArrayBuffer))
-         return false;
+      const
+         arrayBuffer = input,
+         dataView    = new DataView (input);
 
-      const { dataView } = this;
+      if (!(arrayBuffer instanceof ArrayBuffer))
+         return false;
 
       if (dataView .byteLength < 8)
          return false;
@@ -48,16 +45,17 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
       if (dataView .getUint32 (MAGIC_OFFSET, true) !== MAGIC) // glTF
          return false;
 
-      this .version = this .dataView .getUint32 (VERSION_OFFSET, true);
-      this .layout  = VERSION_LAYOUT [this .version];
+      const
+         version = dataView .getUint32 (VERSION_OFFSET, true),
+         layout  = VERSION_LAYOUT [version];
 
-      if (!this .layout) // Version
+      if (!layout) // Version
          return false;
 
-      if (dataView .byteLength < this .layout .headerLength)
+      if (dataView .byteLength < layout .headerLength)
          return false;
 
-      if (this .version >= 3)
+      if (version >= 3)
       {
          if (Number (dataView .getBigUint64 (LENGTH_OFFSET, true)) !== dataView .byteLength)
             return false;
@@ -70,6 +68,15 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
 
       return true;
    },
+});
+
+Object .assign (Object .setPrototypeOf (GLBParser .prototype, X3DParser .prototype),
+{
+   setInput (input)
+   {
+      this .arrayBuffer = input;
+      this .dataView    = new DataView (input);
+   },
    parseIntoScene (resolve, reject)
    {
       this .glb ()
@@ -78,20 +85,32 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
    },
    async glb ()
    {
+      this .version = this .dataView .getUint32 (VERSION_OFFSET, true);
+      this .layout  = VERSION_LAYOUT [this .version];
+
       this .chunks ();
 
       const parser = new GLTF2Parser (this .getScene ());
 
       parser .setBuffers (this .buffers);
 
-      for (const json of this .json)
+      for (const string of this .json)
       {
-         parser .setInput (json);
+         try
+         {
+            const json = JSON .parse (string);
 
-         if (!parser .isValid ())
+            if (!GLTF2Parser .isValid (json))
+               continue;
+
+            parser .setInput (json);
+
+            await parser .rootObject (parser .input);
+         }
+         catch
+         {
             continue;
-
-         await parser .rootObject (parser .input);
+         }
       }
 
       return this .getScene ();
@@ -159,4 +178,4 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
    },
 });
 
-export default GLB2Parser;
+export default GLBParser;

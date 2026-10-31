@@ -43,6 +43,18 @@ function STLAParser (scene)
    X3DParser .call (this, scene);
 }
 
+Object .assign (STLAParser,
+{
+   getEncoding ()
+   {
+      return "STRING";
+   },
+   isValid (input)
+   {
+      return !! input .match (/^(?:[\x20\n\t\r]|;[^\r\n]*[\r\n])*\bsolid\b.*?\bendsolid\b/s);
+   },
+});
+
 Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .prototype),
 {
    CONSTANTS: new Map ([
@@ -50,20 +62,9 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   getEncoding ()
-   {
-      return "STRING";
-   },
    setInput (string)
    {
       this .input = string;
-   },
-   isValid ()
-   {
-      if (typeof this .input !== "string")
-         return false;
-
-      return !! this .input .match (/^(?:[\x20\n\t\r]|;[^\r\n]*[\r\n])*\bsolid\b.*?\bendsolid\b/s);
    },
    parseIntoScene (resolve, reject)
    {

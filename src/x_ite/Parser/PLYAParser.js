@@ -61,19 +61,23 @@ function PLYAParser (scene)
    ]);
 }
 
-Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .prototype),
+Object .assign (PLYAParser,
 {
    getEncoding ()
    {
       return "STRING";
    },
+   isValid (input)
+   {
+      return input .match (/^ply\r?\nformat ascii 1.0/);
+   },
+});
+
+Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .prototype),
+{
    setInput (input)
    {
       this .input = input;
-   },
-   isValid ()
-   {
-      return this .input .match (/^ply\r?\nformat ascii 1.0/);
    },
    parseIntoScene (resolve, reject)
    {

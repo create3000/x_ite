@@ -96,6 +96,24 @@ function VRMLParser (scene)
    X3DParser .call (this, scene, "Parser");
 }
 
+Object .assign (VRMLParser,
+{
+   getEncoding ()
+   {
+      return "STRING";
+   },
+   isValid (input)
+   {
+      if (typeof input !== "string")
+         return false;
+
+      if (input .match (/^#VRML V1.0/))
+         return false;
+
+      return !! input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*(?:PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*\{|$))/s);
+   },
+});
+
 Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .prototype),
 {
    accessTypes: new Map ([
@@ -148,25 +166,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       ["SQRT2",   Math .SQRT2],
    ]),
    unknownLevel: 0,
-   getEncoding ()
-   {
-      return "STRING";
-   },
    setInput (vrmlSyntax)
    {
       this .input      = vrmlSyntax;
       this .lineNumber = 1;
       this .lastIndex  = 0;
-   },
-   isValid ()
-   {
-      if (typeof this .input !== "string")
-         return false;
-
-      if (this .input .match (/^#VRML V1.0/))
-         return false;
-
-      return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*(?:PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*\{|$))/s);
    },
    parseIntoScene (resolve, reject)
    {

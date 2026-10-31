@@ -58,26 +58,11 @@ function GLTF2Parser (scene)
    this .physicsNodes          = [ ];
 }
 
-Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
-   X3DOptimizer .prototype,
+Object .assign (GLTF2Parser,
 {
    getEncoding ()
    {
       return "JSON";
-   },
-   setInput (json)
-   {
-      try
-      {
-         if (typeof json === "string")
-            json = JSON .parse (json);
-
-         this .input = json;
-      }
-      catch
-      {
-         this .input = undefined;
-      }
    },
    isValid: (() =>
    {
@@ -103,20 +88,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          "textures",
       ]);
 
-      return function ()
+      return function (input)
       {
-         if (!(this .input instanceof Object))
+         if (!(input instanceof Object))
             return false;
 
-         if (!Object .keys (this .input) .every (key => keys .has (key)))
+         if (!Object .keys (input) .every (key => keys .has (key)))
             return false;
 
-         if (!(this .input .asset ?.version >= 2.0))
+         if (!(input .asset ?.version >= 2.0))
             return false;
 
          return true;
       };
    })(),
+});
+
+Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
+   X3DOptimizer .prototype,
+{
+   setInput (json)
+   {
+      this .input = json;
+   },
    setBuffers (buffers)
    {
       this .buffers = buffers;

@@ -1,6 +1,8 @@
 import PLYAParser from "./PLYAParser.js";
 import $          from "../../lib/helper.js";
 
+const MAX_TEXT_LENGTH = 4096;
+
 function PLYBParser (scene)
 {
    PLYAParser .call (this, scene);
@@ -34,27 +36,32 @@ function PLYBParser (scene)
    this .binaryFloat64 .bytes = 8;
 }
 
-Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .prototype),
+Object .assign (PLYBParser,
 {
    getEncoding ()
    {
       return "ARRAY_BUFFER";
    },
+   isValid (input)
+   {
+      const
+         text  = $.decodeText (input .slice (0, MAX_TEXT_LENGTH)),
+         magic = text .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
+
+      return !! magic;
+   },
+});
+
+Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .prototype),
+{
    setInput (input)
    {
       this .arrayBuffer  = input;
       this .dataView     = new DataView (this .arrayBuffer);
-      this .input        = $.decodeText (input .slice (0, 4096));
+      this .input        = $.decodeText (input .slice (0, MAX_TEXT_LENGTH));
       this .magic        = this .input .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
       this .byteOffset   = this .magic ?.[0] .length;
       this .littleEndian = this .magic ?.[1] === "binary_little_endian";
-   },
-   isValid ()
-   {
-      if (!(this .arrayBuffer instanceof ArrayBuffer))
-         return false;
-
-      return !! this .magic;
    },
    binaryInt8 ()
    {

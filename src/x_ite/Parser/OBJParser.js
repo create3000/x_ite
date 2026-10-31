@@ -78,6 +78,18 @@ function OBJParser (scene)
    this .lastIndex       = 0;
 }
 
+Object .assign (OBJParser,
+{
+   getEncoding ()
+   {
+      return "STRING";
+   },
+   isValid (input)
+   {
+      return !! input .match (/^(?:[\x20\n\t\r]|#[^\r\n]*[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
+   },
+});
+
 Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototype),
    X3DOptimizer .prototype,
 {
@@ -86,20 +98,9 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
-   getEncoding ()
-   {
-      return "STRING";
-   },
    setInput (string)
    {
       this .input = string;
-   },
-   isValid ()
-   {
-      if (typeof this .input !== "string")
-         return false;
-
-      return !! this .input .match (/^(?:[\x20\n\t\r]|#[^\r\n]*[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
    },
    parseIntoScene (resolve, reject)
    {
