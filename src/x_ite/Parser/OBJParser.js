@@ -61,21 +61,6 @@ function OBJParser (scene)
 {
    X3DParser    .call (this, scene);
    X3DOptimizer .call (this);
-
-   // Optimizer
-
-   this .removeEmptyGroups    = true;
-   this .combineGroupingNodes = false;
-
-   // Globals
-
-   this .geometryIndices = new Map ();
-   this .numGeometries   = 0;
-   this .smoothingGroup  = -1;
-   this .smoothingGroups = new Map ();
-   this .groups          = new Map ();
-   this .materials       = new Map ();
-   this .lastIndex       = 0;
 }
 
 Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototype),
@@ -86,6 +71,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       ["INF", Infinity],
       ["INFINITY", Infinity],
    ]),
+   construct ()
+   {
+      // Optimizer
+
+      this .removeEmptyGroups    = true;
+      this .combineGroupingNodes = false;
+
+      // Globals
+
+      this .geometryIndices = new Map ();
+      this .numGeometries   = 0;
+      this .smoothingGroup  = -1;
+      this .smoothingGroups = new Map ();
+      this .groups          = new Map ();
+      this .materials       = new Map ();
+      this .lastIndex       = 0;
+   },
    getEncoding ()
    {
       return "STRING";
@@ -103,6 +105,8 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    },
    parseIntoScene (resolve, reject)
    {
+      this .construct ();
+
       this .obj ()
          .then (resolve)
          .catch (reject);
