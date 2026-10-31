@@ -14,7 +14,7 @@ Although VRML was once envisioned as a common way to experience interactive 3D c
 
 ## Example of a VRML Scene
 
-<x3d-canvas src="https://create3000.github.io/media/tutorials/vrml/windmill.x3d" contentScale="auto" update="auto"></x3d-canvas>
+<x3d-canvas style="aspect-ratio: 16/7;" src="https://create3000.github.io/media/tutorials/vrml/VRMLBanner/vrmlbanner.wrl" contentScale="auto" update="auto"></x3d-canvas>
 
 ### Code of a VRML Scene
 
