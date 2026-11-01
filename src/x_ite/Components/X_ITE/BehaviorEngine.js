@@ -26,7 +26,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       X3DChildNode .prototype .initialize .call (this);
 
       this .getLive () .addInterest ("set_enabled__", this);
+
       this ._enabled .addInterest ("set_enabled__", this);
+      this ._graph   .addInterest ("set_graph__",   this);
+      this ._graphs  .addInterest ("set_graph__",   this);
 
       this .fps      = 60;
       this .eventBus = new Interactivity .DOMEventBus ();
@@ -35,6 +38,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       console .log (this .engine);
 
       this .set_enabled__ ();
+      this .set_graph__ ();
    },
    set_enabled__ ()
    {
@@ -42,6 +46,23 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          this .engine .playEventQueue ();
       else
          this .engine .pauseEventQueue ();
+   },
+   set_graph__ ()
+   {
+      try
+      {
+         const
+            graph = this ._graphs [this ._graph .getValue ()],
+            run   = this .isLive () && this ._enabled .getValue ();
+
+         this .engine .loadBehaveGraph (JSON .parse (graph), run);
+      }
+      catch (error)
+      {
+         console .error (`${this .getTypeName ()}: Couldn't parse graph ${this ._graph}.`, error);
+
+         this .engine .loadBehaveGraph ({ }, false);
+      }
    },
 });
 
