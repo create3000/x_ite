@@ -35,6 +35,21 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .eventBus = new Interactivity .DOMEventBus ();
       this .engine   = new Interactivity .BasicBehaveEngine (this .fps, this .eventBus);
 
+      this .engine .startAnimation = (animationIndex, startTime, endTime, speed, callback) =>
+      {
+         console .log ("startAnimation", animationIndex, startTime, endTime, speed);
+      };
+
+      this .engine .stopAnimation = (animationIndex) =>
+      {
+         console .log ("stopAnimation", animationIndex);
+      };
+
+      this .engine .stopAnimationAt = (animationIndex, stopTime, callback) =>
+      {
+         console .log ("stopAnimationAt", animationIndex, stopTime);
+      };
+
       console .log (this .engine);
 
       this .set_enabled__ ();
@@ -72,10 +87,11 @@ Object .defineProperties (BehaviorEngine,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",    new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",   new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",      new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "animations", new Fields .MFNode ()),
       ]),
       enumerable: true,
    },
