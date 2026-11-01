@@ -92,11 +92,12 @@ Object .defineProperties (BehaviorEngine,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",      new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",     new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "animations", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",      new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",        new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",       new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "touchSensors", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "animations",   new Fields .MFNode ()),
       ]),
       enumerable: true,
    },
