@@ -36,6 +36,7 @@ function GLTF2Parser (scene)
    // Globals
 
    this .extensions            = new Set ();
+   this .behavior              = [ ];
    this .envLights             = [ ];
    this .lights                = [ ];
    this .materialVariants      = [ ];
@@ -143,11 +144,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .assetObject (glTF .asset, glTF .extensions);
       await this .extensionsArray (glTF .extensionsRequired, this .extensions);
       await this .extensionsArray (glTF .extensionsUsed, this .extensions);
+      await browser .loadComponents (scene);
+
       this .extensionsObject (glTF .extensions);
 
-      await browser .loadComponents (scene);
       await this .buffersArray (glTF .buffers);
-
       this .bufferViewsArray (glTF .bufferViews);
       this .accessorsArray   (glTF .accessors);
       this .samplersArray    (glTF .samplers);
@@ -169,6 +170,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .viewpointsCenterOfRotation (scene);
       this .optimizeSceneGraph (scene .getRootNodes ());
 
+      this .exportGroup ("Behavior",          this .behavior);
       this .exportGroup ("EnvironmentLights", this .envLights);
       this .exportGroup ("Lights",            this .lights);
       this .exportGroup ("Viewpoints",        this .cameras);
@@ -253,6 +255,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             //    break;
             // },
             case "EXT_mesh_gpu_instancing":
+            case "KHR_interactivity":
             case "KHR_materials_anisotropy":
             case "KHR_materials_clearcoat":
             case "KHR_materials_diffuse_transmission":
@@ -262,10 +265,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_iridescence":
             case "KHR_materials_pbrSpecularGlossiness":
             case "KHR_materials_retroreflection":
+            case "KHR_materials_scatter":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
-            case "KHR_materials_scatter":
             case "KHR_materials_volume_scatter": // Legacy
             case "KHR_materials_volume":
             {
@@ -329,6 +332,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             case "EXT_lights_image_based":
                this .extLightsImageBasedObject (value);
+               break;
+            case "KHR_interactivity":
+               this .hhrInteractivity (value);
                break;
             // https://github.com/KhronosGroup/glTF/pull/1956
             // case "KHR_lights_environment": // in development
@@ -430,6 +436,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       light .pointers = [lightNode];
 
       return light .node = lightNode;
+   },
+   hhrInteractivity (KHR_interactivity)
+   {
+      if (!(KHR_interactivity instanceof Object))
+         return;
+
+      if (!(KHR_interactivity .graphs instanceof Array))
+         return;
+
+      const
+         scene          = this .getScene (),
+         behaviorEngine = scene .createNode ("BehaviorEngine", false);
+
+      behaviorEngine ._graph  = KHR_interactivity .graph;
+      behaviorEngine ._graphs = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
+
+      behaviorEngine .setup ();
+
+      this .behavior = [
+         {
+            node: behaviorEngine,
+         },
+      ];
    },
    khrLightsPunctualObject (KHR_lights_punctual)
    {
