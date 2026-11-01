@@ -453,6 +453,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       behaviorEngine .setup ();
 
+      this .behaviorEngine = behaviorEngine;
+
       this .behavior = [
          {
             node: behaviorEngine,
@@ -2926,6 +2928,9 @@ function eventsProcessed ()
       groupNode .setup ();
 
       animation .node = groupNode;
+
+      if (this .behaviorEngine)
+         this .behaviorEngine ._animations [id] = timeSensorNode;
    },
    animationChannelsArray (channels, samplers, timeSensorNode)
    {
