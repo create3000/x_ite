@@ -36,7 +36,6 @@ function GLTF2Parser (scene)
    // Globals
 
    this .extensions            = new Set ();
-   this .behavior              = [ ];
    this .envLights             = [ ];
    this .lights                = [ ];
    this .materialVariants      = [ ];
