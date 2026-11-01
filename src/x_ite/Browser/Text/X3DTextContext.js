@@ -42,7 +42,7 @@ Object .assign (X3DTextContext .prototype,
 
       if (!promise)
       {
-         promise = new Promise ((resolve, reject) =>
+         promise = new Promise (resolve =>
          {
             new FileLoader (node, { dataAsString: false }) .loadDocument ([fileURL], async data =>
             {
