@@ -8,6 +8,7 @@ import Shading              from "./Shading.js";
 import TextureQuality       from "./TextureQuality.js";
 import TextCompression      from "./TextCompression.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
+import URLs                 from "../Networking/URLs.js";
 import $                    from "../../../lib/helper.js";
 
 // https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#BrowserProperties
@@ -432,7 +433,7 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer",       new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "MaximumFrameRate",             new Fields .SFDouble (80)),
          // A string, which is set to the *reference* field of metadata nodes, when they are created.
-         new X3DFieldDefinition (X3DConstants .inputOutput, "MetadataReference",            new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "MetadataReference",            new Fields .SFString (URLs .getProviderURL ())),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",                new Fields .SFInt32 (4)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Mute",                         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",                new Fields .SFBool (true)),

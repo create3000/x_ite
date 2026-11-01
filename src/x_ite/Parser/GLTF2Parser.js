@@ -280,6 +280,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                components .push (browser .getComponent ("Scripting",      1));
                break;
             }
+            case "KHR_node_hoverability":
+            {
+               components .push (browser .getComponent ("PointingDeviceSensor", 1));
+               break;
+            }
             case "KHR_draco_mesh_compression":
             {
                this .draco ??= await this .getLibrary ("draco_decoder_gltf.js");
@@ -2301,7 +2306,7 @@ function eventsProcessed ()
       // 2. Add children.
 
       this .nodes .forEach (node => this .nodeSkeleton (node));
-      this .nodes .forEach (node => this .nodeChildren (node));
+      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
    },
    nodeObject (node, index)
    {
@@ -2357,7 +2362,7 @@ function eventsProcessed ()
          quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();
 
-      return function (node)
+      return function (node, index)
       {
          const
             scene         = this .getScene (),
@@ -2390,7 +2395,7 @@ function eventsProcessed ()
 
          // Handle extensions.
 
-         this .nodeExtensions (node);
+         this .nodeExtensions (node, index);
 
          // Add children.
 
@@ -2469,7 +2474,7 @@ function eventsProcessed ()
          }
       };
    })(),
-   nodeExtensions (node)
+   nodeExtensions (node, index)
    {
       if (!(node .extensions instanceof Object))
          return;
@@ -2489,6 +2494,28 @@ function eventsProcessed ()
                   break;
 
                node .transformNode ._children .push (lightNode);
+               break;
+            }
+            case "KHR_node_hoverability":
+            {
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_hoverability
+
+               const
+                  scene           = this .getScene (),
+                  touchSensorNode = scene .createNode ("TouchSensor", false);
+
+               touchSensorNode .setup ();
+               touchSensorNode .setMetaData ("Interactivity/nodeIndex", new Fields .SFInt32 (index));
+
+               node .transformNode ._children .push (touchSensorNode);
+
+               extension .pointers = [touchSensorNode];
+
+               this .addAnimationPointerAlias (touchSensorNode, "hoverable", "enabled");
+
+               if (this .behaviorEngine)
+                  this .behaviorEngine ._touchSensors .push (touchSensorNode);
+
                break;
             }
             case "KHR_node_visibility":
