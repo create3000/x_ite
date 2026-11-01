@@ -25,11 +25,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this .getLive () .addInterest ("set_enabled__", this);
-
-      this ._enabled .addInterest ("set_enabled__", this);
-      this ._graph   .addInterest ("set_graph__",   this);
-      this ._graphs  .addInterest ("set_graph__",   this);
+      // Engine
 
       this .fps      = 60;
       this .eventBus = new Interactivity .DOMEventBus ();
@@ -40,6 +36,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .engine .stopAnimationAt = (... args) => this .stopAnimationAt (... args);
 
       console .log (this .engine);
+
+      // Events
+
+      this .getLive () .addInterest ("set_enabled__", this);
+
+      this ._enabled .addInterest ("set_enabled__", this);
+      this ._graph   .addInterest ("set_graph__",   this);
+      this ._graphs  .addInterest ("set_graph__",   this);
 
       this .set_enabled__ ();
       this .set_graph__ ();
