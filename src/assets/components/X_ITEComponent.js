@@ -1,7 +1,6 @@
 import Components                           from "../../x_ite/Components.js";
 import X3DX_ITEContext                      from "../../x_ite/Browser/X_ITE/X3DX_ITEContext.js";
 import AnisotropyMaterialExtension          from "../../x_ite/Components/X_ITE/AnisotropyMaterialExtension.js";
-import BehaviorEngine                       from "../../x_ite/Components/X_ITE/BehaviorEngine.js";
 import BlendMode                            from "../../x_ite/Components/X_ITE/BlendMode.js";
 import ClearcoatMaterialExtension           from "../../x_ite/Components/X_ITE/ClearcoatMaterialExtension.js";
 import DepthMode                            from "../../x_ite/Components/X_ITE/DepthMode.js";
@@ -25,7 +24,6 @@ Components .add ({
    concreteNodes:
    [
       AnisotropyMaterialExtension,
-      BehaviorEngine,
       BlendMode,
       ClearcoatMaterialExtension,
       DepthMode,
