@@ -35,20 +35,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .eventBus = new Interactivity .DOMEventBus ();
       this .engine   = new Interactivity .BasicBehaveEngine (this .fps, this .eventBus);
 
-      this .engine .startAnimation = (animationIndex, startTime, endTime, speed, callback) =>
-      {
-         console .log ("startAnimation", animationIndex, startTime, endTime, speed);
-      };
-
-      this .engine .stopAnimation = (animationIndex) =>
-      {
-         console .log ("stopAnimation", animationIndex);
-      };
-
-      this .engine .stopAnimationAt = (animationIndex, stopTime, callback) =>
-      {
-         console .log ("stopAnimationAt", animationIndex, stopTime);
-      };
+      this .engine .startAnimation  = (... args) => this .startAnimation (... args);
+      this .engine .stopAnimation   = (... args) => this .stopAnimation (... args);
+      this .engine .stopAnimationAt = (... args) => this .stopAnimationAt (... args);
 
       console .log (this .engine);
 
@@ -78,6 +67,18 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          this .engine .loadBehaveGraph ({ }, false);
       }
+   },
+   startAnimation (animationIndex, startTime, endTime, speed, callback)
+   {
+      console .log ("startAnimation", animationIndex, startTime, endTime, speed);
+   },
+   stopAnimation (animationIndex)
+   {
+      console .log ("stopAnimation", animationIndex);
+   },
+   stopAnimationAt (animationIndex, stopTime, callback)
+   {
+      console .log ("stopAnimationAt", animationIndex, stopTime);
    },
 });
 
