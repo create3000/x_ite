@@ -25,9 +25,23 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this .engine = new Interactivity .BasicBehaveEngine ();
+      this .getLive () .addInterest ("set_enabled__", this);
+      this ._enabled .addInterest ("set_enabled__", this);
+
+      this .fps      = 60;
+      this .eventBus = new Interactivity .DOMEventBus ();
+      this .engine   = new Interactivity .BasicBehaveEngine (this .fps, this .eventBus);
 
       console .log (this .engine);
+
+      this .set_enabled__ ();
+   },
+   set_enabled__ ()
+   {
+      if (this .isLive () && this ._enabled .getValue ())
+         this .engine .playEventQueue ();
+      else
+         this .engine .pauseEventQueue ();
    },
 });
 
@@ -38,6 +52,7 @@ Object .defineProperties (BehaviorEngine,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graph",    new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",   new Fields .MFString ()),
       ]),
