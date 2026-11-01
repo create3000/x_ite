@@ -59,7 +59,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       }
       catch (error)
       {
-         console .error (`${this .getTypeName ()}: Couldn't parse graph ${this ._graph}.`, error);
+         console .error (new Error (`${this .getTypeName ()}: Couldn't parse graph ${this ._graph}.`, { cause: error }));
 
          this .engine .loadBehaveGraph ({ }, false);
       }
