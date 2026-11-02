@@ -8,7 +8,6 @@ import Shading              from "./Shading.js";
 import TextureQuality       from "./TextureQuality.js";
 import TextCompression      from "./TextCompression.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
-import URLs                 from "../Networking/URLs.js";
 import $                    from "../../../lib/helper.js";
 
 // https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#BrowserProperties
