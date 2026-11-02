@@ -410,7 +410,6 @@ declare namespace X3D
       LoadUrlObjects:               boolean,
       LogarithmicDepthBuffer:       boolean,
       MaximumFrameRate:             number,
-      MetadataReference:            string,
       Multisampling:                number,
       Mute:                         boolean,
       Notifications:                boolean,
