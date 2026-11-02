@@ -5,22 +5,29 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
+import GLTFPointerAliases   from "../../Parser/GLTFPointerAliases.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
 
-// bool: 1,
-// int: 1,
-// float: 1,
-// float2: 2,
-// float3: 3,
-// float4: 4,
-// float2x2: 4,
-// float3x3: 9,
-// float4x4: 16,
-// ref: 1
 const Types = new Map ([
-   [X3DConstants .SFBool,      "bool"],
-   [X3DConstants .SFColor,     "float4"],
-   [X3DConstants .SFColorRGBA, "float4"],
+   [X3DConstants .SFBool,       "bool"],
+   [X3DConstants .SFColor,      "float3"],
+   [X3DConstants .SFColorRGBA,  "float4"],
+   [X3DConstants .SFDouble,     "float"],
+   [X3DConstants .SFFloat,      "float"],
+   [X3DConstants .SFInt32,      "int"],
+   [X3DConstants .SFMatrix3d,   "float3x3"],
+   [X3DConstants .SFMatrix3f,   "float3x3"],
+   [X3DConstants .SFMatrix4d,   "float4x4"],
+   [X3DConstants .SFMatrix4f,   "float4x4"],
+   [X3DConstants .SFQuaternion, "float4"],
+   [X3DConstants .SFRotation,   "float4"],
+   [X3DConstants .SFTime,       "float"],
+   [X3DConstants .SFVec2d,      "float2x2"],
+   [X3DConstants .SFVec2f,      "float2x2"],
+   [X3DConstants .SFVec3d,      "float3x3"],
+   [X3DConstants .SFVec3f,      "float3x3"],
+   [X3DConstants .SFVec4d,      "float4"],
+   [X3DConstants .SFVec4f,      "float4"],
 ]);
 
 /**
@@ -275,45 +282,68 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // Register getter and setter for the property.
 
       const
-         field = node .getField (this .getFieldName (path)),
-         type  = Types .get (field .getType ());
+         field     = node .getField (GLTFPointerAliases .getAlias (path, node)),
+         baseColor = GLTFPointerAliases .isBaseColor (node, field),
+         type      = baseColor ? "float4" : Types .get (field .getType ());
 
       if (!type)
          return;
 
       this .engine .registerJsonPointer (
          path,
-         (path) =>
+         field .isOutput () || field .isInitializable () ? (path) =>
          {
             const
-               node  = this .nodes .get (path),
-               field = node .getField (this .getFieldName (path));
+               node      = this .nodes .get (path),
+               field     = node .getField (GLTFPointerAliases .getAlias (path, node)),
+               baseColor = GLTFPointerAliases .isBaseColor (node, field);
 
-            return [... field];
-         },
-         (path, value) =>
+            switch (field .getType ())
+            {
+               case X3DConstants .SFRotation:
+                  return [... field .getQuaternion ()];
+               default:
+                  return baseColor ? [... field, node ._transparency .getValue ()] : [... field];
+            }
+         } : Function .prototype,
+         field .isInput () || field .isInitializable () ? (path, value) =>
          {
             const
-               node  = this .nodes .get (path),
-               field = node .getField (this .getFieldName (path));
+               node      = this .nodes .get (path),
+               field     = node .getField (GLTFPointerAliases .getAlias (path, node)),
+               baseColor = GLTFPointerAliases .isBaseColor (node, field);
+
+            if (baseColor)
+               node ._transparency = value [3];
 
             switch (field .getType ())
             {
                case X3DConstants .SFColor:
-                  field .assign (new Fields .SFColor (... value));
+               case X3DConstants .SFColorRGBA:
+               case X3DConstants .SFMatrix3d:
+               case X3DConstants .SFMatrix3f:
+               case X3DConstants .SFMatrix4d:
+               case X3DConstants .SFMatrix4f:
+               case X3DConstants .SFQuaternion:
+               case X3DConstants .SFVec2d:
+               case X3DConstants .SFVec2f:
+               case X3DConstants .SFVec3d:
+               case X3DConstants .SFVec3f:
+               case X3DConstants .SFVec4d:
+               case X3DConstants .SFVec4f:
+                  field .assign (new field .constructor (... value));
+                  break;
+               case X3DConstants .SFRotation:
+                  field .setQuaternion (new Fields .SFQuaternion (... value));
                   break;
                default:
                   field .setValue (value [0]);
                   break;
             }
-         },
+         } : Function .prototype,
          type,
-         false
+         !(field .isInput () || field .isInitializable ()) // read-only
       );
-   },
-   getFieldName (path)
-   {
-      return path .match (/([^/]+)$/) [1] .replace (/(?:Factor$)/, "");
    },
    set_over__ (index, over)
    {

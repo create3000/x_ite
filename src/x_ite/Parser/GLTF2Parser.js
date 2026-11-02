@@ -1,21 +1,22 @@
-import X3DParser    from "./X3DParser.js";
-import X3DOptimizer from "./X3DOptimizer.js";
-import Fields       from "../Fields.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import FileLoader   from "../InputOutput/FileLoader.js";
-import URLs         from "../Browser/Networking/URLs.js";
-import Layer        from "../Components/Layering/Layer.js";
-import TraverseType from "../Rendering/TraverseType.js";
-import Algorithm    from "../../standard/Math/Algorithm.js";
-import Vector2      from "../../standard/Math/Numbers/Vector2.js";
-import Vector3      from "../../standard/Math/Numbers/Vector3.js";
-import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
-import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
-import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
-import Color3       from "../../standard/Math/Numbers/Color3.js";
-import Color4       from "../../standard/Math/Numbers/Color4.js";
-import Box3         from "../../standard/Math/Geometry/Box3.js";
-import $            from "../../lib/helper.js";
+import X3DParser          from "./X3DParser.js";
+import X3DOptimizer       from "./X3DOptimizer.js";
+import Fields             from "../Fields.js";
+import X3DConstants       from "../Base/X3DConstants.js";
+import FileLoader         from "../InputOutput/FileLoader.js";
+import URLs               from "../Browser/Networking/URLs.js";
+import Layer              from "../Components/Layering/Layer.js";
+import TraverseType       from "../Rendering/TraverseType.js";
+import GLTFPointerAliases from "./GLTFPointerAliases.js";
+import Algorithm          from "../../standard/Math/Algorithm.js";
+import Vector2            from "../../standard/Math/Numbers/Vector2.js";
+import Vector3            from "../../standard/Math/Numbers/Vector3.js";
+import Quaternion         from "../../standard/Math/Numbers/Quaternion.js";
+import Rotation4          from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix4            from "../../standard/Math/Numbers/Matrix4.js";
+import Color3             from "../../standard/Math/Numbers/Color3.js";
+import Color4             from "../../standard/Math/Numbers/Color4.js";
+import Box3               from "../../standard/Math/Geometry/Box3.js";
+import $                  from "../../lib/helper.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Assets
@@ -601,10 +602,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._cutOffAngle = this .numberValue (light .outerConeAngle, Math .PI / 4);
       lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
 
-      this .addAnimationPointerAlias (lightNode, "range",          "radius");
-      this .addAnimationPointerAlias (lightNode, "outerConeAngle", "cutOffAngle");
-      this .addAnimationPointerAlias (lightNode, "innerConeAngle", "beamWidth");
-
       return lightNode;
    },
    pointLight (light)
@@ -614,8 +611,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          lightNode = scene .createNode ("PointLight", false);
 
       lightNode ._radius = this .numberValue (light .range, 0) || -1;
-
-      this .addAnimationPointerAlias (lightNode, "range", "radius");
 
       return lightNode;
    },
@@ -1725,7 +1720,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       unlitMaterialNode ._transparency           = materialNode ._transparency;
 
       unlitMaterialNode .setup ();
-      this .addAnimationPointerAlias (unlitMaterialNode, "baseColor", "emissiveColor");
 
       materialNode .dispose ();
 
@@ -1839,7 +1833,6 @@ function eventsProcessed ()
                scene .addNamedNode (scene .getUniqueName ("CombineTextureMatrixScript"), scriptNode);
                scene .addRoute (scriptNode, "value_changed", textureTransformNode, "set_matrix");
 
-               this .addAnimationPointerAlias (scriptNode, "offset", "translation");
                this .animationScripts .push (scriptNode);
 
                Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
@@ -2284,9 +2277,6 @@ function eventsProcessed ()
 
       viewpointNode .setup ();
 
-      this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
-      this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
-
       Object .defineProperty (camera, "pointers",
       {
          get: () =>
@@ -2343,10 +2333,6 @@ function eventsProcessed ()
          viewpointNode ._farDistance = camera .zfar;
 
       viewpointNode .setup ();
-
-      this .addAnimationPointerAlias (viewpointNode, "yfov",  "fieldOfView");
-      this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
-      this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
 
       camera .pointers = [viewpointNode];
 
@@ -2570,8 +2556,6 @@ function eventsProcessed ()
 
                extension .pointers = [touchSensorNode];
 
-               this .addAnimationPointerAlias (touchSensorNode, "hoverable", "enabled");
-
                this .behaviorEngine ?._hoverability .push (touchSensorNode);
                break;
             }
@@ -2591,8 +2575,6 @@ function eventsProcessed ()
                node .transformNode ._children .push (touchSensorNode);
 
                extension .pointers = [touchSensorNode];
-
-               this .addAnimationPointerAlias (touchSensorNode, "selectable", "enabled");
 
                this .behaviorEngine ?._selectability .push (touchSensorNode);
                break;
@@ -2888,8 +2870,6 @@ function eventsProcessed ()
             switchNode ._children    = children;
 
             switchNode .setup ();
-
-            this .addAnimationPointerAlias (switchNode, "scene", "whichChoice");
 
             glTF .pointers = [switchNode];
 
@@ -4191,9 +4171,9 @@ function eventsProcessed ()
    })(),
    getAnimationPointer (pointer = "")
    {
-      const
-         path  = pointer .split ("/") .filter (p => p),
-         field = path .pop () .replace (/(?:Factor$)/, "");
+      const path = pointer .split ("/") .filter (p => p);
+
+      path .pop ();
 
       let glTF = this .input;
 
@@ -4201,21 +4181,9 @@ function eventsProcessed ()
          glTF = glTF ?.[property];
 
       return glTF ?.pointers
-         ?.map (node => [node, $.try (() => node ?.getField (this .getAnimationPointerAlias (node, field) ?? field))])
+         ?.map (node => [node, $.try (() => node ?.getField (GLTFPointerAliases .getAlias (pointer, node)))])
          ?.find (([, field]) => field)
          ?? [ ];
-   },
-   addAnimationPointerAlias (node, field, alias)
-   {
-      const key = `${node .getTypeName ()}.${field}`;
-
-      this .pointerAliases .set (key, alias);
-   },
-   getAnimationPointerAlias (node, field)
-   {
-      const key = `${node .getTypeName ()}.${field}`;
-
-      return this .pointerAliases .get (key);
    },
    createNamedInterpolator (typeName, components, interpolation, times, keyValues, cycleInterval)
    {
