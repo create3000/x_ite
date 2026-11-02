@@ -243,18 +243,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    set_over__ (nodeIndex, over)
    {
-      if (nodeIndex < 0)
-         return;
-
-      this .engine .hoverOn (over .getValue () ? nodeIndex : undefined, 0);
+      this .engine .hoverOn (over .getValue () ? nodeIndex : undefined);
    },
    set_touchTime__ (nodeIndex)
    {
-      console .log ("set_touchTime__", nodeIndex);
-
-      if (nodeIndex < 0)
-         return;
-
       this .engine .select (nodeIndex);
    },
    getWorld ()
