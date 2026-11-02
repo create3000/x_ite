@@ -435,7 +435,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       const names = path .split ("/");
 
       if (names .length < 2)
-         return;
+         throw new Error ("Couldn't set metadata value: Key must consist of at least two parts.");
 
       const
          last        = names .pop (),
