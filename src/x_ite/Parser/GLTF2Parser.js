@@ -130,64 +130,55 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          browser = this .getBrowser (),
          scene   = this .getScene ();
 
-      try
-      {
-         // Set profile and components.
+      // Set profile and components.
 
-         browser .reference .push (URLs .getProviderURL ());
+      scene .setEncoding ("GLTF");
+      scene .setProfile (browser .getProfile ("Interchange"));
 
-         scene .setEncoding ("GLTF");
-         scene .setProfile (browser .getProfile ("Interchange"));
+      if (glTF .skins)
+         scene .updateComponent (browser .getComponent ("HAnim"));
 
-         if (glTF .skins)
-            scene .updateComponent (browser .getComponent ("HAnim"));
+      // Parse root objects.
 
-         // Parse root objects.
+      this .assetObject (glTF .asset, glTF .extensions);
+      await this .extensionsArray (glTF .extensionsRequired, this .extensions);
+      await this .extensionsArray (glTF .extensionsUsed, this .extensions);
+      await browser .loadComponents (scene);
 
-         this .assetObject (glTF .asset, glTF .extensions);
-         await this .extensionsArray (glTF .extensionsRequired, this .extensions);
-         await this .extensionsArray (glTF .extensionsUsed, this .extensions);
-         await browser .loadComponents (scene);
+      this .extensionsObject (glTF .extensions);
 
-         this .extensionsObject (glTF .extensions);
+      await this .buffersArray (glTF .buffers);
+      this .bufferViewsArray (glTF .bufferViews);
+      this .accessorsArray   (glTF .accessors);
+      this .samplersArray    (glTF .samplers);
 
-         await this .buffersArray (glTF .buffers);
-         this .bufferViewsArray (glTF .bufferViews);
-         this .accessorsArray   (glTF .accessors);
-         this .samplersArray    (glTF .samplers);
+      await this .imagesArray (glTF .images);
+      await this .videosArray (glTF .extensions ?.EXT_texture_video ?.videos);
 
-         await this .imagesArray (glTF .images);
-         await this .videosArray (glTF .extensions ?.EXT_texture_video ?.videos);
+      this .texturesArray   (glTF .textures);
+      this .materialsArray  (glTF .materials);
+      this .meshesArray     (glTF .meshes);
+      this .camerasArray    (glTF .cameras);
+      this .skinsArray      (glTF .skins, glTF .nodes);
+      this .nodesArray      (glTF .nodes);
+      this .scenesArray     (glTF, glTF .scenes, glTF .scene);
+      this .skinsHumanoid   ();
+      this .skinsBBox       ();
+      this .animationsArray (glTF .animations);
 
-         this .texturesArray   (glTF .textures);
-         this .materialsArray  (glTF .materials);
-         this .meshesArray     (glTF .meshes);
-         this .camerasArray    (glTF .cameras);
-         this .skinsArray      (glTF .skins, glTF .nodes);
-         this .nodesArray      (glTF .nodes);
-         this .scenesArray     (glTF, glTF .scenes, glTF .scene);
-         this .skinsHumanoid   ();
-         this .skinsBBox       ();
-         this .animationsArray (glTF .animations);
+      this .viewpointsCenterOfRotation (scene);
+      this .optimizeSceneGraph (scene .getRootNodes ());
 
-         this .viewpointsCenterOfRotation (scene);
-         this .optimizeSceneGraph (scene .getRootNodes ());
+      this .exportGroup ("Behavior",          this .behavior);
+      this .exportGroup ("EnvironmentLights", this .envLights);
+      this .exportGroup ("Lights",            this .lights);
+      this .exportGroup ("Viewpoints",        this .cameras);
+      this .exportGroup ("Animations",        glTF .animations);
 
-         this .exportGroup ("Behavior",          this .behavior);
-         this .exportGroup ("EnvironmentLights", this .envLights);
-         this .exportGroup ("Lights",            this .lights);
-         this .exportGroup ("Viewpoints",        this .cameras);
-         this .exportGroup ("Animations",        glTF .animations);
+      this .cleanupAnimationScripts ();
+      this .materialVariantsSwitch ();
 
-         this .cleanupAnimationScripts ();
-         this .materialVariantsSwitch ();
-
-         return scene;
-      }
-      finally
-      {
-         browser .reference .pop ();
-      }
+      return scene;
    },
    assetObject (asset, extensions)
    {
@@ -2517,7 +2508,7 @@ function eventsProcessed ()
                touchSensorNode ._enabled = extension .hoverable ?? true;
 
                touchSensorNode .setup ();
-               touchSensorNode .setMetaData ("Interactivity/node", new Fields .SFInt32 (index));
+               touchSensorNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
 
                node .transformNode ._children .push (touchSensorNode);
 
@@ -2541,7 +2532,7 @@ function eventsProcessed ()
                touchSensorNode ._enabled = extension .selectable ?? true;
 
                touchSensorNode .setup ();
-               touchSensorNode .setMetaData ("Interactivity/node", new Fields .SFInt32 (index));
+               touchSensorNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
 
                node .transformNode ._children .push (touchSensorNode);
 
@@ -2946,7 +2937,7 @@ function eventsProcessed ()
       switchNode ._visible     = false;
 
       switchNode .setup ();
-      switchNode .setMetaData ("MaterialVariants/names", new Fields .MFString (... names));
+      switchNode .setMetaData ("MaterialVariants/names", URLs .getProviderURL (), new Fields .MFString (... names));
 
       for (const variantNode of this .materialVariantNodes)
          scene .addRoute (switchNode, "whichChoice", variantNode, "whichChoice");
