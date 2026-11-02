@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const hoverabilityNode of this .hoverabilityNodes)
       {
-         const hoverIndex = +hoverabilityNode .getMetaData ("KHR_node_hoverability/node", new Fields .SFInt32 (-1));
+         const hoverIndex = +hoverabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
          hoverabilityNode ._isOver .addInterest ("set_over__", this, hoverIndex);
       }
@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const selectabilityNode of this .selectabilityNodes)
       {
-         const selectIndex = +selectabilityNode .getMetaData ("KHR_node_selectability/node", new Fields .SFInt32 (-1));
+         const selectIndex = +selectabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
          selectabilityNode ._touchTime .addInterest ("set_touchTime__", this, selectIndex);
       }

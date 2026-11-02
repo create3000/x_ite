@@ -2508,7 +2508,7 @@ function eventsProcessed ()
                touchSensorNode ._enabled = extension .hoverable ?? true;
 
                touchSensorNode .setup ();
-               touchSensorNode .setMetaData (`${key}/node`, new Fields .SFInt32 (index));
+               touchSensorNode .setMetaData ("Interactivity/node", new Fields .SFInt32 (index));
 
                node .transformNode ._children .push (touchSensorNode);
 
@@ -2532,7 +2532,7 @@ function eventsProcessed ()
                touchSensorNode ._enabled = extension .selectable ?? true;
 
                touchSensorNode .setup ();
-               touchSensorNode .setMetaData (`${key}/node`, new Fields .SFInt32 (index));
+               touchSensorNode .setMetaData ("Interactivity/node", new Fields .SFInt32 (index));
 
                node .transformNode ._children .push (touchSensorNode);
 
