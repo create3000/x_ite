@@ -92,10 +92,17 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       }
 
       for (const touchSensorNode of this .touchSensorNodes)
-         touchSensorNode ._isOver .addInterest ("set_over__", this, +touchSensorNode .getMetaData ("Interactivity/node"));
+      {
+         const nodeIndex = +touchSensorNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+
+         touchSensorNode ._isOver .addInterest ("set_over__", this, nodeIndex);
+      }
    },
    set_over__ (nodeIndex, over)
    {
+      if (nodeIndex < 0)
+         return;
+
       console .log (nodeIndex, over .getValue ());
 
       this .engine .hoverOn (over .getValue () ? nodeIndex : undefined, 0);
