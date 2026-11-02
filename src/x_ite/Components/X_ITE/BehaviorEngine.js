@@ -104,9 +104,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const hoverabilityNode of this .hoverabilityNodes)
       {
-         const nodeIndex = +hoverabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+         const index = +hoverabilityNode .getMetaData ("glTF/node", new Fields .SFInt32 (-1));
 
-         hoverabilityNode ._isOver .addInterest ("set_over__", this, nodeIndex);
+         hoverabilityNode ._isOver .addInterest ("set_over__", this, index);
       }
    },
    set_selectability__ ()
@@ -126,9 +126,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const selectabilityNode of this .selectabilityNodes)
       {
-         const nodeIndex = +selectabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+         const index = +selectabilityNode .getMetaData ("glTF/node", new Fields .SFInt32 (-1));
 
-         selectabilityNode ._touchTime .addInterest ("set_touchTime__", this, nodeIndex);
+         selectabilityNode ._touchTime .addInterest ("set_touchTime__", this, index);
       }
    },
    set_animations__ ()
@@ -235,19 +235,21 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          if (x3dnode)
          {
-            const pointer = x3dnode .getMetaData ("Interactivity/pointer", new Fields .SFString ()) .getValue ();
+            const pointer = x3dnode .getMetaData ("glTF/pointer", new Fields .SFString ()) .getValue ();
 
             this .nodes .set (pointer, x3dnode);
          }
       }
    },
-   set_over__ (nodeIndex, over)
+   set_over__ (index, over)
    {
-      this .engine .hoverOn (over .getValue () ? nodeIndex : undefined);
+      this .engine .hoverOn (over .getValue () ? index : undefined);
    },
-   set_touchTime__ (nodeIndex)
+   set_touchTime__ (index)
    {
-      this .engine .select (nodeIndex);
+      console .log ("set_touchTime__", index);
+
+      this .engine .select (index);
    },
    getWorld ()
    {
