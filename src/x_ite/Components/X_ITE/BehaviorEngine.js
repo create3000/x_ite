@@ -79,7 +79,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    set_touchSensors__ ()
    {
       for (const touchSensorNode of this .touchSensorNodes)
-         touchSensorNode ._isOver .removeInterest ("set_over__", this);
+      {
+         touchSensorNode ._isOver    .removeInterest ("set_over__",      this);
+         touchSensorNode ._touchTime .removeInterest ("set_touchTime__", this);
+      }
 
       this .touchSensorNodes .length = 0;
 
@@ -95,7 +98,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       {
          const nodeIndex = +touchSensorNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-         touchSensorNode ._isOver .addInterest ("set_over__", this, nodeIndex);
+         touchSensorNode ._isOver    .addInterest ("set_over__",      this, nodeIndex);
+         touchSensorNode ._touchTime .addInterest ("set_touchTime__", this, nodeIndex);
       }
    },
    set_over__ (nodeIndex, over)
@@ -103,9 +107,18 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       if (nodeIndex < 0)
          return;
 
-      console .log (nodeIndex, over .getValue ());
+      console .log ("set_over__", nodeIndex, over .getValue ());
 
       this .engine .hoverOn (over .getValue () ? nodeIndex : undefined, 0);
+   },
+   set_touchTime__ (nodeIndex)
+   {
+      if (nodeIndex < 0)
+         return;
+
+      console .log ("set_touchTime__", nodeIndex);
+
+      this .engine .select (nodeIndex);
    },
    startAnimation (animationIndex, startTime, endTime, speed, callback)
    {
