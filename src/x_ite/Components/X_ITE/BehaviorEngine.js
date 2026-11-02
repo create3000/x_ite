@@ -4,6 +4,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
 
 /**
@@ -17,6 +18,8 @@ function BehaviorEngine (executionContext)
    this .addType (X3DConstants .BehaviorEngine);
 
    // Private properties
+
+   this .touchSensorNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode .prototype),
@@ -41,9 +44,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       this .getLive () .addInterest ("set_enabled__", this);
 
-      this ._enabled .addInterest ("set_enabled__", this);
-      this ._graph   .addInterest ("set_graph__",   this);
-      this ._graphs  .addInterest ("set_graph__",   this);
+      this ._enabled      .addInterest ("set_enabled__",      this);
+      this ._graph        .addInterest ("set_graph__",        this);
+      this ._graphs       .addInterest ("set_graph__",        this);
+      this ._touchSensors .addInterest ("set_touchSensors__", this);
 
       this .set_enabled__ ();
       this .set_graph__ ();
@@ -72,8 +76,34 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          this .engine .loadBehaveGraph ({ }, false);
       }
    },
+   set_touchSensors__ ()
+   {
+      for (const touchSensorNode of this .touchSensorNodes)
+         touchSensorNode ._isOver .removeInterest ("set_over__", this);
+
+      this .touchSensorNodes .length = 0;
+
+      for (const node of this ._touchSensors)
+      {
+         const touchSensorNode = X3DCast (X3DConstants .TouchSensor, node);
+
+         if (touchSensorNode)
+            this .touchSensorNodes .push (touchSensorNode);
+      }
+
+      for (const touchSensorNode of this .touchSensorNodes)
+         touchSensorNode ._isOver .addInterest ("set_over__", this, +touchSensorNode .getMetaData ("Interactivity/node"));
+   },
+   set_over__ (nodeIndex, over)
+   {
+      console .log (nodeIndex, over .getValue ());
+
+      this .engine .hoverOn (over .getValue () ? nodeIndex : undefined, 0);
+   },
    startAnimation (animationIndex, startTime, endTime, speed, callback)
    {
+      // callback: callback to run when the animation ends.
+
       console .log ("startAnimation", animationIndex, startTime, endTime, speed);
    },
    stopAnimation (animationIndex)
@@ -82,6 +112,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    stopAnimationAt (animationIndex, stopTime, callback)
    {
+      // callback: callback to run when the animation ends.
+
       console .log ("stopAnimationAt", animationIndex, stopTime);
    },
 });

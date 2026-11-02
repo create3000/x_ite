@@ -2505,7 +2505,7 @@ function eventsProcessed ()
                   touchSensorNode = scene .createNode ("TouchSensor", false);
 
                touchSensorNode .setup ();
-               touchSensorNode .setMetaData ("Interactivity/nodeIndex", new Fields .SFInt32 (index));
+               touchSensorNode .setMetaData ("Interactivity/node", new Fields .SFInt32 (index));
 
                node .transformNode ._children .push (touchSensorNode);
 
