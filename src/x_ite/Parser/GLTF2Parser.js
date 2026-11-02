@@ -126,59 +126,68 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(glTF instanceof Object))
          return;
 
-      // Set profile and components.
-
       const
          browser = this .getBrowser (),
          scene   = this .getScene ();
 
-      scene .setEncoding ("GLTF");
-      scene .setProfile (browser .getProfile ("Interchange"));
+      try
+      {
+         // Set profile and components.
 
-      if (glTF .skins)
-         scene .updateComponent (browser .getComponent ("HAnim"));
+         browser .reference .push (URLs .getProviderURL ());
 
-      // Parse root objects.
+         scene .setEncoding ("GLTF");
+         scene .setProfile (browser .getProfile ("Interchange"));
 
-      this .assetObject (glTF .asset, glTF .extensions);
-      await this .extensionsArray (glTF .extensionsRequired, this .extensions);
-      await this .extensionsArray (glTF .extensionsUsed, this .extensions);
-      await browser .loadComponents (scene);
+         if (glTF .skins)
+            scene .updateComponent (browser .getComponent ("HAnim"));
 
-      this .extensionsObject (glTF .extensions);
+         // Parse root objects.
 
-      await this .buffersArray (glTF .buffers);
-      this .bufferViewsArray (glTF .bufferViews);
-      this .accessorsArray   (glTF .accessors);
-      this .samplersArray    (glTF .samplers);
+         this .assetObject (glTF .asset, glTF .extensions);
+         await this .extensionsArray (glTF .extensionsRequired, this .extensions);
+         await this .extensionsArray (glTF .extensionsUsed, this .extensions);
+         await browser .loadComponents (scene);
 
-      await this .imagesArray (glTF .images);
-      await this .videosArray (glTF .extensions ?.EXT_texture_video ?.videos);
+         this .extensionsObject (glTF .extensions);
 
-      this .texturesArray   (glTF .textures);
-      this .materialsArray  (glTF .materials);
-      this .meshesArray     (glTF .meshes);
-      this .camerasArray    (glTF .cameras);
-      this .skinsArray      (glTF .skins, glTF .nodes);
-      this .nodesArray      (glTF .nodes);
-      this .scenesArray     (glTF, glTF .scenes, glTF .scene);
-      this .skinsHumanoid   ();
-      this .skinsBBox       ();
-      this .animationsArray (glTF .animations);
+         await this .buffersArray (glTF .buffers);
+         this .bufferViewsArray (glTF .bufferViews);
+         this .accessorsArray   (glTF .accessors);
+         this .samplersArray    (glTF .samplers);
 
-      this .viewpointsCenterOfRotation (scene);
-      this .optimizeSceneGraph (scene .getRootNodes ());
+         await this .imagesArray (glTF .images);
+         await this .videosArray (glTF .extensions ?.EXT_texture_video ?.videos);
 
-      this .exportGroup ("Behavior",          this .behavior);
-      this .exportGroup ("EnvironmentLights", this .envLights);
-      this .exportGroup ("Lights",            this .lights);
-      this .exportGroup ("Viewpoints",        this .cameras);
-      this .exportGroup ("Animations",        glTF .animations);
+         this .texturesArray   (glTF .textures);
+         this .materialsArray  (glTF .materials);
+         this .meshesArray     (glTF .meshes);
+         this .camerasArray    (glTF .cameras);
+         this .skinsArray      (glTF .skins, glTF .nodes);
+         this .nodesArray      (glTF .nodes);
+         this .scenesArray     (glTF, glTF .scenes, glTF .scene);
+         this .skinsHumanoid   ();
+         this .skinsBBox       ();
+         this .animationsArray (glTF .animations);
 
-      this .cleanupAnimationScripts ();
-      this .materialVariantsSwitch ();
+         this .viewpointsCenterOfRotation (scene);
+         this .optimizeSceneGraph (scene .getRootNodes ());
 
-      return scene;
+         this .exportGroup ("Behavior",          this .behavior);
+         this .exportGroup ("EnvironmentLights", this .envLights);
+         this .exportGroup ("Lights",            this .lights);
+         this .exportGroup ("Viewpoints",        this .cameras);
+         this .exportGroup ("Animations",        glTF .animations);
+
+         this .cleanupAnimationScripts ();
+         this .materialVariantsSwitch ();
+
+         return scene;
+      }
+      finally
+      {
+         browser .reference .pop ();
+      }
    },
    assetObject (asset, extensions)
    {

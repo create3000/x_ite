@@ -435,7 +435,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       const names = path .split ("/");
 
       if (names .length < 2)
-         return;
+         throw new Error ("Couldn't set metadata value: Key must consist of at least two parts.");
 
       const
          last        = names .pop (),
@@ -571,12 +571,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          if (!create)
             return null;
 
-         this ._metadata = this .getExecutionContext () .createNode ("MetadataSet");
+         const executionContext = this .getExecutionContext ();
+
+         this ._metadata = executionContext .createNode ("MetadataSet");
          metadataSet     = this ._metadata .valueOf ();
 
-         this .getExecutionContext () .addNamedNode (this .getExecutionContext () .getUniqueName (name), metadataSet);
+         executionContext .addNamedNode (executionContext .getUniqueName (name), metadataSet);
 
-         metadataSet .reference = this .getBrowser () .getBrowserOption ("MetadataReference");
+         metadataSet .reference = this .getBrowser () .reference .at (-1) ?? "";
          metadataSet .name      = name;
       }
 

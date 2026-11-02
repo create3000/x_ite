@@ -90,11 +90,13 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
       if (metadata)
          this .removeMetaValue (name);
 
-      metadata = this .getExecutionContext () .createNode (typeName);
+      const executionContext = this .getExecutionContext ();
 
-      this .getExecutionContext () .addNamedNode (this .getExecutionContext () .getUniqueName (name), metadata);
+      metadata = executionContext .createNode (typeName);
 
-      metadata .reference = this .getBrowser () .getBrowserOption ("MetadataReference");
+      executionContext .addNamedNode (this .getExecutionContext () .getUniqueName (name), metadata);
+
+      metadata .reference = this .getBrowser () .reference .at (-1) ?? "";
       metadata .name      = name;
 
       this ._value .push (metadata);
