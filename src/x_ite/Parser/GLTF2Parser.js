@@ -281,6 +281,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                break;
             }
             case "KHR_node_hoverability":
+            case "KHR_node_selectability":
             {
                components .push (browser .getComponent ("PointingDeviceSensor", 1));
                break;
@@ -2497,12 +2498,16 @@ function eventsProcessed ()
                break;
             }
             case "KHR_node_hoverability":
+            case "KHR_node_selectability":
             {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_hoverability
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_selectability
 
                const
                   scene           = this .getScene (),
                   touchSensorNode = scene .createNode ("TouchSensor", false);
+
+               touchSensorNode ._enabled = extension .hoverable ?? extension .selectable;
 
                touchSensorNode .setup ();
                touchSensorNode .setMetaData ("Interactivity/node", new Fields .SFInt32 (index));
@@ -2511,7 +2516,8 @@ function eventsProcessed ()
 
                extension .pointers = [touchSensorNode];
 
-               this .addAnimationPointerAlias (touchSensorNode, "hoverable", "enabled");
+               this .addAnimationPointerAlias (touchSensorNode, "hoverable",  "enabled");
+               this .addAnimationPointerAlias (touchSensorNode, "selectable", "enabled");
 
                if (this .behaviorEngine)
                   this .behaviorEngine ._touchSensors .push (touchSensorNode);
