@@ -148,6 +148,9 @@ Object .assign (X3DOptimizer .prototype,
       if (!node .getNodeType () .includes (X3DConstants .X3DGroupingNode))
          return node;
 
+      if (node .children .some (child => child ?.getNodeType () .includes (X3DConstants .X3DPointingDeviceSensorNode)))
+         return node;
+
       if (!node .visible)
          return node;
 
