@@ -96,27 +96,29 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const touchSensorNode of this .touchSensorNodes)
       {
-         const nodeIndex = +touchSensorNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+         const
+            hoverIndex  = +touchSensorNode .getMetaData ("KHR_node_hoverability/node",  new Fields .SFInt32 (-1)),
+            selectIndex = +touchSensorNode .getMetaData ("KHR_node_selectability/node", new Fields .SFInt32 (-1));
 
-         touchSensorNode ._isOver    .addInterest ("set_over__",      this, nodeIndex);
-         touchSensorNode ._touchTime .addInterest ("set_touchTime__", this, nodeIndex);
+         touchSensorNode ._isOver    .addInterest ("set_over__",      this, hoverIndex);
+         touchSensorNode ._touchTime .addInterest ("set_touchTime__", this, selectIndex);
       }
    },
    set_over__ (nodeIndex, over)
    {
+      console .log ("set_over__", nodeIndex, over .getValue ());
+
       if (nodeIndex < 0)
          return;
-
-      console .log ("set_over__", nodeIndex, over .getValue ());
 
       this .engine .hoverOn (over .getValue () ? nodeIndex : undefined, 0);
    },
    set_touchTime__ (nodeIndex)
    {
+      console .log ("set_touchTime__", nodeIndex);
+
       if (nodeIndex < 0)
          return;
-
-      console .log ("set_touchTime__", nodeIndex);
 
       this .engine .select (nodeIndex);
    },

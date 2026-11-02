@@ -2507,17 +2507,19 @@ function eventsProcessed ()
                   scene           = this .getScene (),
                   touchSensorNode = scene .createNode ("TouchSensor", false);
 
-               touchSensorNode ._enabled = extension .hoverable ?? extension .selectable;
+               touchSensorNode ._enabled = extension .hoverable ?? extension .selectable ?? true;
 
                touchSensorNode .setup ();
-               touchSensorNode .setMetaData ("Interactivity/node", new Fields .SFInt32 (index));
+               touchSensorNode .setMetaData (`${key}/node`, new Fields .SFInt32 (index));
 
                node .transformNode ._children .push (touchSensorNode);
 
                extension .pointers = [touchSensorNode];
 
-               this .addAnimationPointerAlias (touchSensorNode, "hoverable",  "enabled");
-               this .addAnimationPointerAlias (touchSensorNode, "selectable", "enabled");
+               if (key === "KHR_node_hoverability")
+                  this .addAnimationPointerAlias (touchSensorNode, "hoverable", "enabled");
+               else if (key === "KHR_node_selectability")
+                  this .addAnimationPointerAlias (touchSensorNode, "selectable", "enabled");
 
                if (this .behaviorEngine)
                   this .behaviorEngine ._touchSensors .push (touchSensorNode);
