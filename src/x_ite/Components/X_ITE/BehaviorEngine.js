@@ -35,6 +35,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .eventBus = new Interactivity .DOMEventBus ();
       this .engine   = new Interactivity .BasicBehaveEngine (this .fps, this .eventBus);
 
+      this .engine .getWorld        = () => this .getWorld ();
       this .engine .startAnimation  = (... args) => this .startAnimation (... args);
       this .engine .stopAnimation   = (... args) => this .stopAnimation (... args);
       this .engine .stopAnimationAt = (... args) => this .stopAnimationAt (... args);
@@ -50,11 +51,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this ._graphs        .addInterest ("set_graph__",         this);
       this ._hoverability  .addInterest ("set_hoverability__",  this);
       this ._selectability .addInterest ("set_selectability__", this);
+      this ._animations    .addInterest ("set_animations__",    this);
 
       this .set_enabled__ ();
       this .set_graph__ ();
       this .set_hoverability__ ();
       this .set_selectability__ ();
+      this .set_animations__ ();
    },
    set_enabled__ ()
    {
@@ -124,6 +127,105 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          selectabilityNode ._touchTime .addInterest ("set_touchTime__", this, nodeIndex);
       }
    },
+   set_animations__ ()
+   {
+      const animations = this ._animations;
+
+      this .world = null;
+
+      this .engine .registerJsonPointer (
+         `/animations/${animations .length}`,
+         (path) => [path],
+         Function .prototype,
+         "ref",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/animations/${animations .length}/extensions/KHR_interactivity/isPlaying`,
+         (path) =>
+         {
+            const
+               parts     = path .split ("/"),
+               index     = parseInt (parts [2]),
+               animation = animations [index];
+
+            return [!! animation ?.isActive];
+         },
+         Function .prototype,
+         "bool",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/animations/${animations .length}/extensions/KHR_interactivity/minTime`,
+         (path) =>
+         {
+            const
+               parts     = path .split ("/"),
+               index     = parseInt (parts [2]),
+               animation = animations [index];
+
+            return [0];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/animations/${animations .length}/extensions/KHR_interactivity/maxTime`,
+         (path) =>
+         {
+            const
+               parts     = path .split ("/"),
+               index     = parseInt (parts [2]),
+               animation = animations [index];
+
+            return [animation ?.cycleInterval ?? 0];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      // The playhead returns a number between 0 and maxTime
+
+      this .engine .registerJsonPointer (
+         `/animations/${animations .length}/extensions/KHR_interactivity/playhead`,
+         (path) =>
+         {
+            const
+               parts     = path .split ("/"),
+               index     = parseInt (parts [2]),
+               animation = animations [index];
+
+            return [animation ? animation .cycleInterval * animation .fraction_changed : NaN];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      // The virtual playhead return the current time on the infinite timeline. Can be negative or larger than maxTime
+
+      this .engine .registerJsonPointer (
+         `/animations/${animations .length}/extensions/KHR_interactivity/virtualPlayhead`,
+         (path) =>
+         {
+            const
+               parts     = path .split ("/"),
+               index     = parseInt (parts [2]),
+               animation = animations [index],
+               browser   = this .getBrowser ();
+
+            return [animation ? browser .getCurrentTime () - animation .startTime : NaN];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+   },
    set_over__ (nodeIndex, over)
    {
       console .log ("set_over__", nodeIndex, over .getValue ());
@@ -141,6 +243,17 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          return;
 
       this .engine .select (nodeIndex);
+   },
+   getWorld ()
+   {
+      return this .world ??= (() =>
+      {
+         const animations = this ._animations;
+
+         return {
+            animations: Array .from (animations, () => { return { }; }),
+         };
+      })();
    },
    startAnimation (animationIndex, startTime, endTime, speed, callback)
    {
