@@ -2516,9 +2516,7 @@ function eventsProcessed ()
 
                this .addAnimationPointerAlias (touchSensorNode, "hoverable", "enabled");
 
-               if (this .behaviorEngine)
-                  this .behaviorEngine ._hoverability .push (touchSensorNode);
-
+               this .behaviorEngine ?._hoverability .push (touchSensorNode);
                break;
             }
             case "KHR_node_selectability":
@@ -2540,9 +2538,7 @@ function eventsProcessed ()
 
                this .addAnimationPointerAlias (touchSensorNode, "selectable", "enabled");
 
-               if (this .behaviorEngine)
-                  this .behaviorEngine ._selectability .push (touchSensorNode);
-
+               this .behaviorEngine ?._selectability .push (touchSensorNode);
                break;
             }
             case "KHR_node_visibility":
