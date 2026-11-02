@@ -256,7 +256,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       return this .world ??= (() =>
       {
          return {
-            animations: this .animations .map (() => undefined),
+            animations: new Array (this .animations .length),
          };
       })();
    },
