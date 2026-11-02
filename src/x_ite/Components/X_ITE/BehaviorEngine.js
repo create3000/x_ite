@@ -21,6 +21,7 @@ function BehaviorEngine (executionContext)
 
    this .hoverabilityNodes  = [ ];
    this .selectabilityNodes = [ ];
+   this .animations         = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode .prototype),
@@ -129,12 +130,22 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    set_animations__ ()
    {
-      const animations = this ._animations;
+      this .animations .length = 0;
+
+      for (const node of this ._animations)
+      {
+         const animation = X3DCast (X3DConstants .TimeSensor, node);
+
+         if (animation)
+            this .animations .push (node);
+      }
+
+      const numAnimations = this .animations .length;
 
       this .world = null;
 
       this .engine .registerJsonPointer (
-         `/animations/${animations .length}`,
+         `/animations/${numAnimations}`,
          (path) => [path],
          Function .prototype,
          "ref",
@@ -142,13 +153,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       );
 
       this .engine .registerJsonPointer (
-         `/animations/${animations .length}/extensions/KHR_interactivity/isPlaying`,
+         `/animations/${numAnimations}/extensions/KHR_interactivity/isPlaying`,
          (path) =>
          {
             const
                parts     = path .split ("/"),
                index     = parseInt (parts [2]),
-               animation = animations [index];
+               animation = this .animations [index];
 
             return [!! animation ?.isActive];
          },
@@ -158,29 +169,21 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       );
 
       this .engine .registerJsonPointer (
-         `/animations/${animations .length}/extensions/KHR_interactivity/minTime`,
-         (path) =>
-         {
-            const
-               parts     = path .split ("/"),
-               index     = parseInt (parts [2]),
-               animation = animations [index];
-
-            return [0];
-         },
+         `/animations/${numAnimations}/extensions/KHR_interactivity/minTime`,
+         () => [0],
          Function .prototype,
          "float",
          true
       );
 
       this .engine .registerJsonPointer (
-         `/animations/${animations .length}/extensions/KHR_interactivity/maxTime`,
+         `/animations/${numAnimations}/extensions/KHR_interactivity/maxTime`,
          (path) =>
          {
             const
                parts     = path .split ("/"),
                index     = parseInt (parts [2]),
-               animation = animations [index];
+               animation = this .animations [index];
 
             return [animation ?.cycleInterval ?? 0];
          },
@@ -192,13 +195,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // The playhead returns a number between 0 and maxTime
 
       this .engine .registerJsonPointer (
-         `/animations/${animations .length}/extensions/KHR_interactivity/playhead`,
+         `/animations/${numAnimations}/extensions/KHR_interactivity/playhead`,
          (path) =>
          {
             const
                parts     = path .split ("/"),
                index     = parseInt (parts [2]),
-               animation = animations [index];
+               animation = this .animations [index];
 
             return [animation ? animation .cycleInterval * animation .fraction_changed : NaN];
          },
@@ -210,13 +213,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // The virtual playhead return the current time on the infinite timeline. Can be negative or larger than maxTime
 
       this .engine .registerJsonPointer (
-         `/animations/${animations .length}/extensions/KHR_interactivity/virtualPlayhead`,
+         `/animations/${numAnimations}/extensions/KHR_interactivity/virtualPlayhead`,
          (path) =>
          {
             const
                parts     = path .split ("/"),
                index     = parseInt (parts [2]),
-               animation = animations [index],
+               animation = this .animations [index],
                browser   = this .getBrowser ();
 
             return [animation ? browser .getCurrentTime () - animation .startTime : NaN];
@@ -228,8 +231,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    set_over__ (nodeIndex, over)
    {
-      console .log ("set_over__", nodeIndex, over .getValue ());
-
       if (nodeIndex < 0)
          return;
 
@@ -248,30 +249,66 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       return this .world ??= (() =>
       {
-         const animations = this ._animations;
-
          return {
-            animations: Array .from (animations, () => { return { }; }),
+            animations: this .animations .map (() => { return { }; }),
          };
       })();
    },
-   startAnimation (animationIndex, startTime, endTime, speed, callback)
+   startAnimation (index, startTime, stopTime, speed, callback)
    {
-      // callback: callback to run when the animation ends.
-      void callback;
+      const animation = this .animations [index];
 
-      console .log ("startAnimation", animationIndex, startTime, endTime, speed);
-   },
-   stopAnimation (animationIndex)
-   {
-      console .log ("stopAnimation", animationIndex);
-   },
-   stopAnimationAt (animationIndex, stopTime, callback)
-   {
-      // callback: callback to run when the animation ends.
-      void callback;
+      if (!animation)
+         return;
 
-      console .log ("stopAnimationAt", animationIndex, stopTime);
+      const
+         currentTime = this .getBrowser () .getCurrentTime (),
+         key         = Symbol ();
+
+      animation .startTime = currentTime + startTime;
+      animation .stopTime  = currentTime + stopTime;
+
+      animation .addFieldCallback (key, "isActive", value =>
+      {
+         if (value)
+            return;
+
+         animation .removeFieldCallback (key, "isActive");
+         callback ();
+      });
+   },
+   stopAnimation (index)
+   {
+      const animation = this .animations [index];
+
+      if (!animation)
+         return;
+
+      const currentTime = this .getBrowser () .getCurrentTime ();
+
+      animation .stopTime = currentTime;
+   },
+   stopAnimationAt (index, stopTime, callback)
+   {
+      const animation = this .animations [index];
+
+      if (!animation)
+         return;
+
+      const
+         currentTime = this .getBrowser () .getCurrentTime (),
+         key         = Symbol ();
+
+      animation .stopTime = currentTime + stopTime;
+
+      animation .addFieldCallback (key, "isActive", value =>
+      {
+         if (value)
+            return;
+
+         animation .removeFieldCallback (key, "isActive");
+         callback ();
+      });
    },
 });
 
