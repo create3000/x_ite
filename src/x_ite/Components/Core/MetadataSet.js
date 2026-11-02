@@ -33,7 +33,7 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
    {
       return this ._value .find (node => node .name === name);
    },
-   setMetaValue (name, value)
+   setMetaValue (name, reference, value)
    {
       if (!Array .isArray (value))
          value = [value .valueOf ()];
@@ -42,28 +42,28 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
       {
          case "boolean":
          {
-            this .getMetadataObject ("MetadataBoolean", name, true) .value = value;
+            this .getMetadataObject ("MetadataBoolean", name, reference, true) .value = value;
             return;
          }
          case "number":
          case "double":
          {
-            this .getMetadataObject ("MetadataDouble", name, true) .value = value;
+            this .getMetadataObject ("MetadataDouble", name, reference, true) .value = value;
             break;
          }
          case "float":
          {
-            this .getMetadataObject ("MetadataFloat", name, true) .value = value;
+            this .getMetadataObject ("MetadataFloat", name, reference, true) .value = value;
             break;
          }
          case "integer":
          {
-            this .getMetadataObject ("MetadataInteger", name, true) .value = value;
+            this .getMetadataObject ("MetadataInteger", name, reference, true) .value = value;
             break;
          }
          case "string":
          {
-            this .getMetadataObject ("MetadataString", name, true) .value = value;
+            this .getMetadataObject ("MetadataString", name, reference, true) .value = value;
             return;
          }
       }
@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
 
       this ._value .splice (index, 1);
    },
-   getMetadataObject (typeName, name, create = false)
+   getMetadataObject (typeName, name, reference, create = false)
    {
       let metadata = this .getMetaValue (name);
 
@@ -90,11 +90,13 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
       if (metadata)
          this .removeMetaValue (name);
 
-      metadata = this .getExecutionContext () .createNode (typeName);
+      const executionContext = this .getExecutionContext ();
 
-      this .getExecutionContext () .addNamedNode (this .getExecutionContext () .getUniqueName (name), metadata);
+      metadata = executionContext .createNode (typeName);
 
-      metadata .reference = this .getBrowser () .getBrowserOption ("MetadataReference");
+      executionContext .addNamedNode (executionContext .getUniqueName (name), metadata);
+
+      metadata .reference = reference;
       metadata .name      = name;
 
       this ._value .push (metadata);

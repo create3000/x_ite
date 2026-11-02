@@ -432,7 +432,6 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer",       new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "MaximumFrameRate",             new Fields .SFDouble (80)),
          // A string, which is set to the *reference* field of metadata nodes, when they are created.
-         new X3DFieldDefinition (X3DConstants .inputOutput, "MetadataReference",            new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",                new Fields .SFInt32 (4)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Mute",                         new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Notifications",                new Fields .SFBool (true)),
