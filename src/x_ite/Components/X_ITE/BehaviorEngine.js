@@ -336,7 +336,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                case X3DConstants .SFRotation:
                   field .setQuaternion (new Fields .SFQuaternion (... value));
                   break;
-               default:
+               default: // SFScalar
                   field .setValue (value [0]);
                   break;
             }
