@@ -65,8 +65,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .engine .stopAnimation   = (... args) => this .stopAnimation (... args);
       this .engine .stopAnimationAt = (... args) => this .stopAnimationAt (... args);
 
-      console .log (this .engine);
-
       // Events
 
       this .getLive () .addInterest ("set_enabled__", this);
@@ -293,6 +291,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          path,
          field .isOutput () || field .isInitializable () ? (path) =>
          {
+            console .log ("get", path);
+
             const
                node      = this .nodes .get (path),
                field     = node .getField (GLTFPointerAliases .getAlias (path, node)),
@@ -312,6 +312,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                node      = this .nodes .get (path),
                field     = node .getField (GLTFPointerAliases .getAlias (path, node)),
                baseColor = GLTFPointerAliases .isBaseColor (node, field);
+
+            console .log ("set", path, field .getName (), value);
 
             if (baseColor)
                node ._transparency = value [3];
@@ -337,7 +339,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   field .setQuaternion (new Fields .SFQuaternion (... value));
                   break;
                default: // SFScalar
-                  field .setValue (value [0]);
+                  field .setValue (value);
                   break;
             }
          } : Function .prototype,
