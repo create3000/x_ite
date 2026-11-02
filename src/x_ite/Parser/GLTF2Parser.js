@@ -515,9 +515,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(node && field))
          return false;
 
-      const path = pointer .replace (/\/[^/]+$/, "");
+      const
+         path  = pointer .replace (/\/[^/]+$/, ""),
+         value = node .getMetaData (`Interactivity/path`, new Fields .MFString ());
 
-      node .setMetaData (`Interactivity/path`, URLs .getProviderURL (), new Fields .MFString (path));
+      value .push (path);
+      node .setMetaData (`Interactivity/path`, URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
 
       this .behaviorEngine ._nodes .push (node);
 
