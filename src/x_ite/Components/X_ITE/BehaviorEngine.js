@@ -19,7 +19,8 @@ function BehaviorEngine (executionContext)
 
    // Private properties
 
-   this .touchSensorNodes = [ ];
+   this .hoverabilityNodes  = [ ];
+   this .selectabilityNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode .prototype),
@@ -44,13 +45,16 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       this .getLive () .addInterest ("set_enabled__", this);
 
-      this ._enabled      .addInterest ("set_enabled__",      this);
-      this ._graph        .addInterest ("set_graph__",        this);
-      this ._graphs       .addInterest ("set_graph__",        this);
-      this ._touchSensors .addInterest ("set_touchSensors__", this);
+      this ._enabled       .addInterest ("set_enabled__",       this);
+      this ._graph         .addInterest ("set_graph__",         this);
+      this ._graphs        .addInterest ("set_graph__",         this);
+      this ._hoverability  .addInterest ("set_hoverability__",  this);
+      this ._selectability .addInterest ("set_selectability__", this);
 
       this .set_enabled__ ();
       this .set_graph__ ();
+      this .set_hoverability__ ();
+      this .set_selectability__ ();
    },
    set_enabled__ ()
    {
@@ -76,32 +80,48 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          this .engine .loadBehaveGraph ({ }, false);
       }
    },
-   set_touchSensors__ ()
+   set_hoverability__ ()
    {
-      for (const touchSensorNode of this .touchSensorNodes)
+      for (const hoverabilityNode of this .hoverabilityNodes)
+         hoverabilityNode ._isOver .removeInterest ("set_over__", this);
+
+      this .hoverabilityNodes .length = 0;
+
+      for (const node of this ._hoverability)
       {
-         touchSensorNode ._isOver    .removeInterest ("set_over__",      this);
-         touchSensorNode ._touchTime .removeInterest ("set_touchTime__", this);
+         const hoverabilityNode = X3DCast (X3DConstants .TouchSensor, node);
+
+         if (hoverabilityNode)
+            this .hoverabilityNodes .push (hoverabilityNode);
       }
 
-      this .touchSensorNodes .length = 0;
-
-      for (const node of this ._touchSensors)
+      for (const hoverabilityNode of this .hoverabilityNodes)
       {
-         const touchSensorNode = X3DCast (X3DConstants .TouchSensor, node);
+         const hoverIndex = +hoverabilityNode .getMetaData ("KHR_node_hoverability/node", new Fields .SFInt32 (-1));
 
-         if (touchSensorNode)
-            this .touchSensorNodes .push (touchSensorNode);
+         hoverabilityNode ._isOver .addInterest ("set_over__", this, hoverIndex);
+      }
+   },
+   set_selectability__ ()
+   {
+      for (const selectabilityNode of this .selectabilityNodes)
+         selectabilityNode ._touchTime .removeInterest ("set_touchTime__", this);
+
+      this .selectabilityNodes .length = 0;
+
+      for (const node of this ._selectability)
+      {
+         const selectabilityNode = X3DCast (X3DConstants .TouchSensor, node);
+
+         if (selectabilityNode)
+            this .selectabilityNodes .push (selectabilityNode);
       }
 
-      for (const touchSensorNode of this .touchSensorNodes)
+      for (const selectabilityNode of this .selectabilityNodes)
       {
-         const
-            hoverIndex  = +touchSensorNode .getMetaData ("KHR_node_hoverability/node",  new Fields .SFInt32 (-1)),
-            selectIndex = +touchSensorNode .getMetaData ("KHR_node_selectability/node", new Fields .SFInt32 (-1));
+         const selectIndex = +selectabilityNode .getMetaData ("KHR_node_selectability/node", new Fields .SFInt32 (-1));
 
-         touchSensorNode ._isOver    .addInterest ("set_over__",      this, hoverIndex);
-         touchSensorNode ._touchTime .addInterest ("set_touchTime__", this, selectIndex);
+         selectabilityNode ._touchTime .addInterest ("set_touchTime__", this, selectIndex);
       }
    },
    set_over__ (nodeIndex, over)
@@ -146,12 +166,13 @@ Object .defineProperties (BehaviorEngine,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",      new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",        new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",       new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "touchSensors", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "animations",   new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",         new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",        new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "hoverability",  new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "selectability", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "animations",    new Fields .MFNode ()),
       ]),
       enumerable: true,
    },

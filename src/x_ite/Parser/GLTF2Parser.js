@@ -2498,16 +2498,14 @@ function eventsProcessed ()
                break;
             }
             case "KHR_node_hoverability":
-            case "KHR_node_selectability":
-            {
+         {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_hoverability
-               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_selectability
 
                const
                   scene           = this .getScene (),
                   touchSensorNode = scene .createNode ("TouchSensor", false);
 
-               touchSensorNode ._enabled = extension .hoverable ?? extension .selectable ?? true;
+               touchSensorNode ._enabled = extension .hoverable ?? true;
 
                touchSensorNode .setup ();
                touchSensorNode .setMetaData (`${key}/node`, new Fields .SFInt32 (index));
@@ -2516,13 +2514,34 @@ function eventsProcessed ()
 
                extension .pointers = [touchSensorNode];
 
-               if (key === "KHR_node_hoverability")
-                  this .addAnimationPointerAlias (touchSensorNode, "hoverable", "enabled");
-               else if (key === "KHR_node_selectability")
-                  this .addAnimationPointerAlias (touchSensorNode, "selectable", "enabled");
+               this .addAnimationPointerAlias (touchSensorNode, "hoverable", "enabled");
 
                if (this .behaviorEngine)
-                  this .behaviorEngine ._touchSensors .push (touchSensorNode);
+                  this .behaviorEngine ._hoverability .push (touchSensorNode);
+
+               break;
+            }
+            case "KHR_node_selectability":
+            {
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_selectability
+
+               const
+                  scene           = this .getScene (),
+                  touchSensorNode = scene .createNode ("TouchSensor", false);
+
+               touchSensorNode ._enabled = extension .selectable ?? true;
+
+               touchSensorNode .setup ();
+               touchSensorNode .setMetaData (`${key}/node`, new Fields .SFInt32 (index));
+
+               node .transformNode ._children .push (touchSensorNode);
+
+               extension .pointers = [touchSensorNode];
+
+               this .addAnimationPointerAlias (touchSensorNode, "selectable", "enabled");
+
+               if (this .behaviorEngine)
+                  this .behaviorEngine ._selectability .push (touchSensorNode);
 
                break;
             }
