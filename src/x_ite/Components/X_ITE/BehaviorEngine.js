@@ -136,16 +136,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .animations .length = 0;
 
       for (const node of this ._animations)
-      {
-         const animation = X3DCast (X3DConstants .TimeSensor, node);
+         this .animations .push (X3DCast (X3DConstants .TimeSensor, node) && node);
 
-         if (animation)
-            this .animations .push (node);
-      }
-
-      const numAnimations = this .animations .length;
+      // Register JSON Pointers
 
       this .world = null;
+
+      const numAnimations = this .animations .length;
 
       this .engine .registerJsonPointer (
          `/animations/${numAnimations}`,
