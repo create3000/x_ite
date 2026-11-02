@@ -305,7 +305,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                default:
                   return baseColor ? [... field, node ._transparency .getValue ()] : [... field];
             }
-         } : Function .prototype,
+         } : () => [ ],
          field .isInput () || field .isInitializable () ? (path, value) =>
          {
             const
