@@ -30,8 +30,7 @@ function getBaseURI (element)
 
 function X3DNetworkingContext ()
 {
-   this .addChildObjects (X3DConstants .inputOutput, "reference", new Fields .MFString (),
-                          X3DConstants .outputOnly,  "loadCount", new Fields .SFInt32 ());
+   this .addChildObjects (X3DConstants .outputOnly, "loadCount", new Fields .SFInt32 ());
 
    this [_baseURL]        = getBaseURI (this .getElement ());
    this [_browserLoading] = false;

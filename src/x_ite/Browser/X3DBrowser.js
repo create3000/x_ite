@@ -1010,12 +1010,6 @@ Object .defineProperties (X3DBrowser .prototype,
       get: X3DBrowser .prototype .getProviderURL,
       enumerable: false,
    },
-   reference:
-   {
-      get () { return this ._reference; },
-      set (value) { this ._reference = value; },
-      enumerable: true,
-   },
    currentFrameRate:
    {
       get: X3DBrowser .prototype .getCurrentFrameRate,
