@@ -492,37 +492,36 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
 
-      const addNode = (pointer) =>
-      {
-         const [node, field] = this .getAnimationPointer (pointer);
-
-         if (!(node && field))
-            return false;
-
-         const path = pointer .replace (/\/[^/]+$/, "");
-
-         node .setMetaData (`Interactivity/path`, URLs .getProviderURL (), new Fields .MFString (path));
-
-         this .behaviorEngine ._nodes .push (node);
-
-         return true;
-      };
-
       for (const string of pointers)
       {
          if (string .match (/\{.*?\}/))
          {
             for (let i = 0;; ++ i)
             {
-               if (!addNode (string .replace (/\{.*?\}/, i)))
+               if (!this .addBehaviorNode (string .replace (/\{.*?\}/, i)))
                   break;
             }
          }
          else
          {
-            addNode (string);
+            this .addBehaviorNode (string);
          }
       }
+   },
+   addBehaviorNode (pointer)
+   {
+      const [node, field] = this .getAnimationPointer (pointer);
+
+      if (!(node && field))
+         return false;
+
+      const path = pointer .replace (/\/[^/]+$/, "");
+
+      node .setMetaData (`Interactivity/path`, URLs .getProviderURL (), new Fields .MFString (path));
+
+      this .behaviorEngine ._nodes .push (node);
+
+      return true;
    },
    khrLightsPunctualObject (KHR_lights_punctual)
    {
