@@ -458,8 +458,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       behaviorEngine ._graph  = KHR_interactivity .graph;
       behaviorEngine ._graphs = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
 
-      behaviorEngine .setup ();
-
       this .behaviorEngine = behaviorEngine;
 
       this .behavior = [
@@ -507,6 +505,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             this .addBehaviorNode (string);
          }
       }
+
+      this .behaviorEngine .setup ();
    },
    addBehaviorNode (pointer)
    {
@@ -515,12 +515,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(node && field))
          return false;
 
-      const
-         path  = pointer .replace (/\/[^/]+$/, ""),
-         value = node .getMetaData (`Interactivity/path`, new Fields .MFString ());
+      const value = node .getMetaData (`Interactivity/pointer`, new Fields .MFString ());
 
-      value .push (path);
-      node .setMetaData (`Interactivity/path`, URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
+      value .push (pointer);
+      node .setMetaData (`Interactivity/pointer`, URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
 
       this .behaviorEngine ._nodes .push (node);
       return true;

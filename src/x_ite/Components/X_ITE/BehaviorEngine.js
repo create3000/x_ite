@@ -7,6 +7,22 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
 
+// bool: 1,
+// int: 1,
+// float: 1,
+// float2: 2,
+// float3: 3,
+// float4: 4,
+// float2x2: 4,
+// float3x3: 9,
+// float4x4: 16,
+// ref: 1
+const Types = new Map ([
+   [X3DConstants .SFBool,      "bool"],
+   [X3DConstants .SFColor,     "float4"],
+   [X3DConstants .SFColorRGBA, "float4"],
+]);
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -57,11 +73,11 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this ._nodes         .addInterest ("set_nodes__",         this);
 
       this .set_enabled__ ();
-      this .set_graph__ ();
       this .set_hoverability__ ();
       this .set_selectability__ ();
       this .set_animations__ ();
       this .set_nodes__ ();
+      this .set_graph__ ();
    },
    set_enabled__ ()
    {
@@ -231,15 +247,73 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const node of this ._nodes)
       {
-         const x3dnode = X3DCast (X3DConstants .X3DNode, node);
+         const _node = X3DCast (X3DConstants .X3DNode, node);
 
-         if (x3dnode)
-         {
-            const pointer = x3dnode .getMetaData ("Interactivity/pointer", new Fields .SFString ()) .getValue ();
+         if (!_node)
+            continue;
 
-            this .nodes .set (pointer, x3dnode);
-         }
+         const paths = _node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
+
+         for (const path of paths)
+            this .nodes .set (path, _node);
       }
+
+      this .engine .registerJsonPointer (
+         "/materials.length",
+         () => [Array .from (this .nodes .values ())
+            .filter (node => node .getType () .includes (X3DConstants .X3DMaterialNode) .length)],
+         Function .prototype,
+         "int",
+         true
+      );
+
+      for (const [pointer, node] of this .nodes)
+         this .registerJSONPointer (pointer, node);
+   },
+   registerJSONPointer (path, node)
+   {
+      // Register getter and setter for the property.
+
+      const
+         field = node .getField (this .getFieldName (path)),
+         type  = Types .get (field .getType ());
+
+      if (!type)
+         return;
+
+      this .engine .registerJsonPointer (
+         path,
+         (path) =>
+         {
+            const
+               node  = this .nodes .get (path),
+               field = node .getField (this .getFieldName (path));
+
+            return [... field];
+         },
+         (path, value) =>
+         {
+            const
+               node  = this .nodes .get (path),
+               field = node .getField (this .getFieldName (path));
+
+            switch (field .getType ())
+            {
+               case X3DConstants .SFColor:
+                  field .assign (new Fields .SFColor (... value));
+                  break;
+               default:
+                  field .setValue (value [0]);
+                  break;
+            }
+         },
+         type,
+         false
+      );
+   },
+   getFieldName (path)
+   {
+      return path .match (/([^/]+)$/) [1] .replace (/(?:Factor$)/, "");
    },
    set_over__ (index, over)
    {
@@ -247,8 +321,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    set_touchTime__ (index)
    {
-      console .log ("set_touchTime__", index);
-
       this .engine .select (index);
    },
    getWorld ()
