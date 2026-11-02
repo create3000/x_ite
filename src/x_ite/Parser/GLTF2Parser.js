@@ -523,7 +523,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       node .setMetaData (`Interactivity/path`, URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
 
       this .behaviorEngine ._nodes .push (node);
-
       return true;
    },
    khrLightsPunctualObject (KHR_lights_punctual)
