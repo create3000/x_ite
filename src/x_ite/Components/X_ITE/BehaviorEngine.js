@@ -22,6 +22,7 @@ function BehaviorEngine (executionContext)
    this .hoverabilityNodes  = [ ];
    this .selectabilityNodes = [ ];
    this .animations         = [ ];
+   this .nodes              = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode .prototype),
@@ -53,12 +54,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this ._hoverability  .addInterest ("set_hoverability__",  this);
       this ._selectability .addInterest ("set_selectability__", this);
       this ._animations    .addInterest ("set_animations__",    this);
+      this ._nodes         .addInterest ("set_nodes__",         this);
 
       this .set_enabled__ ();
       this .set_graph__ ();
       this .set_hoverability__ ();
       this .set_selectability__ ();
       this .set_animations__ ();
+      this .set_nodes__ ();
    },
    set_enabled__ ()
    {
@@ -157,8 +160,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (path) =>
          {
             const
-               parts     = path .split ("/"),
-               index     = parseInt (parts [2]),
+               index     = +path .match (/\/animations\/(\d+)\//) [1],
                animation = this .animations [index];
 
             return [!! animation ?.isActive];
@@ -181,8 +183,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (path) =>
          {
             const
-               parts     = path .split ("/"),
-               index     = parseInt (parts [2]),
+               index     = +path .match (/\/animations\/(\d+)\//) [1],
                animation = this .animations [index];
 
             return [animation ?.cycleInterval ?? 0];
@@ -199,8 +200,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (path) =>
          {
             const
-               parts     = path .split ("/"),
-               index     = parseInt (parts [2]),
+               index     = +path .match (/\/animations\/(\d+)\//) [1],
                animation = this .animations [index];
 
             return [animation ? animation .cycleInterval * animation .fraction_changed : NaN];
@@ -217,8 +217,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (path) =>
          {
             const
-               parts     = path .split ("/"),
-               index     = parseInt (parts [2]),
+               index     = +path .match (/\/animations\/(\d+)\//) [1],
                animation = this .animations [index],
                browser   = this .getBrowser ();
 
@@ -228,6 +227,22 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          "float",
          true
       );
+   },
+   set_nodes__ ()
+   {
+      this .nodes .clear ();
+
+      for (const node of this ._nodes)
+      {
+         const x3dnode = X3DCast (X3DConstants .X3DNode, node);
+
+         if (x3dnode)
+         {
+            const pointer = x3dnode .getMetaData ("Interactivity/pointer", new Fields .SFString ()) .getValue ();
+
+            this .nodes .set (pointer, x3dnode);
+         }
+      }
    },
    set_over__ (nodeIndex, over)
    {
