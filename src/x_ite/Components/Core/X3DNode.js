@@ -430,7 +430,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       return metadataObject ? Array .from (metadataObject .value) : [ ];
    },
-   setMetaData (path, value)
+   setMetaData (path, reference, value)
    {
       const names = path .split ("/");
 
@@ -439,7 +439,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       const
          last        = names .pop (),
-         metadataSet = this .getMetadataSet (names, true);
+         metadataSet = this .getMetadataSet (names, reference, true);
 
       if (value instanceof X3DField)
       {
@@ -531,7 +531,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          value .type = "double";
       }
 
-      metadataSet .getValue () .setMetaValue (last, value);
+      metadataSet .getValue () .setMetaValue (last, reference, value);
 
       this .processMetaDataCallback (path);
    },
@@ -560,7 +560,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (removeMetaData (this .getMetadataSet ([names .shift ()]), names))
          this ._metadata = null;
    },
-   getMetadataSet (names, create = false)
+   getMetadataSet (names, reference, create = false)
    {
       const name = names .shift ();
 
@@ -578,12 +578,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          executionContext .addNamedNode (executionContext .getUniqueName (name), metadataSet);
 
-         metadataSet .reference = this .getBrowser () .reference .at (-1) ?? "";
+         metadataSet .reference = reference;
          metadataSet .name      = name;
       }
 
       for (const name of names)
-         metadataSet = metadataSet .getValue () .getMetadataObject ("MetadataSet", name, create);
+         metadataSet = metadataSet .getValue () .getMetadataObject ("MetadataSet", name, reference, create);
 
       return metadataSet;
    },
