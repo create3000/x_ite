@@ -166,6 +166,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .skinsBBox       ();
       this .animationsArray (glTF .animations);
 
+      this .behaviorNodes (glTF .extensions ?.KHR_interactivity);
       this .viewpointsCenterOfRotation (scene);
       this .optimizeSceneGraph (scene .getRootNodes ());
 
@@ -466,6 +467,62 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             node: behaviorEngine,
          },
       ];
+   },
+   behaviorNodes (KHR_interactivity)
+   {
+      if (!this .behavior)
+         return;
+
+      const pointers = new Set ();
+
+      for (const graph of KHR_interactivity .graphs)
+      {
+         if (!(graph .nodes instanceof Array))
+            continue;
+
+         for (const node of graph .nodes)
+         {
+            const value = node ?.configuration ?.pointer ?.value;
+
+            if (!(value instanceof Array))
+               continue;
+
+            for (const string of value)
+               pointers .add (string);
+         }
+      }
+
+      const addNode = (pointer) =>
+      {
+         const [node, field] = this .getAnimationPointer (pointer);
+
+         if (!(node && field))
+            return false;
+
+         const path = pointer .replace (/\/[^/]+$/, "");
+
+         node .setMetaData (`Interactivity/path`, URLs .getProviderURL (), new Fields .MFString (path));
+
+         this .behaviorEngine ._nodes .push (node);
+
+         return true;
+      };
+
+      for (const string of pointers)
+      {
+         if (string .match (/\{.*?\}/))
+         {
+            for (let i = 0;; ++ i)
+            {
+               if (!addNode (string .replace (/\{.*?\}/, i)))
+                  break;
+            }
+         }
+         else
+         {
+            addNode (string);
+         }
+      }
    },
    khrLightsPunctualObject (KHR_lights_punctual)
    {

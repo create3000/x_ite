@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (path) =>
          {
             const
-               index     = +path .match (/\/animations\/(\d+)\//) [1],
+               index     = +path .match (/^\/animations\/(\d+)\//) [1],
                animation = this .animations [index];
 
             return [!! animation ?.isActive];
@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (path) =>
          {
             const
-               index     = +path .match (/\/animations\/(\d+)\//) [1],
+               index     = +path .match (/^\/animations\/(\d+)\//) [1],
                animation = this .animations [index];
 
             return [animation ?.cycleInterval ?? 0];
@@ -197,7 +197,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (path) =>
          {
             const
-               index     = +path .match (/\/animations\/(\d+)\//) [1],
+               index     = +path .match (/^\/animations\/(\d+)\//) [1],
                animation = this .animations [index];
 
             return [animation ? animation .cycleInterval * animation .fraction_changed : NaN];
@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (path) =>
          {
             const
-               index     = +path .match (/\/animations\/(\d+)\//) [1],
+               index     = +path .match (/^\/animations\/(\d+)\//) [1],
                animation = this .animations [index],
                browser   = this .getBrowser ();
 
