@@ -2508,7 +2508,7 @@ function eventsProcessed ()
                touchSensorNode ._enabled = extension .hoverable ?? true;
 
                touchSensorNode .setup ();
-               touchSensorNode .setMetaData ("glTF/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
+               touchSensorNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
 
                node .transformNode ._children .push (touchSensorNode);
 
@@ -2530,7 +2530,7 @@ function eventsProcessed ()
                touchSensorNode ._enabled = extension .selectable ?? true;
 
                touchSensorNode .setup ();
-               touchSensorNode .setMetaData ("glTF/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
+               touchSensorNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
 
                node .transformNode ._children .push (touchSensorNode);
 
@@ -2933,7 +2933,7 @@ function eventsProcessed ()
       switchNode ._visible     = false;
 
       switchNode .setup ();
-      switchNode .setMetaData ("glTF/materialVariants", URLs .getProviderURL (), Fields .MFString .fromArray (names));
+      switchNode .setMetaData ("Interactivity/materialVariants", URLs .getProviderURL (), Fields .MFString .fromArray (names));
 
       for (const variantNode of this .materialVariantNodes)
          scene .addRoute (switchNode, "whichChoice", variantNode, "whichChoice");

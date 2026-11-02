@@ -1155,11 +1155,11 @@ class SampleViewer
 
       $("<option></option>")
          .prop ("selected", true)
-         .val (switchNode .getValue () .getMetaData ("glTF/materialVariants") .length)
+         .val (switchNode .getValue () .getMetaData ("Interactivity/materialVariants") .length)
          .text ("None")
          .appendTo (select);
 
-      for (const [i, name] of switchNode .getValue () .getMetaData ("glTF/materialVariants") .entries ())
+      for (const [i, name] of switchNode .getValue () .getMetaData ("Interactivity/materialVariants") .entries ())
       {
          $("<option></option>")
             .val (i)

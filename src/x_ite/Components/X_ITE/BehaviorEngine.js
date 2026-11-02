@@ -104,7 +104,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const hoverabilityNode of this .hoverabilityNodes)
       {
-         const index = +hoverabilityNode .getMetaData ("glTF/node", new Fields .SFInt32 (-1));
+         const index = +hoverabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
          hoverabilityNode ._isOver .addInterest ("set_over__", this, index);
       }
@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const selectabilityNode of this .selectabilityNodes)
       {
-         const index = +selectabilityNode .getMetaData ("glTF/node", new Fields .SFInt32 (-1));
+         const index = +selectabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
          selectabilityNode ._touchTime .addInterest ("set_touchTime__", this, index);
       }
@@ -235,7 +235,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          if (x3dnode)
          {
-            const pointer = x3dnode .getMetaData ("glTF/pointer", new Fields .SFString ()) .getValue ();
+            const pointer = x3dnode .getMetaData ("Interactivity/pointer", new Fields .SFString ()) .getValue ();
 
             this .nodes .set (pointer, x3dnode);
          }
