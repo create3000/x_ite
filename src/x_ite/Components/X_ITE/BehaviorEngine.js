@@ -145,6 +145,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    startAnimation (animationIndex, startTime, endTime, speed, callback)
    {
       // callback: callback to run when the animation ends.
+      void callback;
 
       console .log ("startAnimation", animationIndex, startTime, endTime, speed);
    },
@@ -155,6 +156,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    stopAnimationAt (animationIndex, stopTime, callback)
    {
       // callback: callback to run when the animation ends.
+      void callback;
 
       console .log ("stopAnimationAt", animationIndex, stopTime);
    },
