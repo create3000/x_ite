@@ -2853,7 +2853,7 @@ function eventsProcessed ()
       switchNode ._visible     = false;
 
       switchNode .setup ();
-      switchNode .setMetaData ("MaterialVariants/names", new Fields .MFString (... names));
+      switchNode .setMetaData ("MaterialVariants/names", URLs .getProviderURL (), new Fields .MFString (... names));
 
       for (const variantNode of this .materialVariantNodes)
          scene .addRoute (switchNode, "whichChoice", variantNode, "whichChoice");
