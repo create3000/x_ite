@@ -2867,7 +2867,7 @@ function eventsProcessed ()
                node  = nodes [0];
 
             if (!node .getName ())
-               scene .addNamedNode (scene .getUniqueName (`Scene${index}`), node);
+               scene .addNamedNode (scene .getUniqueName (`Scene-${index}`), node);
 
             return node;
          }
@@ -2876,7 +2876,7 @@ function eventsProcessed ()
             const
                scene     = this .getScene (),
                groupNode = scene .createNode ("Group", false),
-               name      = this .sanitizeName (scene .name) || `Scene${index}`;
+               name      = this .sanitizeName (scene .name) || `Scene-${index}`;
 
             scene .addNamedNode (scene .getUniqueName (name), groupNode);
 
