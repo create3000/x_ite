@@ -2933,7 +2933,7 @@ function eventsProcessed ()
       switchNode ._visible     = false;
 
       switchNode .setup ();
-      switchNode .setMetaData ("glTF/MaterialVariants/names", URLs .getProviderURL (), Fields .MFString .fromArray (names));
+      switchNode .setMetaData ("glTF/materialVariants", URLs .getProviderURL (), Fields .MFString .fromArray (names));
 
       for (const variantNode of this .materialVariantNodes)
          scene .addRoute (switchNode, "whichChoice", variantNode, "whichChoice");
