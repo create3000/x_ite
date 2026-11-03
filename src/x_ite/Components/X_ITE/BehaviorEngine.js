@@ -7,6 +7,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import GLTFPointerAliases   from "../../Parser/GLTFPointerAliases.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
+import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 const Types = new Map ([
    [X3DConstants .SFBool,       "bool"],
@@ -279,7 +280,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       // Register getter and setter for the property.
 
-      const property = pointer .match (/\/nodes\/\d+\/([^/]+)$/) [1];
+      const property = pointer .match (/\/nodes\/\d+\/([^/]+)$/) ?.[1];
 
       if (property)
       {
@@ -295,7 +296,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   pointer,
                   (pointer) =>
                   {
-                     console .log ("get", pointer);
+                     if (DEVELOPMENT)
+                        console .log ("get", pointer);
 
                      const node = this .nodes .get (pointer);
 
@@ -323,7 +325,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          pointer,
          field .isReadable () ? (pointer) =>
          {
-            console .log ("get", pointer);
+            if (DEVELOPMENT)
+               console .log ("get", pointer);
 
             const
                node      = this .nodes .get (pointer),
@@ -345,7 +348,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
                baseColor = GLTFPointerAliases .isBaseColor (node, field);
 
-            console .log ("set", pointer, field .getName (), value);
+            if (DEVELOPMENT)
+               console .log ("set", pointer, field .getName (), value);
 
             if (baseColor)
                node ._transparency = value [3];
