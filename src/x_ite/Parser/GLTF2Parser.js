@@ -491,27 +491,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             if (!(value instanceof Array))
                continue;
 
-            for (const string of value)
-               pointers .add (string);
+            for (const pointer of value)
+               pointers .add (pointer);
          }
       }
 
       this .behaviorNodes = new Set ();
 
-      for (const string of pointers)
+      for (const pointer of pointers)
       {
-         const key = string .match (/^\/([^/]+)\/\{.*?\}/);
+         const key = pointer .match (/^\/([^/]+)\/\{.*?\}/);
 
          if (key)
          {
             const length = glTF [key [1]] ?.length ?? 0;
 
             for (let i = 0; i < length; ++ i)
-               this .addBehaviorNode (string .replace (/\{.*?\}/, i), this .behaviorNodes);
+               this .addBehaviorNode (pointer .replace (/\{.*?\}/, i), this .behaviorNodes);
          }
          else
          {
-            this .addBehaviorNode (string, this .behaviorNodes);
+            this .addBehaviorNode (pointer, this .behaviorNodes);
          }
       }
 
@@ -523,7 +523,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const [node, field] = this .getAnimationPointer (pointer);
 
       if (!(node && field))
-         return false;
+         return console .warn (`No node found for pointer "${pointer}".`);
 
       const value = node .getMetaData (`Interactivity/pointer`, new Fields .MFString ());
 
@@ -531,7 +531,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       node .setMetaData (`Interactivity/pointer`, URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
 
       nodes .add (node);
-      return true;
    },
    khrLightsPunctualObject (KHR_lights_punctual)
    {

@@ -128,6 +128,9 @@ Object .assign (X3DOptimizer .prototype,
       if (!this .combineGroupingNodes)
          return node;
 
+      if (node .metadata)
+         return node;
+
       if (node .getValue () .hasRoutes ())
          return node;
 
