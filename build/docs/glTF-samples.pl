@@ -48,14 +48,13 @@ sub glTF {
       @commerce = sort `find '$samples/3DC-Certification/models'  -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
       @models   = sort `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
       @assets   = sort `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
-      @interactivity = $folder eq "glTF-Test-Assets-Interactivity" ? sort `find '$samples/glTF-Test-Assets-Interactivity/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"` : ();
-      @files = (@commerce, @models, @assets, @interactivity);
+      @files = (@commerce, @models, @assets);
 
-      say "Found " . scalar @files . " $folder files ...";
+      push @files, sort `find '$samples/glTF-Test-Assets-Interactivity/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"` if $folder eq "glTF-Test-Assets-Interactivity";
 
       s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
       s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
-      s|/3DC-Certification/|/3DC-Certification/main/|     foreach @files;
+      s|/3DC-Certification/|/3DC-Certification/main/| foreach @files;
       s|/glTF-Test-Assets-Interactivity/|/glTF-Test-Assets-Interactivity/master/| foreach @files;
       s|$samples|| foreach @files;
 
