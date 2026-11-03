@@ -23,8 +23,10 @@ class GLTFPointerAliases
       switch (node .getTypeName ())
       {
          case "PhysicalMaterial":
-         case "SpecularGlossinessMaterial":
             return field .getName () === "baseColor";
+         case "SpecularGlossinessMaterial":
+         case "Material":
+            return field .getName () === "diffuseColor";
          case "UnlitMaterial":
             return field .getName () === "emissiveColor";
          default:
