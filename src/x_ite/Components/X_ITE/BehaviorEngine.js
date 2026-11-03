@@ -320,6 +320,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             switch (field .getType ())
             {
+               case X3DConstants .SFBool:
+               case X3DConstants .SFDouble:
+               case X3DConstants .SFFloat:
+               case X3DConstants .SFInt32:
+               case X3DConstants .SFTime:
+                  field .setValue (value);
+                  break;
                case X3DConstants .SFColor:
                case X3DConstants .SFColorRGBA:
                case X3DConstants .SFMatrix3d:
@@ -337,9 +344,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   break;
                case X3DConstants .SFRotation:
                   field .setQuaternion (new Fields .SFQuaternion (... value));
-                  break;
-               default: // SFScalar
-                  field .setValue (value);
                   break;
             }
          } : Function .prototype,
