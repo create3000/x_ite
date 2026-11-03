@@ -20,10 +20,10 @@ const handler =
 
             // Specification conform would be: `accessType & X3DConstants .outputOnly`.
             // However, we also allow read access to initializeOnly fields.
-            if (field .getAccessType () === X3DConstants .inputOnly)
-               return;
+            if (field .isReadable ())
+               return field .valueOf ();
 
-            return field .valueOf ();
+            return;
          }
       }
       catch
@@ -41,11 +41,13 @@ const handler =
                node  = target .getValue (),
                field = node ?.getField (key);
 
-            if (field .getAccessType () === X3DConstants .outputOnly)
-               return false;
+            if (field .isWritable ())
+            {
+               field .setValue (value);
+               return true;
+            }
 
-            field .setValue (value);
-            return true;
+            return false;
          }
       }
       catch
