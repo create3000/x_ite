@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .skinsBBox       ();
       this .animationsArray (glTF .animations);
 
-      this .behaviorNodes (glTF, glTF .extensions ?.KHR_interactivity);
+      this .addBehaviorNodes (glTF, glTF .extensions ?.KHR_interactivity);
       this .viewpointsCenterOfRotation (scene);
       this .optimizeSceneGraph (scene .getRootNodes ());
 
@@ -472,7 +472,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          },
       ];
    },
-   behaviorNodes (glTF, KHR_interactivity)
+   addBehaviorNodes (glTF, KHR_interactivity)
    {
       if (!this .behavior)
          return;
@@ -496,7 +496,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
 
-      const nodes = new Set ();
+      this .behaviorNodes = new Set ();
 
       for (const string of pointers)
       {
@@ -507,15 +507,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             const length = glTF [key [1]] ?.length ?? 0;
 
             for (let i = 0; i < length; ++ i)
-               this .addBehaviorNode (string .replace (/\{.*?\}/, i), nodes);
+               this .addBehaviorNode (string .replace (/\{.*?\}/, i), this .behaviorNodes);
          }
          else
          {
-            this .addBehaviorNode (string, nodes);
+            this .addBehaviorNode (string, this .behaviorNodes);
          }
       }
 
-      this .behaviorEngine ._nodes = Array .from (nodes);
+      this .behaviorEngine ._nodes = Array .from (this .behaviorNodes);
       this .behaviorEngine .setup ();
    },
    addBehaviorNode (pointer, nodes)
@@ -3113,7 +3113,7 @@ function eventsProcessed ()
 
       for (const scriptNode of scriptNodes)
       {
-         if (this .behaviorEngine ?._nodes .some (node => node .getValue () === scriptNode))
+         if (this .behaviorNodes ?.has (scriptNode))
             continue;
 
          if (scriptNode .getFields () .every (field => !field .getInputRoutes () .size))
