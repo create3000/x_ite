@@ -108,6 +108,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - AudioDestination
 - Background
 - BallJoint
+- BehaviorEngine
 - Billboard
 - BiquadFilter
 - BlendedVolumeStyle
