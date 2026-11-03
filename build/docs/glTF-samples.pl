@@ -48,12 +48,16 @@ sub glTF {
       @commerce = sort `find '$samples/3DC-Certification/models'  -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
       @models   = sort `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
       @assets   = sort `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
-      @files    = (@commerce, @models, @assets);
+      @interactivity = $folder eq "glTF-Test-Assets-Interactivity" ? sort `find '$samples/glTF-Test-Assets-Interactivity/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"` : ();
+      @files = (@commerce, @models, @assets, @interactivity);
+
+      say "Found " . scalar @files . " $folder files ...";
 
       s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
       s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
       s|/3DC-Certification/|/3DC-Certification/main/|     foreach @files;
-      s|$samples/|| foreach @files;
+      s|/glTF-Test-Assets-Interactivity/|/glTF-Test-Assets-Interactivity/master/| foreach @files;
+      s|$samples|| foreach @files;
 
       @files = grep { m|/$folder/|i } @files;
       @all   = (@all, @files);
@@ -64,7 +68,7 @@ sub glTF {
    foreach (@all)
    {
       chomp;
-      $string .= "   \"$khronos/$_\",\n";
+      $string .= "   \"$khronos$_\",\n";
    }
 
    $string .= "];\n";
@@ -82,6 +86,8 @@ system "git pull origin";
 $string = "";
 $string .= "// SAMPLES_BEGIN\n\n";
 $string .= glTF (["glTF"], ".gltf", "glTF");
+$string .= "\n";
+$string .= glTF (["glTF-Test-Assets-Interactivity"], ".gltf", "interactivity");
 $string .= "\n";
 $string .= glTF (["glTF-Binary"], ".glb", "glb");
 $string .= "\n";

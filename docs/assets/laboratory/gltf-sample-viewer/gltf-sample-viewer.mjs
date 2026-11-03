@@ -297,6 +297,25 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/XmpMetadataRoundedCube/glTF/XmpMetadataRoundedCube.gltf",
 ];
 
+const interactivity = [
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ABeautifulGameInteractivity/glTF/ABeautifulGameInteractivity.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ActiveCamera/glTF/ActiveCamera.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/BowShooting/glTF/BowShooting.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Calculator/glTF/Calculator.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ConstructionSite/glTF/ConstructionSite.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Events/glTF/Events.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Flocking/glTF/Flocking.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Ghost/glTF/ghost_v2.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/MagicBall/glTF/MagicBall.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/PerformanceTest/glTF/PerformanceTest.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/PhysicsMath/glTF/PhysicsMath.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Puzzle/glTF/PlaceOnClickPuzzle.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/SnailRace/glTF/SnailRace.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Sundial/glTF/Sundial.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/TrafficLight/glTF/TrafficLight.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/WhackAMole/glTF/WhackAMole.gltf",
+];
+
 const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalCubes/glTF-Binary/AnalyticalCubes.glb",
    "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalGrayscale/glTF-Binary/AnalyticalGrayscale.glb",
@@ -707,18 +726,19 @@ class SampleViewer
          background: false,
       });
 
-      this .createList ("glTF Sample Models",             glTF);
-      this .createList ("glb Sample Models",              glb);
-      this .createList ("glTF Embedded Sample Models",    embedded);
-      this .createList ("glTF Quantized Sample Models",   quantized);
-      this .createList ("glTF Draco Sample Models",       draco);
-      this .createList ("glTF Meshopt Sample Models",     meshopt);
-      this .createList ("glTF Meshopt EXT Sample Models", meshoptEXT);
-      this .createList ("glTF IBL Sample Models",         ibl);
-      this .createList ("glTF WebP Sample Models",        webp);
-      this .createList ("glTF KTX2 Sample Models",        ktx);
-      this .createList ("glTF JPG/PNG Sample Models",     jpg);
-      this .createList ("glTF Random Models",             models);
+      this .createList ("glTF Sample Models",               glTF);
+      this .createList ("glTF Interactivity Sample Models", interactivity);
+      this .createList ("glb Sample Models",                glb);
+      this .createList ("glTF Embedded Sample Models",      embedded);
+      this .createList ("glTF Quantized Sample Models",     quantized);
+      this .createList ("glTF Draco Sample Models",         draco);
+      this .createList ("glTF Meshopt Sample Models",       meshopt);
+      this .createList ("glTF Meshopt EXT Sample Models",   meshoptEXT);
+      this .createList ("glTF IBL Sample Models",           ibl);
+      this .createList ("glTF WebP Sample Models",          webp);
+      this .createList ("glTF KTX2 Sample Models",          ktx);
+      this .createList ("glTF JPG/PNG Sample Models",       jpg);
+      this .createList ("glTF Random Models",               models);
 
       $(".viewer-column2") .on ("scroll", () =>
       {
