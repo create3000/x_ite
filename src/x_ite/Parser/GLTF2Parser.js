@@ -4084,7 +4084,7 @@ function eventsProcessed ()
          scene            = this .getScene (),
          interpolatorNode = scene .createNode (typeName, false);
 
-      switch (interpolation)
+      switch (times .length > 1 ? interpolation : "LINEAR")
       {
          case "STEP":
          {
