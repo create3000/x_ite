@@ -289,7 +289,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       this .engine .registerJsonPointer (
          path,
-         field .isOutput () || field .isInitializable () ? (path) =>
+         field .isReadable () ? (path) =>
          {
             console .log ("get", path);
 
@@ -306,7 +306,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   return baseColor ? [... field, node ._transparency .getValue ()] : [... field];
             }
          } : () => [ ],
-         field .isInput () || field .isInitializable () ? (path, value) =>
+         field .isWritable () ? (path, value) =>
          {
             const
                node      = this .nodes .get (path),
@@ -344,7 +344,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             }
          } : Function .prototype,
          type,
-         !(field .isInput () || field .isInitializable ()) // read-only
+         !field .isWritable () // read-only
       );
    },
    set_over__ (index, over)

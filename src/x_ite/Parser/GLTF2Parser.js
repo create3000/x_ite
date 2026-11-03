@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .skinsBBox       ();
       this .animationsArray (glTF .animations);
 
-      this .behaviorNodes (glTF .extensions ?.KHR_interactivity);
+      this .behaviorNodes (glTF, glTF .extensions ?.KHR_interactivity);
       this .viewpointsCenterOfRotation (scene);
       this .optimizeSceneGraph (scene .getRootNodes ());
 
@@ -256,7 +256,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             //    break;
             // },
             case "EXT_mesh_gpu_instancing":
-            case "KHR_interactivity":
             case "KHR_materials_anisotropy":
             case "KHR_materials_clearcoat":
             case "KHR_materials_diffuse_transmission":
@@ -282,12 +281,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                components .push (browser .getComponent ("Scripting",      1));
                break;
             }
-            case "KHR_node_hoverability":
-            case "KHR_node_selectability":
-            {
-               components .push (browser .getComponent ("PointingDeviceSensor", 1));
-               break;
-            }
             case "KHR_draco_mesh_compression":
             {
                this .draco ??= await this .getLibrary ("draco_decoder_gltf.js");
@@ -298,11 +291,23 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                components .push (browser .getComponent ("GaussianSplats", 1));
                break;
             }
+            case "KHR_interactivity":
+            {
+               components .push (browser .getComponent ("X_ITE",     1));
+               components .push (browser .getComponent ("Scripting", 1));
+               break;
+            }
             case "KHR_meshopt_compression":
             case "EXT_meshopt_compression":
             {
                this .MeshoptDecoder ??= await this .getLibrary ("meshopt_decoder.js");
                await this .MeshoptDecoder .ready;
+               break;
+            }
+            case "KHR_node_hoverability":
+            case "KHR_node_selectability":
+            {
+               components .push (browser .getComponent ("PointingDeviceSensor", 1));
                break;
             }
             case "KHR_texture_transform":
@@ -467,7 +472,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          },
       ];
    },
-   behaviorNodes (KHR_interactivity)
+   behaviorNodes (glTF, KHR_interactivity)
    {
       if (!this .behavior)
          return;
@@ -491,25 +496,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
 
+      const nodes = new Set ();
+
       for (const string of pointers)
       {
-         if (string .match (/\{.*?\}/))
+         const key = string .match (/^\/([^/]+)\/\{.*?\}/);
+
+         if (key)
          {
-            for (let i = 0;; ++ i)
-            {
-               if (!this .addBehaviorNode (string .replace (/\{.*?\}/, i)))
-                  break;
-            }
+            const length = glTF [key [1]] ?.length ?? 0;
+
+            for (let i = 0; i < length; ++ i)
+               this .addBehaviorNode (string .replace (/\{.*?\}/, i), nodes);
          }
          else
          {
-            this .addBehaviorNode (string);
+            this .addBehaviorNode (string, nodes);
          }
       }
 
+      this .behaviorEngine ._nodes = Array .from (nodes);
       this .behaviorEngine .setup ();
    },
-   addBehaviorNode (pointer)
+   addBehaviorNode (pointer, nodes)
    {
       const [node, field] = this .getAnimationPointer (pointer);
 
@@ -521,7 +530,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       value .push (pointer);
       node .setMetaData (`Interactivity/pointer`, URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
 
-      this .behaviorEngine ._nodes .push (node);
+      nodes .add (node);
       return true;
    },
    khrLightsPunctualObject (KHR_lights_punctual)
@@ -3104,6 +3113,9 @@ function eventsProcessed ()
 
       for (const scriptNode of scriptNodes)
       {
+         if (this .behaviorEngine ?._nodes .some (node => node .getValue () === scriptNode))
+            continue;
+
          if (scriptNode .getFields () .every (field => !field .getInputRoutes () .size))
          {
             scriptNode .dispose ();
