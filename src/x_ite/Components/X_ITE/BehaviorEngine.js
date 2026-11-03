@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    set_enabled__ ()
    {
-      if (this .isLive () && this ._enabled .getValue ())
+      if (this .getLive () .getValue () && this ._enabled .getValue ())
          this .engine .playEventQueue ();
       else
          this .engine .pauseEventQueue ();
@@ -98,7 +98,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       {
          const
             graph = this ._graphs [this ._graph .getValue ()],
-            run   = this .isLive () && this ._enabled .getValue ();
+            run   = this .getLive () .getValue () && this ._enabled .getValue ();
+
+         this .engine .clearEventList ();
+         this .engine .clearPointerInterpolation ();
+         this .engine .clearVariableInterpolation ();
+         this .engine .clearScheduledDelays ();
+         this .engine .clearValueEvaluationCache ();
 
          this .engine .loadBehaveGraph (JSON .parse (graph), run);
       }
