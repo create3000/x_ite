@@ -520,10 +520,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    addBehaviorNode (pointer, nodes)
    {
-      const [node, field] = this .getAnimationPointer (pointer);
+      // Replace this just to find an node.
+      const search = pointer .replace (/\/(?:matrix|globalMatrix)$/, "/translation");
+
+      const [node, field] = this .getAnimationPointer (search);
 
       if (!(node && field))
-         return console .warn (`No node found for pointer "${pointer}".`);
+         return console .warn (`No node found for pointer '${pointer}'.`);
 
       const value = node .getMetaData (`Interactivity/pointer`, new Fields .MFString ());
 

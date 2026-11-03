@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       this .engine .registerJsonPointer (
          `/animations/${numAnimations}`,
-         (path) => [path],
+         (pointer) => [pointer],
          Function .prototype,
          "ref",
          true
@@ -175,10 +175,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       this .engine .registerJsonPointer (
          `/animations/${numAnimations}/extensions/KHR_interactivity/isPlaying`,
-         (path) =>
+         (pointer) =>
          {
             const
-               index     = +path .match (/^\/animations\/(\d+)\//) [1],
+               index     = +pointer .match (/^\/animations\/(\d+)\//) [1],
                animation = this .animations [index];
 
             return [!! animation ?.isActive];
@@ -198,10 +198,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       this .engine .registerJsonPointer (
          `/animations/${numAnimations}/extensions/KHR_interactivity/maxTime`,
-         (path) =>
+         (pointer) =>
          {
             const
-               index     = +path .match (/^\/animations\/(\d+)\//) [1],
+               index     = +pointer .match (/^\/animations\/(\d+)\//) [1],
                animation = this .animations [index];
 
             return [animation ?.cycleInterval ?? 0];
@@ -215,10 +215,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       this .engine .registerJsonPointer (
          `/animations/${numAnimations}/extensions/KHR_interactivity/playhead`,
-         (path) =>
+         (pointer) =>
          {
             const
-               index     = +path .match (/^\/animations\/(\d+)\//) [1],
+               index     = +pointer .match (/^\/animations\/(\d+)\//) [1],
                animation = this .animations [index];
 
             return [animation ? animation .cycleInterval * animation .fraction_changed : NaN];
@@ -232,10 +232,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       this .engine .registerJsonPointer (
          `/animations/${numAnimations}/extensions/KHR_interactivity/virtualPlayhead`,
-         (path) =>
+         (pointer) =>
          {
             const
-               index     = +path .match (/^\/animations\/(\d+)\//) [1],
+               index     = +pointer .match (/^\/animations\/(\d+)\//) [1],
                animation = this .animations [index],
                browser   = this .getBrowser ();
 
@@ -257,10 +257,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          if (!_node)
             continue;
 
-         const paths = _node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
+         const pointers = _node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
 
-         for (const path of paths)
-            this .nodes .set (path, _node);
+         for (const pointer of pointers)
+            this .nodes .set (pointer, _node);
       }
 
       this .engine .registerJsonPointer (
@@ -275,81 +275,123 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       for (const [pointer, node] of this .nodes)
          this .registerJSONPointer (pointer, node);
    },
-   registerJSONPointer (path, node)
+   registerJSONPointer (pointer, node)
    {
       // Register getter and setter for the property.
 
-      const
-         field     = node .getField (GLTFPointerAliases .getAlias (path, node)),
-         baseColor = GLTFPointerAliases .isBaseColor (node, field),
-         type      = baseColor ? "float4" : Types .get (field .getType ());
+      const property = pointer .match (/\/nodes\/\d+\/([^/]+)$/) [1];
 
-      if (!type)
-         return;
-
-      this .engine .registerJsonPointer (
-         path,
-         field .isReadable () ? (path) =>
+      switch (property)
+      {
+         case "matrix":
+         case "globalMatrix":
          {
-            console .log ("get", path);
+            if (!node .getType () .includes (X3DConstants .X3DTransformNode))
+               return console .warn (`Couldn't add pointer '${pointer}' for '${node .getTypeName ()}'.`);
 
-            const
-               node      = this .nodes .get (path),
-               field     = node .getField (GLTFPointerAliases .getAlias (path, node)),
-               baseColor = GLTFPointerAliases .isBaseColor (node, field);
+            this .engine .registerJsonPointer (
+               pointer,
+               (pointer) =>
+               {
+                  console .log ("get", pointer);
 
-            switch (field .getType ())
-            {
-               case X3DConstants .SFRotation:
-                  return [... field .getQuaternion ()];
-               default:
-                  return baseColor ? [... field, node ._transparency .getValue ()] : [... field];
-            }
-         } : () => [ ],
-         field .isWritable () ? (path, value) =>
+                  const node = this .nodes .get (pointer);
+
+                  const matrix = new Fields .SFMatrix4f ();
+
+                  matrix .setTransform (node .translation,
+                                        node .rotation,
+                                        node .scale,
+                                        node .scaleOrientation,
+                                        node .center);
+
+                  return [... matrix];
+               },
+               Function .prototype,
+               "float4x4",
+               true
+            );
+
+            break;
+         }
+         default:
          {
             const
-               node      = this .nodes .get (path),
-               field     = node .getField (GLTFPointerAliases .getAlias (path, node)),
-               baseColor = GLTFPointerAliases .isBaseColor (node, field);
+               field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
+               baseColor = GLTFPointerAliases .isBaseColor (node, field),
+               type      = baseColor ? "float4" : Types .get (field .getType ());
 
-            console .log ("set", path, field .getName (), value);
+            if (!type)
+               return;
 
-            if (baseColor)
-               node ._transparency = value [3];
+            this .engine .registerJsonPointer (
+               pointer,
+               field .isReadable () ? (pointer) =>
+               {
+                  console .log ("get", pointer);
 
-            switch (field .getType ())
-            {
-               case X3DConstants .SFBool:
-               case X3DConstants .SFDouble:
-               case X3DConstants .SFFloat:
-               case X3DConstants .SFInt32:
-               case X3DConstants .SFTime:
-                  field .setValue (value);
-                  break;
-               case X3DConstants .SFColor:
-               case X3DConstants .SFColorRGBA:
-               case X3DConstants .SFMatrix3d:
-               case X3DConstants .SFMatrix3f:
-               case X3DConstants .SFMatrix4d:
-               case X3DConstants .SFMatrix4f:
-               case X3DConstants .SFQuaternion:
-               case X3DConstants .SFVec2d:
-               case X3DConstants .SFVec2f:
-               case X3DConstants .SFVec3d:
-               case X3DConstants .SFVec3f:
-               case X3DConstants .SFVec4d:
-               case X3DConstants .SFVec4f:
-                  field .assign (new field .constructor (... value));
-                  break;
-               case X3DConstants .SFRotation:
-                  field .setQuaternion (new Fields .SFQuaternion (... value));
-                  break;
-            }
-         } : Function .prototype,
-         type,
-         !field .isWritable () // read-only
-      );
+                  const
+                     node      = this .nodes .get (pointer),
+                     field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
+                     baseColor = GLTFPointerAliases .isBaseColor (node, field);
+
+                  switch (field .getType ())
+                  {
+                     case X3DConstants .SFRotation:
+                        return [... field .getQuaternion ()];
+                     default:
+                        return baseColor ? [... field, node ._transparency .getValue ()] : [... field];
+                  }
+               } : () => [ ],
+               field .isWritable () ? (pointer, value) =>
+               {
+                  const
+                     node      = this .nodes .get (pointer),
+                     field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
+                     baseColor = GLTFPointerAliases .isBaseColor (node, field);
+
+                  console .log ("set", pointer, field .getName (), value);
+
+                  if (baseColor)
+                     node ._transparency = value [3];
+
+                  switch (field .getType ())
+                  {
+                     case X3DConstants .SFBool:
+                     case X3DConstants .SFDouble:
+                     case X3DConstants .SFFloat:
+                     case X3DConstants .SFInt32:
+                     case X3DConstants .SFTime:
+                        field .setValue (value);
+                        break;
+                     case X3DConstants .SFColor:
+                     case X3DConstants .SFColorRGBA:
+                     case X3DConstants .SFMatrix3d:
+                     case X3DConstants .SFMatrix3f:
+                     case X3DConstants .SFMatrix4d:
+                     case X3DConstants .SFMatrix4f:
+                     case X3DConstants .SFQuaternion:
+                     case X3DConstants .SFVec2d:
+                     case X3DConstants .SFVec2f:
+                     case X3DConstants .SFVec3d:
+                     case X3DConstants .SFVec3f:
+                     case X3DConstants .SFVec4d:
+                     case X3DConstants .SFVec4f:
+                        field .assign (new field .constructor (... value));
+                        break;
+                     case X3DConstants .SFRotation:
+                        field .setQuaternion (new Fields .SFQuaternion (... value));
+                        break;
+                  }
+               } : Function .prototype,
+               type,
+               !field .isWritable () // read-only
+            );
+
+            break;
+         }
+      }
+
    },
    set_over__ (index, over)
    {
