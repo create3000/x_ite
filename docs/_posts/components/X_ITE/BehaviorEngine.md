@@ -15,7 +15,7 @@ tags: [BehaviorEngine, X_ITE]
 
 **BehaviorEngine** is an extension for glTF interactive features.
 
-The **BehaviorEngine** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
+The **BehaviorEngine** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -33,7 +33,13 @@ The **BehaviorEngine** node belongs to the [X_ITE](/x_ite/components/overview/#x
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| SFFloat | [in, out] | [indexOfRefraction](#fields-indexOfRefraction) | 1.5 |
+| SFBool | [in, out] | [enabled](#fields-enabled) |  |
+| SFInt32 | [in, out] | [graph](#fields-graph) |  |
+| MFString | [in, out] | [graphs](#fields-graphs) |  |
+| MFNode | [in, out] | [hoverability](#fields-hoverability) |  |
+| MFNode | [in, out] | [selectability](#fields-selectability) |  |
+| MFNode | [in, out] | [animations](#fields-animations) |  |
+| MFNode | [in, out] | [nodes](#fields-nodes) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -44,6 +50,41 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 #### Hint
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
+
+### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
+
+Input/Output field *enabled*.
+
+### SFInt32 [in, out] **graph** -1 <small>[-1,∞)</small>
+{: #fields-graph }
+
+Input/Output field *graph*.
+
+### MFString [in, out] **graphs** [ ]
+{: #fields-graphs }
+
+Input/Output field *graphs*.
+
+### MFNode [in, out] **hoverability** [ ] <small>[TouchSensor]</small>
+{: #fields-hoverability }
+
+Input/Output field *hoverability*.
+
+### MFNode [in, out] **selectability** [ ] <small>[TouchSensor]</small>
+{: #fields-selectability }
+
+Input/Output field *selectability*.
+
+### MFNode [in, out] **animations** [ ] <small>[TimeSensor]</small>
+{: #fields-animations }
+
+Input/Output field *animations*.
+
+### MFNode [in, out] **nodes** [ ] <small>[X3DNode]</small>
+{: #fields-nodes }
+
+Input/Output field *nodes*.
 
 ## Browser Compatibility
 
