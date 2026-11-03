@@ -33,13 +33,13 @@ The **BehaviorEngine** node belongs to the [X_ITE](/x_ite/components/overview/#x
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| SFBool | [in, out] | [enabled](#fields-enabled) |  |
-| SFInt32 | [in, out] | [graph](#fields-graph) |  |
-| MFString | [in, out] | [graphs](#fields-graphs) |  |
-| MFNode | [in, out] | [hoverability](#fields-hoverability) |  |
-| MFNode | [in, out] | [selectability](#fields-selectability) |  |
-| MFNode | [in, out] | [animations](#fields-animations) |  |
-| MFNode | [in, out] | [nodes](#fields-nodes) |  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFInt32 | [in, out] | [graph](#fields-graph) | -1 |
+| MFString | [in, out] | [graphs](#fields-graphs) | [ ] |
+| MFNode | [in, out] | [hoverability](#fields-hoverability) | [ ] |
+| MFNode | [in, out] | [selectability](#fields-selectability) | [ ] |
+| MFNode | [in, out] | [animations](#fields-animations) | [ ] |
+| MFNode | [in, out] | [nodes](#fields-nodes) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
