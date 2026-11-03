@@ -2,6 +2,8 @@
   children:
     - title: "AnisotropyMaterialExtension"
       url: /components/x-ite/anisotropymaterialextension/
+    - title: "BehaviorEngine"
+      url: /components/x-ite/behaviorengine/
     - title: "BlendMode"
       url: /components/x-ite/blendmode/
     - title: "ClearcoatMaterialExtension"

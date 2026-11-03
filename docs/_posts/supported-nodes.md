@@ -574,6 +574,7 @@ Highest supported level: **1**
 {: .small }
 
 - [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/) <small class="blue">experimental</small>
+- [BehaviorEngine](/x_ite/components/x-ite/behaviorengine/) <small class="blue">experimental</small>
 - [BlendMode](/x_ite/components/x-ite/blendmode/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/blendmode/#example) <small class="blue">experimental</small>
 - [ClearcoatMaterialExtension](/x_ite/components/x-ite/clearcoatmaterialextension/) <small class="blue">experimental</small>
 - [DepthMode](/x_ite/components/x-ite/depthmode/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/depthmode/#example) <small class="blue">experimental</small>
