@@ -271,7 +271,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          const index = +_node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-         this .nodes .set (index, _node);
+         if (index >= 0)
+            this .nodes .set (index, _node);
 
          const pointers = _node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
 

@@ -534,10 +534,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
       }
 
-      const value = node .getMetaData (`Interactivity/pointer`, new Fields .MFString ());
+      const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
 
       value .push (pointer);
-      node .setMetaData (`Interactivity/pointer`, URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
+      node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
+
+      const index = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
+
+      if (index)
+         node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index [1]));
 
       nodes .add (node);
    },
@@ -2529,9 +2534,6 @@ function eventsProcessed ()
 
             if (shapeNodes)
                transformNode ._children .push (... shapeNodes);
-
-            if (this .behavior)
-               transformNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
 
             transformNode .setup ();
          }
