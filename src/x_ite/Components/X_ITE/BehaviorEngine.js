@@ -297,6 +297,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             this .pointers .set (pointer, _node);
       }
 
+      // Returns the number of material nodes.
       this .engine .registerJsonPointer (
          "/materials.length",
          () => [Array .from (this .pointers .values ())
@@ -305,6 +306,48 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          "int",
          true
       );
+
+      // Returns the number of child nodes.
+      this .engine .registerJsonPointer (
+         `/nodes/${this .nodes .size}/children.length`,
+         (pointer) =>
+         {
+            console .log (pointer);
+
+            const
+               index = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+               node  = this .nodes .get (index);
+
+            const numChildren = node ._children
+               .reduce ((count, child) => count + !!child ?.getValue () .getType ()
+                  .includes (X3DConstants .X3DTransformMatrix3DNode), 0);
+
+            return [numChildren];
+         },
+         Function .prototype,
+         "int",
+         true
+      );
+
+      // Returns the child node of the node.
+      // this .engine .registerJsonPointer (
+      //    `/nodes/${nodeCount}/children/${nodeCount}`,
+      //    (path) =>
+      //    {
+      //       const pathParts = path.split("/");
+      //       const nodeIndex = parseInt(pathParts[2]);
+      //       const childIndex = parseInt(pathParts[4]);
+      //       const node = this.world.gltf.nodes[nodeIndex];
+      //       const childNodeIndex = node.children?.[childIndex];
+      //       if (childNodeIndex >= this.world.gltf.nodes.length) {
+      //          return [undefined];
+      //       }
+      //       return [`/nodes/${childNodeIndex}`];
+      //    },
+      //    Function .prototype,
+      //    "ref",
+      //    true
+      // );
 
       for (const [pointer, node] of this .pointers)
          this .registerJSONPointer (pointer, node);
@@ -458,7 +501,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       this .engine .select (this .getHitNodeIndex (hit, index));
 
-      console .log ("select", this .getHitNodeIndex (hit, index))
+      if (DEVELOPMENT)
+         console .log ("select", this .getHitNodeIndex (hit, index));
    },
    getWorld ()
    {
