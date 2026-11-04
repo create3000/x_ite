@@ -534,15 +534,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
       }
 
-      const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
-
-      value .push (pointer);
-      node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
-
       const index = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
 
       if (index)
          node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index [1]));
+
+      const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
+
+      value .push (pointer);
+      node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
 
       nodes .add (node);
    },
