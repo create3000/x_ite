@@ -517,18 +517,18 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       const
          parentNode = this .nodes .get (index),
          shapeNode  = this .getBrowser () .getHit () .shapeNode,
-         shapeIndex = this .getParentNodeIndex (shapeNode, parentNode);
+         shapeIndex = this .getShapeNodeIndex (shapeNode, parentNode);
 
       if (shapeIndex >= 0)
          index = shapeIndex;
 
       return index;
    },
-   getParentNodeIndex (child, parentNode)
+   getShapeNodeIndex (shapeNode, parentNode)
    {
-      // Return index of parent node. If no parent exists return undefined.
+      // Return index of the parent node. If no parent exists return undefined.
 
-      const hierarchies = Traverse .find (this .getExecutionContext (), child, Traverse .ROOT_NODES);
+      const hierarchies = Traverse .find (this .getExecutionContext (), shapeNode, Traverse .ROOT_NODES);
 
       let parentIndex;
 
@@ -543,7 +543,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             const node = object .getValue ();
 
-            if (node === child && parentFound)
+            if (node === shapeNode && parentFound)
             {
                if (parentIndex >= 0)
                   return parentIndex;
