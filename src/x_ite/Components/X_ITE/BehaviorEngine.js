@@ -349,6 +349,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             const childNodeIndex = +childNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
+            if (childNodeIndex < 0)
+               return [undefined];
+
             return [`/nodes/${childNodeIndex}`];
          },
          Function .prototype,
