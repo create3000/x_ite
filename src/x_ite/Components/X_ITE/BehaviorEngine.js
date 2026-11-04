@@ -49,6 +49,7 @@ function BehaviorEngine (executionContext)
    this .selectabilityNodes = [ ];
    this .animations         = [ ];
    this .nodes              = new Map ();
+   this .parents            = new Map ();
    this .pointers           = new Map ();
 }
 
@@ -68,7 +69,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .engine .startAnimation     = (... args) => this .startAnimation (... args);
       this .engine .stopAnimation      = (... args) => this .stopAnimation (... args);
       this .engine .stopAnimationAt    = (... args) => this .stopAnimationAt (... args);
-      this .engine .getParentNodeIndex = (index) => this .getParentNodeIndex (this .nodes .get (index));
+      this .engine .getParentNodeIndex = (index) => this .parents .get (this .nodes .get (index));
 
       // Events
 
@@ -260,6 +261,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    set_nodes__ ()
    {
       this .nodes    .clear ();
+      this .parents  .clear ();
       this .pointers .clear ();
 
       for (const node of this ._nodes)
@@ -272,7 +274,17 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          const index = +_node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
          if (index >= 0)
+         {
             this .nodes .set (index, _node);
+
+            const groupingNode = X3DCast (X3DConstants .X3DGroupingNode, node);
+
+            if (groupingNode)
+            {
+               for (const child of groupingNode ._children)
+                  this .parents .set (child .getValue (), index);
+            }
+         }
 
          const pointers = _node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
 
@@ -337,9 +349,11 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                      if (DEVELOPMENT)
                         console .log ("get", pointer);
 
-                     const node = this .pointers .get (pointer);
+                     const
+                        node  = this .pointers .get (pointer),
+                        index = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-                     return [... this .getModelMatrix (node, new Matrix4 ())];
+                     return [... this .getModelMatrix (index, new Matrix4 ())];
                   },
                   Function .prototype,
                   "float4x4",
@@ -498,6 +512,18 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          callback ();
       });
    },
+   getHitNodeIndex (index)
+   {
+      const
+         parentNode = this .nodes .get (index),
+         shapeNode  = this .getBrowser () .getHit () .shapeNode,
+         shapeIndex = this .getParentNodeIndex (shapeNode, parentNode);
+
+      if (shapeIndex >= 0)
+         index = shapeIndex;
+
+      return index;
+   },
    getParentNodeIndex (child, parentNode)
    {
       // Return index of parent node. If no parent exists return undefined.
@@ -517,7 +543,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             const node = object .getValue ();
 
-            if (node === child && (!parentNode || parentFound))
+            if (node === child && parentFound)
             {
                if (parentIndex >= 0)
                   return parentIndex;
@@ -530,43 +556,18 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          }
       }
    },
-   getHitNodeIndex (index)
+   getModelMatrix (index, modelMatrix)
    {
-      const
-         parentNode = this .nodes .get (index),
-         shapeNode  = this .getBrowser () .getHit () .shapeNode,
-         shapeIndex = this .getParentNodeIndex (shapeNode, parentNode);
+      let node;
 
-      if (shapeIndex >= 0)
-         index = shapeIndex;
-
-      return index;
-   },
-   getModelMatrix (node, modelMatrix)
-   {
-      node = node .valueOf ();
-
-      const hierarchies = Traverse .find (this .getExecutionContext (), node, Traverse .ROOT_NODES);
-
-      for (const hierarchy of hierarchies)
+      while ((node = this .nodes .get (index)))
       {
-         for (const object of hierarchy)
-         {
-            if (!(object instanceof Fields .SFNode))
-               continue;
+         modelMatrix .multRight (node .getMatrix ());
 
-            const node = object .getValue ();
-
-            if (!node .getType () .includes (X3DConstants .X3DTransformMatrix3DNode))
-               continue;
-
-            modelMatrix .multLeft (node .getMatrix ());
-         }
-
-         return modelMatrix;
+         index = this .parents .get (node);
       }
 
-      return modelMatrix .assign (Matrix4 .IDENTITY);
+      return modelMatrix;
    },
 });
 
