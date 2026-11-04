@@ -297,19 +297,23 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             this .pointers .set (pointer, _node);
       }
 
+      const numMaterials = Array .from (this .pointers .values ())
+            .filter (node => node .getType () .includes (X3DConstants .X3DMaterialNode)) .length;
+
       // Returns the number of material nodes.
       this .engine .registerJsonPointer (
          "/materials.length",
-         () => [Array .from (this .pointers .values ())
-            .filter (node => node .getType () .includes (X3DConstants .X3DMaterialNode) .length)],
+         () => [numMaterials],
          Function .prototype,
          "int",
          true
       );
 
+      const numNodes = this .nodes .size;
+
       // Returns the number of child nodes.
       this .engine .registerJsonPointer (
-         `/nodes/${this .nodes .size}/children.length`,
+         `/nodes/${numNodes}/children.length`,
          (pointer) =>
          {
             const
@@ -329,7 +333,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       // Returns the child node of the node.
       this .engine .registerJsonPointer (
-         `/nodes/${this .nodes .size}/children/${this .nodes .size}`,
+         `/nodes/${numNodes}/children/${numNodes}`,
          (pointer) =>
          {
             const
@@ -356,9 +360,22 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
+      const pointers = new Map (Array .from (this .pointers, ([pointer, node]) =>
+      {
+         return [
+            pointer
+               .replace (/\/materials\/\d+\//, `/materials/${numMaterials}/`)
+               .replace (/\/nodes\/\d+\//, `/nodes/${numNodes}/`),
+            node,
+         ];
+      }));
+
       // Register node properties.
-      for (const [pointer, node] of this .pointers)
+      for (const [pointer, node] of pointers)
          this .registerJSONPointer (pointer, node);
+
+      // DEBUG
+      // console .log (this .engine .resolveJsonPtr ("/nodes/43/globalMatrix"));
    },
    registerJSONPointer (pointer, node)
    {
