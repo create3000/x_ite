@@ -522,7 +522,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    addBehaviorNode (pointer, nodes)
    {
       // Replace this just to find an node.
-      const search = pointer .replace (/\/(?:matrix|globalMatrix)$/, "/translation");
+      const search = pointer .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation");
 
       const [node, field] = this .getAnimationPointer (search);
 
@@ -2530,6 +2530,9 @@ function eventsProcessed ()
             if (shapeNodes)
                transformNode ._children .push (... shapeNodes);
 
+            if (this .behavior)
+               transformNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
+
             transformNode .setup ();
          }
       };
@@ -2557,7 +2560,7 @@ function eventsProcessed ()
                break;
             }
             case "KHR_node_hoverability":
-         {
+            {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_hoverability
 
                const

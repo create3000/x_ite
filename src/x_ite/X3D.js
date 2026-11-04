@@ -5,8 +5,11 @@ import FieldDefinitionArray        from "./Base/FieldDefinitionArray.js";
 import X3DField                    from "./Base/X3DField.js";
 import X3DArrayField               from "./Base/X3DArrayField.js";
 import Fields                      from "./Fields.js";
+import SFNodeCache                 from "./Fields/SFNodeCache.js";
 import Legacy                      from "./Browser/Legacy.js";
 import X3DBrowser                  from "./Browser/X3DBrowser.js";
+import X3DNode                     from "./Components/Core/X3DNode.js";
+import X3DImportedNodeInstance     from "./Components/Core/X3DImportedNodeInstance.js";
 import ComponentInfo               from "./Configuration/ComponentInfo.js";
 import ComponentInfoArray          from "./Configuration/ComponentInfoArray.js";
 import ProfileInfo                 from "./Configuration/ProfileInfo.js";
@@ -104,6 +107,8 @@ Namespace, Namespace .Fields,
    X3DRoute,
 
    X3DBaseNode,                 // non-standard
+   X3DNode,
+   X3DImportedNodeInstance,
 
    X3DFieldDefinition,
    FieldDefinitionArray,
@@ -112,6 +117,7 @@ Namespace, Namespace .Fields,
    X3DArrayField,
 
    ... Fields,
+   SFNodeCache,
 },
 {
    /**
