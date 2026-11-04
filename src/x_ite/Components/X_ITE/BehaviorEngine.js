@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .engine .startAnimation     = (... args) => this .startAnimation (... args);
       this .engine .stopAnimation      = (... args) => this .stopAnimation (... args);
       this .engine .stopAnimationAt    = (... args) => this .stopAnimationAt (... args);
-      this .engine .getParentNodeIndex = (... args) => this .getParentNodeIndex (... args);
+      this .engine .getParentNodeIndex = (index) => this .getParentNodeIndex (this .nodes .get (index));
 
       // Events
 
@@ -498,18 +498,22 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          callback ();
       });
    },
-   getParentNodeIndex (index)
+   getParentNodeIndex (child, parentNode)
    {
       // Return index of parent node. If no parent exists return undefined.
 
-      const
-         child       = this .nodes .get (index),
-         hierarchies = Traverse .find (this .getExecutionContext (), child, Traverse .ROOT_NODES);
+      const hierarchies = Traverse .find (this .getExecutionContext (), child, Traverse .ROOT_NODES);
 
       let parentIndex;
 
       for (const hierarchy of hierarchies)
       {
+         if (parentNode)
+         {
+            if (!hierarchy .find (object => object .getValue ?.() === parentNode))
+               continue;
+         }
+
          for (const object of hierarchy)
          {
             if (!(object instanceof Fields .SFNode))
@@ -527,33 +531,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    getHitNodeIndex (index)
    {
       const
+         parentNode = this .nodes .get (index),
          shapeNode  = this .getBrowser () .getHit () .shapeNode,
-         parentNode = this .nodes .get (index);
+         shapeIndex = this .getParentNodeIndex (shapeNode, parentNode);
 
-      const child = parentNode ?._children ?.find (child => this .containsNode (child, shapeNode));
-
-      if (child)
-      {
-         const childIndex = +child .getValue () .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
-
-         if (childIndex >= 0)
-            index = childIndex;
-      }
+      if (shapeIndex >= 0)
+         index = shapeIndex;
 
       return index;
-   },
-   containsNode (node, target)
-   {
-      for (const object of node .traverse (Traverse .ROOT_NODES))
-      {
-         if (!(object instanceof Fields .SFNode))
-            continue;
-
-         if (object .getValue () === target)
-            return true;
-      }
-
-      return false;
    },
    getModelMatrix (node, modelMatrix)
    {
