@@ -2568,15 +2568,18 @@ function eventsProcessed ()
                   touchSensorNode = scene .createNode ("TouchSensor", false);
 
                touchSensorNode ._enabled = extension .hoverable ?? true;
-
                touchSensorNode .setup ();
-               touchSensorNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
 
                node .transformNode ._children .push (touchSensorNode);
 
                extension .pointers = [touchSensorNode];
 
-               this .behaviorEngine ?._hoverability .push (touchSensorNode);
+               if (this .behavior)
+               {
+                  touchSensorNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
+                  this .behaviorEngine ._hoverability .push (touchSensorNode);
+               }
+
                break;
             }
             case "KHR_node_selectability":
@@ -2588,15 +2591,18 @@ function eventsProcessed ()
                   touchSensorNode = scene .createNode ("TouchSensor", false);
 
                touchSensorNode ._enabled = extension .selectable ?? true;
-
                touchSensorNode .setup ();
-               touchSensorNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
 
                node .transformNode ._children .push (touchSensorNode);
 
                extension .pointers = [touchSensorNode];
 
-               this .behaviorEngine ?._selectability .push (touchSensorNode);
+               if (this .behavior)
+               {
+                  touchSensorNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
+                  this .behaviorEngine ._selectability .push (touchSensorNode);
+               }
+
                break;
             }
             case "KHR_node_visibility":
