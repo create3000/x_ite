@@ -441,11 +441,17 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    set_over__ (index, over)
    {
-      this .engine .hoverOn (over .getValue () ? this .getHitNodeIndex (index) : undefined);
+      const hit = this .getBrowser () .getHit ();
+
+      this .engine .hoverOn (over .getValue () ? this .getHitNodeIndex (hit, index) : undefined);
    },
    set_touchTime__ (index)
    {
-      this .engine .select (this .getHitNodeIndex (index));
+      const hit = this .getBrowser () .getHit ();
+
+      // TODO: pass hitPoint and hitRay
+
+      this .engine .select (this .getHitNodeIndex (hit, index));
    },
    getWorld ()
    {
@@ -512,11 +518,11 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          callback ();
       });
    },
-   getHitNodeIndex (index)
+   getHitNodeIndex (hit, index)
    {
       const
          parentNode = this .nodes .get (index),
-         shapeNode  = this .getBrowser () .getHit () .shapeNode,
+         shapeNode  = hit .shapeNode,
          shapeIndex = this .getShapeNodeIndex (shapeNode, parentNode);
 
       if (shapeIndex >= 0)
