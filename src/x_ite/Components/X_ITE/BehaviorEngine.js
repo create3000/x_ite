@@ -508,11 +508,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const hierarchy of hierarchies)
       {
-         if (parentNode)
-         {
-            if (!hierarchy .find (object => object .getValue ?.() === parentNode))
-               continue;
-         }
+         let parentFound = false;
 
          for (const object of hierarchy)
          {
@@ -521,10 +517,11 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             const node = object .getValue ();
 
-            if (node === child)
+            if (node === child && (!parentNode || parentFound))
                return parentIndex >= 0 ? parentIndex : undefined;
 
-            parentIndex = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+            parentFound ||= node === parentNode;
+            parentIndex   = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
          }
       }
    },
