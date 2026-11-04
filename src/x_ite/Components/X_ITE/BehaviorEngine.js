@@ -312,8 +312,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/nodes/${this .nodes .size}/children.length`,
          (pointer) =>
          {
-            console .log (pointer);
-
             const
                index = +pointer .match (/^\/nodes\/(\d+)\//) [1],
                node  = this .nodes .get (index);
