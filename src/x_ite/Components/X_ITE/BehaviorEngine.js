@@ -533,7 +533,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       const child = parentNode ?._children ?.find (child => this .containsNode (child, shapeNode));
 
       if (child)
-         index = +child .getValue () .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+      {
+         const childIndex = +child .getValue () .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+
+         if (childIndex >= 0)
+            index = childIndex;
+      }
 
       return index;
    },
