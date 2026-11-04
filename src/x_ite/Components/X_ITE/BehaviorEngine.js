@@ -271,18 +271,23 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          if (!_node)
             continue;
 
-         const index = +_node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+         const matrixNode = X3DCast (X3DConstants .X3DTransformMatrix3DNode, node);
 
-         if (index >= 0)
+         if (matrixNode)
          {
-            this .nodes .set (index, _node);
+            const index = +matrixNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-            const groupingNode = X3DCast (X3DConstants .X3DGroupingNode, node);
-
-            if (groupingNode)
+            if (index >= 0)
             {
-               for (const child of groupingNode ._children)
-                  this .parents .set (child .getValue (), index);
+               this .nodes .set (index, _node);
+
+               for (const child of matrixNode ._children)
+               {
+                  const childNode = X3DCast (X3DConstants .X3DTransformMatrix3DNode, child);
+
+                  if (childNode)
+                     this .parents .set (childNode, index);
+               }
             }
          }
 
@@ -346,8 +351,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   pointer,
                   (pointer) =>
                   {
-                     if (DEVELOPMENT)
-                        console .log ("get", pointer);
+                     // if (DEVELOPMENT)
+                     //    console .log ("get", pointer);
 
                      const
                         node  = this .pointers .get (pointer),
@@ -452,6 +457,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // TODO: pass hitPoint and hitRay
 
       this .engine .select (this .getHitNodeIndex (hit, index));
+
+      console .log ("select", this .getHitNodeIndex (hit, index))
    },
    getWorld ()
    {

@@ -501,14 +501,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       for (const pointer of pointers)
       {
-         const key = pointer .match (/^\/([^/]+)\/\{.*?\}/);
+         const key = pointer .match (/^\/([^/]+)\/[{[].*?[}\]]/);
 
          if (key)
          {
             const length = glTF [key [1]] ?.length ?? 0;
 
             for (let i = 0; i < length; ++ i)
-               this .addBehaviorNode (pointer .replace (/\{.*?\}/, i), this .behaviorNodes);
+               this .addBehaviorNode (pointer .replace (/[{[].*?[}\]]/, i), this .behaviorNodes);
          }
          else
          {
