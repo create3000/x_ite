@@ -328,25 +328,35 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       );
 
       // Returns the child node of the node.
-      // this .engine .registerJsonPointer (
-      //    `/nodes/${nodeCount}/children/${nodeCount}`,
-      //    (path) =>
-      //    {
-      //       const pathParts = path.split("/");
-      //       const nodeIndex = parseInt(pathParts[2]);
-      //       const childIndex = parseInt(pathParts[4]);
-      //       const node = this.world.gltf.nodes[nodeIndex];
-      //       const childNodeIndex = node.children?.[childIndex];
-      //       if (childNodeIndex >= this.world.gltf.nodes.length) {
-      //          return [undefined];
-      //       }
-      //       return [`/nodes/${childNodeIndex}`];
-      //    },
-      //    Function .prototype,
-      //    "ref",
-      //    true
-      // );
+      this .engine .registerJsonPointer (
+         `/nodes/${this .nodes .size}/children/${this .nodes .size}`,
+         (pointer) =>
+         {
+            const
+               match      = pointer .match (/^\/nodes\/(\d+)\/children\/(\d+)/),
+               nodeIndex  = +match [1],
+               childIndex = +match [2],
+               node       = this .nodes .get (nodeIndex);
 
+            const children = Array .from (node ._children, child => child ?.getValue ())
+               .filter (child => child ?.getValue () .getType ()
+                  .includes (X3DConstants .X3DTransformMatrix3DNode));
+
+            const childNode = children [childIndex];
+
+            if (!childNode)
+               return [undefined];
+
+            const childNodeIndex = +childNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+
+            return [`/nodes/${childNodeIndex}`];
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
+      // Register node properties.
       for (const [pointer, node] of this .pointers)
          this .registerJSONPointer (pointer, node);
    },
