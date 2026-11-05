@@ -310,7 +310,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       const numNodes = this .nodes .size;
 
-      // Returns the number of child nodes.
+      // Returns the parent node of the node.
       this .engine .registerJsonPointer (
          `/nodes/${numNodes}/parent`,
          (pointer) =>
