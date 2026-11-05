@@ -369,7 +369,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                parentNodeIndex = this .getParentNodeIndex (nodeIndex);
 
             if (parentNodeIndex !== undefined)
-               [`/nodes/${parentNodeIndex}`];
+               return [`/nodes/${parentNodeIndex}`];
 
             return [undefined];
          },
