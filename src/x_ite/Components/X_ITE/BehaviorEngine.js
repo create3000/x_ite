@@ -136,9 +136,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const hoverabilityNode of this .hoverabilityNodes)
       {
-         const index = +hoverabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+         const nodeIndex = +hoverabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-         hoverabilityNode ._isOver .addInterest ("set_over__", this, index);
+         hoverabilityNode ._isOver .addInterest ("set_over__", this, nodeIndex);
       }
    },
    set_selectability__ ()
@@ -158,9 +158,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const selectabilityNode of this .selectabilityNodes)
       {
-         const index = +selectabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+         const nodeIndex = +selectabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-         selectabilityNode ._touchTime .addInterest ("set_touchTime__", this, index);
+         selectabilityNode ._touchTime .addInterest ("set_touchTime__", this, nodeIndex);
       }
    },
    set_animations__ ()
@@ -189,8 +189,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (pointer) =>
          {
             const
-               index     = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               animation = this .animations [index];
+               animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
+               animation      = this .animations [animationIndex];
 
             return [!! animation ?.isActive];
          },
@@ -212,8 +212,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (pointer) =>
          {
             const
-               index     = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               animation = this .animations [index];
+               animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
+               animation      = this .animations [animationIndex];
 
             return [animation ?.cycleInterval ?? 0];
          },
@@ -229,8 +229,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (pointer) =>
          {
             const
-               index     = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               animation = this .animations [index];
+               animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
+               animation      = this .animations [animationIndex];
 
             return [animation ? animation .cycleInterval * animation .fraction_changed : NaN];
          },
@@ -246,9 +246,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (pointer) =>
          {
             const
-               index     = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               animation = this .animations [index],
-               browser   = this .getBrowser ();
+               animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
+               animation      = this .animations [animationIndex],
+               browser        = this .getBrowser ();
 
             return [animation ? browser .getCurrentTime () - animation .startTime : NaN];
          },
@@ -274,18 +274,18 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          if (matrixNode)
          {
-            const index = +matrixNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+            const nodeIndex = +matrixNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-            if (index >= 0)
+            if (nodeIndex >= 0)
             {
-               this .nodes .set (index, _node);
+               this .nodes .set (nodeIndex, _node);
 
                for (const child of matrixNode ._children)
                {
                   const childNode = X3DCast (X3DConstants .X3DTransformMatrix3DNode, child);
 
                   if (childNode)
-                     this .parents .set (childNode, index);
+                     this .parents .set (childNode, nodeIndex);
                }
             }
          }
@@ -316,8 +316,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          (pointer) =>
          {
             const
-               index = +pointer .match (/^\/nodes\/(\d+)\//) [1],
-               node  = this .nodes .get (index);
+               nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+               node      = this .nodes .get (nodeIndex);
 
             const numChildren = node ._children
                .reduce ((count, child) => count + !!child ?.getValue () .getType ()
@@ -422,10 +422,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                      //    console .log ("get", pointer);
 
                      const
-                        node  = this .pointers .get (pointer),
-                        index = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+                        node      = this .pointers .get (pointer),
+                        nodeIndex = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-                     return [... this .getModelMatrix (index, new Matrix4 ())];
+                     return [... this .getModelMatrix (nodeIndex, new Matrix4 ())];
                   },
                   Function .prototype,
                   "float4x4",
@@ -511,22 +511,22 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          !field .isWritable () // read-only
       );
    },
-   set_over__ (index, over)
+   set_over__ (nodeIndex, over)
    {
       const hit = this .getBrowser () .getHit ();
 
-      this .engine .hoverOn (over .getValue () ? this .getHitNodeIndex (hit, index) : undefined);
+      this .engine .hoverOn (over .getValue () ? this .getHitNodeIndex (hit, nodeIndex) : undefined);
    },
-   set_touchTime__ (index)
+   set_touchTime__ (nodeIndex)
    {
       const hit = this .getBrowser () .getHit ();
 
       // TODO: pass hitPoint and hitRay
 
-      this .engine .select (this .getHitNodeIndex (hit, index));
+      this .engine .select (this .getHitNodeIndex (hit, nodeIndex));
 
       if (DEVELOPMENT)
-         console .log ("select", index, this .getHitNodeIndex (hit, index));
+         console .log ("select", nodeIndex, this .getHitNodeIndex (hit, nodeIndex));
    },
    getWorld ()
    {
@@ -537,9 +537,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          };
       })();
    },
-   startAnimation (index, startTime, stopTime, speed, callback)
+   startAnimation (animationIndex, startTime, stopTime, speed, callback)
    {
-      const animation = this .animations [index];
+      const animation = this .animations [animationIndex];
 
       if (!animation)
          return;
@@ -560,9 +560,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          callback ();
       });
    },
-   stopAnimation (index)
+   stopAnimation (animationIndex)
    {
-      const animation = this .animations [index];
+      const animation = this .animations [animationIndex];
 
       if (!animation)
          return;
@@ -571,9 +571,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       animation .stopTime = currentTime;
    },
-   stopAnimationAt (index, stopTime, callback)
+   stopAnimationAt (animationIndex, stopTime, callback)
    {
-      const animation = this .animations [index];
+      const animation = this .animations [animationIndex];
 
       if (!animation)
          return;
@@ -593,30 +593,30 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          callback ();
       });
    },
-   getHitNodeIndex (hit, index)
+   getHitNodeIndex (hit, nodeIndex)
    {
       const
          shapeParent = hit .shapeParent,
          parentIndex = +shapeParent .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
       if (parentIndex >= 0)
-         index = parentIndex;
+         nodeIndex = parentIndex;
 
-      return index;
+      return nodeIndex;
    },
-   getParentNodeIndex (index)
+   getParentNodeIndex (nodeIndex)
    {
-      return this .parents .get (this .nodes .get (index));
+      return this .parents .get (this .nodes .get (nodeIndex));
    },
-   getModelMatrix (index, modelMatrix)
+   getModelMatrix (nodeIndex, modelMatrix)
    {
       let node;
 
-      while ((node = this .nodes .get (index)))
+      while ((node = this .nodes .get (nodeIndex)))
       {
          modelMatrix .multRight (node .getMatrix ());
 
-         index = this .parents .get (node);
+         nodeIndex = this .parents .get (node);
       }
 
       return modelMatrix;

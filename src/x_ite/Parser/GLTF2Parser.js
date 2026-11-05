@@ -501,14 +501,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       for (const pointer of pointers)
       {
-         const key = pointer .match (/^\/([^/]+)\/[{[].*?[}\]]/);
+         const key = pointer .match (/^\/([^/]+)\/[{[].*?[\]}]/);
 
          if (key)
          {
             const length = glTF [key [1]] ?.length ?? 0;
 
             for (let i = 0; i < length; ++ i)
-               this .addBehaviorNode (pointer .replace (/[{[].*?[}\]]/, i), this .behaviorNodes);
+               this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
          }
          else
          {
@@ -534,10 +534,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
       }
 
-      const index = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
+      const nodeIndex = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
 
-      if (index)
-         node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index [1]));
+      if (nodeIndex)
+         node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (nodeIndex [1]));
 
       const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
 
