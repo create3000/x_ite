@@ -458,8 +458,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       // Register getter and setter for the property.
 
-      console .log (pointer)
-
       const
          field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
          baseColor = GLTFPointerAliases .isBaseColor (node, field),
