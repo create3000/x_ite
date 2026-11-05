@@ -428,12 +428,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       pointers .delete (`/nodes/${numNodes}/globalMatrix`);
 
       for (const [pointer, node] of pointers)
-         this .registerJSONPointer (pointer, node);
+         this .registerJsonPointer (pointer, node);
 
       // DEBUG
       // console .log (this .engine .resolveJsonPtr ("/nodes/43/parent") ?.getterCallback ("/nodes/43/parent"));
    },
-   registerJSONPointer (pointer, node)
+   registerJsonPointer (pointer, node)
    {
       // Register getter and setter for the property.
 
