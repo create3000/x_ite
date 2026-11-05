@@ -328,6 +328,25 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             key => key .match (/\/nodes\/(\d+)\//) ?.[1] ?? 0)
          .reduce ((p, c) => Math .max (p, c), 0);
 
+      // Returns the parent node of the node.
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/parent`,
+         (pointer) =>
+         {
+            const
+               nodeIndex       = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+               parentNodeIndex = this .getParentNodeIndex (nodeIndex);
+
+            if (parentNodeIndex !== undefined)
+               return [`/nodes/${parentNodeIndex}`];
+
+            return [undefined];
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
       // Returns the number of child nodes.
       this .engine .registerJsonPointer (
          `/nodes/${numNodes}/children.length`,
@@ -369,25 +388,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             if (childNodeIndex >= 0)
                return [`/nodes/${childNodeIndex}`];
-
-            return [undefined];
-         },
-         Function .prototype,
-         "ref",
-         true
-      );
-
-      // Returns the parent node of the node.
-      this .engine .registerJsonPointer (
-         `/nodes/${numNodes}/parent`,
-         (pointer) =>
-         {
-            const
-               nodeIndex       = +pointer .match (/^\/nodes\/(\d+)\//) [1],
-               parentNodeIndex = this .getParentNodeIndex (nodeIndex);
-
-            if (parentNodeIndex !== undefined)
-               return [`/nodes/${parentNodeIndex}`];
 
             return [undefined];
          },
