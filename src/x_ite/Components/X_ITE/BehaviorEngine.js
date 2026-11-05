@@ -7,7 +7,14 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import GLTFPointerAliases   from "../../Parser/GLTFPointerAliases.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
+import Color3               from "../../../standard/Math/Numbers/Color3.js";
+import Color4               from "../../../standard/Math/Numbers/Color4.js";
+import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import Quaternion           from "../../../standard/Math/Numbers/Quaternion.js";
+import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 const Types = new Map ([
@@ -54,6 +61,14 @@ function BehaviorEngine (executionContext)
 
 Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode .prototype),
 {
+   Color3: new Color3 (),
+   Color4: new Color4 (),
+   Matrix3: new Matrix3 (),
+   Matrix4: new Matrix4 (),
+   Quaternion: new Quaternion (),
+   Vector2: new Vector2 (),
+   Vector3: new Vector3 (),
+   Vector4: new Vector4 (),
    initialize ()
    {
       X3DChildNode .prototype .initialize .call (this);
@@ -405,7 +420,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                node      = this .pointers .get (pointer),
                nodeIndex = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-            return [... this .getModelMatrix (nodeIndex, new Matrix4 ())];
+            return [... this .getModelMatrix (nodeIndex, this .Matrix4 .assign (Matrix4 .IDENTITY))];
          },
          Function .prototype,
          "float4x4",
@@ -463,7 +478,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             switch (field .getType ())
             {
                case X3DConstants .SFRotation:
-                  return [... field .getQuaternion ()];
+                  return [... field .getValue () .getQuaternion (this .Quaternion)];
                default:
                   return baseColor ? [... field, node ._transparency .getValue ()] : [... field];
             }
@@ -491,22 +506,36 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   field .setValue (value);
                   break;
                case X3DConstants .SFColor:
+                  field .setValue (this .Color3 .set (... value));
+                  break;
                case X3DConstants .SFColorRGBA:
+                  field .setValue (this .Color4 .set (... value));
+                  break;
                case X3DConstants .SFMatrix3d:
                case X3DConstants .SFMatrix3f:
+                  field .setValue (this .Matrix3 .set (... value));
+                  break;
                case X3DConstants .SFMatrix4d:
                case X3DConstants .SFMatrix4f:
+                  field .setValue (this .Matrix4 .set (... value));
+                  break;
                case X3DConstants .SFQuaternion:
-               case X3DConstants .SFVec2d:
-               case X3DConstants .SFVec2f:
-               case X3DConstants .SFVec3d:
-               case X3DConstants .SFVec3f:
-               case X3DConstants .SFVec4d:
-               case X3DConstants .SFVec4f:
-                  field .assign (new field .constructor (... value));
+                  field .setValue (this .Quaternion .set (... value));
                   break;
                case X3DConstants .SFRotation:
-                  field .setQuaternion (new Fields .SFQuaternion (... value));
+                  field .setQuaternion (this .Quaternion .set (... value));
+                  break;
+               case X3DConstants .SFVec2d:
+               case X3DConstants .SFVec2f:
+                  field .setValue (this .Vector2 .set (... value));
+                  break;
+               case X3DConstants .SFVec3d:
+               case X3DConstants .SFVec3f:
+                  field .setValue (this .Vector3 .set (... value));
+                  break;
+               case X3DConstants .SFVec4d:
+               case X3DConstants .SFVec4f:
+                  field .setValue (this .Vector4 .set (... value));
                   break;
             }
          } : Function .prototype,
