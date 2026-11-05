@@ -534,9 +534,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
       }
 
-      if (node ._children ?.length === 0)
-         return;
-
       const nodeIndex = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
 
       if (nodeIndex)
