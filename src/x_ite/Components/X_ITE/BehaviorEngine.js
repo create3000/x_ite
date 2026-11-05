@@ -312,6 +312,20 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       // Returns the number of child nodes.
       this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/parent`,
+         (pointer) =>
+         {
+            const nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1];
+
+            return [this .parents .get (nodeIndex)];
+         },
+         Function .prototype,
+         "int",
+         true
+      );
+
+      // Returns the number of child nodes.
+      this .engine .registerJsonPointer (
          `/nodes/${numNodes}/children.length`,
          (pointer) =>
          {
