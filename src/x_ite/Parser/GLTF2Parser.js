@@ -522,7 +522,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    addBehaviorNode (pointer, nodes)
    {
       // Replace this just to find an node.
-      const search = pointer .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation");
+      const search = pointer
+         .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
+         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material)/, "$1/transparency");
 
       const [node, field] = this .getAnimationPointer (search);
 
@@ -534,10 +536,28 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return;
       }
 
-      const nodeIndex = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
+      const nodeIndexMatch = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
 
-      if (nodeIndex)
-         node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (nodeIndex [1]));
+      if (nodeIndexMatch)
+      {
+         const
+            nodeIndex = +nodeIndexMatch [1],
+            mesh      = this .nodes [nodeIndex] .mesh;
+
+         node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (nodeIndex));
+
+         if (mesh !== undefined)
+            node .setMetaData (`Interactivity/mesh`, URLs .getProviderURL (), new Fields .SFInt32 (mesh));
+      }
+
+      const materialIndexMatch = pointer .match (/^\/materials\/(\d+)\//);
+
+      if (materialIndexMatch && node .getType () .includes (X3DConstants .X3DMaterialNode))
+      {
+         const materialIndex = +materialIndexMatch [1];
+
+         node .setMetaData ("Interactivity/material", URLs .getProviderURL (), new Fields .SFInt32 (materialIndex));
+      }
 
       const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
 
@@ -2610,8 +2630,8 @@ function eventsProcessed ()
             case "KHR_node_visibility":
             {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
-               extension .pointers       = [node .childNode];
-               node .childNode ._visible = extension .visible ?? true;
+               extension .pointers           = [node .transformNode];
+               node .transformNode ._visible = extension .visible ?? true;
                break;
             }
          }

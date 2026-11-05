@@ -313,8 +313,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             this .pointers .set (pointer, _node);
       }
 
+      // Materials
+
       const numMaterials = Array .from (this .pointers .keys (),
-            key => key .match (/\/materials\/(\d+)\//) ?.[1] ?? -1)
+            key => key .match (/^\/materials\/(\d+)\//) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       // Returns the number of material nodes.
@@ -326,8 +328,39 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
+      // Meshes
+
+      const numMeshes = Array .from (this .pointers .keys (),
+            key => key .match (/^\/meshes\/(\d+)\//) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+      const numPrimitives = Array .from (this .pointers .keys (),
+            key => key .match (/^\/meshes\/\d+\/primitives\/(\d+)\//) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+      // Returns the material index of the mesh.
+      this .engine .registerJsonPointer (
+         `/meshes/${numMeshes}/primitives/${numPrimitives}/material`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  materialNode  = this .pointers .get (pointer),
+                  materialIndex = +materialNode .getMetaData ("Interactivity/material", new Fields .SFInt32 (-1));
+
+               return [`/materials/${materialIndex}`];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
+      // Nodes
+
       const numNodes = Array .from (this .pointers .keys (),
-            key => key .match (/\/nodes\/(\d+)\//) ?.[1] ?? -1)
+            key => key .match (/^\/nodes\/(\d+)\//) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       // Returns the parent node of the node.
@@ -441,10 +474,33 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/mesh`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+                  node      = this .transformNodes .get (nodeIndex),
+                  meshIndex = +node .getMetaData ("Interactivity/mesh", new Fields .SFInt32 (-1));
+
+               if (meshIndex >= 0)
+                  return [`/meshes/${meshIndex}`];
+
+               return [undefined];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
       // Register common node pointers.
 
       const nums = {
          materials: numMaterials,
+         meshes: numMeshes,
          nodes: numNodes,
       };
 
@@ -468,6 +524,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    registerJsonPointer (pointer, node)
    {
       // Register getter and setter for the property.
+
+      if (pointer .match (/^\/meshes\//))
+         return;
 
       const
          field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
