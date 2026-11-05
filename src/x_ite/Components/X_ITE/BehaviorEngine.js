@@ -470,8 +470,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          pointer,
          field .isReadable () ? (pointer) =>
          {
-            if (DEVELOPMENT)
-               console .log ("get", pointer);
+            // if (DEVELOPMENT)
+            //    console .log ("get", pointer);
 
             const
                node      = this .pointers .get (pointer),
