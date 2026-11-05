@@ -364,12 +364,17 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/nodes/${numNodes}/parent`,
          (pointer) =>
          {
-            const nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1];
+            const
+               nodeIndex       = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+               parentNodeIndex = this .getParentNodeIndex (nodeIndex);
 
-            return [this .getParentNodeIndex (nodeIndex)];
+            if (parentNodeIndex !== undefined)
+               [`/nodes/${parentNodeIndex}`];
+
+            return [undefined];
          },
          Function .prototype,
-         "int",
+         "ref",
          true
       );
 
