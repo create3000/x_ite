@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .engine .startAnimation     = (... args) => this .startAnimation (... args);
       this .engine .stopAnimation      = (... args) => this .stopAnimation (... args);
       this .engine .stopAnimationAt    = (... args) => this .stopAnimationAt (... args);
-      this .engine .getParentNodeIndex = (index) => this .parents .get (this .nodes .get (index));
+      this .engine .getParentNodeIndex = (... args) => this .getParentNodeIndex (... args);
 
       // Events
 
@@ -603,6 +603,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          index = parentIndex;
 
       return index;
+   },
+   getParentNodeIndex (index)
+   {
+      return this .parents .get (this .nodes .get (index));
    },
    getModelMatrix (index, modelMatrix)
    {
