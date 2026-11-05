@@ -311,8 +311,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             this .pointers .set (pointer, _node);
       }
 
-      const numMaterials = Array .from (this .pointers .values ())
-            .filter (node => node .getType () .includes (X3DConstants .X3DMaterialNode)) .length;
+      const numMaterials = Array .from (this .pointers .keys (),
+            key => key .match (/\/materials\/(\d+)\//) ?.[1] ?? 0)
+         .reduce ((p, c) => Math .max (p, c), 0);
 
       // Returns the number of material nodes.
       this .engine .registerJsonPointer (
@@ -323,7 +324,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
-      const numNodes = this .nodes .size;
+      const numNodes = Array .from (this .pointers .keys (),
+            key => key .match (/\/nodes\/(\d+)\//) ?.[1] ?? 0)
+         .reduce ((p, c) => Math .max (p, c), 0);
 
       // Returns the number of child nodes.
       this .engine .registerJsonPointer (
@@ -334,7 +337,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
                node      = this .nodes .get (nodeIndex);
 
-            const numChildren = node ._children
+            const numChildren = node ?._children
                .reduce ((count, child) => count + !!child ?.getValue () .getType ()
                   .includes (X3DConstants .X3DTransformMatrix3DNode), 0);
 
@@ -356,8 +359,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                childIndex = +match [2],
                node       = this .nodes .get (nodeIndex);
 
-            const children = Array .from (node ._children, child => child ?.getValue ())
-               .filter (child => child ?.getValue () .getType ()
+            const children = node ._children ?.flatMap (child => child ?.getValue ())
+               .filter (childNode => childNode ?.getType ()
                   .includes (X3DConstants .X3DTransformMatrix3DNode));
 
             const
@@ -454,6 +457,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    registerJsonPointer (pointer, node)
    {
       // Register getter and setter for the property.
+
+      console .log (pointer)
 
       const
          field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
