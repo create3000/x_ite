@@ -54,7 +54,7 @@ function BehaviorEngine (executionContext)
    this .hoverabilityNodes  = [ ];
    this .selectabilityNodes = [ ];
    this .animations         = [ ];
-   this .nodes              = new Map ();
+   this .transformNodes     = new Map ();
    this .parents            = new Map ();
    this .pointers           = new Map ();
 }
@@ -274,9 +274,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    set_nodes__ ()
    {
-      this .nodes    .clear ();
-      this .parents  .clear ();
-      this .pointers .clear ();
+      this .transformNodes .clear ();
+      this .parents        .clear ();
+      this .pointers       .clear ();
 
       for (const node of this ._nodes)
       {
@@ -293,7 +293,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             if (nodeIndex >= 0)
             {
-               this .nodes .set (nodeIndex, _node);
+               this .transformNodes .set (nodeIndex, _node);
 
                for (const child of matrixNode ._children)
                {
@@ -335,7 +335,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const
                nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
-               node      = this .nodes .get (nodeIndex);
+               node      = this .transformNodes .get (nodeIndex);
 
             const numChildren = node ?._children
                .reduce ((count, child) => count + !!child ?.getValue () .getType ()
@@ -357,7 +357,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                match      = pointer .match (/^\/nodes\/(\d+)\/children\/(\d+)/),
                nodeIndex  = +match [1],
                childIndex = +match [2],
-               node       = this .nodes .get (nodeIndex);
+               node       = this .transformNodes .get (nodeIndex);
 
             const children = node ._children ?.flatMap (child => child ?.getValue ())
                .filter (childNode => childNode ?.getType ()
@@ -641,13 +641,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    getParentNodeIndex (nodeIndex)
    {
-      return this .parents .get (this .nodes .get (nodeIndex));
+      return this .parents .get (this .transformNodes .get (nodeIndex));
    },
    getModelMatrix (nodeIndex, modelMatrix)
    {
       let node;
 
-      while ((node = this .nodes .get (nodeIndex)))
+      while ((node = this .transformNodes .get (nodeIndex)))
       {
          modelMatrix .multRight (node .getMatrix ());
 
