@@ -555,10 +555,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             switch (field .getType ())
             {
+               case X3DConstants .SFColor:
+                  return baseColor ? [... field, transparency .getValue ()] : [... field];
                case X3DConstants .SFRotation:
                   return [... field .getValue () .getQuaternion (this .Quaternion)];
                default:
-                  return baseColor ? [... field, transparency .getValue ()] : [... field];
+                  return [... field];
             }
          } : () => [ ],
          field .isWritable () ? (pointer, value) =>
