@@ -556,7 +556,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             switch (field .getType ())
             {
                case X3DConstants .SFColor:
-                  return baseColor ? [... field, transparency .getValue ()] : [... field];
+                  return baseColor ? [... field, 1 - transparency .getValue ()] : [... field];
                case X3DConstants .SFRotation:
                   return [... field .getValue () .getQuaternion (this .Quaternion)];
                default:
@@ -592,7 +592,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   field .setValue (this .Color3 .set (... value));
 
                   if (baseColor)
-                     transparency .setValue (value [3]);
+                     transparency .setValue (1 - value [3]);
 
                   break;
                }
