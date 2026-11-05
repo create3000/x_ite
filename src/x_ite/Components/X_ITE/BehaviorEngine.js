@@ -314,8 +314,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       }
 
       const numMaterials = Array .from (this .pointers .keys (),
-            key => key .match (/\/materials\/(\d+)\//) ?.[1] ?? 0)
-         .reduce ((p, c) => Math .max (p, c), 0);
+            key => key .match (/\/materials\/(\d+)\//) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       // Returns the number of material nodes.
       this .engine .registerJsonPointer (
@@ -327,8 +327,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       );
 
       const numNodes = Array .from (this .pointers .keys (),
-            key => key .match (/\/nodes\/(\d+)\//) ?.[1] ?? 0)
-         .reduce ((p, c) => Math .max (p, c), 0);
+            key => key .match (/\/nodes\/(\d+)\//) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       // Returns the parent node of the node.
       this .engine .registerJsonPointer (
