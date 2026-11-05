@@ -527,7 +527,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .engine .select (this .getHitNodeIndex (hit, index));
 
       if (DEVELOPMENT)
-         console .log ("select", this .getHitNodeIndex (hit, index));
+         console .log ("select", index, this .getHitNodeIndex (hit, index));
    },
    getWorld ()
    {
@@ -597,46 +597,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    getHitNodeIndex (hit, index)
    {
       const
-         parentNode = this .nodes .get (index),
-         shapeNode  = hit .shapeNode,
-         shapeIndex = this .getShapeNodeIndex (shapeNode, parentNode);
+         shapeParent = hit .shapeParent,
+         parentIndex = +shapeParent .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-      if (shapeIndex >= 0)
-         index = shapeIndex;
+      if (parentIndex >= 0)
+         index = parentIndex;
 
       return index;
-   },
-   getShapeNodeIndex (shapeNode, parentNode)
-   {
-      // Return index of the parent node. If no parent exists return undefined.
-
-      const hierarchies = Traverse .find (this .getExecutionContext (), shapeNode, Traverse .ROOT_NODES);
-
-      let parentIndex;
-
-      for (const hierarchy of hierarchies)
-      {
-         let parentFound = false;
-
-         for (const object of hierarchy)
-         {
-            if (!(object instanceof Fields .SFNode))
-               continue;
-
-            const node = object .getValue ();
-
-            if (node === shapeNode && parentFound)
-            {
-               if (parentIndex >= 0)
-                  return parentIndex;
-
-               break;
-            }
-
-            parentFound ||= node === parentNode;
-            parentIndex   = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
-         }
-      }
    },
    getModelMatrix (index, modelMatrix)
    {

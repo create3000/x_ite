@@ -36,9 +36,9 @@ function X3DRenderObject (executionContext)
    this .viewMatrixArray          = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
    this .hitRay                   = new Line3 ();
-   this .path                     = [ ];
    this .sensors                  = [[ ]];
    this .viewpointGroups          = [ ];
+   this .path                     = [ ];
    this .lights                   = new Map ();
    this .globalLightsKeys         = [ ];
    this .globalLights             = [ ];
@@ -223,9 +223,13 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .hitRay;
    },
-   getPath ()
+   getShapeParent ()
    {
-      return this .path;
+      return this .shapeParent;
+   },
+   setShapeParent (shapeParent)
+   {
+      this .shapeParent = shapeParent;
    },
    getSensors ()
    {
@@ -234,6 +238,10 @@ Object .assign (X3DRenderObject .prototype,
    getViewpointGroups ()
    {
       return this .viewpointGroups;
+   },
+   getPath ()
+   {
+      return this .path;
    },
    getLights ()
    {
@@ -611,6 +619,7 @@ Object .assign (X3DRenderObject .prototype,
          renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .hAnimNode = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
          renderContext .shapeNode = shapeNode;
+         renderContext .shapeParent = this .shapeParent;
 
          // Clip planes & sensors
 

@@ -267,6 +267,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       {
          case TraverseType .POINTER:
          {
+            renderObject .setShapeParent (this);
             this .pointingObject ?.traverse (type, renderObject);
             break;
          }

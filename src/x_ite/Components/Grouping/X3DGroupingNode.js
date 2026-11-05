@@ -404,6 +404,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       {
          case TraverseType .POINTER:
          {
+            renderObject .setShapeParent (this);
+            
             const { sensors, pointingDeviceSensorNodes, clipPlaneNodes, pointingObjects } = this;
 
             if (pointingDeviceSensorNodes .size)

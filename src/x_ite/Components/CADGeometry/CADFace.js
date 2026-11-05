@@ -208,6 +208,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       {
          case TraverseType .POINTER:
          {
+            renderObject .setShapeParent (this);
             this .pointingObject ?.traverse (type, renderObject);
             return;
          }
