@@ -310,20 +310,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       const numNodes = this .nodes .size;
 
-      // Returns the parent node of the node.
-      this .engine .registerJsonPointer (
-         `/nodes/${numNodes}/parent`,
-         (pointer) =>
-         {
-            const nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1];
-
-            return [this .parents .get (nodeIndex)];
-         },
-         Function .prototype,
-         "int",
-         true
-      );
-
       // Returns the number of child nodes.
       this .engine .registerJsonPointer (
          `/nodes/${numNodes}/children.length`,
@@ -370,6 +356,20 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          },
          Function .prototype,
          "ref",
+         true
+      );
+
+      // Returns the parent node of the node.
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/parent`,
+         (pointer) =>
+         {
+            const nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1];
+
+            return [this .getParentNodeIndex (nodeIndex)];
+         },
+         Function .prototype,
+         "int",
          true
       );
 
@@ -426,7 +426,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          this .registerJSONPointer (pointer, node);
 
       // DEBUG
-      // console .log (this .engine .resolveJsonPtr ("/nodes/43/parent"));
+      // console .log (this .engine .resolveJsonPtr ("/nodes/43/parent") ?.getterCallback ("/nodes/43/parent"));
    },
    registerJSONPointer (pointer, node)
    {
