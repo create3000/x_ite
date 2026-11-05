@@ -422,7 +422,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       const pointers = new Map (Array .from (this .pointers, ([pointer, node]) =>
       {
          return [
-            pointer .replace (/^\/([a-z]+)\/\d+\//, (m, p1) => `/${p1}/${nums [p1] ?? 0}/`),
+            pointer .replace (/^\/([^/]+)\/\d+\//, (m, p1) => `/${p1}/${nums [p1] ?? 0}/`),
             node,
          ];
       }));
