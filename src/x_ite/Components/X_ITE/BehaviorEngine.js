@@ -55,11 +55,9 @@ function BehaviorEngine (executionContext)
    this .selectabilityNodes = [ ];
    this .animations         = [ ];
    this .transformNodes     = new Map ();
-   this .numChildren        = new Map ();
-   this .children           = new Map ();
-   this .parents            = new Map ();
    this .parents            = new Map ();
    this .pointers           = new Map ();
+   this .cache              = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode .prototype),
@@ -278,10 +276,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    set_nodes__ ()
    {
       this .transformNodes .clear ();
-      this .numChildren    .clear ();
-      this .children       .clear ();
       this .parents        .clear ();
       this .pointers       .clear ();
+      this .cache          .clear ();
 
       for (const node of this ._nodes)
       {
@@ -338,14 +335,17 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/nodes/${numNodes}/parent`,
          (pointer) =>
          {
-            const
-               nodeIndex       = +pointer .match (/^\/nodes\/(\d+)\//) [1],
-               parentNodeIndex = this .getParentNodeIndex (nodeIndex);
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  nodeIndex       = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+                  parentNodeIndex = this .getParentNodeIndex (nodeIndex);
 
-            if (parentNodeIndex !== undefined)
-               return [`/nodes/${parentNodeIndex}`];
+               if (parentNodeIndex !== undefined)
+                  return [`/nodes/${parentNodeIndex}`];
 
-            return [undefined];
+               return [undefined];
+            });
          },
          Function .prototype,
          "ref",
@@ -357,7 +357,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/nodes/${numNodes}/children.length`,
          (pointer) =>
          {
-            return this .numChildren .getOrInsertComputed (pointer, () =>
+            return this .cache .getOrInsertComputed (pointer, () =>
             {
                const
                   nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
@@ -380,7 +380,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/nodes/${numNodes}/children/${numNodes}`,
          (pointer) =>
          {
-            return this .children .getOrInsertComputed (pointer, () =>
+            return this .cache .getOrInsertComputed (pointer, () =>
             {
                const
                   match      = pointer .match (/^\/nodes\/(\d+)\/children\/(\d+)/),
