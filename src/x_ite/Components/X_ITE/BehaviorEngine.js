@@ -55,6 +55,9 @@ function BehaviorEngine (executionContext)
    this .selectabilityNodes = [ ];
    this .animations         = [ ];
    this .transformNodes     = new Map ();
+   this .numChildren        = new Map ();
+   this .children           = new Map ();
+   this .parents            = new Map ();
    this .parents            = new Map ();
    this .pointers           = new Map ();
 }
@@ -275,6 +278,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    set_nodes__ ()
    {
       this .transformNodes .clear ();
+      this .numChildren    .clear ();
+      this .children       .clear ();
       this .parents        .clear ();
       this .pointers       .clear ();
 
@@ -352,15 +357,18 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/nodes/${numNodes}/children.length`,
          (pointer) =>
          {
-            const
-               nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
-               node      = this .transformNodes .get (nodeIndex);
+            return this .numChildren .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+                  node      = this .transformNodes .get (nodeIndex);
 
-            const numChildren = node ?._children
-               .reduce ((count, child) => count + !!child ?.getValue () .getType ()
-                  .includes (X3DConstants .X3DTransformMatrix3DNode), 0);
+               const numChildren = node ?._children
+                  .reduce ((count, child) => count + !!child ?.getValue () .getType ()
+                     .includes (X3DConstants .X3DTransformMatrix3DNode), 0);
 
-            return [numChildren];
+               return [numChildren];
+            });
          },
          Function .prototype,
          "int",
@@ -372,24 +380,27 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/nodes/${numNodes}/children/${numNodes}`,
          (pointer) =>
          {
-            const
-               match      = pointer .match (/^\/nodes\/(\d+)\/children\/(\d+)/),
-               nodeIndex  = +match [1],
-               childIndex = +match [2],
-               node       = this .transformNodes .get (nodeIndex);
+            return this .children .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  match      = pointer .match (/^\/nodes\/(\d+)\/children\/(\d+)/),
+                  nodeIndex  = +match [1],
+                  childIndex = +match [2],
+                  node       = this .transformNodes .get (nodeIndex);
 
-            const children = node ._children ?.flatMap (child => child ?.getValue ())
-               .filter (childNode => childNode ?.getType ()
-                  .includes (X3DConstants .X3DTransformMatrix3DNode));
+               const children = node ._children ?.flatMap (child => child ?.getValue ())
+                  .filter (childNode => childNode ?.getType ()
+                     .includes (X3DConstants .X3DTransformMatrix3DNode));
 
-            const
-               childNode      = children [childIndex],
-               childNodeIndex = +childNode ?.getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+               const
+                  childNode      = children [childIndex],
+                  childNodeIndex = +childNode ?.getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-            if (childNodeIndex >= 0)
-               return [`/nodes/${childNodeIndex}`];
+               if (childNodeIndex >= 0)
+                  return [`/nodes/${childNodeIndex}`];
 
-            return [undefined];
+               return [undefined];
+            });
          },
          Function .prototype,
          "ref",
@@ -452,7 +463,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          this .registerJsonPointer (pointer, node);
 
       // DEBUG
-      // console .log (this .engine .resolveJsonPtr ("/nodes/43/parent") ?.getterCallback ("/nodes/43/parent"));
+      // console .log (this .engine .resolveJsonPtr ("/nodes/2/children.length") ?.getterCallback ("/nodes/2/children.length"));
    },
    registerJsonPointer (pointer, node)
    {
