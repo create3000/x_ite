@@ -484,31 +484,41 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             // if (DEVELOPMENT)
             //    console .log ("get", pointer);
 
-            const
-               node      = this .pointers .get (pointer),
-               field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
-               baseColor = GLTFPointerAliases .isBaseColor (node, field);
+            const [baseColor, field, transparency] = this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  node      = this .pointers .get (pointer),
+                  field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
+                  baseColor = GLTFPointerAliases .isBaseColor (node, field);
+
+               return [baseColor, field, node ._transparency];
+            });
 
             switch (field .getType ())
             {
                case X3DConstants .SFRotation:
                   return [... field .getValue () .getQuaternion (this .Quaternion)];
                default:
-                  return baseColor ? [... field, node ._transparency .getValue ()] : [... field];
+                  return baseColor ? [... field, transparency .getValue ()] : [... field];
             }
          } : () => [ ],
          field .isWritable () ? (pointer, value) =>
          {
-            const
-               node      = this .pointers .get (pointer),
-               field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
-               baseColor = GLTFPointerAliases .isBaseColor (node, field);
+            const [baseColor, field, transparency] = this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  node      = this .pointers .get (pointer),
+                  field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
+                  baseColor = GLTFPointerAliases .isBaseColor (node, field);
+
+               return [baseColor, field, node ._transparency];
+            });
 
             // if (DEVELOPMENT)
             //    console .log ("set", pointer, field .getName (), value);
 
             if (baseColor)
-               node ._transparency = value [3];
+               transparency .setValue (value [3]);
 
             switch (field .getType ())
             {
