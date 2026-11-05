@@ -364,8 +364,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       {
          return [
             pointer
-               .replace (/\/materials\/\d+\//, `/materials/${numMaterials}/`)
-               .replace (/\/nodes\/\d+\//, `/nodes/${numNodes}/`),
+               .replace (/^\/materials\/\d+\//, `/materials/${numMaterials}/`)
+               .replace (/^\/nodes\/\d+\//, `/nodes/${numNodes}/`),
             node,
          ];
       }));
@@ -381,7 +381,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       // Register getter and setter for the property.
 
-      const property = pointer .match (/\/nodes\/\d+\/([^/]+)$/) ?.[1];
+      const property = pointer .match (/^\/nodes\/\d+\/([^/]+)$/) ?.[1];
 
       if (property)
       {
