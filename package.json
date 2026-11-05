@@ -149,7 +149,6 @@
     "webpack-shell-plugin-next": "^2.3.3",
     "woff2-encoder": "^2.0.0",
     "wrapper-webpack-plugin": "^2.2.2",
-    "x3d-traverse": "^3.0.3",
     "yargs": "^18.2.0"
   }
 }

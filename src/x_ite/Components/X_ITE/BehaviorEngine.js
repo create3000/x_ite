@@ -7,7 +7,6 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import GLTFPointerAliases   from "../../Parser/GLTFPointerAliases.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
-import Traverse             from "../../../../node_modules/x3d-traverse/dist/traverse.mjs";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
