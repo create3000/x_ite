@@ -517,9 +517,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             // if (DEVELOPMENT)
             //    console .log ("set", pointer, field .getName (), value);
 
-            if (baseColor)
-               transparency .setValue (value [3]);
-
             switch (field .getType ())
             {
                case X3DConstants .SFBool:
@@ -530,8 +527,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   field .setValue (value);
                   break;
                case X3DConstants .SFColor:
+               {
                   field .setValue (this .Color3 .set (... value));
+
+                  if (baseColor)
+                     transparency .setValue (value [3]);
+
                   break;
+               }
                case X3DConstants .SFColorRGBA:
                   field .setValue (this .Color4 .set (... value));
                   break;
