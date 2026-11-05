@@ -373,6 +373,42 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/matrix`,
+         (pointer) =>
+         {
+            // if (DEVELOPMENT)
+            //    console .log ("get", pointer);
+
+            const node = this .pointers .get (pointer);
+
+            return [... node .getMatrix ()];
+         },
+         Function .prototype,
+         "float4x4",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/globalMatrix`,
+         (pointer) =>
+         {
+            // if (DEVELOPMENT)
+            //    console .log ("get", pointer);
+
+            const
+               node      = this .pointers .get (pointer),
+               nodeIndex = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+
+            return [... this .getModelMatrix (nodeIndex, new Matrix4 ())];
+         },
+         Function .prototype,
+         "float4x4",
+         true
+      );
+
+      // Register common node pointers.
+
       const pointers = new Map (Array .from (this .pointers, ([pointer, node]) =>
       {
          return [
@@ -383,73 +419,18 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          ];
       }));
 
-      // Register node properties.
+      pointers .delete (`/nodes/${numNodes}/matrix`);
+      pointers .delete (`/nodes/${numNodes}/globalMatrix`);
+
       for (const [pointer, node] of pointers)
          this .registerJSONPointer (pointer, node);
 
       // DEBUG
-      // console .log (this .engine .resolveJsonPtr ("/nodes/43/globalMatrix"));
+      // console .log (this .engine .resolveJsonPtr ("/nodes/43/parent"));
    },
    registerJSONPointer (pointer, node)
    {
       // Register getter and setter for the property.
-
-      const property = pointer .match (/^\/nodes\/\d+\/([^/]+)$/) ?.[1];
-
-      if (property)
-      {
-         switch (property)
-         {
-            case "matrix":
-            {
-               if (!node .getType () .includes (X3DConstants .X3DTransformNode))
-                  return console .warn (`Couldn't add pointer '${pointer}' for '${node .getTypeName ()}'.`);
-
-               this .engine .registerJsonPointer (
-                  pointer,
-                  (pointer) =>
-                  {
-                     // if (DEVELOPMENT)
-                     //    console .log ("get", pointer);
-
-                     const node = this .pointers .get (pointer);
-
-                     return [... node .getMatrix ()];
-                  },
-                  Function .prototype,
-                  "float4x4",
-                  true
-               );
-
-               return;
-            }
-            case "globalMatrix":
-            {
-               if (!node .getType () .includes (X3DConstants .X3DTransformNode))
-                  return console .warn (`Couldn't add pointer '${pointer}' for '${node .getTypeName ()}'.`);
-
-               this .engine .registerJsonPointer (
-                  pointer,
-                  (pointer) =>
-                  {
-                     // if (DEVELOPMENT)
-                     //    console .log ("get", pointer);
-
-                     const
-                        node      = this .pointers .get (pointer),
-                        nodeIndex = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
-
-                     return [... this .getModelMatrix (nodeIndex, new Matrix4 ())];
-                  },
-                  Function .prototype,
-                  "float4x4",
-                  true
-               );
-
-               return;
-            }
-         }
-      }
 
       const
          field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
