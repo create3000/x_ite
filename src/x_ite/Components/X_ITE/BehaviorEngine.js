@@ -414,12 +414,15 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       // Register common node pointers.
 
+      const nums = {
+         materials: numMaterials,
+         nodes: numNodes,
+      };
+
       const pointers = new Map (Array .from (this .pointers, ([pointer, node]) =>
       {
          return [
-            pointer
-               .replace (/^\/materials\/\d+\//, `/materials/${numMaterials}/`)
-               .replace (/^\/nodes\/\d+\//, `/nodes/${numNodes}/`),
+            pointer .replace (/^\/([a-z]+)\/\d+\//, (m, p1) => `/${p1}/${nums [p1] ?? 0}/`),
             node,
          ];
       }));
