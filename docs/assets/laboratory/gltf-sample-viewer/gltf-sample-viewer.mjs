@@ -699,22 +699,22 @@ const jpg = [
 ];
 
 const models = [
-   "https://create3000.github.io/media/glTF/Animated Bee/Animated Bee.glb",
-   "https://create3000.github.io/media/glTF/BlackDragon/BlackDragon.glb",
-   "https://create3000.github.io/media/glTF/Bonsai 1/Bonsai 1.gltf",
-   "https://create3000.github.io/media/glTF/BoxVideo/BoxVideo.gltf",
-   "https://create3000.github.io/media/glTF/Bus Stop 1/Bus Stop 1.gltf",
-   "https://create3000.github.io/media/glTF/Cactus/Cactus.glb",
-   "https://create3000.github.io/media/glTF/FurInstancing/FurInstancing.glb",
-   "https://create3000.github.io/media/glTF/Futuristic Bike/Futuristic Bike.gltf",
-   "https://create3000.github.io/media/glTF/GunBot/GunBot.glb",
-   "https://create3000.github.io/media/glTF/LeTonneauTavern/LeTonneauTavern.glb",
-   "https://create3000.github.io/media/glTF/NeilArmstrong/NeilArmstrong.glb",
-   "https://create3000.github.io/media/glTF/TeapotInstancing/TeapotInstancing.gltf",
-   "https://create3000.github.io/media/glTF/Telephone/Telephone.gltf",
-   "https://create3000.github.io/media/glTF/Walking Alien/Walking Alien.gltf",
-   "https://create3000.github.io/media/glTF/WebP/WebP.gltf",
-   "https://create3000.github.io/media/glTF/YetiWarrior/YetiWarrior.gltf",
+   "https://create3000.github.io/media/glTF/Animated Bee/glTF-Binary/Animated Bee.glb",
+   "https://create3000.github.io/media/glTF/BlackDragon/glTF-Binary/BlackDragon.glb",
+   "https://create3000.github.io/media/glTF/Bonsai 1/glTF/Bonsai 1.gltf",
+   "https://create3000.github.io/media/glTF/BoxVideo/glTF/BoxVideo.gltf",
+   "https://create3000.github.io/media/glTF/Bus Stop 1/glTF/Bus Stop 1.gltf",
+   "https://create3000.github.io/media/glTF/Cactus/glTF-Binary/Cactus.glb",
+   "https://create3000.github.io/media/glTF/FurInstancing/glTF-Binary/FurInstancing.glb",
+   "https://create3000.github.io/media/glTF/Futuristic Bike/glTF/Futuristic Bike.gltf",
+   "https://create3000.github.io/media/glTF/GunBot/glTF-Binary/GunBot.glb",
+   "https://create3000.github.io/media/glTF/LeTonneauTavern/glTF-Binary/LeTonneauTavern.glb",
+   "https://create3000.github.io/media/glTF/NeilArmstrong/glTF-Binary/NeilArmstrong.glb",
+   "https://create3000.github.io/media/glTF/TeapotInstancing/glTF/TeapotInstancing.gltf",
+   "https://create3000.github.io/media/glTF/Telephone/glTF/Telephone.gltf",
+   "https://create3000.github.io/media/glTF/Walking Alien/glTF/Walking Alien.gltf",
+   "https://create3000.github.io/media/glTF/WebP/glTF/WebP.gltf",
+   "https://create3000.github.io/media/glTF/YetiWarrior/glTF/YetiWarrior.gltf",
 ];
 
 // SAMPLES_END
