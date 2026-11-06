@@ -496,46 +496,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
-      // KHR_node_hoverability
-
-      this .engine .registerJsonPointer (
-         `/nodes/${numNodes}/extensions/KHR_node_hoverability/hoverable`,
-         (pointer) =>
-         {
-            const node = this .pointers .get (pointer);
-
-            return [node ?._enabled .getValue ()];
-         },
-         (pointer, value) =>
-         {
-            const node = this .pointers .get (pointer);
-
-            node ?._enabled .setValue (value);
-         },
-         "bool",
-         false
-      );
-
-      // KHR_node_selectability
-
-      this .engine .registerJsonPointer (
-         `/nodes/${numNodes}/extensions/KHR_node_selectability/selectable`,
-         (pointer) =>
-         {
-            const node = this .pointers .get (pointer);
-
-            return [node ?._enabled .getValue ()];
-         },
-         (pointer, value) =>
-         {
-            const node = this .pointers .get (pointer);
-
-            node ?._enabled .setValue (value);
-         },
-         "bool",
-         false
-      );
-
       // Register common node pointers.
 
       const nums = {
@@ -565,7 +525,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       // Register getter and setter for the property.
 
-      if (/(?:^\/meshes\/|\/hoverable$|\/selectable$)/ .test (pointer))
+      if (/(?:^\/meshes\/)/ .test (pointer))
          return;
 
       const
@@ -595,6 +555,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             switch (field .getType ())
             {
+               case X3DConstants .SFBool:
+               case X3DConstants .SFDouble:
+               case X3DConstants .SFFloat:
+               case X3DConstants .SFInt32:
+               case X3DConstants .SFTime:
+                  return [field .getValue ()];
                case X3DConstants .SFColor:
                   return baseColor ? [... field, 1 - transparency .getValue ()] : [... field];
                case X3DConstants .SFRotation:
