@@ -496,6 +496,46 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
+      // KHR_node_hoverability
+
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/extensions/KHR_node_hoverability/hoverable`,
+         (pointer) =>
+         {
+            const node = this .pointers .get (pointer);
+
+            return [node ._enabled .getValue ()];
+         },
+         (pointer, value) =>
+         {
+            const node = this .pointers .get (pointer);
+
+            node ._enabled .setValue (value);
+         },
+         "bool",
+         false
+      );
+
+      // KHR_node_selectability
+
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/extensions/KHR_node_selectability/selectable`,
+         (pointer) =>
+         {
+            const node = this .pointers .get (pointer);
+
+            return [node ._enabled .getValue ()];
+         },
+         (pointer, value) =>
+         {
+            const node = this .pointers .get (pointer);
+
+            node ._enabled .setValue (value);
+         },
+         "bool",
+         false
+      );
+
       // Register common node pointers.
 
       const nums = {
@@ -519,13 +559,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          this .registerJsonPointer (pointer, node);
 
       // DEBUG
-      // console .log (this .engine .resolveJsonPtr ("/nodes/2/children.length") ?.getterCallback ("/nodes/2/children.length"));
+      // console .log (this .engine .resolveJsonPtr ("/nodes/116/extensions/KHR_node_selectability/selectable") ?.getterCallback ("/nodes/116/extensions/KHR_node_selectability/selectable"));
    },
    registerJsonPointer (pointer, node)
    {
       // Register getter and setter for the property.
 
-      if (pointer .match (/^\/meshes\//))
+      if (pointer .match (/(?:^\/meshes\/|\/hoverable$|\/selectable$)/))
          return;
 
       const
