@@ -469,11 +469,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .behaviorEngine = behaviorEngine;
 
-      this .behavior = [
-         {
-            node: behaviorEngine,
-         },
-      ];
+      this .behavior = [{ node: behaviorEngine }];
    },
    addBehaviorNodes (glTF, KHR_interactivity)
    {
