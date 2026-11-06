@@ -1001,7 +1001,7 @@ class SampleViewer
    {
       return this .environmentLight ??= await (async () =>
       {
-         this .scene .addComponent (this .browser .getComponent ("CubeMapTexturing"));
+         this .scene .updateComponent (this .browser .getComponent ("CubeMapTexturing"));
 
          await this .browser .loadComponents (this .scene);
 
