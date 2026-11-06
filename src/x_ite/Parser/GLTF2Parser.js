@@ -475,6 +475,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!this .behavior)
          return;
 
+      // Collect pointers.
+
       const pointers = new Set ();
 
       for (const graph of KHR_interactivity .graphs)
@@ -494,7 +496,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
 
+      // Collect behavior nodes.
+
       this .behaviorNodes = new Set ();
+
+      // Top level pointers
 
       for (const pointer of pointers)
       {
@@ -513,10 +519,36 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          }
       }
 
+      // Primitives
+
+      if (Array .from (pointers) .some (pointer => pointer .includes ("/primitives/")))
+      {
+         const numMeshes = glTF .meshes ?.length ?? 0;
+
+         for (let m = 0; m < numMeshes; ++ m)
+         {
+            const numPrimitives = glTF .meshes [m] .primitives ?.length ?? 0;
+
+            for (let p = 0; p < numPrimitives; ++ p)
+               this .addBehaviorNode (`/meshes/${m}/primitives/${p}/material/`, this .behaviorNodes);
+         }
+      }
+
+      // Make pointers unique.
+
+      for (const node of this .behaviorNodes)
+      {
+         const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
+
+         node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
+      }
+
+      // Add behavior nodes.
+
       this .behaviorEngine ._nodes = Array .from (this .behaviorNodes);
       this .behaviorEngine .setup ();
    },
-   addBehaviorNode (pointer, nodes)
+   addBehaviorNode (pointer, behaviorNodes)
    {
       // Replace this just to find an node.
       const search = pointer
@@ -559,9 +591,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
 
       value .push (pointer);
-      node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
+      node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), value);
 
-      nodes .add (node);
+      behaviorNodes .add (node);
    },
    khrLightsPunctualObject (KHR_lights_punctual)
    {
