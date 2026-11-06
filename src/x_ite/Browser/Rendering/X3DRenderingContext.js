@@ -84,7 +84,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       const gl = this .getContext ();
 
-      if (!navigator .userAgent .match (/Firefox/))
+      if (!/Firefox/ .test (navigator .userAgent))
       {
          const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
@@ -98,7 +98,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       const gl = this .getContext ();
 
-      if (!navigator .userAgent .match (/Firefox/))
+      if (!/Firefox/ .test (navigator .userAgent))
       {
          const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 

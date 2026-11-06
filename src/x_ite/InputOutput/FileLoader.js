@@ -265,7 +265,7 @@ class FileLoader
 
          // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (this .resolvedURL .protocol !== "data:" && this .resolvedURL .href .match (/\.(?:html|htm|xhtml)$/))
+         if (this .resolvedURL .protocol !== "data:" && /\.(?:html|htm|xhtml)$/ .test (this .resolvedURL .href))
             return this .foreign (this .resolvedURL .href, this .target);
       }
 

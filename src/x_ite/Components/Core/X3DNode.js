@@ -906,7 +906,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (cdata ?.length === 0)
          cdata = null;
 
-      if (!cdata ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/)))
+      if (!cdata ?.some (string => /^\s*(?:data|ecmascript|javascript|vrmlscript):/ .test (string)))
          cdata = null;
 
       generator .IncIndent ();
@@ -1185,7 +1185,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (sourceText ?.length !== 1)
          sourceText = null;
 
-      if (!sourceText ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/)))
+      if (!sourceText ?.some (string => /^\s*(?:data|ecmascript|javascript|vrmlscript):/ .test (string)))
          sourceText = null;
 
       // Predefined fields

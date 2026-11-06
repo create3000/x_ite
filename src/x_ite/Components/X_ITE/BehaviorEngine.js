@@ -565,7 +565,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       // Register getter and setter for the property.
 
-      if (pointer .match (/(?:^\/meshes\/|\/hoverable$|\/selectable$)/))
+      if (/(?:^\/meshes\/|\/hoverable$|\/selectable$)/ .test (pointer))
          return;
 
       const
@@ -791,7 +791,7 @@ Object .defineProperties (BehaviorEngine,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",         new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",         new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",        new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "hoverability",  new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "selectability", new Fields .MFNode ()),

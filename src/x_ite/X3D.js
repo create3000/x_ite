@@ -155,7 +155,7 @@ Namespace, Namespace .Fields,
          return element .browser;
 
       return Array .from (document .querySelectorAll (String (element)))
-         .find (element => element .nodeName .match (/^(?:x3d-canvas|X3DCanvas)$/i)) ?.browser;
+         .find (element => /^(?:x3d-canvas|X3DCanvas)$/i .test (element .nodeName)) ?.browser;
    },
    createBrowser (... args)
    {

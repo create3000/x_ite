@@ -69,7 +69,7 @@ Object .assign (PLYAParser,
    },
    isValid (input)
    {
-      return input .match (/^ply\r?\nformat ascii 1.0/);
+      return /^ply\r?\nformat ascii 1.0/ .test (input);
    },
 });
 
@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          if (value)
             this .comments .push (value);
 
-         this .mustRotateAxes ||= !! value .match (/\b(?:Blender|Artec|Polycam)\b/i);
+         this .mustRotateAxes ||= /\b(?:Blender|Artec|Polycam)\b/i .test (value);
 
          return true;
       }
@@ -543,7 +543,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       // Geometric properties
 
-      this .alpha     = properties .some (p => p .name .match (/^(?:alpha|a)$/));
+      this .alpha     = properties .some (p => /^(?:alpha|a)$/ .test (p .name));
       this .colors    = colors;
       this .texCoords = texCoords;
       this .normals   = normals;

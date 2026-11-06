@@ -86,7 +86,7 @@ Object .assign (OBJParser,
    },
    isValid (input)
    {
-      return !! input .match (/^(?:[\x20\n\t\r]|#[^\r\n]*[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
+      return /^(?:[\x20\n\t\r]|#[^\r\n]*[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/ .test (input);
    },
 });
 
@@ -1039,7 +1039,7 @@ Object .assign (MaterialParser .prototype,
                   {
                      const
                         scene  = this .executionContext,
-                        repeat = !string .match (/-clamp\s+on/);
+                        repeat = !/-clamp\s+on/ .test (string);
 
                      texture = scene .createNode ("ImageTexture");
 

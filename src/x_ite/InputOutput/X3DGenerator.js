@@ -267,7 +267,7 @@ Object .assign (Generator .prototype,
 
       for (const node of namedNodes)
       {
-         if (node .getNodeName () .match (/^_\d+$/))
+         if (/^_\d+$/ .test (node .getNodeName ()))
             continue;
 
          names .add (node .getNodeName ());
@@ -338,7 +338,7 @@ Object .assign (Generator .prototype,
 
          // The node has no name.
 
-         if (name .match (/^(?:_\d+)?$/) && !this .NeedsName (baseNode))
+         if (/^(?:_\d+)?$/ .test (name) && !this .NeedsName (baseNode))
             return "";
 
          const newName = getUniqueName (names, name);

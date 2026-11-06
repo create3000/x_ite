@@ -339,7 +339,7 @@ Object .assign (X3DBrowserContext,
          browserContexts .push (browserContext);
 
          const keys = Object .keys (browserContext .prototype)
-            .filter (k => !k .match (/^(?:initialize|dispose)$/))
+            .filter (k => !/^(?:initialize|dispose)$/ .test (k))
             .concat (Object .getOwnPropertySymbols (browserContext .prototype));
 
          for (const key of keys)

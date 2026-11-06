@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
          try
          {
-            if (fileURL .pathname .endsWith (".gif") || fileURL .href .match (/^\s*data:image\/gif[;,]/))
+            if (fileURL .pathname .endsWith (".gif") || /^\s*data:image\/gif[;,]/ .test (fileURL .href))
             {
                const
                   data = await this .loadDocument (fileURL),
@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
                this .setGif (gif);
                return;
             }
-            else if (fileURL .pathname .endsWith (".png") || fileURL .href .match (/^\s*data:image\/png[;,]/))
+            else if (fileURL .pathname .endsWith (".png") || /^\s*data:image\/png[;,]/ .test (fileURL .href))
             {
                const
                   data      = await this .loadDocument (fileURL),

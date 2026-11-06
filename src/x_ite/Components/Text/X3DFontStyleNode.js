@@ -190,7 +190,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          const fileURL = new URL (fontFamily, executionContext .getBaseURL ());
 
-         if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
+         if (fileURL .protocol === "data:" || /\.(?:woff2|woff|otf|ttf)$/i .test (fileURL .pathname))
          {
             if (executionContext .getSpecificationVersion () >= 4.1)
                console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);

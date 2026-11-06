@@ -55,7 +55,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          {
             fileURL = new URL (fileURL);
 
-            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^\s*data:image\/ktx2[;,]/))
+            if (/\.ktx2?(?:\.gz)?$/ .test (fileURL .pathname) || /^\s*data:image\/ktx2[;,]/ .test (fileURL .href))
             {
                this .setLinear (true);
                this .setMipMaps (false);

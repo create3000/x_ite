@@ -99,7 +99,7 @@ Object .assign (X3DParser .prototype,
    },
    checkColorName (color, name)
    {
-      if (color .every (v => v === 1) && name .toLowerCase () !== "white" && name .match (/^[a-zA-Z]+$/))
+      if (color .every (v => v === 1) && name .toLowerCase () !== "white" && /^[a-zA-Z]+$/ .test (name))
          throw new Error ("Invalid color name.");
    },
    sanitizeName (name = "")

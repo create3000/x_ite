@@ -51,7 +51,7 @@ Object .assign (STLAParser,
    },
    isValid (input)
    {
-      return !! input .match (/^(?:[\x20\n\t\r]|;[^\r\n]*[\r\n])*\bsolid\b.*?\bendsolid\b/s);
+      return /^(?:[\x20\n\t\r]|;[^\r\n]*[\r\n])*\bsolid\b.*?\bendsolid\b/s .test (input);
    },
 });
 

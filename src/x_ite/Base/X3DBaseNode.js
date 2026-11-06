@@ -552,20 +552,25 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
 });
 
-const getFieldFromArray = (() =>
+function getFieldFromArray (array, name)
 {
-   const
-      set_field     = /^set_(.*?)$/,
-      field_changed = /^(.*?)_changed$/;
+   const field = array .get (name);
 
-   return function (array, name)
+   if (field)
+      return field;
+
+   const match = name .match (/^set_(.*?)$/);
+
+   if (match)
    {
-      const field = array .get (name);
+      const field = array .get (match [1]);
 
-      if (field)
+      if (field ?.getAccessType () === X3DConstants .inputOutput)
          return field;
-
-      const match = name .match (set_field);
+   }
+   else
+   {
+      const match = name .match (/^(.*?)_changed$/);
 
       if (match)
       {
@@ -574,20 +579,8 @@ const getFieldFromArray = (() =>
          if (field ?.getAccessType () === X3DConstants .inputOutput)
             return field;
       }
-      else
-      {
-         const match = name .match (field_changed);
-
-         if (match)
-         {
-            const field = array .get (match [1]);
-
-            if (field ?.getAccessType () === X3DConstants .inputOutput)
-               return field;
-         }
-      }
-   };
-})();
+   }
+}
 
 for (const key of Object .keys (X3DBaseNode .prototype))
    Object .defineProperty (X3DBaseNode .prototype, key, { enumerable: false });

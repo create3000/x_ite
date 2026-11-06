@@ -64,7 +64,7 @@ Object .assign (X3DNetworkingContext .prototype,
          base = getBaseURI (this .getElement ()),
          url  = new URL (value, base);
 
-      this [_baseURL] = url .protocol .match (/^(?:data|blob):$/) ? base : url .href;
+      this [_baseURL] = /^(?:data|blob):$/ .test (url .protocol) ? base : url .href;
    },
    getBrowserLoading ()
    {

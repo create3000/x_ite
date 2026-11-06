@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    getBaseURL ()
    {
-      if (this [_worldURL] .match (/^(?:data|blob):/))
+      if (/^(?:data|blob):/ .test (this [_worldURL]))
       {
          return this .getExecutionContext () ?.getBaseURL ()
             ?? this .getBrowser () .getBaseURL ();

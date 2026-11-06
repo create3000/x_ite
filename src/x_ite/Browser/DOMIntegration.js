@@ -195,7 +195,7 @@ class DOMIntegration
          parentNode = element .parentNode,
          parser     = this .parser;
 
-      if (parentNode .nodeName .match (/^(?:Scene|SCENE)$/))
+      if (/^(?:Scene|SCENE)$/ .test (parentNode .nodeName))
       {
          // Root scene or Inline scene.
 
@@ -258,7 +258,7 @@ class DOMIntegration
 
    processInlineElements (element)
    {
-      if (element .nodeName .match (/^(?:Inline|INLINE)$/))
+      if (/^(?:Inline|INLINE)$/ .test (element .nodeName))
          this .processInlineElement (element);
 
       for (const inlineElement of element .querySelectorAll ("Inline"))

@@ -184,7 +184,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
       {
          case "string":
          {
-            if (item .match (/^-+$/))
+            if (/^-+$/ .test (item))
                li .classList .add ("context-menu-separator", "context-menu-not-selectable");
 
             break;
@@ -708,12 +708,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          delete menu .items ["available-viewers"];
       }
 
-      if (!browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/))
+      if (!/^(?:EXAMINE|FLY)$/ .test (browser .getCurrentViewer ()))
       {
          delete menu .items ["straighten-horizon"];
       }
 
-      if (!browser .getCurrentViewer () .match (/^(?:WALK|FLY)$/))
+      if (!/^(?:WALK|FLY)$/ .test (browser .getCurrentViewer ()))
       {
          delete menu .items ["display-rubberband"];
       }

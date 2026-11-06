@@ -383,7 +383,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, X3DViewer .proto
    {
       const viewpoint = this .getActiveViewpoint ();
 
-      if (viewpoint .getTypeName () .match (/^(?:Viewpoint|GeoViewpoint)$/))
+      if (/^(?:Viewpoint|GeoViewpoint)$/ .test (viewpoint .getTypeName ()))
       {
          if (viewpoint ._fieldOfView .getValue () * viewpoint ._fieldOfViewScale .getValue () >= Math .PI)
             viewpoint ._fieldOfViewScale = (Math .PI - 0.001) / viewpoint ._fieldOfView .getValue ();

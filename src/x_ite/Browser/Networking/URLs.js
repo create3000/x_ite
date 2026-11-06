@@ -39,7 +39,7 @@ const URLs =
       if (!component)
          return "https://create3000.github.io/x_ite/";
 
-      const min = this .getScriptURL () .match (/\.min\.m?js$/) ? ".min" : "";
+      const min = /\.min\.m?js$/ .test (this .getScriptURL ()) ? ".min" : "";
 
       return new URL (`assets/components/${component}Component${min}.js`, this .getScriptURL ()) .href;
    },

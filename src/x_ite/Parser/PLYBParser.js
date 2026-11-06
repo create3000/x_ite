@@ -46,9 +46,9 @@ Object .assign (PLYBParser,
    {
       const
          text  = $.decodeText (input .slice (0, MAX_TEXT_LENGTH)),
-         magic = text .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
+         magic = /^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s .test (text);
 
-      return !! magic;
+      return magic;
    },
 });
 
