@@ -879,9 +879,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       const hit = this .getBrowser () .getHit ();
 
-      // TODO: pass hitPoint and hitRay
+      // Pass nodeIndex, hitPoint and hitRay.point.
 
-      this .engine .select (this .getHitNodeIndex (hit, nodeIndex));
+      this .engine .select (this .getHitNodeIndex (hit, nodeIndex), 0, [... hit .point], [... hit .ray .point]);
 
       if (DEVELOPMENT)
          console .log ("select", nodeIndex, this .getHitNodeIndex (hit, nodeIndex));
