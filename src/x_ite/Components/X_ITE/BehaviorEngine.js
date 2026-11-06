@@ -423,7 +423,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   childIndex = +match [2],
                   node       = this .transformNodes .get (nodeIndex);
 
-               const children = node ._children ?.flatMap (child => child ?.getValue ())
+               const children = node ._children .flatMap (child => child ?.getValue ())
                   .filter (childNode => childNode ?.getType ()
                      .includes (X3DConstants .X3DTransformMatrix3DNode));
 
