@@ -1,7 +1,7 @@
 /* X_ITE v16.7.0 */
 var __webpack_modules__ = ({
 
-/***/ 23
+/***/ 197
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 701
+/***/ 399
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 301
+/***/ 803
 (module) {
 
 /**
@@ -7459,7 +7459,7 @@ Object .assign (Generator .prototype,
 
       for (const node of namedNodes)
       {
-         if (node .getNodeName () .match (/^_\d+$/))
+         if (/^_\d+$/ .test (node .getNodeName ()))
             continue;
 
          names .add (node .getNodeName ());
@@ -7530,7 +7530,7 @@ Object .assign (Generator .prototype,
 
          // The node has no name.
 
-         if (name .match (/^(?:_\d+)?$/) && !this .NeedsName (baseNode))
+         if (/^(?:_\d+)?$/ .test (name) && !this .NeedsName (baseNode))
             return "";
 
          const newName = getUniqueName (names, name);
@@ -14351,10 +14351,10 @@ const SFNode_handler =
 
             // Specification conform would be: `accessType & X3DConstants .outputOnly`.
             // However, we also allow read access to initializeOnly fields.
-            if (field .getAccessType () === Base_X3DConstants .inputOnly)
-               return;
+            if (field .isReadable ())
+               return field .valueOf ();
 
-            return field .valueOf ();
+            return;
          }
       }
       catch
@@ -14372,11 +14372,13 @@ const SFNode_handler =
                node  = target .getValue (),
                field = node ?.getField (key);
 
-            if (field .getAccessType () === Base_X3DConstants .outputOnly)
-               return false;
+            if (field .isWritable ())
+            {
+               field .setValue (value);
+               return true;
+            }
 
-            field .setValue (value);
-            return true;
+            return false;
          }
       }
       catch
@@ -18730,20 +18732,25 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, Base_X3DChildObj
    },
 });
 
-const getFieldFromArray = (() =>
+function getFieldFromArray (array, name)
 {
-   const
-      set_field     = /^set_(.*?)$/,
-      field_changed = /^(.*?)_changed$/;
+   const field = array .get (name);
 
-   return function (array, name)
+   if (field)
+      return field;
+
+   const match = name .match (/^set_(.*?)$/);
+
+   if (match)
    {
-      const field = array .get (name);
+      const field = array .get (match [1]);
 
-      if (field)
+      if (field ?.getAccessType () === Base_X3DConstants .inputOutput)
          return field;
-
-      const match = name .match (set_field);
+   }
+   else
+   {
+      const match = name .match (/^(.*?)_changed$/);
 
       if (match)
       {
@@ -18752,20 +18759,8 @@ const getFieldFromArray = (() =>
          if (field ?.getAccessType () === Base_X3DConstants .inputOutput)
             return field;
       }
-      else
-      {
-         const match = name .match (field_changed);
-
-         if (match)
-         {
-            const field = array .get (match [1]);
-
-            if (field ?.getAccessType () === Base_X3DConstants .inputOutput)
-               return field;
-         }
-      }
-   };
-})();
+   }
+}
 
 for (const key of Object .keys (X3DBaseNode .prototype))
    Object .defineProperty (X3DBaseNode .prototype, key, { enumerable: false });
@@ -20179,7 +20174,6 @@ Object .defineProperties (BrowserOptions,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "LogarithmicDepthBuffer",       new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "MaximumFrameRate",             new x_ite_Fields .SFDouble (80)),
          // A string, which is set to the *reference* field of metadata nodes, when they are created.
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "MetadataReference",            new x_ite_Fields .SFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Multisampling",                new x_ite_Fields .SFInt32 (4)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Mute",                         new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "Notifications",                new x_ite_Fields .SFBool (true)),
@@ -20594,7 +20588,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
       {
          case "string":
          {
-            if (item .match (/^-+$/))
+            if (/^-+$/ .test (item))
                li .classList .add ("context-menu-separator", "context-menu-not-selectable");
 
             break;
@@ -21118,12 +21112,12 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, Base_X3DBaseNode
          delete menu .items ["available-viewers"];
       }
 
-      if (!browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/))
+      if (!/^(?:EXAMINE|FLY)$/ .test (browser .getCurrentViewer ()))
       {
          delete menu .items ["straighten-horizon"];
       }
 
-      if (!browser .getCurrentViewer () .match (/^(?:WALK|FLY)$/))
+      if (!/^(?:WALK|FLY)$/ .test (browser .getCurrentViewer ()))
       {
          delete menu .items ["display-rubberband"];
       }
@@ -21354,7 +21348,7 @@ const URLs =
       if (!component)
          return "https://create3000.github.io/x_ite/";
 
-      const min = this .getScriptURL () .match (/\.min\.m?js$/) ? ".min" : "";
+      const min = /\.min\.m?js$/ .test (this .getScriptURL ()) ? ".min" : "";
 
       return new URL (`assets/components/${component}Component${min}.js`, this .getScriptURL ()) .href;
    },
@@ -21813,16 +21807,16 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
 
       return metadataObject ? Array .from (metadataObject .value) : [ ];
    },
-   setMetaData (path, value)
+   setMetaData (path, reference, value)
    {
       const names = path .split ("/");
 
       if (names .length < 2)
-         return;
+         throw new Error ("Couldn't set metadata value: Key must consist of at least two parts.");
 
       const
          last        = names .pop (),
-         metadataSet = this .getMetadataSet (names, true);
+         metadataSet = this .getMetadataSet (names, reference, true);
 
       if (value instanceof Base_X3DField)
       {
@@ -21914,7 +21908,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
          value .type = "double";
       }
 
-      metadataSet .getValue () .setMetaValue (last, value);
+      metadataSet .getValue () .setMetaValue (last, reference, value);
 
       this .processMetaDataCallback (path);
    },
@@ -21943,7 +21937,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       if (removeMetaData (this .getMetadataSet ([names .shift ()]), names))
          this ._metadata = null;
    },
-   getMetadataSet (names, create = false)
+   getMetadataSet (names, reference, create = false)
    {
       const name = names .shift ();
 
@@ -21954,17 +21948,19 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
          if (!create)
             return null;
 
-         this ._metadata = this .getExecutionContext () .createNode ("MetadataSet");
+         const executionContext = this .getExecutionContext ();
+
+         this ._metadata = executionContext .createNode ("MetadataSet");
          metadataSet     = this ._metadata .valueOf ();
 
-         this .getExecutionContext () .addNamedNode (this .getExecutionContext () .getUniqueName (name), metadataSet);
+         executionContext .addNamedNode (executionContext .getUniqueName (name), metadataSet);
 
-         metadataSet .reference = this .getBrowser () .getBrowserOption ("MetadataReference");
+         metadataSet .reference = reference;
          metadataSet .name      = name;
       }
 
       for (const name of names)
-         metadataSet = metadataSet .getValue () .getMetadataObject ("MetadataSet", name, create);
+         metadataSet = metadataSet .getValue () .getMetadataObject ("MetadataSet", name, reference, create);
 
       return metadataSet;
    },
@@ -22287,7 +22283,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       if (cdata ?.length === 0)
          cdata = null;
 
-      if (!cdata ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/)))
+      if (!cdata ?.some (string => /^\s*(?:data|ecmascript|javascript|vrmlscript):/ .test (string)))
          cdata = null;
 
       generator .IncIndent ();
@@ -22566,7 +22562,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
       if (sourceText ?.length !== 1)
          sourceText = null;
 
-      if (!sourceText ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript):/)))
+      if (!sourceText ?.some (string => /^\s*(?:data|ecmascript|javascript|vrmlscript):/ .test (string)))
          sourceText = null;
 
       // Predefined fields
@@ -26005,7 +26001,7 @@ Object .assign (X3DParser .prototype,
    },
    checkColorName (color, name)
    {
-      if (color .every (v => v === 1) && name .toLowerCase () !== "white" && name .match (/^[a-zA-Z]+$/))
+      if (color .every (v => v === 1) && name .toLowerCase () !== "white" && /^[a-zA-Z]+$/ .test (name))
          throw new Error ("Invalid color name.");
    },
    sanitizeName (name = "")
@@ -26349,10 +26345,10 @@ Object .assign (VRMLParser,
       if (typeof input !== "string")
          return false;
 
-      if (input .match (/^#VRML V1.0/))
+      if (/^#VRML V1.0/ .test (input))
          return false;
 
-      return !! input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*(?:PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*\{|$))/s);
+      return /^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*(?:PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*\{|$))/s .test (input);
    },
 });
 
@@ -30803,6 +30799,9 @@ Object .assign (X3DOptimizer .prototype,
       if (!this .combineGroupingNodes)
          return node;
 
+      if (node .metadata)
+         return node;
+
       if (node .getValue () .hasRoutes ())
          return node;
 
@@ -30821,6 +30820,9 @@ Object .assign (X3DOptimizer .prototype,
       }
 
       if (!node .getNodeType () .includes (Base_X3DConstants .X3DGroupingNode))
+         return node;
+
+      if (node .children .some (child => child ?.getNodeType () .includes (Base_X3DConstants .X3DPointingDeviceSensorNode)))
          return node;
 
       if (!node .visible)
@@ -31225,7 +31227,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(301);
+/* provided dependency */ var libtess = __webpack_require__(803);
 
 
 const Triangle3 =
@@ -32362,9 +32364,9 @@ function X3DRenderObject (executionContext)
    this .viewMatrixArray          = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
    this .hitRay                   = new Geometry_Line3 ();
-   this .path                     = [ ];
    this .sensors                  = [[ ]];
    this .viewpointGroups          = [ ];
+   this .path                     = [ ];
    this .lights                   = new Map ();
    this .globalLightsKeys         = [ ];
    this .globalLights             = [ ];
@@ -32549,9 +32551,13 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .hitRay;
    },
-   getPath ()
+   getShapeParent ()
    {
-      return this .path;
+      return this .shapeParent;
+   },
+   setShapeParent (shapeParent)
+   {
+      this .shapeParent = shapeParent;
    },
    getSensors ()
    {
@@ -32560,6 +32566,10 @@ Object .assign (X3DRenderObject .prototype,
    getViewpointGroups ()
    {
       return this .viewpointGroups;
+   },
+   getPath ()
+   {
+      return this .path;
    },
    getLights ()
    {
@@ -32937,6 +32947,7 @@ Object .assign (X3DRenderObject .prototype,
          renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .hAnimNode = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
          renderContext .shapeNode = shapeNode;
+         renderContext .shapeParent = this .shapeParent;
 
          // Clip planes & sensors
 
@@ -34405,6 +34416,8 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
       {
          case Rendering_TraverseType .POINTER:
          {
+            renderObject .setShapeParent (this);
+            
             const { sensors, pointingDeviceSensorNodes, clipPlaneNodes, pointingObjects } = this;
 
             if (pointingDeviceSensorNodes .size)
@@ -37884,7 +37897,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
          {
             fileURL = new URL (fileURL);
 
-            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^\s*data:image\/ktx2[;,]/))
+            if (/\.ktx2?(?:\.gz)?$/ .test (fileURL .pathname) || /^\s*data:image\/ktx2[;,]/ .test (fileURL .href))
             {
                this .setLinear (true);
                this .setMipMaps (false);
@@ -40391,7 +40404,66 @@ const Layer_default_ = Layer;
 ;
 
 /* harmony default export */ const Layering_Layer = (x_ite_Namespace .add ("Layer", Layer_default_));
+;// ./src/x_ite/Parser/GLTFPointerAliases.js
+class GLTFPointerAliases
+{
+   static #aliases = new Map ();
+
+   static addAlias (typeName, field, alias)
+   {
+      const key = `${typeName}.${field}`;
+
+      this .#aliases .set (key, alias);
+   }
+
+   static getAlias (path, node)
+   {
+      const
+         field = path .match (/([^/]+)$/) [1] .replace (/Factor$/, ""),
+         key   = `${node .getTypeName ()}.${field}`;
+
+      return this .#aliases .get (key) ?? field;
+   }
+
+   static isBaseColor (node, field)
+   {
+      switch (node .getTypeName ())
+      {
+         case "PhysicalMaterial":
+            return field .getName () === "baseColor";
+         case "SpecularGlossinessMaterial":
+         case "Material":
+            return field .getName () === "diffuseColor";
+         case "UnlitMaterial":
+            return field .getName () === "emissiveColor";
+         default:
+            return false;
+      }
+   }
+}
+
+GLTFPointerAliases .addAlias ("OrthoViewpoint", "zfar",           "farDistance");
+GLTFPointerAliases .addAlias ("OrthoViewpoint", "znear",          "nearDistance");
+GLTFPointerAliases .addAlias ("PointLight",     "range",          "radius");
+GLTFPointerAliases .addAlias ("Script",         "offset",         "translation");
+GLTFPointerAliases .addAlias ("SpotLight",      "innerConeAngle", "beamWidth");
+GLTFPointerAliases .addAlias ("SpotLight",      "outerConeAngle", "cutOffAngle");
+GLTFPointerAliases .addAlias ("SpotLight",      "range",          "radius");
+GLTFPointerAliases .addAlias ("Switch",         "scene",          "whichChoice");
+GLTFPointerAliases .addAlias ("TouchSensor",    "hoverable",      "enabled");
+GLTFPointerAliases .addAlias ("TouchSensor",    "selectable",     "enabled");
+GLTFPointerAliases .addAlias ("UnlitMaterial",  "baseColor",      "emissiveColor");
+GLTFPointerAliases .addAlias ("Viewpoint",      "yfov",           "fieldOfView");
+GLTFPointerAliases .addAlias ("Viewpoint",      "zfar",           "farDistance");
+GLTFPointerAliases .addAlias ("Viewpoint",      "znear",          "nearDistance");
+
+const GLTFPointerAliases_default_ = GLTFPointerAliases;
+;
+
+/* harmony default export */ const Parser_GLTFPointerAliases = (x_ite_Namespace .add ("GLTFPointerAliases", GLTFPointerAliases_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
+
+
 
 
 
@@ -40520,11 +40592,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (!(glTF instanceof Object))
          return;
 
-      // Set profile and components.
-
       const
          browser = this .getBrowser (),
          scene   = this .getScene ();
+
+      // Set profile and components.
 
       scene .setEncoding ("GLTF");
       scene .setProfile (browser .getProfile ("Interchange"));
@@ -40537,11 +40609,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       this .assetObject (glTF .asset, glTF .extensions);
       await this .extensionsArray (glTF .extensionsRequired, this .extensions);
       await this .extensionsArray (glTF .extensionsUsed, this .extensions);
+      await browser .loadComponents (scene);
+
       this .extensionsObject (glTF .extensions);
 
-      await browser .loadComponents (scene);
       await this .buffersArray (glTF .buffers);
-
       this .bufferViewsArray (glTF .bufferViews);
       this .accessorsArray   (glTF .accessors);
       this .samplersArray    (glTF .samplers);
@@ -40560,9 +40632,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       this .skinsBBox       ();
       this .animationsArray (glTF .animations);
 
+      this .addBehaviorNodes (glTF, glTF .extensions ?.KHR_interactivity);
       this .viewpointsCenterOfRotation (scene);
       this .optimizeSceneGraph (scene .getRootNodes ());
 
+      this .exportGroup ("Behavior",          this .behavior);
       this .exportGroup ("EnvironmentLights", this .envLights);
       this .exportGroup ("Lights",            this .lights);
       this .exportGroup ("Viewpoints",        this .cameras);
@@ -40656,10 +40730,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_iridescence":
             case "KHR_materials_pbrSpecularGlossiness":
             case "KHR_materials_retroreflection":
+            case "KHR_materials_scatter":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
-            case "KHR_materials_scatter":
             case "KHR_materials_volume_scatter": // Legacy
             case "KHR_materials_volume":
             {
@@ -40682,11 +40756,23 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                components .push (browser .getComponent ("GaussianSplats", 1));
                break;
             }
+            case "KHR_interactivity":
+            {
+               components .push (browser .getComponent ("X_ITE",     1));
+               components .push (browser .getComponent ("Scripting", 1));
+               break;
+            }
             case "KHR_meshopt_compression":
             case "EXT_meshopt_compression":
             {
                this .MeshoptDecoder ??= await this .getLibrary ("meshopt_decoder.js");
                await this .MeshoptDecoder .ready;
+               break;
+            }
+            case "KHR_node_hoverability":
+            case "KHR_node_selectability":
+            {
+               components .push (browser .getComponent ("PointingDeviceSensor", 1));
                break;
             }
             case "KHR_texture_transform":
@@ -40723,6 +40809,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          {
             case "EXT_lights_image_based":
                this .extLightsImageBasedObject (value);
+               break;
+            case "KHR_interactivity":
+               this .hhrInteractivity (value);
                break;
             // https://github.com/KhronosGroup/glTF/pull/1956
             // case "KHR_lights_environment": // in development
@@ -40825,6 +40914,151 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       return light .node = lightNode;
    },
+   hhrInteractivity (KHR_interactivity)
+   {
+      if (!(KHR_interactivity instanceof Object))
+         return;
+
+      if (!(KHR_interactivity .graphs instanceof Array))
+         return;
+
+      const
+         scene          = this .getScene (),
+         behaviorEngine = scene .createNode ("BehaviorEngine", false);
+
+      behaviorEngine ._graph  = KHR_interactivity .graph;
+      behaviorEngine ._graphs = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
+
+      scene .addExportedNode (scene .getUniqueExportName ("BehaviorEngine"), behaviorEngine);
+
+      this .behaviorEngine = behaviorEngine;
+      this .behavior       = [{ node: behaviorEngine }];
+   },
+   addBehaviorNodes (glTF, KHR_interactivity)
+   {
+      if (!this .behavior)
+         return;
+
+      // Collect pointers.
+
+      const pointers = new Set ();
+
+      for (const graph of KHR_interactivity .graphs)
+      {
+         if (!(graph .nodes instanceof Array))
+            continue;
+
+         for (const node of graph .nodes)
+         {
+            const value = node ?.configuration ?.pointer ?.value;
+
+            if (!(value instanceof Array))
+               continue;
+
+            for (const pointer of value)
+               pointers .add (pointer);
+         }
+      }
+
+      // Collect behavior nodes.
+
+      this .behaviorNodes = new Set ();
+
+      // Top level pointers
+
+      for (const pointer of pointers)
+      {
+         const key = pointer .match (/^\/([^/]+)\/[{[].*?[\]}]/);
+
+         if (key)
+         {
+            const length = glTF [key [1]] ?.length ?? 0;
+
+            for (let i = 0; i < length; ++ i)
+               this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
+         }
+         else
+         {
+            this .addBehaviorNode (pointer, this .behaviorNodes);
+         }
+      }
+
+      // Primitives
+
+      if (Array .from (pointers) .some (pointer => pointer .includes ("/primitives/")))
+      {
+         const numMeshes = glTF .meshes ?.length ?? 0;
+
+         for (let m = 0; m < numMeshes; ++ m)
+         {
+            const numPrimitives = glTF .meshes [m] .primitives ?.length ?? 0;
+
+            for (let p = 0; p < numPrimitives; ++ p)
+               this .addBehaviorNode (`/meshes/${m}/primitives/${p}/material`, this .behaviorNodes);
+         }
+      }
+
+      // Make pointers unique.
+
+      for (const node of this .behaviorNodes)
+      {
+         const value = node .getMetaData ("Interactivity/pointer", new x_ite_Fields .MFString ());
+
+         node .setMetaData ("Interactivity/pointer", Networking_URLs .getProviderURL (), x_ite_Fields .MFString .from (new Set (value)));
+      }
+
+      // Add behavior nodes.
+
+      this .behaviorEngine ._nodes = Array .from (this .behaviorNodes);
+      this .behaviorEngine .setup ();
+   },
+   addBehaviorNode (pointer, behaviorNodes)
+   {
+      // Replace this just to find an node.
+      const search = pointer
+         .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
+         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material)/, "$1/transparency");
+
+      const [node, field] = this .getAnimationPointer (search);
+
+      if (!(node && field))
+      {
+         if (DEVELOPMENT)
+            console .warn (`No node found for pointer '${pointer}'.`);
+
+         return;
+      }
+
+      const nodeIndexMatch = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
+
+      if (nodeIndexMatch)
+      {
+         const
+            nodeIndex = +nodeIndexMatch [1],
+            mesh      = this .nodes [nodeIndex] .mesh;
+
+         node .setMetaData ("Interactivity/node", Networking_URLs .getProviderURL (), new x_ite_Fields .SFInt32 (nodeIndex));
+
+         if (mesh !== undefined)
+            node .setMetaData (`Interactivity/mesh`, Networking_URLs .getProviderURL (), new x_ite_Fields .SFInt32 (mesh));
+      }
+
+      const materialIndexMatch = pointer .match (/^\/materials\/(\d+)\//);
+
+      if (materialIndexMatch && node .getType () .includes (Base_X3DConstants .X3DMaterialNode))
+      {
+         const materialIndex = +materialIndexMatch [1];
+
+         node .setMetaData ("Interactivity/material", Networking_URLs .getProviderURL (), new x_ite_Fields .SFInt32 (materialIndex));
+      }
+
+      const value = node .getMetaData ("Interactivity/pointer", new x_ite_Fields .MFString ());
+
+      value .push (pointer);
+      node .setMetaData ("Interactivity/pointer", Networking_URLs .getProviderURL (), value);
+
+      behaviorNodes .add (node);
+   },
    khrLightsPunctualObject (KHR_lights_punctual)
    {
       if (!(KHR_lights_punctual instanceof Object))
@@ -40903,10 +41137,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       lightNode ._cutOffAngle = this .numberValue (light .outerConeAngle, Math .PI / 4);
       lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
 
-      this .addAnimationPointerAlias (lightNode, "range",          "radius");
-      this .addAnimationPointerAlias (lightNode, "outerConeAngle", "cutOffAngle");
-      this .addAnimationPointerAlias (lightNode, "innerConeAngle", "beamWidth");
-
       return lightNode;
    },
    pointLight (light)
@@ -40916,8 +41146,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          lightNode = scene .createNode ("PointLight", false);
 
       lightNode ._radius = this .numberValue (light .range, 0) || -1;
-
-      this .addAnimationPointerAlias (lightNode, "range", "radius");
 
       return lightNode;
    },
@@ -42027,7 +42255,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       unlitMaterialNode ._transparency           = materialNode ._transparency;
 
       unlitMaterialNode .setup ();
-      this .addAnimationPointerAlias (unlitMaterialNode, "baseColor", "emissiveColor");
 
       materialNode .dispose ();
 
@@ -42141,7 +42368,6 @@ function eventsProcessed ()
                scene .addNamedNode (scene .getUniqueName ("CombineTextureMatrixScript"), scriptNode);
                scene .addRoute (scriptNode, "value_changed", textureTransformNode, "set_matrix");
 
-               this .addAnimationPointerAlias (scriptNode, "offset", "translation");
                this .animationScripts .push (scriptNode);
 
                Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
@@ -42161,7 +42387,7 @@ function eventsProcessed ()
 
       this .meshes = meshes;
    },
-   meshObject (mesh, skin, EXT_mesh_gpu_instancing)
+   meshObject (mesh, skin, weights, EXT_mesh_gpu_instancing)
    {
       if (!(mesh instanceof Object))
          return;
@@ -42180,8 +42406,8 @@ function eventsProcessed ()
       }
 
       // Actually shapeNodes are not always Shape nodes, it also can be a Switch nodes from variants
-      // or a GaussianSplats node.
-      const shapeNodes = this .primitivesArray (mesh, skin, EXT_mesh_gpu_instancing);
+      // or a GaussianSplats node. TODO: should be called meshNodes.
+      const shapeNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing);
 
       // Name Shape nodes.
 
@@ -42204,7 +42430,7 @@ function eventsProcessed ()
 
       return mesh .shapeNodes = shapeNodes;
    },
-   primitivesArray ({ primitives, weights }, skin, EXT_mesh_gpu_instancing)
+   primitivesArray (primitives, skin, weights, EXT_mesh_gpu_instancing)
    {
       if (!(primitives instanceof Array))
          return [ ];
@@ -42586,9 +42812,6 @@ function eventsProcessed ()
 
       viewpointNode .setup ();
 
-      this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
-      this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
-
       Object .defineProperty (camera, "pointers",
       {
          get: () =>
@@ -42646,10 +42869,6 @@ function eventsProcessed ()
 
       viewpointNode .setup ();
 
-      this .addAnimationPointerAlias (viewpointNode, "yfov",  "fieldOfView");
-      this .addAnimationPointerAlias (viewpointNode, "znear", "nearDistance");
-      this .addAnimationPointerAlias (viewpointNode, "zfar",  "farDistance");
-
       camera .pointers = [viewpointNode];
 
       return viewpointNode;
@@ -42665,7 +42884,7 @@ function eventsProcessed ()
       // 2. Add children.
 
       this .nodes .forEach (node => this .nodeSkeleton (node));
-      this .nodes .forEach (node => this .nodeChildren (node));
+      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
    },
    nodeObject (node, index)
    {
@@ -42721,7 +42940,7 @@ function eventsProcessed ()
          quaternion       = new Numbers_Quaternion (),
          matrix           = new Numbers_Matrix4 ();
 
-      return function (node)
+      return function (node, index)
       {
          const
             scene         = this .getScene (),
@@ -42743,7 +42962,7 @@ function eventsProcessed ()
 
          const
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
-            shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
+            shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, node .weights, EXT_mesh_gpu_instancing);
 
          // Add camera.
 
@@ -42754,7 +42973,7 @@ function eventsProcessed ()
 
          // Handle extensions.
 
-         this .nodeExtensions (node);
+         this .nodeExtensions (node, index);
 
          // Add children.
 
@@ -42833,7 +43052,7 @@ function eventsProcessed ()
          }
       };
    })(),
-   nodeExtensions (node)
+   nodeExtensions (node, index)
    {
       if (!(node .extensions instanceof Object))
          return;
@@ -42855,11 +43074,57 @@ function eventsProcessed ()
                node .transformNode ._children .push (lightNode);
                break;
             }
+            case "KHR_node_hoverability":
+            {
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_hoverability
+
+               const
+                  scene           = this .getScene (),
+                  touchSensorNode = scene .createNode ("TouchSensor", false);
+
+               touchSensorNode ._enabled = extension .hoverable ?? true;
+               touchSensorNode .setup ();
+
+               node .transformNode ._children .push (touchSensorNode);
+
+               extension .pointers = [touchSensorNode];
+
+               if (this .behavior)
+               {
+                  touchSensorNode .setMetaData ("Interactivity/node", Networking_URLs .getProviderURL (), new x_ite_Fields .SFInt32 (index));
+                  this .behaviorEngine ._hoverability .push (touchSensorNode);
+               }
+
+               break;
+            }
+            case "KHR_node_selectability":
+            {
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_selectability
+
+               const
+                  scene           = this .getScene (),
+                  touchSensorNode = scene .createNode ("TouchSensor", false);
+
+               touchSensorNode ._enabled = extension .selectable ?? true;
+               touchSensorNode .setup ();
+
+               node .transformNode ._children .push (touchSensorNode);
+
+               extension .pointers = [touchSensorNode];
+
+               if (this .behavior)
+               {
+                  touchSensorNode .setMetaData ("Interactivity/node", Networking_URLs .getProviderURL (), new x_ite_Fields .SFInt32 (index));
+                  this .behaviorEngine ._selectability .push (touchSensorNode);
+               }
+
+               break;
+            }
             case "KHR_node_visibility":
             {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
-               extension .pointers       = [node .childNode];
-               node .childNode ._visible = extension .visible ?? true;
+               extension .pointers           = [node .transformNode];
+               node .transformNode ._visible = extension .visible ?? true;
                break;
             }
          }
@@ -43147,8 +43412,6 @@ function eventsProcessed ()
 
             switchNode .setup ();
 
-            this .addAnimationPointerAlias (switchNode, "scene", "whichChoice");
-
             glTF .pointers = [switchNode];
 
             scene .getRootNodes () .push (switchNode);
@@ -43181,7 +43444,7 @@ function eventsProcessed ()
                node  = nodes [0];
 
             if (!node .getName ())
-               scene .addNamedNode (scene .getUniqueName (`Scene${index}`), node);
+               scene .addNamedNode (scene .getUniqueName (`Scene-${index}`), node);
 
             return node;
          }
@@ -43190,7 +43453,7 @@ function eventsProcessed ()
             const
                scene     = this .getScene (),
                groupNode = scene .createNode ("Group", false),
-               name      = this .sanitizeName (scene .name) || `Scene${index}`;
+               name      = this .sanitizeName (scene .name) || `Scene-${index}`;
 
             scene .addNamedNode (scene .getUniqueName (name), groupNode);
 
@@ -43247,7 +43510,7 @@ function eventsProcessed ()
       switchNode ._visible     = false;
 
       switchNode .setup ();
-      switchNode .setMetaData ("MaterialVariants/names", new x_ite_Fields .MFString (... names));
+      switchNode .setMetaData ("Interactivity/materialVariants", Networking_URLs .getProviderURL (), x_ite_Fields .MFString .fromArray (names));
 
       for (const variantNode of this .materialVariantNodes)
          scene .addRoute (switchNode, "whichChoice", variantNode, "whichChoice");
@@ -43292,6 +43555,9 @@ function eventsProcessed ()
       groupNode .setup ();
 
       animation .node = groupNode;
+
+      if (this .behaviorEngine)
+         this .behaviorEngine ._animations [id] = timeSensorNode;
    },
    animationChannelsArray (channels, samplers, timeSensorNode)
    {
@@ -43379,6 +43645,9 @@ function eventsProcessed ()
 
       for (const scriptNode of scriptNodes)
       {
+         if (this .behaviorNodes ?.has (scriptNode))
+            continue;
+
          if (scriptNode .getFields () .every (field => !field .getInputRoutes () .size))
          {
             scriptNode .dispose ();
@@ -44328,7 +44597,7 @@ function eventsProcessed ()
                interpolatorNodes .push (interpolatorNode);
 
                // These are currently the only two affected fields, which are SFColor but pointer is Color4.
-               if (field .getName () .match (/^(?:baseColor|emissiveColor)$/) && transparencies)
+               if (/^(?:baseColor|emissiveColor)$/ .test (field .getName ()) && transparencies)
                {
                   const interpolatorNode = this .createNamedInterpolator ("ScalarInterpolator", 1, interpolation, times, transparencies, cycleInterval);
 
@@ -44446,9 +44715,9 @@ function eventsProcessed ()
    })(),
    getAnimationPointer (pointer = "")
    {
-      const
-         path  = pointer .split ("/") .filter (p => p),
-         field = path .pop () .replace (/(?:Factor$)/, "");
+      const path = pointer .split ("/") .filter (p => p);
+
+      path .pop ();
 
       let glTF = this .input;
 
@@ -44456,21 +44725,9 @@ function eventsProcessed ()
          glTF = glTF ?.[property];
 
       return glTF ?.pointers
-         ?.map (node => [node, helper.try (() => node ?.getField (this .getAnimationPointerAlias (node, field) ?? field))])
+         ?.map (node => [node, helper.try (() => node ?.getField (Parser_GLTFPointerAliases .getAlias (pointer, node)))])
          ?.find (([, field]) => field)
          ?? [ ];
-   },
-   addAnimationPointerAlias (node, field, alias)
-   {
-      const key = `${node .getTypeName ()}.${field}`;
-
-      this .pointerAliases .set (key, alias);
-   },
-   getAnimationPointerAlias (node, field)
-   {
-      const key = `${node .getTypeName ()}.${field}`;
-
-      return this .pointerAliases .get (key);
    },
    createNamedInterpolator (typeName, components, interpolation, times, keyValues, cycleInterval)
    {
@@ -44478,7 +44735,7 @@ function eventsProcessed ()
          scene            = this .getScene (),
          interpolatorNode = scene .createNode (typeName, false);
 
-      switch (interpolation)
+      switch (times .length > 1 ? interpolation : "LINEAR")
       {
          case "STEP":
          {
@@ -45132,7 +45389,7 @@ Object .assign (OBJParser,
    },
    isValid (input)
    {
-      return !! input .match (/^(?:[\x20\n\t\r]|#[^\r\n]*[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
+      return /^(?:[\x20\n\t\r]|#[^\r\n]*[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/ .test (input);
    },
 });
 
@@ -46085,7 +46342,7 @@ Object .assign (MaterialParser .prototype,
                   {
                      const
                         scene  = this .executionContext,
-                        repeat = !string .match (/-clamp\s+on/);
+                        repeat = !/-clamp\s+on/ .test (string);
 
                      texture = scene .createNode ("ImageTexture");
 
@@ -46227,7 +46484,7 @@ Object .assign (STLAParser,
    },
    isValid (input)
    {
-      return !! input .match (/^(?:[\x20\n\t\r]|;[^\r\n]*[\r\n])*\bsolid\b.*?\bendsolid\b/s);
+      return /^(?:[\x20\n\t\r]|;[^\r\n]*[\r\n])*\bsolid\b.*?\bendsolid\b/s .test (input);
    },
 });
 
@@ -46732,7 +46989,7 @@ Object .assign (PLYAParser,
    },
    isValid (input)
    {
-      return input .match (/^ply\r?\nformat ascii 1.0/);
+      return /^ply\r?\nformat ascii 1.0/ .test (input);
    },
 });
 
@@ -46789,7 +47046,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
          if (value)
             this .comments .push (value);
 
-         this .mustRotateAxes ||= !! value .match (/\b(?:Blender|Artec|Polycam)\b/i);
+         this .mustRotateAxes ||= /\b(?:Blender|Artec|Polycam)\b/i .test (value);
 
          return true;
       }
@@ -47206,7 +47463,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
 
       // Geometric properties
 
-      this .alpha     = properties .some (p => p .name .match (/^(?:alpha|a)$/));
+      this .alpha     = properties .some (p => /^(?:alpha|a)$/ .test (p .name));
       this .colors    = colors;
       this .texCoords = texCoords;
       this .normals   = normals;
@@ -47468,9 +47725,9 @@ Object .assign (PLYBParser,
    {
       const
          text  = helper.decodeText (input .slice (0, MAX_TEXT_LENGTH)),
-         magic = text .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
+         magic = /^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s .test (text);
 
-      return !! magic;
+      return magic;
    },
 });
 
@@ -48006,7 +48263,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(301);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(803);
 
 
 
@@ -50867,12 +51124,12 @@ class GoldenGate extends Parser_X3DParser
                   return;
 
                // An empty string should result in an empty XML (encoding) scene.
-               if (string .match (/^\s*$/))
+               if (/^\s*$/ .test (string))
                   return "";
 
                // XML must start with markup. Do not try DOMParser on other input, because
                // some browsers (Firefox) log a parsing error to the console when it fails.
-               if (!string .match (/^\s*</))
+               if (!/^\s*</ .test (string))
                   return;
 
                return helper.parseXML (string);
@@ -51452,7 +51709,7 @@ class FileLoader
 
          // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (this .resolvedURL .protocol !== "data:" && this .resolvedURL .href .match (/\.(?:html|htm|xhtml)$/))
+         if (this .resolvedURL .protocol !== "data:" && /\.(?:html|htm|xhtml)$/ .test (this .resolvedURL .href))
             return this .foreign (this .resolvedURL .href, this .target);
       }
 
@@ -53856,7 +54113,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, Execution_X3DExecut
    },
    getBaseURL ()
    {
-      if (this [_worldURL] .match (/^(?:data|blob):/))
+      if (/^(?:data|blob):/ .test (this [_worldURL]))
       {
          return this .getExecutionContext () ?.getBaseURL ()
             ?? this .getBrowser () .getBaseURL ();
@@ -63038,7 +63295,7 @@ Object .assign (Object .setPrototypeOf (PlaneViewer .prototype, Navigation_X3DVi
    {
       const viewpoint = this .getActiveViewpoint ();
 
-      if (viewpoint .getTypeName () .match (/^(?:Viewpoint|GeoViewpoint)$/))
+      if (/^(?:Viewpoint|GeoViewpoint)$/ .test (viewpoint .getTypeName ()))
       {
          if (viewpoint ._fieldOfView .getValue () * viewpoint ._fieldOfViewScale .getValue () >= Math .PI)
             viewpoint ._fieldOfViewScale = (Math .PI - 0.001) / viewpoint ._fieldOfView .getValue ();
@@ -64229,7 +64486,7 @@ Object .assign (X3DNetworkingContext .prototype,
          base = getBaseURI (this .getElement ()),
          url  = new URL (value, base);
 
-      this [_baseURL] = url .protocol .match (/^(?:data|blob):$/) ? base : url .href;
+      this [_baseURL] = /^(?:data|blob):$/ .test (url .protocol) ? base : url .href;
    },
    getBrowserLoading ()
    {
@@ -65157,7 +65414,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [X3DPointingDeviceSensorContext_id])
       {
          const
-            { renderObject, sensors, modelViewMatrix, shapeNode } = this [_pointingContexts] [hit .id],
+            { renderObject, sensors, modelViewMatrix, shapeNode, shapeParent } = this [_pointingContexts] [hit .id],
             geometryContext = shapeNode .getGeometryContext ();
 
          hit .ray .assign (renderObject .getHitRay ());
@@ -65168,8 +65425,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
             hit .sensors .set (sensor .node, sensor);
          }
 
-         hit .layerNode = renderObject;
-         hit .shapeNode = shapeNode;
+         hit .layerNode   = renderObject;
+         hit .shapeNode   = shapeNode;
+         hit .shapeParent = shapeParent;
 
          hit .viewMatrix      .assign (renderObject .getViewpoint () .getViewMatrix ());
          hit .modelViewMatrix .assign (modelViewMatrix);
@@ -65852,7 +66110,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       const gl = this .getContext ();
 
-      if (!navigator .userAgent .match (/Firefox/))
+      if (!/Firefox/ .test (navigator .userAgent))
       {
          const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
@@ -65866,7 +66124,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       const gl = this .getContext ();
 
-      if (!navigator .userAgent .match (/Firefox/))
+      if (!/Firefox/ .test (navigator .userAgent))
       {
          const dbgRenderInfo = gl .getExtension ("WEBGL_debug_renderer_info");
 
@@ -73356,7 +73614,7 @@ Object .assign (X3DBrowserContext,
          browserContexts .push (browserContext);
 
          const keys = Object .keys (browserContext .prototype)
-            .filter (k => !k .match (/^(?:initialize|dispose)$/))
+            .filter (k => !/^(?:initialize|dispose)$/ .test (k))
             .concat (Object .getOwnPropertySymbols (browserContext .prototype));
 
          for (const key of keys)
@@ -73601,7 +73859,7 @@ class DOMIntegration
          parentNode = element .parentNode,
          parser     = this .parser;
 
-      if (parentNode .nodeName .match (/^(?:Scene|SCENE)$/))
+      if (/^(?:Scene|SCENE)$/ .test (parentNode .nodeName))
       {
          // Root scene or Inline scene.
 
@@ -73664,7 +73922,7 @@ class DOMIntegration
 
    processInlineElements (element)
    {
-      if (element .nodeName .match (/^(?:Inline|INLINE)$/))
+      if (/^(?:Inline|INLINE)$/ .test (element .nodeName))
          this .processInlineElement (element);
 
       for (const inlineElement of element .querySelectorAll ("Inline"))
@@ -74728,7 +74986,7 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, Core_X3DNode .pr
    {
       return this ._value .find (node => node .name === name);
    },
-   setMetaValue (name, value)
+   setMetaValue (name, reference, value)
    {
       if (!Array .isArray (value))
          value = [value .valueOf ()];
@@ -74737,28 +74995,28 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, Core_X3DNode .pr
       {
          case "boolean":
          {
-            this .getMetadataObject ("MetadataBoolean", name, true) .value = value;
+            this .getMetadataObject ("MetadataBoolean", name, reference, true) .value = value;
             return;
          }
          case "number":
          case "double":
          {
-            this .getMetadataObject ("MetadataDouble", name, true) .value = value;
+            this .getMetadataObject ("MetadataDouble", name, reference, true) .value = value;
             break;
          }
          case "float":
          {
-            this .getMetadataObject ("MetadataFloat", name, true) .value = value;
+            this .getMetadataObject ("MetadataFloat", name, reference, true) .value = value;
             break;
          }
          case "integer":
          {
-            this .getMetadataObject ("MetadataInteger", name, true) .value = value;
+            this .getMetadataObject ("MetadataInteger", name, reference, true) .value = value;
             break;
          }
          case "string":
          {
-            this .getMetadataObject ("MetadataString", name, true) .value = value;
+            this .getMetadataObject ("MetadataString", name, reference, true) .value = value;
             return;
          }
       }
@@ -74772,7 +75030,7 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, Core_X3DNode .pr
 
       this ._value .splice (index, 1);
    },
-   getMetadataObject (typeName, name, create = false)
+   getMetadataObject (typeName, name, reference, create = false)
    {
       let metadata = this .getMetaValue (name);
 
@@ -74785,11 +75043,13 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, Core_X3DNode .pr
       if (metadata)
          this .removeMetaValue (name);
 
-      metadata = this .getExecutionContext () .createNode (typeName);
+      const executionContext = this .getExecutionContext ();
 
-      this .getExecutionContext () .addNamedNode (this .getExecutionContext () .getUniqueName (name), metadata);
+      metadata = executionContext .createNode (typeName);
 
-      metadata .reference = this .getBrowser () .getBrowserOption ("MetadataReference");
+      executionContext .addNamedNode (executionContext .getUniqueName (name), metadata);
+
+      metadata .reference = reference;
       metadata .name      = name;
 
       this ._value .push (metadata);
@@ -91660,8 +91920,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(23);
-/* provided dependency */ var APNG = __webpack_require__(701);
+/* provided dependency */ var SuperGif = __webpack_require__(197);
+/* provided dependency */ var APNG = __webpack_require__(399);
 
 
 
@@ -91734,7 +91994,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
 
          try
          {
-            if (fileURL .pathname .endsWith (".gif") || fileURL .href .match (/^\s*data:image\/gif[;,]/))
+            if (fileURL .pathname .endsWith (".gif") || /^\s*data:image\/gif[;,]/ .test (fileURL .href))
             {
                const
                   data = await this .loadDocument (fileURL),
@@ -91753,7 +92013,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
                this .setGif (gif);
                return;
             }
-            else if (fileURL .pathname .endsWith (".png") || fileURL .href .match (/^\s*data:image\/png[;,]/))
+            else if (fileURL .pathname .endsWith (".png") || /^\s*data:image\/png[;,]/ .test (fileURL .href))
             {
                const
                   data      = await this .loadDocument (fileURL),
@@ -94305,12 +94565,15 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(301);
+/* provided dependency */ var libtess_libtess = __webpack_require__(803);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (x_ite_Namespace .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
+
+
+
 
 
 
@@ -94417,6 +94680,8 @@ x_ite_Namespace, x_ite_Namespace .Fields,
    X3DRoute: Routing_X3DRoute,
 
    X3DBaseNode: Base_X3DBaseNode,                 // non-standard
+   X3DNode: Core_X3DNode,
+   X3DImportedNodeInstance: Core_X3DImportedNodeInstance,
 
    X3DFieldDefinition: Base_X3DFieldDefinition,
    FieldDefinitionArray: Base_FieldDefinitionArray,
@@ -94425,6 +94690,7 @@ x_ite_Namespace, x_ite_Namespace .Fields,
    X3DArrayField: Base_X3DArrayField,
 
    ... x_ite_Fields,
+   SFNodeCache: Fields_SFNodeCache,
 },
 {
    /**
@@ -94462,7 +94728,7 @@ x_ite_Namespace, x_ite_Namespace .Fields,
          return element .browser;
 
       return Array .from (document .querySelectorAll (String (element)))
-         .find (element => element .nodeName .match (/^(?:x3d-canvas|X3DCanvas)$/i)) ?.browser;
+         .find (element => /^(?:x3d-canvas|X3DCanvas)$/i .test (element .nodeName)) ?.browser;
    },
    createBrowser (... args)
    {

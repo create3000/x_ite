@@ -410,7 +410,6 @@ declare namespace X3D
       LoadUrlObjects:               boolean,
       LogarithmicDepthBuffer:       boolean,
       MaximumFrameRate:             number,
-      MetadataReference:            string,
       Multisampling:                number,
       Mute:                         boolean,
       Notifications:                boolean,
@@ -10279,6 +10278,8 @@ declare namespace X3D
        */
       description: string;
       /**
+       * Contains zero or more HAnimDisplacer nodes that can animate the HAnimHumanoid skinCoord field.
+       *
        * This field is of access type 'inputOutput' and type MFNode.
        */
       displacers: MFNode <HAnimDisplacerProxy>;
@@ -10307,7 +10308,7 @@ declare namespace X3D
        */
       jointBindingScales: MFVec3f;
       /**
-       * The joints field contains a list of USE references for all HAnimJoint node instances found within the preceding skeleton hierarchy.
+       * (Deprecated) The joints field contains a list of USE references for all HAnimJoint node instances found within the preceding skeleton hierarchy.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -10361,13 +10362,13 @@ declare namespace X3D
        */
       scaleOrientation: SFRotation;
       /**
-       * The segments field contains a list of USE references for all HAnimSegment node instances found within the preceding skeleton hierarchy.
+       * (Deprecated) The segments field contains a list of USE references for all HAnimSegment node instances found within the preceding skeleton hierarchy.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
       segments: MFNode <HAnimSegmentProxy>;
       /**
-       * sites field contains a list of USE references for all HAnimSite node instances found within the preceding skeleton hierarchy.
+       * (Deprecated) sites field contains a list of USE references for all HAnimSite node instances found within the preceding skeleton hierarchy.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -10904,6 +10905,8 @@ declare namespace X3D
        */
       children: MFNode <X3DChildNodeProxy>;
       /**
+       * the coord field is used for HAnimSite objects that have deformable meshes and shall contain coordinates referenced from the mesh in the current object.
+       *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       coord: X3DCoordinateNodeProxy | null;
@@ -10914,6 +10917,8 @@ declare namespace X3D
        */
       description: string;
       /**
+       * the displacers field stores HAnimDisplacer objects for a particular HAnimJoint object.
+       *
        * This field is of access type 'inputOutput' and type MFNode.
        */
       displacers: MFNode <HAnimDisplacerProxy>;

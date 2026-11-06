@@ -343,6 +343,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
          {
+            renderObject .setShapeParent (this);
             this .pointingObject ?.traverse (type, renderObject);
             return;
          }

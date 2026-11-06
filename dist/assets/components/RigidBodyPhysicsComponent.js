@@ -764,6 +764,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
          {
+            renderObject .setShapeParent (this);
             this .pointingObject ?.traverse (type, renderObject);
             break;
          }
