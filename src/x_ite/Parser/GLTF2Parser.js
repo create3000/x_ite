@@ -530,7 +530,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             const numPrimitives = glTF .meshes [m] .primitives ?.length ?? 0;
 
             for (let p = 0; p < numPrimitives; ++ p)
-               this .addBehaviorNode (`/meshes/${m}/primitives/${p}/material/`, this .behaviorNodes);
+               this .addBehaviorNode (`/meshes/${m}/primitives/${p}/material`, this .behaviorNodes);
          }
       }
 
