@@ -1923,7 +1923,7 @@ function eventsProcessed ()
 
       this .meshes = meshes;
    },
-   meshObject (mesh, skin, EXT_mesh_gpu_instancing)
+   meshObject (mesh, skin, weights, EXT_mesh_gpu_instancing)
    {
       if (!(mesh instanceof Object))
          return;
@@ -1943,7 +1943,7 @@ function eventsProcessed ()
 
       // Actually shapeNodes are not always Shape nodes, it also can be a Switch nodes from variants
       // or a GaussianSplats node.
-      const shapeNodes = this .primitivesArray (mesh, skin, EXT_mesh_gpu_instancing);
+      const shapeNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing);
 
       // Name Shape nodes.
 
@@ -1966,7 +1966,7 @@ function eventsProcessed ()
 
       return mesh .shapeNodes = shapeNodes;
    },
-   primitivesArray ({ primitives, weights }, skin, EXT_mesh_gpu_instancing)
+   primitivesArray (primitives, skin, weights, EXT_mesh_gpu_instancing)
    {
       if (!(primitives instanceof Array))
          return [ ];
@@ -2498,7 +2498,7 @@ function eventsProcessed ()
 
          const
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
-            shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
+            shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, node .weights, EXT_mesh_gpu_instancing);
 
          // Add camera.
 
