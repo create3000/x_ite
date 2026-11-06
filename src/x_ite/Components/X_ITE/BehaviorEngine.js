@@ -12,6 +12,7 @@ import Color4               from "../../../standard/Math/Numbers/Color4.js";
 import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Quaternion           from "../../../standard/Math/Numbers/Quaternion.js";
+import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
@@ -67,6 +68,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    Matrix3: new Matrix3 (),
    Matrix4: new Matrix4 (),
    Quaternion: new Quaternion (),
+   Rotation4: new Rotation4 (),
    Vector2: new Vector2 (),
    Vector3: new Vector3 (),
    Vector4: new Vector4 (),
@@ -313,7 +315,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             this .pointers .set (pointer, _node);
       }
 
-      // Materials
+      // Register material pointers.
 
       const numMaterials = Array .from (this .pointers .keys (),
             key => key .match (/^\/materials\/(\d+)\//) ?.[1] ?? -1)
@@ -328,7 +330,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
-      // Meshes
+      // Register meshes pointers.
 
       const numMeshes = Array .from (this .pointers .keys (),
             key => key .match (/^\/meshes\/(\d+)\//) ?.[1] ?? -1)
@@ -357,7 +359,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
-      // Nodes
+      // Register node pointers.
 
       const numNodes = Array .from (this .pointers .keys (),
             key => key .match (/^\/nodes\/(\d+)\//) ?.[1] ?? -1)
@@ -493,6 +495,44 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          },
          Function .prototype,
          "ref",
+         true
+      );
+
+      // Register pointers for the active camera.
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/position`,
+         () =>
+         {
+            const viewpoint = this .getBrowser () .getActiveViewpoint ();
+
+            if (!viewpoint)
+               return [NaN, NaN, NaN];
+
+            viewpoint .getCameraSpaceMatrix () .getTransform (this .Vector3);
+
+            return [... this .Vector3];
+         },
+         Function .prototype,
+         "float3",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/rotation`,
+         () =>
+         {
+            const viewpoint = this .getBrowser () .getActiveViewpoint ();
+
+            if (!viewpoint)
+               return [NaN, NaN, NaN, NaN];
+
+            viewpoint .getCameraSpaceMatrix () .getTransform (null, this .Rotation4);
+
+            return [... this .Rotation4 .getQuaternion (this .Quaternion)];
+         },
+         Function .prototype,
+         "float4",
          true
       );
 
