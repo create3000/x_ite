@@ -498,6 +498,42 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
+      // // Register pointers for the node weights.
+
+      // this .engine .registerJsonPointer (
+      //    `/nodes/${numNodes}/weights.length`,
+      //    (pointer) =>
+      //    {
+      //       return this .cache .getOrInsertComputed (pointer, () =>
+      //       {
+      //          const
+      //             nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
+      //             weights   = this .pointers .get (`/nodes/${nodeIndex}/weights`);
+
+      //          return [weights ?._value .length];
+      //       });
+      //    },
+      //    Function .prototype,
+      //    "int",
+      //    true
+      // );
+
+      // this .engine .registerJsonPointer (
+      //    `/nodes/${numNodes}/weights`,
+      //    (pointer) =>
+      //    {
+      //       console .log (pointer)
+      //    },
+      //    (pointer, value) =>
+      //    {
+      //       console .log (pointer)
+      //    },
+      //    "float",
+      //    false
+      // );
+
+      // console .log (this .engine .resolveJsonPtr ("/nodes/947/weights/0") ?.getterCallback ("/nodes/947/weights/0"));
+
       // Register pointers for the active camera.
 
       this .engine .registerJsonPointer (
