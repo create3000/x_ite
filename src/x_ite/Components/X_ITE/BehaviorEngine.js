@@ -556,12 +556,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/extensions/KHR_interactivity/activeCamera/perspective/znear`,
          () =>
          {
-            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+            const
+               browser       = this .getBrowser (),
+               viewpointNode = browser .getActiveViewpoint ();
 
             if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
                return [NaN];
 
-            return [viewpointNode .getNearDistance (this .getBrowser () .getActiveNavigationInfo ())];
+            return [viewpointNode .getNearDistance (browser .getActiveNavigationInfo ())];
          },
          Function .prototype,
          "float",
@@ -572,12 +574,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/extensions/KHR_interactivity/activeCamera/perspective/zfar`,
          () =>
          {
-            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+            const
+               browser       = this .getBrowser (),
+               viewpointNode = browser .getActiveViewpoint ();
 
             if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
                return [NaN];
 
-            return [viewpointNode .getFarDistance (this .getBrowser () .getActiveNavigationInfo ())];
+            return [viewpointNode .getFarDistance (browser .getActiveNavigationInfo ())];
          },
          Function .prototype,
          "float",
@@ -606,12 +610,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/extensions/KHR_interactivity/activeCamera/orthographic/znear`,
          () =>
          {
-            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+            const
+               browser       = this .getBrowser (),
+               viewpointNode = browser .getActiveViewpoint ();
 
             if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
                return [NaN];
 
-            return [viewpointNode .getNearDistance (this .getBrowser () .getActiveNavigationInfo ())];
+            return [viewpointNode .getNearDistance (browser .getActiveNavigationInfo ())];
          },
          Function .prototype,
          "float",
@@ -622,12 +628,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/extensions/KHR_interactivity/activeCamera/orthographic/zfar`,
          () =>
          {
-            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+            const
+               browser       = this .getBrowser (),
+               viewpointNode = browser .getActiveViewpoint ();
 
             if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
                return [NaN];
 
-            return [viewpointNode .getFarDistance (this .getBrowser () .getActiveNavigationInfo ())];
+            return [viewpointNode .getFarDistance (browser .getActiveNavigationInfo ())];
          },
          Function .prototype,
          "float",
