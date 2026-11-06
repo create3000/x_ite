@@ -129,7 +129,7 @@
     "dicom-parser": "^1.8.21",
     "draco3d": "^1.5.9",
     "eslint": "^10.14.0",
-    "fast-xml-parser": "^5.11.2",
+    "fast-xml-parser": "^5.12.0",
     "globals": "^17.14.0",
     "jpeg-js": "^0.4.4",
     "jpeg-lossless-decoder-js": "2.1.2",
