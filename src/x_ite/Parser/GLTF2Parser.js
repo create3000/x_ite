@@ -468,8 +468,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .addExportedNode (scene .getUniqueExportName ("BehaviorEngine"), behaviorEngine);
 
       this .behaviorEngine = behaviorEngine;
-
-      this .behavior = [{ node: behaviorEngine }];
+      this .behavior       = [{ node: behaviorEngine }];
    },
    addBehaviorNodes (glTF, KHR_interactivity)
    {
