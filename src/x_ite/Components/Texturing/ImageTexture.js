@@ -43,7 +43,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    },
    loadData ()
    {
-      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
+      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL, mimeType) =>
       {
          if (data === null)
          {
@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
                this .setLinear (false);
                this .setMipMaps (true);
 
-               const objectURL = URL .createObjectURL (new Blob ([data]));
+               const objectURL = URL .createObjectURL (new Blob ([data], { type: mimeType }));
 
                try
                {

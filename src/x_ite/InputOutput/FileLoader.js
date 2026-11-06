@@ -312,7 +312,7 @@ class FileLoader
             return this .foreign (this .resolvedURL .href, this .target);
       }
 
-      await this .dataCallback (await $.gunzip (await this .getBlob (response)), this .resolvedURL);
+      await this .dataCallback (await $.gunzip (await this .getBlob (response)), this .resolvedURL, mimeType);
    }
 
    async getBlob (response)
