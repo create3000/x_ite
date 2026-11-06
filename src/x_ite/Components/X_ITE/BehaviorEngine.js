@@ -504,13 +504,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const node = this .pointers .get (pointer);
 
-            return [node ._enabled .getValue ()];
+            return [node ?._enabled .getValue ()];
          },
          (pointer, value) =>
          {
             const node = this .pointers .get (pointer);
 
-            node ._enabled .setValue (value);
+            node ?._enabled .setValue (value);
          },
          "bool",
          false
@@ -524,13 +524,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const node = this .pointers .get (pointer);
 
-            return [node ._enabled .getValue ()];
+            return [node ?._enabled .getValue ()];
          },
          (pointer, value) =>
          {
             const node = this .pointers .get (pointer);
 
-            node ._enabled .setValue (value);
+            node ?._enabled .setValue (value);
          },
          "bool",
          false
