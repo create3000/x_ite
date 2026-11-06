@@ -1211,6 +1211,11 @@ class SampleViewer
 
    addAnimations ()
    {
+      const behaviorEngine = $.try (() => this .scene .getExportedNode ("BehaviorEngine"));
+
+      if (behaviorEngine)
+         return;
+
       const animations = $.try (() => this .scene .getExportedNode ("Animations"));
 
       if (!animations)

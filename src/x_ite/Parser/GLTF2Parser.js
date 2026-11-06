@@ -465,6 +465,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       behaviorEngine ._graph  = KHR_interactivity .graph;
       behaviorEngine ._graphs = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
 
+      scene .addExportedNode (scene .getUniqueExportName ("BehaviorEngine"), behaviorEngine);
+
       this .behaviorEngine = behaviorEngine;
 
       this .behavior = [
