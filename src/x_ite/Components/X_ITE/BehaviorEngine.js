@@ -504,12 +504,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/extensions/KHR_interactivity/activeCamera/position`,
          () =>
          {
-            const viewpoint = this .getBrowser () .getActiveViewpoint ();
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
 
-            if (!viewpoint)
+            if (!viewpointNode)
                return [NaN, NaN, NaN];
 
-            viewpoint .getCameraSpaceMatrix () .getTransform (this .Vector3);
+            viewpointNode .getCameraSpaceMatrix () .getTransform (this .Vector3);
 
             return [... this .Vector3];
          },
@@ -522,17 +522,165 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          `/extensions/KHR_interactivity/activeCamera/rotation`,
          () =>
          {
-            const viewpoint = this .getBrowser () .getActiveViewpoint ();
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
 
-            if (!viewpoint)
+            if (!viewpointNode)
                return [NaN, NaN, NaN, NaN];
 
-            viewpoint .getCameraSpaceMatrix () .getTransform (null, this .Rotation4);
+            viewpointNode .getCameraSpaceMatrix () .getTransform (null, this .Rotation4);
 
             return [... this .Rotation4 .getQuaternion (this .Quaternion)];
          },
          Function .prototype,
          "float4",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/perspective/yfov`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
+               return [NaN];
+
+            return [viewpointNode .getUserFieldOfView ()];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/perspective/znear`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
+               return [NaN];
+
+            return [viewpointNode .getNearDistance (this .getBrowser () .getActiveNavigationInfo ())];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/perspective/zfar`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
+               return [NaN];
+
+            return [viewpointNode .getFarDistance (this .getBrowser () .getActiveNavigationInfo ())];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/perspective/aspectRatio`,
+         () =>
+         {
+            const layerNode = this .getBrowser () .getActiveLayer ();
+
+            if (!layerNode)
+               return [NaN];
+
+            const viewport = layerNode .getViewport () .getRectangle ();
+
+            return [viewport [2] / viewport [3]];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/orthographic/znear`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
+               return [NaN];
+
+            return [viewpointNode .getNearDistance (this .getBrowser () .getActiveNavigationInfo ())];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/orthographic/zfar`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
+               return [NaN];
+
+            return [viewpointNode .getFarDistance (this .getBrowser () .getActiveNavigationInfo ())];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/orthographic/xmag`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
+               return [NaN];
+
+            return [viewpointNode .getUserSizeX () / 2];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/orthographic/ymag`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
+               return [NaN];
+
+            return [viewpointNode .getUserSizeY () / 2];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/orthographic/aspectRatio`,
+         () =>
+         {
+            const layerNode = this .getBrowser () .getActiveLayer ();
+
+            if (!layerNode)
+               return [NaN];
+
+            const viewport = layerNode .getViewport () .getRectangle ();
+
+            return [viewport [2] / viewport [3]];
+         },
+         Function .prototype,
+         "float",
          true
       );
 
@@ -559,7 +707,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          this .registerJsonPointer (pointer, node);
 
       // DEBUG
-      // console .log (this .engine .resolveJsonPtr ("/nodes/116/extensions/KHR_node_selectability/selectable") ?.getterCallback ("/nodes/116/extensions/KHR_node_selectability/selectable"));
+      // console .log (this .engine .resolveJsonPtr ("/extensions/KHR_interactivity/activeCamera/perspective/yfov") ?.getterCallback ("/extensions/KHR_interactivity/activeCamera/perspective/yfov"));
    },
    registerJsonPointer (pointer, node)
    {
