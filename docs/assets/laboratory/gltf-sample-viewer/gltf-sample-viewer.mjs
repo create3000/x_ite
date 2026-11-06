@@ -297,7 +297,7 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/XmpMetadataRoundedCube/glTF/XmpMetadataRoundedCube.gltf",
 ];
 
-const interactivity = [
+const interactivity_gltf = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ABeautifulGameInteractivity/glTF/ABeautifulGameInteractivity.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ActiveCamera/glTF/ActiveCamera.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/BowShooting/glTF/BowShooting.gltf",
@@ -314,6 +314,25 @@ const interactivity = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Sundial/glTF/Sundial.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/TrafficLight/glTF/TrafficLight.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/WhackAMole/glTF/WhackAMole.gltf",
+];
+const interactivity_glb = [
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ABeautifulGameInteractivity/glTF-Binary/ABeautifulGameInteractivity.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ActiveCamera/glTF-Binary/ActiveCamera.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/BowShooting/glTF-Binary/BowShooting.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Calculator/glTF-Binary/Calculator.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ConstructionSite/glTF-Binary/ConstructionSite.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Events/glTF-Binary/Events.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Flocking/glTF-Binary/Flocking.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Ghost/glTF-Binary/ghost_v2.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/MagicBall/glTF-Binary/MagicBall.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/MiniChess/glTF-Binary/mini-chess.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/PerformanceTest/glTF-Binary/PerformanceTest.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/PhysicsMath/glTF-Binary/PhysicsMath.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Puzzle/glTF-Binary/PlaceOnClickPuzzle.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/SnailRace/glTF-Binary/SnailRace.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Sundial/glTF-Binary/Sundial.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/TrafficLight/glTF-Binary/TrafficLight.glb",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/WhackAMole/glTF-Binary/WhackAMole.glb",
 ];
 
 const glb = [
@@ -727,7 +746,7 @@ class SampleViewer
       });
 
       this .createList ("glTF Sample Models",               glTF);
-      this .createList ("glTF Interactivity Sample Models", interactivity);
+      this .createList ("glTF Interactivity Sample Models", interactivity_glb .concat (interactivity_gltf));
       this .createList ("glb Sample Models",                glb);
       this .createList ("glTF Embedded Sample Models",      embedded);
       this .createList ("glTF Quantized Sample Models",     quantized);
@@ -854,7 +873,7 @@ class SampleViewer
       for (const filename of filenames)
       {
          const
-            match = filename .match (/([^\/]+)\.\w+$/),
+            match = filename .match (/\/([^\/]+)\/[^\/]+\/[^\/]+$/),
             name  = this .makeName (match [1]);
 
          map .set (name, filename);
