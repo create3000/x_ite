@@ -59,9 +59,9 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    {
       const fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
 
-      return this .getReverse (fraction);
+      return this .getReversed (fraction);
    },
-   getReverse (fraction)
+   getReversed (fraction)
    {
       return this .reverse ? 1 - fraction : fraction;
    },
@@ -75,6 +75,11 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    set_reverse__ ()
    {
       this .reverse = this ._reverse .getValue ();
+
+      if (!this ._isActive .getValue ())
+         return;
+
+      this .setRange (this .getReversed (this .fraction), this ._range [1], this ._range [2], false);
    },
    set_range__ ()
    {
@@ -102,7 +107,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       this ._time             = time;
       this ._elapsedTime      = 0;
       this ._cycleTime        = time;
-      this ._fraction_changed = this .getReverse (this .fraction);
+      this ._fraction_changed = this .getReversed (this .fraction);
       this ._cycleCount       = 0;
    },
    set_pause ()
@@ -132,7 +137,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       if (time - this .cycle < this .interval)
          return;
 
-      this ._fraction_changed  = this .getReverse (this .last);
+      this ._fraction_changed  = this .getReversed (this .last);
       this ._cycleCount        = this ._cycleCount .getValue () + 1;
       this ._cycleComplete     = true;
       this ._cycleCompleteTime = time;
