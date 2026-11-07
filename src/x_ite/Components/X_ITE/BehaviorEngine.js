@@ -924,50 +924,39 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       console .log ("start", animationIndex, startTime, stopTime, cycleInterval, startTime === stopTime)
 
-      if (startTime === stopTime)
+      timeSensor ._cycleInterval = cycleInterval * speed;
+      timeSensor ._reverse       = reverse;
+      timeSensor ._range [0]     = startTime / cycleInterval;
+      timeSensor ._startTime     = currentTime;
+
+      if (Number .isFinite (duration))
       {
-         timeSensor ._fraction_changed = startTime / cycleInterval;
+         timeSensor ._range [2] = stopTime / cycleInterval;
 
-         this .getBrowser () .nextFrame () .then (endCallback);
-
-         console .log ("start done", animationIndex, timeSensor ._fraction_changed .getValue ())
+         if (reverse)
+            timeSensor ._range [2] = 1 - timeSensor ._range [2];
       }
       else
       {
-         timeSensor ._cycleInterval = cycleInterval * speed;
-         timeSensor ._reverse       = reverse;
-         timeSensor ._range [0]     = startTime / cycleInterval;
-         timeSensor ._startTime     = currentTime;
-
-         if (Number .isFinite (duration))
-         {
-            timeSensor ._range [2] = stopTime / cycleInterval;
-
-            if (reverse)
-               timeSensor ._range [2] = 1 - timeSensor ._range [2];
-         }
-         else
-         {
-            timeSensor ._loop = true;
-         }
-
-         timeSensor ._isActive .addFieldCallback (key, value =>
-         {
-            if (value)
-               return;
-
-            timeSensor ._isActive .removeFieldCallback (key);
-
-            timeSensor ._cycleInterval = cycleInterval;
-            timeSensor ._loop          = false;
-            timeSensor ._range [0]     = 0;
-            timeSensor ._range [2]     = 1;
-
-            endCallback ();
-
-            console .log ("start done", animationIndex, timeSensor ._fraction_changed .getValue ())
-         });
+         timeSensor ._loop = true;
       }
+
+      timeSensor ._isActive .addFieldCallback (key, value =>
+      {
+         if (value)
+            return;
+
+         timeSensor ._isActive .removeFieldCallback (key);
+
+         timeSensor ._cycleInterval = cycleInterval;
+         timeSensor ._loop          = false;
+         timeSensor ._range [0]     = 0;
+         timeSensor ._range [2]     = 1;
+
+         endCallback ();
+
+         console .log ("start done", animationIndex, timeSensor ._fraction_changed .getValue ())
+      });
    },
    stopAnimation (animationIndex)
    {
