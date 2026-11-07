@@ -906,7 +906,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       const
          currentTime    = this .getBrowser () .getCurrentTime (),
          cycleInterval  = timeSensor ._cycleInterval .getValue (),
-         signedDuration = stopTime - startTime;
+         signedDuration = (stopTime - startTime) % cycleInterval;
 
       if (startTime < 0 || startTime > cycleInterval)
          startTime = Algorithm .interval (startTime, 0, cycleInterval);
@@ -914,7 +914,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       if (Number .isFinite (stopTime))
       {
          if (stopTime < 0 || stopTime > cycleInterval)
-            stopTime = Algorithm .interval (stopTime, 0, cycleInterval);
+            stopTime = startTime + signedDuration;
       }
 
       const
@@ -941,8 +941,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          if (Number .isFinite (duration))
          {
-            if (duration < cycleInterval)
-               timeSensor ._stopTime = currentTime + duration;
+            timeSensor ._range [2] = stopTime / cycleInterval;
+
+            if (reverse)
+               timeSensor ._range [2] = 1 - timeSensor ._range [2];
          }
          else
          {
@@ -959,11 +961,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             timeSensor ._cycleInterval = cycleInterval;
             timeSensor ._loop          = false;
             timeSensor ._range [0]     = 0;
+            timeSensor ._range [2]     = 1;
 
-            if (Number .isFinite (stopTime))
-               timeSensor ._fraction_changed = stopTime / cycleInterval;
-
-            this .getBrowser () .nextFrame () .then (endCallback);
+            endCallback ();
 
             console .log ("start done", animationIndex, timeSensor ._fraction_changed .getValue ())
          });
