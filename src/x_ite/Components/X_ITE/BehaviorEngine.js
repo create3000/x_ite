@@ -7,6 +7,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import GLTFPointerAliases   from "../../Parser/GLTFPointerAliases.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 import Color3               from "../../../standard/Math/Numbers/Color3.js";
 import Color4               from "../../../standard/Math/Numbers/Color4.js";
 import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
@@ -186,7 +187,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .animations .length = 0;
 
       for (const node of this ._animations)
-         this .animations .push (X3DCast (X3DConstants .TimeSensor, node) && node);
+         this .animations .push (X3DCast (X3DConstants .TimeSensor, node));
 
       // Register JSON Pointers
 
@@ -208,9 +209,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               animation      = this .animations [animationIndex];
+               timeSensor     = this .animations [animationIndex];
 
-            return [!! animation ?.isActive];
+            return [!! timeSensor ?._isActive .getValue ()];
          },
          Function .prototype,
          "bool",
@@ -231,9 +232,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               animation      = this .animations [animationIndex];
+               timeSensor     = this .animations [animationIndex];
 
-            return [animation ?.cycleInterval ?? 0];
+            return [timeSensor ?._cycleInterval .getValue () ?? 0];
          },
          Function .prototype,
          "float",
@@ -248,9 +249,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               animation      = this .animations [animationIndex];
+               timeSensor     = this .animations [animationIndex];
 
-            return [animation ? animation .cycleInterval * animation .fraction_changed : NaN];
+            return [timeSensor ? timeSensor ._fraction_changed .getValue () * timeSensor ._cycleInterval .getValue () : NaN];
          },
          Function .prototype,
          "float",
@@ -265,10 +266,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               animation      = this .animations [animationIndex],
+               timeSensor     = this .animations [animationIndex],
                browser        = this .getBrowser ();
 
-            return [animation ? browser .getCurrentTime () - animation .startTime : NaN];
+            return [timeSensor ? browser .getCurrentTime () - timeSensor ._startTime .getValue () : NaN];
          },
          Function .prototype,
          "float",
@@ -895,60 +896,99 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          };
       })();
    },
-   startAnimation (animationIndex, startTime, stopTime, speed, callback)
+   startAnimation (animationIndex, startTime, stopTime, speed, endCallback)
    {
-      const animation = this .animations [animationIndex];
+      const timeSensor = this .animations [animationIndex];
 
-      if (!animation)
+      if (!timeSensor)
          return;
 
       const
-         currentTime = this .getBrowser () .getCurrentTime (),
-         key         = Symbol ();
+         currentTime   = this .getBrowser () .getCurrentTime (),
+         cycleInterval = timeSensor ._cycleInterval .getValue (),
+         duration      = Math .abs (stopTime - startTime),
+         reverse       = stopTime < startTime,
+         key           = Symbol ();
 
-      animation .startTime = currentTime + startTime;
-      animation .stopTime  = currentTime + stopTime;
+      console .log ("start", animationIndex, startTime, stopTime, cycleInterval, startTime === stopTime)
 
-      animation .addFieldCallback (key, "isActive", value =>
+      if (startTime === stopTime)
       {
-         if (value)
-            return;
+         timeSensor ._fraction_changed = Algorithm .clamp (startTime, 0, cycleInterval) / cycleInterval;
 
-         animation .removeFieldCallback (key, "isActive");
-         callback ();
-      });
+         this .getBrowser () .nextFrame () .then (endCallback);
+
+         console .log ("start done", animationIndex, timeSensor ._fraction_changed .getValue ())
+      }
+      else
+      {
+         timeSensor ._cycleInterval = cycleInterval * speed;
+         timeSensor ._reverse       = reverse;
+         timeSensor ._range [0]     = startTime / cycleInterval;
+         timeSensor ._startTime     = currentTime;
+
+         if (Number .isFinite (duration))
+         {
+            if (duration < cycleInterval)
+               timeSensor ._stopTime = currentTime + duration;
+         }
+         else
+         {
+            timeSensor ._loop = true;
+         }
+
+         timeSensor ._isActive .addFieldCallback (key, value =>
+         {
+            if (value)
+               return;
+
+            timeSensor ._isActive .removeFieldCallback (key);
+
+            timeSensor ._cycleInterval = cycleInterval;
+            timeSensor ._loop          = false;
+            timeSensor ._range [0]     = 0;
+
+            endCallback ();
+
+            console .log ("start done", animationIndex, timeSensor ._fraction_changed .getValue ())
+         });
+      }
    },
    stopAnimation (animationIndex)
    {
-      const animation = this .animations [animationIndex];
+      const timeSensor = this .animations [animationIndex];
 
-      if (!animation)
+      if (!timeSensor)
          return;
 
-      const currentTime = this .getBrowser () .getCurrentTime ();
+      console .log ("stop", animationIndex)
 
-      animation .stopTime = currentTime;
+      timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
    },
-   stopAnimationAt (animationIndex, stopTime, callback)
+   stopAnimationAt (animationIndex, stopTime, stopCallback)
    {
-      const animation = this .animations [animationIndex];
+      const timeSensor = this .animations [animationIndex];
 
-      if (!animation)
+      if (!timeSensor)
          return;
 
       const
          currentTime = this .getBrowser () .getCurrentTime (),
          key         = Symbol ();
 
-      animation .stopTime = currentTime + stopTime;
+      console .log ("stop at", animationIndex, stopTime)
 
-      animation .addFieldCallback (key, "isActive", value =>
+      timeSensor ._stopTime = currentTime + stopTime;
+
+      timeSensor ._isActive .addFieldCallback (key, value =>
       {
          if (value)
             return;
 
-         animation .removeFieldCallback (key, "isActive");
-         callback ();
+         console .log ("stop done", animationIndex, stopTime)
+
+         timeSensor ._isActive .removeFieldCallback (key);
+         stopCallback ();
       });
    },
    getHitNodeIndex (hit, nodeIndex)

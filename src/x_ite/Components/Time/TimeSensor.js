@@ -35,7 +35,10 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       X3DTimeDependentNode .prototype .initialize .call (this);
 
       this ._cycleInterval .addInterest ("set_cycleInterval__", this);
+      this ._reverse       .addInterest ("set_reverse__",       this);
       this ._range         .addInterest ("set_range__",         this);
+
+      this .set_reverse__ ();
    },
    setRange (fraction, firstFraction, lastFraction, offset)
    {
@@ -54,7 +57,13 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    getFraction (time)
    {
-      return this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+      const fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+
+      return this .getReverse (fraction);
+   },
+   getReverse (fraction)
+   {
+      return this .reverse ? 1 - fraction : fraction;
    },
    set_cycleInterval__ ()
    {
@@ -62,6 +71,10 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
          return;
 
       this .setRange (this .fraction, this ._range [1], this ._range [2], false);
+   },
+   set_reverse__ ()
+   {
+      this .reverse = this ._reverse .getValue ();
    },
    set_range__ ()
    {
@@ -89,7 +102,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       this ._time             = time;
       this ._elapsedTime      = 0;
       this ._cycleTime        = time;
-      this ._fraction_changed = this .fraction;
+      this ._fraction_changed = this .getReverse (this .fraction);
       this ._cycleCount       = 0;
    },
    set_pause ()
@@ -119,7 +132,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       if (time - this .cycle < this .interval)
          return;
 
-      this ._fraction_changed  = this .last;
+      this ._fraction_changed  = this .getReverse (this .last);
       this ._cycleCount        = this ._cycleCount .getValue () + 1;
       this ._cycleComplete     = true;
       this ._cycleCompleteTime = time;
@@ -170,6 +183,7 @@ Object .defineProperties (TimeSensor,
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",     new Fields .SFTime (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "loop",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "reverse",           new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",         new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",        new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",         new Fields .SFTime (0)),
