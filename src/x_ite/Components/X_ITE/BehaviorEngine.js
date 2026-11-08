@@ -950,8 +950,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          timeSensor ._cycleInterval = cycleInterval;
          timeSensor ._loop          = false;
-         timeSensor ._range [0]     = 0;
-         timeSensor ._range [2]     = 1;
+         timeSensor ._range         = [0, 0, 1];
 
          endCallback ();
 
