@@ -260,7 +260,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor ? timeSensor ._fraction_changed .getValue () * timeSensor ._cycleInterval .getValue () : NaN];
+            return [timeSensor ? timeSensor ._fraction_changed .getValue () * timeSensor [_cycleInterval] : NaN];
          },
          Function .prototype,
          "float",
@@ -275,10 +275,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               timeSensor     = this .animations [animationIndex],
-               browser        = this .getBrowser ();
+               timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor ? browser .getCurrentTime () - timeSensor ._startTime .getValue () : NaN];
+            return [timeSensor ? timeSensor ._fraction_changed .getValue () * timeSensor ._cycleInterval .getValue () : NaN];
          },
          Function .prototype,
          "float",
