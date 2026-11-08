@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       }
       else
       {
-         throw new AggregateError (errors, "Couldn't connect route.");
+         throw new AggregateError (errors, `Couldn't connect route from '${this [_sourceNode] .getName ()}.${this [_sourceFieldName]}' to '${this [_destinationNode] .getName ()}.${this [_destinationFieldName]}'.`);
       }
    },
    disconnect ()
