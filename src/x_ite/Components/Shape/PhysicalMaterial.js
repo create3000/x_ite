@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .TransmissionMaterialExtension)));
 
-      this .setVolumeScatter (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeScatterMaterialExtension)));
+      this .setScatter (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .ScatterMaterialExtension)));
 
       this .set_extensionsKey__ ();
       this .set_renderedTextures__ ();
@@ -211,7 +211,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       browser .getShaders () .set (key, shaderNode);
 
-      shaderNode .volumeScatterPass         = options .includes ("X3D_VOLUME_SCATTER_PASS");
+      shaderNode .scatterPass               = options .includes ("X3D_SCATTER_PASS");
       shaderNode .transmissionBackfacesPass = options .includes ("X3D_TRANSMISSION_BACKFACES_PASS");
 
       return shaderNode;

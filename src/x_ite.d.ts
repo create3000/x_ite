@@ -1488,7 +1488,7 @@ declare namespace X3D
       readonly VolumeEmitter: number;
       readonly VolumeMaterialExtension: number;
       readonly VolumePickSensor: number;
-      readonly VolumeScatterMaterialExtension: number;
+      readonly ScatterMaterialExtension: number;
       readonly WaveShaper: number;
       readonly WindPhysicsModel: number;
       readonly WorldInfo: number;
@@ -21875,7 +21875,7 @@ declare namespace X3D
       sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED";
    }
 
-   /** VolumeScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
+   /** ScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
    interface VolumeScatterMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    {
       /**
@@ -24146,7 +24146,7 @@ declare namespace X3D
       VolumeEmitter: VolumeEmitterProxy,
       VolumeMaterialExtension: VolumeMaterialExtensionProxy,
       VolumePickSensor: VolumePickSensorProxy,
-      VolumeScatterMaterialExtension: VolumeScatterMaterialExtensionProxy,
+      ScatterMaterialExtension: VolumeScatterMaterialExtensionProxy,
       WaveShaper: WaveShaperProxy,
       WindPhysicsModel: WindPhysicsModelProxy,
       WorldInfo: WorldInfoProxy,

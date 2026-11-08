@@ -6,11 +6,11 @@ export default () => /* glsl */ `
 #include <Fragment>
 #include <Shadow>
 
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_SCATTER_MATERIAL_EXT)
    uniform ivec4 x3d_Viewport;
 #endif
 
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT) || defined (X3D_SCATTER_MATERIAL_EXT)
    uniform mat4 x3d_ProjectionMatrix;
    uniform mat4 x3d_ModelViewMatrix;
 #endif
@@ -39,7 +39,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 #include <IBL>
 #include <Iridescence>
 
-#if defined (X3D_VOLUME_SCATTER_PASS)
+#if defined (X3D_SCATTER_PASS)
 #include <Scatter>
 #else
 vec4
@@ -122,8 +122,8 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
-   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-      materialInfo = getVolumeScatterInfo (materialInfo);
+   #if defined (X3D_SCATTER_MATERIAL_EXT)
+      materialInfo = getScatterInfo (materialInfo);
    #endif
 
    #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
@@ -173,9 +173,9 @@ getMaterialColor (const in vec4 fragCoord)
    #endif
    #endif
 
-   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+   #if defined (X3D_SCATTER_MATERIAL_EXT)
       // Used for weighting absorption and scattering.
-      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
+      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor, materialInfo .scatterStrength, materialInfo .scatterAnisotropy);
    #endif
 
    #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
@@ -195,7 +195,7 @@ getMaterialColor (const in vec4 fragCoord)
             diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
          #endif
 
-         #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+         #if defined (X3D_SCATTER_MATERIAL_EXT)
             diffuseTransmissionIBL *= (1.0 - singleScatter);
          #endif
 
@@ -216,6 +216,19 @@ getMaterialColor (const in vec4 fragCoord)
             materialInfo .attenuationColor,
             materialInfo .attenuationDistance,
             materialInfo .dispersion);
+
+         #if defined (X3D_SCATTER_MATERIAL_EXT)
+            if (materialInfo .thickness <= 0.0)
+            {
+               float forwardFraction  = (1.0 + materialInfo .scatterAnisotropy) * 0.5;
+               float backwardFraction = (1.0 - materialInfo .scatterAnisotropy) * 0.5;
+               vec3  scatterBTDF      = getDiffuseLight (-n) * materialInfo .multiscatterColor * forwardFraction;
+               vec3  scatterBRDF      = getDiffuseLight (n) * materialInfo .multiscatterColor * backwardFraction;
+               vec3  scatterLobe      = scatterBTDF + scatterBRDF;
+
+               f_specular_transmission = mix (f_specular_transmission, scatterLobe, materialInfo .scatterStrength);
+            }
+         #endif
 
          f_diffuse = mix (f_diffuse, f_specular_transmission, materialInfo .transmissionFactor);
       #endif
@@ -359,7 +372,7 @@ getMaterialColor (const in vec4 fragCoord)
                   l_diffuse_btdf = applyVolumeAttenuation (l_diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
                #endif
 
-               #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+               #if defined (X3D_SCATTER_MATERIAL_EXT)
                   l_diffuse_btdf *= (1.0 - singleScatter);
                #endif
 
@@ -380,6 +393,28 @@ getMaterialColor (const in vec4 fragCoord)
 
             #if defined (X3D_VOLUME_MATERIAL_EXT)
                transmittedLight = applyVolumeAttenuation (transmittedLight, length (transmissionRay), materialInfo .attenuationColor, materialInfo .attenuationDistance);
+            #endif
+
+            #if defined (X3D_SCATTER_MATERIAL_EXT)
+               if (materialInfo .thickness <= 0.0)
+               {
+                  float forwardFraction  = (1.0 + materialInfo .scatterAnisotropy) * 0.5;
+                  float backwardFraction = (1.0 - materialInfo .scatterAnisotropy) * 0.5;
+                  vec3  scatterLobe      = vec3 (0.0);
+
+                  if (dot (n, l) < 0.0)
+                  {
+                     float scatterNdotL = clamp (dot (-n, l), 0.0, 1.0);
+
+                     scatterLobe = lightIntensity * scatterNdotL * BRDF_lambertian (materialInfo .multiscatterColor) * forwardFraction;
+                  }
+                  else
+                  {
+                     scatterLobe = lightIntensity * NdotL * BRDF_lambertian (materialInfo .multiscatterColor) * backwardFraction;
+                  }
+
+                  transmittedLight = mix (transmittedLight, scatterLobe, materialInfo .scatterStrength);
+               }
             #endif
 
             l_diffuse = mix (l_diffuse, transmittedLight, materialInfo .transmissionFactor);
@@ -459,11 +494,21 @@ getMaterialColor (const in vec4 fragCoord)
    }
    #endif
 
-   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-      // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
-      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, materialInfo .diffuseTransmissionColorFactor, materialInfo .multiscatterColor, fragCoord);
+   #if defined (X3D_SCATTER_MATERIAL_EXT) && defined (X3D_VOLUME_MATERIAL_EXT) && defined (X3D_TRANSMISSION_MATERIAL_EXT)
+      if (materialInfo .scatterStrength > 0.0 && materialInfo .thickness > 0.0)
+      {
+         // Subsurface scattering is calculated based on the Burley diffusion profile.
+         // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
+         vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, materialInfo .multiscatterColor, materialInfo .multiscatterColor, materialInfo .scatterStrength, materialInfo. scatterAnisotropy, singleScatter, fragCoord);
 
-      color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * (1.0 - materialInfo .iridescenceFactor) * (1.0 - materialInfo .transmissionFactor);
+         float iridescenceMask = 1.0;
+
+         #ifdef MATERIAL_IRIDESCENCE
+            iridescenceMask = 1.0 - materialInfo .iridescenceFactor;
+         #endif
+
+         color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * iridescenceMask * materialInfo .transmissionFactor;
+    }
    #endif
 
    f_emissive = getEmissiveColor ();

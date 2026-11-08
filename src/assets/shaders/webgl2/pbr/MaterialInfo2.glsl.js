@@ -60,8 +60,10 @@ struct MaterialInfo
    // KHR_materials_dispersion
    float dispersion;
 
-   // KHR_materials_volume_scatter
-   vec3 multiscatterColor;
+    // KHR_materials_scatter
+    float scatterStrength;
+    vec3 multiscatterColor;
+    float scatterAnisotropy;
 
    // KHR_materials_retroreflection
    float retroreflectionFactor;
@@ -234,16 +236,17 @@ getDiffuseTransmissionInfo (in MaterialInfo info)
 }
 #endif
 
-#if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+#if defined (X3D_SCATTER_MATERIAL_EXT)
 
 ${MaterialTextures .texture ("x3d_ScatterStrengthTextureEXT", "a", "linear")}
 ${MaterialTextures .texture ("x3d_MultiscatterColorTextureEXT", "rgb", "linear")}
 
 uniform float x3d_ScatterStrengthEXT;
 uniform vec3 x3d_MultiscatterColorEXT;
+uniform float x3d_ScatterAnisotropyEXT;
 
 MaterialInfo
-getVolumeScatterInfo (in MaterialInfo info)
+getScatterInfo (in MaterialInfo info)
 {
    // TODO: use scatter.
    float scatterStrength = x3d_ScatterStrengthEXT;
@@ -256,6 +259,16 @@ getVolumeScatterInfo (in MaterialInfo info)
 
    #if defined (X3D_MULTISCATTER_COLOR_TEXTURE_EXT)
       info .multiscatterColor *= getMultiscatterColorTextureEXT ();
+   #endif
+
+   info .scatterAnisotropy = x3d_ScatterAnisotropyEXT;
+
+   #if !defined (X3D_VOLUME_MATERIAL_EXT)
+      // Thin-walled mode has no interior volume. Force the transmission ray to
+      // zero length so KHR_materials_transmission samples the background directly.
+      info .thickness           = 0.0;
+      info .attenuationColor    = vec3(1.0);
+      info .attenuationDistance = 0.0;
    #endif
 
    return info;

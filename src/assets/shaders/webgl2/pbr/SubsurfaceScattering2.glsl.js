@@ -3,21 +3,30 @@ export default () => /* glsl */ `
 // Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/punctual.glsl
 
-#if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+#if defined (X3D_SCATTER_MATERIAL_EXT)
 
 // glTF specification for converting multi-scatter color to single scatter color.
 vec3
-multiToSingleScatter (const in vec3 multiscatterColor)
+multiToSingleScatter (const in vec3 multiscatterColor, const in float scatterStrength, const in float scatterAnisotropy)
 {
-   vec3 s = 4.09712 + 4.20863 * multiscatterColor - sqrt (9.59217 + (41.6808 + 17.7126 * multiscatterColor) * multiscatterColor);
+   vec3 rhoMs = multiscatterColor * scatterStrength;
+   vec3 s     = 4.09712 + 4.20863 * rhoMs - sqrt (9.59217 + 41.6808 * rhoMs + 17.7126 * rhoMs * rhoMs);
 
-   return 1.0 - s * s;
+   s = clamp (s, 0.0, 1.0);
+
+   // For a zero input albedo, force s = 1 so rho_ss is exactly zero.
+   vec3 zeroInput = vec3 (equal (rhoMs, vec3 (0.0)));
+
+   s = mix (s, vec3 (1.0), zeroInput);
+
+   vec3 rhoSs = (1.0 - s * s) / (1.0 - scatterAnisotropy * s * s);
+
+   return clamp (rhoSs, 0.0, 1.0);
 }
 
-#if !defined (X3D_VOLUME_SCATTER_PASS)
+#if !defined (X3D_SCATTER_PASS)
 // Subsurface scattering based on the blender implementation of the Burley model.
 
-uniform float x3d_ScatterAnisotropyEXT;
 uniform vec3  x3d_ScatterSamplesEXT [X3D_SCATTER_SAMPLES_COUNT_EXT];
 uniform float x3d_ScatterMinRadiusEXT;
 
@@ -46,9 +55,14 @@ burley_eval (const in vec3 d, const in float r)
 }
 
 vec3
-getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 diffuseColor, const in vec3 multiscatterColor, const in vec4 fragCoord)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 diffuseColor, const in vec3 multiscatterColor, const in float scatterStrength, const in float scatterAnisotropy, const in vec3 singleScatter, const in vec4 fragCoord)
 {
-   vec3  scatterDistance     = attenuationDistance * multiscatterColor; // Scale the attenuation distance by the multi-scatter color.
+   vec3 multiScatter = scatterStrength * multiscatterColor;
+   // Blend between the multi-scatter-driven diffusion length and the
+   // single-scatter-driven length as anisotropy increases. At g = 0 this keeps
+   // the previous multi-scatter radius, while forward scattering (g > 0)
+   // stretches the profile and backward scattering (g < 0) tightens it.
+   vec3 scatterDistance      = attenuationDistance * mix (multiScatter, singleScatter, abs (scatterAnisotropy));
    float maxColor            = max3 (scatterDistance);
    vec3  vMaxColor           = max (vec3 (maxColor), vec3 (0.00001));
    vec2  texelSize           = 1.0 / vec2 (x3d_Viewport .zw);
@@ -71,7 +85,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    float maxRadiusPixels    = maxColor / mPerPixel; // Calculate the maximum radius in pixels.
 
    if (maxRadiusPixels <= 1.0)
-      return centerSample .rgb; // If the maximum radius is less than or equal to the pixel size, the pixel itself defines the scatter color.
+      return centerSample .rgb * diffuseColor; // If the maximum radius is less than or equal to the pixel size, the pixel itself defines the scatter color.
 
    centerDepth = fragViewPosition .z; // Extract the depth value.
 

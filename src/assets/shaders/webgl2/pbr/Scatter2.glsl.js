@@ -70,10 +70,10 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
-   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-      materialInfo = getVolumeScatterInfo (materialInfo);
+   #if defined (X3D_SCATTER_MATERIAL_EXT)
+      materialInfo = getScatterInfo (materialInfo);
 
-      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
+      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor, materialInfo .scatterStrength, materialInfo .scatterAnisotropy);
    #endif
 
    materialInfo .perceptualRoughness = clamp (materialInfo .perceptualRoughness, 0.0, 1.0);
@@ -87,29 +87,11 @@ getMaterialColor (const in vec4 fragCoord)
    vec3 f_diffuse             = vec3 (0.0);
    vec3 f_dielectric_brdf_ibl = vec3 (0.0);
 
-   float albedoSheenScaling           = 1.0;
-   float diffuseTransmissionThickness = 1.0;
-
-   #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-   #if defined (X3D_VOLUME_MATERIAL_EXT)
-      diffuseTransmissionThickness = materialInfo .thickness * (length (x3d_ModelViewMatrix [0] .xyz) + length (x3d_ModelViewMatrix [1] .xyz) + length (x3d_ModelViewMatrix [2] .xyz)) / 3.0;
-   #endif
-   #endif
+   float albedoSheenScaling = 1.0;
 
    // Calculate lighting contribution from image based lighting source (IBL)
    #if defined (X3D_USE_IBL) || defined (X3D_TRANSMISSION_MATERIAL_EXT)
-      #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-         f_diffuse = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor * singleScatter;
-
-         vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
-
-         #if defined (X3D_VOLUME_MATERIAL_EXT)
-            diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
-         #endif
-
-         f_diffuse += diffuseTransmissionIBL * (1.0 - singleScatter) * singleScatter;
-         f_diffuse *= materialInfo .diffuseTransmissionFactor;
-      #endif
+      f_diffuse = getDiffuseLight (n) * baseColor .rgb;
 
       #if defined (X3D_SHEEN_MATERIAL_EXT)
          albedoSheenScaling = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor);
@@ -154,36 +136,15 @@ getMaterialColor (const in vec4 fragCoord)
 
          vec3 dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (VdotH));
 
+         // Calculation of analytical light
+         // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
+         vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
+
          vec3 l_diffuse             = vec3 (0.0);
          vec3 l_specular_dielectric = vec3 (0.0);
          vec3 l_dielectric_brdf     = vec3 (0.0);
 
-         #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-            // Calculation of analytical light
-            // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
-            vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
-
-            l_diffuse = lightIntensity * NdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor) * singleScatter;
-
-            if (dot (n, l) < 0.0)
-            {
-               float diffuseNdotL = clamp (dot (-n, l), 0.0, 1.0);
-               vec3  diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
-
-               vec3  l_mirror     = normalize (reflect (l, n)); // Mirror light reflection vector on surface
-               float diffuseVdotH = clamp (dot (v, normalize (l_mirror + v)), 0.0, 1.0);
-
-               dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (diffuseVdotH));
-
-               #if defined (X3D_VOLUME_MATERIAL_EXT)
-                  diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
-               #endif
-
-               l_diffuse += diffuse_btdf * (1.0 - singleScatter) * singleScatter;
-            }
-
-            l_diffuse *= materialInfo .diffuseTransmissionFactor;
-         #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
+         l_diffuse = lightIntensity * NdotL * BRDF_lambertian (baseColor .rgb);
 
          // We need to multiply with sheen scaling, since we aggregate all lights in one texture, for IBL this can be done in the normal PBR shader
          #if defined (X3D_SHEEN_MATERIAL_EXT)
