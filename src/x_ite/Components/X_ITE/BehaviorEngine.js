@@ -847,8 +847,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          parentIndex = +shapeParent ?.getMetaData ("Interactivity/node", new Fields .SFInt32 (-1)),
          nodeIndex   = parentIndex >= 0 ? parentIndex : undefined;
 
-      if (DEVELOPMENT)
-         console .log (hit .type, nodeIndex, shapeParent);
+      // if (DEVELOPMENT)
+      //    console .log (hit .type, nodeIndex, shapeParent);
 
       switch (hit .type)
       {
@@ -859,7 +859,16 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          }
          case "release":
          {
-            this .engine .select (nodeIndex, 0, [... hit .point], [... hit .ray .point]);
+            const selectionPoint = this .Matrix4
+               .assign (hit .modelViewMatrix)
+               .inverse ()
+               .multRight (shapeParent .getMatrix ())
+               .multVecMatrix (hit .point .copy ());
+
+            const selectionRayOrigin = this .Matrix4
+               .multVecMatrix (hit .ray .point .copy ());
+
+            this .engine .select (nodeIndex, 0, [... selectionPoint], [... selectionRayOrigin]);
             break;
          }
       }
