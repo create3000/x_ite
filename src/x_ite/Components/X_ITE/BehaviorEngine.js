@@ -965,7 +965,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          timeSensor ._loop          = false;
          timeSensor ._range         = [0, 0, 1];
 
-         timeSensor [_doneCallback] ();
+         timeSensor [_doneCallback] ?.();
 
          console .log ("start done", animationIndex, timeSensor ._fraction_changed .getValue ())
       });
@@ -980,6 +980,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       console .log ("stop", animationIndex)
 
       timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+
+      timeSensor [_doneCallback] = undefined;
    },
    stopAnimationAt (animationIndex, stopTime, stopCallback)
    {
