@@ -929,7 +929,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          duration = Math .abs (signedDuration),
          reverse  = stopTime < startTime;
 
-      console .log ("start", animationIndex, startTime, stopTime, cycleInterval, startTime === stopTime)
+      if (DEVELOPMENT)
+         console .log ("start", animationIndex, startTime, stopTime, cycleInterval, startTime === stopTime)
 
       timeSensor ._cycleInterval = cycleInterval * speed;
       timeSensor ._reverse       = reverse;
@@ -966,7 +967,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          timeSensor [_doneCallback] ?.();
 
-         console .log ("start done", animationIndex, timeSensor ._fraction_changed .getValue ())
+         if (DEVELOPMENT)
+            console .log ("start done", animationIndex, timeSensor ._fraction_changed .getValue ())
       });
    },
    stopAnimation (animationIndex)
@@ -976,7 +978,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       if (!timeSensor)
          return;
 
-      console .log ("stop", animationIndex)
+      if (DEVELOPMENT)
+         console .log ("stop", animationIndex)
 
       timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
 
@@ -999,7 +1002,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       timeSensor [_doneCallback] = stopCallback;
 
-      console .log ("stop at", animationIndex, stopTime)
+      if (DEVELOPMENT)
+         console .log ("stop at", animationIndex, stopTime)
    },
    getHitNodeIndex (hit, nodeIndex)
    {
