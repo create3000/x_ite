@@ -19,6 +19,12 @@ import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
+const
+   _cycleInterval = Symbol (),
+   _active        = Symbol (),
+   _doneCallback  = Symbol (),
+   _animation     = Symbol ();
+
 const Types = new Map ([
    [X3DConstants .SFBool,       "bool"],
    [X3DConstants .SFColor,      "float3"],
@@ -189,6 +195,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       for (const node of this ._animations)
          this .animations .push (X3DCast (X3DConstants .TimeSensor, node));
 
+      for (const timeSensor of this .animations)
+         timeSensor [_cycleInterval] = timeSensor ._cycleInterval .getValue ();
+
       // Register JSON Pointers
 
       this .world = null;
@@ -211,7 +220,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [!! timeSensor ?._isActive .getValue ()];
+            return [!! timeSensor ?.[_active]];
          },
          Function .prototype,
          "bool",
@@ -234,7 +243,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor ?._cycleInterval .getValue () ?? 0];
+            return [timeSensor ?.[_cycleInterval] ?? 0];
          },
          Function .prototype,
          "float",
@@ -905,7 +914,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       const
          currentTime    = this .getBrowser () .getCurrentTime (),
-         cycleInterval  = timeSensor ._cycleInterval .getValue (),
+         cycleInterval  = timeSensor [_cycleInterval],
          signedDuration = (stopTime - startTime) % cycleInterval;
 
       if (startTime < 0 || startTime > cycleInterval)
@@ -919,8 +928,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       const
          duration = Math .abs (signedDuration),
-         reverse  = stopTime < startTime,
-         key      = Symbol ();
+         reverse  = stopTime < startTime;
 
       console .log ("start", animationIndex, startTime, stopTime, cycleInterval, startTime === stopTime)
 
@@ -941,18 +949,23 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          timeSensor ._loop = true;
       }
 
-      timeSensor ._isActive .addFieldCallback (key, value =>
+      timeSensor [_active]       = true;
+      timeSensor [_doneCallback] = endCallback;
+
+      timeSensor ._isActive .addFieldCallback (_animation, value =>
       {
          if (value)
             return;
 
-         timeSensor ._isActive .removeFieldCallback (key);
+         timeSensor ._isActive .removeFieldCallback (_animation);
+
+         timeSensor [_active] = false;
 
          timeSensor ._cycleInterval = cycleInterval;
          timeSensor ._loop          = false;
          timeSensor ._range         = [0, 0, 1];
 
-         endCallback ();
+         timeSensor [_doneCallback] ();
 
          console .log ("start done", animationIndex, timeSensor ._fraction_changed .getValue ())
       });
@@ -975,24 +988,17 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       if (!timeSensor)
          return;
 
-      const
-         currentTime = this .getBrowser () .getCurrentTime (),
-         key         = Symbol ();
+      if (!timeSensor [_active])
+         return;
+
+      if (stopTime >= timeSensor [_cycleInterval])
+         return;
+
+      timeSensor ._range [2] = stopTime / timeSensor [_cycleInterval];
+
+      timeSensor [_doneCallback] = stopCallback;
 
       console .log ("stop at", animationIndex, stopTime)
-
-      timeSensor ._stopTime = currentTime + stopTime;
-
-      timeSensor ._isActive .addFieldCallback (key, value =>
-      {
-         if (value)
-            return;
-
-         console .log ("stop done", animationIndex, stopTime)
-
-         timeSensor ._isActive .removeFieldCallback (key);
-         stopCallback ();
-      });
    },
    getHitNodeIndex (hit, nodeIndex)
    {
