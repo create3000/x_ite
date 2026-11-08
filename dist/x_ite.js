@@ -1,4 +1,4 @@
-/* X_ITE v16.7.0 */
+/* X_ITE v16.7.1 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 197
+/***/ 215
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 399
+/***/ 69
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 803
+/***/ 13
 (module) {
 
 /**
@@ -18889,7 +18889,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.7.0";
+const BROWSER_VERSION_default_ = "16.7.1";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -31247,7 +31247,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(803);
+/* provided dependency */ var libtess = __webpack_require__(13);
 
 
 const Triangle3 =
@@ -37905,7 +37905,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
    },
    loadData ()
    {
-      new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
+      new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL, mimeType) =>
       {
          if (data === null)
          {
@@ -37933,7 +37933,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
                this .setLinear (false);
                this .setMipMaps (true);
 
-               const objectURL = URL .createObjectURL (new Blob ([data]));
+               const objectURL = URL .createObjectURL (new Blob ([data], { type: mimeType }));
 
                try
                {
@@ -48283,7 +48283,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(803);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(13);
 
 
 
@@ -51776,7 +51776,7 @@ class FileLoader
             return this .foreign (this .resolvedURL .href, this .target);
       }
 
-      await this .dataCallback (await helper.gunzip (await this .getBlob (response)), this .resolvedURL);
+      await this .dataCallback (await helper.gunzip (await this .getBlob (response)), this .resolvedURL, mimeType);
    }
 
    async getBlob (response)
@@ -52438,7 +52438,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, Base_X3DObject .pro
       }
       else
       {
-         throw new AggregateError (errors, "Couldn't connect route.");
+         throw new AggregateError (errors, `Couldn't connect route from '${this [_sourceNode] .getName ()}.${this [_sourceFieldName]}' to '${this [_destinationNode] .getName ()}.${this [_destinationFieldName]}'.`);
       }
    },
    disconnect ()
@@ -55060,7 +55060,7 @@ function X3DCoreContext (element)
          const link = document .createElement ("link");
 
          if (!DEVELOPMENT)
-            link .integrity = "sha384-FJsf4cbe6iyzs4pjkkDmFsCiYVJgLa2BvbYqQk1S/mA+iQj1PJ8k38Hpo/btTA3y";
+            link .integrity = "sha384-R4Z2SisYPIAtBlzqB1lbEs1filJuLfAqQibEeR1JP13+AA1DPi0xXsMTKl3zyx+I";
 
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
@@ -91940,8 +91940,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(197);
-/* provided dependency */ var APNG = __webpack_require__(399);
+/* provided dependency */ var SuperGif = __webpack_require__(215);
+/* provided dependency */ var APNG = __webpack_require__(69);
 
 
 
@@ -94585,7 +94585,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(803);
+/* provided dependency */ var libtess_libtess = __webpack_require__(13);
 const libtess_default_ = libtess_libtess;
 ;
 

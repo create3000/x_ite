@@ -1,4 +1,4 @@
-/* X_ITE v16.7.0 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -18212,7 +18212,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, (external_X_I
                   childIndex = +match [2],
                   node       = this .transformNodes .get (nodeIndex);
 
-               const children = node ._children ?.flatMap (child => child ?.getValue ())
+               const children = node ._children .flatMap (child => child ?.getValue ())
                   .filter (childNode => childNode ?.getType ()
                      .includes ((external_X_ITE_X3D_X3DConstants_default()).X3DTransformMatrix3DNode));
 
