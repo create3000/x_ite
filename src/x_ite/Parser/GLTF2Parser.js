@@ -3105,10 +3105,10 @@ function eventsProcessed ()
 
       // Determine cycleInterval.
 
-      const cycleInterval = samplers
-         .map (sampler => this .accessors [sampler .input])
-         .filter (input => input ?.array .length)
-         .reduce ((value, input) => Math .max (value, input .array .at (-1)), 0);
+      const cycleInterval = channels .map (channel => samplers [channel .sampler])
+         .map (sampler => this .accessors [sampler ?.input])
+         .filter (input => input ?.max .length)
+         .reduce ((value, input) => Math .max (value, input .max [0]), 0);
 
       timeSensorNode ._cycleInterval = cycleInterval;
 
