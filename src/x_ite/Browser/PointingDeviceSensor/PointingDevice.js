@@ -60,9 +60,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
                .some (node => node .getType () .includes (X3DConstants .X3DDragSensorNode));
 
             browser .setCursor ("POINTER");
-
-            this .onverifymotion (x, y);
          }
+
+         browser .setHitType ("press");
+
+         this .onverifymotion (x, y);
       }
    },
    mouseup (event)
@@ -82,9 +84,12 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       $.on (this, surface, "mousemove", event => this .mousemove (event));
 
       this .grabbing = false;
+      this .over     = browser .motionNotifyEvent (x, y);
 
       browser .buttonReleaseEvent ();
       browser .setCursor (this .over ? "POINTER" : "DEFAULT");
+      browser .setHitType ("release");
+
       this .onverifymotion (x, y);
 
       if (!this .over)
@@ -214,6 +219,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
       else
          browser .setCursor (this .grabbing && move ? "GRABBING" : "DEFAULT");
+
+      browser .setHitType ("motion");
    },
    onmouseout ()
    {

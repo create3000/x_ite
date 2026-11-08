@@ -1,5 +1,6 @@
 import PointingDevice from "./PointingDevice.js";
 import PointingBuffer from "../../Rendering/PointingBuffer.js";
+import Fields         from "../../Fields.js";
 import TraverseType   from "../../Rendering/TraverseType.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
@@ -15,6 +16,7 @@ const
    _cursorType                = Symbol (),
    _pointer                   = Symbol (),
    _hit                       = Symbol (),
+   _hitEvents                 = Symbol (),
    _sensors                   = Symbol (),
    _overSensors               = Symbol (),
    _activeSensors             = Symbol (),
@@ -32,6 +34,7 @@ function X3DPointingDeviceSensorContext ()
    this [_pointingDevice]            = new PointingDevice (this .getPrivateScene ());
    this [_pointingDeviceSensorNodes] = new Set ();
    this [_pointer]                   = new Vector2 ();
+   this [_hitEvents]                 = new Fields .SFTime ();
    this [_sensors]                   = [ ];
    this [_overSensors]               = new Map ();
    this [_activeSensors]             = new Map ();
@@ -170,6 +173,17 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       this .buttonReleaseEvent (hit);
       this .motion (hit);
+   },
+   setHitType (type, hit = this [_hit])
+   {
+      hit .type = type;
+
+      this [_hitEvents] .set (this .getCurrentTime ());
+      this [_hitEvents] .processEvent ();
+   },
+   hitEvents ()
+   {
+      return this [_hitEvents];
    },
    addSensor (sensor)
    {
