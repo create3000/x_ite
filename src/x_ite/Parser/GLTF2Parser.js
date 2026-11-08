@@ -305,12 +305,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                await this .MeshoptDecoder .ready;
                break;
             }
-            case "KHR_node_hoverability":
-            case "KHR_node_selectability":
-            {
-               components .push (browser .getComponent ("PointingDeviceSensor", 1));
-               break;
-            }
             case "KHR_texture_transform":
             {
                components .push (browser .getComponent ("Texturing3D", 2));
@@ -2613,47 +2607,11 @@ function eventsProcessed ()
             case "KHR_node_hoverability":
             {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_hoverability
-
-               const
-                  scene           = this .getScene (),
-                  touchSensorNode = scene .createNode ("TouchSensor", false);
-
-               touchSensorNode ._enabled = extension .hoverable ?? true;
-               touchSensorNode .setup ();
-
-               node .transformNode ._children .push (touchSensorNode);
-
-               extension .pointers = [touchSensorNode];
-
-               if (this .behavior)
-               {
-                  touchSensorNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
-                  this .behaviorEngine ._hoverability .push (touchSensorNode);
-               }
-
                break;
             }
             case "KHR_node_selectability":
             {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_selectability
-
-               const
-                  scene           = this .getScene (),
-                  touchSensorNode = scene .createNode ("TouchSensor", false);
-
-               touchSensorNode ._enabled = extension .selectable ?? true;
-               touchSensorNode .setup ();
-
-               node .transformNode ._children .push (touchSensorNode);
-
-               extension .pointers = [touchSensorNode];
-
-               if (this .behavior)
-               {
-                  touchSensorNode .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (index));
-                  this .behaviorEngine ._selectability .push (touchSensorNode);
-               }
-
                break;
             }
             case "KHR_node_visibility":

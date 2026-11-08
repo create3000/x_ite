@@ -66,16 +66,6 @@ Input/Output field *graph*.
 
 Input/Output field *graphs*.
 
-### MFNode [in, out] **hoverability** [ ] <small>[TouchSensor]</small>
-{: #fields-hoverability }
-
-Input/Output field *hoverability*.
-
-### MFNode [in, out] **selectability** [ ] <small>[TouchSensor]</small>
-{: #fields-selectability }
-
-Input/Output field *selectability*.
-
 ### MFNode [in, out] **animations** [ ] <small>[TimeSensor]</small>
 {: #fields-animations }
 

@@ -59,13 +59,11 @@ function BehaviorEngine (executionContext)
 
    // Private properties
 
-   this .hoverabilityNodes  = [ ];
-   this .selectabilityNodes = [ ];
-   this .animations         = [ ];
-   this .transformNodes     = new Map ();
-   this .parents            = new Map ();
-   this .pointers           = new Map ();
-   this .cache              = new Map ();
+   this .animations     = [ ];
+   this .transformNodes = new Map ();
+   this .parents        = new Map ();
+   this .pointers       = new Map ();
+   this .cache          = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode .prototype),
@@ -102,24 +100,30 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this ._enabled       .addInterest ("set_enabled__",       this);
       this ._graph         .addInterest ("set_graph__",         this);
       this ._graphs        .addInterest ("set_graph__",         this);
-      this ._hoverability  .addInterest ("set_hoverability__",  this);
-      this ._selectability .addInterest ("set_selectability__", this);
       this ._animations    .addInterest ("set_animations__",    this);
       this ._nodes         .addInterest ("set_nodes__",         this);
 
       this .set_enabled__ ();
-      this .set_hoverability__ ();
-      this .set_selectability__ ();
       this .set_animations__ ();
       this .set_nodes__ ();
       this .set_graph__ ();
    },
    set_enabled__ ()
    {
+      const browser = this .getBrowser ();
+
       if (this .getLive () .getValue () && this ._enabled .getValue ())
+      {
+         browser .addPointingDeviceSensor (this);
+         browser .hitEvents () .addInterest ("set_hit__", this);
          this .engine .playEventQueue ();
+      }
       else
+      {
+         browser .removePointingDeviceSensor (this);
+         browser .hitEvents () .removeInterest ("set_hit__", this);
          this .engine .pauseEventQueue ();
+      }
    },
    set_graph__ ()
    {
@@ -142,50 +146,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          console .error (new Error (`${this .getTypeName ()}: Couldn't parse graph ${this ._graph}.`, { cause: error }));
 
          this .engine .loadBehaveGraph ({ }, false);
-      }
-   },
-   set_hoverability__ ()
-   {
-      for (const hoverabilityNode of this .hoverabilityNodes)
-         hoverabilityNode ._isOver .removeInterest ("set_over__", this);
-
-      this .hoverabilityNodes .length = 0;
-
-      for (const node of this ._hoverability)
-      {
-         const hoverabilityNode = X3DCast (X3DConstants .TouchSensor, node);
-
-         if (hoverabilityNode)
-            this .hoverabilityNodes .push (hoverabilityNode);
-      }
-
-      for (const hoverabilityNode of this .hoverabilityNodes)
-      {
-         const nodeIndex = +hoverabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
-
-         hoverabilityNode ._isOver .addInterest ("set_over__", this, nodeIndex);
-      }
-   },
-   set_selectability__ ()
-   {
-      for (const selectabilityNode of this .selectabilityNodes)
-         selectabilityNode ._touchTime .removeInterest ("set_touchTime__", this);
-
-      this .selectabilityNodes .length = 0;
-
-      for (const node of this ._selectability)
-      {
-         const selectabilityNode = X3DCast (X3DConstants .TouchSensor, node);
-
-         if (selectabilityNode)
-            this .selectabilityNodes .push (selectabilityNode);
-      }
-
-      for (const selectabilityNode of this .selectabilityNodes)
-      {
-         const nodeIndex = +selectabilityNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
-
-         selectabilityNode ._touchTime .addInterest ("set_touchTime__", this, nodeIndex);
       }
    },
    set_animations__ ()
@@ -878,22 +838,31 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          !field .isWritable () // read-only
       );
    },
-   set_over__ (nodeIndex, over)
+   set_hit__ ()
    {
-      const hit = this .getBrowser () .getHit ();
+      const
+         browser     = this .getBrowser (),
+         hit         = browser .getHit (),
+         shapeParent = hit .shapeParent,
+         parentIndex = +shapeParent ?.getMetaData ("Interactivity/node", new Fields .SFInt32 (-1)),
+         nodeIndex   = parentIndex >= 0 ? parentIndex : undefined;
 
-      this .engine .hoverOn (over .getValue () ? this .getHitNodeIndex (hit, nodeIndex) : undefined);
-   },
-   set_touchTime__ (nodeIndex)
-   {
-      const hit = this .getBrowser () .getHit ();
+      if (DEVELOPMENT)
+         console .log (hit .type, nodeIndex, shapeParent);
 
-      // Pass nodeIndex, hitPoint and hitRay.point.
-
-      this .engine .select (this .getHitNodeIndex (hit, nodeIndex), 0, [... hit .point], [... hit .ray .point]);
-
-      // if (DEVELOPMENT)
-      //    console .log ("select", nodeIndex, this .getHitNodeIndex (hit, nodeIndex));
+      switch (hit .type)
+      {
+         case "motion":
+         {
+            this .engine .hoverOn (nodeIndex);
+            break;
+         }
+         case "release":
+         {
+            this .engine .select (nodeIndex, 0, [... hit .point], [... hit .ray .point]);
+            break;
+         }
+      }
    },
    getWorld ()
    {
@@ -1005,17 +974,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // if (DEVELOPMENT)
       //    console .log ("stop at", animationIndex, stopTime)
    },
-   getHitNodeIndex (hit, nodeIndex)
-   {
-      const
-         shapeParent = hit .shapeParent,
-         parentIndex = +shapeParent .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
-
-      if (parentIndex >= 0)
-         nodeIndex = parentIndex;
-
-      return nodeIndex;
-   },
    getParentNodeIndex (nodeIndex)
    {
       return this .parents .get (this .transformNodes .get (nodeIndex));
@@ -1041,14 +999,12 @@ Object .defineProperties (BehaviorEngine,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",         new Fields .SFInt32 (-1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",        new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "hoverability",  new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "selectability", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "animations",    new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "nodes",         new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",      new Fields .SFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",     new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "animations", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "nodes",      new Fields .MFNode ()),
       ]),
       enumerable: true,
    },
