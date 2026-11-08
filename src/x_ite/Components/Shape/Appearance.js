@@ -197,7 +197,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       {
          this .materialNode ._transparent      .removeInterest ("set_transparent__",      this);
          this .materialNode ._transmission     .removeInterest ("set_transmission__",     this);
-         this .materialNode ._volumeScatter    .removeInterest ("set_volumeScatter__",    this);
+         this .materialNode ._scatter    .removeInterest ("set_scatter__",          this);
          this .materialNode ._renderedTextures .removeInterest ("set_renderedTextures__", this);
       }
 
@@ -206,11 +206,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
 
       this .materialNode ._transparent      .addInterest ("set_transparent__",      this);
       this .materialNode ._transmission     .addInterest ("set_transmission__",     this);
-      this .materialNode ._volumeScatter    .addInterest ("set_volumeScatter__",    this);
+      this .materialNode ._scatter    .addInterest ("set_scatter__",          this);
       this .materialNode ._renderedTextures .addInterest ("set_renderedTextures__", this);
 
       this .set_transmission__ ();
-      this .set_volumeScatter__ ();
+      this .set_scatter__ ();
 
       this .set_transmission__ ();
 
@@ -225,7 +225,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       {
          this .backMaterialNode ._transparent      .removeInterest ("set_transparent__",      this);
          this .backMaterialNode ._transmission     .removeInterest ("set_transmission__",     this);
-         this .backMaterialNode ._volumeScatter    .removeInterest ("set_volumeScatter__",    this);
+         this .backMaterialNode ._scatter    .removeInterest ("set_scatter__",          this);
          this .backMaterialNode ._renderedTextures .removeInterest ("set_renderedTextures__", this);
       }
 
@@ -235,7 +235,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       {
          this .backMaterialNode ._transparent      .addInterest ("set_transparent__",      this);
          this .backMaterialNode ._transmission     .addInterest ("set_transmission__",     this);
-         this .backMaterialNode ._volumeScatter    .addInterest ("set_volumeScatter__",    this);
+         this .backMaterialNode ._scatter    .addInterest ("set_scatter__",          this);
          this .backMaterialNode ._renderedTextures .addInterest ("set_renderedTextures__", this);
       }
 
@@ -379,10 +379,10 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
                              this .backMaterialNode ?.isTransmission ());
 
    },
-   set_volumeScatter__ ()
+   set_scatter__ ()
    {
-      this .setVolumeScatter (this .materialNode ?.isVolumeScatter () ||
-                              this .backMaterialNode ?.isVolumeScatter ());
+      this .setScatter (this .materialNode ?.isScatter () ||
+                              this .backMaterialNode ?.isScatter ());
    },
    set_renderedTextures__ ()
    {

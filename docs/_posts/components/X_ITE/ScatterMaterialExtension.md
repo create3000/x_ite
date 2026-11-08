@@ -1,9 +1,9 @@
 ---
-title: VolumeScatterMaterialExtension
+title: ScatterMaterialExtension
 date: 2024-06-12
 nav: components-X_ITE
 categories: [components, X_ITE]
-tags: [VolumeScatterMaterialExtension, X_ITE]
+tags: [ScatterMaterialExtension, X_ITE]
 ---
 <style>
 .post h3 {
@@ -13,9 +13,9 @@ tags: [VolumeScatterMaterialExtension, X_ITE]
 
 ## Overview
 
-**VolumeScatterMaterialExtension** is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) node. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
+**ScatterMaterialExtension** is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) node. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
 
-The **VolumeScatterMaterialExtension** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
+The **ScatterMaterialExtension** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *extensions.* It is available from X3D version 4.0 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -25,7 +25,7 @@ The **VolumeScatterMaterialExtension** node belongs to the [X_ITE](/x_ite/compon
 ```
 + X3DNode
   + X3DMaterialExtensionNode
-    + VolumeScatterMaterialExtension
+    + ScatterMaterialExtension
 ```
 
 ## Fields

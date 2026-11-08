@@ -14,7 +14,7 @@ function X3DMaterialNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "transparent",      new Fields .SFBool (),
                           X3DConstants .outputOnly, "transmission",     new Fields .SFBool (),
-                          X3DConstants .outputOnly, "volumeScatter",    new Fields .SFBool (),
+                          X3DConstants .outputOnly, "scatter",          new Fields .SFBool (),
                           X3DConstants .outputOnly, "renderedTextures", new Fields .SFTime ());
 
    // Private properties
@@ -48,14 +48,14 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       return this ._transmission .getValue ();
    },
-   setVolumeScatter (value)
+   setScatter (value)
    {
-      if (!!value !== this ._volumeScatter .getValue ())
-         this ._volumeScatter = value;
+      if (!!value !== this ._scatter .getValue ())
+         this ._scatter = value;
    },
-   isVolumeScatter ()
+   isScatter ()
    {
-      return this ._volumeScatter .getValue ();
+      return this ._scatter .getValue ();
    },
    addTexture (index, textureNode)
    {
@@ -346,7 +346,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          case RenderPass .VOLUME_SCATTER_KEY:
          {
-            options .push ("X3D_VOLUME_SCATTER_PASS", "X3D_LINEAR_OUTPUT");
+            options .push ("X3D_SCATTER_PASS", "X3D_LINEAR_OUTPUT");
             break;
          }
          case RenderPass .TRANSMISSION_KEY:

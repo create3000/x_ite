@@ -1754,7 +1754,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(KHR_materials_scatter instanceof Object))
          return;
 
-      const extension = this .getScene () .createNode ("VolumeScatterMaterialExtension", false);
+      const extension = this .getScene () .createNode ("ScatterMaterialExtension", false);
 
       extension ._scatterStrength        = this .numberValue (KHR_materials_scatter .scatterStrengthFactor, 0);
       extension ._scatterStrengthTexture = this .textureInfo (KHR_materials_scatter .scatterStrengthTexture);

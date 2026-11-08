@@ -1,4 +1,4 @@
-/* X_ITE v16.7.0 */
+/* X_ITE v16.7.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -754,7 +754,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
    },
    loadData ()
    {
-      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
+      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL, mimeType) =>
       {
          if (data === null)
          {
@@ -781,7 +781,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
                this .setLinear (false);
                this .setMipMaps (true);
 
-               const objectURL = URL .createObjectURL (new Blob ([data]));
+               const objectURL = URL .createObjectURL (new Blob ([data], { type: mimeType }));
 
                try
                {

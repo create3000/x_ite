@@ -8,9 +8,9 @@ function X3DAppearanceNode (executionContext)
 
    this .addType (X3DConstants .X3DAppearanceNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "transparent",   new Fields .SFBool (),
-                          X3DConstants .outputOnly, "transmission",  new Fields .SFBool (),
-                          X3DConstants .outputOnly, "volumeScatter", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "transparent",  new Fields .SFBool (),
+                          X3DConstants .outputOnly, "transmission", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "scatter",      new Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, X3DNode .prototype),
@@ -33,14 +33,14 @@ Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, X3DNode .p
    {
       return this ._transmission .getValue ();
    },
-   setVolumeScatter (value)
+   setScatter (value)
    {
-      if (!!value !== this ._volumeScatter .getValue ())
-         this ._volumeScatter = value;
+      if (!!value !== this ._scatter .getValue ())
+         this ._scatter = value;
    },
-   isVolumeScatter ()
+   isScatter ()
    {
-      return this ._volumeScatter .getValue ();
+      return this ._scatter .getValue ();
    },
 });
 

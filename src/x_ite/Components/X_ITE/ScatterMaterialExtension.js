@@ -32,18 +32,18 @@ ShaderRegistry .addIncludeFile ("SubsurfaceScattering", SubsurfaceScattering2);
  * THIS NODE IS STILL EXPERIMENTAL.
  */
 
-function VolumeScatterMaterialExtension (executionContext)
+function ScatterMaterialExtension (executionContext)
 {
    X3DMaterialExtensionNode .call (this, executionContext);
 
-   this .addType (X3DConstants .VolumeScatterMaterialExtension);
+   this .addType (X3DConstants .ScatterMaterialExtension);
 
    // Private properties
 
    this .multiscatterColorArray = new Float32Array (3);
 }
 
-Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
+Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X3DMaterialExtensionNode .prototype),
 {
    initialize ()
    {
@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    },
    getShaderOptions (options)
    {
-      options .push ("X3D_VOLUME_SCATTER_MATERIAL_EXT");
+      options .push ("X3D_SCATTER_MATERIAL_EXT");
       options .push (`X3D_SCATTER_SAMPLES_COUNT_EXT ${ScatterSamples .SCATTER_SAMPLES_COUNT}`);
 
       if (!+this .getTextureBits ())
@@ -129,7 +129,7 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
          textureTransformMapping,
          textureCoordinateMapping);
 
-      if (shaderObject .volumeScatterPass)
+      if (shaderObject .scatterPass)
       {
          gl .uniform1f  (shaderObject .x3d_ScatterMaterialIdEXT, browser .getShapeId ());
          gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
@@ -161,9 +161,9 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    },
 });
 
-Object .defineProperties (VolumeScatterMaterialExtension,
+Object .defineProperties (ScatterMaterialExtension,
 {
-   ... X3DNode .getStaticProperties ("VolumeScatterMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
+   ... X3DNode .getStaticProperties ("ScatterMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
@@ -180,4 +180,4 @@ Object .defineProperties (VolumeScatterMaterialExtension,
    },
 });
 
-export default VolumeScatterMaterialExtension;
+export default ScatterMaterialExtension;

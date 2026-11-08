@@ -1003,10 +1003,10 @@
       </InterfaceDefinition>
     </ConcreteNode>
 
-    <ConcreteNode name="VolumeScatterMaterialExtension">
+    <ConcreteNode name="ScatterMaterialExtension">
       <InterfaceDefinition
         specificationUrl="https://create3000.github.io/x_ite/components/x-ite/volumescattermaterialextension"
-        appinfo="VolumeScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node.">
+        appinfo="ScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node.">
         <componentInfo name="X_ITE" level="1" />
         <Inheritance baseType="X3DMaterialExtensionNode" />
         <field name="metadata"
