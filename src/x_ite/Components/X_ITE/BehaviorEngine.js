@@ -854,11 +854,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       {
          case "motion":
          {
-            this .engine .hoverOn (nodeIndex);
+            this .engine .hoverOn (nodeIndex, 0);
             break;
          }
          case "release":
          {
+            if (!shapeParent)
+               break;
+
             const selectionPoint = this .Matrix4
                .assign (hit .modelViewMatrix)
                .inverse ()
