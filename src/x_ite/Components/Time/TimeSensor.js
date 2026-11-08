@@ -63,14 +63,14 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    getReversed (fraction)
    {
-      return this .reverse ? 1 - fraction : fraction;
+      return this .reverse ? this .last + this .first - fraction : fraction;
    },
    set_cycleInterval__ ()
    {
       if (!this ._isActive .getValue ())
          return;
 
-      this .setRange (this .fraction, this ._range [1], this ._range [2], false);
+      this .setRange (this .getReversed (this .fraction), this ._range [1], this ._range [2], false);
    },
    set_reverse__ ()
    {
@@ -86,7 +86,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       if (!this ._isActive .getValue ())
          return;
 
-      this .setRange (this ._range [0], this ._range [1], this ._range [2], false);
+      this .setRange (this .getReversed (this ._range [0]), this ._range [1], this ._range [2], false);
 
       if (this ._isPaused .getValue ())
          return;
@@ -100,7 +100,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       browser .timePrepareEvents () .addInterest ("set_prepare", this);
       browser .addBrowserEvent ();
 
-      this .setRange (this ._range [0], this ._range [1], this ._range [2], true);
+      this .setRange (this .getReversed (this ._range [0]), this ._range [1], this ._range [2], true);
 
       const time = browser .getCurrentTime ();
 
@@ -121,7 +121,7 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
       browser .timePrepareEvents () .addInterest ("set_prepare", this);
       browser .addBrowserEvent ();
 
-      this .setRange (this .fraction, this ._range [1], this ._range [2], false);
+      this .setRange (this .getReversed (this .fraction), this ._range [1], this ._range [2], false);
    },
    set_stop ()
    {
