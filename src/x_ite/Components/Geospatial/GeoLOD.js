@@ -222,14 +222,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
             case 0:
             {
                for (const childInlineNode of this .childInlineNodes)
-               {
-                  childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
-                  childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
-                  childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
-                  childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
-                  childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
-                  childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
-               }
+                  childInlineNode ._childFlags .removeInterest ("set_childShadowObject__", this);
 
                if (this ._rootNode .length)
                {
@@ -265,14 +258,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                   this .disconnectChildNode (this .rootInlineNode);
 
                for (const childInlineNode of this .childInlineNodes)
-               {
-                  childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
-                  childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
-                  childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
-                  childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
-                  childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
-                  childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
-               }
+                  childInlineNode ._childFlags .addInterest ("set_childShadowObject__", this);
 
                this .set_childBoundedObject__ ();
                this .set_childPointingObject__ ();

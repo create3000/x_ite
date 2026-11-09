@@ -148,13 +148,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    {
       for (const childNode of this .childNodes)
       {
-         childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
-         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
-         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
-         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
-         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+         childNode ._childFlags .removeInterest ("requestRebuild", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
@@ -232,13 +226,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             }
             case X3DConstants .X3DChildNode:
             {
-               childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
-               childNode ._isPointingObject  .addInterest ("requestRebuild", this);
-               childNode ._isCameraObject    .addInterest ("requestRebuild", this);
-               childNode ._isPickableObject  .addInterest ("requestRebuild", this);
-               childNode ._isCollisionObject .addInterest ("requestRebuild", this);
-               childNode ._isShadowObject    .addInterest ("requestRebuild", this);
-               childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
+               childNode ._childFlags .addInterest ("requestRebuild", this);
 
                this .childNodes .add (childNode);
 
@@ -329,13 +317,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             }
             case X3DConstants .X3DChildNode:
             {
-               childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
-               childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
-               childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
-               childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
-               childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
-               childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
-               childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+               childNode ._childFlags .removeInterest ("requestRebuild", this);
 
                if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                {

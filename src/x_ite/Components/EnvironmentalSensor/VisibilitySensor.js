@@ -24,8 +24,12 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-      this ._enabled .addFieldInterest (this ._isVisibleObject);
+      this ._enabled .addInterest ("set_enabled__", this);
 
+      this .set_enabled__ ();
+   },
+   set_enabled__ ()
+   {
       this .setVisibleObject (this ._enabled .getValue ());
    },
    update ()

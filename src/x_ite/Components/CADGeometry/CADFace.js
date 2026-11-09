@@ -72,13 +72,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       {
          const childNode = this .childNode;
 
-         childNode ._isBoundedObject   .removeInterest ("requestRebuild", this);
-         childNode ._isPointingObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCameraObject    .removeInterest ("requestRebuild", this);
-         childNode ._isPickableObject  .removeInterest ("requestRebuild", this);
-         childNode ._isCollisionObject .removeInterest ("requestRebuild", this);
-         childNode ._isShadowObject    .removeInterest ("requestRebuild", this);
-         childNode ._isVisibleObject   .removeInterest ("requestRebuild", this);
+         childNode ._childFlags .removeInterest ("requestRebuild", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
@@ -113,13 +107,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                case X3DConstants .Transform:
                case X3DConstants .X3DShapeNode:
                {
-                  childNode ._isBoundedObject   .addInterest ("requestRebuild", this);
-                  childNode ._isPointingObject  .addInterest ("requestRebuild", this);
-                  childNode ._isCameraObject    .addInterest ("requestRebuild", this);
-                  childNode ._isPickableObject  .addInterest ("requestRebuild", this);
-                  childNode ._isCollisionObject .addInterest ("requestRebuild", this);
-                  childNode ._isShadowObject    .addInterest ("requestRebuild", this);
-                  childNode ._isVisibleObject   .addInterest ("requestRebuild", this);
+                  childNode ._childFlags .addInterest ("requestRebuild", this);
 
                   this .childNode = childNode;
 

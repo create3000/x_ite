@@ -3,6 +3,19 @@ import X3DNode      from "./X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import TraverseType from "../../Rendering/TraverseType.js";
 
+const _flagKey = Symbol ();
+
+let i = 0;
+
+const
+   BOUNDED_INDEX   = i ++,
+   POINTING_INDEX  = i ++,
+   CAMERA_INDEX    = i ++,
+   PICKABLE_INDEX  = i ++,
+   COLLISION_INDEX = i ++,
+   SHADOW_INDEX    = i ++,
+   VISIBLE_INDEX   = i ++;
+
 function X3DChildNode (executionContext)
 {
    if (this .getExecutionContext ())
@@ -12,79 +25,82 @@ function X3DChildNode (executionContext)
 
    this .addType (X3DConstants .X3DChildNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "isBoundedObject",   new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isPointingObject",  new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isCameraObject",    new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isPickableObject",  new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isCollisionObject", new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isShadowObject",    new Fields .SFBool (),
-                          X3DConstants .outputOnly, "isVisibleObject",   new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "childFlags", new Fields .SFInt32 ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .prototype),
 {
+   getChildFlag (index)
+   {
+      return !! (this ._childFlags .getValue () & (1 << index));
+   },
+   setChildFlag (index, value)
+   {
+      let flags = this ._childFlags .getValue ();
+
+      if (value)
+         flags |= 1 << index;
+      else
+         flags &= ~(1 << index);
+
+      if (flags !== this ._childFlags .getValue ())
+         this ._childFlags = flags;
+   },
    setBoundedObject (value)
    {
-      if (!!value !== this ._isBoundedObject .getValue ())
-         this ._isBoundedObject = value;
+      this .setChildFlag (BOUNDED_INDEX, value);
    },
    isBoundedObject ()
    {
-      return this ._isBoundedObject .getValue ();
+      return this .getChildFlag (BOUNDED_INDEX);
    },
    setPointingObject (value)
    {
-      if (!!value !== this ._isPointingObject .getValue ())
-         this ._isPointingObject = value;
+      this .setChildFlag (POINTING_INDEX, value);
    },
    isPointingObject ()
    {
-      return this ._isPointingObject .getValue ();
+      return this .getChildFlag (POINTING_INDEX);
    },
    setCameraObject (value)
    {
-      if (!!value !== this ._isCameraObject .getValue ())
-         this ._isCameraObject = value;
+      this .setChildFlag (CAMERA_INDEX, value);
    },
    isCameraObject ()
    {
-      return this ._isCameraObject .getValue ();
+      return this .getChildFlag (CAMERA_INDEX);
    },
    setPickableObject (value)
    {
-      if (!!value !== this ._isPickableObject .getValue ())
-         this ._isPickableObject = value;
+      this .setChildFlag (PICKABLE_INDEX, value);
    },
    isPickableObject ()
    {
-      return this ._isPickableObject .getValue ();
+      return this .getChildFlag (PICKABLE_INDEX);
    },
    setShadowObject (value)
    {
-      if (!!value !== this ._isShadowObject .getValue ())
-         this ._isShadowObject = value;
+      this .setChildFlag (SHADOW_INDEX, value);
    },
    isShadowObject ()
    {
-      return this ._isShadowObject .getValue ();
+      return this .getChildFlag (SHADOW_INDEX);
    },
    setCollisionObject (value)
    {
-      if (!!value !== this ._isCollisionObject .getValue ())
-         this ._isCollisionObject = value;
+      this .setChildFlag (COLLISION_INDEX, value);
    },
    isCollisionObject ()
    {
-      return this ._isCollisionObject .getValue ();
+      return this .getChildFlag (COLLISION_INDEX);
    },
    setVisibleObject (value)
    {
-      if (!!value !== this ._isVisibleObject .getValue ())
-         this ._isVisibleObject = value;
+      this .setChildFlag (VISIBLE_INDEX, value);
    },
    isVisibleObject ()
    {
-      return this ._isVisibleObject .getValue ();
+      return this .getChildFlag (VISIBLE_INDEX);
    },
    isVisible ()
    {
@@ -93,57 +109,33 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    },
    connectChildNode (childNode, excludes)
    {
-      if (!excludes ?.includes (TraverseType .BBOX))
+      childNode ._childFlags .addFieldCallback (_flagKey, flags =>
       {
-         childNode ._isBoundedObject .addFieldInterest (this ._isBoundedObject);
-         this .setBoundedObject (childNode .isBoundedObject ());
-      }
+         if (!excludes ?.includes (TraverseType .BBOX))
+            this .setBoundedObject (flags & (1 << BOUNDED_INDEX));
 
-      if (!excludes ?.includes (TraverseType .POINTER))
-      {
-         childNode ._isPointingObject .addFieldInterest (this ._isPointingObject);
-         this .setPointingObject (childNode .isPointingObject ());
-      }
+         if (!excludes ?.includes (TraverseType .POINTER))
+            this .setPointingObject (flags & (1 << POINTING_INDEX));
 
-      if (!excludes ?.includes (TraverseType .CAMERA))
-      {
-         childNode ._isCameraObject .addFieldInterest (this ._isCameraObject);
-         this .setCameraObject (childNode .isCameraObject ());
-      }
+         if (!excludes ?.includes (TraverseType .CAMERA))
+            this .setCameraObject (flags & (1 << CAMERA_INDEX));
 
-      if (!excludes ?.includes (TraverseType .PICKING))
-      {
-         childNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
-         this .setPickableObject (childNode .isPickableObject ());
-      }
+         if (!excludes ?.includes (TraverseType .PICKING))
+            this .setPickableObject (flags & (1 << PICKABLE_INDEX));
 
-      if (!excludes ?.includes (TraverseType .COLLISION))
-      {
-         childNode ._isCollisionObject .addFieldInterest (this ._isCollisionObject);
-         this .setCollisionObject (childNode .isCollisionObject ());
-      }
+         if (!excludes ?.includes (TraverseType .COLLISION))
+            this .setCollisionObject (flags & (1 << COLLISION_INDEX));
 
-      if (!excludes ?.includes (TraverseType .SHADOW))
-      {
-         childNode ._isShadowObject .addFieldInterest (this ._isShadowObject);
-         this .setShadowObject (childNode .isShadowObject ());
-      }
+         if (!excludes ?.includes (TraverseType .SHADOW))
+            this .setShadowObject (flags & (1 << SHADOW_INDEX));
 
-      if (!excludes ?.includes (TraverseType .DISPLAY))
-      {
-         childNode ._isVisibleObject .addFieldInterest (this ._isVisibleObject);
-         this .setVisibleObject (childNode .isVisibleObject ());
-      }
+         if (!excludes ?.includes (TraverseType .DISPLAY))
+            this .setVisibleObject (flags & (1 << VISIBLE_INDEX));
+      });
    },
    disconnectChildNode (childNode)
    {
-      childNode ._isBoundedObject   .removeFieldInterest (this ._isBoundedObject);
-      childNode ._isPointingObject  .removeFieldInterest (this ._isPointingObject);
-      childNode ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
-      childNode ._isPickableObject  .removeFieldInterest (this ._isPickableObject);
-      childNode ._isCollisionObject .removeFieldInterest (this ._isCollisionObject);
-      childNode ._isShadowObject    .removeFieldInterest (this ._isShadowObject);
-      childNode ._isVisibleObject   .removeFieldInterest (this ._isVisibleObject);
+      childNode ._childFlags .removeFieldCallback (_flagKey);
    },
    getShapes (shapes, modelMatrix)
    {

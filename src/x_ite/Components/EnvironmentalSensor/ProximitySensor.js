@@ -38,15 +38,21 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    {
       X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-      this ._size   .addInterest ("set_extents__", this);
-      this ._center .addInterest ("set_extents__", this);
+      this ._enabled   .addInterest ("set_enabled__",   this);
+      this ._traversed .addInterest ("set_traversed__", this);
+      this ._size      .addInterest ("set_extents__",   this);
+      this ._center    .addInterest ("set_extents__",   this);
 
-      this ._enabled   .addFieldInterest (this ._isVisibleObject);
-      this ._traversed .addFieldInterest (this ._isCameraObject);
-
-      this .setVisibleObject (this ._enabled .getValue ());
-
+      this .set_enabled__ ();
       this .set_extents__ ();
+   },
+   set_enabled__ ()
+   {
+      this .setVisibleObject (this ._enabled .getValue ());
+   },
+   set_traversed__ ()
+   {
+      this .setCameraObject (this ._traversed .getValue ());
    },
    set_extents__ ()
    {
