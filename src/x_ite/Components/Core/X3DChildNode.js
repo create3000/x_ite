@@ -3,8 +3,6 @@ import X3DNode      from "./X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import TraverseType from "../../Rendering/TraverseType.js";
 
-const _flagKey = Symbol ();
-
 let i = 0;
 
 const
@@ -111,33 +109,36 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    },
    connectChildNode (childNode, excludes)
    {
-      childNode ._childFlags .addFieldCallback (_flagKey, flags =>
-      {
-         if (!excludes ?.includes (TraverseType .BBOX))
-            this .setBoundedObject (flags & (1 << BOUNDED_INDEX));
-
-         if (!excludes ?.includes (TraverseType .POINTER))
-            this .setPointingObject (flags & (1 << POINTING_INDEX));
-
-         if (!excludes ?.includes (TraverseType .CAMERA))
-            this .setCameraObject (flags & (1 << CAMERA_INDEX));
-
-         if (!excludes ?.includes (TraverseType .PICKING))
-            this .setPickableObject (flags & (1 << PICKABLE_INDEX));
-
-         if (!excludes ?.includes (TraverseType .COLLISION))
-            this .setCollisionObject (flags & (1 << COLLISION_INDEX));
-
-         if (!excludes ?.includes (TraverseType .SHADOW))
-            this .setShadowObject (flags & (1 << SHADOW_INDEX));
-
-         if (!excludes ?.includes (TraverseType .DISPLAY))
-            this .setVisibleObject (flags & (1 << VISIBLE_INDEX));
-      });
+      childNode ._childFlags .addInterest ("updateFlagsFromChildNode", this, excludes);
    },
    disconnectChildNode (childNode)
    {
-      childNode ._childFlags .removeFieldCallback (_flagKey);
+      childNode ._childFlags .removeInterest ("updateFlagsFromChildNode", this);
+   },
+   updateFlagsFromChildNode (excludes)
+   {
+      const flags = this ._childFlags .getValue ();
+
+      if (!excludes ?.includes (TraverseType .BBOX))
+         this .setBoundedObject (flags & (1 << BOUNDED_INDEX));
+
+      if (!excludes ?.includes (TraverseType .POINTER))
+         this .setPointingObject (flags & (1 << POINTING_INDEX));
+
+      if (!excludes ?.includes (TraverseType .CAMERA))
+         this .setCameraObject (flags & (1 << CAMERA_INDEX));
+
+      if (!excludes ?.includes (TraverseType .PICKING))
+         this .setPickableObject (flags & (1 << PICKABLE_INDEX));
+
+      if (!excludes ?.includes (TraverseType .COLLISION))
+         this .setCollisionObject (flags & (1 << COLLISION_INDEX));
+
+      if (!excludes ?.includes (TraverseType .SHADOW))
+         this .setShadowObject (flags & (1 << SHADOW_INDEX));
+
+      if (!excludes ?.includes (TraverseType .DISPLAY))
+         this .setVisibleObject (flags & (1 << VISIBLE_INDEX));
    },
    getShapes (shapes, modelMatrix)
    {
