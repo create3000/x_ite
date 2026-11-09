@@ -138,6 +138,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       return copy;
    },
+   getHit ()
+   {
+      return this [_currentHit];
+   },
    getPointer ()
    {
       return this [_pointer];
@@ -166,10 +170,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    getPointingLayer ()
    {
       return this [_pointingLayer];
-   },
-   getHit ()
-   {
-      return this [_currentHit];
    },
    addSensor (sensor)
    {
