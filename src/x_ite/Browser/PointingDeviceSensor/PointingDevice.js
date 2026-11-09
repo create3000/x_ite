@@ -147,6 +147,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
 
+            this .touchX = event .pageX;
+            this .touchY = event .pageY;
+
             this .mousedown (event);
 
             // Show context menu on long tab.
@@ -155,8 +158,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
             if (!hit .id || !hit .sensors .size)
             {
-               this .touchX       = event .pageX;
-               this .touchY       = event .pageY;
                this .touchTimeout = setTimeout (() => this .showContextMenu (event), CONTEXT_MENU_TIME);
             }
             break;
@@ -170,9 +171,13 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    touchend (event)
    {
-      event = this .getBrowser () .copyEvent (event);
+      const browser = this .getBrowser ();
+
+      event = browser .copyEvent (event);
 
       event .button = 0;
+      event .pageX  = this .touchX;
+      event .pageY  = this .touchY;
 
       this .mouseup (event);
 
@@ -192,6 +197,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             event .button = 0;
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
+
+            this .touchX = event .pageX;
+            this .touchY = event .pageY;
 
             this .mousemove (event);
 
