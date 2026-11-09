@@ -110,14 +110,16 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    connectChildNode (childNode, excludes)
    {
       childNode ._childFlags .addInterest ("updateFlagsFromChildNode", this, excludes);
+
+      this .updateFlagsFromChildNode (excludes, childNode ._childFlags);
    },
    disconnectChildNode (childNode)
    {
       childNode ._childFlags .removeInterest ("updateFlagsFromChildNode", this);
    },
-   updateFlagsFromChildNode (excludes)
+   updateFlagsFromChildNode (excludes, childFlags)
    {
-      const flags = this ._childFlags .getValue ();
+      const flags = childFlags .getValue ();
 
       if (!excludes ?.includes (TraverseType .BBOX))
          this .setBoundedObject (flags & (1 << BOUNDED_INDEX));
