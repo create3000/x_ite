@@ -504,7 +504,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          for (let i = 0; i < length; ++ i)
          {
-            const [node] = this .getAnimationPointer (`/nodes/${i}/translation`);
+            const [node] = this .getAnimationPointer (`/nodes/${i}/metadata`);
 
             if (!node)
                continue;
@@ -567,8 +567,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       // Replace this just to find an node.
       const search = pointer
-         .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
-         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material)/, "$1/transparency");
+         .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/metadata")
+         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material)/, "$1/metadata");
 
       const [node, field] = this .getAnimationPointer (search);
 
