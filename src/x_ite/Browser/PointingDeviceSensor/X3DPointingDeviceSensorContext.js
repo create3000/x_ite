@@ -290,6 +290,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Pick.
 
+      hit .type = type;
+
       this [_currentHit]    = hit;
       this [_inputSource]   = inputSource;
       this [_pointingLayer] = hit .pointingLayerNode;
@@ -303,8 +305,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this [_pointingBuffer] .getHit (hit);
 
       hit .sensors .clear ();
-
-      hit .type = type;
 
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
       {
