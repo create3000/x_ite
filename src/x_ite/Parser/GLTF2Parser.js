@@ -496,7 +496,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .behaviorNodes = new Set ();
 
-      // Add all nodes if KHR_node_hoverability and KHR_node_selectability.
+      // Add all nodes matrix pointer if KHR_node_hoverability and KHR_node_selectability.
 
       if (this .extensions .has ("KHR_node_hoverability") || this .extensions .has ("KHR_node_selectability"))
       {
@@ -506,26 +506,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             pointers .add (`/nodes/${i}/matrix`);
       }
 
-      // Top level pointers
-
-      for (const pointer of pointers)
-      {
-         const key = pointer .match (/^\/([^/]+)\/[{[].*?[\]}]/);
-
-         if (key)
-         {
-            const length = glTF [key [1]] ?.length ?? 0;
-
-            for (let i = 0; i < length; ++ i)
-               this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
-         }
-         else
-         {
-            this .addBehaviorNode (pointer, this .behaviorNodes);
-         }
-      }
-
-      // Primitives
+      // Add all primitives pointers if needed.
 
       if (Array .from (pointers) .some (pointer => pointer .includes ("/primitives/")))
       {
@@ -536,7 +517,28 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             const numPrimitives = glTF .meshes [m] .primitives ?.length ?? 0;
 
             for (let p = 0; p < numPrimitives; ++ p)
-               this .addBehaviorNode (`/meshes/${m}/primitives/${p}/material`, this .behaviorNodes);
+               pointers .add (`/meshes/${m}/primitives/${p}/material`);
+         }
+      }
+
+      // Collect nodes from pointers.
+
+      for (const pointer of pointers)
+      {
+         const key = pointer .match (/^\/([^/]+)\/[{[].*?[\]}]/);
+
+         if (key)
+         {
+            // Top level pointers
+
+            const length = glTF [key [1]] ?.length ?? 0;
+
+            for (let i = 0; i < length; ++ i)
+               this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
+         }
+         else
+         {
+            this .addBehaviorNode (pointer, this .behaviorNodes);
          }
       }
 
