@@ -10,10 +10,7 @@ function SelectabilityExtension (executionContext)
 {
    X3DInteractivitySensorNode .call (this, executionContext);
 
-   this .addType (X3DConstants .SelectabilityExtension);
-
-   this .addChildObjects (X3DConstants .outputOnly, "isOver", new Fields .SFBool (),);
-}
+   this .addType (X3DConstants .SelectabilityExtension);}
 
 Object .assign (Object .setPrototypeOf (SelectabilityExtension .prototype, X3DInteractivitySensorNode .prototype),
 {
@@ -40,6 +37,7 @@ Object .defineProperties (SelectabilityExtension,
          new X3DFieldDefinition (X3DConstants .inputOutput, "description", new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "selectable",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",      new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",    new Fields .SFBool ()),
       ]),
       enumerable: true,
