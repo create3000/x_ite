@@ -12,7 +12,7 @@ const
    PICKABLE_INDEX  = i ++,
    COLLISION_INDEX = i ++,
    SHADOW_INDEX    = i ++,
-   VISIBLE_INDEX   = i ++;
+   VISIBLE_INDEX   = i;
 
 function X3DChildNode (executionContext)
 {
@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
       if (!excludes ?.includes (TraverseType .DISPLAY))
          this .setVisibleObject (flags & (1 << VISIBLE_INDEX));
    },
-   getShapes (shapes, modelMatrix)
+   getShapes (shapes /* , modelMatrix */)
    {
       return shapes;
    },
