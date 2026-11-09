@@ -404,18 +404,23 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       {
          case TraverseType .POINTER:
          {
-            renderObject .setShapeParent (this);
-            
             const { sensors, pointingDeviceSensorNodes, clipPlaneNodes, pointingObjects } = this;
 
             if (pointingDeviceSensorNodes .size)
             {
+               sensors .length = 0;
+
                for (const pointingDeviceSensorNode of pointingDeviceSensorNodes)
-                  pointingDeviceSensorNode .push (renderObject, sensors);
+               {
+                  if (!pointingDeviceSensorNode .push (renderObject, sensors))
+                     return;
+               }
 
                if (sensors .length)
                   renderObject .getSensors () .push (sensors);
             }
+
+            renderObject .setShapeParent (this);
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
@@ -427,11 +432,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                clipPlaneNode .pop (renderObject);
 
             if (sensors .length)
-            {
-               sensors .length = 0;
-
                renderObject .getSensors () .pop ();
-            }
 
             return;
          }

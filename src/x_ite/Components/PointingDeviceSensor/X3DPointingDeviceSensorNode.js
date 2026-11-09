@@ -72,8 +72,6 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
       if (this .getLive () .getValue () && this ._enabled .getValue ())
       {
          this .getBrowser () .addPointingDeviceSensor (this);
-
-         delete this .push;
       }
       else
       {
@@ -84,8 +82,6 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
 
          if (this ._isOver .getValue ())
             this ._isOver = false;
-
-         this .push = Function .prototype;
       }
    },
    set_over__ (over, hit)
@@ -109,6 +105,9 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
    { },
    push (renderObject, sensors)
    {
+      if (!this ._enabled .getValue ())
+         return true;
+
       const sensor = PointingDeviceSensors .pop ();
 
       sensor .set (this,
@@ -119,6 +118,8 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
       this .getBrowser () .addSensor (sensor);
 
       sensors .push (sensor);
+
+      return true;
    },
 });
 

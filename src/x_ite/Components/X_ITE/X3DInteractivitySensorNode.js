@@ -9,9 +9,8 @@ function X3DInteractivitySensorNode (executionContext)
 
    this .addType (X3DConstants .X3DInteractivitySensorNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true),
-                          X3DConstants .outputOnly,  "isOver",   new Fields .SFBool (),
-                          X3DConstants .outputOnly,  "isActive", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "isOver",   new Fields .SFBool (),
+                          X3DConstants .outputOnly, "isActive", new Fields .SFBool ());
 }
 
 Object .setPrototypeOf (X3DInteractivitySensorNode .prototype, X3DPointingDeviceSensorNode .prototype);

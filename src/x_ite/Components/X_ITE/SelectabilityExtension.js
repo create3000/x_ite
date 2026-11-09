@@ -4,6 +4,7 @@ import FieldDefinitionArray       from "../../Base/FieldDefinitionArray.js";
 import X3DNode                    from "../Core/X3DNode.js";
 import X3DInteractivitySensorNode from "./X3DInteractivitySensorNode.js";
 import X3DConstants               from "../../Base/X3DConstants.js";
+import PointingType               from "../../Browser/PointingDeviceSensor/PointingType.js";
 
 function SelectabilityExtension (executionContext)
 {
@@ -14,9 +15,13 @@ function SelectabilityExtension (executionContext)
 
 Object .assign (Object .setPrototypeOf (SelectabilityExtension .prototype, X3DInteractivitySensorNode .prototype),
 {
-   initialize ()
+   push (renderObject, sensors)
    {
-      X3DInteractivitySensorNode .prototype .initialize .call (this);
+      X3DInteractivitySensorNode .prototype .push .call (this, renderObject, sensors);
+
+      return this .getBrowser () .getHit () .type === PointingType .RELEASE
+         ? this ._selectable .getValue ()
+         : true;
    },
 });
 
@@ -28,6 +33,7 @@ Object .defineProperties (SelectabilityExtension,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "selectable",  new Fields .SFBool (true)),
       ]),
       enumerable: true,
