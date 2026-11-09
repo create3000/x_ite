@@ -463,8 +463,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       scene .addExportedNode (scene .getUniqueExportName ("BehaviorEngine"), behaviorEngine);
 
-      this .behaviorEngine = behaviorEngine;
       this .behavior       = [{ node: behaviorEngine }];
+      this .behaviorEngine = behaviorEngine;
    },
    addBehaviorNodes (glTF, KHR_interactivity)
    {
@@ -495,6 +495,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       // Collect behavior nodes.
 
       this .behaviorNodes = new Set ();
+
+      // KHR_node_hoverability and KHR_node_selectability
+
+      if (this .extensions .has ("KHR_node_hoverability") || this .extensions .has ("KHR_node_selectability"))
+      {
+         const length = glTF .nodes ?.length ?? 0;
+
+         for (let i = 0; i < length; ++ i)
+         {
+            const [node] = this .getAnimationPointer (`/nodes/${i}/translation`);
+
+            if (!node)
+               continue;
+
+            node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (i));
+
+            this .behaviorNodes .add (node);
+         }
+      }
 
       // Top level pointers
 
