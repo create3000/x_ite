@@ -115,12 +115,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       if (this .getLive () .getValue () && this ._enabled .getValue ())
       {
-         browser .pointingEvents () .addInterest ("set_touch__", this);
+         browser .pointingEvents () .addInterest ("set_pointing__", this);
          this .engine .playEventQueue ();
       }
       else
       {
-         browser .pointingEvents () .removeInterest ("set_touch__", this);
+         browser .pointingEvents () .removeInterest ("set_pointing__", this);
          this .engine .pauseEventQueue ();
       }
    },
@@ -837,7 +837,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          !field .isWritable () // read-only
       );
    },
-   set_touch__ ()
+   set_pointing__ ()
    {
       const
          browser     = this .getBrowser (),
@@ -848,6 +848,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       if (DEVELOPMENT)
          console .log (hit .type, nodeIndex, shapeParent);
+
+      // for (const sensor of hit .sensors .keys ())
+      // {
+      //    if (sensor .getType () .includes (X3DConstants .SelectabilityExtension))
+      //       hit .sensors .delete (sensor);
+      // }
 
       switch (hit .type)
       {

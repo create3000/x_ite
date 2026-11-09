@@ -69,8 +69,6 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
    },
    set_live__ ()
    {
-      console .warn (this .getTypeName (), this ._enabled .getValue ())
-
       if (this .getLive () .getValue () && this ._enabled .getValue ())
       {
          this .getBrowser () .addPointingDeviceSensor (this);
