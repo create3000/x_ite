@@ -17,11 +17,14 @@ Object .assign (Object .setPrototypeOf (HoverabilityExtension .prototype, X3DInt
 {
    push (renderObject, sensors)
    {
+      const type = this .getBrowser () .getHit () .type;
+
+      if (type !== PointingType .MOVE)
+         return true;
+
       X3DInteractivitySensorNode .prototype .push .call (this, renderObject, sensors);
 
-      return this .getBrowser () .getHit () .type === PointingType .MOVE
-         ? this ._hoverable .getValue ()
-         : true;
+      return this ._hoverable .getValue ();
    },
 });
 

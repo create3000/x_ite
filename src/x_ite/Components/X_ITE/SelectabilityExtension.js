@@ -17,11 +17,14 @@ Object .assign (Object .setPrototypeOf (SelectabilityExtension .prototype, X3DIn
 {
    push (renderObject, sensors)
    {
+      const type = this .getBrowser () .getHit () .type;
+
+      if (type !== PointingType .PRESS && type !== PointingType .RELEASE)
+         return true;
+
       X3DInteractivitySensorNode .prototype .push .call (this, renderObject, sensors);
 
-      return this .getBrowser () .getHit () .type === PointingType .RELEASE
-         ? this ._selectable .getValue ()
-         : true;
+      return this ._selectable .getValue ();
    },
 });
 

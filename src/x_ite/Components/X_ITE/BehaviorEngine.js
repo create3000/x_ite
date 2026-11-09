@@ -846,20 +846,21 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          parentIndex = +shapeParent ?.getMetaData ("Interactivity/node", new Fields .SFInt32 (-1)),
          nodeIndex   = parentIndex >= 0 ? parentIndex : undefined;
 
-      if (DEVELOPMENT)
-         console .log (hit .type, nodeIndex, shapeParent);
-
-      // for (const sensor of hit .sensors .keys ())
-      // {
-      //    if (sensor .getType () .includes (X3DConstants .X3DInteractivitySensorNode))
-      //       hit .sensors .delete (sensor);
-      // }
+      // if (DEVELOPMENT)
+      //    console .log (hit .type, nodeIndex);
 
       switch (hit .type)
       {
          case PointingType .MOVE:
          {
             this .engine .hoverOn (nodeIndex, 0);
+
+            for (const sensor of hit .sensors .keys ())
+            {
+               if (sensor .getType () .at (-1) === X3DConstants .HoverabilityExtension)
+                  hit .sensors .delete (sensor);
+            }
+
             break;
          }
          case PointingType .RELEASE:
