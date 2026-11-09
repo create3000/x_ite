@@ -36,12 +36,14 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    },
    setChildFlag (index, value)
    {
+      const mask = 1 << index;
+
       let flags = this ._childFlags .getValue ();
 
       if (value)
-         flags |= 1 << index;
+         flags |= mask;
       else
-         flags &= ~(1 << index);
+         flags &= ~mask;
 
       if (flags !== this ._childFlags .getValue ())
          this ._childFlags = flags;
