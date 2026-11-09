@@ -35,19 +35,19 @@ class GLTFPointerAliases
    }
 }
 
-GLTFPointerAliases .addAlias ("OrthoViewpoint", "zfar",           "farDistance");
-GLTFPointerAliases .addAlias ("OrthoViewpoint", "znear",          "nearDistance");
-GLTFPointerAliases .addAlias ("PointLight",     "range",          "radius");
-GLTFPointerAliases .addAlias ("Script",         "offset",         "translation");
-GLTFPointerAliases .addAlias ("SpotLight",      "innerConeAngle", "beamWidth");
-GLTFPointerAliases .addAlias ("SpotLight",      "outerConeAngle", "cutOffAngle");
-GLTFPointerAliases .addAlias ("SpotLight",      "range",          "radius");
-GLTFPointerAliases .addAlias ("Switch",         "scene",          "whichChoice");
-GLTFPointerAliases .addAlias ("TouchSensor",    "hoverable",      "enabled");
-GLTFPointerAliases .addAlias ("TouchSensor",    "selectable",     "enabled");
-GLTFPointerAliases .addAlias ("UnlitMaterial",  "baseColor",      "emissiveColor");
-GLTFPointerAliases .addAlias ("Viewpoint",      "yfov",           "fieldOfView");
-GLTFPointerAliases .addAlias ("Viewpoint",      "zfar",           "farDistance");
-GLTFPointerAliases .addAlias ("Viewpoint",      "znear",          "nearDistance");
+GLTFPointerAliases .addAlias ("OrthoViewpoint",         "zfar",           "farDistance");
+GLTFPointerAliases .addAlias ("OrthoViewpoint",         "znear",          "nearDistance");
+GLTFPointerAliases .addAlias ("PointLight",             "range",          "radius");
+GLTFPointerAliases .addAlias ("Script",                 "offset",         "translation");
+GLTFPointerAliases .addAlias ("SpotLight",              "innerConeAngle", "beamWidth");
+GLTFPointerAliases .addAlias ("SpotLight",              "outerConeAngle", "cutOffAngle");
+GLTFPointerAliases .addAlias ("SpotLight",              "range",          "radius");
+GLTFPointerAliases .addAlias ("Switch",                 "scene",          "whichChoice");
+GLTFPointerAliases .addAlias ("HoverabilityExtension",  "hoverable",      "enabled");
+GLTFPointerAliases .addAlias ("SelectabilityExtension", "selectable",     "enabled");
+GLTFPointerAliases .addAlias ("UnlitMaterial",          "baseColor",      "emissiveColor");
+GLTFPointerAliases .addAlias ("Viewpoint",              "yfov",           "fieldOfView");
+GLTFPointerAliases .addAlias ("Viewpoint",              "zfar",           "farDistance");
+GLTFPointerAliases .addAlias ("Viewpoint",              "znear",          "nearDistance");
 
 export default GLTFPointerAliases;

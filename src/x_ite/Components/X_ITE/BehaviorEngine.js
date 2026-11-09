@@ -115,13 +115,11 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       if (this .getLive () .getValue () && this ._enabled .getValue ())
       {
-         browser .addPointingDeviceSensor (this);
          browser .pointingEvents () .addInterest ("set_touch__", this);
          this .engine .playEventQueue ();
       }
       else
       {
-         browser .removePointingDeviceSensor (this);
          browser .pointingEvents () .removeInterest ("set_touch__", this);
          this .engine .pauseEventQueue ();
       }

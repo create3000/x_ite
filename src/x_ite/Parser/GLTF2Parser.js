@@ -272,6 +272,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_transmission":
             case "KHR_materials_volume_scatter": // Legacy
             case "KHR_materials_volume":
+            case "KHR_node_hoverability":
+            case "KHR_node_selectability":
             {
                components .push (browser .getComponent ("X_ITE", 1));
                break;
@@ -2582,7 +2584,7 @@ function eventsProcessed ()
          }
       };
    })(),
-   nodeExtensions (node, index)
+   nodeExtensions (node)
    {
       if (!(node .extensions instanceof Object))
          return;
@@ -2607,11 +2609,33 @@ function eventsProcessed ()
             case "KHR_node_hoverability":
             {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_hoverability
+
+               const
+                  scene         = this .getScene (),
+                  extensionNode = scene .createNode ("HoverabilityExtension", false);
+
+               extensionNode ._enabled = extension .hoverable ?? true;
+               extensionNode .setup ();
+
+               node .transformNode ._children .push (extensionNode);
+
+               extension .pointers = [extensionNode];
                break;
             }
             case "KHR_node_selectability":
             {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_selectability
+
+               const
+                  scene         = this .getScene (),
+                  extensionNode = scene .createNode ("SelectabilityExtension", false);
+
+               extensionNode ._enabled = extension .selectable ?? true;
+               extensionNode .setup ();
+
+               node .transformNode ._children .push (extensionNode);
+
+               extension .pointers = [extensionNode];
                break;
             }
             case "KHR_node_visibility":
@@ -2924,6 +2948,12 @@ function eventsProcessed ()
 
       if (lightNode)
          nodes .unshift (lightNode);
+
+      if (this .extensions .has ("KHR_node_hoverability"))
+         nodes .unshift (this .getScene () .createNode ("HoverabilityExtension"));
+
+      if (this .extensions .has ("KHR_node_selectability"))
+         nodes .unshift (this .getScene () .createNode ("SelectabilityExtension"));
 
       switch (nodes .length)
       {
