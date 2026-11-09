@@ -503,16 +503,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          const length = glTF .nodes ?.length ?? 0;
 
          for (let i = 0; i < length; ++ i)
-         {
-            const [node] = this .getAnimationPointer (`/nodes/${i}/metadata`);
-
-            if (!node)
-               continue;
-
-            node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (i));
-
-            this .behaviorNodes .add (node);
-         }
+            pointers .add (`/nodes/${i}/matrix`);
       }
 
       // Top level pointers
@@ -568,7 +559,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       // Replace this just to find an node.
       const search = pointer
          .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
-         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material)/, "$1/metadata");
+         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material)/, "$1/transparency");
 
       const [node, field] = this .getAnimationPointer (search);
 
