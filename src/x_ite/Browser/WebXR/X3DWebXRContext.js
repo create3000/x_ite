@@ -1,5 +1,6 @@
 import ScreenLine  from "../Rendering/ScreenLine.js";
 import ScreenPoint from "../Rendering/ScreenPoint.js";
+import TouchType   from "../PointingDeviceSensor/TouchType.js";
 import ViewVolume  from "../../../standard/Math/Geometry/ViewVolume.js";
 import Color3      from "../../../standard/Math/Numbers/Color3.js";
 import Vector3     from "../../../standard/Math/Numbers/Vector3.js";
@@ -103,7 +104,7 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .xrUpdateBaseLayer ({ }, session);
          this .setSession (session);
-         this .removeHit (this .getHit ());
+         this .buttonReleaseEvent (NaN, NaN);
 
          // Browser Options
 
@@ -144,7 +145,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .setDefaultFramebuffer (null);
 
          for (const { hit } of this [_inputSources])
-            this .removeHit (hit);
+            this .buttonReleaseEvent (0, 0, hit);
 
          this [_referenceSpace] = null;
          this [_baseLayer]      = null;
@@ -258,7 +259,7 @@ Object .assign (X3DWebXRContext .prototype,
 
       for (const inputSource of event .removed)
       {
-         this .removeHit (inputSource .hit);
+         this .buttonReleaseEvent (0, 0, inputSource .hit);
          this [_inputSources] .delete (inputSource);
       }
 
@@ -388,7 +389,7 @@ Object .assign (X3DWebXRContext .prototype,
             if (!active)
                continue;
 
-            this .touch (viewport [2] / 2, viewport [3] / 2, hit, inputSource);
+            this .touch (TouchType .MOVE, viewport [2] / 2, viewport [3] / 2, hit, inputSource);
 
             // Make a vibration puls if there is a sensor hit.
 
@@ -449,7 +450,7 @@ Object .assign (X3DWebXRContext .prototype,
                {
                   hit .pressed = false;
 
-                  this .buttonReleaseEvent (hit);
+                  this .buttonReleaseEvent (0, 0, hit);
                }
             }
 

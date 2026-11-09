@@ -5,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
+import TouchType            from "../../Browser/PointingDeviceSensor/TouchType.js";
 import GLTFPointerAliases   from "../../Parser/GLTFPointerAliases.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
@@ -115,13 +116,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       if (this .getLive () .getValue () && this ._enabled .getValue ())
       {
          browser .addPointingDeviceSensor (this);
-         browser .hitEvents () .addInterest ("set_hit__", this);
+         browser .touchEvents () .addInterest ("set_touch__", this);
          this .engine .playEventQueue ();
       }
       else
       {
          browser .removePointingDeviceSensor (this);
-         browser .hitEvents () .removeInterest ("set_hit__", this);
+         browser .touchEvents () .removeInterest ("set_touch__", this);
          this .engine .pauseEventQueue ();
       }
    },
@@ -838,7 +839,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          !field .isWritable () // read-only
       );
    },
-   set_hit__ ()
+   set_touch__ ()
    {
       const
          browser     = this .getBrowser (),
@@ -847,17 +848,17 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          parentIndex = +shapeParent ?.getMetaData ("Interactivity/node", new Fields .SFInt32 (-1)),
          nodeIndex   = parentIndex >= 0 ? parentIndex : undefined;
 
-      // if (DEVELOPMENT)
-      //    console .log (hit .type, nodeIndex, shapeParent);
+      if (DEVELOPMENT)
+         console .log (hit .type, nodeIndex, shapeParent);
 
       switch (hit .type)
       {
-         case "motion":
+         case TouchType .MOVE:
          {
             this .engine .hoverOn (nodeIndex, 0);
             break;
          }
-         case "release":
+         case TouchType .RELEASE:
          {
             if (!shapeParent)
                break;

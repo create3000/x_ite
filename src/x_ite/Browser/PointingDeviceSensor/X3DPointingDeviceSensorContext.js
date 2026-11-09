@@ -1,7 +1,9 @@
 import PointingDevice from "./PointingDevice.js";
 import PointingBuffer from "../../Rendering/PointingBuffer.js";
 import Fields         from "../../Fields.js";
+import X3DConstants   from "../../Base/X3DConstants.js";
 import TraverseType   from "../../Rendering/TraverseType.js";
+import TouchType      from "./TouchType.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4        from "../../../standard/Math/Numbers/Vector4.js";
@@ -16,7 +18,7 @@ const
    _cursorType                = Symbol (),
    _pointer                   = Symbol (),
    _hit                       = Symbol (),
-   _hitEvents                 = Symbol (),
+   _currentHit                = Symbol (),
    _sensors                   = Symbol (),
    _overSensors               = Symbol (),
    _activeSensors             = Symbol (),
@@ -31,10 +33,11 @@ const
 
 function X3DPointingDeviceSensorContext ()
 {
+   this .addChildObjects (X3DConstants .outputOnly, "touchEvents", new Fields .SFTime ());
+
    this [_pointingDevice]            = new PointingDevice (this .getPrivateScene ());
    this [_pointingDeviceSensorNodes] = new Set ();
    this [_pointer]                   = new Vector2 ();
-   this [_hitEvents]                 = new Fields .SFTime ();
    this [_sensors]                   = [ ];
    this [_overSensors]               = new Map ();
    this [_activeSensors]             = new Map ();
@@ -75,6 +78,8 @@ function X3DPointingDeviceSensorContext ()
          };
       },
    };
+
+   this [_currentHit] = this [_hit];
 }
 
 Object .assign (X3DPointingDeviceSensorContext .prototype,
@@ -164,26 +169,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    getHit ()
    {
-      return this [_hit];
-   },
-   removeHit (hit)
-   {
-      hit .id = 0;
-      hit .sensors .clear ();
-
-      this .buttonReleaseEvent (hit);
-      this .motion (hit);
-   },
-   setHitType (type, hit = this [_hit])
-   {
-      hit .type = type;
-
-      this [_hitEvents] .set (this .getCurrentTime ());
-      this [_hitEvents] .processEvent ();
-   },
-   hitEvents ()
-   {
-      return this [_hitEvents];
+      return this [_currentHit];
    },
    addSensor (sensor)
    {
@@ -206,7 +192,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this .advanceOnlyTime ();
 
       if (hit === this [_hit])
-         this .touch (x, y);
+         this .touch (TouchType .PRESS, x, y);
 
       if (!hit .id)
          return false;
@@ -226,16 +212,25 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Immediately process events to be able
       // to do audio and window.open stuff.
+      this .addTaintedField (this ._touchEvents);
       this [_processEvents] ();
 
       return !! hit .sensors .size;
    },
-   buttonReleaseEvent (hit = this [_hit])
+   buttonReleaseEvent (x, y, hit = this [_hit])
    {
       hit .pointingLayerNode = null;
 
       if (!this [_pointingDeviceSensorNodes] .size)
          return;
+
+      // Must advance time, because events are later processed.
+      this .advanceOnlyTime ();
+
+      if (hit === this [_hit])
+         this .touch (TouchType .RELEASE, x, y);
+
+      this .motion (hit);
 
       // Must advance time, because event are later processed.
       this .advanceOnlyTime ();
@@ -252,7 +247,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Immediately process events to be able
       // to do audio and window.open stuff.
+      this .addTaintedField (this ._touchEvents);
       this [_processEvents] ();
+
+      return !! hit .sensors .size;
    },
    motionNotifyEvent (x, y, hit = this [_hit])
    {
@@ -263,19 +261,24 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this .advanceOnlyTime ();
 
       if (hit === this [_hit])
-         this .touch (x, y);
+         this .touch (TouchType .MOVE, x, y);
 
       this .motion (hit);
 
       // Immediately process events to be able
       // to do audio and window.open stuff.
+      this .addTaintedField (this ._touchEvents);
       this [_processEvents] ();
 
       return !! hit .sensors .size;
    },
    leaveNotifyEvent ()
    { },
-   touch (x, y, hit = this [_hit], inputSource = null)
+   touchEvents ()
+   {
+      return this ._touchEvents;
+   },
+   touch (type, x, y, hit = this [_hit], inputSource = null)
    {
       if (this .getViewer () .isActive ())
          return false;
@@ -287,6 +290,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Pick.
 
+      this [_currentHit]    = hit;
       this [_inputSource]   = inputSource;
       this [_pointingLayer] = hit .pointingLayerNode;
       this [_id]            = 0;
@@ -299,6 +303,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this [_pointingBuffer] .getHit (hit);
 
       hit .sensors .clear ();
+
+      hit .type = type;
 
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
       {

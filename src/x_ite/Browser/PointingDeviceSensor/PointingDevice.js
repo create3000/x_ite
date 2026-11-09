@@ -62,8 +62,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             browser .setCursor ("POINTER");
          }
 
-         browser .setHitType ("press");
-
          this .onverifymotion (x, y);
       }
    },
@@ -84,11 +82,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       $.on (this, surface, "mousemove", event => this .mousemove (event));
 
       this .grabbing = false;
-      this .over     = browser .motionNotifyEvent (x, y);
+      this .over     = browser .buttonReleaseEvent (x, y);
 
-      browser .buttonReleaseEvent ();
       browser .setCursor (this .over ? "POINTER" : "DEFAULT");
-      browser .setHitType ("release");
 
       this .onverifymotion (x, y);
 
@@ -219,8 +215,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
       else
          browser .setCursor (this .grabbing && move ? "GRABBING" : "DEFAULT");
-
-      browser .setHitType ("motion");
    },
    onmouseout ()
    {
