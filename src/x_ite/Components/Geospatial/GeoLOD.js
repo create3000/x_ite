@@ -222,7 +222,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
             case 0:
             {
                for (const childInlineNode of this .childInlineNodes)
-                  childInlineNode ._childFlags .removeInterest ("set_childShadowObject__", this);
+                  childInlineNode ._childNodeFlags .removeInterest ("set_childShadowObject__", this);
 
                if (this ._rootNode .length)
                {
@@ -258,7 +258,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
                   this .disconnectChildNode (this .rootInlineNode);
 
                for (const childInlineNode of this .childInlineNodes)
-                  childInlineNode ._childFlags .addInterest ("set_childShadowObject__", this);
+                  childInlineNode ._childNodeFlags .addInterest ("set_childShadowObject__", this);
 
                this .set_childBoundedObject__ ();
                this .set_childPointingObject__ ();

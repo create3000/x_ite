@@ -148,7 +148,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
    {
       for (const childNode of this .childNodes)
       {
-         childNode ._childFlags .removeInterest ("requestRebuild", this);
+         childNode ._childNodeFlags .removeInterest ("requestRebuild", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
@@ -226,7 +226,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             }
             case X3DConstants .X3DChildNode:
             {
-               childNode ._childFlags .addInterest ("requestRebuild", this);
+               childNode ._childNodeFlags .addInterest ("requestRebuild", this);
 
                this .childNodes .add (childNode);
 
@@ -317,7 +317,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             }
             case X3DConstants .X3DChildNode:
             {
-               childNode ._childFlags .removeInterest ("requestRebuild", this);
+               childNode ._childNodeFlags .removeInterest ("requestRebuild", this);
 
                if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                {

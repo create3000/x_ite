@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
       {
          const childNode = this .childNode;
 
-         childNode ._childFlags .removeInterest ("requestRebuild", this);
+         childNode ._childNodeFlags .removeInterest ("requestRebuild", this);
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
          {
@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
                case X3DConstants .Transform:
                case X3DConstants .X3DShapeNode:
                {
-                  childNode ._childFlags .addInterest ("requestRebuild", this);
+                  childNode ._childNodeFlags .addInterest ("requestRebuild", this);
 
                   this .childNode = childNode;
 
