@@ -290,6 +290,12 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Pick.
 
+      if (!Number .isFinite (x))
+         x = this [_pointer] .x;
+
+      if (!Number .isFinite (y))
+         y = this [_pointer] .y;
+
       hit .type = type;
 
       this [_currentHit]    = hit;
