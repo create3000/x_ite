@@ -496,7 +496,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .behaviorNodes = new Set ();
 
-      // KHR_node_hoverability and KHR_node_selectability
+      // Add all nodes if KHR_node_hoverability and KHR_node_selectability.
 
       if (this .extensions .has ("KHR_node_hoverability") || this .extensions .has ("KHR_node_selectability"))
       {
