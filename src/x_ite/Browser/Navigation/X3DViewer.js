@@ -2,7 +2,7 @@ import Fields         from "../../Fields.js";
 import X3DBaseNode    from "../../Base/X3DBaseNode.js";
 import X3DConstants   from "../../Base/X3DConstants.js";
 import OrthoViewpoint from "../../Components/Navigation/OrthoViewpoint.js";
-import TouchType      from "../PointingDeviceSensor/TouchType.js";
+import PointingType   from "../PointingDeviceSensor/PointingType.js";
 import Vector2        from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3        from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4        from "../../../standard/Math/Numbers/Matrix4.js";
@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    },
    touch (x, y)
    {
-      return this .getBrowser () .touch (TouchType .TOUCH, x, y);
+      return this .getBrowser () .touch (PointingType .TOUCH, x, y);
    },
    disconnect ()
    { },

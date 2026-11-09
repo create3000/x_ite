@@ -5,7 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
-import TouchType            from "../../Browser/PointingDeviceSensor/TouchType.js";
+import PointingType         from "../../Browser/PointingDeviceSensor/PointingType.js";
 import GLTFPointerAliases   from "../../Parser/GLTFPointerAliases.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
@@ -116,13 +116,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       if (this .getLive () .getValue () && this ._enabled .getValue ())
       {
          browser .addPointingDeviceSensor (this);
-         browser .touchEvents () .addInterest ("set_touch__", this);
+         browser .pointingEvents () .addInterest ("set_touch__", this);
          this .engine .playEventQueue ();
       }
       else
       {
          browser .removePointingDeviceSensor (this);
-         browser .touchEvents () .removeInterest ("set_touch__", this);
+         browser .pointingEvents () .removeInterest ("set_touch__", this);
          this .engine .pauseEventQueue ();
       }
    },
@@ -853,12 +853,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       switch (hit .type)
       {
-         case TouchType .MOVE:
+         case PointingType .MOVE:
          {
             this .engine .hoverOn (nodeIndex, 0);
             break;
          }
-         case TouchType .RELEASE:
+         case PointingType .RELEASE:
          {
             if (!shapeParent)
                break;

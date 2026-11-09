@@ -1,13 +1,13 @@
-import ScreenLine  from "../Rendering/ScreenLine.js";
-import ScreenPoint from "../Rendering/ScreenPoint.js";
-import TouchType   from "../PointingDeviceSensor/TouchType.js";
-import ViewVolume  from "../../../standard/Math/Geometry/ViewVolume.js";
-import Color3      from "../../../standard/Math/Numbers/Color3.js";
-import Vector3     from "../../../standard/Math/Numbers/Vector3.js";
-import Rotation4   from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4     from "../../../standard/Math/Numbers/Matrix4.js";
-import Lock        from "../../../standard/Utility/Lock.js";
-import _           from "../../../locale/gettext.js";
+import ScreenLine   from "../Rendering/ScreenLine.js";
+import ScreenPoint  from "../Rendering/ScreenPoint.js";
+import PointingType from "../PointingDeviceSensor/PointingType.js";
+import ViewVolume   from "../../../standard/Math/Geometry/ViewVolume.js";
+import Color3       from "../../../standard/Math/Numbers/Color3.js";
+import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4    from "../../../standard/Math/Numbers/Rotation4.js";
+import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
+import Lock         from "../../../standard/Utility/Lock.js";
+import _            from "../../../locale/gettext.js";
 
 import "./xrExamineViewer.js";
 import "./xrX3DFlyViewer.js";
@@ -389,7 +389,7 @@ Object .assign (X3DWebXRContext .prototype,
             if (!active)
                continue;
 
-            this .touch (TouchType .MOVE, viewport [2] / 2, viewport [3] / 2, hit, inputSource);
+            this .touch (PointingType .MOVE, viewport [2] / 2, viewport [3] / 2, hit, inputSource);
 
             // Make a vibration puls if there is a sensor hit.
 

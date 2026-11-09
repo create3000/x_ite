@@ -1,10 +1,10 @@
 let i = 0;
 
-const TouchType = Object .freeze ({
+const PointingType = Object .freeze ({
    TOUCH:   i ++,
    PRESS:   i ++,
    RELEASE: i ++,
    MOVE:    i ++,
 });
 
-export default TouchType;
+export default PointingType;
