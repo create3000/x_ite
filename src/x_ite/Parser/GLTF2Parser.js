@@ -2614,7 +2614,7 @@ function eventsProcessed ()
                   scene         = this .getScene (),
                   extensionNode = scene .createNode ("HoverabilityExtension", false);
 
-               extensionNode ._enabled = extension .hoverable ?? true;
+               extensionNode ._hoverable = extension .hoverable ?? true;
                extensionNode .setup ();
 
                node .transformNode ._children .push (extensionNode);
@@ -2630,7 +2630,7 @@ function eventsProcessed ()
                   scene         = this .getScene (),
                   extensionNode = scene .createNode ("SelectabilityExtension", false);
 
-               extensionNode ._enabled = extension .selectable ?? true;
+               extensionNode ._selectable = extension .selectable ?? true;
                extensionNode .setup ();
 
                node .transformNode ._children .push (extensionNode);

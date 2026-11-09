@@ -20,6 +20,7 @@ import SpecularGlossinessMaterial           from "../../x_ite/Components/X_ITE/S
 import SpecularMaterialExtension            from "../../x_ite/Components/X_ITE/SpecularMaterialExtension.js";
 import TransmissionMaterialExtension        from "../../x_ite/Components/X_ITE/TransmissionMaterialExtension.js";
 import VolumeMaterialExtension              from "../../x_ite/Components/X_ITE/VolumeMaterialExtension.js";
+import X3DInteractivitySensorNode           from "../../x_ite/Components/X_ITE/X3DInteractivitySensorNode.js";
 import X3DMaterialExtensionNode             from "../../x_ite/Components/X_ITE/X3DMaterialExtensionNode.js";
 
 Components .add ({
@@ -49,6 +50,7 @@ Components .add ({
    ],
    abstractNodes:
    [
+      X3DInteractivitySensorNode,
       X3DMaterialExtensionNode,
    ],
    browserContext: X3DX_ITEContext,

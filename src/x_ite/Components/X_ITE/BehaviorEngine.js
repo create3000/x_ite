@@ -851,7 +851,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       // for (const sensor of hit .sensors .keys ())
       // {
-      //    if (sensor .getType () .includes (X3DConstants .SelectabilityExtension))
+      //    if (sensor .getType () .includes (X3DConstants .X3DInteractivitySensorNode))
       //       hit .sensors .delete (sensor);
       // }
 
