@@ -147,8 +147,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
 
-            this .touchX = event .pageX;
-            this .touchY = event .pageY;
+            this .startTouchX = event .pageX;
+            this .startTouchY = event .pageY;
+            this .touchX      = event .pageX;
+            this .touchY      = event .pageY;
 
             this .mousedown (event);
 
@@ -157,9 +159,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             const hit = browser .getHit ();
 
             if (!hit .id || !hit .sensors .size)
-            {
                this .touchTimeout = setTimeout (() => this .showContextMenu (event), CONTEXT_MENU_TIME);
-            }
+
             break;
          }
          case 2:
@@ -203,7 +204,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
             this .mousemove (event);
 
-            if (Math .hypot (this .touchX - event .pageX, this .touchY - event .pageY) > 7)
+            if (Math .hypot (this .startTouchX - this .touchX, this .startTouchY - this .touchY) > 7)
                clearTimeout (this .touchTimeout);
 
             break;
