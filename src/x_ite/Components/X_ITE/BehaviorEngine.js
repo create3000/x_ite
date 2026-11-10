@@ -419,7 +419,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             const node = this .pointers .get (pointer);
 
-            return [... node .getMatrix ()];
+            return [... this .getMatrix (node)];
          },
          Function .prototype,
          "float4x4",
@@ -1002,13 +1002,26 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       while ((node = this .transformNodes .get (nodeIndex)))
       {
-         modelMatrix .multRight (node .getMatrix ());
+         modelMatrix .multRight (this .getMatrix (node));
 
          nodeIndex = this .parents .get (node);
       }
 
       return modelMatrix;
    },
+   getMatrix: (() =>
+   {
+      const matrix = new Matrix4 ();
+
+      return function (node)
+      {
+         return matrix .setTransform (node ._translation .getValue (),
+                                      node ._rotation .getValue (),
+                                      node ._scale .getValue (),
+                                      node ._scaleOrientation .getValue (),
+                                      node ._center .getValue ());
+      };
+   })(),
 });
 
 Object .defineProperties (BehaviorEngine,
