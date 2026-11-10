@@ -80,6 +80,10 @@ Object .assign (X3DWebXRContext .prototype,
             session        = await navigator .xr .requestSession (mode),
             referenceSpace = await session .requestReferenceSpace ("local");
 
+         this .setSession (session);
+         this .xrUpdateBaseLayer ({ }, session);
+         this .buttonReleaseEvent (NaN, NaN);
+
          await gl .makeXRCompatible ();
 
          this .displayFinishEvents () .addInterest ("xrUpdatePointers", this);
@@ -101,10 +105,6 @@ Object .assign (X3DWebXRContext .prototype,
             viewMatrix: new Matrix4 (),
             views: [ ],
          };
-
-         this .xrUpdateBaseLayer ({ }, session);
-         this .setSession (session);
-         this .buttonReleaseEvent (NaN, NaN);
 
          // Browser Options
 
