@@ -622,6 +622,24 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       for (const callback of map .values ())
          callback ();
    },
+   getNodeFlag (field, index)
+   {
+      return !! (field .getValue () & (1 << index));
+   },
+   setNodeFlag (field, index, value)
+   {
+      const mask = 1 << index;
+
+      let flags = field .getValue ();
+
+      if (value)
+         flags |= mask;
+      else
+         flags &= ~mask;
+
+      if (flags !== field .getValue ())
+         field .setValue (flags);
+   },
    toStream (generator)
    {
       generator .string += this .getTypeName ();

@@ -3,6 +3,7 @@ import X3DNode                from "../Core/X3DNode.js";
 import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
 import AlphaMode              from "../../Browser/Shape/AlphaMode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
+import MaterialFlag           from "../../Browser/Shape/MaterialFlag.js";
 import RenderPass             from "../../Rendering/RenderPass.js";
 import BitSet                 from "../../../standard/Utility/BitSet.js";
 
@@ -12,9 +13,7 @@ function X3DMaterialNode (executionContext)
 
    this .addType (X3DConstants .X3DMaterialNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "transparent",      new Fields .SFBool (),
-                          X3DConstants .outputOnly, "transmission",     new Fields .SFBool (),
-                          X3DConstants .outputOnly, "scatter",          new Fields .SFBool (),
+   this .addChildObjects (X3DConstants .outputOnly, "materialFlags",    new Fields .SFInt32 (),
                           X3DConstants .outputOnly, "renderedTextures", new Fields .SFTime ());
 
    // Private properties
@@ -26,36 +25,41 @@ function X3DMaterialNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanceChildNode .prototype),
 {
+   getMaterialFlag (index)
+   {
+      return this .getNodeFlag (this ._materialFlags, index);
+   },
+   setMaterialFlag (index, value)
+   {
+      this .setNodeFlag (this ._materialFlags, index, value);
+   },
    isPhysical ()
    {
       return false;
    },
    setTransparent (value)
    {
-      if (!!value !== this ._transparent .getValue ())
-         this ._transparent = value;
+      this .setMaterialFlag (MaterialFlag .TRANSPARENT, value);
    },
    isTransparent ()
    {
-      return this ._transparent .getValue ();
+      return this .getMaterialFlag (MaterialFlag .TRANSPARENT);
    },
    setTransmission (value)
    {
-      if (!!value !== this ._transmission .getValue ())
-         this ._transmission = value;
+      this .setMaterialFlag (MaterialFlag .TRANSMISSION, value);
    },
    isTransmission ()
    {
-      return this ._transmission .getValue ();
+      return this .getMaterialFlag (MaterialFlag .TRANSMISSION);
    },
    setScatter (value)
    {
-      if (!!value !== this ._scatter .getValue ())
-         this ._scatter = value;
+      this .setMaterialFlag (MaterialFlag .SCATTER, value);
    },
    isScatter ()
    {
-      return this ._scatter .getValue ();
+      return this .getMaterialFlag (MaterialFlag .SCATTER);
    },
    addTexture (index, textureNode)
    {

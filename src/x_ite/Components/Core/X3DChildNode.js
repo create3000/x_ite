@@ -23,28 +23,18 @@ function X3DChildNode (executionContext)
 
    this .addType (X3DConstants .X3DChildNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "childNodeFlags", new Fields .SFInt32 ());
+   this .addChildObjects (X3DConstants .outputOnly, "childFlags", new Fields .SFInt32 ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .prototype),
 {
    getChildFlag (index)
    {
-      return !! (this ._childNodeFlags .getValue () & (1 << index));
+      return this .getNodeFlag (this ._childFlags, index);
    },
    setChildFlag (index, value)
    {
-      const mask = 1 << index;
-
-      let flags = this ._childNodeFlags .getValue ();
-
-      if (value)
-         flags |= mask;
-      else
-         flags &= ~mask;
-
-      if (flags !== this ._childNodeFlags .getValue ())
-         this ._childNodeFlags = flags;
+      this .setNodeFlag (this ._childFlags, index, value);
    },
    setBoundedObject (value)
    {
@@ -109,17 +99,17 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
    },
    connectChildNode (childNode, excludes)
    {
-      childNode ._childNodeFlags .addInterest ("updateFlagsFromChildNode", this, excludes);
+      childNode ._childFlags .addInterest ("updateFlagsFromChildNode", this, excludes);
 
-      this .updateFlagsFromChildNode (excludes, childNode ._childNodeFlags);
+      this .updateFlagsFromChildNode (excludes, childNode ._childFlags);
    },
    disconnectChildNode (childNode)
    {
-      childNode ._childNodeFlags .removeInterest ("updateFlagsFromChildNode", this);
+      childNode ._childFlags .removeInterest ("updateFlagsFromChildNode", this);
    },
-   updateFlagsFromChildNode (excludes, childNodeFlags)
+   updateFlagsFromChildNode (excludes, childFlags)
    {
-      const flags = childNodeFlags .getValue ();
+      const flags = childFlags .getValue ();
 
       if (!excludes ?.includes (TraverseType .BBOX))
          this .setBoundedObject (flags & (1 << BOUNDED_INDEX));

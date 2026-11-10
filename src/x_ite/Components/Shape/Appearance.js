@@ -195,18 +195,18 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       if (this .materialNode)
       {
-         this .materialNode ._transparent      .removeInterest ("set_transparent__",      this);
-         this .materialNode ._transmission     .removeInterest ("set_transmission__",     this);
-         this .materialNode ._scatter    .removeInterest ("set_scatter__",          this);
+         this .materialNode ._materialFlags    .removeInterest ("set_transparent__",      this);
+         this .materialNode ._materialFlags    .removeInterest ("set_transmission__",     this);
+         this .materialNode ._materialFlags    .removeInterest ("set_scatter__",          this);
          this .materialNode ._renderedTextures .removeInterest ("set_renderedTextures__", this);
       }
 
       this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material)
          ?? this .getBrowser () .getDefaultMaterial ();
 
-      this .materialNode ._transparent      .addInterest ("set_transparent__",      this);
-      this .materialNode ._transmission     .addInterest ("set_transmission__",     this);
-      this .materialNode ._scatter    .addInterest ("set_scatter__",          this);
+      this .materialNode ._materialFlags    .addInterest ("set_transparent__",      this);
+      this .materialNode ._materialFlags    .addInterest ("set_transmission__",     this);
+      this .materialNode ._materialFlags    .addInterest ("set_scatter__",          this);
       this .materialNode ._renderedTextures .addInterest ("set_renderedTextures__", this);
 
       this .set_transmission__ ();
@@ -223,9 +223,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       if (this .backMaterialNode)
       {
-         this .backMaterialNode ._transparent      .removeInterest ("set_transparent__",      this);
-         this .backMaterialNode ._transmission     .removeInterest ("set_transmission__",     this);
-         this .backMaterialNode ._scatter    .removeInterest ("set_scatter__",          this);
+         this .backMaterialNode ._materialFlags    .removeInterest ("set_transparent__",      this);
+         this .backMaterialNode ._materialFlags    .removeInterest ("set_transmission__",     this);
+         this .backMaterialNode ._materialFlags    .removeInterest ("set_scatter__",          this);
          this .backMaterialNode ._renderedTextures .removeInterest ("set_renderedTextures__", this);
       }
 
@@ -233,9 +233,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
 
       if (this .backMaterialNode)
       {
-         this .backMaterialNode ._transparent      .addInterest ("set_transparent__",      this);
-         this .backMaterialNode ._transmission     .addInterest ("set_transmission__",     this);
-         this .backMaterialNode ._scatter    .addInterest ("set_scatter__",          this);
+         this .backMaterialNode ._materialFlags    .addInterest ("set_transparent__",      this);
+         this .backMaterialNode ._materialFlags    .addInterest ("set_transmission__",     this);
+         this .backMaterialNode ._materialFlags    .addInterest ("set_scatter__",          this);
          this .backMaterialNode ._renderedTextures .addInterest ("set_renderedTextures__", this);
       }
 
@@ -382,7 +382,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    set_scatter__ ()
    {
       this .setScatter (this .materialNode ?.isScatter () ||
-                              this .backMaterialNode ?.isScatter ());
+                        this .backMaterialNode ?.isScatter ());
    },
    set_renderedTextures__ ()
    {

@@ -1,6 +1,7 @@
 import Fields       from "../../Fields.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import MaterialFlag from "../../Browser/Shape/MaterialFlag.js";
 
 function X3DAppearanceNode (executionContext)
 {
@@ -8,39 +9,42 @@ function X3DAppearanceNode (executionContext)
 
    this .addType (X3DConstants .X3DAppearanceNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "transparent",  new Fields .SFBool (),
-                          X3DConstants .outputOnly, "transmission", new Fields .SFBool (),
-                          X3DConstants .outputOnly, "scatter",      new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "materialFlags", new Fields .SFInt32 ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, X3DNode .prototype),
 {
+   getMaterialFlag (index)
+   {
+      return this .getNodeFlag (this ._materialFlags, index);
+   },
+   setMaterialFlag (index, value)
+   {
+      this .setNodeFlag (this ._materialFlags, index, value);
+   },
    setTransparent (value)
    {
-      if (!!value !== this ._transparent .getValue ())
-         this ._transparent = value;
+      this .setMaterialFlag (MaterialFlag .TRANSPARENT, value);
    },
    isTransparent ()
    {
-      return this ._transparent .getValue ();
+      return this .getMaterialFlag (MaterialFlag .TRANSPARENT);
    },
    setTransmission (value)
    {
-      if (!!value !== this ._transmission .getValue ())
-         this ._transmission = value;
+      this .setMaterialFlag (MaterialFlag .TRANSMISSION, value);
    },
    isTransmission ()
    {
-      return this ._transmission .getValue ();
+      return this .getMaterialFlag (MaterialFlag .TRANSMISSION);
    },
    setScatter (value)
    {
-      if (!!value !== this ._scatter .getValue ())
-         this ._scatter = value;
+      this .setMaterialFlag (MaterialFlag .SCATTER, value);
    },
    isScatter ()
    {
-      return this ._scatter .getValue ();
+      return this .getMaterialFlag (MaterialFlag .SCATTER);
    },
 });
 

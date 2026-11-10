@@ -155,18 +155,18 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       if (this .appearanceNode)
       {
          this .appearanceNode ._alphaMode     .removeInterest ("set_transparent__",  this);
-         this .appearanceNode ._transparent   .removeInterest ("set_transparent__",  this);
-         this .appearanceNode ._transmission  .removeInterest ("set_transmission__", this);
-         this .appearanceNode ._scatter .removeInterest ("set_scatter__",      this);
+         this .appearanceNode ._materialFlags .removeInterest ("set_transparent__",  this);
+         this .appearanceNode ._materialFlags .removeInterest ("set_transmission__", this);
+         this .appearanceNode ._materialFlags .removeInterest ("set_scatter__",      this);
       }
 
       this .appearanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance)
          ?? this .getBrowser () .getDefaultAppearance ();
 
       this .appearanceNode ._alphaMode     .addInterest ("set_transparent__",  this);
-      this .appearanceNode ._transparent   .addInterest ("set_transparent__",  this);
-      this .appearanceNode ._transmission  .addInterest ("set_transmission__", this);
-      this .appearanceNode ._scatter .addInterest ("set_scatter__",      this);
+      this .appearanceNode ._materialFlags .addInterest ("set_transparent__",  this);
+      this .appearanceNode ._materialFlags .addInterest ("set_transmission__", this);
+      this .appearanceNode ._materialFlags .addInterest ("set_scatter__",      this);
 
       this .set_transparent__ ();
       this .set_transmission__ ();
