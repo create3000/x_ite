@@ -214,10 +214,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    {
       const browser = this .getBrowser ();
 
-      this .over = browser .motionNotifyEvent (x, y);
-
       if (browser .getViewer () .isActive ())
          return;
+
+      this .over = browser .motionNotifyEvent (x, y);
 
       if (this .over)
          browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");

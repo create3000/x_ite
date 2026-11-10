@@ -37,6 +37,7 @@ The **SelectabilityExtension** node belongs to the [X_ITE](/x_ite/components/ove
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [selectable](#fields-selectable) | TRUE |
+| SFBool | [out] | [isOver](#fields-isOver) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 {: .fields }
 
@@ -63,6 +64,11 @@ Input/Output field *enabled*.
 {: #fields-selectable }
 
 Input/Output field *selectable*.
+
+### SFBool [out] **isOver**
+{: #fields-isOver }
+
+Output field *isOver*.
 
 ### SFBool [out] **isActive**
 {: #fields-isActive }

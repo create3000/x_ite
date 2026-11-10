@@ -15,8 +15,6 @@ function HoverabilityExtension (executionContext)
    X3DInteractivitySensorNode .call (this, executionContext);
 
    this .addType (X3DConstants .HoverabilityExtension);
-
-   this .addChildObjects (X3DConstants .outputOnly, "isActive", new Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (HoverabilityExtension .prototype, X3DInteractivitySensorNode .prototype),
@@ -45,6 +43,7 @@ Object .defineProperties (HoverabilityExtension,
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "hoverable",   new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isOver",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",    new Fields .SFBool ()),
       ]),
       enumerable: true,
    },

@@ -38,6 +38,7 @@ The **HoverabilityExtension** node belongs to the [X_ITE](/x_ite/components/over
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [hoverable](#fields-hoverable) | TRUE |
 | SFBool | [out] | [isOver](#fields-isOver) |  |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -68,6 +69,11 @@ Input/Output field *hoverable*.
 {: #fields-isOver }
 
 Output field *isOver*.
+
+### SFBool [out] **isActive**
+{: #fields-isActive }
+
+Output field *isActive*.
 
 ## Browser Compatibility
 
