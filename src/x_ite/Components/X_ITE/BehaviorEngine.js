@@ -437,7 +437,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                node      = this .pointers .get (pointer),
                nodeIndex = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
 
-            return [... this .getModelMatrix (nodeIndex, this .Matrix4 .assign (Matrix4 .IDENTITY))];
+            return [... this .getModelMatrix (nodeIndex, this .Matrix4 .set ())];
          },
          Function .prototype,
          "float4x4",
