@@ -32,10 +32,15 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       if (this .getExecutionContext () .getSpecificationVersion () >= 4.1)
       {
          if (this ._loop .getValue ())
-            this ._startTime .set (browser .getCurrentTime ());
+         {
+            if (this ._stopTime .getValue () <= this ._startTime .getValue ())
+               this ._startTime = browser .getCurrentTime ();
+         }
       }
-
-      this ._initialized = browser .getCurrentTime ();
+      else
+      {
+         this ._initialized = browser .getCurrentTime ();
+      }
 
       // Events
 
