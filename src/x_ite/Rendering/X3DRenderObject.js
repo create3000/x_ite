@@ -225,11 +225,11 @@ Object .assign (X3DRenderObject .prototype,
    },
    getShapeParent ()
    {
-      return this .shapeParent;
+      return this .parentNode;
    },
-   setShapeParent (shapeParent)
+   setShapeParent (parentNode)
    {
-      this .shapeParent = shapeParent;
+      this .parentNode = parentNode;
    },
    getSensors ()
    {
@@ -618,9 +618,9 @@ Object .assign (X3DRenderObject .prototype,
          renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
 
-         renderContext .hAnimNode   = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
-         renderContext .shapeParent = this .shapeParent;
-         renderContext .shapeNode   = shapeNode;
+         renderContext .hAnimNode  = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
+         renderContext .parentNode = this .parentNode;
+         renderContext .shapeNode  = shapeNode;
 
          // Clip planes & sensors
 

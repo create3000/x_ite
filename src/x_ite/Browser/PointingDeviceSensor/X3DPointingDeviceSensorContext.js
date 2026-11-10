@@ -317,7 +317,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (Number .isInteger (hit .id) && hit .id > 0 && hit .id <= this [_id])
       {
          const
-            { renderObject, sensors, modelViewMatrix, shapeParent, shapeNode } = this [_pointingContexts] [hit .id],
+            { renderObject, sensors, modelViewMatrix, parentNode, shapeNode } = this [_pointingContexts] [hit .id],
             geometryContext = shapeNode .getGeometryContext ();
 
          hit .ray .assign (renderObject .getHitRay ());
@@ -328,9 +328,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
             hit .sensors .set (sensor .node, sensor);
          }
 
-         hit .layerNode   = renderObject;
-         hit .shapeParent = shapeParent;
-         hit .shapeNode   = shapeNode;
+         hit .layerNode  = renderObject;
+         hit .parentNode = parentNode;
+         hit .shapeNode  = shapeNode;
 
          hit .viewMatrix      .assign (renderObject .getViewpoint () .getViewMatrix ());
          hit .modelViewMatrix .assign (modelViewMatrix);
@@ -351,7 +351,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
             hit .ray .assign (hit .pointingLayerNode .getHitRay ());
 
          hit .layerNode   = null;
-         hit .shapeParent = null;
+         hit .parentNode = null;
          hit .shapeNode   = null;
 
          hit .viewMatrix      .assign (Matrix4 .IDENTITY);

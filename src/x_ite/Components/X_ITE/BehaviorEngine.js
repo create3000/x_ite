@@ -842,8 +842,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       const
          browser     = this .getBrowser (),
          hit         = browser .getHit (),
-         shapeParent = hit .shapeParent,
-         parentIndex = +shapeParent ?.getMetaData ("Interactivity/node", new Fields .SFInt32 (-1)),
+         parentNode  = hit .parentNode,
+         parentIndex = +parentNode ?.getMetaData ("Interactivity/node", new Fields .SFInt32 (-1)),
          nodeIndex   = parentIndex >= 0 ? parentIndex : undefined;
 
       // if (DEVELOPMENT)
@@ -865,13 +865,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          }
          case PointingType .RELEASE:
          {
-            if (!shapeParent)
+            if (!parentNode)
                break;
 
             const selectionPoint = this .Matrix4
                .assign (hit .modelViewMatrix)
                .inverse ()
-               .multRight (shapeParent .getMatrix ())
+               .multRight (parentNode .getMatrix ())
                .multVecMatrix (hit .point .copy ());
 
             const selectionRayOrigin = this .Matrix4
