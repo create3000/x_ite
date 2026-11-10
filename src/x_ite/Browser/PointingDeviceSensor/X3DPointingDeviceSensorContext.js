@@ -286,11 +286,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    { },
    touch (type, x, y, hit = this [_hit], inputSource = null)
    {
-      hit .type = PointingType .NONE;
-
-      if (this .getViewer () .isActive ())
-         return false;
-
       if (Boolean (this .getPose ()) !== Boolean (inputSource))
          return false;
 
@@ -350,9 +345,9 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          if (hit .pointingLayerNode)
             hit .ray .assign (hit .pointingLayerNode .getHitRay ());
 
-         hit .layerNode   = null;
+         hit .layerNode  = null;
          hit .parentNode = null;
-         hit .shapeNode   = null;
+         hit .shapeNode  = null;
 
          hit .viewMatrix      .assign (Matrix4 .IDENTITY);
          hit .modelViewMatrix .assign (Matrix4 .IDENTITY);
