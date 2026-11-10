@@ -75,28 +75,14 @@ Object .assign (X3DWebXRContext .prototype,
             return;
 
          const
-            gl             = this .getContext (),
-            mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
-            session        = await navigator .xr .requestSession (mode),
-            referenceSpace = await session .requestReferenceSpace ("local");
-
-         this .setSession (session);
+            gl   = this .getContext (),
+            mode = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-");
 
          await gl .makeXRCompatible ();
 
-         this .displayFinishEvents () .addInterest ("xrUpdatePointers", this);
+         const session = await navigator .xr .requestSession (mode);
 
-         session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
-         session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
-         session .addEventListener ("end", () => this .xrStopSession ());
-
-         this [_referenceSpace] = referenceSpace;
-         this [_visible]        = true;
-         this [_inputSources]   = new Set ();
-         this [_inputRay]       = new ScreenLine (this, 4, 2, 0.9);
-         this [_inputPoint]     = new ScreenPoint (this);
-
-         Object .assign (this [_gamepads], { action: true });
+         this .setSession (session);
 
          this [_pose] = {
             cameraSpaceMatrix: new Matrix4 (),
@@ -104,8 +90,22 @@ Object .assign (X3DWebXRContext .prototype,
             views: [ ],
          };
 
+         this [_referenceSpace] = await session .requestReferenceSpace ("local");;
+         this [_visible]        = true;
+         this [_inputSources]   = new Set ();
+         this [_inputRay]       = new ScreenLine (this, 4, 2, 0.9);
+         this [_inputPoint]     = new ScreenPoint (this);
+
+         Object .assign (this [_gamepads], { action: true });
+
          this .xrUpdateBaseLayer ({ }, session);
          this .buttonReleaseEvent (NaN, NaN);
+
+         this .displayFinishEvents () .addInterest ("xrUpdatePointers", this);
+
+         session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
+         session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
+         session .addEventListener ("end", () => this .xrStopSession ());
 
          // Browser Options
 
