@@ -17,6 +17,9 @@ tags: [SelectabilityExtension, X_ITE]
 
 The **SelectabilityExtension** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
+{: .prompt-info }
+
 ## Hierarchy
 
 ```

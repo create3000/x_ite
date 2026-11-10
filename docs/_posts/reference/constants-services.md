@@ -208,6 +208,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - HAnimPose
 - HAnimSegment
 - HAnimSite
+- HoverabilityExtension
 - ImageCubeMapTexture
 - ImageTexture
 - ImageTexture3D
@@ -310,10 +311,12 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - ScalarChaser
 - ScalarDamper
 - ScalarInterpolator
+- ScatterMaterialExtension
 - ScreenFontStyle
 - ScreenGroup
 - Script
 - SegmentedVolumeData
+- SelectabilityExtension
 - ShadedVolumeStyle
 - ShaderPart
 - ShaderProgram
@@ -378,7 +381,6 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - VolumeEmitter
 - VolumeMaterialExtension
 - VolumePickSensor
-- VolumeScatterMaterialExtension
 - WaveShaper
 - WindPhysicsModel
 - WorldInfo
@@ -414,6 +416,7 @@ All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to
 - X3DGeometryNode
 - X3DGroupingNode
 - X3DInfoNode
+- X3DInteractivitySensorNode
 - X3DInterpolatorNode
 - X3DKeyDeviceSensorNode
 - X3DLayerNode

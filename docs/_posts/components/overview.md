@@ -559,16 +559,18 @@ Highest supported level: **1**
 - [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) <small class="blue">experimental</small>
 - [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/) <small class="blue">experimental</small>
 - [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/) <small class="blue">experimental</small>
+- [HoverabilityExtension](/x_ite/components/x-ite/hoverabilityextension/) <small class="blue">experimental</small>
 - [InstancedShape](/x_ite/components/x-ite/instancedshape/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/instancedshape/#example) <small class="blue">experimental</small>
 - [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) <small class="blue">experimental</small>
 - [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/) <small class="blue">experimental</small>
 - [RetroreflectionMaterialExtension](/x_ite/components/x-ite/retroreflectionmaterialextension/) <small class="blue">experimental</small>
+- [ScatterMaterialExtension](/x_ite/components/x-ite/scattermaterialextension/) <small class="blue">experimental</small>
+- [SelectabilityExtension](/x_ite/components/x-ite/selectabilityextension/) <small class="blue">experimental</small>
 - [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/) <small class="blue">experimental</small>
 - [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) <small class="yellow">deprecated</small>
 - [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/) <small class="blue">experimental</small>
 - [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) <small class="blue">experimental</small>
 - [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) <small class="blue">experimental</small>
-- [VolumeScatterMaterialExtension](/x_ite/components/x-ite/volumescattermaterialextension/) <small class="blue">experimental</small>
 
 <!-- COMPONENTS END -->
 

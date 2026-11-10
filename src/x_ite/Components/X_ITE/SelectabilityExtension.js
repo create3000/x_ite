@@ -6,6 +6,10 @@ import X3DInteractivitySensorNode from "./X3DInteractivitySensorNode.js";
 import X3DConstants               from "../../Base/X3DConstants.js";
 import PointingType               from "../../Browser/PointingDeviceSensor/PointingType.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function SelectabilityExtension (executionContext)
 {
    X3DInteractivitySensorNode .call (this, executionContext);

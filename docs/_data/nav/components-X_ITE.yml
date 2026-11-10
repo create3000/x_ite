@@ -16,6 +16,8 @@
       url: /components/x-ite/dispersionmaterialextension/
     - title: "EmissiveStrengthMaterialExtension"
       url: /components/x-ite/emissivestrengthmaterialextension/
+    - title: "HoverabilityExtension"
+      url: /components/x-ite/hoverabilityextension/
     - title: "InstancedShape"
       url: /components/x-ite/instancedshape/
     - title: "IORMaterialExtension"
@@ -24,6 +26,10 @@
       url: /components/x-ite/iridescencematerialextension/
     - title: "RetroreflectionMaterialExtension"
       url: /components/x-ite/retroreflectionmaterialextension/
+    - title: "ScatterMaterialExtension"
+      url: /components/x-ite/scattermaterialextension/
+    - title: "SelectabilityExtension"
+      url: /components/x-ite/selectabilityextension/
     - title: "SheenMaterialExtension"
       url: /components/x-ite/sheenmaterialextension/
     - title: "SpecularGlossinessMaterial"
@@ -34,5 +40,3 @@
       url: /components/x-ite/transmissionmaterialextension/
     - title: "VolumeMaterialExtension"
       url: /components/x-ite/volumematerialextension/
-    - title: "VolumeScatterMaterialExtension"
-      url: /components/x-ite/volumescattermaterialextension/
