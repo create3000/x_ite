@@ -122,7 +122,7 @@
   "devDependencies": {
     "@create3000/libgif": "^0.0.5",
     "@eslint/js": "^10.0.1",
-    "@khronosgroup/gltf-interactivity-engine": "^1.1.0",
+    "@khronosgroup/gltf-interactivity-engine": "^1.2.0",
     "ammojs": "^0.0.2",
     "apng-js": "^1.1.5",
     "CharLS.js": "^2.0.1",
