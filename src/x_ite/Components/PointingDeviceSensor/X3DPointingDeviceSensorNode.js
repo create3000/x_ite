@@ -1,9 +1,9 @@
-import X3DNode                       from "../Core/X3DNode.js";
-import X3DSensorNode                 from "../Core/X3DSensorNode.js";
-import X3DConstants                  from "../../Base/X3DConstants.js";
-import ObjectCache                   from "../../../standard/Utility/ObjectCache.js";
-import Vector4                       from "../../../standard/Math/Numbers/Vector4.js";
-import Matrix4                       from "../../../standard/Math/Numbers/Matrix4.js";
+import X3DNode       from "../Core/X3DNode.js";
+import X3DSensorNode from "../Core/X3DSensorNode.js";
+import X3DConstants  from "../../Base/X3DConstants.js";
+import ObjectCache   from "../../../standard/Utility/ObjectCache.js";
+import Vector4       from "../../../standard/Math/Numbers/Vector4.js";
+import Matrix4       from "../../../standard/Math/Numbers/Matrix4.js";
 
 const PointingDeviceSensors = ObjectCache (PointingDeviceSensorContainer);
 
