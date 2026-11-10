@@ -636,8 +636,6 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       {
          const viewpoint = this .getActiveViewpoint ();
 
-         console .log ("spin")
-
          if (this .getStraightenHorizon ())
          {
             const
