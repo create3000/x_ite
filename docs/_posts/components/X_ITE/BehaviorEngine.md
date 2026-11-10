@@ -1,6 +1,6 @@
 ---
 title: BehaviorEngine
-date: 2024-06-12
+date: 2026-11-02
 nav: components-X_ITE
 categories: [components, X_ITE]
 tags: [BehaviorEngine, X_ITE]

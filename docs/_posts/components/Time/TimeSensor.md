@@ -95,6 +95,11 @@ Enables/disables node operation.
 
 Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 
+### SFBool [in, out] **reverse** FALSE
+{: #fields-reverse }
+
+Reverse fraction_changed events.
+
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 {: #fields-startTime }
 
