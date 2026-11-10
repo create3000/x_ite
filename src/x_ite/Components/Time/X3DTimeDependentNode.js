@@ -25,6 +25,20 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 {
    initialize ()
    {
+      const browser = this .getBrowser ();
+
+      // Initialize Events
+
+      if (this .getExecutionContext () .getSpecificationVersion () >= 4.1)
+      {
+         if (this ._loop .getValue ())
+            this ._startTime = browser .getCurrentTime ();
+      }
+
+      this ._initialized = browser .getCurrentTime ();
+
+      // Events
+
       this .getLive () .addInterest ("set_live__", this);
       this ._evenLive  .addInterest (Symbol .for ("X_ITE.X3DBaseNode.set_live__"), this);
 
@@ -36,12 +50,12 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       this ._resumeTime  .addInterest ("set_resumeTime__", this);
       this ._stopTime    .addInterest ("set_stopTime__",   this);
 
+      // Initialize Times
+
       this .startTimeValue  = this ._startTime  .getValue ();
       this .pauseTimeValue  = this ._pauseTime  .getValue ();
       this .resumeTimeValue = this ._resumeTime .getValue ();
       this .stopTimeValue   = this ._stopTime   .getValue ();
-
-      this ._initialized = this .getBrowser () .getCurrentTime ();
    },
    checkLiveState ()
    {
