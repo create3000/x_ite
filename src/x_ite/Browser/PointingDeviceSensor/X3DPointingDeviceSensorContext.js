@@ -280,6 +280,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    { },
    touch (type, x, y, hit = this [_hit], inputSource = null)
    {
+      hit .type = PointingType .NONE;
+
       if (this .getViewer () .isActive ())
          return false;
 
