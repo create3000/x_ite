@@ -12,7 +12,7 @@ function SelectabilityExtension (executionContext)
 
    this .addType (X3DConstants .SelectabilityExtension);
 
-   this .addChildObjects (X3DConstants .outputOnly, "isOver", new Fields .SFBool (),);
+   this .addChildObjects (X3DConstants .outputOnly, "isOver", new Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (SelectabilityExtension .prototype, X3DInteractivitySensorNode .prototype),
