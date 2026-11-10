@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       this .timeSensor ._stopTime = Date .now () / 1000;
       this .timeSensor .setup ();
 
-      this .timeSensor ._fraction_changed  .addInterest ("spin", this);
+      this .timeSensor ._fraction_changed .addInterest ("spin", this);
 
       this .set_activeViewpoint__ ();
    },
@@ -635,6 +635,8 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       return function ()
       {
          const viewpoint = this .getActiveViewpoint ();
+
+         console .log ("spin")
 
          if (this .getStraightenHorizon ())
          {
