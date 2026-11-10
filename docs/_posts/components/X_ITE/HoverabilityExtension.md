@@ -17,9 +17,6 @@ tags: [HoverabilityExtension, X_ITE]
 
 The **HoverabilityExtension** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
->**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
-{: .prompt-info }
-
 ## Hierarchy
 
 ```
@@ -34,13 +31,10 @@ The **HoverabilityExtension** node belongs to the [X_ITE](/x_ite/components/over
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFInt32 | [in, out] | [graph](#fields-graph) | -1 |
-| MFString | [in, out] | [graphs](#fields-graphs) | [ ] |
-| MFNode | [in, out] | [hoverability](#fields-hoverability) | [ ] |
-| MFNode | [in, out] | [selectability](#fields-selectability) | [ ] |
-| MFNode | [in, out] | [animations](#fields-animations) | [ ] |
-| MFNode | [in, out] | [nodes](#fields-nodes) | [ ] |
+| SFBool | [in, out] | [hoverable](#fields-hoverable) | TRUE |
+| SFBool | [out] | [isOver](#fields-isOver) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -66,6 +60,11 @@ Input/Output field *enabled*.
 {: #fields-hoverable }
 
 Input/Output field *hoverable*.
+
+### SFBool [out] **isOver**
+{: #fields-isOver }
+
+Output field *isOver*.
 
 ## Browser Compatibility
 

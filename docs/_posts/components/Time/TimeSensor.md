@@ -38,6 +38,7 @@ The **TimeSensor** node belongs to the [Time](/x_ite/components/overview/#time) 
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFTime | [in, out] | [cycleInterval](#fields-cycleInterval) | 1 |
 | SFBool | [in, out] | [loop](#fields-loop) | FALSE |
+| SFBool | [in, out] | [reverse](#fields-reverse) | FALSE |
 | SFTime | [in, out] | [startTime](#fields-startTime) | 0 |
 | SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0 |
 | SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0 |
