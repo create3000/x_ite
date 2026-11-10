@@ -197,6 +197,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       if (hit === this [_hit])
          this .touch (PointingType .PRESS, x, y);
+      else // WebXR
+         hit .type = PointingType .PRESS;
 
       if (!hit .id)
          return false;
@@ -233,6 +235,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       if (hit === this [_hit])
          this .touch (PointingType .RELEASE, x, y);
+      else // WebXR
+         hit .type = PointingType .RELEASE;
 
       this .motion (hit);
 
@@ -266,6 +270,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       if (hit === this [_hit])
          this .touch (PointingType .MOVE, x, y);
+      else // WebXR
+         hit .type = PointingType .MOVE;
 
       this .motion (hit);
 
