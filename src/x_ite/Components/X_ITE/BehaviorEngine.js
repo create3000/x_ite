@@ -22,9 +22,9 @@ import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 //import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 const
-   _active        = Symbol (),
-   _doneCallback  = Symbol (),
-   _animation     = Symbol ();
+   _active       = Symbol (),
+   _doneCallback = Symbol (),
+   _animation    = Symbol ();
 
 const Types = new Map ([
    [X3DConstants .SFBool,       "bool"],
