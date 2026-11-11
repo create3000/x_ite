@@ -850,26 +850,28 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             // if (DEVELOPMENT)
             //    console .log ("get", pointer);
 
-            const [baseColor, field, transparency] = this .cache .getOrInsertComputed (pointer, () =>
+            const [flags, field, transparency] = this .cache .getOrInsertComputed (pointer, () =>
             {
                const
                   node      = this .pointers .get (pointer),
                   field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
-                  baseColor = GLTFPointerAliases .isBaseColor (node, field);
+                  baseColor = GLTFPointerAliases .isBaseColor (node, field),
+                  solid     = field .getName () === "solid";
 
-               return [baseColor, field, node ._transparency];
+               return [[baseColor, solid], field, node ._transparency];
             });
 
             switch (field .getType ())
             {
                case X3DConstants .SFBool:
+                  return flags [1] ? [!field .getValue ()] : [field .getValue ()];
                case X3DConstants .SFDouble:
                case X3DConstants .SFFloat:
                case X3DConstants .SFInt32:
                case X3DConstants .SFTime:
                   return [field .getValue ()];
                case X3DConstants .SFColor:
-                  return baseColor ? [... field, 1 - transparency .getValue ()] : [... field];
+                  return flags [0] ? [... field, 1 - transparency .getValue ()] : [... field];
                case X3DConstants .SFRotation:
                   return [... field .getValue () .getQuaternion (this .Quaternion)];
                default:
@@ -878,14 +880,15 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          } : () => [ ],
          field .isWritable () ? (pointer, value) =>
          {
-            const [baseColor, field, transparency] = this .cache .getOrInsertComputed (pointer, () =>
+            const [flags, field, transparency] = this .cache .getOrInsertComputed (pointer, () =>
             {
                const
                   node      = this .pointers .get (pointer),
                   field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
-                  baseColor = GLTFPointerAliases .isBaseColor (node, field);
+                  baseColor = GLTFPointerAliases .isBaseColor (node, field),
+                  solid     = field .getName () === "solid";
 
-               return [baseColor, field, node ._transparency];
+               return [[baseColor, solid], field, node ._transparency];
             });
 
             // if (DEVELOPMENT)
@@ -894,6 +897,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             switch (field .getType ())
             {
                case X3DConstants .SFBool:
+                  field .setValue (flags [1] ? !value : value);
+                  break;
                case X3DConstants .SFDouble:
                case X3DConstants .SFFloat:
                case X3DConstants .SFInt32:
@@ -904,7 +909,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                {
                   field .setValue (this .Color3 .set (... value));
 
-                  if (baseColor)
+                  if (flags [0])
                      transparency .setValue (1 - value [3]);
 
                   break;

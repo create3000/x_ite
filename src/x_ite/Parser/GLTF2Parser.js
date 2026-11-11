@@ -3266,6 +3266,8 @@ function eventsProcessed ()
 
       shapeNode .setup ();
 
+      primitive .material ?.pointers .push (primitive .geometryNode);
+
       return shapeNode;
    },
    meshInstancing (EXT_mesh_gpu_instancing)
