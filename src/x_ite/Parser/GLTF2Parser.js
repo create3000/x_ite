@@ -493,42 +493,65 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (!(node && field))
       {
-         if (DEVELOPMENT)
-            console .warn (`No node found for pointer '${pointer}'.`);
+         // if (DEVELOPMENT)
+         //    console .warn (`No node found for pointer '${pointer}'.`);
 
          return;
       }
 
-      const nodeIndexMatch = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
+      const type = node .getType ();
 
-      if (nodeIndexMatch && node .getType () .includes (X3DConstants .X3DGroupingNode))
+      for (let t = type .length - 1; t >= 0; -- t)
       {
-         const
-            nodeIndex = +nodeIndexMatch [1],
-            mesh      = this .nodes [nodeIndex] .mesh;
+         switch (type [t])
+         {
+            case X3DConstants .X3DViewpointNode:
+            {
+               const cameraIndexMatch = pointer .match (/^\/cameras\/(\d+)/);
 
-         node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (nodeIndex));
+               if (!cameraIndexMatch)
+                  break;
 
-         if (mesh !== undefined)
-            node .setMetaData (`Interactivity/mesh`, URLs .getProviderURL (), new Fields .SFInt32 (mesh));
-      }
+               const cameraIndex = +cameraIndexMatch [1];
 
-      const cameraIndexMatch = pointer .match (/^\/cameras\/(\d+)/);
+               node .setMetaData ("Interactivity/camera", URLs .getProviderURL (), new Fields .SFInt32 (cameraIndex));
+               break;
+            }
+            case X3DConstants .X3DMaterialNode:
+            {
+               const materialIndexMatch = pointer .match (/^\/materials\/(\d+)/);
 
-      if (cameraIndexMatch && node .getType () .includes (X3DConstants .X3DViewpointNode))
-      {
-         const cameraIndex = +cameraIndexMatch [1];
+               if (!materialIndexMatch)
+                  break;
 
-         node .setMetaData ("Interactivity/camera", URLs .getProviderURL (), new Fields .SFInt32 (cameraIndex));
-      }
+               const materialIndex = +materialIndexMatch [1];
 
-      const materialIndexMatch = pointer .match (/^\/materials\/(\d+)/);
+               node .setMetaData ("Interactivity/material", URLs .getProviderURL (), new Fields .SFInt32 (materialIndex));
+               break;
+            }
+            case X3DConstants .X3DTransformMatrix3DNode:
+            {
+               const nodeIndexMatch = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
 
-      if (materialIndexMatch && node .getType () .includes (X3DConstants .X3DMaterialNode))
-      {
-         const materialIndex = +materialIndexMatch [1];
+               if (!nodeIndexMatch)
+                  break;
 
-         node .setMetaData ("Interactivity/material", URLs .getProviderURL (), new Fields .SFInt32 (materialIndex));
+               const
+                  nodeIndex = +nodeIndexMatch [1],
+                  mesh      = this .nodes [nodeIndex] .mesh;
+
+               node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (nodeIndex));
+
+               if (mesh !== undefined)
+                  node .setMetaData (`Interactivity/mesh`, URLs .getProviderURL (), new Fields .SFInt32 (mesh));
+
+               break;
+            }
+            default:
+               continue;
+         }
+
+         break;
       }
 
       const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
