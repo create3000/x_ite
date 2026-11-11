@@ -205,6 +205,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       const numAnimations = this .animations .length;
 
       this .engine .registerJsonPointer (
+         `/animations.length`,
+         () => [numAnimations],
+         Function .prototype,
+         "int",
+         true
+      );
+
+      this .engine .registerJsonPointer (
          `/animations/${numAnimations}`,
          (pointer) => [pointer],
          Function .prototype,
@@ -350,6 +358,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             key => key .match (/^\/meshes\/\d+\/primitives\/(\d+)\//) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
+      this .engine .registerJsonPointer (
+         `/meshes.length`,
+         () => [numMeshes],
+         Function .prototype,
+         "int",
+         true
+      );
+
       // Returns the material index of the mesh.
       this .engine .registerJsonPointer (
          `/meshes/${numMeshes}/primitives/${numPrimitives}/material`,
@@ -374,6 +390,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       const numNodes = Array .from (this .pointers .keys (),
             key => key .match (/^\/nodes\/(\d+)\//) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+      this .engine .registerJsonPointer (
+         `/nodes.length`,
+         () => [numNodes],
+         Function .prototype,
+         "int",
+         true
+      );
 
       // Returns the parent node of the node.
       this .engine .registerJsonPointer (
