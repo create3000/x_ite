@@ -333,10 +333,25 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             this .pointers .set (pointer, _node);
       }
 
+      // Register camera pointers.
+
+      const numCameras = Array .from (this .pointers .keys (),
+            key => key .match (/^\/cameras\/(\d+)/) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+      // Returns the number of material nodes.
+      this .engine .registerJsonPointer (
+         "/cameras.length",
+         () => [numCameras],
+         Function .prototype,
+         "int",
+         true
+      );
+
       // Register material pointers.
 
       const numMaterials = Array .from (this .pointers .keys (),
-            key => key .match (/^\/materials\/(\d+)\//) ?.[1] ?? -1)
+            key => key .match (/^\/materials\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       // Returns the number of material nodes.
@@ -351,11 +366,11 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // Register meshes pointers.
 
       const numMeshes = Array .from (this .pointers .keys (),
-            key => key .match (/^\/meshes\/(\d+)\//) ?.[1] ?? -1)
+            key => key .match (/^\/meshes\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       const numPrimitives = Array .from (this .pointers .keys (),
-            key => key .match (/^\/meshes\/\d+\/primitives\/(\d+)\//) ?.[1] ?? -1)
+            key => key .match (/^\/meshes\/\d+\/primitives\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       this .engine .registerJsonPointer (
@@ -388,7 +403,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // Register node pointers.
 
       const numNodes = Array .from (this .pointers .keys (),
-            key => key .match (/^\/nodes\/(\d+)\//) ?.[1] ?? -1)
+            key => key .match (/^\/nodes\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       this .engine .registerJsonPointer (
