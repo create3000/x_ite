@@ -66,8 +66,11 @@ Object .assign (X3DOptimizer .prototype,
 
             if (this .removeEmptyGroups)
             {
-               if (node .children .length === 0)
-                  return [ ];
+               if (!node .metadata)
+               {
+                  if (node .children .length === 0)
+                     return [ ];
+               }
             }
 
             break;
@@ -303,7 +306,6 @@ Object .assign (X3DOptimizer .prototype,
                                  child .center .getValue ());
 
       nodeMatrix .multLeft (childMatrix);
-
       nodeMatrix .getTransform (translation, rotation, scale, scaleOrientation, child .center .getValue ());
 
       child .translation      = translation;
