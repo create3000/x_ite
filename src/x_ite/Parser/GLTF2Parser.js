@@ -413,20 +413,22 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .behaviorNodes = new Set ();
 
+      // Add all cameras.
+
+      if (Array .isArray (glTF .cameras))
+      {
+         for (const c of glTF .cameras .keys ())
+            pointers .add (`/cameras/${c}`);
+      }
+
       // Add all nodes matrix pointer if KHR_node_hoverability and KHR_node_selectability.
 
       if (this .extensions .has ("KHR_node_hoverability") || this .extensions .has ("KHR_node_selectability"))
       {
          const length = glTF .nodes ?.length ?? 0;
 
-         for (let i = 0; i < length; ++ i)
-            pointers .add (`/nodes/${i}/matrix`);
-      }
-
-      if (Array .isArray (glTF .cameras))
-      {
-         for (const c of glTF .cameras .keys ())
-            pointers .add (`/cameras/${c}`);
+         for (let n = 0; n < length; ++ n)
+            pointers .add (`/nodes/${n}/matrix`);
       }
 
       // Add all primitives pointers if needed.
@@ -499,7 +501,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const nodeIndexMatch = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
 
-      if (nodeIndexMatch)
+      if (nodeIndexMatch && node .getType () .includes (X3DConstants .X3DGroupingNode))
       {
          const
             nodeIndex = +nodeIndexMatch [1],
@@ -511,7 +513,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             node .setMetaData (`Interactivity/mesh`, URLs .getProviderURL (), new Fields .SFInt32 (mesh));
       }
 
-      const materialIndexMatch = pointer .match (/^\/materials\/(\d+)\//);
+      const cameraIndexMatch = pointer .match (/^\/cameras\/(\d+)/);
+
+      if (cameraIndexMatch && node .getType () .includes (X3DConstants .X3DViewpointNode))
+      {
+         const cameraIndex = +cameraIndexMatch [1];
+
+         node .setMetaData ("Interactivity/camera", URLs .getProviderURL (), new Fields .SFInt32 (cameraIndex));
+      }
+
+      const materialIndexMatch = pointer .match (/^\/materials\/(\d+)/);
 
       if (materialIndexMatch && node .getType () .includes (X3DConstants .X3DMaterialNode))
       {

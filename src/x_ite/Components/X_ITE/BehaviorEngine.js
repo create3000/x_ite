@@ -83,8 +83,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      try
-      {
       // Engine
 
       this .fps      = 60;
@@ -111,11 +109,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .set_animations__ ();
       this .set_nodes__ ();
       this .set_graph__ ();
-      }
-      catch (error)
-      {
-         console .error (error);
-      }
    },
    set_enabled__ ()
    {
@@ -514,6 +507,27 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          },
          Function .prototype,
          "float4x4",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/camera`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  node        = this .pointers .get (pointer),
+                  cameraIndex = node .getMetaData ("Interactivity/camera") [0] ?? -1;
+
+               if (cameraIndex >= 0)
+                  return [`/cameras/${cameraIndex}`];
+
+               return [undefined];
+            });
+         },
+         Function .prototype,
+         "ref",
          true
       );
 

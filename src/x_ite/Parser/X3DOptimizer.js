@@ -137,7 +137,7 @@ Object .assign (X3DOptimizer .prototype,
 
       if (node .getNodeTypeName () === "Transform")
       {
-         if (parent .getNodeTypeName () === "HAnimJoint")
+         if (parent ?.getNodeTypeName () === "HAnimJoint")
          {
             if (node .children .some (child => child ?.getNodeType () .at (-1) === X3DConstants .HAnimHumanoid))
                return node;

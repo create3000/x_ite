@@ -96,21 +96,14 @@ Object .assign (Object .setPrototypeOf (GLBParser .prototype, X3DParser .prototy
 
       for (const string of this .json)
       {
-         try
-         {
-            const json = JSON .parse (string);
+         const json = JSON .parse (string);
 
-            if (!GLTF2Parser .isValid (json))
-               continue;
-
-            parser .setInput (json);
-
-            await parser .rootObject (parser .input);
-         }
-         catch
-         {
+         if (!GLTF2Parser .isValid (json))
             continue;
-         }
+
+         parser .setInput (json);
+
+         await parser .rootObject (parser .input);
       }
 
       return this .getScene ();
