@@ -140,21 +140,16 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          this .engine .loadBehaveGraph (JSON .parse (graph), run);
 
-         this .engine .registerJsonPointer (
-            `/extensions/KHR_interactivity/asset/majorVersion`,
-            () => [+this ._version .getValue () .split (".") [0]],
-            Function .prototype,
-            "int",
-            true
-         );
-
-         this .engine .registerJsonPointer (
-            `/extensions/KHR_interactivity/asset/minorVersion`,
-            () => [+this ._version .getValue () .split (".") [1]],
-            Function .prototype,
-            "int",
-            true
-         );
+         for (const [i, versionPart] of ["majorVersion", "minorVersion"] .entries ())
+         {
+            this .engine .registerJsonPointer (
+               `/extensions/KHR_interactivity/asset/${versionPart}`,
+               () => [+this ._version .getValue () .split (".") [i]],
+               Function .prototype,
+               "int",
+               true
+            );
+         }
 
          const limits = [
             "maxActiveAnimations",
