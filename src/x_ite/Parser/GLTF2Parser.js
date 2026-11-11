@@ -147,7 +147,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       await this .extensionsArray (glTF .extensionsUsed, this .extensions);
       await browser .loadComponents (scene);
 
-      this .extensionsObject (glTF .extensions);
+      this .extensionsObject (glTF, glTF .extensions);
 
       await this .buffersArray (glTF .buffers);
       this .bufferViewsArray (glTF .bufferViews);
@@ -330,7 +330,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return library;
       })();
    },
-   extensionsObject (extensions)
+   extensionsObject (glTF, extensions)
    {
       if (!(extensions instanceof Object))
          return;
@@ -343,7 +343,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                this .extLightsImageBasedObject (value);
                break;
             case "KHR_interactivity":
-               this .hhrInteractivity (value);
+               this .hhrInteractivity (glTF, value);
                break;
             // https://github.com/KhronosGroup/glTF/pull/1956
             // case "KHR_lights_environment": // in development
@@ -446,7 +446,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return light .node = lightNode;
    },
-   hhrInteractivity (KHR_interactivity)
+   hhrInteractivity (glTF, KHR_interactivity)
    {
       if (!(KHR_interactivity instanceof Object))
          return;
@@ -458,8 +458,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene          = this .getScene (),
          behaviorEngine = scene .createNode ("BehaviorEngine", false);
 
-      behaviorEngine ._graph  = KHR_interactivity .graph;
-      behaviorEngine ._graphs = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
+      behaviorEngine ._version = glTF .asset .version;
+      behaviorEngine ._graph   = KHR_interactivity .graph;
+      behaviorEngine ._graphs  = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
 
       scene .addExportedNode (scene .getUniqueExportName ("BehaviorEngine"), behaviorEngine);
 

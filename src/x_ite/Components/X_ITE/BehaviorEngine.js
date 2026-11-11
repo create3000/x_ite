@@ -142,7 +142,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          this .engine .registerJsonPointer (
             `/extensions/KHR_interactivity/asset/majorVersion`,
-            () => [2],
+            () => [+this ._version .getValue () .split (".") [0]],
             Function .prototype,
             "int",
             true
@@ -150,7 +150,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          this .engine .registerJsonPointer (
             `/extensions/KHR_interactivity/asset/minorVersion`,
-            () => [0],
+            () => [+this ._version .getValue () .split (".") [1]],
             Function .prototype,
             "int",
             true
@@ -1069,6 +1069,7 @@ Object .defineProperties (BehaviorEngine,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "version",    new Fields .SFString ("2.0")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graph",      new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",     new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "animations", new Fields .MFNode ()),

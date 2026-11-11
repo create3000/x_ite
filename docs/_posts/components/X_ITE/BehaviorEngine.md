@@ -34,6 +34,7 @@ The **BehaviorEngine** node belongs to the [X_ITE](/x_ite/components/overview/#x
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFString | [in, out] | [version](#fields-version) |  |
 | SFInt32 | [in, out] | [graph](#fields-graph) | -1 |
 | MFString | [in, out] | [graphs](#fields-graphs) | [ ] |
 | MFNode | [in, out] | [animations](#fields-animations) | [ ] |
@@ -53,6 +54,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 {: #fields-enabled }
 
 Input/Output field *enabled*.
+
+### SFString [in, out] **version** "2.0"
+{: #fields-version }
+
+Input/Output field *version*.
 
 ### SFInt32 [in, out] **graph** -1 <small>[-1,∞)</small>
 {: #fields-graph }
