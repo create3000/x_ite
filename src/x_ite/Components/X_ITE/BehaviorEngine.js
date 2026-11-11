@@ -152,11 +152,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             );
          }
 
-         for (const extension of this ._extensions)
+         for (const extension of GLTFExtensions)
          {
-            if (!GLTFExtensions .has (extension))
-               continue;
-
             this .engine .registerJsonPointer (
                `/extensions/KHR_interactivity/asset/extensions/${extension}/enabled`,
                () => [true],
@@ -1080,7 +1077,6 @@ Object .defineProperties (BehaviorEngine,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "version",    new Fields .SFString ("2.1")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "extensions", new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graph",      new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",     new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "animations", new Fields .MFNode ()),
