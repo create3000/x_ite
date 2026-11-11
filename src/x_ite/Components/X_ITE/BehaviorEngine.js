@@ -5,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
+import URLs                 from "../../Browser/Networking/URLs.js";
 import PointingType         from "../../Browser/PointingDeviceSensor/PointingType.js";
 import GLTFPointerAliases   from "../../Parser/GLTFPointerAliases.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
@@ -21,7 +22,6 @@ import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 //import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 const
-   _cycleInterval = Symbol (),
    _active        = Symbol (),
    _doneCallback  = Symbol (),
    _animation     = Symbol ();
@@ -155,7 +155,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          this .animations .push (X3DCast (X3DConstants .TimeSensor, node));
 
       for (const timeSensor of this .animations)
-         timeSensor [_cycleInterval] = timeSensor ._cycleInterval .getValue ();
+         timeSensor .setMetaData ("Interactivity/cycleInterval", URLs .getProviderURL (), timeSensor ._cycleInterval);
 
       // Register JSON Pointers
 
@@ -202,7 +202,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor ?.[_cycleInterval] ?? 0];
+            if (timeSensor)
+               return [+timeSensor .getMetaData ("Interactivity/cycleInterval", new Fields .SFTime (0))];
+
+            return [NaN];
          },
          Function .prototype,
          "float",
@@ -219,8 +222,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            // Or use `timeSensor ._elapsedTime .getValue () / speed`.
-            return [timeSensor ? timeSensor ._fraction_changed .getValue () * timeSensor [_cycleInterval] : NaN];
+            if (timeSensor)
+            {
+               return [timeSensor ._fraction_changed .getValue () * +timeSensor .getMetaData ("Interactivity/cycleInterval", new Fields .SFTime ())];
+            }
+
+            return [NaN];
          },
          Function .prototype,
          "float",
@@ -901,7 +908,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       const
          currentTime    = this .getBrowser () .getCurrentTime (),
-         cycleInterval  = timeSensor [_cycleInterval],
+         cycleInterval  = +timeSensor .getMetaData ("Interactivity/cycleInterval", new Fields .SFTime (1)),
          signedDuration = (stopTime - startTime) % cycleInterval;
 
       if (startTime < 0 || startTime > cycleInterval)
@@ -983,10 +990,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       if (!timeSensor [_active])
          return;
 
-      if (stopTime >= timeSensor [_cycleInterval])
+      const cycleInterval = +timeSensor .getMetaData ("Interactivity/cycleInterval", new Fields .SFTime (1));
+
+      if (stopTime >= cycleInterval)
          return;
 
-      timeSensor ._range [2] = stopTime / timeSensor [_cycleInterval];
+      timeSensor ._range [2] = stopTime / cycleInterval;
 
       timeSensor [_doneCallback] = stopCallback;
 
