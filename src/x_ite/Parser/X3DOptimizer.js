@@ -122,6 +122,7 @@ Object .assign (X3DOptimizer .prototype,
          }
       }
 
+
       if (!combine)
          return node;
 
@@ -136,6 +137,12 @@ Object .assign (X3DOptimizer .prototype,
 
       if (node .getNodeTypeName () === "Transform")
       {
+         if (parent .getNodeTypeName () === "HAnimJoint")
+         {
+            if (node .children .some (child => child ?.getNodeType () .at (-1) === X3DConstants .HAnimHumanoid))
+               return node;
+         }
+
          node = this .combineSingleChild (node, removedNodes);
 
          if (!node .translation ?.getValue () .equals (Vector3 .ZERO))

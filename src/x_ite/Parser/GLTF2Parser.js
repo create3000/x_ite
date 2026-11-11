@@ -343,13 +343,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          switch (key)
          {
-            case "EXT_lights_image_based":
-               this .extLightsImageBasedObject (value);
-               break;
             case "KHR_interactivity":
                this .hhrInteractivity (glTF, value);
                break;
-            // https://github.com/KhronosGroup/glTF/pull/1956
+            case "EXT_lights_image_based":
+               this .extLightsImageBasedObject (value);
+               break;
+               // https://github.com/KhronosGroup/glTF/pull/1956
             // case "KHR_lights_environment": // in development
             //    this .khrLightsEnvironment (value);
             //    break;
@@ -361,6 +361,171 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                break;
          }
       }
+   },
+   hhrInteractivity (glTF, KHR_interactivity)
+   {
+      if (!(KHR_interactivity instanceof Object))
+         return;
+
+      if (!(KHR_interactivity .graphs instanceof Array))
+         return;
+
+      const
+         scene          = this .getScene (),
+         behaviorEngine = scene .createNode ("BehaviorEngine", false);
+
+      behaviorEngine ._version = glTF .asset .version;
+      behaviorEngine ._graph   = KHR_interactivity .graph;
+      behaviorEngine ._graphs  = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
+
+      scene .addExportedNode (scene .getUniqueExportName ("BehaviorEngine"), behaviorEngine);
+
+      this .behavior       = [{ node: behaviorEngine }];
+      this .behaviorEngine = behaviorEngine;
+   },
+   addBehaviorNodes (glTF, KHR_interactivity)
+   {
+      if (!this .behavior)
+         return;
+
+      // Collect pointers.
+
+      const pointers = new Set ();
+
+      for (const graph of KHR_interactivity .graphs)
+      {
+         if (!(graph .nodes instanceof Array))
+            continue;
+
+         for (const node of graph .nodes)
+         {
+            const value = node ?.configuration ?.pointer ?.value;
+
+            if (!(value instanceof Array))
+               continue;
+
+            for (const pointer of value)
+               pointers .add (pointer);
+         }
+      }
+
+      // Collect behavior nodes.
+
+      this .behaviorNodes = new Set ();
+
+      // Add all nodes matrix pointer if KHR_node_hoverability and KHR_node_selectability.
+
+      if (this .extensions .has ("KHR_node_hoverability") || this .extensions .has ("KHR_node_selectability"))
+      {
+         const length = glTF .nodes ?.length ?? 0;
+
+         for (let i = 0; i < length; ++ i)
+            pointers .add (`/nodes/${i}/matrix`);
+      }
+
+      if (Array .isArray (glTF .cameras))
+      {
+         for (const c of glTF .cameras .keys ())
+            pointers .add (`/cameras/${c}`);
+      }
+
+      // Add all primitives pointers if needed.
+
+      if (Array .from (pointers) .some (pointer => pointer .includes ("/primitives/")))
+      {
+         const numMeshes = glTF .meshes ?.length ?? 0;
+
+         for (let m = 0; m < numMeshes; ++ m)
+         {
+            const numPrimitives = glTF .meshes [m] .primitives ?.length ?? 0;
+
+            for (let p = 0; p < numPrimitives; ++ p)
+               pointers .add (`/meshes/${m}/primitives/${p}/material`);
+         }
+      }
+
+      // Collect nodes from pointers.
+
+      for (const pointer of pointers)
+      {
+         const key = pointer .match (/^\/([^/]+)\/[{[].*?[\]}]/);
+
+         if (key)
+         {
+            // Top level pointers
+
+            const length = glTF [key [1]] ?.length ?? 0;
+
+            for (let i = 0; i < length; ++ i)
+               this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
+         }
+         else
+         {
+            this .addBehaviorNode (pointer, this .behaviorNodes);
+         }
+      }
+
+      // Make pointers unique.
+
+      for (const node of this .behaviorNodes)
+      {
+         const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
+
+         node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
+      }
+
+      // Add behavior nodes.
+
+      this .behaviorEngine ._nodes = Array .from (this .behaviorNodes);
+      this .behaviorEngine .setup ();
+   },
+   addBehaviorNode (pointer, behaviorNodes)
+   {
+      // Replace this just to find an node.
+      const search = pointer
+         .replace (/^(\/nodes\/\d+\/camera|\/cameras\/\d+)$/, "$1/znear")
+         .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
+         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material)/, "$1/transparency");
+
+      const [node, field] = this .getAnimationPointer (search);
+
+      if (!(node && field))
+      {
+         if (DEVELOPMENT)
+            console .warn (`No node found for pointer '${pointer}'.`);
+
+         return;
+      }
+
+      const nodeIndexMatch = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
+
+      if (nodeIndexMatch)
+      {
+         const
+            nodeIndex = +nodeIndexMatch [1],
+            mesh      = this .nodes [nodeIndex] .mesh;
+
+         node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (nodeIndex));
+
+         if (mesh !== undefined)
+            node .setMetaData (`Interactivity/mesh`, URLs .getProviderURL (), new Fields .SFInt32 (mesh));
+      }
+
+      const materialIndexMatch = pointer .match (/^\/materials\/(\d+)\//);
+
+      if (materialIndexMatch && node .getType () .includes (X3DConstants .X3DMaterialNode))
+      {
+         const materialIndex = +materialIndexMatch [1];
+
+         node .setMetaData ("Interactivity/material", URLs .getProviderURL (), new Fields .SFInt32 (materialIndex));
+      }
+
+      const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
+
+      value .push (pointer);
+      node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), value);
+
+      behaviorNodes .add (node);
    },
    extLightsImageBasedObject (EXT_lights_image_based)
    {
@@ -449,164 +614,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       light .pointers = [lightNode];
 
       return light .node = lightNode;
-   },
-   hhrInteractivity (glTF, KHR_interactivity)
-   {
-      if (!(KHR_interactivity instanceof Object))
-         return;
-
-      if (!(KHR_interactivity .graphs instanceof Array))
-         return;
-
-      const
-         scene          = this .getScene (),
-         behaviorEngine = scene .createNode ("BehaviorEngine", false);
-
-      behaviorEngine ._version = glTF .asset .version;
-      behaviorEngine ._graph   = KHR_interactivity .graph;
-      behaviorEngine ._graphs  = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
-
-      scene .addExportedNode (scene .getUniqueExportName ("BehaviorEngine"), behaviorEngine);
-
-      this .behavior       = [{ node: behaviorEngine }];
-      this .behaviorEngine = behaviorEngine;
-   },
-   addBehaviorNodes (glTF, KHR_interactivity)
-   {
-      if (!this .behavior)
-         return;
-
-      // Collect pointers.
-
-      const pointers = new Set ();
-
-      for (const graph of KHR_interactivity .graphs)
-      {
-         if (!(graph .nodes instanceof Array))
-            continue;
-
-         for (const node of graph .nodes)
-         {
-            const value = node ?.configuration ?.pointer ?.value;
-
-            if (!(value instanceof Array))
-               continue;
-
-            for (const pointer of value)
-               pointers .add (pointer);
-         }
-      }
-
-      // Collect behavior nodes.
-
-      this .behaviorNodes = new Set ();
-
-      // Add all nodes matrix pointer if KHR_node_hoverability and KHR_node_selectability.
-
-      if (this .extensions .has ("KHR_node_hoverability") || this .extensions .has ("KHR_node_selectability"))
-      {
-         const length = glTF .nodes ?.length ?? 0;
-
-         for (let i = 0; i < length; ++ i)
-            pointers .add (`/nodes/${i}/matrix`);
-      }
-
-      // Add all primitives pointers if needed.
-
-      if (Array .from (pointers) .some (pointer => pointer .includes ("/primitives/")))
-      {
-         const numMeshes = glTF .meshes ?.length ?? 0;
-
-         for (let m = 0; m < numMeshes; ++ m)
-         {
-            const numPrimitives = glTF .meshes [m] .primitives ?.length ?? 0;
-
-            for (let p = 0; p < numPrimitives; ++ p)
-               pointers .add (`/meshes/${m}/primitives/${p}/material`);
-         }
-      }
-
-      // Collect nodes from pointers.
-
-      for (const pointer of pointers)
-      {
-         const key = pointer .match (/^\/([^/]+)\/[{[].*?[\]}]/);
-
-         if (key)
-         {
-            // Top level pointers
-
-            const length = glTF [key [1]] ?.length ?? 0;
-
-            for (let i = 0; i < length; ++ i)
-               this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
-         }
-         else
-         {
-            this .addBehaviorNode (pointer, this .behaviorNodes);
-         }
-      }
-
-      // Make pointers unique.
-
-      for (const node of this .behaviorNodes)
-      {
-         const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
-
-         node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
-      }
-
-      // Add behavior nodes.
-
-      this .behaviorEngine ._nodes = Array .from (this .behaviorNodes);
-      this .behaviorEngine .setup ();
-   },
-   addBehaviorNode (pointer, behaviorNodes)
-   {
-      // Replace this just to find an node.
-      const search = pointer
-         .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
-         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material)/, "$1/transparency");
-
-      const [node, field] = this .getAnimationPointer (search);
-
-      if (!(node && field))
-      {
-         if (DEVELOPMENT)
-            console .warn (`No node found for pointer '${pointer}'.`);
-
-         return;
-      }
-
-      const nodeIndexMatch = pointer .match (/^\/nodes\/(\d+)\/[^/]+$/);
-
-      if (nodeIndexMatch)
-      {
-         const
-            nodeIndex = +nodeIndexMatch [1],
-            mesh      = this .nodes [nodeIndex] .mesh;
-
-         node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (nodeIndex));
-
-         if (mesh !== undefined)
-            node .setMetaData (`Interactivity/mesh`, URLs .getProviderURL (), new Fields .SFInt32 (mesh));
-      }
-
-      const materialIndexMatch = pointer .match (/^\/materials\/(\d+)\//);
-
-      if (materialIndexMatch && node .getType () .includes (X3DConstants .X3DMaterialNode))
-      {
-         const materialIndex = +materialIndexMatch [1];
-
-         node .setMetaData ("Interactivity/material", URLs .getProviderURL (), new Fields .SFInt32 (materialIndex));
-      }
-
-      const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
-
-      value .push (pointer);
-      node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), value);
-
-      behaviorNodes .add (node);
    },
    khrLightsPunctualObject (KHR_lights_punctual)
    {
@@ -2323,7 +2330,10 @@ function eventsProcessed ()
       viewpointNode ._description = this .description (camera .name || `Viewpoint ${id + 1}`);
       viewpointNode ._position    = Vector3 .ZERO;
 
-      return camera .node = viewpointNode;
+      camera .pointers = [viewpointNode];
+      camera .node     = viewpointNode;
+
+      return camera;
    },
    cameraType (camera)
    {
@@ -2417,8 +2427,6 @@ function eventsProcessed ()
          viewpointNode ._farDistance = camera .zfar;
 
       viewpointNode .setup ();
-
-      camera .pointers = [viewpointNode];
 
       return viewpointNode;
    },
@@ -2515,7 +2523,9 @@ function eventsProcessed ()
 
          // Add camera.
 
-         const viewpointNode = this .cameraObject (node .camera, this .cameras [node .camera]);
+         node .camera = this .cameraObject (node .camera, this .cameras [node .camera]);
+
+         const viewpointNode = node .camera ?.node;
 
          if (viewpointNode)
             transformNode ._children .push (viewpointNode);
@@ -2534,7 +2544,11 @@ function eventsProcessed ()
 
             children = children .map (childNode =>
             {
-               if (childNode .getType () .at (-1) !== X3DConstants .HAnimJoint)
+               if (childNode .getType () .includes (X3DConstants .X3DGroupingNode))
+               {
+                  return childNode;
+               }
+               else
                {
                   const groupNode = scene .createNode ("Group", false);
 
@@ -2543,10 +2557,6 @@ function eventsProcessed ()
                   groupNode .setup ();
 
                   return groupNode;
-               }
-               else
-               {
-                  return childNode;
                }
             });
          }

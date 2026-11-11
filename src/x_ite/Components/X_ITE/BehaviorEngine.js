@@ -83,6 +83,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       X3DChildNode .prototype .initialize .call (this);
 
+      try
+      {
       // Engine
 
       this .fps      = 60;
@@ -109,6 +111,11 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .set_animations__ ();
       this .set_nodes__ ();
       this .set_graph__ ();
+      }
+      catch (error)
+      {
+         console .error (error);
+      }
    },
    set_enabled__ ()
    {
@@ -791,7 +798,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       // Register getter and setter for the property.
 
-      if (/(?:^\/meshes\/)/ .test (pointer))
+      if (/(?:^\/(?:cameras|meshes)\/|\/camera$)/ .test (pointer))
          return;
 
       const
