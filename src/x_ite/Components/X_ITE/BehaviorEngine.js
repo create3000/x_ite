@@ -1069,7 +1069,7 @@ Object .defineProperties (BehaviorEngine,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "version",    new Fields .SFString ("2.0")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "version",    new Fields .SFString ("2.1")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graph",      new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",     new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "animations", new Fields .MFNode ()),
