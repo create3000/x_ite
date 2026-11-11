@@ -219,6 +219,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
+            // Or use `timeSensor ._elapsedTime .getValue () / speed`.
             return [timeSensor ? timeSensor ._fraction_changed .getValue () * timeSensor [_cycleInterval] : NaN];
          },
          Function .prototype,
@@ -236,7 +237,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor ? timeSensor ._fraction_changed .getValue () * timeSensor ._cycleInterval .getValue () : NaN];
+            return [timeSensor ? timeSensor ._elapsedTime .getValue () : NaN];
          },
          Function .prototype,
          "float",
