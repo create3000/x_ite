@@ -832,7 +832,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       // Register getter and setter for the property.
 
-      if (/(?:^\/(?:cameras|meshes)\/|\/camera$)/ .test (pointer))
+      if (/(?:^\/(?:cameras|materials|meshes)\/|\/(?:camera|material)$)/ .test (pointer))
          return;
 
       const

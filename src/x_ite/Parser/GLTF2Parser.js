@@ -444,6 +444,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             for (let p = 0; p < numPrimitives; ++ p)
                pointers .add (`/meshes/${m}/primitives/${p}/material`);
          }
+
+         if (Array .isArray (glTF .materials))
+         {
+            for (const c of glTF .materials .keys ())
+               pointers .add (`/materials/${c}`);
+         }
       }
 
       // Collect nodes from pointers.
@@ -487,7 +493,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const search = pointer
          .replace (/^(\/nodes\/\d+\/camera|\/cameras\/\d+)$/, "$1/znear")
          .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
-         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material)/, "$1/transparency");
+         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material|\/materials\/\d+)/, "$1/transparency");
 
       const [node, field] = this .getAnimationPointer (search);
 
