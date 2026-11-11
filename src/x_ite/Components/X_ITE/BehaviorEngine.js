@@ -7,6 +7,7 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import URLs                 from "../../Browser/Networking/URLs.js";
 import PointingType         from "../../Browser/PointingDeviceSensor/PointingType.js";
+import GLTFExtensions       from "../../Parser/GLTFExtensions.js";
 import GLTFPointerAliases   from "../../Parser/GLTFPointerAliases.js";
 import * as Interactivity   from "../../../../node_modules/@khronosgroup/gltf-interactivity-engine/build/index.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
@@ -147,6 +148,20 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                () => [+this ._version .getValue () .split (".") [i]],
                Function .prototype,
                "int",
+               true
+            );
+         }
+
+         for (const extension of this ._extensions)
+         {
+            if (!GLTFExtensions .has (extension))
+               continue;
+
+            this .engine .registerJsonPointer (
+               `/extensions/KHR_interactivity/asset/extensions/${extension}/enabled`,
+               () => [true],
+               Function .prototype,
+               "bool",
                true
             );
          }
@@ -1065,6 +1080,7 @@ Object .defineProperties (BehaviorEngine,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "version",    new Fields .SFString ("2.1")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "extensions", new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graph",      new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",     new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "animations", new Fields .MFNode ()),

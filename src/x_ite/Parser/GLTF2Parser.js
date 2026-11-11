@@ -6,6 +6,7 @@ import FileLoader         from "../InputOutput/FileLoader.js";
 import URLs               from "../Browser/Networking/URLs.js";
 import Layer              from "../Components/Layering/Layer.js";
 import TraverseType       from "../Rendering/TraverseType.js";
+import GLTFExtensions     from "./GLTFExtensions.js";
 import GLTFPointerAliases from "./GLTFPointerAliases.js";
 import Algorithm          from "../../standard/Math/Algorithm.js";
 import Vector2            from "../../standard/Math/Numbers/Vector2.js";
@@ -242,6 +243,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       for (const extension of extensions)
       {
+         if (!GLTFExtensions .has (extension))
+            console .warn (`glTF extension'${extension}' is not supported by ${browser .name}. It will be ignored.`);
+
          set .add (extension);
 
          switch (extension)
@@ -458,9 +462,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene          = this .getScene (),
          behaviorEngine = scene .createNode ("BehaviorEngine", false);
 
-      behaviorEngine ._version = glTF .asset .version;
-      behaviorEngine ._graph   = KHR_interactivity .graph;
-      behaviorEngine ._graphs  = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
+      behaviorEngine ._version    = glTF .asset .version;
+      behaviorEngine ._extensions = Fields .MFString .from (this .extensions) .sort ();
+      behaviorEngine ._graph      = KHR_interactivity .graph;
+      behaviorEngine ._graphs     = KHR_interactivity .graphs .map (graph => JSON .stringify (graph));
 
       scene .addExportedNode (scene .getUniqueExportName ("BehaviorEngine"), behaviorEngine);
 
