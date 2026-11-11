@@ -139,6 +139,40 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          this .engine .clearValueEvaluationCache ();
 
          this .engine .loadBehaveGraph (JSON .parse (graph), run);
+
+         this .engine .registerJsonPointer (
+            `/extensions/KHR_interactivity/asset/majorVersion`,
+            () => [2],
+            Function .prototype,
+            "int",
+            true
+         );
+
+         this .engine .registerJsonPointer (
+            `/extensions/KHR_interactivity/asset/minorVersion`,
+            () => [0],
+            Function .prototype,
+            "int",
+            true
+         );
+
+         const limits = [
+            "maxActiveAnimations",
+            "maxActiveDelays",
+            "maxActivePropertyInterpolations",
+            "maxActiveVariableInterpolations",
+         ];
+
+         for (const name of limits)
+         {
+            this .engine .registerJsonPointer (
+               `/extensions/KHR_interactivity/limits/${name}`,
+               () => [2 ** 16],
+               Function .prototype,
+               "int",
+               true
+            );
+         }
       }
       catch (error)
       {
