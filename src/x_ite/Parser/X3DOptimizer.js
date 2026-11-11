@@ -20,6 +20,11 @@ Object .assign (X3DOptimizer .prototype,
    optimizeInterpolators: false,
    optimizeSceneGraph (nodes)
    {
+      this .preserveParent = new Set ([
+         X3DConstants .HAnimHumanoid,
+         X3DConstants .X3DViewpointNode,
+      ]);
+
       const removedNodes = [ ];
 
       nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes, new Set ()));
@@ -142,7 +147,7 @@ Object .assign (X3DOptimizer .prototype,
       {
          if (parent ?.getNodeTypeName () === "HAnimJoint")
          {
-            if (node .children .some (child => child ?.getNodeType () .at (-1) === X3DConstants .HAnimHumanoid))
+            if (node .children .some (child => child ?.getNodeType () .some (type => this .preserveParent .has (type))))
                return node;
          }
 
