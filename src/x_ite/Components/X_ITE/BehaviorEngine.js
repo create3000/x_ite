@@ -179,7 +179,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [!! timeSensor ?.[_active]];
+            return [timeSensor [_active]];
          },
          Function .prototype,
          "bool",
@@ -202,10 +202,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            if (timeSensor)
-               return [+timeSensor .getMetaData ("Interactivity/cycleInterval", new Fields .SFTime (0))];
-
-            return [NaN];
+            return [timeSensor .getMetaData ("Interactivity/cycleInterval") [0] ?? 0];
          },
          Function .prototype,
          "float",
@@ -222,12 +219,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            if (timeSensor)
-            {
-               return [timeSensor ._fraction_changed .getValue () * +timeSensor .getMetaData ("Interactivity/cycleInterval", new Fields .SFTime ())];
-            }
-
-            return [NaN];
+            return [timeSensor ._fraction_changed .getValue ()
+               * (timeSensor .getMetaData ("Interactivity/cycleInterval") [0] ?? 0)];
          },
          Function .prototype,
          "float",
@@ -244,7 +237,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor ? timeSensor ._elapsedTime .getValue () : NaN];
+            return [timeSensor ._elapsedTime .getValue ()];
          },
          Function .prototype,
          "float",
@@ -269,7 +262,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
          if (matrixNode)
          {
-            const nodeIndex = +matrixNode .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+            const nodeIndex = matrixNode .getMetaData ("Interactivity/node") [0] ?? -1;
 
             if (nodeIndex >= 0)
             {
@@ -285,7 +278,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             }
          }
 
-         const pointers = _node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
+         const pointers = _node .getMetaData ("Interactivity/pointer");
 
          for (const pointer of pointers)
             this .pointers .set (pointer, _node);
@@ -325,7 +318,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             {
                const
                   materialNode  = this .pointers .get (pointer),
-                  materialIndex = +materialNode .getMetaData ("Interactivity/material", new Fields .SFInt32 (-1));
+                  materialIndex = materialNode .getMetaData ("Interactivity/material") [0] ?? -1;
 
                return [`/materials/${materialIndex}`];
             });
@@ -405,7 +398,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
                const
                   childNode      = children [childIndex],
-                  childNodeIndex = +childNode ?.getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+                  childNodeIndex = childNode ?.getMetaData ("Interactivity/node") [0] ?? -1;
 
                if (childNodeIndex >= 0)
                   return [`/nodes/${childNodeIndex}`];
@@ -443,7 +436,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
             const
                node      = this .pointers .get (pointer),
-               nodeIndex = +node .getMetaData ("Interactivity/node", new Fields .SFInt32 (-1));
+               nodeIndex = node .getMetaData ("Interactivity/node") [0] ?? -1;
 
             return [... this .getModelMatrix (nodeIndex, this .Matrix4 .set ())];
          },
@@ -461,7 +454,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                const
                   nodeIndex = +pointer .match (/^\/nodes\/(\d+)\//) [1],
                   node      = this .transformNodes .get (nodeIndex),
-                  meshIndex = +node .getMetaData ("Interactivity/mesh", new Fields .SFInt32 (-1));
+                  meshIndex = node .getMetaData ("Interactivity/mesh") [0] ?? -1;
 
                if (meshIndex >= 0)
                   return [`/meshes/${meshIndex}`];
@@ -851,7 +844,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          browser     = this .getBrowser (),
          hit         = browser .getHit (),
          parentNode  = hit .parentNode,
-         parentIndex = +parentNode ?.getMetaData ("Interactivity/node", new Fields .SFInt32 (-1)),
+         parentIndex = parentNode ?.getMetaData ("Interactivity/node") [0] ?? -1,
          nodeIndex   = parentIndex >= 0 ? parentIndex : undefined;
 
       // if (DEVELOPMENT)
@@ -908,7 +901,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       const
          currentTime    = this .getBrowser () .getCurrentTime (),
-         cycleInterval  = +timeSensor .getMetaData ("Interactivity/cycleInterval", new Fields .SFTime (1)),
+         cycleInterval  = timeSensor .getMetaData ("Interactivity/cycleInterval") [0] ?? 1,
          signedDuration = (stopTime - startTime) % cycleInterval;
 
       if (startTime < 0 || startTime > cycleInterval)
@@ -990,7 +983,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       if (!timeSensor [_active])
          return;
 
-      const cycleInterval = +timeSensor .getMetaData ("Interactivity/cycleInterval", new Fields .SFTime (1));
+      const cycleInterval = timeSensor .getMetaData ("Interactivity/cycleInterval") [0] ?? 1;
 
       if (stopTime >= cycleInterval)
          return;
