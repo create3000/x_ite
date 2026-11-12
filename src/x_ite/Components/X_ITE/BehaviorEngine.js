@@ -334,11 +334,102 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             this .pointers .set (pointer, _node);
       }
 
-      // Register camera pointers.
+      // Determine number of special pointers.
+
+      const numScenes = Array .from (this .pointers .keys (),
+            key => key .match (/^\/scenes\/(\d+)/) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       const numCameras = Array .from (this .pointers .keys (),
             key => key .match (/^\/cameras\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+      const numMaterials = Array .from (this .pointers .keys (),
+            key => key .match (/^\/materials\/(\d+)/) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+      const numMeshes = Array .from (this .pointers .keys (),
+            key => key .match (/^\/meshes\/(\d+)/) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+      const numPrimitives = Array .from (this .pointers .keys (),
+            key => key .match (/^\/meshes\/\d+\/primitives\/(\d+)/) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+      const numNodes = Array .from (this .pointers .keys (),
+            key => key .match (/^\/nodes\/(\d+)/) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+      // Register scene pointers.
+
+      // Returns the index of the current scene.
+      this .engine .registerJsonPointer (
+         "/scene",
+         () =>
+         {
+            const scenes = this .pointers .get ("/scenes");
+
+            return [scenes ._whichChoice .getValue ()];
+         },
+         (pointer, value) =>
+         {
+            const scenes = this .pointers .get ("/scenes");
+
+            return [scenes ._whichChoice .setValue (value)];
+         },
+         "int",
+         false
+      );
+
+      // Returns the number of scenes.
+      this .engine .registerJsonPointer (
+         "/scenes.length",
+         () => [numScenes],
+         Function .prototype,
+         "int",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/scenes/${numScenes}/nodes.length`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  sceneIndex = +pointer .match (/^\/scenes\/(\d+)\//) [1],
+                  scene      = this .pointers .get (`/scenes/${sceneIndex}`);
+
+               return [scene ?._children .length ?? 0];
+            });
+         },
+         Function .prototype,
+         "int",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/scenes/${numScenes}/nodes/${numNodes}`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  node      = this .pointers .get (pointer),
+                  nodeIndex = node .getMetaData ("Interactivity/node") [0] ?? -1;
+
+               if (nodeIndex >= 0)
+                  return [`/nodes/${nodeIndex}`];
+
+               return [undefined];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
+      // Register camera pointers.
 
       // Returns the number of material nodes.
       this .engine .registerJsonPointer (
@@ -349,11 +440,201 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
-      // Register material pointers.
+      // Register pointers for the active camera.
 
-      const numMaterials = Array .from (this .pointers .keys (),
-            key => key .match (/^\/materials\/(\d+)/) ?.[1] ?? -1)
-         .reduce ((p, c) => Math .max (p, c), -1) + 1;
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/position`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (!viewpointNode)
+               return [NaN, NaN, NaN];
+
+            viewpointNode .getCameraSpaceMatrix () .getTransform (this .Vector3);
+
+            return [... this .Vector3];
+         },
+         Function .prototype,
+         "float3",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/rotation`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (!viewpointNode)
+               return [NaN, NaN, NaN, NaN];
+
+            viewpointNode .getCameraSpaceMatrix () .getTransform (null, this .Rotation4);
+
+            return [... this .Rotation4 .getQuaternion (this .Quaternion)];
+         },
+         Function .prototype,
+         "float4",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/perspective/yfov`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
+               return [NaN];
+
+            return [viewpointNode .getUserFieldOfView ()];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/perspective/znear`,
+         () =>
+         {
+            const
+               browser       = this .getBrowser (),
+               viewpointNode = browser .getActiveViewpoint ();
+
+            if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
+               return [NaN];
+
+            return [viewpointNode .getNearDistance (browser .getActiveNavigationInfo ())];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/perspective/zfar`,
+         () =>
+         {
+            const
+               browser       = this .getBrowser (),
+               viewpointNode = browser .getActiveViewpoint ();
+
+            if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
+               return [NaN];
+
+            return [viewpointNode .getFarDistance (browser .getActiveNavigationInfo ())];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/perspective/aspectRatio`,
+         () =>
+         {
+            const layerNode = this .getBrowser () .getActiveLayer ();
+
+            if (!layerNode)
+               return [NaN];
+
+            const viewport = layerNode .getViewport () .getRectangle ();
+
+            return [viewport [2] / viewport [3]];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/orthographic/znear`,
+         () =>
+         {
+            const
+               browser       = this .getBrowser (),
+               viewpointNode = browser .getActiveViewpoint ();
+
+            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
+               return [NaN];
+
+            return [viewpointNode .getNearDistance (browser .getActiveNavigationInfo ())];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/orthographic/zfar`,
+         () =>
+         {
+            const
+               browser       = this .getBrowser (),
+               viewpointNode = browser .getActiveViewpoint ();
+
+            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
+               return [NaN];
+
+            return [viewpointNode .getFarDistance (browser .getActiveNavigationInfo ())];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/orthographic/xmag`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
+               return [NaN];
+
+            return [viewpointNode .getUserSizeX () / 2];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/orthographic/ymag`,
+         () =>
+         {
+            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
+
+            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
+               return [NaN];
+
+            return [viewpointNode .getUserSizeY () / 2];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/extensions/KHR_interactivity/activeCamera/orthographic/aspectRatio`,
+         () =>
+         {
+            const layerNode = this .getBrowser () .getActiveLayer ();
+
+            if (!layerNode)
+               return [NaN];
+
+            const viewport = layerNode .getViewport () .getRectangle ();
+
+            return [viewport [2] / viewport [3]];
+         },
+         Function .prototype,
+         "float",
+         true
+      );
+
+      // Register material pointers.
 
       // Returns the number of material nodes.
       this .engine .registerJsonPointer (
@@ -364,15 +645,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
-      // Register meshes pointers.
-
-      const numMeshes = Array .from (this .pointers .keys (),
-            key => key .match (/^\/meshes\/(\d+)/) ?.[1] ?? -1)
-         .reduce ((p, c) => Math .max (p, c), -1) + 1;
-
-      const numPrimitives = Array .from (this .pointers .keys (),
-            key => key .match (/^\/meshes\/\d+\/primitives\/(\d+)/) ?.[1] ?? -1)
-         .reduce ((p, c) => Math .max (p, c), -1) + 1;
+      // Register mesh pointers.
 
       this .engine .registerJsonPointer (
          `/meshes.length`,
@@ -402,10 +675,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       );
 
       // Register node pointers.
-
-      const numNodes = Array .from (this .pointers .keys (),
-            key => key .match (/^\/nodes\/(\d+)/) ?.[1] ?? -1)
-         .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
       this .engine .registerJsonPointer (
          `/nodes.length`,
@@ -609,273 +878,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // );
 
       // console .log (this .engine .resolveJsonPtr ("/nodes/947/weights/0") ?.getterCallback ("/nodes/947/weights/0"));
-
-      // Register scene pointers.
-
-      const numScenes = Array .from (this .pointers .keys (),
-            key => key .match (/^\/scenes\/(\d+)/) ?.[1] ?? -1)
-         .reduce ((p, c) => Math .max (p, c), -1) + 1;
-
-      // Returns the index of the current scene.
-      this .engine .registerJsonPointer (
-         "/scene",
-         () =>
-         {
-            const scenes = this .pointers .get ("/scenes");
-
-            return [scenes ._whichChoice .getValue ()];
-         },
-         (pointer, value) =>
-         {
-            const scenes = this .pointers .get ("/scenes");
-
-            return [scenes ._whichChoice .setValue (value)];
-         },
-         "int",
-         false
-      );
-
-      // Returns the number of scenes.
-      this .engine .registerJsonPointer (
-         "/scenes.length",
-         () => [numScenes],
-         Function .prototype,
-         "int",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/scenes/${numScenes}/nodes.length`,
-         (pointer) =>
-         {
-            return this .cache .getOrInsertComputed (pointer, () =>
-            {
-               const
-                  sceneIndex = +pointer .match (/^\/scenes\/(\d+)\//) [1],
-                  scene      = this .pointers .get (`/scenes/${sceneIndex}`);
-
-               return [scene ?._children .length ?? 0];
-            });
-         },
-         Function .prototype,
-         "int",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/scenes/${numScenes}/nodes/${numNodes}`,
-         (pointer) =>
-         {
-            return this .cache .getOrInsertComputed (pointer, () =>
-            {
-               const
-                  node      = this .pointers .get (pointer),
-                  nodeIndex = node .getMetaData ("Interactivity/node") [0] ?? -1;
-
-               if (nodeIndex >= 0)
-                  return [`/nodes/${nodeIndex}`];
-
-               return [undefined];
-            });
-         },
-         Function .prototype,
-         "ref",
-         true
-      );
-
-      // Register pointers for the active camera.
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/position`,
-         () =>
-         {
-            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
-
-            if (!viewpointNode)
-               return [NaN, NaN, NaN];
-
-            viewpointNode .getCameraSpaceMatrix () .getTransform (this .Vector3);
-
-            return [... this .Vector3];
-         },
-         Function .prototype,
-         "float3",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/rotation`,
-         () =>
-         {
-            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
-
-            if (!viewpointNode)
-               return [NaN, NaN, NaN, NaN];
-
-            viewpointNode .getCameraSpaceMatrix () .getTransform (null, this .Rotation4);
-
-            return [... this .Rotation4 .getQuaternion (this .Quaternion)];
-         },
-         Function .prototype,
-         "float4",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/perspective/yfov`,
-         () =>
-         {
-            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
-
-            if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
-               return [NaN];
-
-            return [viewpointNode .getUserFieldOfView ()];
-         },
-         Function .prototype,
-         "float",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/perspective/znear`,
-         () =>
-         {
-            const
-               browser       = this .getBrowser (),
-               viewpointNode = browser .getActiveViewpoint ();
-
-            if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
-               return [NaN];
-
-            return [viewpointNode .getNearDistance (browser .getActiveNavigationInfo ())];
-         },
-         Function .prototype,
-         "float",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/perspective/zfar`,
-         () =>
-         {
-            const
-               browser       = this .getBrowser (),
-               viewpointNode = browser .getActiveViewpoint ();
-
-            if (viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint) ?? true)
-               return [NaN];
-
-            return [viewpointNode .getFarDistance (browser .getActiveNavigationInfo ())];
-         },
-         Function .prototype,
-         "float",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/perspective/aspectRatio`,
-         () =>
-         {
-            const layerNode = this .getBrowser () .getActiveLayer ();
-
-            if (!layerNode)
-               return [NaN];
-
-            const viewport = layerNode .getViewport () .getRectangle ();
-
-            return [viewport [2] / viewport [3]];
-         },
-         Function .prototype,
-         "float",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/orthographic/znear`,
-         () =>
-         {
-            const
-               browser       = this .getBrowser (),
-               viewpointNode = browser .getActiveViewpoint ();
-
-            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
-               return [NaN];
-
-            return [viewpointNode .getNearDistance (browser .getActiveNavigationInfo ())];
-         },
-         Function .prototype,
-         "float",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/orthographic/zfar`,
-         () =>
-         {
-            const
-               browser       = this .getBrowser (),
-               viewpointNode = browser .getActiveViewpoint ();
-
-            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
-               return [NaN];
-
-            return [viewpointNode .getFarDistance (browser .getActiveNavigationInfo ())];
-         },
-         Function .prototype,
-         "float",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/orthographic/xmag`,
-         () =>
-         {
-            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
-
-            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
-               return [NaN];
-
-            return [viewpointNode .getUserSizeX () / 2];
-         },
-         Function .prototype,
-         "float",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/orthographic/ymag`,
-         () =>
-         {
-            const viewpointNode = this .getBrowser () .getActiveViewpoint ();
-
-            if (!viewpointNode ?.getType () .includes (X3DConstants .OrthoViewpoint))
-               return [NaN];
-
-            return [viewpointNode .getUserSizeY () / 2];
-         },
-         Function .prototype,
-         "float",
-         true
-      );
-
-      this .engine .registerJsonPointer (
-         `/extensions/KHR_interactivity/activeCamera/orthographic/aspectRatio`,
-         () =>
-         {
-            const layerNode = this .getBrowser () .getActiveLayer ();
-
-            if (!layerNode)
-               return [NaN];
-
-            const viewport = layerNode .getViewport () .getRectangle ();
-
-            return [viewport [2] / viewport [3]];
-         },
-         Function .prototype,
-         "float",
-         true
-      );
 
       // Register common node pointers.
 
