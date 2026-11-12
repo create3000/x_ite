@@ -616,7 +616,26 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             key => key .match (/^\/scenes\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
-      // Returns the number of material nodes.
+      // Returns the index of the current scene.
+      this .engine .registerJsonPointer (
+         "/scene",
+         () =>
+         {
+            const scenes = this .pointers .get ("/scenes");
+
+            return [scenes ._whichChoice .getValue ()];
+         },
+         (pointer, value) =>
+         {
+            const scenes = this .pointers .get ("/scenes");
+
+            return [scenes ._whichChoice .setValue (value)];
+         },
+         "int",
+         false
+      );
+
+      // Returns the number of scenes.
       this .engine .registerJsonPointer (
          "/scenes.length",
          () => [numScenes],
@@ -634,8 +653,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                const
                   sceneIndex = +pointer .match (/^\/scenes\/(\d+)\//) [1],
                   scene      = this .pointers .get (`/scenes/${sceneIndex}`);
-
-               console .log (scene)
 
                return [scene ?._children .length];
             });
@@ -890,7 +907,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       // Register getter and setter for the property.
 
-      if (/(?:^\/(?:scenes\/)|(?:cameras|materials|meshes)\/\d+$|\/(?:camera|material)$)/ .test (pointer))
+      if (/^\/(?:scenes\/)|(?:scenes|cameras|materials|meshes)\/\d+$|\/(?:scenes|camera|material)$/ .test (pointer))
          return;
 
       const

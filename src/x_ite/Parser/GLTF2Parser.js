@@ -415,6 +415,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Add all scenes.
 
+      pointers .add ("/scenes");
+
       if (Array .isArray (glTF .scenes))
       {
          for (const s of glTF .scenes .keys ())
@@ -499,7 +501,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       // Replace this just to find an node.
       const search = pointer
-         .replace (/^(\/scenes\/\d+|\/scenes\/\d+\/nodes\/\d+)$/, "$1/metadata")
+         .replace (/^(\/scenes|\/scenes\/\d+|\/scenes\/\d+\/nodes\/\d+)$/, "$1/metadata")
          .replace (/^(\/nodes\/\d+\/camera|\/cameras\/\d+)$/, "$1/metadata")
          .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/metadata")
          .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material|\/materials\/\d+)$/, "$1/metadata");
@@ -3006,7 +3008,7 @@ function eventsProcessed ()
 
             switchNode .setup ();
 
-            glTF .pointers = [switchNode];
+            scenes .pointers = [switchNode];
 
             scene .getRootNodes () .push (switchNode);
             return;
