@@ -860,6 +860,27 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
+      this .engine .registerJsonPointer (
+         `/nodes/${numNodes}/extensions/KHR_lights_punctual/light`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  node       = this .pointers .get (pointer),
+                  lightIndex = node .getMetaData ("Interactivity/light") [0] ?? -1;
+
+               if (lightIndex >= 0)
+                  return [`/extensions/KHR_lights_punctual/lights/${lightIndex}`];
+
+               return [undefined];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
       // // Register pointers for the node weights.
 
       // this .engine .registerJsonPointer (
@@ -894,7 +915,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       //    false
       // );
 
-      // console .log (this .engine .resolveJsonPtr ("/nodes/947/weights/0") ?.getterCallback ("/nodes/947/weights/0"));
+      // console .log (this .engine .getPathValue ("/nodes/5/KHR_lights_punctual/light/range"));
 
       // Register common node pointers.
 
@@ -921,7 +942,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          this .registerJsonPointer (pointer, node);
 
       // DEBUG
-      // console .log (this .engine .resolveJsonPtr ("/extensions/KHR_interactivity/activeCamera/perspective/yfov") ?.getterCallback ("/extensions/KHR_interactivity/activeCamera/perspective/yfov"));
+      // console .log (this .engine .getPathValue ("/nodes/75/translation"));
    },
    registerJsonPointer (pointer, node)
    {
@@ -948,6 +969,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             const [field, flags, transparency] = this .cache
                .getOrInsertComputed (pointer, () => this .getFieldFromPointer (pointer));
 
+            if (!field)
+               return;
+
             switch (field .getType ())
             {
                case X3DConstants .SFBool:
@@ -969,6 +993,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const [field, flags, transparency] = this .cache
                .getOrInsertComputed (pointer, () => this .getFieldFromPointer (pointer));
+
+            if (!field)
+               return;
 
             // if (DEVELOPMENT)
             //    console .log ("set", pointer, field .getName (), value);
@@ -1030,8 +1057,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    getFieldFromPointer (pointer)
    {
+      const node = this .pointers .get (pointer);
+
+      if (!node)
+         return [ ];
+
       const
-         node      = this .pointers .get (pointer),
          field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
          baseColor = GLTFPointerAliases .isBaseColor (node, field),
          solid     = field .getName () === "solid";

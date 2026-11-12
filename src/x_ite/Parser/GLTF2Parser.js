@@ -479,6 +479,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             for (let i = 0; i < length; ++ i)
                this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
          }
+         else if (/\/lights\/[{[].*?[\]}]/ .test (pointer))
+         {
+            // Top level pointers
+
+            const length = glTF .extensions ?.KHR_lights_punctual .lights ?.length ?? 0;
+
+            for (let i = 0; i < length; ++ i)
+               this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
+         }
          else
          {
             this .addBehaviorNode (pointer, this .behaviorNodes);
@@ -524,16 +533,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          switch (type [t])
          {
-            case X3DConstants .X3DViewpointNode:
+            case X3DConstants .X3DLightNode:
             {
-               const cameraIndexMatch = pointer .match (/^\/cameras\/(\d+)/);
+               const lightIndexMatch = pointer .match (/^\/light\/(\d+)/);
 
-               if (!cameraIndexMatch)
+               if (!lightIndexMatch)
                   break;
 
-               const cameraIndex = +cameraIndexMatch [1];
+               const lightIndex = +lightIndexMatch [1];
 
-               node .setMetaData ("Interactivity/camera", URLs .getProviderURL (), new Fields .SFInt32 (cameraIndex));
+               node .setMetaData ("Interactivity/light", URLs .getProviderURL (), new Fields .SFInt32 (lightIndex));
                break;
             }
             case X3DConstants .X3DMaterialNode:
@@ -564,6 +573,18 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                if (mesh !== undefined)
                   node .setMetaData (`Interactivity/mesh`, URLs .getProviderURL (), new Fields .SFInt32 (mesh));
 
+               break;
+            }
+            case X3DConstants .X3DViewpointNode:
+            {
+               const cameraIndexMatch = pointer .match (/^\/cameras\/(\d+)/);
+
+               if (!cameraIndexMatch)
+                  break;
+
+               const cameraIndex = +cameraIndexMatch [1];
+
+               node .setMetaData ("Interactivity/camera", URLs .getProviderURL (), new Fields .SFInt32 (cameraIndex));
                break;
             }
             default:
@@ -682,8 +703,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .lights = lights;
    },
-   lightObject (id, light = this .lights [id])
+   lightObject (extension)
    {
+      const
+         id    = extension .light,
+         light = this .lights [id];
+
+      extension .light = light;
+
       if (!(light instanceof Object))
          return null;
 
@@ -743,8 +770,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          lightNode = scene .createNode ("SpotLight", false);
 
       lightNode ._radius      = this .numberValue (light .range, 0) || -1;
-      lightNode ._cutOffAngle = this .numberValue (light .outerConeAngle, Math .PI / 4);
-      lightNode ._beamWidth   = this .numberValue (light .innerConeAngle, 0);
+      lightNode ._cutOffAngle = this .numberValue (light .spot ?.outerConeAngle, Math .PI / 4);
+      lightNode ._beamWidth   = this .numberValue (light .spot ?.innerConeAngle, 0);
+
+      light .spot .pointers = [lightNode];
 
       return lightNode;
    },
@@ -2683,7 +2712,7 @@ function eventsProcessed ()
          {
             case "KHR_lights_punctual":
             {
-               const lightNode = this .lightObject (extension .light);
+               const lightNode = this .lightObject (extension);
 
                if (!lightNode)
                   break;
