@@ -751,11 +751,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
-      // setTimeout (() =>
-      // {
-      //    console .log (this .engine .resolveJsonPtr ("/nodes/0/children.length") ?.getterCallback ("/nodes/0/children.length"));
-      // }, 1000);
-
       // Returns the child node of the node.
       this .engine .registerJsonPointer (
          `/nodes/${numNodes}/children/${numNodes}`,
