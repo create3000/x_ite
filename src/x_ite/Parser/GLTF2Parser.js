@@ -1999,22 +1999,22 @@ function eventsProcessed ()
       if (!(mesh instanceof Object))
          return;
 
-      if (mesh .shapeNodes && !EXT_mesh_gpu_instancing)
+      if (mesh .meshNodes && !EXT_mesh_gpu_instancing)
       {
          const primitives = mesh .primitives;
 
          if (!Array .isArray (primitives))
-            return mesh .shapeNodes;
+            return mesh .meshNodes;
 
          for (const primitive of primitives)
             this .attributesJointsArray (skin, primitive .attributes ?.JOINTS, primitive .attributes ?.WEIGHTS);
 
-         return mesh .shapeNodes;
+         return mesh .meshNodes;
       }
 
-      // Actually shapeNodes are not always Shape nodes, it also can be a Switch nodes from variants
+      // Actually meshNodes are not always Shape nodes, it also can be a Switch nodes from variants
       // or a GaussianSplats node. TODO: should be called meshNodes.
-      const shapeNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing);
+      const meshNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing);
 
       // Name Shape nodes.
 
@@ -2024,7 +2024,7 @@ function eventsProcessed ()
 
       if (name)
       {
-         for (const [i, shapeNode] of shapeNodes .entries ())
+         for (const [i, shapeNode] of meshNodes .entries ())
          {
             scene .addNamedNode (scene .getUniqueName (name), shapeNode);
 
@@ -2035,21 +2035,21 @@ function eventsProcessed ()
          }
       }
 
-      return mesh .shapeNodes = shapeNodes;
+      return mesh .meshNodes = meshNodes;
    },
    primitivesArray (primitives, skin, weights, EXT_mesh_gpu_instancing)
    {
       if (!Array .isArray (primitives))
          return [ ];
 
-      const shapeNodes = [ ];
+      const meshNodes = [ ];
 
       for (const primitive of primitives)
-         this .primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, shapeNodes);
+         this .primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, meshNodes);
 
-      return shapeNodes;
+      return meshNodes;
    },
-   primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, shapeNodes)
+   primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, meshNodes)
    {
       if (!(primitive instanceof Object))
          return;
@@ -2058,7 +2058,7 @@ function eventsProcessed ()
       this .targetsArray     (primitive .targets);
 
       if (primitive .extensions ?.KHR_gaussian_splatting)
-         return this .khrGaussianSplatting (primitive, shapeNodes);
+         return this .khrGaussianSplatting (primitive, meshNodes);
 
       primitive .indices  = this .accessors [primitive .indices];
       primitive .material = this .materials [primitive .material];
@@ -2069,9 +2069,9 @@ function eventsProcessed ()
          shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing),
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
-      shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
+      meshNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
    },
-   khrGaussianSplatting (primitive, shapeNodes)
+   khrGaussianSplatting (primitive, meshNodes)
    {
       const
          scene                  = this .getScene (),
@@ -2116,7 +2116,7 @@ function eventsProcessed ()
 
       gaussianSplats .setup ();
 
-      shapeNodes .push (primitive .shapeNode = gaussianSplats);
+      meshNodes .push (primitive .shapeNode = gaussianSplats);
    },
    attributesObject (attributes)
    {
@@ -2576,7 +2576,7 @@ function eventsProcessed ()
 
          const
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
-            shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, node .weights, EXT_mesh_gpu_instancing);
+            meshNodes               = this .meshObject (this .meshes [node .mesh], skin, node .weights, EXT_mesh_gpu_instancing);
 
          // Add camera.
 
@@ -2626,13 +2626,13 @@ function eventsProcessed ()
 
             const humanoidNode = skin .humanoidNode;
 
-            if (!shapeNodes ?.length)
+            if (!meshNodes ?.length)
                return;
 
-            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+            humanoidNode ._skinNormal = meshNodes [0] ._geometry .normal;
+            humanoidNode ._skinCoord  = meshNodes [0] ._geometry .coord;
 
-            humanoidNode ._skin .push (... shapeNodes);
+            humanoidNode ._skin .push (... meshNodes);
          }
          else
          {
@@ -2661,8 +2661,8 @@ function eventsProcessed ()
 
             // Add Shape nodes.
 
-            if (shapeNodes)
-               transformNode ._children .push (... shapeNodes);
+            if (meshNodes)
+               transformNode ._children .push (... meshNodes);
 
             transformNode .setup ();
          }
