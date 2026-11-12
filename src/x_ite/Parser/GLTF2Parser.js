@@ -482,6 +482,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
       }
 
+      console .log (pointers)
+
       // Add behavior nodes.
 
       this .behaviorEngine ._nodes = Array .from (this .behaviorNodes);
@@ -492,6 +494,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       // Replace this just to find an node.
       const search = pointer
          .replace (/^(\/nodes\/\d+\/camera|\/cameras\/\d+)$/, "$1/znear")
+         .replace (/^(\/scenes\/\d+\/nodes\/\d+)$/, "$1/translation")
          .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
          .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material|\/materials\/\d+)$/, "$1/transparency");
 
@@ -3012,6 +3015,9 @@ function eventsProcessed ()
       const
          lightNode = this .envLightObject (scene .extensions ?.EXT_lights_image_based ?.light),
          nodes     = this .sceneNodesArray (scene .nodes);
+
+      if (Array .isArray (scene .nodes))
+         scene .nodes = scene .nodes .map (index => this .nodes [index]);
 
       if (lightNode)
          nodes .unshift (lightNode);

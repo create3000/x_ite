@@ -610,6 +610,42 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       // console .log (this .engine .resolveJsonPtr ("/nodes/947/weights/0") ?.getterCallback ("/nodes/947/weights/0"));
 
+      // Register scene pointers.
+
+      const numScenes = Array .from (this .pointers .keys (),
+            key => key .match (/^\/scenes\/(\d+)/) ?.[1] ?? -1)
+         .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+      // Returns the number of material nodes.
+      this .engine .registerJsonPointer (
+         "/scenes.length",
+         () => [numScenes],
+         Function .prototype,
+         "int",
+         true
+      );
+
+      this .engine .registerJsonPointer (
+         `/scenes/${numScenes}/nodes/${numNodes}`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  node      = this .pointers .get (pointer),
+                  nodeIndex = node .getMetaData ("Interactivity/node") [0] ?? -1;
+
+               if (nodeIndex >= 0)
+                  return [`/nodes/${nodeIndex}`];
+
+               return [undefined];
+            });
+         },
+         Function .prototype,
+         "ref",
+         true
+      );
+
       // Register pointers for the active camera.
 
       this .engine .registerJsonPointer (
@@ -807,6 +843,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // Register common node pointers.
 
       const nums = {
+         cameras: numCameras,
          materials: numMaterials,
          meshes: numMeshes,
          nodes: numNodes,
@@ -833,7 +870,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    {
       // Register getter and setter for the property.
 
-      if (/(?:^\/(?:cameras|materials|meshes)\/\d+$|\/(?:camera|material)$)/ .test (pointer))
+      if (/(?:^\/(?:scenes\/)|(?:cameras|materials|meshes)\/\d+$|\/(?:camera|material)$)/ .test (pointer))
          return;
 
       const
