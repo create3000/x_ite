@@ -2012,8 +2012,8 @@ function eventsProcessed ()
          return mesh .meshNodes;
       }
 
-      // Actually meshNodes are not always Shape nodes, it also can be a Switch nodes from variants
-      // or a GaussianSplats node. TODO: should be called meshNodes.
+      // Actually meshNodes are not always Shape nodes, it also can be a Switch nodes from variants or
+      // a GaussianSplats node.
       const meshNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing);
 
       // Name Shape nodes.
