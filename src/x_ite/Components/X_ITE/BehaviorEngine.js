@@ -988,7 +988,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                default:
                   return [... field];
             }
-         } : () => [ ],
+         } : Function .prototype,
          field .isWritable () ? (pointer, value) =>
          {
             const [field, flags, transparency] = this .cache
