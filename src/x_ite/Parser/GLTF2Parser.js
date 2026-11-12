@@ -506,7 +506,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          .replace (/^(\/scenes|\/scenes\/\d+|\/scenes\/\d+\/nodes\/\d+)$/, "$1/metadata")
          .replace (/^(\/nodes\/\d+\/camera|\/cameras\/\d+)$/, "$1/metadata")
          .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/metadata")
-         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material|\/materials\/\d+)$/, "$1/metadata");
+         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material|\/materials\/\d+)$/, "$1/transparency");
 
       const [node, field] = this .getAnimationPointer (search);
 
