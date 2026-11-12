@@ -2308,14 +2308,13 @@ function eventsProcessed ()
 
       // Fall back to default material if no active variant.
       for (const i of variantsNode ._children .keys ())
-      {
-         if (!variantsNode ._children [i])
-            variantsNode ._children [i] = shapeNode;
-      }
+         variantsNode ._children [i] ??= shapeNode;
 
       variantsNode .setup ();
 
       this .materialVariantNodes .push (variantsNode);
+
+      KHR_materials_variants .pointers = [variantsNode];
 
       return variantsNode;
    },
