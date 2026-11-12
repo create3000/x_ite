@@ -882,6 +882,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // Register common node pointers.
 
       const nums = {
+         scenes: numScenes,
          cameras: numCameras,
          materials: numMaterials,
          meshes: numMeshes,
