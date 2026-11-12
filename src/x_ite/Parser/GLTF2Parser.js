@@ -2024,11 +2024,11 @@ function eventsProcessed ()
 
       if (name)
       {
-         for (const [i, shapeNode] of meshNodes .entries ())
+         for (const [i, meshNode] of meshNodes .entries ())
          {
-            scene .addNamedNode (scene .getUniqueName (name), shapeNode);
+            scene .addNamedNode (scene .getUniqueName (name), meshNode);
 
-            const geometryNode = shapeNode .getGeometry ?.();
+            const geometryNode = meshNode .getGeometry ?.();
 
             if (geometryNode && !geometryNode .getName ())
                scene .addNamedNode (scene .getUniqueName (`${name}-Mesh-${i}`), geometryNode);
@@ -2066,10 +2066,10 @@ function eventsProcessed ()
       this .primitiveExtensionsObject (primitive .extensions, primitive);
 
       const
-         shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing),
-         variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
+         meshNode     = this .createMesh (primitive, weights, skin, EXT_mesh_gpu_instancing),
+         variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, meshNode);
 
-      meshNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
+      meshNodes .push (primitive .meshNode = variantsNode ?? meshNode);
    },
    khrGaussianSplatting (primitive, meshNodes)
    {
@@ -2116,7 +2116,7 @@ function eventsProcessed ()
 
       gaussianSplats .setup ();
 
-      meshNodes .push (primitive .shapeNode = gaussianSplats);
+      meshNodes .push (primitive .meshNode = gaussianSplats);
    },
    attributesObject (attributes)
    {
@@ -2967,10 +2967,10 @@ function eventsProcessed ()
          bboxSize   = bbox .size,
          bboxCenter = bbox .center;
 
-      for (const shapeNode of humanoidNode ._skin)
+      for (const meshNode of humanoidNode ._skin)
       {
-         shapeNode .bboxSize   = bboxSize;
-         shapeNode .bboxCenter = bboxCenter;
+         meshNode .bboxSize   = bboxSize;
+         meshNode .bboxCenter = bboxCenter;
       }
    },
    scenesArray (glTF, scenes, sceneNumber = 0)
@@ -3276,23 +3276,23 @@ function eventsProcessed ()
          }
       }
    },
-   createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
+   createMesh (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
       const
-         scene     = this .getScene (),
-         shapeNode = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false);
+         scene    = this .getScene (),
+         meshNode = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false);
 
       primitive .appearanceNode ??= this .materialObject (primitive);
       primitive .geometryNode   ??= this .createGeometry (primitive, weights, skin);
 
-      shapeNode ._appearance = primitive .appearanceNode;
-      shapeNode ._geometry   = primitive .geometryNode;
+      meshNode ._appearance = primitive .appearanceNode;
+      meshNode ._geometry   = primitive .geometryNode;
 
-      shapeNode .setup ();
+      meshNode .setup ();
 
       primitive .material ?.pointers .push (primitive .geometryNode);
 
-      return shapeNode;
+      return meshNode;
    },
    meshInstancing (EXT_mesh_gpu_instancing)
    {
@@ -4097,9 +4097,9 @@ function eventsProcessed ()
             if (!Array .isArray (primitives))
                return null;
 
-            for (const { shapeNode, targets, attributes } of primitives)
+            for (const { meshNode, targets, attributes } of primitives)
             {
-               const geometryNode = shapeNode ._geometry .getValue ();
+               const geometryNode = meshNode ._geometry .getValue ();
 
                if (!geometryNode || !geometryNode ._coord .getValue ())
                   continue;
@@ -4124,9 +4124,9 @@ function eventsProcessed ()
                scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
             }
 
-            for (const { shapeNode, targets, attributes } of primitives)
+            for (const { meshNode, targets, attributes } of primitives)
             {
-               const geometryNode = shapeNode ._geometry .getValue ();
+               const geometryNode = meshNode ._geometry .getValue ();
 
                if (!geometryNode || !geometryNode ._normal .getValue ())
                   continue;
