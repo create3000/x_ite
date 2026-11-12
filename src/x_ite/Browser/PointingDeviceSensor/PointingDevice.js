@@ -81,9 +81,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       $.off (this, document);
       $.on (this, surface, "mousemove", event => this .mousemove (event));
 
+      this .click    = browser .buttonReleaseEvent (x, y);
       this .grabbing = false;
 
-      browser .buttonReleaseEvent (x, y);
       browser .setCursor (this .over ? "POINTER" : "DEFAULT");
 
       this .onverifymotion (x, y);
@@ -102,7 +102,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
          return;
 
-      if (!this .over)
+      if (!(this .over || this .click))
          return;
 
       // Stop event propagation.
