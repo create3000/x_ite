@@ -2012,8 +2012,7 @@ function eventsProcessed ()
          return mesh .meshNodes;
       }
 
-      // Actually meshNodes are not always Shape nodes, it also can be a Switch nodes from variants or
-      // a GaussianSplats node.
+      // meshNodes are Shape, InstancedShape, Switch from variants, or GaussianSplats nodes.
       const meshNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing);
 
       // Name Shape nodes.
@@ -2066,10 +2065,10 @@ function eventsProcessed ()
       this .primitiveExtensionsObject (primitive .extensions, primitive);
 
       const
-         meshNode     = this .createMesh (primitive, weights, skin, EXT_mesh_gpu_instancing),
-         variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, meshNode);
+         shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing),
+         variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
-      meshNodes .push (primitive .meshNode = variantsNode ?? meshNode);
+      meshNodes .push (primitive .meshNode = variantsNode ?? shapeNode);
    },
    khrGaussianSplatting (primitive, meshNodes)
    {
@@ -3276,23 +3275,23 @@ function eventsProcessed ()
          }
       }
    },
-   createMesh (primitive, weights, skin, EXT_mesh_gpu_instancing)
+   createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
       const
-         scene    = this .getScene (),
-         meshNode = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false);
+         scene     = this .getScene (),
+         shapeNode = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false);
 
       primitive .appearanceNode ??= this .materialObject (primitive);
       primitive .geometryNode   ??= this .createGeometry (primitive, weights, skin);
 
-      meshNode ._appearance = primitive .appearanceNode;
-      meshNode ._geometry   = primitive .geometryNode;
+      shapeNode ._appearance = primitive .appearanceNode;
+      shapeNode ._geometry   = primitive .geometryNode;
 
-      meshNode .setup ();
+      shapeNode .setup ();
 
       primitive .material ?.pointers .push (primitive .geometryNode);
 
-      return meshNode;
+      return shapeNode;
    },
    meshInstancing (EXT_mesh_gpu_instancing)
    {
