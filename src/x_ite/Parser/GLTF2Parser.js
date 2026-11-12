@@ -413,7 +413,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .behaviorNodes = new Set ();
 
-      // Add all scenes.
+      // Add all scene pointers.
 
       pointers .add ("/scenes");
 
@@ -423,12 +423,35 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             pointers .add (`/scenes/${s}`);
       }
 
-      // Add all cameras.
+      // Add all camera pointers.
 
       if (Array .isArray (glTF .cameras))
       {
          for (const c of glTF .cameras .keys ())
             pointers .add (`/cameras/${c}`);
+      }
+
+      // Add all materials pointers.
+
+      if (Array .isArray (glTF .materials))
+      {
+         for (const c of glTF .materials .keys ())
+            pointers .add (`/materials/${c}`);
+      }
+
+      // Add all primitives pointers.
+
+      if (Array .isArray (glTF .meshes))
+      {
+         const numMeshes = glTF .meshes .length;
+
+         for (let m = 0; m < numMeshes; ++ m)
+         {
+            const numPrimitives = glTF .meshes [m] .primitives ?.length ?? 0;
+
+            for (let p = 0; p < numPrimitives; ++ p)
+               pointers .add (`/meshes/${m}/primitives/${p}/material`);
+         }
       }
 
       // Add all nodes matrix pointer if KHR_node_hoverability and KHR_node_selectability.
@@ -439,27 +462,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          for (let n = 0; n < length; ++ n)
             pointers .add (`/nodes/${n}/matrix`);
-      }
-
-      // Add all primitives pointers if needed.
-
-      if (Array .from (pointers) .some (pointer => pointer .includes ("/primitives/")))
-      {
-         const numMeshes = glTF .meshes ?.length ?? 0;
-
-         for (let m = 0; m < numMeshes; ++ m)
-         {
-            const numPrimitives = glTF .meshes [m] .primitives ?.length ?? 0;
-
-            for (let p = 0; p < numPrimitives; ++ p)
-               pointers .add (`/meshes/${m}/primitives/${p}/material`);
-         }
-
-         if (Array .isArray (glTF .materials))
-         {
-            for (const c of glTF .materials .keys ())
-               pointers .add (`/materials/${c}`);
-         }
       }
 
       // Collect nodes from pointers.
