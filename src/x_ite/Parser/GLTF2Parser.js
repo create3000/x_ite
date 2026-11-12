@@ -413,6 +413,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .behaviorNodes = new Set ();
 
+      // Add all scenes.
+
+      if (Array .isArray (glTF .scenes))
+      {
+         for (const s of glTF .scenes .keys ())
+            pointers .add (`/scenes/${s}`);
+      }
+
       // Add all cameras.
 
       if (Array .isArray (glTF .cameras))
@@ -482,8 +490,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
       }
 
-      console .log (pointers)
-
       // Add behavior nodes.
 
       this .behaviorEngine ._nodes = Array .from (this .behaviorNodes);
@@ -493,10 +499,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       // Replace this just to find an node.
       const search = pointer
-         .replace (/^(\/nodes\/\d+\/camera|\/cameras\/\d+)$/, "$1/znear")
-         .replace (/^(\/scenes\/\d+\/nodes\/\d+)$/, "$1/translation")
-         .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
-         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material|\/materials\/\d+)$/, "$1/transparency");
+         .replace (/^(\/scenes\/\d+|\/scenes\/\d+\/nodes\/\d+)$/, "$1/metadata")
+         .replace (/^(\/nodes\/\d+\/camera|\/cameras\/\d+)$/, "$1/metadata")
+         .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/metadata")
+         .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material|\/materials\/\d+)$/, "$1/metadata");
 
       const [node, field] = this .getAnimationPointer (search);
 
@@ -3007,17 +3013,17 @@ function eventsProcessed ()
          }
       }
    },
-   sceneObject (scene, index)
+   sceneObject (sceneObject, index)
    {
-      if (!(scene instanceof Object))
+      if (!(sceneObject instanceof Object))
          return null;
 
       const
-         lightNode = this .envLightObject (scene .extensions ?.EXT_lights_image_based ?.light),
-         nodes     = this .sceneNodesArray (scene .nodes);
+         lightNode = this .envLightObject (sceneObject .extensions ?.EXT_lights_image_based ?.light),
+         nodes     = this .sceneNodesArray (sceneObject .nodes);
 
-      if (Array .isArray (scene .nodes))
-         scene .nodes = scene .nodes .map (index => this .nodes [index]);
+      if (Array .isArray (sceneObject .nodes))
+         sceneObject .nodes = sceneObject .nodes .map (index => this .nodes [index]);
 
       if (lightNode)
          nodes .unshift (lightNode);
@@ -3043,6 +3049,8 @@ function eventsProcessed ()
             if (!node .getName ())
                scene .addNamedNode (scene .getUniqueName (`Scene-${index}`), node);
 
+            sceneObject .pointers = [node];
+
             return node;
          }
          default:
@@ -3057,6 +3065,8 @@ function eventsProcessed ()
             groupNode ._children = nodes;
 
             groupNode .setup ();
+
+            sceneObject .pointers = [groupNode];
 
             return groupNode;
          }

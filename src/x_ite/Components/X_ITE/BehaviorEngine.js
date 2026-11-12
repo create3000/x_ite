@@ -626,6 +626,26 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       );
 
       this .engine .registerJsonPointer (
+         `/scenes/${numScenes}/nodes.length`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+               const
+                  sceneIndex = +pointer .match (/^\/scenes\/(\d+)\//) [1],
+                  scene      = this .pointers .get (`/scenes/${sceneIndex}`);
+
+               console .log (scene)
+
+               return [scene ?._children .length];
+            });
+         },
+         Function .prototype,
+         "int",
+         true
+      );
+
+      this .engine .registerJsonPointer (
          `/scenes/${numScenes}/nodes/${numNodes}`,
          (pointer) =>
          {
