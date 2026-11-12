@@ -479,7 +479,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             for (let i = 0; i < length; ++ i)
                this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
          }
-         else if (/\/lights\/[{[].*?[\]}]/ .test (pointer))
+         else if (/^\/extensions\/KHR_lights_punctual\/lights\/[{[].*?[\]}]/ .test (pointer))
          {
             // Top level pointers
 
@@ -535,7 +535,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             case X3DConstants .X3DLightNode:
             {
-               const lightIndexMatch = pointer .match (/^\/light\/(\d+)/);
+               const lightIndexMatch = pointer .match (/\/light\/(\d+)/);
 
                if (!lightIndexMatch)
                   break;
