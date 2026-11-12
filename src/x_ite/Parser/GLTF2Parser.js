@@ -233,7 +233,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    async extensionsArray (extensions, set)
    {
-      if (!(extensions instanceof Array))
+      if (!Array .isArray (extensions))
          return;
 
       const
@@ -401,7 +401,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             const value = node ?.configuration ?.pointer ?.value;
 
-            if (!(value instanceof Array))
+            if (!Array .isArray (value))
                continue;
 
             for (const pointer of value)
@@ -587,7 +587,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    envLightsArray (lights)
    {
-      if (!(lights instanceof Array))
+      if (!Array .isArray (lights))
          return;
 
       this .envLights = lights;
@@ -621,7 +621,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          for (const irradianceCoefficient of light .irradianceCoefficients)
          {
-            if (!(irradianceCoefficient instanceof Array))
+            if (!Array .isArray (irradianceCoefficient))
                continue;
 
             lightNode ._diffuseCoefficients .push (... irradianceCoefficient);
@@ -634,7 +634,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             specularTextureNode = scene .createNode ("ComposedCubeMapTexture", false),
             baseImages          = light .specularImages [0];
 
-         if (baseImages instanceof Array)
+         if (Array .isArray (baseImages))
          {
             const faces = ["right", "left", "bottom", "top", "front", "back"];
 
@@ -675,7 +675,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    lightsArray (lights)
    {
-      if (!(lights instanceof Array))
+      if (!Array .isArray (lights))
          return;
 
       this .lights = lights;
@@ -763,7 +763,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const variants = KHR_materials_variants .variants;
 
-      if (!(variants instanceof Array))
+      if (!Array .isArray (variants))
          return;
 
       this .materialVariants = variants;
@@ -790,7 +790,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             const array = value ["@set"] ?? value ["@list"];
 
-            if (array instanceof Array)
+            if (Array .isArray (array))
             {
                const v = array .map (v => v .toString ()) .join (", ");
 
@@ -817,7 +817,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    async buffersArray (buffers)
    {
-      if (!(buffers instanceof Array))
+      if (!Array .isArray (buffers))
          return;
 
       this .buffers = await Promise .all (buffers .map ((buffer, i) => this .bufferObject (buffer, i)));
@@ -842,7 +842,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    bufferViewsArray (bufferViews)
    {
-      if (!(bufferViews instanceof Array))
+      if (!Array .isArray (bufferViews))
          return;
 
       this .bufferViews = bufferViews;
@@ -922,7 +922,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    })(),
    accessorsArray (accessors)
    {
-      if (!(accessors instanceof Array))
+      if (!Array .isArray (accessors))
          return;
 
       this .accessors = accessors;
@@ -1079,7 +1079,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    samplersArray (samplers)
    {
-      if (!(samplers instanceof Array))
+      if (!Array .isArray (samplers))
          return;
 
       this .samplers = samplers;
@@ -1160,14 +1160,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    })(),
    async imagesArray (images)
    {
-      if (!(images instanceof Array))
+      if (!Array .isArray (images))
          return;
 
       this .images = await Promise .all (images .map ((image, index) => this .imageObject (image, index)));
    },
    async videosArray (videos)
    {
-      if (!(videos instanceof Array))
+      if (!Array .isArray (videos))
          return;
 
       this .videos = await Promise .all (videos .map ((video, index) => this .imageObject (video, index)));
@@ -1211,7 +1211,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    texturesArray (textures)
    {
-      if (!(textures instanceof Array))
+      if (!Array .isArray (textures))
          return;
 
       this .textures = textures;
@@ -1310,7 +1310,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    materialsArray (materials)
    {
-      if (!(materials instanceof Array))
+      if (!Array .isArray (materials))
          return;
 
       this .materials = materials;
@@ -1989,7 +1989,7 @@ function eventsProcessed ()
    })(),
    meshesArray (meshes)
    {
-      if (!(meshes instanceof Array))
+      if (!Array .isArray (meshes))
          return;
 
       this .meshes = meshes;
@@ -2003,7 +2003,7 @@ function eventsProcessed ()
       {
          const primitives = mesh .primitives;
 
-         if (!(primitives instanceof Array))
+         if (!Array .isArray (primitives))
             return mesh .shapeNodes;
 
          for (const primitive of primitives)
@@ -2039,7 +2039,7 @@ function eventsProcessed ()
    },
    primitivesArray (primitives, skin, weights, EXT_mesh_gpu_instancing)
    {
-      if (!(primitives instanceof Array))
+      if (!Array .isArray (primitives))
          return [ ];
 
       const shapeNodes = [ ];
@@ -2145,7 +2145,7 @@ function eventsProcessed ()
    },
    targetsArray (targets)
    {
-      if (!(targets instanceof Array))
+      if (!Array .isArray (targets))
          return;
    },
    primitiveExtensionsObject (extensions, primitive)
@@ -2280,12 +2280,14 @@ function eventsProcessed ()
    },
    khrMaterialsVariantsExtension (KHR_materials_variants, shapeNode)
    {
+      // https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_materials_variants/README.md
+
       if (!(KHR_materials_variants instanceof Object))
          return;
 
       const mappings = KHR_materials_variants .mappings;
 
-      if (!(mappings instanceof Array))
+      if (!Array .isArray (mappings))
          return;
 
       if (!mappings .length)
@@ -2328,26 +2330,31 @@ function eventsProcessed ()
       if (!mapping .material)
          return;
 
-      const
-         scene          = this .getScene (),
-         variantNode    = this .getScene () .createNode ("Shape", false),
-         appearanceNode = this .materialObject (mapping),
-         variant        = mapping .variants ?.[0] ?? 0,
-         name           = this .sanitizeName (this .materialVariants [variant] ?.name ?? "");
+      if (!Array .isArray (mapping .variants))
+         return;
 
-      if (name)
-         scene .addNamedNode (scene .getUniqueName (name), variantNode);
+      for (const variant of mapping .variants)
+      {
+         const
+            scene          = this .getScene (),
+            variantNode    = this .getScene () .createNode ("Shape", false),
+            appearanceNode = this .materialObject (mapping),
+            name           = this .sanitizeName (this .materialVariants [variant] ?.name ?? "");
 
-      variantNode ._appearance = appearanceNode;
-      variantNode ._geometry   = shapeNode ._geometry;
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), variantNode);
 
-      variantNode .setup ();
+         variantNode ._appearance = appearanceNode;
+         variantNode ._geometry   = shapeNode ._geometry;
 
-      variantsNode ._children [variant] = variantNode;
+         variantNode .setup ();
+
+         variantsNode ._children [variant] = variantNode;
+      }
    },
    camerasArray (cameras)
    {
-      if (!(cameras instanceof Array))
+      if (!Array .isArray (cameras))
          return;
 
       this .cameras = cameras;
@@ -2482,7 +2489,7 @@ function eventsProcessed ()
    },
    nodesArray (nodes)
    {
-      if (!(nodes instanceof Array))
+      if (!Array .isArray (nodes))
          return;
 
       this .nodes = nodes .map ((node, index) => this .nodeObject (node, index));
@@ -2727,7 +2734,7 @@ function eventsProcessed ()
    },
    nodeChildrenArray (children)
    {
-      if (!(children instanceof Array))
+      if (!Array .isArray (children))
          return [ ];
 
       const nodes = Array .from (new Set (children
@@ -2741,10 +2748,10 @@ function eventsProcessed ()
    },
    skinsArray (skins, nodes)
    {
-      if (!(skins instanceof Array))
+      if (!Array .isArray (skins))
          return;
 
-      if (!(nodes instanceof Array))
+      if (!Array .isArray (nodes))
          return;
 
       this .skins = skins;
@@ -2801,7 +2808,7 @@ function eventsProcessed ()
    },
    jointsArray (joints, add)
    {
-      if (!(joints instanceof Array))
+      if (!Array .isArray (joints))
          return [ ];
 
       // If skin is not references anywhere, don't create HAnimJoint nodes.
@@ -2829,7 +2836,7 @@ function eventsProcessed ()
 
       const children = node .children;
 
-      if (!(children instanceof Array))
+      if (!Array .isArray (children))
          return;
 
       for (const child of children)
@@ -2968,7 +2975,7 @@ function eventsProcessed ()
    },
    scenesArray (glTF, scenes, sceneNumber = 0)
    {
-      if (!(scenes instanceof Array))
+      if (!Array .isArray (scenes))
          return;
 
       const
@@ -3079,7 +3086,7 @@ function eventsProcessed ()
    },
    exportGroup (name, array)
    {
-      if (!(array instanceof Array))
+      if (!Array .isArray (array))
          return;
 
       const nodes = array .map (object => object .node) .filter (node => node);
@@ -3127,7 +3134,7 @@ function eventsProcessed ()
    },
    animationsArray (animations)
    {
-      if (!(animations instanceof Array))
+      if (!Array .isArray (animations))
          return;
 
       for (const [i, animation] of animations .entries ())
@@ -3169,10 +3176,10 @@ function eventsProcessed ()
    },
    animationChannelsArray (channels, samplers, timeSensorNode)
    {
-      if (!(channels instanceof Array))
+      if (!Array .isArray (channels))
          return [ ];
 
-      if (!(samplers instanceof Array))
+      if (!Array .isArray (samplers))
          return [ ];
 
       // Determine cycleInterval.
@@ -3845,7 +3852,7 @@ function eventsProcessed ()
 
       normalNode ._vector = normal .array;
 
-      if ((targets instanceof Array) && (weights instanceof Array))
+      if (Array .isArray (targets) && Array .isArray (weights))
       {
          normal .field = normalNode ._vector .copy ();
 
@@ -3904,7 +3911,7 @@ function eventsProcessed ()
 
       coordinateNode ._point = position .array;
 
-      if ((targets instanceof Array) && (weights instanceof Array))
+      if (Array .isArray (targets) && Array .isArray (weights))
       {
          position .field = coordinateNode ._point .copy ();
 
@@ -3929,10 +3936,10 @@ function eventsProcessed ()
       if (!(skin instanceof Object))
          return;
 
-      if (!(joints instanceof Array))
+      if (!Array .isArray (joints))
          return;
 
-      if (!(weights instanceof Array))
+      if (!Array .isArray (weights))
          return;
 
       for (let i = 0, length = joints .length; i < length; ++ i)
@@ -4087,7 +4094,7 @@ function eventsProcessed ()
                primitives        = mesh ?.primitives,
                interpolatorNodes = [ ];
 
-            if (!(primitives instanceof Array))
+            if (!Array .isArray (primitives))
                return null;
 
             for (const { shapeNode, targets, attributes } of primitives)
@@ -4691,7 +4698,7 @@ function eventsProcessed ()
    },
    vectorValue (array, vector)
    {
-      if (!(array instanceof Array))
+      if (!Array .isArray (array))
          return false;
 
       if (array .length !== vector .length)

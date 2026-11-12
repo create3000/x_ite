@@ -1195,7 +1195,7 @@ class SampleViewer
       $("<option></option>")
          .prop ("selected", true)
          .val (switchNode .getValue () .getMetaData ("Interactivity/materialVariants") .length)
-         .text ("None")
+         .text ("Default")
          .appendTo (select);
 
       for (const [i, name] of switchNode .getValue () .getMetaData ("Interactivity/materialVariants") .entries ())
