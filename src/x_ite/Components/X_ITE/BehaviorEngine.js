@@ -843,6 +843,17 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       if (!type)
          return;
 
+      const getField = pointer =>
+      {
+         const
+            node      = this .pointers .get (pointer),
+            field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
+            baseColor = GLTFPointerAliases .isBaseColor (node, field),
+            solid     = field .getName () === "solid";
+
+         return [field, [baseColor, solid], node ._transparency];
+      };
+
       this .engine .registerJsonPointer (
          pointer,
          field .isReadable () ? (pointer) =>
@@ -850,16 +861,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             // if (DEVELOPMENT)
             //    console .log ("get", pointer);
 
-            const [flags, field, transparency] = this .cache .getOrInsertComputed (pointer, () =>
-            {
-               const
-                  node      = this .pointers .get (pointer),
-                  field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
-                  baseColor = GLTFPointerAliases .isBaseColor (node, field),
-                  solid     = field .getName () === "solid";
-
-               return [[baseColor, solid], field, node ._transparency];
-            });
+            const [field, flags, transparency] = this .cache .getOrInsertComputed (pointer, () => getField (pointer));
 
             switch (field .getType ())
             {
@@ -880,16 +882,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          } : () => [ ],
          field .isWritable () ? (pointer, value) =>
          {
-            const [flags, field, transparency] = this .cache .getOrInsertComputed (pointer, () =>
-            {
-               const
-                  node      = this .pointers .get (pointer),
-                  field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
-                  baseColor = GLTFPointerAliases .isBaseColor (node, field),
-                  solid     = field .getName () === "solid";
-
-               return [[baseColor, solid], field, node ._transparency];
-            });
+            const [field, flags, transparency] = this .cache .getOrInsertComputed (pointer, () => getField (pointer));
 
             // if (DEVELOPMENT)
             //    console .log ("set", pointer, field .getName (), value);
