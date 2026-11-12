@@ -483,7 +483,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             // Top level pointers
 
-            const length = glTF .extensions ?.KHR_lights_punctual .lights ?.length ?? 0;
+            const length = glTF .extensions ?.KHR_lights_punctual ?.lights ?.length ?? 0;
 
             for (let i = 0; i < length; ++ i)
                this .addBehaviorNode (pointer .replace (/[{[].*?[\]}]/, i), this .behaviorNodes);
