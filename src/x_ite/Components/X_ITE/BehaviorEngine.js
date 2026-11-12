@@ -452,7 +452,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   .reduce ((count, child) => count + !!child ?.getValue () .getType ()
                      .includes (X3DConstants .X3DTransformMatrix3DNode), 0);
 
-               return [numChildren];
+               return [numChildren ?? 0];
             });
          },
          Function .prototype,
@@ -654,7 +654,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   sceneIndex = +pointer .match (/^\/scenes\/(\d+)\//) [1],
                   scene      = this .pointers .get (`/scenes/${sceneIndex}`);
 
-               return [scene ?._children .length];
+               return [scene ?._children .length ?? 0];
             });
          },
          Function .prototype,
