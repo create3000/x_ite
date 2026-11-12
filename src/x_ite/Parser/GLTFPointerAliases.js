@@ -35,24 +35,26 @@ class GLTFPointerAliases
    }
 }
 
-GLTFPointerAliases .addAlias ("IndexedTriangleFanSet",   "doubleSided",    "solid");
-GLTFPointerAliases .addAlias ("IndexedTriangleSet",      "doubleSided",    "solid");
-GLTFPointerAliases .addAlias ("IndexedTriangleStripSet", "doubleSided",    "solid");
-GLTFPointerAliases .addAlias ("OrthoViewpoint",          "zfar",           "farDistance");
-GLTFPointerAliases .addAlias ("OrthoViewpoint",          "znear",          "nearDistance");
-GLTFPointerAliases .addAlias ("PointLight",              "range",          "radius");
-GLTFPointerAliases .addAlias ("Script",                  "offset",         "translation");
-GLTFPointerAliases .addAlias ("SpotLight",               "innerConeAngle", "beamWidth");
-GLTFPointerAliases .addAlias ("SpotLight",               "outerConeAngle", "cutOffAngle");
-GLTFPointerAliases .addAlias ("SpotLight",               "range",          "radius");
-GLTFPointerAliases .addAlias ("Switch",                  "scene",          "whichChoice");
-GLTFPointerAliases .addAlias ("TriangleFanSet",          "doubleSided",    "solid");
-GLTFPointerAliases .addAlias ("TriangleSet",             "doubleSided",    "solid");
-GLTFPointerAliases .addAlias ("TriangleSet",             "doubleSided",    "solid");
-GLTFPointerAliases .addAlias ("TriangleStripSet",        "doubleSided",    "solid");
-GLTFPointerAliases .addAlias ("UnlitMaterial",           "baseColor",      "emissiveColor");
-GLTFPointerAliases .addAlias ("Viewpoint",               "yfov",           "fieldOfView");
-GLTFPointerAliases .addAlias ("Viewpoint",               "zfar",           "farDistance");
-GLTFPointerAliases .addAlias ("Viewpoint",               "znear",          "nearDistance");
+GLTFPointerAliases .addAlias ("IndexedTriangleFanSet",      "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("IndexedTriangleSet",         "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("IndexedTriangleStripSet",    "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("OrthoViewpoint",             "zfar",           "farDistance");
+GLTFPointerAliases .addAlias ("OrthoViewpoint",             "znear",          "nearDistance");
+GLTFPointerAliases .addAlias ("PhysicalMaterial",           "emissive",       "emissiveColor");
+GLTFPointerAliases .addAlias ("PointLight",                 "range",          "radius");
+GLTFPointerAliases .addAlias ("Script",                     "offset",         "translation");
+GLTFPointerAliases .addAlias ("SpecularGlossinessMaterial", "emissive",       "emissiveColor");
+GLTFPointerAliases .addAlias ("SpotLight",                  "innerConeAngle", "beamWidth");
+GLTFPointerAliases .addAlias ("SpotLight",                  "outerConeAngle", "cutOffAngle");
+GLTFPointerAliases .addAlias ("SpotLight",                  "range",          "radius");
+GLTFPointerAliases .addAlias ("Switch",                     "scene",          "whichChoice");
+GLTFPointerAliases .addAlias ("TriangleFanSet",             "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("TriangleSet",                "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("TriangleSet",                "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("TriangleStripSet",           "doubleSided",    "solid");
+GLTFPointerAliases .addAlias ("UnlitMaterial",              "baseColor",      "emissiveColor");
+GLTFPointerAliases .addAlias ("Viewpoint",                  "yfov",           "fieldOfView");
+GLTFPointerAliases .addAlias ("Viewpoint",                  "zfar",           "farDistance");
+GLTFPointerAliases .addAlias ("Viewpoint",                  "znear",          "nearDistance");
 
 export default GLTFPointerAliases;
