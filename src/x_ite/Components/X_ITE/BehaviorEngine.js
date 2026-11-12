@@ -655,6 +655,28 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
+      // Returns the number of mesh primitives.
+      this .engine .registerJsonPointer (
+         `/meshes/${numMeshes}/primitives.length`,
+         (pointer) =>
+         {
+            return this .cache .getOrInsertComputed (pointer, () =>
+            {
+
+               const
+                  meshIndex     = +pointer .match (/^\/meshes\/(\d+)\//) [1],
+                  regex         = new RegExp (`^\\/meshes\\/${meshIndex}\\/primitives\\/(\\d+)`),
+                  numPrimitives = Array .from (this .pointers .keys (), key => key .match (regex) ?.[1] ?? -1)
+                     .reduce ((p, c) => Math .max (p, c), -1) + 1;
+
+               return [numPrimitives];
+            });
+         },
+         Function .prototype,
+         "int",
+         true
+      );
+
       // Returns the material index of the mesh.
       this .engine .registerJsonPointer (
          `/meshes/${numMeshes}/primitives/${numPrimitives}/material`,
