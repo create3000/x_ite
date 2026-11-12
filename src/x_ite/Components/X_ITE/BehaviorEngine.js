@@ -284,9 +284,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               timeSensor     = this .animations [animationIndex];
+               timeSensor     = this .animations [animationIndex],
+               reverse        = timeSensor ._reverse .getValue () ? -1 : 1;
 
-            return [timeSensor ._elapsedTime .getValue ()];
+            return [timeSensor ._elapsedTime .getValue () * reverse];
          },
          Function .prototype,
          "float",
@@ -1025,7 +1026,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // if (DEVELOPMENT)
       //    console .log ("start", animationIndex, startTime, stopTime, cycleInterval, startTime === stopTime)
 
-      timeSensor ._cycleInterval = cycleInterval * speed;
+      timeSensor ._cycleInterval = cycleInterval / speed;
       timeSensor ._reverse       = reverse;
       timeSensor ._range [0]     = startTime / cycleInterval;
       timeSensor ._startTime     = currentTime;
