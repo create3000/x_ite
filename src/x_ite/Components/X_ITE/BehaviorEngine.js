@@ -50,12 +50,9 @@ const Types = new Map ([
 ]);
 
 const
-   COLOR_FLAG = 0,
-   SOLID_FLAG = 1;
-
-const
    BASE_COLOR_FLAG     = 0,
-   SPECULAR_COLOR_FLAG = 1;
+   SPECULAR_COLOR_FLAG = 1,
+   SOLID_FLAG          = 2;
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -378,7 +375,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const [name, num] of Object .entries (nums))
       {
-         // Returns the number of scenes.
+         // Returns the number of scenes, cameras ...
          this .engine .registerJsonPointer (
             `/${name}.length`,
             () => [num],
@@ -950,7 +947,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             switch (field .getType ())
             {
                case X3DConstants .SFBool:
-                  return flags [SOLID_FLAG] ? [!field .getValue ()] : [field .getValue ()];
+                  return flags === SOLID_FLAG ? [!field .getValue ()] : [field .getValue ()];
                case X3DConstants .SFDouble:
                case X3DConstants .SFFloat:
                case X3DConstants .SFInt32:
@@ -958,7 +955,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                   return [field .getValue ()];
                case X3DConstants .SFColor:
                {
-                  switch (flags [COLOR_FLAG])
+                  switch (flags)
                   {
                      case BASE_COLOR_FLAG:
                         return [... field, 1 - node ._transparency .getValue ()];
@@ -988,7 +985,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             switch (field .getType ())
             {
                case X3DConstants .SFBool:
-                  field .setValue (flags [SOLID_FLAG] ? !value : value);
+                  field .setValue (flags === SOLID_FLAG ? !value : value);
                   break;
                case X3DConstants .SFDouble:
                case X3DConstants .SFFloat:
@@ -1000,7 +997,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                {
                   field .setValue (this .Color3 .set (... value));
 
-                  switch (flags [COLOR_FLAG])
+                  switch (flags)
                   {
                      case BASE_COLOR_FLAG:
                      {
@@ -1069,18 +1066,18 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       if (!node)
          return [ ];
 
-      const
-         field = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
-         solid = field .getName () === "solid";
+      const field = node .getField (GLTFPointerAliases .getAlias (pointer, node));
 
-      let colorFlag;
+      let flags;
 
       if (GLTFPointerAliases .isBaseColor (node, field))
-         colorFlag = BASE_COLOR_FLAG;
+         flags = BASE_COLOR_FLAG;
       else if (GLTFPointerAliases .isSpecularColor (node, field))
-         colorFlag = SPECULAR_COLOR_FLAG;
+         flags = SPECULAR_COLOR_FLAG;
+      else if (field .getName () === "solid")
+         flags = SOLID_FLAG;
 
-      return [node, field, [colorFlag, solid]];
+      return [node, field, flags];
    },
    set_pointing__ ()
    {
