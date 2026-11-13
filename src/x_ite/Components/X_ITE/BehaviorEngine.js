@@ -1085,24 +1085,16 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          browser     = this .getBrowser (),
          hit         = browser .getHit (),
          parentNode  = hit .parentNode,
-         parentIndex = parentNode ?.getMetaData ("Interactivity/node") [0] ?? -1,
-         nodeIndex   = parentIndex >= 0 ? parentIndex : undefined;
+         parentIndex = parentNode ?.getMetaData ("Interactivity/node") [0];
 
       // if (DEVELOPMENT)
-      //    console .log (hit .type, nodeIndex);
+      //    browser .println (hit .type, parentIndex);
 
       switch (hit .type)
       {
          case PointingType .MOVE:
          {
-            this .engine .hoverOn (nodeIndex, 0);
-
-            for (const sensor of hit .sensors .keys ())
-            {
-               if (sensor .getType () .at (-1) === X3DConstants .HoverabilityExtension)
-                  hit .sensors .delete (sensor);
-            }
-
+            this .engine .hoverOn (parentIndex, 0);
             break;
          }
          case PointingType .RELEASE:
@@ -1119,7 +1111,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             const selectionRayOrigin = this .Matrix4
                .multVecMatrix (hit .ray .point .copy ());
 
-            this .engine .select (nodeIndex, 0, [... selectionPoint], [... selectionRayOrigin]);
+            this .engine .select (parentIndex, 0, [... selectionPoint], [... selectionRayOrigin]);
             break;
          }
       }

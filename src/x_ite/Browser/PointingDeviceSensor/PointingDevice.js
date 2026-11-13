@@ -65,7 +65,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          }
       }
    },
-   mouseup (event)
+   mouseup (event, touch)
    {
       if (event .button !== 0)
          return;
@@ -86,7 +86,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
 
       browser .setCursor (this .over ? "POINTER" : "DEFAULT");
 
-      this .onverifymotion (x, y);
+      if (touch)
+         this .onverifymotion (NaN, NaN);
+      else
+         this .onverifymotion (x, y);
 
       if (!this .over)
          return;
@@ -153,6 +156,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             this .touchY      = event .pageY;
 
             this .mousedown (event);
+            this .mousemove (event);
 
             // Show context menu on long tab.
 
@@ -180,7 +184,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       event .pageX  = this .touchX;
       event .pageY  = this .touchY;
 
-      this .mouseup (event);
+      this .mouseup (event, true);
 
       clearTimeout (this .touchTimeout);
    },
