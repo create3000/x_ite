@@ -1088,7 +1088,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          parentIndex = parentNode ?.getMetaData ("Interactivity/node") [0];
 
       // if (DEVELOPMENT)
-      //    browser .println (hit .type, nodeIndex);
+      //    browser .println (hit .type, parentIndex);
 
       switch (hit .type)
       {
