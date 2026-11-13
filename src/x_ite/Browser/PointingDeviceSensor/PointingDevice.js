@@ -65,7 +65,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
          }
       }
    },
-   mouseup (event, touch)
+   mouseup (event)
    {
       if (event .button !== 0)
          return;
@@ -81,15 +81,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       $.off (this, document);
       $.on (this, surface, "mousemove", event => this .mousemove (event));
 
-      this .click    = browser .buttonReleaseEvent (x, y);
       this .grabbing = false;
 
+      browser .buttonReleaseEvent (x, y);
       browser .setCursor (this .over ? "POINTER" : "DEFAULT");
-
-      if (touch)
-         this .onverifymotion (NaN, NaN);
-      else
-         this .onverifymotion (x, y);
+      this .onverifymotion (x, y);
 
       if (!this .over)
          return;
@@ -105,7 +101,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
          return;
 
-      if (!(this .over || this .click))
+      if (!this .over)
          return;
 
       // Stop event propagation.
@@ -150,12 +146,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
 
-            this .startTouchX = event .pageX;
-            this .startTouchY = event .pageY;
-            this .touchX      = event .pageX;
-            this .touchY      = event .pageY;
-
-            this .mousemove (event);
             this .mousedown (event);
 
             // Show context menu on long tab.
@@ -163,8 +153,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             const hit = browser .getHit ();
 
             if (!hit .id || !hit .sensors .size)
+            {
+               this .touchX       = event .pageX;
+               this .touchY       = event .pageY;
                this .touchTimeout = setTimeout (() => this .showContextMenu (event), CONTEXT_MENU_TIME);
-
+            }
             break;
          }
          case 2:
@@ -176,15 +169,11 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    touchend (event)
    {
-      const browser = this .getBrowser ();
-
-      event = browser .copyEvent (event);
+      event = this .getBrowser () .copyEvent (event);
 
       event .button = 0;
-      event .pageX  = this .touchX;
-      event .pageY  = this .touchY;
 
-      this .mouseup (event, true);
+      this .mouseup (event);
 
       clearTimeout (this .touchTimeout);
    },
@@ -203,12 +192,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             event .pageX  = touches [0] .pageX;
             event .pageY  = touches [0] .pageY;
 
-            this .touchX = event .pageX;
-            this .touchY = event .pageY;
-
             this .mousemove (event);
 
-            if (Math .hypot (this .startTouchX - this .touchX, this .startTouchY - this .touchY) > 7)
+            if (Math .hypot (this .touchX - event .pageX, this .touchY - event .pageY) > 7)
                clearTimeout (this .touchTimeout);
 
             break;
