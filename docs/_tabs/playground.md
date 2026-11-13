@@ -11,6 +11,7 @@ monaco: true
 @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block);
 @import url(https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css);
 
+
 .material-symbols-outlined {
   font-variation-settings:
     'FILL' 0,
@@ -26,11 +27,19 @@ monaco: true
   top: 5px;
 }
 
+body {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.row {
+  height: calc(100dvh - 128px);
+}
+
 /* Table */
 .playground {
   box-sizing: border-box;
-  height: 100%;
-  height: calc(100vh - 128px);
+  height: calc(100dvh - 128px);
 }
 
 .toolbar {

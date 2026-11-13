@@ -29,9 +29,18 @@ jquery: true
   }
 }
 
+body {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.row {
+  height: calc(100dvh - 128px);
+}
+
 .viewer-row {
   display: flex;
-  height: calc(100vh - 128px);
+  height: calc(100dvh - 128px);
 }
 
 .viewer-column1 {

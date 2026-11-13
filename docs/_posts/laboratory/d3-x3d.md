@@ -7,6 +7,15 @@ tags: [Area Chart, D3-X3D]
 jquery: true
 ---
 <style>
+body {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.row {
+  height: calc(100dvh - 128px);
+}
+
 /* Paragraph */
 article > p {
   padding: 0 2rem;
@@ -21,7 +30,7 @@ p {
   box-sizing: border-box;
   height: 100%;
   border-top: 1px solid var(--main-border-color);
-  height: calc(100vh - 128px - 3.8rem);
+  height: calc(100dvh - 128px - 3.8rem);
 }
 
 .viewer-row {
