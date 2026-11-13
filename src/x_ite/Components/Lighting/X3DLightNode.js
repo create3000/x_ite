@@ -12,7 +12,7 @@ function X3DLightNode (executionContext)
 
    // Private properties
 
-   this .enabled = true;
+   this .enabled = true; // Used in X3DTextureProjectorNode.
 }
 
 Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .prototype),
@@ -55,6 +55,8 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    setEnabled (value)
    {
       this .enabled = value;
+
+      this .set_on__ ();
    },
    getGlobal ()
    {

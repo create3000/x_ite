@@ -111,7 +111,6 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
       this .setEnabled (!! this .textureNode);
 
       this .set_textureNode__ ();
-      this .set_on__ ();
    },
    set_textureNode__ ()
    {
