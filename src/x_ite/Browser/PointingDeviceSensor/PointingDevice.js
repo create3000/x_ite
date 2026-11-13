@@ -155,8 +155,8 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
             this .touchX      = event .pageX;
             this .touchY      = event .pageY;
 
-            this .mousedown (event);
             this .mousemove (event);
+            this .mousedown (event);
 
             // Show context menu on long tab.
 
