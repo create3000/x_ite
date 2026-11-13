@@ -67,6 +67,10 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
 
       this .set_live__ ();
    },
+   changePointerType ()
+   {
+      return true;
+   },
    set_live__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue ())
