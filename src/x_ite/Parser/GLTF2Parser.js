@@ -1811,12 +1811,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (this .vectorValue (KHR_materials_specular .specularColorFactor, specularColorFactor))
       {
          const
-            max              = Math .max (... specularColorFactor),
-            specularStrength = Math .max (max, 1),
+            specularStrength = Math .max (... specularColorFactor, 1),
             specularColor    = [... specularColorFactor .divide (specularStrength)];
 
-         extension ._specularColor    = new Color3 (... (max ? specularColor : [0]));
-         extension ._specularStrength = Math .max (specularStrength, 1);
+         extension ._specularColor    = new Color3 (... specularColor);
+         extension ._specularStrength = specularStrength;
       }
 
       extension ._specularColorTexture        = this .textureInfo (KHR_materials_specular .specularColorTexture);

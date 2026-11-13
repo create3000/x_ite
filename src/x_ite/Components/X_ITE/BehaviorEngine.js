@@ -1043,14 +1043,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                      }
                      case SPECULAR_COLOR_FLAG:
                      {
-                        const
-                           max              = Math .max (... value),
-                           specularStrength = Math .max (max, 1);
+                        const specularStrength = Math .max (... value, 1);
 
-                        this .Vector3 .set (... value);
-
-                        if (max)
-                           this .Vector3 .divide (specularStrength);
+                        this .Vector3 .set (... value) .divide (specularStrength);
 
                         field .setValue (this .Color3 .set (... this .Vector3));
                         node ._specularStrength .setValue (specularStrength);
