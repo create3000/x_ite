@@ -977,7 +977,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             const [node, field, flags] = this .cache
                .getOrInsertComputed (pointer, () => this .getFieldFromPointer (pointer));
 
-            if (!field)
+            if (!node)
                return;
 
             switch (field .getType ())
@@ -1012,7 +1012,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             const [node, field, flags] = this .cache
                .getOrInsertComputed (pointer, () => this .getFieldFromPointer (pointer));
 
-            if (!field)
+            if (!node)
                return;
 
             // if (DEVELOPMENT)

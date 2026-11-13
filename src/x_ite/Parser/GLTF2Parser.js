@@ -507,13 +507,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .behaviorEngine ._nodes = Array .from (this .behaviorNodes);
       this .behaviorEngine .setup ();
-
-      setTimeout (() =>
-      {
-         console .log (glTF .materials ?.[6] .normalTexture);
-         console .log (this .getAnimationPointer ("/materials/6/occlusionTexture/strength"));
-      },
-      1000);
    },
    addBehaviorNode (pointer, behaviorNodes)
    {
@@ -529,7 +522,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(node && field))
       {
          // if (DEVELOPMENT)
-            console .warn (`No node found for pointer '${pointer}'.`);
+            // console .warn (`No node found for pointer '${pointer}'.`);
 
          return;
       }
