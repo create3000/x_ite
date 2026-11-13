@@ -21,9 +21,8 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      this ._global    .addInterest ("set_global__", this);
-      this ._on        .addInterest ("set_on__",     this);
-      this ._intensity .addInterest ("set_on__",     this);
+      this ._global .addInterest ("set_global__", this);
+      this ._on     .addInterest ("set_on__",     this);
 
       this .set_global__ ();
       this .set_on__ ();
@@ -34,7 +33,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    },
    set_on__ ()
    {
-      if (this ._on .getValue () && this .getIntensity () > 0 && this .enabled)
+      if (this ._on .getValue () && this .enabled)
       {
          delete this .push;
          delete this .pop;
