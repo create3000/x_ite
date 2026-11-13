@@ -1113,7 +1113,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             const selectionPoint = this .Matrix4
                .assign (hit .modelViewMatrix)
                .inverse ()
-               .multRight (parentNode .getMatrix ())
+               .multRight (parentNode .getMatrix ?.() ?? Matrix4 .IDENTITY)
                .multVecMatrix (hit .point .copy ());
 
             const selectionRayOrigin = this .Matrix4
