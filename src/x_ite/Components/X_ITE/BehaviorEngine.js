@@ -368,6 +368,26 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             key => key .match (/^\/nodes\/(\d+)/) ?.[1] ?? -1)
          .reduce ((p, c) => Math .max (p, c), -1) + 1;
 
+      const nums = {
+         scenes: numScenes,
+         cameras: numCameras,
+         materials: numMaterials,
+         meshes: numMeshes,
+         nodes: numNodes,
+      };
+
+      for (const [name, num] of Object .entries (nums))
+      {
+         // Returns the number of scenes.
+         this .engine .registerJsonPointer (
+            `/${name}.length`,
+            () => [num],
+            Function .prototype,
+            "int",
+            true
+         );
+      }
+
       // Register scene pointers.
 
       // Returns the index of the current scene.
@@ -387,15 +407,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          },
          "int",
          false
-      );
-
-      // Returns the number of scenes.
-      this .engine .registerJsonPointer (
-         "/scenes.length",
-         () => [numScenes],
-         Function .prototype,
-         "int",
-         true
       );
 
       this .engine .registerJsonPointer (
@@ -438,15 +449,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       );
 
       // Register camera pointers.
-
-      // Returns the number of material nodes.
-      this .engine .registerJsonPointer (
-         "/cameras.length",
-         () => [numCameras],
-         Function .prototype,
-         "int",
-         true
-      );
 
       // Register pointers for the active camera.
 
@@ -642,26 +644,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          true
       );
 
-      // Register material pointers.
-
-      // Returns the number of material nodes.
-      this .engine .registerJsonPointer (
-         "/materials.length",
-         () => [numMaterials],
-         Function .prototype,
-         "int",
-         true
-      );
-
       // Register mesh pointers.
-
-      this .engine .registerJsonPointer (
-         `/meshes.length`,
-         () => [numMeshes],
-         Function .prototype,
-         "int",
-         true
-      );
 
       // Returns the number of mesh primitives.
       this .engine .registerJsonPointer (
@@ -705,14 +688,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       );
 
       // Register node pointers.
-
-      this .engine .registerJsonPointer (
-         `/nodes.length`,
-         () => [numNodes],
-         Function .prototype,
-         "int",
-         true
-      );
 
       // Returns the parent node of the node.
       this .engine .registerJsonPointer (
@@ -926,14 +901,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // console .log (this .engine .getPathValue ("/nodes/5/KHR_lights_punctual/light/range"));
 
       // Register common node pointers.
-
-      const nums = {
-         scenes: numScenes,
-         cameras: numCameras,
-         materials: numMaterials,
-         meshes: numMeshes,
-         nodes: numNodes,
-      };
 
       const pointers = new Map (Array .from (this .pointers, ([pointer, node]) =>
       {
