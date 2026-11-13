@@ -30,6 +30,8 @@ Object .assign (Object .setPrototypeOf (HoverabilityExtension .prototype, X3DInt
 
       return this ._hoverable .getValue ();
    },
+   set_active__ ()
+   { },
 });
 
 Object .defineProperties (HoverabilityExtension,

@@ -30,6 +30,8 @@ Object .assign (Object .setPrototypeOf (SelectabilityExtension .prototype, X3DIn
 
       return this ._selectable .getValue ();
    },
+   set_over__ ()
+   { },
 });
 
 Object .defineProperties (SelectabilityExtension,
