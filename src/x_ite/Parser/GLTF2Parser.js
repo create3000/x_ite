@@ -2726,6 +2726,8 @@ function eventsProcessed ()
          {
             case "KHR_lights_punctual":
             {
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_lights_punctual
+
                const lightNode = this .lightObject (extension);
 
                if (!lightNode)
@@ -2769,6 +2771,7 @@ function eventsProcessed ()
             case "KHR_node_visibility":
             {
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+               
                extension .pointers           = [node .transformNode];
                node .transformNode ._visible = extension .visible ?? true;
                break;
