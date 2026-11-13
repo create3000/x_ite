@@ -510,10 +510,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       setTimeout (() =>
       {
-         console .log (glTF .materials ?.[6])
-         console .log (this .getAnimationPointer ("/materials/6/normalTexture/scale"))
+         console .log (glTF .materials ?.[6] .normalTexture);
+         console .log (this .getAnimationPointer ("/materials/6/occlusionTexture/strength"));
       },
-      1000)
+      1000);
    },
    addBehaviorNode (pointer, behaviorNodes)
    {
@@ -1535,6 +1535,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode ._occlusionStrength       = this .numberValue (occlusionTexture .strength, 1);
       materialNode ._occlusionTexture        = this .textureInfo (occlusionTexture);
       materialNode ._occlusionTextureMapping = this .textureMapping (occlusionTexture);
+
+      occlusionTexture .pointers .push (materialNode);
    },
    normalTextureInfo (normalTexture, materialNode)
    {
@@ -1544,6 +1546,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode ._normalScale          = this .numberValue (normalTexture .scale, 1);
       materialNode ._normalTexture        = this .textureInfo (normalTexture);
       materialNode ._normalTextureMapping = this .textureMapping (normalTexture);
+
+      normalTexture .pointers .push (materialNode);
    },
    textureInfo (texture)
    {
@@ -1554,6 +1558,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          texture .mapping = this .textureTransformObject (texture .extensions .KHR_texture_transform, texture .texCoord || 0);
       else
          texture .mapping = `TEXCOORD_${texture .texCoord || 0}`;
+
+      texture .pointers = [ ];
 
       return this .textureObject (this .textures [texture .index]);
    },
@@ -1805,11 +1811,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (this .vectorValue (KHR_materials_specular .specularColorFactor, specularColorFactor))
       {
          const
-            specularStrength = Math .max (... specularColorFactor),
-            specularColor    = [... specularColorFactor] .map (c => c / specularStrength);
+            max              = Math .max (... specularColorFactor),
+            specularStrength = Math .max (max, 1),
+            specularColor    = [... specularColorFactor .divide (specularStrength)];
 
-         extension ._specularColor    = new Color3 (... (specularStrength ? specularColor : [0]));
-         extension ._specularStrength = specularStrength;
+         extension ._specularColor    = new Color3 (... (max ? specularColor : [0]));
+         extension ._specularStrength = Math .max (specularStrength, 1);
       }
 
       extension ._specularColorTexture        = this .textureInfo (KHR_materials_specular .specularColorTexture);
@@ -1943,23 +1950,24 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (this .vectorValue (KHR_texture_transform .scale, scale))
             matrix .scale (vector .set (... scale, 1));
 
-         // Check for existing node.
+         // Check for existing node, but does not work if there are pointers.
 
-         const existing = this .textureTransformNodes .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
+         // const existing = this .textureTransformNodes
+         //    .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
 
-         if (existing)
-         {
-            Object .defineProperty (KHR_texture_transform, "pointers",
-            {
-               get: () =>
-               {
-                  return this .texCoordExtensionOfNode .get (existing);
-               },
-               configurable: true,
-            });
+         // if (existing)
+         // {
+         //    Object .defineProperty (KHR_texture_transform, "pointers",
+         //    {
+         //       get: () =>
+         //       {
+         //          return this .texCoordExtensionOfNode .get (existing);
+         //       },
+         //       configurable: true,
+         //    });
 
-            return existing ._mapping .getValue ();
-         }
+         //    return existing ._mapping .getValue ();
+         // }
 
          // Create new TextureTransformMatrix3D.
 

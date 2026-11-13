@@ -49,6 +49,14 @@ const Types = new Map ([
    [X3DConstants .SFVec4f,      "float4"],
 ]);
 
+const
+   COLOR_FLAG = 0,
+   SOLID_FLAG = 1;
+
+const
+   BASE_COLOR_FLAG     = 0,
+   SPECULAR_COLOR_FLAG = 1;
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -966,7 +974,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             // if (DEVELOPMENT)
             //    console .log ("get", pointer);
 
-            const [field, flags, transparency] = this .cache
+            const [node, field, flags] = this .cache
                .getOrInsertComputed (pointer, () => this .getFieldFromPointer (pointer));
 
             if (!field)
@@ -975,14 +983,24 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             switch (field .getType ())
             {
                case X3DConstants .SFBool:
-                  return flags [1] ? [!field .getValue ()] : [field .getValue ()];
+                  return flags [SOLID_FLAG] ? [!field .getValue ()] : [field .getValue ()];
                case X3DConstants .SFDouble:
                case X3DConstants .SFFloat:
                case X3DConstants .SFInt32:
                case X3DConstants .SFTime:
                   return [field .getValue ()];
                case X3DConstants .SFColor:
-                  return flags [0] ? [... field, 1 - transparency .getValue ()] : [... field];
+               {
+                  switch (flags [COLOR_FLAG])
+                  {
+                     case BASE_COLOR_FLAG:
+                        return [... field, 1 - node ._transparency .getValue ()];
+                     case SPECULAR_COLOR_FLAG:
+                        return [... this .Vector3 .set (... field) .multiply (node ._specularStrength .getValue ())];
+                     default:
+                        return [... field];
+                  }
+               }
                case X3DConstants .SFRotation:
                   return [... field .getValue () .getQuaternion (this .Quaternion)];
                default:
@@ -991,7 +1009,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          } : Function .prototype,
          field .isWritable () ? (pointer, value) =>
          {
-            const [field, flags, transparency] = this .cache
+            const [node, field, flags] = this .cache
                .getOrInsertComputed (pointer, () => this .getFieldFromPointer (pointer));
 
             if (!field)
@@ -1003,7 +1021,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             switch (field .getType ())
             {
                case X3DConstants .SFBool:
-                  field .setValue (flags [1] ? !value : value);
+                  field .setValue (flags [SOLID_FLAG] ? !value : value);
                   break;
                case X3DConstants .SFDouble:
                case X3DConstants .SFFloat:
@@ -1015,8 +1033,35 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                {
                   field .setValue (this .Color3 .set (... value));
 
-                  if (flags [0])
-                     transparency .setValue (1 - value [3]);
+                  switch (flags [COLOR_FLAG])
+                  {
+                     case BASE_COLOR_FLAG:
+                     {
+                        field .setValue (this .Color3 .set (... value));
+                        node ._transparency .setValue (1 - value [3]);
+                        break;
+                     }
+                     case SPECULAR_COLOR_FLAG:
+                     {
+                        const
+                           max              = Math .max (... value),
+                           specularStrength = Math .max (max, 1);
+
+                        this .Vector3 .set (... value);
+
+                        if (max)
+                           this .Vector3 .divide (specularStrength);
+
+                        field .setValue (this .Color3 .set (... this .Vector3));
+                        node ._specularStrength .setValue (specularStrength);
+                        break;
+                     }
+                     default:
+                     {
+                        field .setValue (this .Color3 .set (... value));
+                        break;
+                     }
+                  }
 
                   break;
                }
@@ -1063,11 +1108,17 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          return [ ];
 
       const
-         field     = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
-         baseColor = GLTFPointerAliases .isBaseColor (node, field),
-         solid     = field .getName () === "solid";
+         field = node .getField (GLTFPointerAliases .getAlias (pointer, node)),
+         solid = field .getName () === "solid";
 
-      return [field, [baseColor, solid], node ._transparency];
+      let colorFlag;
+
+      if (GLTFPointerAliases .isBaseColor (node, field))
+         colorFlag = BASE_COLOR_FLAG;
+      else if (GLTFPointerAliases .isSpecularColor (node, field))
+         colorFlag = SPECULAR_COLOR_FLAG;
+
+      return [node, field, [colorFlag, solid]];
    },
    set_pointing__ ()
    {
