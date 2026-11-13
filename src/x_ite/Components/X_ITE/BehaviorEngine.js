@@ -1095,14 +1095,6 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          case PointingType .MOVE:
          {
             this .engine .hoverOn (parentIndex, 0);
-
-            // Remove sensors to prevent displaying a mouse pointer instead of an arrow.
-            for (const sensor of hit .sensors .keys ())
-            {
-               if (sensor .getType () .at (-1) === X3DConstants .HoverabilityExtension)
-                  hit .sensors .delete (sensor);
-            }
-
             break;
          }
          case PointingType .RELEASE:

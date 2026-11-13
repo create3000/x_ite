@@ -4,7 +4,6 @@ import FieldDefinitionArray       from "../../Base/FieldDefinitionArray.js";
 import X3DNode                    from "../Core/X3DNode.js";
 import X3DInteractivitySensorNode from "./X3DInteractivitySensorNode.js";
 import X3DConstants               from "../../Base/X3DConstants.js";
-import PointingType               from "../../Browser/PointingDeviceSensor/PointingType.js";
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -21,15 +20,12 @@ Object .assign (Object .setPrototypeOf (HoverabilityExtension .prototype, X3DInt
 {
    push (renderObject, sensors)
    {
-      const type = this .getBrowser () .getHit () .type;
-
-      if (type !== PointingType .MOVE)
-         return true;
-
       X3DInteractivitySensorNode .prototype .push .call (this, renderObject, sensors);
 
       return this ._hoverable .getValue ();
    },
+   set_active__ ()
+   { },
 });
 
 Object .defineProperties (HoverabilityExtension,
