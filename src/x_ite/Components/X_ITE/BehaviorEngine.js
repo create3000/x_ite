@@ -360,6 +360,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          }
       }
 
+      // Add special animation pointer.
+
       this .set_animations__ ();
 
       // Determine number of special pointers.
