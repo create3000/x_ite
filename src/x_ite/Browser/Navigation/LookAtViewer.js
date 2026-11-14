@@ -125,6 +125,9 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
 
       const browser = this .getBrowser ();
 
+      if (!browser .getHit () .dblclick)
+         return;
+
       const { x, y } = browser .getPointerFromEvent (event);
 
       this .disconnect ();

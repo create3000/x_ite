@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       else
          this .onverifymotion (x, y);
 
-      if (!(this .over || !browser .getHit () .dblclick))
+      if (!this .over)
          return;
 
       // Stop event propagation and prevent dblclick.
@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
          return;
 
-      if (!(this .over || !browser .getHit () .dblclick))
+      if (!this .over)
          return;
 
       // Stop event propagation.
