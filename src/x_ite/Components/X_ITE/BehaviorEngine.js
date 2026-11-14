@@ -1099,13 +1099,13 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          }
          case PointingType .RELEASE:
          {
-            if (!parentNode)
+            if (parentIndex === undefined)
                break;
 
             const selectionPoint = this .Matrix4
                .assign (hit .modelViewMatrix)
                .inverse ()
-               .multRight (parentNode .getMatrix ?.() ?? Matrix4 .IDENTITY)
+               .multRight (parentNode .getMatrix ())
                .multVecMatrix (hit .point .copy ());
 
             const selectionRayOrigin = this .Matrix4
