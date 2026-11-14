@@ -382,6 +382,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .behavior       = [{ node: behaviorEngine }];
       this .behaviorEngine = behaviorEngine;
+      this .behaviorNodes  = new Set ();
+
    },
    addBehaviorNodes (glTF, KHR_interactivity)
    {
@@ -410,8 +412,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
 
       // Collect behavior nodes.
-
-      this .behaviorNodes = new Set ();
 
       // Add all scene pointers.
 
@@ -3205,8 +3205,11 @@ function eventsProcessed ()
 
       animation .node = groupNode;
 
-      if (this .behaviorEngine)
-         this .behaviorEngine ._animations [id] = timeSensorNode;
+      if (this .behavior)
+      {
+         timeSensorNode .setMetaData ("Interactivity/animation", URLs .getProviderURL (), id);
+         this .behaviorNodes .add (timeSensorNode);
+      }
    },
    animationChannelsArray (channels, samplers, timeSensorNode)
    {

@@ -104,14 +104,12 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       this .getLive () .addInterest ("set_enabled__", this);
 
-      this ._enabled       .addInterest ("set_enabled__",       this);
-      this ._graph         .addInterest ("set_graph__",         this);
-      this ._graphs        .addInterest ("set_graph__",         this);
-      this ._animations    .addInterest ("set_animations__",    this);
-      this ._nodes         .addInterest ("set_nodes__",         this);
+      this ._enabled .addInterest ("set_enabled__", this);
+      this ._graph   .addInterest ("set_graph__",   this);
+      this ._graphs  .addInterest ("set_graph__",   this);
+      this ._nodes   .addInterest ("set_nodes__",   this);
 
       this .set_enabled__ ();
-      this .set_animations__ ();
       this .set_nodes__ ();
       this .set_graph__ ();
    },
@@ -197,17 +195,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    set_animations__ ()
    {
-      this .animations .length = 0;
-
-      for (const node of this ._animations)
-         this .animations .push (X3DCast (X3DConstants .TimeSensor, node));
-
       for (const timeSensor of this .animations)
          timeSensor .setMetaData ("Interactivity/cycleInterval", URLs .getProviderURL (), timeSensor ._cycleInterval);
 
       // Register JSON Pointers
-
-      this .world = null;
 
       const numAnimations = this .animations .length;
 
@@ -235,7 +226,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor [_active]];
+            return [timeSensor ?.[_active]];
          },
          Function .prototype,
          "bool",
@@ -258,7 +249,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
 
-            return [timeSensor .getMetaData ("Interactivity/cycleInterval") [0] ?? 0];
+            return [timeSensor ?.getMetaData ("Interactivity/cycleInterval") [0] ?? 0];
          },
          Function .prototype,
          "float",
@@ -274,6 +265,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             const
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex];
+
+            if (!timeSensor)
+               return [0];
 
             return [timeSensor ._fraction_changed .getValue ()
                * (timeSensor .getMetaData ("Interactivity/cycleInterval") [0] ?? 0)];
@@ -292,9 +286,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             const
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
                timeSensor     = this .animations [animationIndex],
-               reverse        = timeSensor ._reverse .getValue () ? -1 : 1;
+               reverse        = timeSensor ?._reverse .getValue () ? -1 : 1;
 
-            return [timeSensor ._elapsedTime .getValue () * reverse];
+            return [(timeSensor ?._elapsedTime .getValue () ?? 0) * reverse];
          },
          Function .prototype,
          "float",
@@ -303,6 +297,10 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    set_nodes__ ()
    {
+      this .world = null;
+
+      this .animations .length = 0;
+
       this .transformNodes .clear ();
       this .parents        .clear ();
       this .pointers       .clear ();
@@ -310,36 +308,59 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
 
       for (const node of this ._nodes)
       {
-         const _node = X3DCast (X3DConstants .X3DNode, node);
+         const innerNode = X3DCast (X3DConstants .X3DNode, node);
 
-         if (!_node)
+         if (!innerNode)
             continue;
 
-         const matrixNode = X3DCast (X3DConstants .X3DTransformMatrix3DNode, node);
-
-         if (matrixNode)
-         {
-            const nodeIndex = matrixNode .getMetaData ("Interactivity/node") [0] ?? -1;
-
-            if (nodeIndex >= 0)
-            {
-               this .transformNodes .set (nodeIndex, _node);
-
-               for (const child of matrixNode ._children)
-               {
-                  const childNode = X3DCast (X3DConstants .X3DTransformMatrix3DNode, child);
-
-                  if (childNode)
-                     this .parents .set (childNode, nodeIndex);
-               }
-            }
-         }
-
-         const pointers = _node .getMetaData ("Interactivity/pointer");
+         const pointers = innerNode .getMetaData ("Interactivity/pointer");
 
          for (const pointer of pointers)
-            this .pointers .set (pointer, _node);
+            this .pointers .set (pointer, innerNode);
+
+         const type = innerNode .getType ();
+
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case X3DConstants .TimeSensor:
+               {
+                  const animationIndex = innerNode .getMetaData ("Interactivity/animation") [0] ?? -1;
+
+                  if (animationIndex >= 0)
+                     this .animations [animationIndex] = innerNode;
+
+                  break;
+               }
+               case X3DConstants .X3DTransformMatrix3DNode:
+               {
+                  const nodeIndex = innerNode .getMetaData ("Interactivity/node") [0] ?? -1;
+
+                  if (nodeIndex >= 0)
+                  {
+                     this .transformNodes .set (nodeIndex, innerNode);
+
+                     for (const child of innerNode ._children)
+                     {
+                        const childNode = X3DCast (X3DConstants .X3DTransformMatrix3DNode, child);
+
+                        if (childNode)
+                           this .parents .set (childNode, nodeIndex);
+                     }
+                  }
+
+                  break;
+               }
+               default:
+                  continue;
+            }
+
+            break;
+         }
       }
+
+      this .set_animations__ ();
 
       // Determine number of special pointers.
 
@@ -1271,13 +1292,12 @@ Object .defineProperties (BehaviorEngine,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",    new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "version",    new Fields .SFString ("2.1")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",      new Fields .SFInt32 (-1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",     new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "animations", new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "nodes",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "version",  new Fields .SFString ("2.1")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graph",    new Fields .SFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "graphs",   new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "nodes",    new Fields .MFNode ()),
       ]),
       enumerable: true,
    },
