@@ -48,6 +48,7 @@ function X3DPointingDeviceSensorContext ()
 
    this [_hit] = {
       id: 0,
+      dblclick: true,
       pointer: new Vector2 (),
       ray: new Line3 (),
       sensors: new Map (),
@@ -63,6 +64,7 @@ function X3DPointingDeviceSensorContext ()
       {
          return {
             id: this .id,
+            dblclick: true,
             pointer: this .pointer .copy (),
             ray: this .ray .copy (),
             sensors: new Map (this .sensors),

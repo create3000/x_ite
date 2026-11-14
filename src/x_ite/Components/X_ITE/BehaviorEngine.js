@@ -1102,6 +1102,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             if (parentIndex === undefined)
                break;
 
+            // Prevent dblclick.
             hit .dblclick = false;
 
             const selectionPoint = this .Matrix4
