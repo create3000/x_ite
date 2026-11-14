@@ -9,7 +9,13 @@ function X3DInteractivitySensorNode (executionContext)
    this .addType (X3DConstants .X3DInteractivitySensorNode);
 }
 
-Object .setPrototypeOf (X3DInteractivitySensorNode .prototype, X3DPointingDeviceSensorNode .prototype);
+Object .assign (Object .setPrototypeOf (X3DInteractivitySensorNode .prototype, X3DPointingDeviceSensorNode .prototype),
+{
+   changePointerType ()
+   {
+      return false;
+   },
+});
 
 Object .defineProperties (X3DInteractivitySensorNode, X3DNode .getStaticProperties ("X3DInteractivitySensorNode", "X_ITE", 1));
 

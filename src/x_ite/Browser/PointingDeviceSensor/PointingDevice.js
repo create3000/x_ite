@@ -222,7 +222,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       if (browser .getViewer () .isActive ())
          return;
 
-      this .over = browser .motionNotifyEvent (x, y);
+      browser .motionNotifyEvent (x, y);
+
+      this .over = this .checkOver ();
 
       if (this .over)
          browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
@@ -242,6 +244,16 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       await this .getBrowser () .nextFrame ();
 
       this .motion (x, y);
+   },
+   checkOver ()
+   {
+      for (const node of this .getBrowser () .getHit () .sensors .keys ())
+      {
+         if (node .changePointerType ())
+            return true;
+      }
+
+      return false;
    },
    showContextMenu (event)
    {
