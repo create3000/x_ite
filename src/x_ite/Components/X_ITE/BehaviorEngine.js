@@ -1102,6 +1102,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
             if (parentIndex === undefined)
                break;
 
+            hit .dblclick = false;
+
             const selectionPoint = this .Matrix4
                .assign (hit .modelViewMatrix)
                .inverse ()

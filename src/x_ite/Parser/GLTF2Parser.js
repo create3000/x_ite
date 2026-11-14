@@ -3076,12 +3076,6 @@ function eventsProcessed ()
       if (lightNode)
          nodes .unshift (lightNode);
 
-      if (this .extensions .has ("KHR_node_hoverability"))
-         nodes .unshift (this .getScene () .createNode ("HoverabilityExtension"));
-
-      if (this .extensions .has ("KHR_node_selectability"))
-         nodes .unshift (this .getScene () .createNode ("SelectabilityExtension"));
-
       switch (nodes .length)
       {
          case 0:

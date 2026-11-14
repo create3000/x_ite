@@ -107,10 +107,6 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
    },
    set_motion__ (/* hit */)
    { },
-   changePointerType ()
-   {
-      return true;
-   },
    push (renderObject, sensors)
    {
       const sensor = PointingDeviceSensors .pop ();

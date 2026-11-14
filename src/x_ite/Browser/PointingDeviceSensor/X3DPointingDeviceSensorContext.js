@@ -293,7 +293,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Pick.
 
-      hit .type = type;
+      hit .type     = type;
+      hit .dblclick = true;
 
       this [_currentHit]    = hit;
       this [_inputSource]   = inputSource;

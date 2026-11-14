@@ -19,14 +19,12 @@ function SelectabilityExtension (executionContext)
 
 Object .assign (Object .setPrototypeOf (SelectabilityExtension .prototype, X3DInteractivitySensorNode .prototype),
 {
-   push (renderObject, sensors)
+   push ()
    {
       const type = this .getBrowser () .getHit () .type;
 
       if (type !== PointingType .PRESS && type !== PointingType .RELEASE)
          return true;
-
-      X3DInteractivitySensorNode .prototype .push .call (this, renderObject, sensors);
 
       return this ._selectable .getValue ();
    },

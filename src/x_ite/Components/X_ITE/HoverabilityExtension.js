@@ -19,14 +19,12 @@ function HoverabilityExtension (executionContext)
 
 Object .assign (Object .setPrototypeOf (HoverabilityExtension .prototype, X3DInteractivitySensorNode .prototype),
 {
-   push (renderObject, sensors)
+   push ()
    {
       const type = this .getBrowser () .getHit () .type;
 
       if (type !== PointingType .MOVE)
          return true;
-
-      X3DInteractivitySensorNode .prototype .push .call (this, renderObject, sensors);
 
       return this ._hoverable .getValue ();
    },

@@ -81,9 +81,9 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       $.off (this, document);
       $.on (this, surface, "mousemove", event => this .mousemove (event));
 
-      this .click    = browser .buttonReleaseEvent (x, y);
       this .grabbing = false;
 
+      browser .buttonReleaseEvent (x, y);
       browser .setCursor (this .over ? "POINTER" : "DEFAULT");
 
       if (touch)
@@ -91,10 +91,10 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       else
          this .onverifymotion (x, y);
 
-      if (!this .over)
+      if (!(this .over || !browser .getHit () .dblclick))
          return;
 
-      // Stop event propagation.
+      // Stop event propagation and prevent dblclick.
 
       event .preventDefault ();
    },
@@ -105,7 +105,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       if (browser .getShiftKey () && (browser .getControlKey () || browser .getCommandKey ()))
          return;
 
-      if (!(this .over || this .click))
+      if (!(this .over || !browser .getHit () .dblclick))
          return;
 
       // Stop event propagation.
@@ -222,9 +222,7 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       if (browser .getViewer () .isActive ())
          return;
 
-      browser .motionNotifyEvent (x, y);
-
-      this .over = this .checkOver ();
+      this .over = browser .motionNotifyEvent (x, y);
 
       if (this .over)
          browser .setCursor (this .grabbing && move ? "GRABBING" : "POINTER");
@@ -244,16 +242,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       await this .getBrowser () .nextFrame ();
 
       this .motion (x, y);
-   },
-   checkOver ()
-   {
-      for (const node of this .getBrowser () .getHit () .sensors .keys ())
-      {
-         if (node .changePointerType ())
-            return true;
-      }
-
-      return false;
    },
    showContextMenu (event)
    {
