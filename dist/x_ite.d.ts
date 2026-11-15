@@ -1420,6 +1420,7 @@ declare namespace X3D
       readonly ScalarChaser: number;
       readonly ScalarDamper: number;
       readonly ScalarInterpolator: number;
+      readonly ScatterMaterialExtension: number;
       readonly ScreenFontStyle: number;
       readonly ScreenGroup: number;
       readonly Script: number;
@@ -1488,7 +1489,6 @@ declare namespace X3D
       readonly VolumeEmitter: number;
       readonly VolumeMaterialExtension: number;
       readonly VolumePickSensor: number;
-      readonly VolumeScatterMaterialExtension: number;
       readonly WaveShaper: number;
       readonly WindPhysicsModel: number;
       readonly WorldInfo: number;
@@ -17393,6 +17393,59 @@ declare namespace X3D
       readonly value_changed: number;
    }
 
+   /** ScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
+   interface ScatterMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+   {
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * The multi-scatter color. In volumetric mode, this is the multi-scatter albedo. In thin-walled mode, this is a surface tint applied to transmitted light..
+       *
+       * This field is of access type 'inputOutput' and type SFColor.
+       */
+      multiscatterColor: SFColor;
+      /**
+       * A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColor.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      multiscatterColorTexture: X3DSingleTextureNodeProxy | null;
+      /**
+       * Input/Output field multiscatterColorTextureMapping.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      multiscatterColorTextureMapping: string;
+      /**
+       * The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      scatterAnisotropy: number;
+      /**
+       * The strength of the scattering effect. Range is [0, 1]. At 0, scattering is disabled; at 1, scattering is fully applied.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      scatterStrength: number;
+      /**
+       * A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by scatterStrength.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      scatterStrengthTexture: X3DSingleTextureNodeProxy | null;
+      /**
+       * Input/Output field multiscatterColorTextureMapping.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      scatterStrengthTextureMapping: string;
+   }
+
    /** ScreenFontStyle is an X3DFontStyleNode defines the size, family, justification, and other styles used within a screen layout. */
    interface ScreenFontStyleProxy extends X3DFontStyleNodeProxy
    {
@@ -21875,59 +21928,6 @@ declare namespace X3D
       sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED";
    }
 
-   /** VolumeScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
-   interface VolumeScatterMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
-   {
-      /**
-       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
-       *
-       * This field is of access type 'inputOutput' and type SFNode.
-       */
-      metadata: X3DMetadataObjectProxy | null;
-      /**
-       * The multi-scatter color. In volumetric mode, this is the multi-scatter albedo. In thin-walled mode, this is a surface tint applied to transmitted light..
-       *
-       * This field is of access type 'inputOutput' and type SFColor.
-       */
-      multiscatterColor: SFColor;
-      /**
-       * A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColor.
-       *
-       * This field is of access type 'inputOutput' and type SFNode.
-       */
-      multiscatterColorTexture: X3DSingleTextureNodeProxy | null;
-      /**
-       * Input/Output field multiscatterColorTextureMapping.
-       *
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      multiscatterColorTextureMapping: string;
-      /**
-       * The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering.
-       *
-       * This field is of access type 'inputOutput' and type SFFloat.
-       */
-      scatterAnisotropy: number;
-      /**
-       * The strength of the scattering effect. Range is [0, 1]. At 0, scattering is disabled; at 1, scattering is fully applied.
-       *
-       * This field is of access type 'inputOutput' and type SFFloat.
-       */
-      scatterStrength: number;
-      /**
-       * A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by scatterStrength.
-       *
-       * This field is of access type 'inputOutput' and type SFNode.
-       */
-      scatterStrengthTexture: X3DSingleTextureNodeProxy | null;
-      /**
-       * Input/Output field multiscatterColorTextureMapping.
-       *
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      scatterStrengthTextureMapping: string;
-   }
-
    /** WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. */
    interface WaveShaperProxy extends X3DSoundProcessingNodeProxy
    {
@@ -24078,6 +24078,7 @@ declare namespace X3D
       ScalarChaser: ScalarChaserProxy,
       ScalarDamper: ScalarDamperProxy,
       ScalarInterpolator: ScalarInterpolatorProxy,
+      ScatterMaterialExtension: ScatterMaterialExtensionProxy,
       ScreenFontStyle: ScreenFontStyleProxy,
       ScreenGroup: ScreenGroupProxy,
       Script: ScriptProxy,
@@ -24146,7 +24147,6 @@ declare namespace X3D
       VolumeEmitter: VolumeEmitterProxy,
       VolumeMaterialExtension: VolumeMaterialExtensionProxy,
       VolumePickSensor: VolumePickSensorProxy,
-      VolumeScatterMaterialExtension: VolumeScatterMaterialExtensionProxy,
       WaveShaper: WaveShaperProxy,
       WindPhysicsModel: WindPhysicsModelProxy,
       WorldInfo: WorldInfoProxy,

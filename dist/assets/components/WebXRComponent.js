@@ -1,4 +1,4 @@
-/* X_ITE v16.7.1 */
+/* X_ITE v16.8.0 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -228,6 +228,9 @@ const __default__ = ScreenPoint;
 ;
 
 /* harmony default export */ const Rendering_ScreenPoint = (external_X_ITE_X3D_Namespace_default().add ("ScreenPoint", __default__));
+;// external "__X_ITE_X3D__ .PointingType"
+const external_X_ITE_X3D_PointingType_namespaceObject = __X_ITE_X3D__ .PointingType;
+var external_X_ITE_X3D_PointingType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_PointingType_namespaceObject);
 ;// external "__X_ITE_X3D__ .ViewVolume"
 const external_X_ITE_X3D_ViewVolume_namespaceObject = __X_ITE_X3D__ .ViewVolume;
 var external_X_ITE_X3D_ViewVolume_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ViewVolume_namespaceObject);
@@ -394,6 +397,7 @@ Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
 
 
 
+
 const
    _xrButton       = Symbol (),
    _sessionLock    = Symbol (),
@@ -456,26 +460,14 @@ Object .assign (X3DWebXRContext .prototype,
             return;
 
          const
-            gl             = this .getContext (),
-            mode           = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-"),
-            session        = await navigator .xr .requestSession (mode),
-            referenceSpace = await session .requestReferenceSpace ("local");
+            gl   = this .getContext (),
+            mode = this .getBrowserOption ("XRSessionMode") .toLowerCase () .replaceAll ("_", "-");
 
          await gl .makeXRCompatible ();
 
-         this .displayFinishEvents () .addInterest ("xrUpdatePointers", this);
+         const session = await navigator .xr .requestSession (mode);
 
-         session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
-         session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
-         session .addEventListener ("end", () => this .xrStopSession ());
-
-         this [_referenceSpace] = referenceSpace;
-         this [_visible]        = true;
-         this [_inputSources]   = new Set ();
-         this [_inputRay]       = new (external_X_ITE_X3D_ScreenLine_default()) (this, 4, 2, 0.9);
-         this [_inputPoint]     = new Rendering_ScreenPoint (this);
-
-         Object .assign (this [_gamepads], { action: true });
+         this .setSession (session);
 
          this [_pose] = {
             cameraSpaceMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
@@ -483,9 +475,22 @@ Object .assign (X3DWebXRContext .prototype,
             views: [ ],
          };
 
+         this [_referenceSpace] = await session .requestReferenceSpace ("local");;
+         this [_visible]        = true;
+         this [_inputSources]   = new Set ();
+         this [_inputRay]       = new (external_X_ITE_X3D_ScreenLine_default()) (this, 4, 2, 0.9);
+         this [_inputPoint]     = new Rendering_ScreenPoint (this);
+
+         Object .assign (this [_gamepads], { action: true });
+
          this .xrUpdateBaseLayer ({ }, session);
-         this .setSession (session);
-         this .removeHit (this .getHit ());
+         this .buttonReleaseEvent (NaN, NaN);
+
+         this .displayFinishEvents () .addInterest ("xrUpdatePointers", this);
+
+         session .addEventListener ("visibilitychange", () => this .xrUpdateVisibility ());
+         session .addEventListener ("inputsourceschange", event => this .xrUpdateInputSources (event));
+         session .addEventListener ("end", () => this .xrStopSession ());
 
          // Browser Options
 
@@ -526,7 +531,7 @@ Object .assign (X3DWebXRContext .prototype,
          this .setDefaultFramebuffer (null);
 
          for (const { hit } of this [_inputSources])
-            this .removeHit (hit);
+            this .buttonReleaseEvent (0, 0, hit);
 
          this [_referenceSpace] = null;
          this [_baseLayer]      = null;
@@ -640,7 +645,7 @@ Object .assign (X3DWebXRContext .prototype,
 
       for (const inputSource of event .removed)
       {
-         this .removeHit (inputSource .hit);
+         this .buttonReleaseEvent (0, 0, inputSource .hit);
          this [_inputSources] .delete (inputSource);
       }
 
@@ -770,7 +775,7 @@ Object .assign (X3DWebXRContext .prototype,
             if (!active)
                continue;
 
-            this .touch (viewport [2] / 2, viewport [3] / 2, hit, inputSource);
+            this .touch ((external_X_ITE_X3D_PointingType_default()).MOVE, viewport [2] / 2, viewport [3] / 2, hit, inputSource);
 
             // Make a vibration puls if there is a sensor hit.
 
@@ -831,7 +836,7 @@ Object .assign (X3DWebXRContext .prototype,
                {
                   hit .pressed = false;
 
-                  this .buttonReleaseEvent (hit);
+                  this .buttonReleaseEvent (0, 0, hit);
                }
             }
 
