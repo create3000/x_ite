@@ -176,7 +176,7 @@ In addition, the glTF parser can now handle [KHR_meshopt_compression](https://gi
 ### Notable Changes
 
 - [x] The Walk and Fly viewers come now with a new feature »Slide Along Walls« and new [browser option](/x_ite/reference/browser-services/#browser-options) `WallFriction`.
-- [x] New glTF extension [KHR_materials_volume_scatter](/x_ite/components/x-ite/volumescattermaterialextension/) implemented.
+- [x] New glTF extension [KHR_materials_volume_scatter](/x_ite/components/x-ite/scattermaterialextension/) implemented.
 - [x] If a glTF file with animations is loaded, a new »Animations« menu will appear in the context menu.
 - [x] Optimized creation of [HAnimMotion](/x_ite/components/hanim/hanimmotion/) interpolators.
 - [x] glTF Parser now supports extension [KHR_node_visibility](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility) with animation pointers.
