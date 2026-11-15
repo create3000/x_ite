@@ -5,7 +5,41 @@ nav: main
 categories: []
 tags: [New, Releases]
 ---
+
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
+
+## X_ITE v16.8 Series
+
+**Leipzig, 15th November 2026:** The 16.8 series of X_ITE introduces basic support for **KHR_interactivity**, a glTF 2.0 extension that brings interactive behavior directly into 3D assets.
+
+Using node-based behavior graphs, KHR_interactivity allows creators to define how their 3D content responds to events and user interactions without requiring application-specific code. These graphs can combine events, control flow, calculations, and actions to control animations, modify object transformations, change material properties, and manage internal state.
+
+This makes it possible to create self-contained interactive glTF experiences that can be shared across compatible viewers and applications. For example, a single glTF model can contain the logic for an interactive product configurator, respond to clicks by starting animations, or dynamically change its appearance based on user input.
+
+With this addition, X_ITE takes another step toward making interactive 3D content portable and reusable across platforms.
+
+Learn more about the extension in the [KHR_interactivity specification](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_interactivity/Specification.adoc).
+
+### Examples
+
+![A Beautiful Game Interactivity](/assets/img/whats-new/a-beautiful-game-interactivity.avif){: .normal .w-25 }![Construction Site](/assets/img/whats-new/construction-site.avif){: .normal .w-25 }![Physics Math](/assets/img/whats-new/physics-math.avif){: .normal .w-25 }![Sundial](/assets/img/whats-new/sundial.avif){: .normal .w-25 }
+
+- [A Beautiful Game Interactivity](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ABeautifulGameInteractivity/glTF/ABeautifulGameInteractivity.gltf)
+- [Active Camera](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ActiveCamera/glTF/ActiveCamera.gltf)
+- [Bow Shooting](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/BowShooting/glTF/BowShooting.gltf)
+- [Calculator](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Calculator/glTF/Calculator.gltf)
+- [Construction Site](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ConstructionSite/glTF/ConstructionSite.gltf)
+- [Events](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Events/glTF/Events.gltf)
+- [Flocking](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Flocking/glTF/Flocking.gltf)
+- [Ghost](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Ghost/glTF/ghost_v2.gltf)
+- [Magic Ball](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/MagicBall/glTF/MagicBall.gltf)
+- [Performance Test](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/PerformanceTest/glTF/PerformanceTest.gltf)
+- [Physics Math](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/PhysicsMath/glTF/PhysicsMath.gltf)
+- [Puzzle](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Puzzle/glTF/PlaceOnClickPuzzle.gltf)
+- [Snail Race](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/SnailRace/glTF/SnailRace.gltf)
+- [Sundial](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Sundial/glTF/Sundial.gltf)
+- [Traffic Light](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/TrafficLight/glTF/TrafficLight.gltf)
+- [Whack A Mole](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/WhackAMole/glTF/WhackAMole.gltf)
 
 ## X_ITE v16.5 Series
 
