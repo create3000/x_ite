@@ -1146,12 +1146,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
    },
    getWorld ()
    {
-      return this .world ??= (() =>
-      {
-         return {
-            animations: new Array (this .animations .length),
-         };
-      })();
+      return this .world ??= {
+         animations: new Array (this .animations .length),
+      };
    },
    startAnimation (animationIndex, startTime, stopTime, speed, endCallback)
    {
