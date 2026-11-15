@@ -16,6 +16,8 @@ Using node-based behavior graphs, KHR_interactivity allows creators to define ho
 
 This makes it possible to create self-contained interactive glTF experiences that can be shared across compatible viewers and applications. For example, a single glTF model can contain the logic for an interactive product configurator, respond to clicks by starting animations, or dynamically change its appearance based on user input.
 
+Please note that **morph target weights and skin-related properties are not yet supported** by the current implementation.
+
 With this addition, X_ITE takes another step toward making interactive 3D content portable and reusable across platforms.
 
 Learn more about the extension in the [KHR_interactivity specification](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_interactivity/Specification.adoc).
