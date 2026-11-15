@@ -775,6 +775,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._cutOffAngle = this .numberValue (light .spot ?.outerConeAngle, Math .PI / 4);
       lightNode ._beamWidth   = this .numberValue (light .spot ?.innerConeAngle, 0);
 
+      light .spot ??= { };
       light .spot .pointers = [lightNode];
 
       return lightNode;
