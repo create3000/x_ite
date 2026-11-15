@@ -77,7 +77,7 @@ Output field *isActive*.
 
 ## Example
 
-- [View »Anisotropy Barn Lamp« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Ghost/glTF/ghost_v2.gltf)
+- [View »Ghost« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/Ghost/glTF/ghost_v2.gltf)
 
 ## Browser Compatibility
 

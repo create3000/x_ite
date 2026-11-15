@@ -76,7 +76,7 @@ Input/Output field *nodes*.
 
 ## Example
 
-- [View »Anisotropy Barn Lamp« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/PhysicsMath/glTF/PhysicsMath.gltf)
+- [View »Physics Math« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/PhysicsMath/glTF/PhysicsMath.gltf)
 
 ## Browser Compatibility
 
