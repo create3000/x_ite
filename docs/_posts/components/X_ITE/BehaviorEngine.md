@@ -74,6 +74,10 @@ Input/Output field *graphs*.
 
 Input/Output field *nodes*.
 
+## Example
+
+- [View »Anisotropy Barn Lamp« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/PhysicsMath/glTF/PhysicsMath.gltf)
+
 ## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
