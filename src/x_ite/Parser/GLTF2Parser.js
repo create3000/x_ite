@@ -23,7 +23,9 @@ import $                  from "../../lib/helper.js";
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Assets
 
-const SAMPLES_PER_SECOND = 30; // in 1/s
+const
+   REFERENCE          = URLs .getProviderURL (),
+   SAMPLES_PER_SECOND = 30; // in 1/s
 
 function GLTF2Parser (scene)
 {
@@ -500,7 +502,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       {
          const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
 
-         node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), Fields .MFString .from (new Set (value)));
+         node .setMetaData ("Interactivity/pointer", REFERENCE, Fields .MFString .from (new Set (value)));
       }
 
       // Add behavior nodes.
@@ -542,7 +544,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                const lightIndex = +lightIndexMatch [1];
 
-               node .setMetaData ("Interactivity/light", URLs .getProviderURL (), new Fields .SFInt32 (lightIndex));
+               node .setMetaData ("Interactivity/light", REFERENCE, new Fields .SFInt32 (lightIndex));
                break;
             }
             case X3DConstants .X3DMaterialNode:
@@ -554,7 +556,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                const materialIndex = +materialIndexMatch [1];
 
-               node .setMetaData ("Interactivity/material", URLs .getProviderURL (), new Fields .SFInt32 (materialIndex));
+               node .setMetaData ("Interactivity/material", REFERENCE, new Fields .SFInt32 (materialIndex));
                break;
             }
             case X3DConstants .X3DTransformMatrix3DNode:
@@ -568,10 +570,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   nodeIndex = +nodeIndexMatch [1],
                   mesh      = this .nodes [nodeIndex] .mesh;
 
-               node .setMetaData ("Interactivity/node", URLs .getProviderURL (), new Fields .SFInt32 (nodeIndex));
+               node .setMetaData ("Interactivity/node", REFERENCE, new Fields .SFInt32 (nodeIndex));
 
                if (mesh !== undefined)
-                  node .setMetaData (`Interactivity/mesh`, URLs .getProviderURL (), new Fields .SFInt32 (mesh));
+                  node .setMetaData (`Interactivity/mesh`, REFERENCE, new Fields .SFInt32 (mesh));
 
                break;
             }
@@ -584,7 +586,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                const cameraIndex = +cameraIndexMatch [1];
 
-               node .setMetaData ("Interactivity/camera", URLs .getProviderURL (), new Fields .SFInt32 (cameraIndex));
+               node .setMetaData ("Interactivity/camera", REFERENCE, new Fields .SFInt32 (cameraIndex));
                break;
             }
             default:
@@ -597,7 +599,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const value = node .getMetaData ("Interactivity/pointer", new Fields .MFString ());
 
       value .push (pointer);
-      node .setMetaData ("Interactivity/pointer", URLs .getProviderURL (), value);
+      node .setMetaData ("Interactivity/pointer", REFERENCE, value);
 
       behaviorNodes .add (node);
    },
@@ -3159,7 +3161,7 @@ function eventsProcessed ()
       switchNode ._visible     = false;
 
       switchNode .setup ();
-      switchNode .setMetaData ("Interactivity/materialVariants", URLs .getProviderURL (), Fields .MFString .fromArray (names));
+      switchNode .setMetaData ("Interactivity/materialVariants", REFERENCE, Fields .MFString .fromArray (names));
 
       for (const variantNode of this .materialVariantNodes)
          scene .addRoute (switchNode, "whichChoice", variantNode, "whichChoice");
@@ -3174,7 +3176,7 @@ function eventsProcessed ()
       for (const [i, animation] of animations .entries ())
          this .animationObject (i, animation);
    },
-   animationObject (id, animation)
+   animationObject (index, animation)
    {
       if (!(animation instanceof Object))
          return null;
@@ -3191,12 +3193,12 @@ function eventsProcessed ()
          groupNode = scene .createNode ("Group", false),
          name      = this .sanitizeName (animation .name);
 
-      scene .addNamedNode (scene .getUniqueName (name || `Animation${id + 1}`), groupNode);
-      scene .addNamedNode (scene .getUniqueName (`Timer${id + 1}`), timeSensorNode);
-      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${id + 1}`), groupNode);
-      scene .addExportedNode (scene .getUniqueExportName (`Timer${id + 1}`), timeSensorNode);
+      scene .addNamedNode (scene .getUniqueName (name || `Animation${index + 1}`), groupNode);
+      scene .addNamedNode (scene .getUniqueName (`Timer${index + 1}`), timeSensorNode);
+      scene .addExportedNode (scene .getUniqueExportName (name || `Animation${index + 1}`), groupNode);
+      scene .addExportedNode (scene .getUniqueExportName (`Timer${index + 1}`), timeSensorNode);
 
-      timeSensorNode ._description = this .description (animation .name) || `Animation ${id + 1}`;
+      timeSensorNode ._description = this .description (animation .name) || `Animation ${index + 1}`;
 
       groupNode ._children .push (timeSensorNode, ... channelNodes);
 
@@ -3207,7 +3209,7 @@ function eventsProcessed ()
 
       if (this .behavior)
       {
-         timeSensorNode .setMetaData ("Interactivity/animation", URLs .getProviderURL (), id);
+         timeSensorNode .setMetaData ("Interactivity/animation", REFERENCE, index);
          this .behaviorNodes .add (timeSensorNode);
       }
    },
