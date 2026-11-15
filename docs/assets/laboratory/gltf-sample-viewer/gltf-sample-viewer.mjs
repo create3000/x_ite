@@ -953,7 +953,7 @@ class SampleViewer
    {
       if (show)
       {
-         $("#options") .show ();
+         $("#options") .css ("display", "");
       }
       else
       {
