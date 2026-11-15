@@ -87,4 +87,4 @@ Input/Output field *nodes*.
 
 ## See Also
 
-- [Khronos glTF Specification of the KHR_interactivity Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_interactivity)
+- [Khronos glTF Specification of the KHR_interactivity Extension](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_interactivity/Specification.adoc)
