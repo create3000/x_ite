@@ -20,7 +20,14 @@ Please note that **morph target weights and skin-related properties are not yet 
 
 With this addition, X_ITE takes another step toward making interactive 3D content portable and reusable across platforms.
 
-Learn more about the extension in the [KHR_interactivity specification](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_interactivity/Specification.adoc).
+> **Tip:** Learn more about the extension in the [KHR_interactivity specification](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_interactivity/Specification.adoc).
+{: .prompt-tip }
+
+X_ITE supports glTF Interactivity thanks to the introduction of a new [BehaviorEngine](/x_ite/components/x-ite/behaviorengine/) node and two new extensions: [HoverabilityExtension](/x_ite/components/x-ite/hoverabilityextension/) and [SelectabilityExtension](/x_ite/components/x-ite/selectabilityextension/).
+
+The BehaviorEngine loads and processes glTF Interactivity graphs defined as JSON string, executing their defined logic and behaviors. It uses the official Khronos implementation, [@khronosgroup/gltf-interactivity-engine](https://www.npmjs.com/package/@khronosgroup/gltf-interactivity-engine). There is a *nodes* field which has all nodes that can be manipulated by the engine. Almost all nodes have metadata nodes with special values needed for the engine.
+
+The HoverabilityExtension and SelectabilityExtension provide the necessary interaction capabilities, allowing glTF scenes to respond to user input such as hovering over and selecting objects. They are based on X3DPointingDeviceSensorNode and have each a new SFBool field hoverable or selectable. While all nodes are *selectable* by *default*, even without the use of one of the extensions, they provide a way to disable a hierarchy from hovering or selecting nodes, as required by glTF. The outputs isOver and isActive are not used, because glTF selection works different from X3D.
 
 ### Examples
 
