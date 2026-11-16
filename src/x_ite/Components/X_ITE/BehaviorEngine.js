@@ -94,6 +94,8 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this .eventBus = new Interactivity .DOMEventBus ();
       this .engine   = new Interactivity .BasicBehaveEngine (this .fps, this .eventBus);
 
+      this .engine .pauseEventQueue ();
+
       this .engine .getWorld           = () => this .getWorld ();
       this .engine .startAnimation     = (... args) => this .startAnimation (... args);
       this .engine .stopAnimation      = (... args) => this .stopAnimation (... args);
@@ -109,9 +111,9 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       this ._graphs  .addInterest ("set_graph__",   this);
       this ._nodes   .addInterest ("set_nodes__",   this);
 
-      this .set_enabled__ ();
       this .set_nodes__ ();
       this .set_graph__ ();
+      this .set_enabled__ ();
    },
    set_enabled__ ()
    {
