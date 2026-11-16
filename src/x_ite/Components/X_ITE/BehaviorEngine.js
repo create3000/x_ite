@@ -1158,7 +1158,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          return;
 
       const
-         currentTime    = this .getBrowser () .getCurrentTime (),
+         currentTime    = Date .now () / 1_000,
          cycleInterval  = timeSensor .getMetaData ("Interactivity/cycleInterval") [0] ?? 1,
          signedDuration = (stopTime - startTime) % cycleInterval;
 
@@ -1227,7 +1227,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
       // if (DEVELOPMENT)
       //    console .log ("stop", animationIndex)
 
-      timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+      timeSensor ._stopTime = Date .now () / 1_000;
 
       timeSensor [_doneCallback] = undefined;
    },
