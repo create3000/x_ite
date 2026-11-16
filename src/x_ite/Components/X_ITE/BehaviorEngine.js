@@ -288,11 +288,7 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
                timeSensor     = this .animations [animationIndex],
                reverse        = timeSensor ?._reverse .getValue () ? -1 : 1;
 
-            if (!timeSensor)
-               return [0];
-
-            return [timeSensor ._fraction_changed .getValue ()
-               * timeSensor ._cycleInterval .getValue () * reverse];
+            return [Math .max (timeSensor ?._elapsedTime .getValue () ?? 0, 0) * reverse];
          },
          Function .prototype,
          "float",
