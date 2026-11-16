@@ -285,10 +285,14 @@ Object .assign (Object .setPrototypeOf (BehaviorEngine .prototype, X3DChildNode 
          {
             const
                animationIndex = +pointer .match (/^\/animations\/(\d+)\//) [1],
-               timeSensor     = this .animations [animationIndex],
-               reverse        = timeSensor ?._reverse .getValue () ? -1 : 1;
+               timeSensor     = this .animations [animationIndex];
 
-            return [Math .max (timeSensor ?._elapsedTime .getValue () ?? 0, 0) * reverse];
+            if (!timeSensor)
+               return [0];
+
+            const reverse = timeSensor ._reverse .getValue () ? -1 : 1;
+
+            return [Math .max (timeSensor ._elapsedTime .getValue (), 0) * reverse];
          },
          Function .prototype,
          "float",
