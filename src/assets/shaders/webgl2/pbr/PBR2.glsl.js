@@ -331,7 +331,16 @@ getMaterialColor (const in vec4 fragCoord)
       {
          // BSTF
          vec3 l = normalize (pointToLight);   // Direction from surface point to light
-         vec3 h = normalize (l + v);          // Direction of the vector between l and v, called halfway vector
+
+         // Direction of the vector between l and v, called halfway vector
+         // When the light is directly behind the surface (l == -v) the halfway vector
+         // degenerates to zero, and normalizing it yields NaN which blackens the pixel.
+         // Fall back to the normal, whose exact value is irrelevant here because the
+         // front-face contribution is zero at NdotL == 0 anyway.
+         vec3  h    = l + v;
+         float hLen = length (h);
+
+         h = hLen > 1e-5 ? h / hLen : n;
 
          float NdotL = clamp (dot (n, l), 0.0, 1.0);
          float NdotH = clamp (dot (n, h), 0.0, 1.0);
@@ -353,6 +362,7 @@ getMaterialColor (const in vec4 fragCoord)
          vec3  l_sheen               = vec3 (0.0);
          float l_albedoSheenScaling  = 1.0;
          vec3  l_diffuse_btdf        = vec3 (0.0);
+         vec3  l_transmission        = vec3 (0.0);
 
          #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
             l_diffuse *= 1.0 - materialInfo .diffuseTransmissionFactor;
@@ -363,11 +373,6 @@ getMaterialColor (const in vec4 fragCoord)
 
                l_diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
 
-               vec3  l_mirror     = normalize (reflect (l, n)); // Mirror light reflection vector on surface
-               float diffuseVdotH = clamp (dot (v, normalize (l_mirror + v)), 0.0, 1.0);
-
-               dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (diffuseVdotH));
-
                #if defined (X3D_VOLUME_MATERIAL_EXT)
                   l_diffuse_btdf = applyVolumeAttenuation (l_diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
                #endif
@@ -375,8 +380,6 @@ getMaterialColor (const in vec4 fragCoord)
                #if defined (X3D_SCATTER_MATERIAL_EXT)
                   l_diffuse_btdf *= (1.0 - singleScatter);
                #endif
-
-               l_diffuse += l_diffuse_btdf * materialInfo .diffuseTransmissionFactor;
             }
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
@@ -417,7 +420,8 @@ getMaterialColor (const in vec4 fragCoord)
                }
             #endif
 
-            l_diffuse = mix (l_diffuse, transmittedLight, materialInfo .transmissionFactor);
+            l_diffuse     *= (1.0 - materialInfo .transmissionFactor);
+            l_transmission = transmittedLight;
          #endif
 
          // Calculation of analytical light
@@ -478,6 +482,30 @@ getMaterialColor (const in vec4 fragCoord)
          #if defined (X3D_SHEEN_MATERIAL_EXT)
             l_sheen              = intensity * getPunctualRadianceSheen (materialInfo .sheenColorFactor, materialInfo .sheenRoughnessFactor, NdotL, NdotV, NdotH);
             l_albedoSheenScaling = min (1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor), 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotL, materialInfo .sheenRoughnessFactor));
+         #endif
+
+         #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT) || defined (X3D_TRANSMISSION_MATERIAL_EXT)
+            // Transmitted light exits through the front face, so it is gated by the
+            // front-face transmittance at the view angle, not by the reflection Fresnel.
+            // The reflection Fresnel approaches 1 for a light directly behind the
+            // surface (VdotH ~ 0), which would otherwise erase the transmission.
+            vec3 transmittance = 1.0 - F_Schlick(materialInfo.f0_dielectric * materialInfo.specularWeight, materialInfo.f90_dielectric, NdotV);
+         #endif
+
+         #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+            // Specular transmission (KHR_materials_transmission) overrides diffuse
+            // transmission when both are present.
+            float diffuseTransmissionScale = materialInfo .diffuseTransmissionFactor;
+
+            #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+               diffuseTransmissionScale *= 1.0 - materialInfo .transmissionFactor;
+            #endif
+
+            l_dielectric_brdf += l_diffuse_btdf * diffuseTransmissionScale * transmittance;
+         #endif
+
+         #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+            l_dielectric_brdf += l_transmission * materialInfo .transmissionFactor * transmittance;
          #endif
 
          vec3 l_color = mix (l_dielectric_brdf, l_metal_brdf, materialInfo .metallic);

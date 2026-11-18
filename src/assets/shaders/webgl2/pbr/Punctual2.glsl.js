@@ -102,10 +102,17 @@ getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const
     vec3 v        = normalize (view);             // Direction from surface point to view
     vec3 l        = normalize (pointToLight);
     vec3 l_mirror = normalize (l + 2.0 * n * dot (-l, n)); // Mirror light reflection vector on surface
-    vec3 h        = normalize (l_mirror + v);              // Halfway vector between transmission light vector and v
 
-    float D   = D_GGX (clamp (dot (n, h), 0.0, 1.0), transmissionRoughness);
-    float Vis = V_GGX (clamp (dot (n, l_mirror), 0.0, 1.0), clamp (dot (n, v), 0.0, 1.0), transmissionRoughness);
+    // The transmission half-vector degenerates when the mirrored light is exactly
+    // opposite the view (l_mirror == -v), and normalizing zero yields NaN which
+    // blackens the pixel. Fall back to the normal, which keeps D finite.
+    vec3  h    = l_mirror + v;
+    float hLen = length (h);
+
+    h = hLen > 1e-5 ? h / hLen : n;
+
+    float D   = D_GGX (abs (dot (n, h)), transmissionRoughness);
+    float Vis = V_GGX (abs (dot (n, l_mirror)), abs (dot (n, v)), transmissionRoughness);
 
     // Transmission BTDF
     return baseColor * D * Vis;
