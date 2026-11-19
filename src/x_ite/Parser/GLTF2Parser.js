@@ -893,6 +893,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          [5123, 2], // Uint16Array
          [5124, 4], // Int32Array
          [5125, 4], // Uint32Array
+         [5134, 8], // BigInt64Array
+         [5135, 8], // BigUint64Array
          [5131, 2], // Float16Array
          [5126, 4], // Float32Array
          [5130, 8], // Float64Array
@@ -975,6 +977,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          [5123, Uint16Array],
          [5124, Int32Array],
          [5125, Uint32Array],
+         [5134, BigInt64Array],
+         [5135, BigUint64Array],
          [5131, Float16Array],
          [5126, Float32Array],
          [5130, Float64Array],
@@ -1105,10 +1109,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             return Float32Array .from (array, v => Math .max (v / 2147483647, -1));
          case 5125: // Uint32Array
             return Float32Array .from (array, v => v / 4294967295);
+         // Their normalized property MUST NOT be set to true:
+         case 5134: // BigInt64Array
+         case 5135: // BigUint64Array
          case 5131: // Float16Array
          case 5126: // Float32Array
          case 5130: // Float64Array
-            return array; // Their normalized property MUST NOT be set to true;
+            return array;
       }
    },
    samplersArray (samplers)
