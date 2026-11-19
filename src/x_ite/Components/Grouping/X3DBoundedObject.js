@@ -9,8 +9,7 @@ function X3DBoundedObject (/* executionContext */)
 {
    this .addType (X3DConstants .X3DBoundedObject);
 
-   this .addChildObjects (X3DConstants .outputOnly, "hidden",           new Fields .SFBool (),
-                          X3DConstants .outputOnly, "display",          new Fields .SFBool (true),
+   this .addChildObjects (X3DConstants .outputOnly, "hidden",           new Fields .SFInt32 (),
                           X3DConstants .outputOnly, "transformSensors", new Fields .SFTime ());
 
    // Units
@@ -29,27 +28,23 @@ Object .assign (X3DBoundedObject .prototype,
    childBBox: new Box3 (), // X3DExecutionContext needs this.
    initialize ()
    {
-      this ._hidden     .addInterest ("set_visible_and_hidden__",      this);
-      this ._visible    .addInterest ("set_visible_and_hidden__",      this);
-      this ._bboxSize   .addInterest ("set_bboxSize_and_bboxCenter__", this);
-      this ._bboxCenter .addInterest ("set_bboxSize_and_bboxCenter__", this);
+      this ._visible    .addInterest ("set_visible__",       this);
+      this ._bboxSize   .addInterest ("set_bboxSizeCenter__", this);
+      this ._bboxCenter .addInterest ("set_bboxSizeCenter__", this);
 
-      this .set_visible_and_hidden__ ();
+      this .set_visible__ ();
    },
    isVisible ()
    {
-      return this ._display .getValue ();
+      return !this ._hidden .getValue ();
    },
    isHidden ()
    {
-      return this ._hidden .getValue ();
+      return this ._hidden .getValue () & 0b1;
    },
    setHidden (value)
    {
-      if (value === this ._hidden .getValue ())
-         return;
-
-      this ._hidden = value;
+      this .setNodeFlag (this ._hidden, 0, value);
    },
    isDefaultBBoxSize ()
    {
@@ -101,16 +96,11 @@ Object .assign (X3DBoundedObject .prototype,
    {
       return this .transformSensorNodes;
    },
-   set_visible_and_hidden__ ()
+   set_visible__ ()
    {
-      const value = this ._visible .getValue () && !this ._hidden .getValue ();
-
-      if (value === this ._display .getValue ())
-         return;
-
-      this ._display = value;
+      this .setNodeFlag (this ._hidden, 1, !this ._visible .getValue ());
    },
-   set_bboxSize_and_bboxCenter__ ()
+   set_bboxSizeCenter__ ()
    {
       this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
    },

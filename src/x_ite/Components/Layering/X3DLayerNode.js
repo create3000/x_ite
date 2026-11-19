@@ -21,7 +21,7 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    this .addType (X3DConstants .X3DLayerNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "hidden",  new Fields .SFBool (),
+   this .addChildObjects (X3DConstants .inputOutput, "hidden",  new Fields .SFInt32 (),
                           X3DConstants .outputOnly,  "display", new Fields .SFBool (true));
 
    // Legacy
@@ -85,11 +85,10 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       X3DNode         .prototype .initialize .call (this);
       X3DRenderObject .prototype .initialize .call (this);
 
-      this ._hidden         .addInterest ("set_visible_and_hidden__", this);
-      this ._visible        .addInterest ("set_visible_and_hidden__", this);
-      this ._viewport       .addInterest ("set_viewport__",           this);
-      this ._addChildren    .addInterest ("set_addChildren__",        this);
-      this ._removeChildren .addInterest ("set_removeChildren__",     this);
+      this ._visible        .addInterest ("set_visible__",        this);
+      this ._viewport       .addInterest ("set_viewport__",       this);
+      this ._addChildren    .addInterest ("set_addChildren__",    this);
+      this ._removeChildren .addInterest ("set_removeChildren__", this);
 
       this ._children .addFieldInterest (this .groupNode ._children);
       this .groupNode ._children .addFieldInterest (this ._children);
@@ -115,19 +114,20 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       this .backgrounds     .setup ();
       this .fogs            .setup ();
 
-      this .set_visible_and_hidden__ ();
+      this .set_visible__ ();
       this .set_viewport__ ();
+   },
+   isVisible ()
+   {
+      return !this ._hidden .getValue ();
    },
    isHidden ()
    {
-      return this ._hidden .getValue ();
+      return this ._hidden .getValue () & 0b1;
    },
    setHidden (value)
    {
-      if (value === this ._hidden .getValue ())
-         return;
-
-      this ._hidden = value;
+      this .setNodeFlag (this ._hidden, 0, value);
    },
    getBBox (bbox, shadows)
    {
@@ -229,14 +229,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       this .getViewpoint () .straightenView (this);
    },
-   set_visible_and_hidden__ ()
+   set_visible__ ()
    {
-      const value = this ._visible .getValue () && !this ._hidden .getValue ();
-
-      if (value === this ._display .getValue ())
-         return;
-
-      this ._display = value;
+      this .setNodeFlag (this ._hidden, 1, !this ._visible .getValue ());
    },
    set_viewport__ ()
    {

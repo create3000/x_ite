@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
          }
       }
 
-      if (!activeLayerNode ?._display .getValue ())
+      if (!activeLayerNode ?.isVisible ())
          activeLayerNode = null;
 
       if (this ._activeLayerNode .getValue () !== activeLayerNode)
@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
       const layers = this ._layers .getValue ();
 
       for (const layerNode of this .layerNodes)
-         layerNode ._display .removeInterest ("set_layers__", this);
+         layerNode ._hidden .removeInterest ("set_layers__", this);
 
       this .layerNodes .length = 0;
 
@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
       {
          if (index === 0)
          {
-            this .layerNode0 ._display .addInterest ("set_layers__", this);
+            this .layerNode0 ._hidden .addInterest ("set_layers__", this);
             this .layerNodes .push (this .layerNode0);
          }
          else
@@ -107,9 +107,9 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, X3DNode .prototype)
                if (!layerNode)
                   continue;
 
-               layerNode ._display .addInterest ("set_layers__", this);
+               layerNode ._hidden .addInterest ("set_layers__", this);
 
-               if (layerNode ._display .getValue ())
+               if (layerNode .isVisible ())
                   this .layerNodes .push (layerNode);
             }
          }
