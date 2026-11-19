@@ -66,7 +66,7 @@ getMaterialColor (const in vec4 fragCoord)
       float NdotV = clamp (dot (n, v), 0.0, 1.0);
 
       #if defined (X3D_RETROREFLECTION_MATERIAL_EXT)
-         vec3 v_retro = normalize (reflect (-v, n));
+         vec3 v_retro = reflect (-v, n);
       #endif
    #endif
 
