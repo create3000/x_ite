@@ -21,8 +21,7 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    this .addType (X3DConstants .X3DLayerNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "hidden",  new Fields .SFInt32 (),
-                          X3DConstants .outputOnly,  "display", new Fields .SFBool (true));
+   this .addChildObjects (X3DConstants .inputOutput, "hidden", new Fields .SFInt32 ());
 
    // Legacy
 
