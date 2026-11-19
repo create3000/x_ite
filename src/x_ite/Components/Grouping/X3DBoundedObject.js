@@ -28,9 +28,9 @@ Object .assign (X3DBoundedObject .prototype,
    childBBox: new Box3 (), // X3DExecutionContext needs this.
    initialize ()
    {
-      this ._visible    .addInterest ("set_visible__",       this);
-      this ._bboxSize   .addInterest ("set_bboxSizeCenter__", this);
-      this ._bboxCenter .addInterest ("set_bboxSizeCenter__", this);
+      this ._visible    .addInterest ("set_visible__",           this);
+      this ._bboxSize   .addInterest ("set_bboxSizeAndCenter__", this);
+      this ._bboxCenter .addInterest ("set_bboxSizeAndCenter__", this);
 
       this .set_visible__ ();
    },
@@ -100,7 +100,7 @@ Object .assign (X3DBoundedObject .prototype,
    {
       this .setNodeFlag (this ._hidden, 1, !this ._visible .getValue ());
    },
-   set_bboxSizeCenter__ ()
+   set_bboxSizeAndCenter__ ()
    {
       this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
    },
