@@ -94,28 +94,19 @@ getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, co
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
 vec3
-getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const in vec3 pointToLight, const in float alphaRoughness, const in vec3 baseColor, const in float ior)
+getPunctualRadianceTransmission (const in vec3 n, const in vec3 v, const in vec3 l, const in float alphaRoughness, const in vec3 baseColor, const in float ior)
 {
-    float transmissionRoughness = applyIorToRoughness (alphaRoughness, ior);
+   float transmissionRoughness = applyIorToRoughness (alphaRoughness, ior);
 
-    vec3 n        = normalize (normal);           // Outward direction of surface point
-    vec3 v        = normalize (view);             // Direction from surface point to view
-    vec3 l        = normalize (pointToLight);
-    vec3 l_mirror = normalize (l + 2.0 * n * dot (-l, n)); // Mirror light reflection vector on surface
+   // X_ITE: use reflect.
+   vec3 l_mirror = reflect (l, n); // Mirror light reflection vector on surface
 
-    // The transmission half-vector degenerates when the mirrored light is exactly
-    // opposite the view (l_mirror == -v), and normalizing zero yields NaN which
-    // blackens the pixel. Fall back to the normal, which keeps D finite.
-    vec3  h    = l_mirror + v;
-    float hLen = length (h);
+   vec3  h   = normalize (l_mirror + v);
+   float D   = D_GGX (abs (dot (n, h)), transmissionRoughness);
+   float Vis = V_GGX (abs (dot (n, l_mirror)), abs (dot (n, v)), transmissionRoughness);
 
-    h = hLen > 1e-5 ? h / hLen : n;
-
-    float D   = D_GGX (abs (dot (n, h)), transmissionRoughness);
-    float Vis = V_GGX (abs (dot (n, l_mirror)), abs (dot (n, v)), transmissionRoughness);
-
-    // Transmission BTDF
-    return baseColor * D * Vis;
+   // Transmission BTDF
+   return baseColor * D * Vis;
 }
 
 // Compute attenuated light as it travels through a volume.
