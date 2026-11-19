@@ -32,9 +32,9 @@ getRangeAttenuation (const in float radius, const in float distanceToLight)
 
 // https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_lights_punctual/README.md#inner-and-outer-cone-angles
 float
-getSpotAttenuation (const in vec3 pointToLight, const in vec3 spotDirection, const in float outerConeCos, const in float innerConeCos)
+getSpotAttenuation (const in vec3 l, const in vec3 spotDirection, const in float outerConeCos, const in float innerConeCos)
 {
-   float actualCos = dot (normalize (spotDirection), normalize (-pointToLight));
+   float actualCos = dot (spotDirection, -l);
 
    if (actualCos > outerConeCos)
    {
@@ -52,7 +52,7 @@ getSpotAttenuation (const in vec3 pointToLight, const in vec3 spotDirection, con
 }
 
 vec3
-getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 pointToLight, const in float distanceToLight)
+getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 l, const in float distanceToLight)
 {
    float intensity = light .intensity;
 
@@ -64,7 +64,7 @@ getLightIntensity (const in x3d_LightSourceParameters light, const in vec3 point
 
    if (light .type == x3d_SpotLight)
    {
-      intensity *= getSpotAttenuation (pointToLight, light .direction, cos (light .cutOffAngle), cos (light .beamWidth));
+      intensity *= getSpotAttenuation (l, light .direction, cos (light .cutOffAngle), cos (light .beamWidth));
    }
 
    return intensity * light .color;
@@ -132,7 +132,7 @@ vec3
 getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thickness, const in float ior, in mat4 modelMatrix)
 {
    // Direction of refracted light.
-   vec3 refractionVector = refract (-v, normalize (n), 1.0 / ior);
+   vec3 refractionVector = refract (-v, n, 1.0 / ior);
 
    // Compute rotation-independent scaling of the model matrix.
    vec3 modelScale;
@@ -142,7 +142,7 @@ getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thick
    modelScale .z = length (modelMatrix [2] .xyz);
 
    // The thickness is specified in local space.
-   return normalize (refractionVector) * thickness * modelScale;
+   return refractionVector * thickness * modelScale;
 }
 #endif
 
