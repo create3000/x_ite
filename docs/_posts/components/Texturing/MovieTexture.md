@@ -323,6 +323,9 @@ Any video file format supported by the web browser, but at least:
   [Animated PNG]: /x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Texturing/AnimatedPNG.x3d
   [Animated GIF]: /x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Texturing/AnimatedGIF.x3d
 
+>Tip: Set the [Appearance](/x_ite/components/shape/appearance/) *alphaMode* to `BLEND` for transparent animated PNG or GIF images.
+{: .prompt-tip }
+
 ## Advice
 
 ### Hints
