@@ -22,6 +22,8 @@ const no_headlight = [
    "LightVisibility",
    "PlaysetLightTest",
    "PointLightIntensityTest",
+   "ScatterPlant",
+   "ScatteringSkull",
    "TrafficCone",
 ];
 
