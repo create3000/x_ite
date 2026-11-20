@@ -45,9 +45,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 vec4
 getMaterialColor (const in vec4 fragCoord)
 {
-   #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
-      mat4 modelViewMatrix = eye (x3d_ModelViewMatrix);
-   #endif
+   mat4 modelViewMatrix = eye (x3d_ModelViewMatrix);
 
    vec4 baseColor = getBaseColor ();
 
@@ -530,7 +528,7 @@ getMaterialColor (const in vec4 fragCoord)
    }
    #endif
 
-   #if defined (X3D_SCATTER_MATERIAL_EXT) && defined (X3D_VOLUME_MATERIAL_EXT) && defined (X3D_TRANSMISSION_MATERIAL_EXT)
+   #if defined (X3D_SCATTER_MATERIAL_EXT) && defined (X3D_VOLUME_MATERIAL_EXT) && defined (X3D_TRANSMISSION_MATERIAL_EXT) && (defined (X3D_USE_IBL) || defined (X3D_LIGHTING))
       if (materialInfo .scatterStrength > 0.0 && materialInfo .thickness > 0.0)
       {
          // Single-scattering ray march along the refracted ray through the
@@ -558,7 +556,7 @@ getMaterialColor (const in vec4 fragCoord)
             materialInfo .multiscatterColor,
             materialInfo .multiscatterColor,
             materialInfo .scatterStrength,
-            materialInfo. scatterAnisotropy,
+            materialInfo .scatterAnisotropy,
             singleScatter,
             fragCoord
          );
