@@ -60,10 +60,10 @@ struct MaterialInfo
    // KHR_materials_dispersion
    float dispersion;
 
-    // KHR_materials_scatter
-    float scatterStrength;
-    vec3 multiscatterColor;
-    float scatterAnisotropy;
+   // KHR_materials_scatter
+   float scatterStrength;
+   vec3 multiscatterColor;
+   float scatterAnisotropy;
 
    // KHR_materials_retroreflection
    float retroreflectionFactor;
