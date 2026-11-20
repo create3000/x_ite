@@ -91,6 +91,7 @@ Object .assign (GLTF2Parser,
          "scenes",
          "skins",
          "textures",
+         "uniqueIds",
       ]);
 
       return function (input)
