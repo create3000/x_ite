@@ -13,18 +13,18 @@ export default () => /* glsl */ `
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT) || defined (X3D_SCATTER_MATERIAL_EXT)
    uniform mat4 x3d_ProjectionMatrix;
    uniform mat4 x3d_ModelViewMatrix;
-#endif
 
-#if defined (X3D_XR_SESSION)
-uniform mat4 x3d_EyeMatrix;
+   #if defined (X3D_XR_SESSION)
+      uniform mat4 x3d_EyeMatrix;
 
-mat4
-eye (const in mat4 modelViewMatrix)
-{
-   return x3d_EyeMatrix * modelViewMatrix;
-}
-#else
-   #define eye(x) (x)
+      mat4
+      eye (const in mat4 modelViewMatrix)
+      {
+         return x3d_EyeMatrix * modelViewMatrix;
+      }
+   #else
+      #define eye(x) (x)
+   #endif
 #endif
 
 #if defined (X3D_LIGHTING)
@@ -45,7 +45,9 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 vec4
 getMaterialColor (const in vec4 fragCoord)
 {
-   mat4 modelViewMatrix = eye (x3d_ModelViewMatrix);
+   #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT) || defined (X3D_SCATTER_MATERIAL_EXT)
+      mat4 modelViewMatrix = eye (x3d_ModelViewMatrix);
+   #endif
 
    vec4 baseColor = getBaseColor ();
 
