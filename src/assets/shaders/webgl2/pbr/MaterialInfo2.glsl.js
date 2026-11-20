@@ -248,26 +248,23 @@ uniform float x3d_ScatterAnisotropyEXT;
 MaterialInfo
 getScatterInfo (in MaterialInfo info)
 {
-   // TODO: use scatter.
-   float scatterStrength = x3d_ScatterStrengthEXT;
+   info .scatterStrength   = x3d_ScatterStrengthEXT;
+   info .multiscatterColor = x3d_MultiscatterColorEXT;
+   info .scatterAnisotropy = x3d_ScatterAnisotropyEXT;
 
    #if defined (X3D_SCATTER_STRENGTH_TEXTURE_EXT)
-      scatterStrength *= getScatterStrengthTextureEXT ();
+      info .scatterStrength *= getScatterStrengthTextureEXT ();
    #endif
-
-   info .multiscatterColor = x3d_MultiscatterColorEXT;
 
    #if defined (X3D_MULTISCATTER_COLOR_TEXTURE_EXT)
       info .multiscatterColor *= getMultiscatterColorTextureEXT ();
    #endif
 
-   info .scatterAnisotropy = x3d_ScatterAnisotropyEXT;
-
    #if !defined (X3D_VOLUME_MATERIAL_EXT)
       // Thin-walled mode has no interior volume. Force the transmission ray to
       // zero length so KHR_materials_transmission samples the background directly.
       info .thickness           = 0.0;
-      info .attenuationColor    = vec3(1.0);
+      info .attenuationColor    = vec3 (1.0);
       info .attenuationDistance = 0.0;
    #endif
 
