@@ -9,7 +9,7 @@ function X3DBoundedObject (/* executionContext */)
 {
    this .addType (X3DConstants .X3DBoundedObject);
 
-   this .addChildObjects (X3DConstants .outputOnly, "hidden",           new Fields .MFBool (),
+   this .addChildObjects (X3DConstants .outputOnly, "hidden",           new Fields .SFInt32 (),
                           X3DConstants .outputOnly, "transformSensors", new Fields .SFTime ());
 
    // Units
