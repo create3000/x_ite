@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    },
    isHidden ()
    {
-      return this ._hidden .getValue () & 0b1;
+      return !! (this ._hidden .getValue () & 0b1);
    },
    setHidden (value)
    {
