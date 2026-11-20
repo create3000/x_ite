@@ -514,20 +514,64 @@ getMaterialColor (const in vec4 fragCoord)
    #endif
 
    #if defined (X3D_SCATTER_MATERIAL_EXT) && defined (X3D_VOLUME_MATERIAL_EXT) && defined (X3D_TRANSMISSION_MATERIAL_EXT)
+   if (materialInfo .scatterStrength > 0.0 && materialInfo .thickness > 0.0)
+   {
+      // Subsurface scattering is calculated based on the Burley diffusion profile.
+      // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
+      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, materialInfo .multiscatterColor, materialInfo .multiscatterColor, materialInfo .scatterStrength, materialInfo. scatterAnisotropy, singleScatter, fragCoord);
+
+      float iridescenceMask = 1.0;
+
+      #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+         iridescenceMask -= materialInfo .iridescenceFactor;
+      #endif
+
+      color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * iridescenceMask * materialInfo .transmissionFactor;
+   }
+   #endif
+
+   #if defined (X3D_SCATTER_MATERIAL_EXT) && defined (X3D_VOLUME_MATERIAL_EXT) && defined (X3D_TRANSMISSION_MATERIAL_EXT)
       if (materialInfo .scatterStrength > 0.0 && materialInfo .thickness > 0.0)
       {
-         // Subsurface scattering is calculated based on the Burley diffusion profile.
-         // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
-         vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, materialInfo .multiscatterColor, materialInfo .multiscatterColor, materialInfo .scatterStrength, materialInfo. scatterAnisotropy, singleScatter, fragCoord);
+         // Single-scattering ray march along the refracted ray through the
+         // volume (Henyey-Greenstein phase + Beer-Lambert attenuation).
+         vec3 singleScattering = getVolumeSingleScattering (
+            v,
+            n,
+            materialInfo .ior,
+            materialInfo .attenuationColor,
+            materialInfo .attenuationDistance,
+            materialInfo .multiscatterColor,
+            materialInfo .scatterStrength,
+            materialInfo .scatterAnisotropy,
+            vertex,
+            materialInfo .thickness,
+            modelViewMatrix
+         );
 
+         // Diffuse multiple scattering. Christensen & Burley (2015),
+         // "Approximate Reflectance Profiles for Efficient Subsurface Scattering".
+         vec3 diffuseScattering = getSubsurfaceScattering (
+            vertex,
+            x3d_ProjectionMatrix,
+            materialInfo .attenuationDistance,
+            materialInfo .multiscatterColor,
+            materialInfo .multiscatterColor,
+            materialInfo .scatterStrength,
+            materialInfo. scatterAnisotropy,
+            singleScatter,
+            fragCoord
+         );
+
+         vec3  l_color         = singleScattering + diffuseScattering;
          float iridescenceMask = 1.0;
 
-         #ifdef MATERIAL_IRIDESCENCE
-            iridescenceMask = 1.0 - materialInfo .iridescenceFactor;
+         #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
+            iridescenceMask -= materialInfo .iridescenceFactor;
          #endif
 
          color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * iridescenceMask * materialInfo .transmissionFactor;
-    }
+      }
    #endif
 
    f_emissive = getEmissiveColor ();

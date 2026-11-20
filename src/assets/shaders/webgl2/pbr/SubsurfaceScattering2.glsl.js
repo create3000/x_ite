@@ -24,6 +24,123 @@ multiToSingleScatter (const in vec3 multiscatterColor, const in float scatterStr
    return clamp (rhoSs, 0.0, 1.0);
 }
 
+#if defined (X3D_VOLUME_MATERIAL_EXT) && defined (X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined (X3D_USE_IBL)
+vec3
+getDiffuseLight (const in vec3 n);
+#endif
+
+const int SCATTER_VOLUME_STEPS = 16;
+
+float
+henyeyGreenstein (const in float g, const in float cosTheta)
+{
+   // Henyey-Greenstein phase function.
+   // Henyey & Greenstein (1941), "Diffuse radiation in the galaxy", ApJ 93, 70.
+
+   float gSq   = g * g;
+   float denom = 1.0 + gSq - 2.0 * g * cosTheta;
+
+   return (1.0 - gSq) / (4.0 * M_PI * pow (denom, 1.5));
+}
+
+vec3 getVolumeSingleScattering (
+   vec3 v,
+   vec3 n,
+   float ior,
+   vec3 attenuationColor,
+   float attenuationDistance,
+   vec3 multiscatterColor,
+   float scatterStrength,
+   float scatterAnisotropy,
+   vec3 frontWorldPos,
+   float thicknessMap,
+   mat4 modelMatrix
+)
+{
+   vec3 outgoingDir = v;
+
+   // Refract the incoming view ray at the front surface. For total internal
+   // reflection, fall back to the un-refracted view ray.
+   vec3 refractedDir = refract (-outgoingDir, n, 1.0 / ior);
+
+   if (dot (refractedDir, refractedDir) < 1e-4)
+      refractedDir = -outgoingDir;
+
+   // Thin-walled: march the authored thickness map directly as a flat slab
+   // (symmetric entry/exit), matching getVolumeTransmissionRay's no-cosine
+   // model. The thickness is in local space, so scale it to world space.
+   float modelScale  = length (modelMatrix [0] .xyz);
+   float cosRay      = 1.0;
+   float chordLength = thicknessMap * modelScale;
+
+   // Beer-Lambert attenuation coefficient. attenuationDistance == 0 means no attenuation.
+   vec3 sigma_t = vec3 (0.0);
+
+   if (attenuationDistance > 0.0)
+   {
+      vec3 attenuation = max (attenuationColor, vec3 (1e-4));
+
+      sigma_t = max (-log (attenuation) / attenuationDistance, vec3 (0.0));
+   }
+
+   vec3  sigma_s    = sigma_t * multiToSingleScatter (multiscatterColor, scatterStrength, scatterAnisotropy);
+   float stepLength = chordLength / float (SCATTER_VOLUME_STEPS);
+   vec3  scattered  = vec3 (0.0);
+
+   for (int i = 1; i <= SCATTER_VOLUME_STEPS; ++ i)
+   {
+      float t         = (float (i) - 0.5) * stepLength;
+      vec3  samplePos = frontWorldPos + refractedDir * t;
+      vec3  inscatter = vec3 (0.0);
+
+      #if defined (X3D_LIGHTING)
+      for (int l = 0; l < X3D_NUM_LIGHTS; ++ l)
+      {
+         x3d_LightSourceParameters light = x3d_LightSource [l];
+
+         vec3  pointToLight;
+         float distanceToLight;
+
+         if (light .type != x3d_DirectionalLight)
+         {
+            pointToLight    = light .location - vertex;
+            distanceToLight = length (light .matrix * pointToLight);
+         }
+         else
+         {
+            pointToLight    = -light .direction;
+            distanceToLight = -1.0;
+         }
+
+         vec3  lightIntensity = getLightIntensity (light, normalize (pointToLight), distanceToLight);
+         float lightDist      = max (length (pointToLight), 1e-4);
+         vec3  lightDir       = -pointToLight / lightDist;
+         float phase          = henyeyGreenstein (scatterAnisotropy, dot (lightDir, outgoingDir));
+
+         inscatter += lightIntensity * phase;
+      }
+      #endif
+
+      #if defined (X3D_USE_IBL)
+         // Approximate the environment as isotropic incoming radiance.
+         inscatter += getDiffuseLight (n) / M_PI;
+      #endif
+
+      inscatter *= sigma_s;
+
+      // Beer-Lambert transmittance along the refracted ray and back out to
+      // the camera. The scattered light exits through the front surface, so
+      // its exit distance is t * cosRay.
+      vec3 transmittance = exp (-sigma_t * t * (1.0 + cosRay));
+
+      scattered += inscatter * transmittance * stepLength;
+   }
+
+   return scattered;
+}
+#endif
+
 #if !defined (X3D_SCATTER_PASS)
 // Subsurface scattering based on the blender implementation of the Burley model.
 
@@ -62,7 +179,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    // single-scatter-driven length as anisotropy increases. At g = 0 this keeps
    // the previous multi-scatter radius, while forward scattering (g > 0)
    // stretches the profile and backward scattering (g < 0) tightens it.
-   vec3 scatterDistance      = attenuationDistance * mix (multiScatter, singleScatter, abs (scatterAnisotropy));
+   vec3  scatterDistance     = attenuationDistance * mix (multiScatter, singleScatter, abs (scatterAnisotropy));
    float maxColor            = max3 (scatterDistance);
    vec3  vMaxColor           = max (vec3 (maxColor), vec3 (0.00001));
    vec2  texelSize           = 1.0 / vec2 (x3d_Viewport .zw);

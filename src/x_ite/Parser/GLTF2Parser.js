@@ -277,7 +277,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
-            case "KHR_materials_volume_scatter": // Legacy
             case "KHR_materials_volume":
             case "KHR_node_hoverability":
             case "KHR_node_selectability":
@@ -1623,7 +1622,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                this .khrMaterialsVolumeObject (value, materialNode);
                break;
             case "KHR_materials_scatter":
-            case "KHR_materials_volume_scatter": // Legacy
                this .khrMaterialsScatterObject (value, materialNode);
                break;
          }
