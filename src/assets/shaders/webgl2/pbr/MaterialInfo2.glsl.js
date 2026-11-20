@@ -242,7 +242,7 @@ ${MaterialTextures .texture ("x3d_ScatterStrengthTextureEXT", "a", "linear")}
 ${MaterialTextures .texture ("x3d_MultiscatterColorTextureEXT", "rgb", "linear")}
 
 uniform float x3d_ScatterStrengthEXT;
-uniform vec3 x3d_MultiscatterColorEXT;
+uniform vec3  x3d_MultiscatterColorEXT;
 uniform float x3d_ScatterAnisotropyEXT;
 
 MaterialInfo
