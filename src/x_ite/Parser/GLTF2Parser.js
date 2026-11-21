@@ -2700,7 +2700,7 @@ function eventsProcessed ()
          if (inlineNode)
             transformNode ._children .push (inlineNode);
 
-         // Add children.
+         // Add child nodes.
 
          let children = this .nodeChildrenArray (node .children);
 
@@ -2729,7 +2729,7 @@ function eventsProcessed ()
 
          transformNode ._children .push (... children);
 
-         // Get mesh.
+         // Add mesh nodes.
 
          const
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
