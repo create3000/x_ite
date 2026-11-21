@@ -10,7 +10,7 @@ export default new Set ([
    "KHR_animation_pointer",
    "KHR_draco_mesh_compression",
    "KHR_gaussian_splatting",
-   //"KHR_implicit_shapes",
+   // "KHR_implicit_shapes",
    "KHR_interactivity",
    "KHR_lights_punctual",
    "KHR_materials_anisotropy",
