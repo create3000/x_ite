@@ -255,8 +255,11 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       {
          case TraverseType .POINTER:
          {
-            renderObject .setShapeParent (this);
+            renderObject .getHierarchy () .push (this);
+
             this .pointingObject ?.traverse (type, renderObject);
+
+            renderObject .getHierarchy () .pop (this);
             break;
          }
          case TraverseType .CAMERA:

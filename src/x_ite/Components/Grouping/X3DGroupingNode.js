@@ -402,7 +402,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                   renderObject .getSensors () .push (sensors);
             }
 
-            renderObject .setShapeParent (this);
+            renderObject .getHierarchy () .push (this);
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
@@ -416,6 +416,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             if (sensors .length)
                renderObject .getSensors () .pop ();
 
+            renderObject .getHierarchy () .pop ();
             return;
          }
          case TraverseType .CAMERA:
