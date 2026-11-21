@@ -181,7 +181,8 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml    | [X3D Encoding: Classic VRML][X3DV] |
 | VRML 2.0         | .wrl, .wrz     | model/vrml        | [VRML Viewer][VRML2]               |
 | VRML 1.0         | .wrl, .vrml    | model/vrml        | <i class="fa-solid fa-puzzle-piece"></i> [By Using an Extension][VRML1] |
-| glTF             | .gltf, .glb    | model/gltf+json   | [glTF Support][glTF]               |
+| glTF 2.0, 2.1    | .gltf          | model/gltf+json   | [glTF Support][glTF]               |
+| GLBv2, GLBv3     | .glb           | model/gltf-binary | [glTF Support][glTF]               |
 | VRM              | .vrm           | model/vrm         | [About VRM][VRM]                   |
 | Wavefront OBJ    | .obj           | model/obj         |                                    |
 | STL              | .stl           | model/stl         | ASCII & Binary                     |
