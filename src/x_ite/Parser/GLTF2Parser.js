@@ -58,7 +58,6 @@ function GLTF2Parser (scene)
    this .skins                 = [ ];
    this .skeletons             = new Map ();
    this .joints                = new Set ();
-   this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
    this .physicsNodes          = [ ];
 }
