@@ -125,7 +125,7 @@ async function castle ()
       json [key] .castle = text .includes (`T${key}Node`);
    }
 
-   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (sortKeys (json), undefined, "  ") + "\n");
+   writeJson (json);
 }
 
 async function x3dom ()
@@ -142,7 +142,7 @@ async function x3dom ()
       json [key] .x3dom ||= !!text .match (new RegExp (`\\b${key}\\b`));
    }
 
-   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (sortKeys (json), undefined, "  ") + "\n");
+   writeJson (json);
 }
 
 async function freewrl ()
@@ -164,7 +164,12 @@ async function freewrl ()
       json [key] .freewrl = match ? !match [1] .match (/not/i) : false;
    }
 
-   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (json, undefined, "  ") + "\n");
+   writeJson (json);
+}
+
+function writeJson (json)
+{
+   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (sortKeys (json), undefined, "  ") + "\n");
 }
 
 function sortKeys (json)
