@@ -3108,7 +3108,7 @@ function eventsProcessed ()
          }
          case 1:
          {
-            if (this .input .asset .version >= 2.1 || (sceneNumber === 0 && !this .behavior))
+            if (glTF .asset .version >= 2.1 || (sceneNumber === 0 && !this .behavior))
             {
                scene .getRootNodes () .push (children [0]);
                return;
