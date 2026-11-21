@@ -2179,16 +2179,17 @@ function eventsProcessed ()
       if (!(attributes instanceof Object))
          return;
 
-      for (const key in attributes)
-         attributes [key] = this .accessors [attributes [key]];
+      const entries = Object .entries (attributes);
 
       attributes .TEXCOORD = [ ];
       attributes .COLOR    = [ ];
       attributes .JOINTS   = [ ];
       attributes .WEIGHTS  = [ ];
 
-      for (const [key, attribute] of Object .entries (attributes))
+      for (const [key, accessor] of entries)
       {
+         attributes [key] = this .accessors [accessor];
+
          const match = key .match (/^(\w+)_(\d+)$/);
 
          if (!match)
@@ -2198,12 +2199,12 @@ function eventsProcessed ()
          {
             case "COLOR":
                // Only first color is used.
-               attributes .COLOR .push (attribute);
+               attributes .COLOR .push (attributes [key]);
                break;
             case "TEXCOORD":
             case "JOINTS":
             case "WEIGHTS":
-               attributes [match [1]] [match [2]] = attribute;
+               attributes [match [1]] [match [2]] = attributes [key];
                break;
          }
       }
