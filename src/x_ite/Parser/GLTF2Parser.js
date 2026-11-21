@@ -202,7 +202,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (typeof value !== "string")
             continue;
 
-         if (key === "version")
+         if (/^(?:thumbnail|version)$/ .test (key))
             continue;
 
          scene .addMetaData (key, value);
@@ -3108,7 +3108,7 @@ function eventsProcessed ()
          }
          case 1:
          {
-            if (sceneNumber === 0 && !this .behavior)
+            if (this .input .asset .version >= 2.1 || (sceneNumber === 0 && !this .behavior))
             {
                scene .getRootNodes () .push (children [0]);
                return;
