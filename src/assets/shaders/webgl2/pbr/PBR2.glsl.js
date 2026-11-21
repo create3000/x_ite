@@ -513,23 +513,6 @@ getMaterialColor (const in vec4 fragCoord)
    }
    #endif
 
-   #if defined (X3D_SCATTER_MATERIAL_EXT) && defined (X3D_VOLUME_MATERIAL_EXT) && defined (X3D_TRANSMISSION_MATERIAL_EXT)
-   if (materialInfo .scatterStrength > 0.0 && materialInfo .thickness > 0.0)
-   {
-      // Subsurface scattering is calculated based on the Burley diffusion profile.
-      // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
-      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, materialInfo .multiscatterColor, materialInfo .multiscatterColor, materialInfo .scatterStrength, materialInfo. scatterAnisotropy, singleScatter, fragCoord);
-
-      float iridescenceMask = 1.0;
-
-      #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)
-         iridescenceMask -= materialInfo .iridescenceFactor;
-      #endif
-
-      color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * iridescenceMask * materialInfo .transmissionFactor;
-   }
-   #endif
-
    #if defined (X3D_SCATTER_MATERIAL_EXT) && defined (X3D_VOLUME_MATERIAL_EXT) && defined (X3D_TRANSMISSION_MATERIAL_EXT) && (defined (X3D_USE_IBL) || defined (X3D_LIGHTING))
       if (materialInfo .scatterStrength > 0.0 && materialInfo .thickness > 0.0)
       {
