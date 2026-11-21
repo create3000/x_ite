@@ -161,8 +161,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .accessorsArray   (glTF .accessors);
       this .samplersArray    (glTF .samplers);
 
-      await this .imagesArray (glTF .images);
-      await this .videosArray (glTF .extensions ?.EXT_texture_video ?.videos);
+      await this .filesArray  (glTF, "files");
+      await this .filesArray (glTF, "images");
+      await this .filesArray (glTF .extensions ?.EXT_texture_video, "videos");
 
       this .texturesArray   (glTF .textures);
       this .materialsArray  (glTF .materials);
@@ -1204,43 +1205,38 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          });
       };
    })(),
-   async imagesArray (images)
+   async filesArray (object, property)
    {
-      if (!Array .isArray (images))
+      const files = object ?.[property];
+
+      if (!Array .isArray (files))
          return;
 
-      this .images = await Promise .all (images .map ((image, index) => this .imageObject (image, index)));
+      this [property] = await Promise .all (files .map ((file, index) => this .fileObject (file, index)));
    },
-   async videosArray (videos)
+   async fileObject (file, index)
    {
-      if (!Array .isArray (videos))
+      if (!(file instanceof Object))
          return;
 
-      this .videos = await Promise .all (videos .map ((video, index) => this .imageObject (video, index)));
-   },
-   async imageObject (image, index)
-   {
-      if (!(image instanceof Object))
-         return;
+      file .index = index;
 
-      image .index = index;
+      if (file .uri)
+         return file;
 
-      if (image .uri)
-         return image;
-
-      const bufferView = this .bufferViews [image .bufferView];
+      const bufferView = this .bufferViews [file .bufferView];
 
       if (!bufferView)
-         return image;
+         return file;
 
       const
          buffer = bufferView .getBuffer (),
-         blob   = new Blob ([new Uint8Array (buffer)], { type: image .mimeType }),
+         blob   = new Blob ([new Uint8Array (buffer)], { type: file .mimeType }),
          uri    = await this .blobToDataUrl (blob);
 
-      image .uri = uri;
+      file .uri = uri;
 
-      return image;
+      return file;
    },
    blobToDataUrl (blob)
    {
@@ -2570,7 +2566,7 @@ function eventsProcessed ()
       if (externalAsset .node)
          return externalAsset;
 
-      const file = this .input .files ?.[externalAsset .file];
+      const file = this .files ?.[externalAsset .file];
 
       if (!(file instanceof Object))
          return;
