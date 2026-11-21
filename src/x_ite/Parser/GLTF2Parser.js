@@ -2186,9 +2186,9 @@ function eventsProcessed ()
       attributes .JOINTS   = [ ];
       attributes .WEIGHTS  = [ ];
 
-      for (const [key, accessor] of entries)
+      for (const [key, accessorIndex] of entries)
       {
-         attributes [key] = this .accessors [accessor];
+         attributes [key] = this .accessors [accessorIndex];
 
          const match = key .match (/^(\w+)_(\d+)$/);
 
