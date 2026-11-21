@@ -14,8 +14,6 @@ import $           from "../../lib/helper.js";
 
 class GoldenGate extends X3DParser
 {
-   #inputs = new Map ();
-
    static #parsers = [
       XMLParser,
       VRMLParser,
@@ -44,6 +42,8 @@ class GoldenGate extends X3DParser
    {
       return this .#parsers .slice ();
    }
+
+   #inputs = new Map ();
 
    parseIntoScene (x3dSyntax, resolve, reject)
    {
