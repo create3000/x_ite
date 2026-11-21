@@ -41,8 +41,6 @@ function GLTF2Parser (scene)
    // Globals
 
    this .extensions            = new Set ();
-   this .envLights             = [ ];
-   this .lights                = [ ];
    this .materialVariants      = [ ];
    this .materialVariantNodes  = [ ];
    this .buffers               = [ ];
@@ -53,7 +51,6 @@ function GLTF2Parser (scene)
    this .materials             = [ ];
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
-   this .cameras               = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
    this .skeletons             = new Map ();
@@ -622,7 +619,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    envLightObject (index)
    {
-      const light = this .envLights [index];
+      const light = this .envLights ?.[index];
 
       if (!(light instanceof Object))
          return null;
@@ -714,7 +711,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       const
          index = extension .light,
-         light = this .lights [index];
+         light = this .lights ?.[index];
 
       extension .light = light;
 
@@ -2427,7 +2424,7 @@ function eventsProcessed ()
    },
    cameraObject (index)
    {
-      const camera = this .cameras [index];
+      const camera = this .cameras ?.[index];
 
       if (!(camera instanceof Object))
          return null;
