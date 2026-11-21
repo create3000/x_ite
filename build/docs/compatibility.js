@@ -125,7 +125,7 @@ async function castle ()
       json [key] .castle = text .includes (`T${key}Node`);
    }
 
-   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (json, undefined, "  ") + "\n");
+   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (sortKeys (json), undefined, "  ") + "\n");
 }
 
 async function x3dom ()
@@ -142,7 +142,7 @@ async function x3dom ()
       json [key] .x3dom ||= !!text .match (new RegExp (`\\b${key}\\b`));
    }
 
-   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (json, undefined, "  ") + "\n");
+   fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (sortKeys (json), undefined, "  ") + "\n");
 }
 
 async function freewrl ()
@@ -165,6 +165,13 @@ async function freewrl ()
    }
 
    fs .writeFileSync ("build/docs/compatibility.json", JSON .stringify (json, undefined, "  ") + "\n");
+}
+
+function sortKeys (json)
+{
+   return Object .fromEntries (
+      Object .entries (json) .sort (([a], [b]) => a .localeCompare (b, "en"))
+   );
 }
 
 /*

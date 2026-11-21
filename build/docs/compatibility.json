@@ -65,6 +65,12 @@
     "x3dom": true,
     "freewrl": true
   },
+  "BehaviorEngine": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "Billboard": {
     "x3d-edit": true,
     "castle": true,
@@ -351,7 +357,7 @@
     "x3d-edit": true,
     "castle": true,
     "x3dom": true,
-    "freewrl": false
+    "freewrl": true
   },
   "CoordinateInterpolator": {
     "x3d-edit": true,
@@ -659,6 +665,12 @@
     "x3dom": true,
     "freewrl": true
   },
+  "HoverabilityExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "ImageCubeMapTexture": {
     "x3d-edit": false,
     "castle": true,
@@ -867,7 +879,7 @@
     "x3d-edit": true,
     "castle": true,
     "x3dom": true,
-    "freewrl": false
+    "freewrl": true
   },
   "MetadataDouble": {
     "x3d-edit": true,
@@ -1277,6 +1289,12 @@
     "x3dom": true,
     "freewrl": true
   },
+  "ScatterMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "ScreenFontStyle": {
     "x3d-edit": false,
     "castle": false,
@@ -1300,6 +1318,12 @@
     "castle": false,
     "x3dom": true,
     "freewrl": true
+  },
+  "SelectabilityExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
   },
   "ShadedVolumeStyle": {
     "x3d-edit": true,
@@ -1695,7 +1719,7 @@
     "x3d-edit": true,
     "castle": false,
     "x3dom": false,
-    "freewrl": false
+    "freewrl": true
   },
   "WindPhysicsModel": {
     "x3d-edit": false,
@@ -1707,6 +1731,6 @@
     "x3d-edit": true,
     "castle": true,
     "x3dom": true,
-    "freewrl": false
+    "freewrl": true
   }
 }
