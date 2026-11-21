@@ -1387,6 +1387,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
       materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
 
+      // glTF 2.1: Promoted Extension Functionality
+      // https://github.com/KhronosGroup/glTF/issues/2592
+      if (material .emissiveStrength !== undefined && !material .extensions ?.KHR_materials_emissive_strength)
+      {
+         material .extensions ??= { };
+         material .extensions .KHR_materials_emissive_strength = {
+            emissiveStrength: material .emissiveStrength,
+         };
+      }
+
       this .occlusionTextureInfo (material .occlusionTexture, materialNode);
       this .normalTextureInfo    (material .normalTexture,    materialNode);
       this .materialExtensions   (material .extensions,       materialNode);
@@ -2775,7 +2785,7 @@ function eventsProcessed ()
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
 
                extension .pointers           = [node .transformNode];
-               node .transformNode ._visible = extension .visible ?? true;
+               node .transformNode ._visible = node .visible ?? extension .visible ?? true;
                break;
             }
          }
