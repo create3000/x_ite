@@ -81,7 +81,9 @@ Object .assign (GLTF2Parser,
          "extensions",
          "extensionsRequired",
          "extensionsUsed",
+         "externalAssets",
          "extras",
+         "files",
          "images",
          "materials",
          "meshes",
@@ -617,8 +619,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .envLights = lights;
    },
-   envLightObject (id, light = this .envLights [id])
+   envLightObject (index)
    {
+      const light = this .envLights [index];
+
       if (!(light instanceof Object))
          return null;
 
@@ -628,7 +632,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       const
          scene      = this .getScene (),
          lightNode  = scene .createNode ("EnvironmentLight", false),
-         name       = `EnvironmentLight${id + 1}`,
+         name       = `EnvironmentLight${index + 1}`,
          quaternion = new Quaternion ();
 
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
@@ -708,8 +712,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    lightObject (extension)
    {
       const
-         id    = extension .light,
-         light = this .lights [id];
+         index = extension .light,
+         light = this .lights [index];
 
       extension .light = light;
 
@@ -726,7 +730,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene = this .getScene (),
-         name  = this .sanitizeName (light .name) || `Light${id + 1}`;
+         name  = this .sanitizeName (light .name) || `Light${index + 1}`;
 
       const color = new Color3 (1);
 
@@ -2054,7 +2058,7 @@ function eventsProcessed ()
    meshObject (mesh, skin, weights, EXT_mesh_gpu_instancing)
    {
       if (!(mesh instanceof Object))
-         return;
+         return [ ];
 
       if (mesh .meshNodes && !EXT_mesh_gpu_instancing)
       {
@@ -2309,10 +2313,10 @@ function eventsProcessed ()
             }
          }
 
-         for (const [key, id] of Object .entries (attributes))
+         for (const [key, index] of Object .entries (attributes))
          {
             const
-               attribute     = decoder .GetAttributeByUniqueId (geometry, id),
+               attribute     = decoder .GetAttributeByUniqueId (geometry, index),
                numComponents = attribute .num_components (),
                numPoints     = geometry .num_points (),
                numValues     = numPoints * numComponents,
@@ -2425,8 +2429,10 @@ function eventsProcessed ()
 
       this .cameras = cameras;
    },
-   cameraObject (id, camera)
+   cameraObject (index)
    {
+      const camera = this .cameras [index];
+
       if (!(camera instanceof Object))
          return null;
 
@@ -2450,7 +2456,7 @@ function eventsProcessed ()
          scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
       }
 
-      viewpointNode ._description = this .description (camera .name || `Viewpoint ${id + 1}`);
+      viewpointNode ._description = this .description (camera .name || `Viewpoint ${index + 1}`);
       viewpointNode ._position    = Vector3 .ZERO;
 
       camera .pointers = [viewpointNode];
@@ -2553,6 +2559,40 @@ function eventsProcessed ()
 
       return viewpointNode;
    },
+   externalAsset (index)
+   {
+      const externalAsset = this .input .externalAssets ?.[index];
+
+      if (!(externalAsset instanceof Object))
+         return;
+
+      if (externalAsset .node)
+         return externalAsset;
+
+      const file = this .input .files ?.[externalAsset .file];
+
+      if (!(file instanceof Object))
+         return;
+
+      const
+         scene      = this .getScene (),
+         inlineNode = scene .createNode ("Inline", false),
+         name       = this .sanitizeName (externalAsset .name);
+
+      inlineNode ._description = this .description (externalAsset .name);
+      inlineNode ._url         = [file .uri];
+
+      inlineNode .setup ();
+
+      // Name
+
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), inlineNode);
+
+      externalAsset .node = inlineNode;
+
+      return externalAsset;
+   },
    nodesArray (nodes)
    {
       if (!Array .isArray (nodes))
@@ -2638,15 +2678,9 @@ function eventsProcessed ()
                transformNode ._name = node .name;
          }
 
-         // Get mesh.
-
-         const
-            EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
-            meshNodes               = this .meshObject (this .meshes [node .mesh], skin, node .weights, EXT_mesh_gpu_instancing);
-
          // Add camera.
 
-         node .camera = this .cameraObject (node .camera, this .cameras [node .camera]);
+         node .camera = this .cameraObject (node .camera);
 
          const viewpointNode = node .camera ?.node;
 
@@ -2656,6 +2690,15 @@ function eventsProcessed ()
          // Handle extensions.
 
          this .nodeExtensions (node, index);
+
+         // Handle external assets.
+
+         node .externalAsset = this .externalAsset (node .externalAsset);
+
+         const inlineNode = node .externalAsset ?.node;
+
+         if (inlineNode)
+            transformNode ._children .push (inlineNode);
 
          // Add children.
 
@@ -2686,19 +2729,25 @@ function eventsProcessed ()
 
          transformNode ._children .push (... children);
 
+         // Get mesh.
+
+         const
+            EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
+            meshNodes               = this .meshObject (this .meshes [node .mesh], skin, node .weights, EXT_mesh_gpu_instancing);
+
          if (skin)
          {
             skin .name ??= node .name;
 
             const humanoidNode = skin .humanoidNode;
 
-            if (!meshNodes ?.length)
-               return;
+            if (meshNodes .length)
+            {
+               humanoidNode ._skinNormal = meshNodes [0] ._geometry .normal;
+               humanoidNode ._skinCoord  = meshNodes [0] ._geometry .coord;
 
-            humanoidNode ._skinNormal = meshNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord  = meshNodes [0] ._geometry .coord;
-
-            humanoidNode ._skin .push (... meshNodes);
+               humanoidNode ._skin .push (... meshNodes);
+            }
          }
          else
          {
@@ -2725,10 +2774,9 @@ function eventsProcessed ()
                   transformNode ._scale = scale;
             }
 
-            // Add Shape nodes.
+            // Add mesh nodes.
 
-            if (meshNodes)
-               transformNode ._children .push (... meshNodes);
+            transformNode ._children .push (... meshNodes);
 
             transformNode .setup ();
          }
