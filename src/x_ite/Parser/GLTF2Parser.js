@@ -161,7 +161,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .accessorsArray   (glTF .accessors);
       this .samplersArray    (glTF .samplers);
 
-      await this .filesArray  (glTF, "files");
+      await this .filesArray (glTF, "files");
       await this .filesArray (glTF, "images");
       await this .filesArray (glTF .extensions ?.EXT_texture_video, "videos");
 
