@@ -522,7 +522,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
          .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material|\/materials\/\d+)$/, "$1/transparency");
 
-      const [node, field] = this .getAnimationPointer (search);
+      const [node, field] = this .getPointer (search);
 
       if (!(node && field))
       {
@@ -4187,7 +4187,7 @@ function eventsProcessed ()
       {
          case "pointer":
          {
-            const [node, field] = this .getAnimationPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
+            const [node, field] = this .getPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
 
             return this .createAnimationPointerInterpolator (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval);
          }
@@ -4443,7 +4443,7 @@ function eventsProcessed ()
          }
       };
    })(),
-   getAnimationPointer (pointer = "")
+   getPointer (pointer = "")
    {
       const path = pointer .split ("/") .filter (p => p);
 
