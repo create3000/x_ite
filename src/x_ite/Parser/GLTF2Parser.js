@@ -2794,7 +2794,7 @@ function eventsProcessed ()
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
 
                extension .pointers           = [node .transformNode];
-               node .transformNode ._visible = node .visible ?? extension .visible ?? true;
+               node .transformNode ._visible = extension .visible ?? node .visible ?? true;
                break;
             }
          }
