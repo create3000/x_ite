@@ -2187,17 +2187,26 @@ function eventsProcessed ()
       attributes .JOINTS   = [ ];
       attributes .WEIGHTS  = [ ];
 
-      for (let i = 0; attributes ["TEXCOORD_" + i]; ++ i)
-         attributes .TEXCOORD .push (attributes ["TEXCOORD_" + i]);
+      for (const [key, attribute] of Object .entries (attributes))
+      {
+         const match = key .match (/^(\w+)_(\d+)$/);
 
-      for (let i = 0; attributes ["COLOR_" + i]; ++ i)
-         attributes .COLOR .push (attributes ["COLOR_" + i]);
+         if (!match)
+            continue;
 
-      for (let i = 0; attributes ["JOINTS_" + i]; ++ i)
-         attributes .JOINTS .push (attributes ["JOINTS_" + i]);
-
-      for (let i = 0; attributes ["WEIGHTS_" + i]; ++ i)
-         attributes .WEIGHTS .push (attributes ["WEIGHTS_" + i]);
+         switch (match [1])
+         {
+            case "COLOR":
+               // Only first color is used.
+               attributes .COLOR .push (attribute);
+               break;
+            case "TEXCOORD":
+            case "JOINTS":
+            case "WEIGHTS":
+               attributes [match [1]] [match [2]] = attribute;
+               break;
+         }
+      }
    },
    targetsArray (targets)
    {
@@ -3843,7 +3852,13 @@ function eventsProcessed ()
       if (texCoords .textureCoordinateNode)
          return texCoords .textureCoordinateNode;
 
-      switch (texCoords .length === 1 ? 1 : material .texCoordMappings .size)
+      const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
+         .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
+         .sort ((a, b) => a [1] - b [1])
+         .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
+         .filter (node => node);
+
+      switch (textureCoordinateNodes .length)
       {
          case 0:
          {
@@ -3851,18 +3866,10 @@ function eventsProcessed ()
          }
          case 1:
          {
-            return texCoords .textureCoordinateNode = Array .from (material .texCoordMappings .entries (), ([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping)) [0];
+            return texCoords .textureCoordinateNode = textureCoordinateNodes [0];
          }
          default:
          {
-            const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
-               .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
-               .sort ((a, b) => a [1] - b [1])
-               .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping));
-
-            if (!textureCoordinateNodes .length)
-               return null;
-
             const
                scene                 = this .getScene (),
                textureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
