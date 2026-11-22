@@ -1,21 +1,12 @@
 ---
 title: Real Time Earth Quake Information
 date: 2023-02-21
-layout: wide
+layout: app
 categories: [Laboratory]
 tags: [Real Time, Earth Quake, Laboratory]
 jquery: true
 ---
 <style>
-:root {
-  height: 100dvh;
-  overflow: hidden;
-}
-
-.row {
-  height: calc(100dvh - 128px);
-}
-
 /* Paragraph */
 article > p {
   padding: 0 2rem;

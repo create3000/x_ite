@@ -1,7 +1,7 @@
 ---
 title: glTF Sample Viewer
 date: 2023-02-21
-layout: wide
+layout: app
 categories: [Laboratory]
 tags: [glTF, Sample, Viewer, Laboratory]
 jquery: true
@@ -27,15 +27,6 @@ jquery: true
   html:not([data-mode]), html[data-mode=light] {
     --list-color: rgba(0, 0, 0, 0.02);
   }
-}
-
-:root {
-  height: 100dvh;
-  overflow: hidden;
-}
-
-.row {
-  height: calc(100dvh - 128px);
 }
 
 .viewer-row {

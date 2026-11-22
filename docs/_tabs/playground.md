@@ -1,7 +1,7 @@
 ---
 title: Playground
 date: 2022-11-28
-layout: wide
+layout: app
 icon: fas fa-rocket
 order: 4
 jquery: true
@@ -25,15 +25,6 @@ monaco: true
   font-size: 21px;
   position: relative;
   top: 5px;
-}
-
-:root {
-  height: 100dvh;
-  overflow: hidden;
-}
-
-.row {
-  height: calc(100dvh - 128px);
 }
 
 /* Table */

@@ -68,7 +68,7 @@ class Playground
 
       const
          searchParams = new URL (location) .searchParams,
-         url          = searchParams .get ("url") ?? "/x_ite/assets/playground/playground.x3d";
+         url          = searchParams .get ("url") ?? new URL ("playground.x3d", import .meta .url);
 
       if (searchParams .get ("play") === "false")
          browser .endUpdate ();

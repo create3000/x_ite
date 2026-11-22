@@ -1,21 +1,12 @@
 ---
 title: D3-X3D Area Chart
 date: 2025-04-03
-layout: wide
+layout: app
 categories: [Laboratory]
 tags: [Area Chart, D3-X3D]
 jquery: true
 ---
 <style>
-:root{
-  height: 100dvh;
-  overflow: hidden;
-}
-
-.row {
-  height: calc(100dvh - 128px);
-}
-
 /* Paragraph */
 article > p {
   padding: 0 2rem;
