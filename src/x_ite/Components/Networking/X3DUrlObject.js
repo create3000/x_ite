@@ -8,7 +8,7 @@ const
    _autoRefreshCompleteTime = Symbol (),
    _autoRefreshId           = Symbol ();
 
-function X3DUrlObject (executionContext)
+function X3DUrlObject (/* executionContext */)
 {
    this .addType (X3DConstants .X3DUrlObject);
 
@@ -103,7 +103,7 @@ Object .assign (X3DUrlObject .prototype,
 
       if (this ._url .length === 0 && !this .getAllowEmptyUrl ())
       {
-         this .unloadData ();
+         this .requestUnload ();
          return;
       }
 
@@ -160,7 +160,7 @@ Object .assign (X3DUrlObject .prototype,
    {
       const loadState = this .checkLoadState ();
 
-      if (loadState === X3DConstants .NOT_STARTED_STATE || loadState === X3DConstants .FAILED_STATE)
+      if (loadState === X3DConstants .NOT_STARTED_STATE)
          return;
 
       this .unloadData ();
