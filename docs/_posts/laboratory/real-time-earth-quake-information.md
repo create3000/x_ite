@@ -7,7 +7,7 @@ tags: [Real Time, Earth Quake, Laboratory]
 jquery: true
 ---
 <style>
-html, body {
+:root {
   height: 100dvh;
   overflow: hidden;
 }

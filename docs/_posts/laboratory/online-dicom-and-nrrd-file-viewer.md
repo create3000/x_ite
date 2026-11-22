@@ -7,7 +7,7 @@ tags: [Online, DICOM, NRRD, File, Viewer, Laboratory]
 jquery: true
 ---
 <style>
-html, body {
+:root {
   height: 100dvh;
   overflow: hidden;
 }
