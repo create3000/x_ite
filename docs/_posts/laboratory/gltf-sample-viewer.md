@@ -29,7 +29,7 @@ jquery: true
   }
 }
 
-body {
+html, body {
   height: 100dvh;
   overflow: hidden;
 }

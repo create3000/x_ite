@@ -27,7 +27,7 @@ monaco: true
   top: 5px;
 }
 
-body {
+html, body {
   height: 100dvh;
   overflow: hidden;
 }

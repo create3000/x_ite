@@ -7,7 +7,7 @@ tags: [Area Chart, D3-X3D]
 jquery: true
 ---
 <style>
-body {
+html, body {
   height: 100dvh;
   overflow: hidden;
 }
