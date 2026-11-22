@@ -21,7 +21,7 @@ sub media {
 
    @files = `find '$random' -type f  -name "*.gltf" -o -name "*.glb" | sort`;
 
-   my $string = "export const models = [\n";
+   my $string = "const models = [\n";
 
    foreach (map { s|$random||r } @files)
    {
@@ -62,7 +62,7 @@ sub glTF {
       @all   = (@all, @files);
    }
 
-   my $string = "export const $var = [\n";
+   my $string = "const $var = [\n";
 
    foreach (@all)
    {

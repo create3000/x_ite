@@ -1,27 +1,4 @@
-import {
-   no_ibl,
-   no_headlight,
-   no_background,
-}
-from "./samples.mjs";
-
-import {
-   glTF,
-   interactivity_gltf,
-   interactivity_glb,
-   glb,
-   embedded,
-   quantized,
-   draco,
-   meshopt,
-   meshoptEXT,
-   ibl,
-   webp,
-   ktx,
-   jpg,
-   models
-}
-from "./samples.mjs";
+import Samples from "./samples.mjs";
 
 $.try = function (callback)
 {
@@ -49,19 +26,19 @@ class SampleViewer
          background: false,
       });
 
-      this .createList ("glTF Sample Models",               glTF);
-      this .createList ("glTF Interactivity Sample Models", interactivity_glb .concat (interactivity_gltf));
-      this .createList ("glb Sample Models",                glb);
-      this .createList ("glTF Embedded Sample Models",      embedded);
-      this .createList ("glTF Quantized Sample Models",     quantized);
-      this .createList ("glTF Draco Sample Models",         draco);
-      this .createList ("glTF Meshopt Sample Models",       meshopt);
-      this .createList ("glTF Meshopt EXT Sample Models",   meshoptEXT);
-      this .createList ("glTF IBL Sample Models",           ibl);
-      this .createList ("glTF WebP Sample Models",          webp);
-      this .createList ("glTF KTX2 Sample Models",          ktx);
-      this .createList ("glTF JPG/PNG Sample Models",       jpg);
-      this .createList ("glTF Random Models",               models);
+      this .createList ("glTF Sample Models",               Samples .glTF);
+      this .createList ("glTF Interactivity Sample Models", Samples .interactivity);
+      this .createList ("glb Sample Models",                Samples .glb);
+      this .createList ("glTF Embedded Sample Models",      Samples .embedded);
+      this .createList ("glTF Quantized Sample Models",     Samples .quantized);
+      this .createList ("glTF Draco Sample Models",         Samples .draco);
+      this .createList ("glTF Meshopt Sample Models",       Samples .meshopt);
+      this .createList ("glTF Meshopt EXT Sample Models",   Samples .meshoptEXT);
+      this .createList ("glTF IBL Sample Models",           Samples .ibl);
+      this .createList ("glTF WebP Sample Models",          Samples .webp);
+      this .createList ("glTF KTX2 Sample Models",          Samples .ktx);
+      this .createList ("glTF JPG/PNG Sample Models",       Samples .jpg);
+      this .createList ("glTF Random Models",               Samples .models);
 
       $(".viewer-column2") .on ("scroll", () =>
       {
@@ -237,16 +214,16 @@ class SampleViewer
    async loadURL (filename)
    {
       this .showOptions (false);
-      this .setEnvironmentLight (!no_ibl .some (name => filename .includes (name)));
+      this .setEnvironmentLight (!Samples .no_ibl .some (name => filename .includes (name)));
 
       await this .browser .loadURL (new X3D .MFString (filename));
 
       this .showOptions (true);
       this .viewAll ();
-      this .setEnvironmentLight (!no_ibl .some (name => filename .includes (name)));
-      this .setHeadlight (!no_headlight .some (name => filename .includes (name)));
+      this .setEnvironmentLight (!Samples .no_ibl .some (name => filename .includes (name)));
+      this .setHeadlight (!Samples .no_headlight .some (name => filename .includes (name)));
       this .setToneMapping (this .localStorage .toneMapping);
-      this .setBackground (no_background .some (name => filename .includes (name)) ? false : this .localStorage .background);
+      this .setBackground (Samples .no_background .some (name => filename .includes (name)) ? false : this .localStorage .background);
       this .addScenes ();
       this .addViewpoints ();
       this .addMaterialVariants ();

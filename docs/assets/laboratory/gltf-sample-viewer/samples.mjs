@@ -3,7 +3,7 @@
 
 // EnvironmentLight
 
-export const no_ibl = [
+const no_ibl = [
    "DirectionalLight",
    "LightsPunctualLamp",
    "LightVisibility",
@@ -13,7 +13,7 @@ export const no_ibl = [
 ];
 
 // KHR_lights_punctual
-export const no_headlight = [
+const no_headlight = [
    "DiffuseTransmissionPlant",
    "DirectionalLight",
    "GlamVelvetSofa",
@@ -28,13 +28,13 @@ export const no_headlight = [
 ];
 
 // KHR_lights_punctual
-export const no_background = [
+const no_background = [
    "TrafficCone",
 ];
 
 // SAMPLES_BEGIN
 
-export const glTF = [
+const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalCubes/glTF/AnalyticalCubes.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalGrayscale/glTF/AnalyticalGrayscale.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalSpheres/glTF/AnalyticalSpheres.gltf",
@@ -302,7 +302,7 @@ export const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/XmpMetadataRoundedCube/glTF/XmpMetadataRoundedCube.gltf",
 ];
 
-export const interactivity_gltf = [
+const interactivity_gltf = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ABeautifulGameInteractivity/glTF/ABeautifulGameInteractivity.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ActiveCamera/glTF/ActiveCamera.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/BowShooting/glTF/BowShooting.gltf",
@@ -320,7 +320,7 @@ export const interactivity_gltf = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/TrafficLight/glTF/TrafficLight.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/WhackAMole/glTF/WhackAMole.gltf",
 ];
-export const interactivity_glb = [
+const interactivity_glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ABeautifulGameInteractivity/glTF-Binary/ABeautifulGameInteractivity.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/ActiveCamera/glTF-Binary/ActiveCamera.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/BowShooting/glTF-Binary/BowShooting.glb",
@@ -340,7 +340,7 @@ export const interactivity_glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/WhackAMole/glTF-Binary/WhackAMole.glb",
 ];
 
-export const glb = [
+const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalCubes/glTF-Binary/AnalyticalCubes.glb",
    "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalGrayscale/glTF-Binary/AnalyticalGrayscale.glb",
    "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalSpheres/glTF-Binary/AnalyticalSpheres.glb",
@@ -546,7 +546,7 @@ export const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/XmpMetadataRoundedCube/glTF-Binary/XmpMetadataRoundedCube.glb",
 ];
 
-export const embedded = [
+const embedded = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/2CylinderEngine/glTF-Embedded/2CylinderEngine.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AlphaBlendModeTest/glTF-Embedded/AlphaBlendModeTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AnimatedTriangle/glTF-Embedded/AnimatedTriangle.gltf",
@@ -618,7 +618,7 @@ export const embedded = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/VirtualCity/glTF-Embedded/VirtualCity.gltf",
 ];
 
-export const quantized = [
+const quantized = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/AnimatedMorphCube/glTF-Quantized/AnimatedMorphCube.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF-Quantized/Avocado.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF-Quantized/Duck.gltf",
@@ -629,7 +629,7 @@ export const quantized = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/Lantern/glTF-Quantized/Lantern.gltf",
 ];
 
-export const draco = [
+const draco = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/2CylinderEngine/glTF-Draco/2CylinderEngine.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF-Draco/Avocado.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/BarramundiFish/glTF-Draco/BarramundiFish.gltf",
@@ -668,7 +668,7 @@ export const draco = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF-KTX-BasisU-Draco/CarConcept.gltf",
 ];
 
-export const meshopt = [
+const meshopt = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/BrainStem/glTF-Meshopt/BrainStem.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DragonAttenuation/glTF-Meshopt/DragonAttenuation.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BrainStem/glTF-Meshopt/BrainStem.gltf",
@@ -676,22 +676,22 @@ export const meshopt = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MeshoptCubeTest/glTF-Meshopt/MeshoptCubeTest.gltf",
 ];
 
-export const meshoptEXT = [
+const meshoptEXT = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BrainStem/glTF-Meshopt-EXT/BrainStem.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/DragonAttenuation/glTF-Meshopt-EXT/DragonAttenuation.gltf",
 ];
 
-export const ibl = [
+const ibl = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/EnvironmentTest/glTF-IBL/EnvironmentTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/EnvironmentTest/glTF-IBL/EnvironmentTest.gltf",
 ];
 
-export const webp = [
+const webp = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF-WEBP/CarConcept.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF-WEBP/ChronographWatch.gltf",
 ];
 
-export const ktx = [
+const ktx = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/FlightHelmet/glTF-KTX-BasisU/FlightHelmet.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnisotropyBarnLamp/glTF-KTX-BasisU/AnisotropyBarnLamp.gltf",
@@ -700,13 +700,13 @@ export const ktx = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/StainedGlassLamp/glTF-KTX-BasisU/StainedGlassLamp.gltf",
 ];
 
-export const jpg = [
+const jpg = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/StainedGlassLamp/glTF-JPG-PNG/StainedGlassLamp.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/StainedGlassLamp/glTF-JPG-PNG/StainedGlassLamp.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF-JPG/CarConcept.gltf",
 ];
 
-export const models = [
+const models = [
    "https://create3000.github.io/media/glTF/Animated Bee/glTF-Binary/Animated Bee.glb",
    "https://create3000.github.io/media/glTF/BlackDragon/glTF-Binary/BlackDragon.glb",
    "https://create3000.github.io/media/glTF/Bonsai 1/glTF/Bonsai 1.gltf",
@@ -726,3 +726,22 @@ export const models = [
 ];
 
 // SAMPLES_END
+
+export default {
+   no_ibl,
+   no_headlight,
+   no_background,
+   glTF,
+   interactivity: interactivity_glb .concat (interactivity_gltf),
+   glb,
+   embedded,
+   quantized,
+   draco,
+   meshopt,
+   meshoptEXT,
+   ibl,
+   webp,
+   ktx,
+   jpg,
+   models
+};
