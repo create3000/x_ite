@@ -51,6 +51,16 @@ The HoverabilityExtension and SelectabilityExtension provide the necessary inter
 - [Traffic Light](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/TrafficLight/glTF/TrafficLight.gltf)
 - [Whack A Mole](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Test-Assets-Interactivity/master/Models/WhackAMole/glTF/WhackAMole.gltf)
 
+### Notable Changes
+
+- [x] Added support for KHR_interactivity extension.
+- [x] Added support for glTF 2.1 external assets.
+- [x] Added support for glTF 2.1 file references.
+- [x] Added support for glTF 2.1 non-sequential attributes.
+- [x] Added support for glTF 2.1 int64 and uint64 accessor types.
+- [x] Deprecated support for glTF multiple scenes.
+- [x] Improved support for [ScatterMaterialExtension](/x_ite/components/x-ite/scattermaterialextension/).
+
 ## X_ITE v16.5 Series
 
 **Leipzig, 11th October 2026:** The 16.5 series of X_ITE brings improved handling of imported nodes, with particular attention to imported node instances that can now be added directly to the scene graph.
