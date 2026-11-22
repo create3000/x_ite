@@ -1,4 +1,4 @@
-/* X_ITE v16.8.0 */
+/* X_ITE v16.8.1 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 974
+/***/ 713
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 44
+/***/ 139
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 248
+/***/ 751
 (module) {
 
 /**
@@ -18889,7 +18889,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.8.0";
+const BROWSER_VERSION_default_ = "16.8.1";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -23849,8 +23849,7 @@ function X3DBoundedObject (/* executionContext */)
 {
    this .addType (Base_X3DConstants .X3DBoundedObject);
 
-   this .addChildObjects (Base_X3DConstants .outputOnly, "hidden",           new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly, "display",          new x_ite_Fields .SFBool (true),
+   this .addChildObjects (Base_X3DConstants .outputOnly, "hidden",           new x_ite_Fields .SFInt32 (),
                           Base_X3DConstants .outputOnly, "transformSensors", new x_ite_Fields .SFTime ());
 
    // Units
@@ -23869,27 +23868,31 @@ Object .assign (X3DBoundedObject .prototype,
    childBBox: new Geometry_Box3 (), // X3DExecutionContext needs this.
    initialize ()
    {
-      this ._hidden     .addInterest ("set_visible_and_hidden__",      this);
-      this ._visible    .addInterest ("set_visible_and_hidden__",      this);
-      this ._bboxSize   .addInterest ("set_bboxSize_and_bboxCenter__", this);
-      this ._bboxCenter .addInterest ("set_bboxSize_and_bboxCenter__", this);
+      this ._visible    .addInterest ("set_visible__",           this);
+      this ._bboxSize   .addInterest ("set_bboxSizeAndCenter__", this);
+      this ._bboxCenter .addInterest ("set_bboxSizeAndCenter__", this);
 
-      this .set_visible_and_hidden__ ();
+      this .set_visible__ ();
+   },
+   set_visible__ ()
+   {
+      this .setNodeFlag (this ._hidden, 1, !this ._visible .getValue ());
+   },
+   set_bboxSizeAndCenter__ ()
+   {
+      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
    },
    isVisible ()
    {
-      return this ._display .getValue ();
+      return !this ._hidden .getValue ();
    },
    isHidden ()
    {
-      return this ._hidden .getValue ();
+      return !! (this ._hidden .getValue () & 0b1);
    },
    setHidden (value)
    {
-      if (value === this ._hidden .getValue ())
-         return;
-
-      this ._hidden = value;
+      this .setNodeFlag (this ._hidden, 0, value);
    },
    isDefaultBBoxSize ()
    {
@@ -23940,19 +23943,6 @@ Object .assign (X3DBoundedObject .prototype,
    getTransformSensors ()
    {
       return this .transformSensorNodes;
-   },
-   set_visible_and_hidden__ ()
-   {
-      const value = this ._visible .getValue () && !this ._hidden .getValue ();
-
-      if (value === this ._display .getValue ())
-         return;
-
-      this ._display = value;
-   },
-   set_bboxSize_and_bboxCenter__ ()
-   {
-      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
    },
    dispose ()
    { },
@@ -24447,7 +24437,7 @@ const
    _autoRefreshCompleteTime = Symbol (),
    _autoRefreshId           = Symbol ();
 
-function X3DUrlObject (executionContext)
+function X3DUrlObject (/* executionContext */)
 {
    this .addType (Base_X3DConstants .X3DUrlObject);
 
@@ -24542,7 +24532,7 @@ Object .assign (X3DUrlObject .prototype,
 
       if (this ._url .length === 0 && !this .getAllowEmptyUrl ())
       {
-         this .unloadData ();
+         this .requestUnload ();
          return;
       }
 
@@ -24599,7 +24589,7 @@ Object .assign (X3DUrlObject .prototype,
    {
       const loadState = this .checkLoadState ();
 
-      if (loadState === Base_X3DConstants .NOT_STARTED_STATE || loadState === Base_X3DConstants .FAILED_STATE)
+      if (loadState === Base_X3DConstants .NOT_STARTED_STATE)
          return;
 
       this .unloadData ();
@@ -31266,7 +31256,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(248);
+/* provided dependency */ var libtess = __webpack_require__(751);
 
 
 const Triangle3 =
@@ -32403,6 +32393,7 @@ function X3DRenderObject (executionContext)
    this .viewMatrixArray          = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
    this .hitRay                   = new Geometry_Line3 ();
+   this .hierarchy                = [ ];
    this .sensors                  = [[ ]];
    this .viewpointGroups          = [ ];
    this .path                     = [ ];
@@ -32590,13 +32581,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .hitRay;
    },
-   getShapeParent ()
+   getHierarchy ()
    {
-      return this .parentNode;
-   },
-   setShapeParent (parentNode)
-   {
-      this .parentNode = parentNode;
+      return this .hierarchy;
    },
    getSensors ()
    {
@@ -32986,7 +32973,7 @@ Object .assign (X3DRenderObject .prototype,
          renderContext .modelViewMatrix .set (modelViewMatrix);
 
          renderContext .hAnimNode  = geometryContext .getCoord () ?.[_hAnimNodes] ?.at (-1);
-         renderContext .parentNode = this .parentNode;
+         renderContext .parentNode = this .hierarchy .at (-1);
          renderContext .shapeNode  = shapeNode;
 
          // Clip planes & sensors
@@ -34204,7 +34191,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
 
          if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
          {
-            childNode ._display     .removeInterest ("requestRebuild", this);
+            childNode ._hidden      .removeInterest ("requestRebuild", this);
             childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
          }
       }
@@ -34308,7 +34295,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
 
                if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
                {
-                  childNode ._display     .addInterest ("requestRebuild", this);
+                  childNode ._hidden      .addInterest ("requestRebuild", this);
                   childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                   if (childNode .isBBoxVisible ())
@@ -34373,7 +34360,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
 
                if (Base_X3DCast (Base_X3DConstants .X3DBoundedObject, childNode))
                {
-                  childNode ._display     .removeInterest ("requestRebuild", this);
+                  childNode ._hidden      .removeInterest ("requestRebuild", this);
                   childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
                }
 
@@ -34454,7 +34441,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
                   renderObject .getSensors () .push (sensors);
             }
 
-            renderObject .setShapeParent (this);
+            renderObject .getHierarchy () .push (this);
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
@@ -34468,6 +34455,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, Core_X3DChil
             if (sensors .length)
                renderObject .getSensors () .pop ();
 
+            renderObject .getHierarchy () .pop ();
             return;
          }
          case Rendering_TraverseType .CAMERA:
@@ -38157,8 +38145,7 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
 
    this .addType (Base_X3DConstants .X3DLayerNode);
 
-   this .addChildObjects (Base_X3DConstants .inputOutput, "hidden",  new x_ite_Fields .SFBool (),
-                          Base_X3DConstants .outputOnly,  "display", new x_ite_Fields .SFBool (true));
+   this .addChildObjects (Base_X3DConstants .inputOutput, "hidden", new x_ite_Fields .SFInt32 ());
 
    // Legacy
 
@@ -38221,11 +38208,10 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
       Core_X3DNode         .prototype .initialize .call (this);
       Rendering_X3DRenderObject .prototype .initialize .call (this);
 
-      this ._hidden         .addInterest ("set_visible_and_hidden__", this);
-      this ._visible        .addInterest ("set_visible_and_hidden__", this);
-      this ._viewport       .addInterest ("set_viewport__",           this);
-      this ._addChildren    .addInterest ("set_addChildren__",        this);
-      this ._removeChildren .addInterest ("set_removeChildren__",     this);
+      this ._visible        .addInterest ("set_visible__",        this);
+      this ._viewport       .addInterest ("set_viewport__",       this);
+      this ._addChildren    .addInterest ("set_addChildren__",    this);
+      this ._removeChildren .addInterest ("set_removeChildren__", this);
 
       this ._children .addFieldInterest (this .groupNode ._children);
       this .groupNode ._children .addFieldInterest (this ._children);
@@ -38251,19 +38237,20 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
       this .backgrounds     .setup ();
       this .fogs            .setup ();
 
-      this .set_visible_and_hidden__ ();
+      this .set_visible__ ();
       this .set_viewport__ ();
+   },
+   isVisible ()
+   {
+      return !this ._hidden .getValue ();
    },
    isHidden ()
    {
-      return this ._hidden .getValue ();
+      return !! (this ._hidden .getValue () & 0b1);
    },
    setHidden (value)
    {
-      if (value === this ._hidden .getValue ())
-         return;
-
-      this ._hidden = value;
+      this .setNodeFlag (this ._hidden, 0, value);
    },
    getBBox (bbox, shadows)
    {
@@ -38365,14 +38352,9 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, Core_X3DNode .p
    {
       this .getViewpoint () .straightenView (this);
    },
-   set_visible_and_hidden__ ()
+   set_visible__ ()
    {
-      const value = this ._visible .getValue () && !this ._hidden .getValue ();
-
-      if (value === this ._display .getValue ())
-         return;
-
-      this ._display = value;
+      this .setNodeFlag (this ._hidden, 1, !this ._visible .getValue ());
    },
    set_viewport__ ()
    {
@@ -40482,6 +40464,7 @@ const GLTFExtensions_default_ = new Set ([
    "KHR_animation_pointer",
    "KHR_draco_mesh_compression",
    "KHR_gaussian_splatting",
+   // "KHR_implicit_shapes",
    "KHR_interactivity",
    "KHR_lights_punctual",
    "KHR_materials_anisotropy",
@@ -40493,13 +40476,13 @@ const GLTFExtensions_default_ = new Set ([
    "KHR_materials_iridescence",
    "KHR_materials_pbrSpecularGlossiness",
    "KHR_materials_retroreflection",
+   "KHR_materials_scatter",
    "KHR_materials_sheen",
    "KHR_materials_specular",
    "KHR_materials_transmission",
    "KHR_materials_unlit",
    "KHR_materials_variants",
    "KHR_materials_volume",
-   "KHR_materials_volume_scatter",
    "KHR_mesh_quantization",
    "KHR_meshopt_compression",
    "KHR_node_hoverability",
@@ -40638,8 +40621,6 @@ function GLTF2Parser (scene)
    // Globals
 
    this .extensions            = new Set ();
-   this .envLights             = [ ];
-   this .lights                = [ ];
    this .materialVariants      = [ ];
    this .materialVariantNodes  = [ ];
    this .buffers               = [ ];
@@ -40650,12 +40631,10 @@ function GLTF2Parser (scene)
    this .materials             = [ ];
    this .textureTransformNodes = [ ];
    this .meshes                = [ ];
-   this .cameras               = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
    this .skeletons             = new Map ();
    this .joints                = new Set ();
-   this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
    this .physicsNodes          = [ ];
 }
@@ -40678,7 +40657,9 @@ Object .assign (GLTF2Parser,
          "extensions",
          "extensionsRequired",
          "extensionsUsed",
+         "externalAssets",
          "extras",
+         "files",
          "images",
          "materials",
          "meshes",
@@ -40686,8 +40667,10 @@ Object .assign (GLTF2Parser,
          "samplers",
          "scene",
          "scenes",
+         "shapes",
          "skins",
          "textures",
+         "uniqueIds",
       ]);
 
       return function (input)
@@ -40754,8 +40737,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       this .accessorsArray   (glTF .accessors);
       this .samplersArray    (glTF .samplers);
 
-      await this .imagesArray (glTF .images);
-      await this .videosArray (glTF .extensions ?.EXT_texture_video ?.videos);
+      await this .filesArray (glTF, "files");
+      await this .filesArray (glTF, "images");
+      await this .filesArray (glTF .extensions ?.EXT_texture_video, "videos");
 
       this .texturesArray   (glTF .textures);
       this .materialsArray  (glTF .materials);
@@ -40795,7 +40779,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          if (typeof value !== "string")
             continue;
 
-         if (key === "version")
+         if (/^(?:thumbnail|version)$/ .test (key))
             continue;
 
          scene .addMetaData (key, value);
@@ -40873,7 +40857,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
-            case "KHR_materials_volume_scatter": // Legacy
             case "KHR_materials_volume":
             case "KHR_node_hoverability":
             case "KHR_node_selectability":
@@ -41116,7 +41099,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          .replace (/^(\/nodes\/\d+)\/(?:matrix|globalMatrix)$/, "$1/translation")
          .replace (/^(\/meshes\/\d+\/primitives\/\d+\/material|\/materials\/\d+)$/, "$1/transparency");
 
-      const [node, field] = this .getAnimationPointer (search);
+      const [node, field] = this .getPointer (search);
 
       if (!(node && field))
       {
@@ -41214,8 +41197,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       this .envLights = lights;
    },
-   envLightObject (id, light = this .envLights [id])
+   envLightObject (index)
    {
+      const light = this .envLights ?.[index];
+
       if (!(light instanceof Object))
          return null;
 
@@ -41225,7 +41210,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       const
          scene      = this .getScene (),
          lightNode  = scene .createNode ("EnvironmentLight", false),
-         name       = `EnvironmentLight${id + 1}`,
+         name       = `EnvironmentLight${index + 1}`,
          quaternion = new Numbers_Quaternion ();
 
       scene .addNamedNode    (scene .getUniqueName       (name), lightNode);
@@ -41305,8 +41290,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
    lightObject (extension)
    {
       const
-         id    = extension .light,
-         light = this .lights [id];
+         index = extension .light,
+         light = this .lights ?.[index];
 
       extension .light = light;
 
@@ -41323,7 +41308,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       const
          scene = this .getScene (),
-         name  = this .sanitizeName (light .name) || `Light${id + 1}`;
+         name  = this .sanitizeName (light .name) || `Light${index + 1}`;
 
       const color = new Numbers_Color3 (1);
 
@@ -41372,6 +41357,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       lightNode ._cutOffAngle = this .numberValue (light .spot ?.outerConeAngle, Math .PI / 4);
       lightNode ._beamWidth   = this .numberValue (light .spot ?.innerConeAngle, 0);
 
+      light .spot ??= { };
       light .spot .pointers = [lightNode];
 
       return lightNode;
@@ -41489,6 +41475,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          [5123, 2], // Uint16Array
          [5124, 4], // Int32Array
          [5125, 4], // Uint32Array
+         [5134, 8], // BigInt64Array
+         [5135, 8], // BigUint64Array
          [5131, 2], // Float16Array
          [5126, 4], // Float32Array
          [5130, 8], // Float64Array
@@ -41571,6 +41559,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          [5123, Uint16Array],
          [5124, Int32Array],
          [5125, Uint32Array],
+         [5134, BigInt64Array],
+         [5135, BigUint64Array],
          [5131, Float16Array],
          [5126, Float32Array],
          [5130, Float64Array],
@@ -41701,10 +41691,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             return Float32Array .from (array, v => Math .max (v / 2147483647, -1));
          case 5125: // Uint32Array
             return Float32Array .from (array, v => v / 4294967295);
+         // Their normalized property MUST NOT be set to true:
+         case 5134: // BigInt64Array
+         case 5135: // BigUint64Array
          case 5131: // Float16Array
          case 5126: // Float32Array
          case 5130: // Float64Array
-            return array; // Their normalized property MUST NOT be set to true;
+            return array;
       }
    },
    samplersArray (samplers)
@@ -41788,43 +41781,38 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          });
       };
    })(),
-   async imagesArray (images)
+   async filesArray (object, property)
    {
-      if (!Array .isArray (images))
+      const files = object ?.[property];
+
+      if (!Array .isArray (files))
          return;
 
-      this .images = await Promise .all (images .map ((image, index) => this .imageObject (image, index)));
+      this [property] = await Promise .all (files .map ((file, index) => this .fileObject (file, index)));
    },
-   async videosArray (videos)
+   async fileObject (file, index)
    {
-      if (!Array .isArray (videos))
+      if (!(file instanceof Object))
          return;
 
-      this .videos = await Promise .all (videos .map ((video, index) => this .imageObject (video, index)));
-   },
-   async imageObject (image, index)
-   {
-      if (!(image instanceof Object))
-         return;
+      file .index = index;
 
-      image .index = index;
+      if (file .uri)
+         return file;
 
-      if (image .uri)
-         return image;
-
-      const bufferView = this .bufferViews [image .bufferView];
+      const bufferView = this .bufferViews [file .bufferView];
 
       if (!bufferView)
-         return image;
+         return file;
 
       const
          buffer = bufferView .getBuffer (),
-         blob   = new Blob ([new Uint8Array (buffer)], { type: image .mimeType }),
+         blob   = new Blob ([new Uint8Array (buffer)], { type: file .mimeType }),
          uri    = await this .blobToDataUrl (blob);
 
-      image .uri = uri;
+      file .uri = uri;
 
-      return image;
+      return file;
    },
    blobToDataUrl (blob)
    {
@@ -41975,6 +41963,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       materialNode ._emissiveTexture        = this .textureInfo    (material .emissiveTexture);
       materialNode ._emissiveTextureMapping = this .textureMapping (material .emissiveTexture);
+
+      // glTF 2.1: Promoted Extension Functionality
+      // https://github.com/KhronosGroup/glTF/issues/2592
+      if (material .emissiveStrength !== undefined && !material .extensions ?.KHR_materials_emissive_strength)
+      {
+         material .extensions ??= { };
+         material .extensions .KHR_materials_emissive_strength = {
+            emissiveStrength: material .emissiveStrength,
+         };
+      }
 
       this .occlusionTextureInfo (material .occlusionTexture, materialNode);
       this .normalTextureInfo    (material .normalTexture,    materialNode);
@@ -42211,7 +42209,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
                this .khrMaterialsVolumeObject (value, materialNode);
                break;
             case "KHR_materials_scatter":
-            case "KHR_materials_volume_scatter": // Legacy
                this .khrMaterialsScatterObject (value, materialNode);
                break;
          }
@@ -42634,7 +42631,7 @@ function eventsProcessed ()
    meshObject (mesh, skin, weights, EXT_mesh_gpu_instancing)
    {
       if (!(mesh instanceof Object))
-         return;
+         return [ ];
 
       if (mesh .meshNodes && !EXT_mesh_gpu_instancing)
       {
@@ -42759,25 +42756,35 @@ function eventsProcessed ()
       if (!(attributes instanceof Object))
          return;
 
-      for (const key in attributes)
-         attributes [key] = this .accessors [attributes [key]];
+      const entries = Object .entries (attributes);
 
       attributes .TEXCOORD = [ ];
       attributes .COLOR    = [ ];
       attributes .JOINTS   = [ ];
       attributes .WEIGHTS  = [ ];
 
-      for (let i = 0; attributes ["TEXCOORD_" + i]; ++ i)
-         attributes .TEXCOORD .push (attributes ["TEXCOORD_" + i]);
+      for (const [key, accessorIndex] of entries)
+      {
+         attributes [key] = this .accessors [accessorIndex];
 
-      for (let i = 0; attributes ["COLOR_" + i]; ++ i)
-         attributes .COLOR .push (attributes ["COLOR_" + i]);
+         const match = key .match (/^(\w+)_(\d+)$/);
 
-      for (let i = 0; attributes ["JOINTS_" + i]; ++ i)
-         attributes .JOINTS .push (attributes ["JOINTS_" + i]);
+         if (!match)
+            continue;
 
-      for (let i = 0; attributes ["WEIGHTS_" + i]; ++ i)
-         attributes .WEIGHTS .push (attributes ["WEIGHTS_" + i]);
+         switch (match [1])
+         {
+            case "COLOR":
+               // Only first color is used.
+               attributes .COLOR .push (attributes [key]);
+               break;
+            case "TEXCOORD":
+            case "JOINTS":
+            case "WEIGHTS":
+               attributes [match [1]] [match [2]] = attributes [key];
+               break;
+         }
+      }
    },
    targetsArray (targets)
    {
@@ -42879,10 +42886,10 @@ function eventsProcessed ()
             }
          }
 
-         for (const [key, id] of Object .entries (attributes))
+         for (const [key, index] of Object .entries (attributes))
          {
             const
-               attribute     = decoder .GetAttributeByUniqueId (geometry, id),
+               attribute     = decoder .GetAttributeByUniqueId (geometry, index),
                numComponents = attribute .num_components (),
                numPoints     = geometry .num_points (),
                numValues     = numPoints * numComponents,
@@ -42995,8 +43002,10 @@ function eventsProcessed ()
 
       this .cameras = cameras;
    },
-   cameraObject (id, camera)
+   cameraObject (index)
    {
+      const camera = this .cameras ?.[index];
+
       if (!(camera instanceof Object))
          return null;
 
@@ -43020,7 +43029,7 @@ function eventsProcessed ()
          scene .addExportedNode (scene .getUniqueExportName (name), viewpointNode);
       }
 
-      viewpointNode ._description = this .description (camera .name || `Viewpoint ${id + 1}`);
+      viewpointNode ._description = this .description (camera .name || `Viewpoint ${index + 1}`);
       viewpointNode ._position    = Numbers_Vector3 .ZERO;
 
       camera .pointers = [viewpointNode];
@@ -43123,6 +43132,40 @@ function eventsProcessed ()
 
       return viewpointNode;
    },
+   externalAsset (index)
+   {
+      const externalAsset = this .input .externalAssets ?.[index];
+
+      if (!(externalAsset instanceof Object))
+         return;
+
+      if (externalAsset .node)
+         return externalAsset;
+
+      const file = this .files ?.[externalAsset .file];
+
+      if (!(file instanceof Object))
+         return;
+
+      const
+         scene      = this .getScene (),
+         inlineNode = scene .createNode ("Inline", false),
+         name       = this .sanitizeName (externalAsset .name);
+
+      inlineNode ._description = this .description (externalAsset .name);
+      inlineNode ._url         = [file .uri];
+
+      inlineNode .setup ();
+
+      // Name
+
+      if (name)
+         scene .addNamedNode (scene .getUniqueName (name), inlineNode);
+
+      externalAsset .node = inlineNode;
+
+      return externalAsset;
+   },
    nodesArray (nodes)
    {
       if (!Array .isArray (nodes))
@@ -43208,15 +43251,9 @@ function eventsProcessed ()
                transformNode ._name = node .name;
          }
 
-         // Get mesh.
-
-         const
-            EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
-            meshNodes               = this .meshObject (this .meshes [node .mesh], skin, node .weights, EXT_mesh_gpu_instancing);
-
          // Add camera.
 
-         node .camera = this .cameraObject (node .camera, this .cameras [node .camera]);
+         node .camera = this .cameraObject (node .camera);
 
          const viewpointNode = node .camera ?.node;
 
@@ -43227,7 +43264,16 @@ function eventsProcessed ()
 
          this .nodeExtensions (node, index);
 
-         // Add children.
+         // Handle external assets.
+
+         node .externalAsset = this .externalAsset (node .externalAsset);
+
+         const inlineNode = node .externalAsset ?.node;
+
+         if (inlineNode)
+            transformNode ._children .push (inlineNode);
+
+         // Add child nodes.
 
          let children = this .nodeChildrenArray (node .children);
 
@@ -43256,19 +43302,25 @@ function eventsProcessed ()
 
          transformNode ._children .push (... children);
 
+         // Add mesh nodes.
+
+         const
+            EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
+            meshNodes               = this .meshObject (this .meshes [node .mesh], skin, node .weights, EXT_mesh_gpu_instancing);
+
          if (skin)
          {
             skin .name ??= node .name;
 
             const humanoidNode = skin .humanoidNode;
 
-            if (!meshNodes ?.length)
-               return;
+            if (meshNodes .length)
+            {
+               humanoidNode ._skinNormal = meshNodes [0] ._geometry .normal;
+               humanoidNode ._skinCoord  = meshNodes [0] ._geometry .coord;
 
-            humanoidNode ._skinNormal = meshNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord  = meshNodes [0] ._geometry .coord;
-
-            humanoidNode ._skin .push (... meshNodes);
+               humanoidNode ._skin .push (... meshNodes);
+            }
          }
          else
          {
@@ -43295,10 +43347,9 @@ function eventsProcessed ()
                   transformNode ._scale = scale;
             }
 
-            // Add Shape nodes.
+            // Add mesh nodes.
 
-            if (meshNodes)
-               transformNode ._children .push (... meshNodes);
+            transformNode ._children .push (... meshNodes);
 
             transformNode .setup ();
          }
@@ -43365,7 +43416,7 @@ function eventsProcessed ()
                // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
 
                extension .pointers           = [node .transformNode];
-               node .transformNode ._visible = extension .visible ?? true;
+               node .transformNode ._visible = extension .visible ?? node .visible ?? true;
                break;
             }
          }
@@ -43629,7 +43680,7 @@ function eventsProcessed ()
          }
          case 1:
          {
-            if (sceneNumber === 0 && !this .behavior)
+            if (glTF .asset .version >= 2.1 || (sceneNumber === 0 && !this .behavior))
             {
                scene .getRootNodes () .push (children [0]);
                return;
@@ -44423,7 +44474,13 @@ function eventsProcessed ()
       if (texCoords .textureCoordinateNode)
          return texCoords .textureCoordinateNode;
 
-      switch (texCoords .length === 1 ? 1 : material .texCoordMappings .size)
+      const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
+         .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
+         .sort ((a, b) => a [1] - b [1])
+         .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
+         .filter (node => node);
+
+      switch (textureCoordinateNodes .length)
       {
          case 0:
          {
@@ -44431,18 +44488,10 @@ function eventsProcessed ()
          }
          case 1:
          {
-            return texCoords .textureCoordinateNode = Array .from (material .texCoordMappings .entries (), ([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping)) [0];
+            return texCoords .textureCoordinateNode = textureCoordinateNodes [0];
          }
          default:
          {
-            const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
-               .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
-               .sort ((a, b) => a [1] - b [1])
-               .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping));
-
-            if (!textureCoordinateNodes .length)
-               return null;
-
             const
                scene                 = this .getScene (),
                textureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
@@ -44710,7 +44759,7 @@ function eventsProcessed ()
       {
          case "pointer":
          {
-            const [node, field] = this .getAnimationPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
+            const [node, field] = this .getPointer (target .extensions ?.KHR_animation_pointer ?.pointer);
 
             return this .createAnimationPointerInterpolator (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval);
          }
@@ -44966,7 +45015,7 @@ function eventsProcessed ()
          }
       };
    })(),
-   getAnimationPointer (pointer = "")
+   getPointer (pointer = "")
    {
       const path = pointer .split ("/") .filter (p => p);
 
@@ -48509,7 +48558,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(248);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(751);
 
 
 
@@ -51263,8 +51312,6 @@ const SVGParser_default_ = SVGParser;
 
 class GoldenGate extends Parser_X3DParser
 {
-   #inputs = new Map ();
-
    static #parsers = [
       Parser_XMLParser,
       Parser_VRMLParser,
@@ -51293,6 +51340,8 @@ class GoldenGate extends Parser_X3DParser
    {
       return this .#parsers .slice ();
    }
+
+   #inputs = new Map ();
 
    parseIntoScene (x3dSyntax, resolve, reject)
    {
@@ -51328,8 +51377,8 @@ class GoldenGate extends Parser_X3DParser
 
       if (this .getScene () .worldURL .startsWith ("data:"))
          throw new Error ("Couldn't parse X3D. No suitable file handler found for 'data:' URL.");
-      else
-         throw new Error (`Couldn't parse X3D. No suitable file handler found for '${this .getScene () .worldURL}'.`);
+
+      throw new Error (`Couldn't parse X3D. No suitable file handler found for '${this .getScene () .worldURL}'.`);
    }
 
    getInput (encoding, x3dSyntax)
@@ -51486,7 +51535,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, Core_X3DNode .proto
          }
       }
 
-      if (!activeLayerNode ?._display .getValue ())
+      if (!activeLayerNode ?.isVisible ())
          activeLayerNode = null;
 
       if (this ._activeLayerNode .getValue () !== activeLayerNode)
@@ -51497,7 +51546,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, Core_X3DNode .proto
       const layers = this ._layers .getValue ();
 
       for (const layerNode of this .layerNodes)
-         layerNode ._display .removeInterest ("set_layers__", this);
+         layerNode ._hidden .removeInterest ("set_layers__", this);
 
       this .layerNodes .length = 0;
 
@@ -51505,7 +51554,7 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, Core_X3DNode .proto
       {
          if (index === 0)
          {
-            this .layerNode0 ._display .addInterest ("set_layers__", this);
+            this .layerNode0 ._hidden .addInterest ("set_layers__", this);
             this .layerNodes .push (this .layerNode0);
          }
          else
@@ -51519,9 +51568,9 @@ Object .assign (Object .setPrototypeOf (LayerSet .prototype, Core_X3DNode .proto
                if (!layerNode)
                   continue;
 
-               layerNode ._display .addInterest ("set_layers__", this);
+               layerNode ._hidden .addInterest ("set_layers__", this);
 
-               if (layerNode ._display .getValue ())
+               if (layerNode .isVisible ())
                   this .layerNodes .push (layerNode);
             }
          }
@@ -55286,7 +55335,7 @@ function X3DCoreContext (element)
          const link = document .createElement ("link");
 
          if (!DEVELOPMENT)
-            link .integrity = "sha384-LjqGCbHHyX6wENYgkRJ/9RmmFuv15OQ5a2tXJcy74LdX25w1zBhrgNBZCht6zgop";
+            link .integrity = "sha384-MAr9kMEk8rHQvm6L8WW0ph/qy33A+012CNW7Cp5S31XRn3fpqh/6OxN44YKZUSW8";
 
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
@@ -67033,7 +67082,7 @@ in mat4 x3d_InstanceMatrix;vec4 getInstanceVertex(const in vec4 vertex){return x
 ;// ./src/assets/shaders/webgl2/common/Lighting2.glsl.js
 const Lighting2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_LIGHTING)
-float getAttenuation(const in vec3 attenuation,const in float distanceToLight){return 1./max(dot(attenuation,vec3(1.,distanceToLight,distanceToLight*distanceToLight)),1.);}float getSpotFactor(const in vec3 pointToLight,const in vec3 direction,const in float cutOffAngle,const in float beamWidth){float spotAngle=acos(clamp(dot(-pointToLight,direction),-1.,1.));if(spotAngle>=cutOffAngle)return 0.;else if(spotAngle<=beamWidth)return 1.;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
+float getAttenuation(const in vec3 attenuation,const in float distanceToLight){return 1./max(dot(attenuation,vec3(1.,distanceToLight,distanceToLight*distanceToLight)),1.);}float getSpotFactor(const in vec3 l,const in vec3 direction,const in float cutOffAngle,const in float beamWidth){float spotAngle=acos(clamp(dot(-l,direction),-1.,1.));if(spotAngle>=cutOffAngle)return 0.;else if(spotAngle<=beamWidth)return 1.;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
 #endif
 `
 ;
@@ -67768,7 +67817,7 @@ textureColor=sRGBToLinear(textureColor);
 #endif
 return textureColor*x3d_EnvironmentLightSource.color*x3d_EnvironmentLightSource.intensity;}
 #endif
-vec3 getIBLGGXFresnel(const in vec3 n,const in vec3 v,const in float roughness,const in vec3 F0,const in float specularWeight){float NdotV=clamp(dot(n,v),0.,1.);vec2 brdfSamplePoint=clamp(vec2(NdotV,roughness),vec2(0),vec2(1));vec2 f_ab=texture(x3d_EnvironmentLightSource.ggxLUTTexture,brdfSamplePoint).rg;vec3 Fr=max(vec3(1.-roughness),F0)-F0;vec3 k_S=F0+Fr*pow(1.-NdotV,5.);vec3 FssEss=specularWeight*(k_S*f_ab.x+f_ab.y);float Ems=(1.-(f_ab.x+f_ab.y));vec3 F_avg=specularWeight*(F0+(1.-F0)/21.);vec3 FmsEms=Ems*FssEss*F_avg/(1.-F_avg*Ems);return FssEss+FmsEms;}vec3 getIBLRadianceGGX(const in vec3 n,const in vec3 v,const in float roughness){float NdotV=clamp(dot(n,v),0.,1.);float lod=roughness*float(x3d_EnvironmentLightSource.specularTextureLevels);vec3 reflection=normalize(reflect(-v,n));vec3 specularLight=getSpecularLight(reflection,lod);return specularLight;}
+vec3 getIBLGGXFresnel(const in vec3 n,const in vec3 v,const in float roughness,const in vec3 F0,const in float specularWeight){float NdotV=clamp(dot(n,v),0.,1.);vec2 brdfSamplePoint=clamp(vec2(NdotV,roughness),vec2(0),vec2(1));vec2 f_ab=texture(x3d_EnvironmentLightSource.ggxLUTTexture,brdfSamplePoint).rg;vec3 Fr=max(vec3(1.-roughness),F0)-F0;vec3 k_S=F0+Fr*pow(1.-NdotV,5.);vec3 FssEss=specularWeight*(k_S*f_ab.x+f_ab.y);float Ems=(1.-(f_ab.x+f_ab.y));vec3 F_avg=specularWeight*(F0+(1.-F0)/21.);vec3 FmsEms=Ems*FssEss*F_avg/(1.-F_avg*Ems);return FssEss+FmsEms;}vec3 getIBLRadianceGGX(const in vec3 n,const in vec3 v,const in float roughness){float NdotV=clamp(dot(n,v),0.,1.);float lod=roughness*float(x3d_EnvironmentLightSource.specularTextureLevels);vec3 reflection=reflect(-v,n);vec3 specularLight=getSpecularLight(reflection,lod);return specularLight;}
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)
 uniform sampler2D x3d_TransmissionSamplerEXT;vec3 getTransmissionSample(const in vec2 fragCoord,const in float roughness,const in float ior){int framebufferSize=max(x3d_Viewport.z,x3d_Viewport.w);float framebufferLod=log2(float(framebufferSize))*applyIorToRoughness(roughness,ior);vec3 transmittedLight=textureLod(x3d_TransmissionSamplerEXT,fragCoord,framebufferLod).rgb;return transmittedLight;}vec3 getIBLVolumeRefraction(const in vec3 n,const in vec3 v,const in float perceptualRoughness,const in vec3 baseColor,const in vec3 position,const in mat4 modelMatrix,const in mat4 projMatrix,const in float ior,const in float thickness,const in vec3 attenuationColor,const in float attenuationDistance,const in float dispersion){
 #if defined(X3D_DISPERSION_MATERIAL_EXT)
@@ -67779,10 +67828,10 @@ vec3 transmissionRay=getVolumeTransmissionRay(n,v,thickness,ior,modelMatrix);flo
 vec3 attenuatedColor=applyVolumeAttenuation(transmittedLight,transmissionRayLength,attenuationColor,attenuationDistance);return attenuatedColor*baseColor;}
 #endif
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
-vec3 getIBLRadianceAnisotropy(const in vec3 n,const in vec3 v,const in float roughness,const in float anisotropy,const in vec3 anisotropyDirection){float NdotV=clamp(dot(n,v),0.,1.);float tangentRoughness=mix(roughness,1.,anisotropy*anisotropy);vec3 anisotropicTangent=cross(anisotropyDirection,v);vec3 anisotropicNormal=cross(anisotropicTangent,anisotropyDirection);float bendFactor=1.-anisotropy*(1.-roughness);float bendFactorPow4=bendFactor*bendFactor*bendFactor*bendFactor;vec3 bentNormal=normalize(mix(anisotropicNormal,n,bendFactorPow4));float lod=roughness*float(x3d_EnvironmentLightSource.specularTextureLevels);vec3 reflection=normalize(reflect(-v,bentNormal));vec3 specularLight=getSpecularLight(reflection,lod);return specularLight;}
+vec3 getIBLRadianceAnisotropy(const in vec3 n,const in vec3 v,const in float roughness,const in float anisotropy,const in vec3 anisotropyDirection){float NdotV=clamp(dot(n,v),0.,1.);float tangentRoughness=mix(roughness,1.,anisotropy*anisotropy);vec3 anisotropicTangent=cross(anisotropyDirection,v);vec3 anisotropicNormal=cross(anisotropicTangent,anisotropyDirection);float bendFactor=1.-anisotropy*(1.-roughness);float bendFactorPow4=bendFactor*bendFactor*bendFactor*bendFactor;vec3 bentNormal=normalize(mix(anisotropicNormal,n,bendFactorPow4));float lod=roughness*float(x3d_EnvironmentLightSource.specularTextureLevels);vec3 reflection=reflect(-v,bentNormal);vec3 specularLight=getSpecularLight(reflection,lod);return specularLight;}
 #endif
 #if defined(X3D_SHEEN_MATERIAL_EXT)
-vec3 getIBLRadianceCharlie(const in vec3 n,const in vec3 v,const in float sheenRoughness,const in vec3 sheenColor){float NdotV=clamp(dot(n,v),0.,1.);float lod=sheenRoughness*float(x3d_EnvironmentLightSource.sheenTextureLevels);vec3 reflection=normalize(reflect(-v,n));vec2 brdfSamplePoint=clamp(vec2(NdotV,sheenRoughness),vec2(0),vec2(1));float brdf=texture(x3d_EnvironmentLightSource.charlieLUTTexture,brdfSamplePoint).b;vec3 sheenLight=getSheenLight(reflection,lod);return sheenLight*sheenColor*brdf;}
+vec3 getIBLRadianceCharlie(const in vec3 n,const in vec3 v,const in float sheenRoughness,const in vec3 sheenColor){float NdotV=clamp(dot(n,v),0.,1.);float lod=sheenRoughness*float(x3d_EnvironmentLightSource.sheenTextureLevels);vec3 reflection=reflect(-v,n);vec2 brdfSamplePoint=clamp(vec2(NdotV,sheenRoughness),vec2(0),vec2(1));float brdf=texture(x3d_EnvironmentLightSource.charlieLUTTexture,brdfSamplePoint).b;vec3 sheenLight=getSheenLight(reflection,lod);return sheenLight*sheenColor*brdf;}
 #endif
 #endif
 `
@@ -67865,15 +67914,13 @@ return info;}
 #if defined(X3D_SCATTER_MATERIAL_EXT)
 ${MaterialTextures .texture ("x3d_ScatterStrengthTextureEXT", "a", "linear")}
 ${MaterialTextures .texture ("x3d_MultiscatterColorTextureEXT", "rgb", "linear")}
-uniform float x3d_ScatterStrengthEXT;uniform vec3 x3d_MultiscatterColorEXT;uniform float x3d_ScatterAnisotropyEXT;MaterialInfo getScatterInfo(in MaterialInfo info){float scatterStrength=x3d_ScatterStrengthEXT;
+uniform float x3d_ScatterStrengthEXT;uniform vec3 x3d_MultiscatterColorEXT;uniform float x3d_ScatterAnisotropyEXT;MaterialInfo getScatterInfo(in MaterialInfo info){info.scatterStrength=x3d_ScatterStrengthEXT;info.multiscatterColor=x3d_MultiscatterColorEXT;info.scatterAnisotropy=x3d_ScatterAnisotropyEXT;
 #if defined(X3D_SCATTER_STRENGTH_TEXTURE_EXT)
-scatterStrength*=getScatterStrengthTextureEXT();
+info.scatterStrength*=getScatterStrengthTextureEXT();
 #endif
-info.multiscatterColor=x3d_MultiscatterColorEXT;
 #if defined(X3D_MULTISCATTER_COLOR_TEXTURE_EXT)
 info.multiscatterColor*=getMultiscatterColorTextureEXT();
 #endif
-info.scatterAnisotropy=x3d_ScatterAnisotropyEXT;
 #if!defined(X3D_VOLUME_MATERIAL_EXT)
 info.thickness=0.;info.attenuationColor=vec3(1);info.attenuationDistance=0.;
 #endif
@@ -67983,11 +68030,11 @@ uniform ivec4 x3d_Viewport;
 #endif
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)||defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)||defined(X3D_SCATTER_MATERIAL_EXT)
 uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;
-#endif
 #if defined(X3D_XR_SESSION)
 uniform mat4 x3d_EyeMatrix;mat4 eye(const in mat4 modelViewMatrix){return x3d_EyeMatrix*modelViewMatrix;}
 #else
 #define eye(x)(x)
+#endif
 #endif
 #if defined(X3D_LIGHTING)
 uniform x3d_LightSourceParameters x3d_LightSource[X3D_NUM_LIGHTS];
@@ -68002,7 +68049,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 #include<Scatter>
 #else
 vec4 getMaterialColor(const in vec4 fragCoord){
-#if defined(X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined(X3D_TRANSMISSION_MATERIAL_EXT)||defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)||defined(X3D_SCATTER_MATERIAL_EXT)
 mat4 modelViewMatrix=eye(x3d_ModelViewMatrix);
 #endif
 vec4 baseColor=getBaseColor();
@@ -68013,7 +68060,7 @@ vec3 color=vec3(0);vec3 v=normalize(-vertex);
 #if defined(X3D_USE_IBL)||defined(X3D_LIGHTING)
 NormalInfo normalInfo=getNormalInfo(x3d_Material.normalScale);vec3 n=normalInfo.n;float NdotV=clamp(dot(n,v),0.,1.);
 #if defined(X3D_RETROREFLECTION_MATERIAL_EXT)
-vec3 v_retro=normalize(reflect(-v,n));
+vec3 v_retro=reflect(-v,n);
 #endif
 #endif
 MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0_dielectric=vec3(.04);materialInfo.specularWeight=1.;materialInfo.f90=vec3(1);materialInfo.f90_dielectric=materialInfo.f90;
@@ -68123,16 +68170,16 @@ float ao=getOcclusionFactor();color*=1.+x3d_Material.occlusionStrength*(ao-1.);
 #endif
 f_diffuse=vec3(0);f_specular_dielectric=vec3(0);f_specular_metal=vec3(0);vec3 f_dielectric_brdf=vec3(0);vec3 f_metal_brdf=vec3(0);
 #if defined(X3D_LIGHTING)
-for(int i=0;i<X3D_NUM_LIGHTS;++i){x3d_LightSourceParameters light=x3d_LightSource[i];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-vertex;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}if(distanceToLight<=light.radius||light.radius<0.){vec3 l=normalize(pointToLight);vec3 h=normalize(l+v);float NdotL=clamp(dot(n,l),0.,1.);float NdotH=clamp(dot(n,h),0.,1.);float VdotH=clamp(dot(v,h),0.,1.);vec3 dielectric_fresnel=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(VdotH));vec3 metal_fresnel=F_Schlick(baseColor.rgb,vec3(1),abs(VdotH));vec3 lightIntensity=getLightIntensity(light,l,distanceToLight);vec3 l_diffuse=lightIntensity*NdotL*BRDF_lambertian(baseColor.rgb);vec3 l_specular_dielectric=vec3(0);vec3 l_specular_metal=vec3(0);vec3 l_dielectric_brdf=vec3(0);vec3 l_metal_brdf=vec3(0);vec3 l_clearcoat_brdf=vec3(0);vec3 l_sheen=vec3(0);float l_albedoSheenScaling=1.;vec3 l_diffuse_btdf=vec3(0);
+for(int i=0;i<X3D_NUM_LIGHTS;++i){x3d_LightSourceParameters light=x3d_LightSource[i];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-vertex;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}if(distanceToLight<=light.radius||light.radius<0.){vec3 l=normalize(pointToLight);vec3 h=normalize(l+v);float NdotL=clamp(dot(n,l),0.,1.);float NdotH=clamp(dot(n,h),0.,1.);float VdotH=clamp(dot(v,h),0.,1.);vec3 dielectric_fresnel=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(VdotH));vec3 metal_fresnel=F_Schlick(baseColor.rgb,vec3(1),abs(VdotH));vec3 lightIntensity=getLightIntensity(light,l,distanceToLight);vec3 l_diffuse=lightIntensity*NdotL*BRDF_lambertian(baseColor.rgb);vec3 l_specular_dielectric=vec3(0);vec3 l_specular_metal=vec3(0);vec3 l_dielectric_brdf=vec3(0);vec3 l_metal_brdf=vec3(0);vec3 l_clearcoat_brdf=vec3(0);vec3 l_sheen=vec3(0);float l_albedoSheenScaling=1.;vec3 l_diffuse_btdf=vec3(0);vec3 l_transmission=vec3(0);
 #if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-l_diffuse*=1.-materialInfo.diffuseTransmissionFactor;if(dot(n,l)<0.){float diffuseNdotL=clamp(dot(-n,l),0.,1.);l_diffuse_btdf=lightIntensity*diffuseNdotL*BRDF_lambertian(materialInfo.diffuseTransmissionColorFactor);vec3 l_mirror=normalize(reflect(l,n));float diffuseVdotH=clamp(dot(v,normalize(l_mirror+v)),0.,1.);dielectric_fresnel=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(diffuseVdotH));
+l_diffuse*=1.-materialInfo.diffuseTransmissionFactor;if(dot(n,l)<0.){float diffuseNdotL=clamp(dot(-n,l),0.,1.);l_diffuse_btdf=lightIntensity*diffuseNdotL*BRDF_lambertian(materialInfo.diffuseTransmissionColorFactor);
 #if defined(X3D_VOLUME_MATERIAL_EXT)
 l_diffuse_btdf=applyVolumeAttenuation(l_diffuse_btdf,diffuseTransmissionThickness,materialInfo.attenuationColor,materialInfo.attenuationDistance);
 #endif
 #if defined(X3D_SCATTER_MATERIAL_EXT)
 l_diffuse_btdf*=(1.-singleScatter);
 #endif
-l_diffuse+=l_diffuse_btdf*materialInfo.diffuseTransmissionFactor;}
+}
 #endif
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)
 vec3 transmissionRay=getVolumeTransmissionRay(n,v,materialInfo.thickness,materialInfo.ior,modelViewMatrix);pointToLight-=transmissionRay;l=normalize(pointToLight);vec3 transmittedLight=lightIntensity*getPunctualRadianceTransmission(n,v,l,materialInfo.alphaRoughness,baseColor.rgb,materialInfo.ior);
@@ -68142,7 +68189,7 @@ transmittedLight=applyVolumeAttenuation(transmittedLight,length(transmissionRay)
 #if defined(X3D_SCATTER_MATERIAL_EXT)
 if(materialInfo.thickness<=0.){float forwardFraction=(1.+materialInfo.scatterAnisotropy)*.5;float backwardFraction=(1.-materialInfo.scatterAnisotropy)*.5;vec3 scatterLobe=vec3(0);if(dot(n,l)<0.){float scatterNdotL=clamp(dot(-n,l),0.,1.);scatterLobe=lightIntensity*scatterNdotL*BRDF_lambertian(materialInfo.multiscatterColor)*forwardFraction;}else{scatterLobe=lightIntensity*NdotL*BRDF_lambertian(materialInfo.multiscatterColor)*backwardFraction;}transmittedLight=mix(transmittedLight,scatterLobe,materialInfo.scatterStrength);}
 #endif
-l_diffuse=mix(l_diffuse,transmittedLight,materialInfo.transmissionFactor);
+l_diffuse*=(1.-materialInfo.transmissionFactor);l_transmission=transmittedLight;
 #endif
 vec3 intensity=getLightIntensity(light,l,length(light.matrix*pointToLight));
 #if defined(X3D_ANISOTROPY_MATERIAL_EXT)
@@ -68173,16 +68220,29 @@ l_clearcoat_brdf=intensity*getPunctualRadianceClearCoat(materialInfo.clearcoatNo
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 l_sheen=intensity*getPunctualRadianceSheen(materialInfo.sheenColorFactor,materialInfo.sheenRoughnessFactor,NdotL,NdotV,NdotH);l_albedoSheenScaling=min(1.-max3(materialInfo.sheenColorFactor)*albedoSheenScalingLUT(NdotV,materialInfo.sheenRoughnessFactor),1.-max3(materialInfo.sheenColorFactor)*albedoSheenScalingLUT(NdotL,materialInfo.sheenRoughnessFactor));
 #endif
+#if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)||defined(X3D_TRANSMISSION_MATERIAL_EXT)
+vec3 transmittance=1.-F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,NdotV);
+#endif
+#if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+float diffuseTransmissionScale=materialInfo.diffuseTransmissionFactor;
+#if defined(X3D_TRANSMISSION_MATERIAL_EXT)
+diffuseTransmissionScale*=1.-materialInfo.transmissionFactor;
+#endif
+l_dielectric_brdf+=l_diffuse_btdf*diffuseTransmissionScale*transmittance;
+#endif
+#if defined(X3D_TRANSMISSION_MATERIAL_EXT)
+l_dielectric_brdf+=l_transmission*materialInfo.transmissionFactor*transmittance;
+#endif
 vec3 l_color=mix(l_dielectric_brdf,l_metal_brdf,materialInfo.metallic);l_color=l_sheen+l_color*l_albedoSheenScaling;l_color=mix(l_color,l_clearcoat_brdf,clearcoatFactor*clearcoatFresnel);
 #if defined(X3D_SHADOWS)
 l_color=mix(l_color,light.shadowColor,getShadowIntensity(i,light));
 #endif
 color+=l_color;}}
 #endif
-#if defined(X3D_SCATTER_MATERIAL_EXT)&&defined(X3D_VOLUME_MATERIAL_EXT)&&defined(X3D_TRANSMISSION_MATERIAL_EXT)
-if(materialInfo.scatterStrength>0.&&materialInfo.thickness>0.){vec3 l_color=getSubsurfaceScattering(vertex,x3d_ProjectionMatrix,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,singleScatter,fragCoord);float iridescenceMask=1.;
-#ifdef MATERIAL_IRIDESCENCE
-iridescenceMask=1.-materialInfo.iridescenceFactor;
+#if defined(X3D_SCATTER_MATERIAL_EXT)&&defined(X3D_VOLUME_MATERIAL_EXT)&&defined(X3D_TRANSMISSION_MATERIAL_EXT)&&(defined(X3D_USE_IBL)||defined(X3D_LIGHTING))
+if(materialInfo.scatterStrength>0.&&materialInfo.thickness>0.){vec3 singleScattering=getVolumeSingleScattering(v,n,materialInfo.ior,materialInfo.attenuationColor,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,vertex,materialInfo.thickness,modelViewMatrix);vec3 diffuseScattering=getSubsurfaceScattering(vertex,x3d_ProjectionMatrix,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,singleScatter,fragCoord);vec3 l_color=singleScattering+diffuseScattering;float iridescenceMask=1.;
+#if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
+iridescenceMask-=materialInfo.iridescenceFactor;
 #endif
 color+=l_color*(1.-materialInfo.metallic)*(1.-clearcoatFactor*clearcoatFresnel)*iridescenceMask*materialInfo.transmissionFactor;}
 #endif
@@ -68207,7 +68267,7 @@ float applyIorToRoughness(const in float roughness,const in float ior){return ro
 #endif
 #if defined(X3D_LIGHTING)
 #include<Lighting>
-float getRangeAttenuation(const in float radius,const in float distanceToLight){if(radius<=0.){return 1./pow(distanceToLight,2.);}return max(min(1.-pow(distanceToLight/radius,4.),1.),0.)/pow(distanceToLight,2.);}float getSpotAttenuation(const in vec3 pointToLight,const in vec3 spotDirection,const in float outerConeCos,const in float innerConeCos){float actualCos=dot(normalize(spotDirection),normalize(-pointToLight));if(actualCos>outerConeCos){if(actualCos<innerConeCos){float angularAttenuation=(actualCos-outerConeCos)/(innerConeCos-outerConeCos);return angularAttenuation*angularAttenuation;}return 1.;}return 0.;}vec3 getLightIntensity(const in x3d_LightSourceParameters light,const in vec3 pointToLight,const in float distanceToLight){float intensity=light.intensity;if(light.type!=x3d_DirectionalLight){intensity*=getAttenuation(light.attenuation,distanceToLight);intensity*=getRangeAttenuation(light.radius,distanceToLight);}if(light.type==x3d_SpotLight){intensity*=getSpotAttenuation(pointToLight,light.direction,cos(light.cutOffAngle),cos(light.beamWidth));}return intensity*light.color;}
+float getRangeAttenuation(const in float radius,const in float distanceToLight){if(radius<=0.){return 1./pow(distanceToLight,2.);}return max(min(1.-pow(distanceToLight/radius,4.),1.),0.)/pow(distanceToLight,2.);}float getSpotAttenuation(const in vec3 l,const in vec3 spotDirection,const in float outerConeCos,const in float innerConeCos){float actualCos=dot(spotDirection,-l);if(actualCos>outerConeCos){if(actualCos<innerConeCos){float angularAttenuation=(actualCos-outerConeCos)/(innerConeCos-outerConeCos);return angularAttenuation*angularAttenuation;}return 1.;}return 0.;}vec3 getLightIntensity(const in x3d_LightSourceParameters light,const in vec3 l,const in float distanceToLight){float intensity=light.intensity;if(light.type!=x3d_DirectionalLight){intensity*=getAttenuation(light.attenuation,distanceToLight);intensity*=getRangeAttenuation(light.radius,distanceToLight);}if(light.type==x3d_SpotLight){intensity*=getSpotAttenuation(l,light.direction,cos(light.cutOffAngle),cos(light.beamWidth));}return intensity*light.color;}
 #if defined(X3D_SHEEN_MATERIAL_EXT)
 vec3 getPunctualRadianceSheen(const in vec3 sheenColor,const in float sheenRoughness,const in float NdotL,const in float NdotV,const in float NdotH){return NdotL*BRDF_specularSheen(sheenColor,sheenRoughness,NdotL,NdotV,NdotH);}
 #endif
@@ -68216,7 +68276,7 @@ vec3 getPunctualRadianceClearCoat(const in vec3 clearcoatNormal,const in vec3 v,
 #endif
 #endif
 #if defined(X3D_TRANSMISSION_MATERIAL_EXT)||defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-vec3 getPunctualRadianceTransmission(const in vec3 normal,const in vec3 view,const in vec3 pointToLight,const in float alphaRoughness,const in vec3 baseColor,const in float ior){float transmissionRoughness=applyIorToRoughness(alphaRoughness,ior);vec3 n=normalize(normal);vec3 v=normalize(view);vec3 l=normalize(pointToLight);vec3 l_mirror=normalize(l+2.*n*dot(-l,n));vec3 h=normalize(l_mirror+v);float D=D_GGX(clamp(dot(n,h),0.,1.),transmissionRoughness);float Vis=V_GGX(clamp(dot(n,l_mirror),0.,1.),clamp(dot(n,v),0.,1.),transmissionRoughness);return baseColor*D*Vis;}vec3 applyVolumeAttenuation(const in vec3 radiance,const in float transmissionDistance,const in vec3 attenuationColor,const in float attenuationDistance){if(attenuationDistance==0.){return radiance;}else{vec3 attenuationCoefficient=log(attenuationColor)/attenuationDistance;vec3 transmittance=exp(attenuationCoefficient*transmissionDistance);return transmittance*radiance;}}vec3 getVolumeTransmissionRay(const in vec3 n,const in vec3 v,const in float thickness,const in float ior,in mat4 modelMatrix){vec3 refractionVector=refract(-v,normalize(n),1./ior);vec3 modelScale;modelScale.x=length(modelMatrix[0].xyz);modelScale.y=length(modelMatrix[1].xyz);modelScale.z=length(modelMatrix[2].xyz);return normalize(refractionVector)*thickness*modelScale;}
+vec3 getPunctualRadianceTransmission(const in vec3 n,const in vec3 v,const in vec3 l,const in float alphaRoughness,const in vec3 baseColor,const in float ior){float transmissionRoughness=applyIorToRoughness(alphaRoughness,ior);vec3 l_mirror=reflect(l,n);vec3 h=normalize(l_mirror+v);float D=D_GGX(abs(dot(n,h)),transmissionRoughness);float Vis=V_GGX(abs(dot(n,l_mirror)),abs(dot(n,v)),transmissionRoughness);return baseColor*D*Vis;}vec3 applyVolumeAttenuation(const in vec3 radiance,const in float transmissionDistance,const in vec3 attenuationColor,const in float attenuationDistance){if(attenuationDistance==0.){return radiance;}else{vec3 attenuationCoefficient=log(attenuationColor)/attenuationDistance;vec3 transmittance=exp(attenuationCoefficient*transmissionDistance);return transmittance*radiance;}}vec3 getVolumeTransmissionRay(const in vec3 n,const in vec3 v,const in float thickness,const in float ior,in mat4 modelMatrix){vec3 refractionVector=refract(-v,n,1./ior);vec3 modelScale;modelScale.x=length(modelMatrix[0].xyz);modelScale.y=length(modelMatrix[1].xyz);modelScale.z=length(modelMatrix[2].xyz);return refractionVector*thickness*modelScale;}
 #endif
 #include<SubsurfaceScattering>
 `
@@ -92280,8 +92340,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(974);
-/* provided dependency */ var APNG = __webpack_require__(44);
+/* provided dependency */ var SuperGif = __webpack_require__(713);
+/* provided dependency */ var APNG = __webpack_require__(139);
 
 
 
@@ -94925,7 +94985,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(248);
+/* provided dependency */ var libtess_libtess = __webpack_require__(751);
 const libtess_default_ = libtess_libtess;
 ;
 

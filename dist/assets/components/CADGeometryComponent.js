@@ -1,4 +1,4 @@
-/* X_ITE v16.8.0 */
+/* X_ITE v16.8.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -211,7 +211,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
 
          if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
          {
-            childNode ._display     .removeInterest ("requestRebuild", this);
+            childNode ._hidden      .removeInterest ("requestRebuild", this);
             childNode ._bboxDisplay .removeInterest ("requestRebuild", this);
          }
       }
@@ -272,7 +272,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
 
                   if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
                   {
-                     childNode ._display     .addInterest ("requestRebuild", this);
+                     childNode ._hidden      .addInterest ("requestRebuild", this);
                      childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                      if (childNode .isBBoxVisible ())
@@ -331,8 +331,11 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
       {
          case (external_X_ITE_X3D_TraverseType_default()).POINTER:
          {
-            renderObject .setShapeParent (this);
+            renderObject .getHierarchy () .push (this);
+
             this .pointingObject ?.traverse (type, renderObject);
+
+            renderObject .getHierarchy () .pop ();
             return;
          }
          case (external_X_ITE_X3D_TraverseType_default()).CAMERA:

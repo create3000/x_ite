@@ -1,4 +1,4 @@
-/* X_ITE v16.8.0 */
+/* X_ITE v16.8.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -17811,7 +17811,7 @@ function load() {
 function loadSync() {
   console.error('DEPRECATED! migrate to: opentype.parse(require("fs").readFileSync(url), opt)');
 }
-
+;
 
 ;// external "__X_ITE_X3D__ .FileLoader"
 const external_X_ITE_X3D_FileLoader_namespaceObject = __X_ITE_X3D__ .FileLoader;
