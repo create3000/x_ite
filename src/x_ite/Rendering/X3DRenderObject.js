@@ -1152,16 +1152,16 @@ Object .assign (X3DRenderObject .prototype,
          {
             // Render to volume scatter buffer.
 
-            if (this .renderPasses & RenderPass .VOLUME_SCATTER_BIT)
+            if (this .renderPasses & RenderPass .SCATTER_BIT)
             {
                browser .resetShapeId ();
 
-               this .renderPass = RenderPass .VOLUME_SCATTER_KEY;
+               this .renderPass = RenderPass .SCATTER_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-               this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
 
             // Render to transmission buffer.

@@ -217,9 +217,9 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_scatter__ ()
    {
-      this .set_renderPass__ (this .appearanceNode .isScatter (), RenderPass .VOLUME_SCATTER_BIT);
+      this .set_renderPass__ (this .appearanceNode .isScatter (), RenderPass .SCATTER_BIT);
 
-      this [RenderPass .VOLUME_SCATTER_KEY] = this .appearanceNode .isScatter () ? this : null;
+      this [RenderPass .SCATTER_KEY] = this .appearanceNode .isScatter () ? this : null;
    },
    set_renderPass__ (value, bit)
    {

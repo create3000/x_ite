@@ -104,7 +104,7 @@ vec3 getVolumeSingleScattering (
 
          if (light .type != x3d_DirectionalLight)
          {
-            pointToLight    = light .location - vertex;
+            pointToLight    = light .location - samplePos;
             distanceToLight = length (light .matrix * pointToLight);
          }
          else
@@ -172,7 +172,7 @@ burley_eval (const in vec3 d, const in float r)
 }
 
 vec3
-getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 diffuseColor, const in vec3 multiscatterColor, const in float scatterStrength, const in float scatterAnisotropy, const in vec3 singleScatter, const in vec4 fragCoord)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 multiscatterColor, const in float scatterStrength, const in float scatterAnisotropy, const in vec3 singleScatter, const in vec4 fragCoord)
 {
    vec3 multiScatter = scatterStrength * multiscatterColor;
    // Blend between the multi-scatter-driven diffusion length and the
@@ -202,7 +202,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    float maxRadiusPixels    = maxColor / mPerPixel; // Calculate the maximum radius in pixels.
 
    if (maxRadiusPixels <= 1.0)
-      return centerSample .rgb * diffuseColor; // If the maximum radius is less than or equal to the pixel size, the pixel itself defines the scatter color.
+      return centerSample .rgb * multiscatterColor; // If the maximum radius is less than or equal to the pixel size, the pixel itself defines the scatter color.
 
    centerDepth = fragViewPosition .z; // Extract the depth value.
 
@@ -244,7 +244,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 
    totalWeight = max (totalWeight, vec3 (0.0001)); // Avoid division by zero.
 
-   return totalDiffuse / totalWeight * diffuseColor;
+   return totalDiffuse / totalWeight * multiscatterColor;
 }
 #endif
 #endif

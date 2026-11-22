@@ -44,7 +44,7 @@ function X3DBackgroundNode (executionContext)
 
    this [RenderPass .RENDER_KEY]         = this;
    this [RenderPass .TRANSMISSION_KEY]   = this;
-   this [RenderPass .VOLUME_SCATTER_KEY] = null;
+   this [RenderPass .SCATTER_KEY] = null;
 
 }
 

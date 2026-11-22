@@ -539,7 +539,6 @@ getMaterialColor (const in vec4 fragCoord)
             x3d_ProjectionMatrix,
             materialInfo .attenuationDistance,
             materialInfo .multiscatterColor,
-            materialInfo .multiscatterColor,
             materialInfo .scatterStrength,
             materialInfo .scatterAnisotropy,
             singleScatter,

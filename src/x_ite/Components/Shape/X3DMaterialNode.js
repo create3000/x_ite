@@ -348,7 +348,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
       switch (renderObject .getRenderPass ())
       {
-         case RenderPass .VOLUME_SCATTER_KEY:
+         case RenderPass .SCATTER_KEY:
          {
             options .push ("X3D_SCATTER_PASS", "X3D_LINEAR_OUTPUT");
             break;

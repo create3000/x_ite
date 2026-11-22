@@ -68,8 +68,6 @@ getMaterialColor (const in vec4 fragCoord)
 
    #if defined (X3D_SCATTER_MATERIAL_EXT)
       materialInfo = getScatterInfo (materialInfo);
-
-      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor, materialInfo .scatterStrength, materialInfo .scatterAnisotropy);
    #endif
 
    materialInfo .perceptualRoughness = clamp (materialInfo .perceptualRoughness, 0.0, 1.0);
