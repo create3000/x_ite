@@ -323,7 +323,7 @@ Object .assign (MultiSampleFramebuffer .prototype,
       // // DEBUG start
       // if (DEVELOPMENT)
       // {
-      //    const volumeScatterBuffer = browser .getVolumeScatterBuffer ?.();
+      //    const volumeScatterBuffer = browser .getScatterBuffer ?.();
 
       //    if (volumeScatterBuffer)
       //    {

@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X3D
       // Set scatter framebuffer textures.
 
       const
-         scatterSampleBuffer       = browser .getVolumeScatterBuffer (),
+         scatterSampleBuffer       = browser .getScatterBuffer (),
          scatterSampleUnit         = browser .popTextureUnit (),
          scatterDepthSampleUnit    = browser .popTextureUnit (),
          scatterSampleTexture      = scatterSampleBuffer .getColorTexture (),

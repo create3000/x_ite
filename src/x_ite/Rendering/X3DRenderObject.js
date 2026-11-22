@@ -1159,7 +1159,7 @@ Object .assign (X3DRenderObject .prototype,
                this .renderPass = RenderPass .SCATTER_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
-               const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
+               const volumeScatterBuffer = browser .getScatterBuffer ();
 
                this .drawShapes (RenderPass .SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
