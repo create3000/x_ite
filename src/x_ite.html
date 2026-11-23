@@ -29,6 +29,7 @@
    <!-- Extensions -->
 
    <!-- Examples and Tests -->
+   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.min.js"></script>
    <script src="examples.js"></script>
    <script src="tests.js"></script>
@@ -187,9 +188,17 @@ $("#blob") .on ("click", () =>
    });
 });
 
-$("#reset-history") .on ("click", () =>
+$("#download-pixels") .on ("click", () =>
 {
-   localStorage ["Bookmarks.url"] = undefined;
+   Browser .getScatterBuffer() .bind ();
+
+	const
+	 	pixel = Browser .getScatterBuffer().readPixels(),
+		blob  = new Blob ([pixel], { type: "application/octet-stream" });
+
+	saveAs (blob, "pixels.rgba");
+
+   console .log (Browser .getViewport () .toString ());
 });
       </script>
       <style>
@@ -551,7 +560,7 @@ main.color-management #browser {
                   <a href="/x_ite/dist/example.html">Example Page</a>
                   <a href="/x_ite-dom/">DOM</a>
                   <a id="blob" href="#">Blob</a>
-                  <a id="reset-history" href="#">Reset History</a>
+                  <a id="download-pixels" href="#">Download Pixels</a>
                </div>
                <div class="buttons">
                   <a href="../x_ite.min.html">x_ite.min.html</a>

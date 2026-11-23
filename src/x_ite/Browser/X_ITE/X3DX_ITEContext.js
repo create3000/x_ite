@@ -1,8 +1,8 @@
 import TextureBuffer from "../../Rendering/TextureBuffer.js";
 
 const
-   _transmissionBuffer  = Symbol (),
-   _scatterBuffer = Symbol ();
+   _transmissionBuffer = Symbol (),
+   _scatterBuffer      = Symbol ();
 
 function X3DX_ITEContext () { }
 

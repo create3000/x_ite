@@ -9,6 +9,7 @@ function TextureBuffer ({ browser, width, height, float = false, mipMaps = false
    this .context = gl;
    this .width   = width;
    this .height  = height;
+   this .float   = float;
 
    Object .defineProperty (this, "array",
    {
@@ -120,7 +121,7 @@ Object .assign (TextureBuffer .prototype,
    {
       const { context: gl, array, width, height } = this;
 
-      gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
+      gl .readPixels (0, 0, width, height, gl .RGBA, this .float ? gl .FLOAT : gl .UNSIGNED_BYTE, array);
 
       return array;
    },
