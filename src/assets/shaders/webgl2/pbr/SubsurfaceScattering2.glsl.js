@@ -45,17 +45,17 @@ henyeyGreenstein (const in float g, const in float cosTheta)
 }
 
 vec3 getVolumeSingleScattering (
-   vec3 v,
-   vec3 n,
-   float ior,
-   vec3 attenuationColor,
-   float attenuationDistance,
-   vec3 multiscatterColor,
-   float scatterStrength,
-   float scatterAnisotropy,
-   vec3 frontWorldPos,
-   float thicknessMap,
-   mat4 modelMatrix
+   const in vec3 v,
+   const in vec3 n,
+   const in float ior,
+   const in vec3 attenuationColor,
+   const in float attenuationDistance,
+   const in vec3 multiscatterColor,
+   const in float scatterStrength,
+   const in float scatterAnisotropy,
+   const in vec3 frontWorldPos,
+   const in float thicknessMap,
+   const in mat4 modelMatrix
 )
 {
    vec3 outgoingDir = v;
@@ -171,7 +171,16 @@ burley_eval (const in vec3 d, const in float r)
 }
 
 vec3
-getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 multiscatterColor, const in float scatterStrength, const in float scatterAnisotropy, const in vec3 singleScatter, const in vec4 fragCoord)
+getSubsurfaceScattering (
+   const in vec3 vertex,
+   const in mat4 projectionMatrix,
+   const in float attenuationDistance,
+   const in vec3 multiscatterColor,
+   const in float scatterStrength,
+   const in float scatterAnisotropy,
+   const in vec3 singleScatter,
+   const in vec4 fragCoord
+)
 {
    vec3 multiScatter = scatterStrength * multiscatterColor;
    // Blend between the multi-scatter-driven diffusion length and the
