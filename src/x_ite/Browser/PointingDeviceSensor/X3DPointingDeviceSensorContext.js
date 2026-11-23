@@ -179,6 +179,8 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    addPointingShape (pointingContext)
    {
+      // Support multiple layers.
+
       const id = ++ this [_id];
 
       this [_pointingContexts] [id] = pointingContext;
