@@ -16,12 +16,12 @@ function X3DProgrammableShaderObject (executionContext)
 
    // Private properties
 
-   this .attributeNames         = [ ];
-   this .uniformNames           = [ ];
-   this .environmentLightNodes  = [ ];
-   this .lightNodes             = [ ];
-   this .textureProjectorNodes  = [ ];
-   this .textures               = new Set ();
+   this .attributeNames        = [ ];
+   this .uniformNames          = [ ];
+   this .environmentLightNodes = [ ];
+   this .lightNodes            = [ ];
+   this .textureProjectorNodes = [ ];
+   this .textures              = new Set ();
 
    this .x3d_ClipPlane                  = [ ];
    this .x3d_EnvironmentLight           = [ ];
