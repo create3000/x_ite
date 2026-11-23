@@ -3,7 +3,7 @@ export default () => /* glsl */ `
 // Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/punctual.glsl
 
-#if defined (X3D_SCATTER_MATERIAL_EXT)
+#if defined (X3D_SCATTER_MATERIAL_EXT) && !defined (X3D_SCATTER_PASS)
 
 // glTF specification for converting multi-scatter color to single scatter color.
 vec3
@@ -141,7 +141,6 @@ vec3 getVolumeSingleScattering (
 }
 #endif
 
-#if !defined (X3D_SCATTER_PASS)
 // Subsurface scattering based on the blender implementation of the Burley model.
 
 uniform vec3  x3d_ScatterSamplesEXT [X3D_SCATTER_SAMPLES_COUNT_EXT];
@@ -246,6 +245,5 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 
    return totalDiffuse / totalWeight * multiscatterColor;
 }
-#endif
 #endif
 `;

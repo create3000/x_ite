@@ -58,17 +58,17 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getSpecularInfo (materialInfo);
    #endif
 
-   #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
-      materialInfo = getTransmissionInfo (materialInfo);
-   #endif
+   // #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+   //    materialInfo = getTransmissionInfo (materialInfo);
+   // #endif
 
-   #if defined (X3D_VOLUME_MATERIAL_EXT)
-      materialInfo = getVolumeInfo (materialInfo);
-   #endif
+   // #if defined (X3D_VOLUME_MATERIAL_EXT)
+   //    materialInfo = getVolumeInfo (materialInfo);
+   // #endif
 
-   #if defined (X3D_SCATTER_MATERIAL_EXT)
-      materialInfo = getScatterInfo (materialInfo);
-   #endif
+   // #if defined (X3D_SCATTER_MATERIAL_EXT)
+   //    materialInfo = getScatterInfo (materialInfo);
+   // #endif
 
    materialInfo .perceptualRoughness = clamp (materialInfo .perceptualRoughness, 0.0, 1.0);
 

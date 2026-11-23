@@ -145,6 +145,4 @@ getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thick
    return refractionVector * thickness * modelScale;
 }
 #endif
-
-#include <SubsurfaceScattering>
 `;

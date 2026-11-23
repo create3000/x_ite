@@ -36,6 +36,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 #include <BRDF>
 #include <MaterialInfo>
 #include <Punctual>
+#include <SubsurfaceScattering>
 #include <IBL>
 #include <Iridescence>
 
