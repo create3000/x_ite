@@ -1860,7 +1860,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._thickness               = this .numberValue (KHR_materials_volume .thicknessFactor, 0);
       extension ._thicknessTexture        = this .textureInfo (KHR_materials_volume .thicknessTexture);
       extension ._thicknessTextureMapping = this .textureMapping (KHR_materials_volume .thicknessTexture);
-      extension ._attenuationDistance     = this .numberValue (KHR_materials_volume .attenuationDistance, 1_000_000);
+      extension ._attenuationDistance     = this .numberValue (KHR_materials_volume .attenuationDistance, 0); // 0 means infinite distance.
 
       const attenuationColor = new Color3 ();
 

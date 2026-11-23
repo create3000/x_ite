@@ -67,7 +67,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    {
       const attenuationDistance = this ._attenuationDistance .getValue ();
 
-      this .attenuationDistance = attenuationDistance ? Math .max (attenuationDistance, 0) : 1_000_000;
+      this .attenuationDistance = Math .max (attenuationDistance, 0);
    },
    set_attenuationColor__ ()
    {
@@ -118,7 +118,7 @@ Object .defineProperties (VolumeMaterialExtension,
          new X3DFieldDefinition (X3DConstants .inputOutput, "thickness",               new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "thicknessTextureMapping", new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "thicknessTexture",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "attenuationDistance",     new Fields .SFFloat (1_000_000)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "attenuationDistance",     new Fields .SFFloat (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "attenuationColor",        new Fields .SFColor (1, 1, 1)),
       ]),
       enumerable: true,
