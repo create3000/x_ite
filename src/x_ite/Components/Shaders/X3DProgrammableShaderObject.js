@@ -8,7 +8,7 @@ import $                from "../../../lib/helper.js";
 
 const _uniformLocation = Symbol .for ("X_ITE.X3DField.uniformLocation");
 
-function X3DProgrammableShaderObject (executionContext)
+function X3DProgrammableShaderObject (/* executionContext */)
 {
    this .addType (X3DConstants .X3DProgrammableShaderObject);
 
