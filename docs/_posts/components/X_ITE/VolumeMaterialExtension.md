@@ -36,7 +36,7 @@ The **VolumeMaterialExtension** node belongs to the [X_ITE](/x_ite/components/ov
 | SFFloat | [in, out] | [thickness](#fields-thickness) | 0 |
 | SFString | [in, out] | [thicknessTextureMapping](#fields-thicknessTextureMapping) | "" |
 | SFNode | [in, out] | [thicknessTexture](#fields-thicknessTexture) | NULL |
-| SFFloat | [in, out] | [attenuationDistance](#fields-attenuationDistance) | 1000000 |
+| SFFloat | [in, out] | [attenuationDistance](#fields-attenuationDistance) | 0 |
 | SFColor | [in, out] | [attenuationColor](#fields-attenuationColor) | 1 1 1 |
 {: .fields }
 
@@ -64,7 +64,7 @@ Input/Output field *thicknessTextureMapping*.
 
 A texture that defines the thickness, stored in the green (G) channel. This will be multiplied by thicknessFactor.
 
-### SFFloat [in, out] **attenuationDistance** 1000000 <small>(0,∞)</small>
+### SFFloat [in, out] **attenuationDistance** 0 <small>(0,∞)</small>
 {: #fields-attenuationDistance }
 
 Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space. A value of `0` means infinite distance.
