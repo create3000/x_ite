@@ -22,6 +22,7 @@ const no_headlight = [
    "LightVisibility",
    "PlaysetLightTest",
    "PointLightIntensityTest",
+   "ScatterAnemone",
    "ScatterPlant",
    "ScatteringSkull",
    "TrafficCone",
@@ -29,6 +30,7 @@ const no_headlight = [
 
 // KHR_lights_punctual
 const no_background = [
+   "ScatterAnemone",
    "TrafficCone",
 ];
 
