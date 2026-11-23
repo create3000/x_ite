@@ -67,7 +67,7 @@ A texture that defines the thickness, stored in the green (G) channel. This will
 ### SFFloat [in, out] **attenuationDistance** 1000000 <small>(0,∞)</small>
 {: #fields-attenuationDistance }
 
-Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space.
+Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space. 0 means infinite distance.
 
 ### SFColor [in, out] **attenuationColor** 1 1 1 <small>[0,1]</small>
 {: #fields-attenuationColor }
