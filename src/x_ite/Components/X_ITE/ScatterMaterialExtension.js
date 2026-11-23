@@ -117,6 +117,20 @@ Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X3D
    {
       const browser = this .getBrowser ();
 
+      if (shaderObject .scatterPass)
+      {
+         gl .uniform1f (shaderObject .x3d_ScatterMaterialIdEXT, browser .getShapeId ());
+         return;
+      }
+
+      gl .uniform1f  (shaderObject .x3d_ScatterStrengthEXT,   this .scatterStrength);
+      gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
+      gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
+      gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    ScatterSamples .SCATTER_SAMPLES);
+      gl .uniform1f  (shaderObject .x3d_ScatterMinRadiusEXT,  ScatterSamples .SCATTER_MIN_RADIUS);
+
+      // Textures
+
       this .scatterStrengthTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject .x3d_ScatterStrengthTextureEXT,
          this ._scatterStrengthTextureMapping .getValue (),
@@ -128,19 +142,6 @@ Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X3D
          this ._multiscatterColorTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
-
-      if (shaderObject .scatterPass)
-      {
-         gl .uniform1f  (shaderObject .x3d_ScatterMaterialIdEXT, browser .getShapeId ());
-         gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
-         return;
-      }
-
-      gl .uniform1f  (shaderObject .x3d_ScatterStrengthEXT,   this .scatterStrength);
-      gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
-      gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
-      gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    ScatterSamples .SCATTER_SAMPLES);
-      gl .uniform1f  (shaderObject .x3d_ScatterMinRadiusEXT,  ScatterSamples .SCATTER_MIN_RADIUS);
 
       // Set scatter framebuffer textures.
 
