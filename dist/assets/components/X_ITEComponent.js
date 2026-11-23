@@ -46,8 +46,8 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 const
-   _transmissionBuffer  = Symbol (),
-   _volumeScatterBuffer = Symbol ();
+   _transmissionBuffer = Symbol (),
+   _scatterBuffer      = Symbol ();
 
 function X3DX_ITEContext () { }
 
@@ -56,7 +56,7 @@ Object .assign (X3DX_ITEContext .prototype,
    initialize ()
    {
       this .addTextureBuffer (_transmissionBuffer);
-      this .addTextureBuffer (_volumeScatterBuffer);
+      this .addTextureBuffer (_scatterBuffer);
    },
    getTransmissionBuffer ()
    {
@@ -67,9 +67,9 @@ Object .assign (X3DX_ITEContext .prototype,
          mipMaps: true,
       });
    },
-   getVolumeScatterBuffer ()
+   getScatterBuffer ()
    {
-      return this [_volumeScatterBuffer] ??= new (external_X_ITE_X3D_TextureBuffer_default()) ({
+      return this [_scatterBuffer] ??= new (external_X_ITE_X3D_TextureBuffer_default()) ({
          browser: this,
          width: this ._viewport [2],
          height: this ._viewport [3],
@@ -20564,7 +20564,7 @@ materialInfo=getTransmissionInfo(materialInfo);
 materialInfo=getVolumeInfo(materialInfo);
 #endif
 #if defined(X3D_SCATTER_MATERIAL_EXT)
-materialInfo=getScatterInfo(materialInfo);vec3 singleScatter=multiToSingleScatter(materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy);
+materialInfo=getScatterInfo(materialInfo);
 #endif
 materialInfo.perceptualRoughness=clamp(materialInfo.perceptualRoughness,0.,1.);materialInfo.alphaRoughness=materialInfo.perceptualRoughness*materialInfo.perceptualRoughness;vec3 f_specular_dielectric=vec3(0);vec3 f_diffuse=vec3(0);vec3 f_dielectric_brdf_ibl=vec3(0);float albedoSheenScaling=1.;
 #if defined(X3D_USE_IBL)
@@ -20595,7 +20595,7 @@ vec3 getDiffuseLight(const in vec3 n);
 #endif
 const int SCATTER_VOLUME_STEPS=16;float henyeyGreenstein(const in float g,const in float cosTheta){float gSq=g*g;float denom=1.+gSq-2.*g*cosTheta;return(1.-gSq)/(4.*M_PI*pow(denom,1.5));}vec3 getVolumeSingleScattering(vec3 v,vec3 n,float ior,vec3 attenuationColor,float attenuationDistance,vec3 multiscatterColor,float scatterStrength,float scatterAnisotropy,vec3 frontWorldPos,float thicknessMap,mat4 modelMatrix){vec3 outgoingDir=v;vec3 refractedDir=refract(-outgoingDir,n,1./ior);if(dot(refractedDir,refractedDir)<1e-4)refractedDir=-outgoingDir;float modelScale=length(modelMatrix[0].xyz);float cosRay=1.;float chordLength=thicknessMap*modelScale;vec3 sigma_t=vec3(0);if(attenuationDistance>0.){vec3 attenuation=max(attenuationColor,vec3(1e-4));sigma_t=max(-log(attenuation)/attenuationDistance,vec3(0));}vec3 sigma_s=sigma_t*multiToSingleScatter(multiscatterColor,scatterStrength,scatterAnisotropy);float stepLength=chordLength/float(SCATTER_VOLUME_STEPS);vec3 scattered=vec3(0);for(int i=1;i<=SCATTER_VOLUME_STEPS;++i){float t=(float(i)-.5)*stepLength;vec3 samplePos=frontWorldPos+refractedDir*t;vec3 inscatter=vec3(0);
 #if defined(X3D_LIGHTING)
-for(int l=0;l<X3D_NUM_LIGHTS;++l){x3d_LightSourceParameters light=x3d_LightSource[l];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-vertex;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}vec3 lightIntensity=getLightIntensity(light,normalize(pointToLight),distanceToLight);float lightDist=max(length(pointToLight),1e-4);vec3 lightDir=-pointToLight/lightDist;float phase=henyeyGreenstein(scatterAnisotropy,dot(lightDir,outgoingDir));inscatter+=lightIntensity*phase;}
+for(int l=0;l<X3D_NUM_LIGHTS;++l){x3d_LightSourceParameters light=x3d_LightSource[l];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-samplePos;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}vec3 lightIntensity=getLightIntensity(light,normalize(pointToLight),distanceToLight);float lightDist=max(length(pointToLight),1e-4);vec3 lightDir=-pointToLight/lightDist;float phase=henyeyGreenstein(scatterAnisotropy,dot(lightDir,outgoingDir));inscatter+=lightIntensity*phase;}
 #endif
 #if defined(X3D_USE_IBL)
 inscatter+=getDiffuseLight(n)/M_PI;
@@ -20603,7 +20603,7 @@ inscatter+=getDiffuseLight(n)/M_PI;
 inscatter*=sigma_s;vec3 transmittance=exp(-sigma_t*t*(1.+cosRay));scattered+=inscatter*transmittance*stepLength;}return scattered;}
 #endif
 #if!defined(X3D_SCATTER_PASS)
-uniform vec3 x3d_ScatterSamplesEXT[X3D_SCATTER_SAMPLES_COUNT_EXT];uniform float x3d_ScatterMinRadiusEXT;uniform sampler2D x3d_ScatterSamplerEXT;uniform sampler2D x3d_ScatterDepthSamplerEXT;const float M_1_PI=1./M_PI;vec3 burley_setup(const in vec3 radius,const in vec3 albedo){vec3 a=albedo-.8;vec3 s=1.9-albedo+3.5*(a*a);vec3 l=.25*M_1_PI*radius;return l/s;}vec3 burley_eval(const in vec3 d,const in float r){vec3 exp_r_3_d=exp(-r/(3.*d));vec3 exp_r_d=exp_r_3_d*exp_r_3_d*exp_r_3_d;return(exp_r_d+exp_r_3_d)/(4.*d);}vec3 getSubsurfaceScattering(const in vec3 vertex,const in mat4 projectionMatrix,const in float attenuationDistance,const in vec3 diffuseColor,const in vec3 multiscatterColor,const in float scatterStrength,const in float scatterAnisotropy,const in vec3 singleScatter,const in vec4 fragCoord){vec3 multiScatter=scatterStrength*multiscatterColor;vec3 scatterDistance=attenuationDistance*mix(multiScatter,singleScatter,abs(scatterAnisotropy));float maxColor=max3(scatterDistance);vec3 vMaxColor=max(vec3(maxColor),vec3(.00001));vec2 texelSize=1./vec2(x3d_Viewport.zw);mat4 invProjectionMatrix=inverse(projectionMatrix);vec2 uv=fragCoord.xy*texelSize;vec4 centerSample=textureLod(x3d_ScatterSamplerEXT,uv,0.);float centerDepth=textureLod(x3d_ScatterDepthSamplerEXT,uv,0.).r;centerDepth=centerDepth*2.-1.;vec2 clipUV=uv*2.-1.;vec4 clipSpacePosition=vec4(clipUV.xy,centerDepth,1.);vec4 upos=invProjectionMatrix*clipSpacePosition;vec3 fragViewPosition=upos.xyz/upos.w;upos=invProjectionMatrix*vec4(clipUV.x+texelSize.x,clipUV.y,centerDepth,1.);vec3 offsetViewPosition=upos.xyz/upos.w;float mPerPixel=distance(fragViewPosition,offsetViewPosition);float maxRadiusPixels=maxColor/mPerPixel;if(maxRadiusPixels<=1.)return centerSample.rgb*diffuseColor;centerDepth=fragViewPosition.z;vec3 totalWeight=vec3(0);vec3 totalDiffuse=vec3(0);vec3 clampedScatterDistance=max(vec3(x3d_ScatterMinRadiusEXT),scatterDistance/maxColor)*maxColor;vec3 d=burley_setup(clampedScatterDistance,vec3(1));for(int i=0;i<X3D_SCATTER_SAMPLES_COUNT_EXT;++i){vec3 scatterSample=x3d_ScatterSamplesEXT[i];float fabAngle=scatterSample.x;float r=scatterSample.y*maxRadiusPixels*texelSize.x;float rcpPdf=scatterSample.z;vec2 sampleCoords=vec2(cos(fabAngle),sin(fabAngle))*r;vec2 sampleUV=uv+sampleCoords;vec4 textureSample=textureLod(x3d_ScatterSamplerEXT,sampleUV,0.);if(centerSample.w!=textureSample.w)continue;float sampleDepth=textureLod(x3d_ScatterDepthSamplerEXT,sampleUV,0.).r;sampleDepth=sampleDepth*2.-1.;vec2 sampleClipUV=sampleUV*2.-1.;vec4 sampleUpos=invProjectionMatrix*vec4(sampleClipUV.xy,sampleDepth,1.);vec3 sampleViewPosition=sampleUpos.xyz/sampleUpos.w;float sampleDistance=distance(sampleViewPosition,fragViewPosition);vec3 weight=burley_eval(d,sampleDistance)*rcpPdf;totalWeight+=weight;totalDiffuse+=weight*textureSample.rgb;}totalWeight=max(totalWeight,vec3(.0001));return totalDiffuse/totalWeight*diffuseColor;}
+uniform vec3 x3d_ScatterSamplesEXT[X3D_SCATTER_SAMPLES_COUNT_EXT];uniform float x3d_ScatterMinRadiusEXT;uniform sampler2D x3d_ScatterSamplerEXT;uniform sampler2D x3d_ScatterDepthSamplerEXT;const float M_1_PI=1./M_PI;vec3 burley_setup(const in vec3 radius,const in vec3 albedo){vec3 a=albedo-.8;vec3 s=1.9-albedo+3.5*(a*a);vec3 l=.25*M_1_PI*radius;return l/s;}vec3 burley_eval(const in vec3 d,const in float r){vec3 exp_r_3_d=exp(-r/(3.*d));vec3 exp_r_d=exp_r_3_d*exp_r_3_d*exp_r_3_d;return(exp_r_d+exp_r_3_d)/(4.*d);}vec3 getSubsurfaceScattering(const in vec3 vertex,const in mat4 projectionMatrix,const in float attenuationDistance,const in vec3 multiscatterColor,const in float scatterStrength,const in float scatterAnisotropy,const in vec3 singleScatter,const in vec4 fragCoord){vec3 multiScatter=scatterStrength*multiscatterColor;vec3 scatterDistance=attenuationDistance*mix(multiScatter,singleScatter,abs(scatterAnisotropy));float maxColor=max3(scatterDistance);vec3 vMaxColor=max(vec3(maxColor),vec3(.00001));vec2 texelSize=1./vec2(x3d_Viewport.zw);mat4 invProjectionMatrix=inverse(projectionMatrix);vec2 uv=fragCoord.xy*texelSize;vec4 centerSample=textureLod(x3d_ScatterSamplerEXT,uv,0.);float centerDepth=textureLod(x3d_ScatterDepthSamplerEXT,uv,0.).r;centerDepth=centerDepth*2.-1.;vec2 clipUV=uv*2.-1.;vec4 clipSpacePosition=vec4(clipUV.xy,centerDepth,1.);vec4 upos=invProjectionMatrix*clipSpacePosition;vec3 fragViewPosition=upos.xyz/upos.w;upos=invProjectionMatrix*vec4(clipUV.x+texelSize.x,clipUV.y,centerDepth,1.);vec3 offsetViewPosition=upos.xyz/upos.w;float mPerPixel=distance(fragViewPosition,offsetViewPosition);float maxRadiusPixels=maxColor/mPerPixel;if(maxRadiusPixels<=1.)return centerSample.rgb*multiscatterColor;centerDepth=fragViewPosition.z;vec3 totalWeight=vec3(0);vec3 totalDiffuse=vec3(0);vec3 clampedScatterDistance=max(vec3(x3d_ScatterMinRadiusEXT),scatterDistance/maxColor)*maxColor;vec3 d=burley_setup(clampedScatterDistance,vec3(1));for(int i=0;i<X3D_SCATTER_SAMPLES_COUNT_EXT;++i){vec3 scatterSample=x3d_ScatterSamplesEXT[i];float fabAngle=scatterSample.x;float r=scatterSample.y*maxRadiusPixels*texelSize.x;float rcpPdf=scatterSample.z;vec2 sampleCoords=vec2(cos(fabAngle),sin(fabAngle))*r;vec2 sampleUV=uv+sampleCoords;vec4 textureSample=textureLod(x3d_ScatterSamplerEXT,sampleUV,0.);if(centerSample.w!=textureSample.w)continue;float sampleDepth=textureLod(x3d_ScatterDepthSamplerEXT,sampleUV,0.).r;sampleDepth=sampleDepth*2.-1.;vec2 sampleClipUV=sampleUV*2.-1.;vec4 sampleUpos=invProjectionMatrix*vec4(sampleClipUV.xy,sampleDepth,1.);vec3 sampleViewPosition=sampleUpos.xyz/sampleUpos.w;float sampleDistance=distance(sampleViewPosition,fragViewPosition);vec3 weight=burley_eval(d,sampleDistance)*rcpPdf;totalWeight+=weight;totalDiffuse+=weight*textureSample.rgb;}totalWeight=max(totalWeight,vec3(.0001));return totalDiffuse/totalWeight*multiscatterColor;}
 #endif
 #endif
 `
@@ -20758,7 +20758,7 @@ Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X_I
       // Set scatter framebuffer textures.
 
       const
-         scatterSampleBuffer       = browser .getVolumeScatterBuffer (),
+         scatterSampleBuffer       = browser .getScatterBuffer (),
          scatterSampleUnit         = browser .popTextureUnit (),
          scatterDepthSampleUnit    = browser .popTextureUnit (),
          scatterSampleTexture      = scatterSampleBuffer .getColorTexture (),
@@ -21646,7 +21646,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
    {
       const attenuationDistance = this ._attenuationDistance .getValue ();
 
-      this .attenuationDistance = attenuationDistance ? Math .max (attenuationDistance, 0) : 1_000_000;
+      this .attenuationDistance = Math .max (attenuationDistance, 0);
    },
    set_attenuationColor__ ()
    {
@@ -21697,7 +21697,7 @@ Object .defineProperties (VolumeMaterialExtension,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "thickness",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "thicknessTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "thicknessTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "attenuationDistance",     new (external_X_ITE_X3D_Fields_default()).SFFloat (1_000_000)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "attenuationDistance",     new (external_X_ITE_X3D_Fields_default()).SFFloat (0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "attenuationColor",        new (external_X_ITE_X3D_Fields_default()).SFColor (1, 1, 1)),
       ]),
       enumerable: true,

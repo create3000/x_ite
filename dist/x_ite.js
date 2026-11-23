@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 713
+/***/ 216
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 139
+/***/ 538
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 751
+/***/ 730
 (module) {
 
 /**
@@ -31256,7 +31256,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(751);
+/* provided dependency */ var libtess = __webpack_require__(730);
 
 
 const Triangle3 =
@@ -31692,9 +31692,10 @@ function TextureBuffer ({ browser, width, height, float = false, mipMaps = false
 {
    const gl = browser .getContext ();
 
-   this .context = gl;
-   this .width   = width;
-   this .height  = height;
+   this .context      = gl;
+   this .width        = width;
+   this .height       = height;
+   this .internalType = float ? gl .FLOAT : gl .UNSIGNED_BYTE;
 
    Object .defineProperty (this, "array",
    {
@@ -31804,9 +31805,9 @@ Object .assign (TextureBuffer .prototype,
    },
    readPixels ()
    {
-      const { context: gl, array, width, height } = this;
+      const { context: gl, array, width, height, internalType } = this;
 
-      gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
+      gl .readPixels (0, 0, width, height, gl .RGBA, internalType, array);
 
       return array;
    },
@@ -31892,11 +31893,11 @@ const RenderPass =
 {
    // Bits
    NONE:               0b00,
-   VOLUME_SCATTER_BIT: 0b01,
+   SCATTER_BIT: 0b01,
    TRANSMISSION_BIT:   0b10,
    // Keys
    RENDER_KEY:         0,
-   VOLUME_SCATTER_KEY: 1,
+   SCATTER_KEY: 1,
    TRANSMISSION_KEY:   2,
 };
 
@@ -33509,16 +33510,16 @@ Object .assign (X3DRenderObject .prototype,
          {
             // Render to volume scatter buffer.
 
-            if (this .renderPasses & Rendering_RenderPass .VOLUME_SCATTER_BIT)
+            if (this .renderPasses & Rendering_RenderPass .SCATTER_BIT)
             {
                browser .resetShapeId ();
 
-               this .renderPass = Rendering_RenderPass .VOLUME_SCATTER_KEY;
+               this .renderPass = Rendering_RenderPass .SCATTER_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
-               const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
+               const volumeScatterBuffer = browser .getScatterBuffer ();
 
-               this .drawShapes (Rendering_RenderPass .VOLUME_SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (Rendering_RenderPass .SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
 
             // Render to transmission buffer.
@@ -36864,7 +36865,7 @@ function X3DBackgroundNode (executionContext)
 
    this [Rendering_RenderPass .RENDER_KEY]         = this;
    this [Rendering_RenderPass .TRANSMISSION_KEY]   = this;
-   this [Rendering_RenderPass .VOLUME_SCATTER_KEY] = null;
+   this [Rendering_RenderPass .SCATTER_KEY] = null;
 
 }
 
@@ -42440,7 +42441,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       extension ._thickness               = this .numberValue (KHR_materials_volume .thicknessFactor, 0);
       extension ._thicknessTexture        = this .textureInfo (KHR_materials_volume .thicknessTexture);
       extension ._thicknessTextureMapping = this .textureMapping (KHR_materials_volume .thicknessTexture);
-      extension ._attenuationDistance     = this .numberValue (KHR_materials_volume .attenuationDistance, 1_000_000);
+      extension ._attenuationDistance     = this .numberValue (KHR_materials_volume .attenuationDistance, 0); // 0 means infinite distance.
 
       const attenuationColor = new Numbers_Color3 ();
 
@@ -48558,7 +48559,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(751);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(730);
 
 
 
@@ -58512,9 +58513,9 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
    },
    set_scatter__ ()
    {
-      this .set_renderPass__ (this .appearanceNode .isScatter (), Rendering_RenderPass .VOLUME_SCATTER_BIT);
+      this .set_renderPass__ (this .appearanceNode .isScatter (), Rendering_RenderPass .SCATTER_BIT);
 
-      this [Rendering_RenderPass .VOLUME_SCATTER_KEY] = this .appearanceNode .isScatter () ? this : null;
+      this [Rendering_RenderPass .SCATTER_KEY] = this .appearanceNode .isScatter () ? this : null;
    },
    set_renderPass__ (value, bit)
    {
@@ -66289,7 +66290,7 @@ Object .assign (MultiSampleFramebuffer .prototype,
       // // DEBUG start
       // if (DEVELOPMENT)
       // {
-      //    const volumeScatterBuffer = browser .getVolumeScatterBuffer ?.();
+      //    const volumeScatterBuffer = browser .getScatterBuffer ?.();
 
       //    if (volumeScatterBuffer)
       //    {
@@ -68240,7 +68241,7 @@ l_color=mix(l_color,light.shadowColor,getShadowIntensity(i,light));
 color+=l_color;}}
 #endif
 #if defined(X3D_SCATTER_MATERIAL_EXT)&&defined(X3D_VOLUME_MATERIAL_EXT)&&defined(X3D_TRANSMISSION_MATERIAL_EXT)&&(defined(X3D_USE_IBL)||defined(X3D_LIGHTING))
-if(materialInfo.scatterStrength>0.&&materialInfo.thickness>0.){vec3 singleScattering=getVolumeSingleScattering(v,n,materialInfo.ior,materialInfo.attenuationColor,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,vertex,materialInfo.thickness,modelViewMatrix);vec3 diffuseScattering=getSubsurfaceScattering(vertex,x3d_ProjectionMatrix,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,singleScatter,fragCoord);vec3 l_color=singleScattering+diffuseScattering;float iridescenceMask=1.;
+if(materialInfo.scatterStrength>0.&&materialInfo.thickness>0.){vec3 singleScattering=getVolumeSingleScattering(v,n,materialInfo.ior,materialInfo.attenuationColor,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,vertex,materialInfo.thickness,modelViewMatrix);vec3 diffuseScattering=getSubsurfaceScattering(vertex,x3d_ProjectionMatrix,materialInfo.attenuationDistance,materialInfo.multiscatterColor,materialInfo.scatterStrength,materialInfo.scatterAnisotropy,singleScatter,fragCoord);vec3 l_color=singleScattering+diffuseScattering;float iridescenceMask=1.;
 #if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
 iridescenceMask-=materialInfo.iridescenceFactor;
 #endif
@@ -72148,7 +72149,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
 
       switch (renderObject .getRenderPass ())
       {
-         case Rendering_RenderPass .VOLUME_SCATTER_KEY:
+         case Rendering_RenderPass .SCATTER_KEY:
          {
             options .push ("X3D_SCATTER_PASS", "X3D_LINEAR_OUTPUT");
             break;
@@ -92340,8 +92341,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(713);
-/* provided dependency */ var APNG = __webpack_require__(139);
+/* provided dependency */ var SuperGif = __webpack_require__(216);
+/* provided dependency */ var APNG = __webpack_require__(538);
 
 
 
@@ -94985,7 +94986,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(751);
+/* provided dependency */ var libtess_libtess = __webpack_require__(730);
 const libtess_default_ = libtess_libtess;
 ;
 
