@@ -554,6 +554,10 @@ getMaterialColor (const in vec4 fragCoord)
 
          color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * iridescenceMask * materialInfo .transmissionFactor;
       }
+
+      // DEBUG: Scatter Texture
+      // vec2 uv = (gl_FragCoord .xy - vec2 (x3d_Viewport .xy)) / vec2 (x3d_Viewport .zw);
+      // return vec4 (texture (x3d_ScatterSamplerEXT, uv) .rgb, 1.0);
    #endif
 
    f_emissive = getEmissiveColor ();
