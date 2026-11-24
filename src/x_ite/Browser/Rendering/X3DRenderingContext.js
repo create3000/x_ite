@@ -346,9 +346,7 @@ Object .assign (X3DRenderingContext .prototype,
    },
    limitFramebufferSize (width, height)
    {
-      const
-         gl              = this .getContext (),
-         maxViewportDims = gl .getParameter (gl .MAX_VIEWPORT_DIMS);
+      const maxRenderbufferSize = this .getRenderingProperty ("MaxRenderbufferSize");
 
       let contentScale = this .getBrowserOption ("ContentScale");
 
@@ -358,17 +356,17 @@ Object .assign (X3DRenderingContext .prototype,
       width  *= contentScale,
       height *= contentScale;
 
-      if (width > maxViewportDims [0] || height > maxViewportDims [1])
+      if (width > maxRenderbufferSize || height > maxRenderbufferSize)
       {
          if (width > height)
          {
-            height = maxViewportDims [1] * height / width;
-            width  = maxViewportDims [0];
+            height = maxRenderbufferSize * height / width;
+            width  = maxRenderbufferSize;
          }
          else
          {
-            width  = maxViewportDims [0] * width / height;
-            height = maxViewportDims [1];
+            width  = maxRenderbufferSize * width / height;
+            height = maxRenderbufferSize;
          }
       }
 
