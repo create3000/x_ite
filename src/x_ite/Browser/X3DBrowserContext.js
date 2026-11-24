@@ -304,7 +304,8 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       browsers .delete (this);
 
-      this [_tainted] = true;
+      this [_tainted]        = true;
+      this [_renderCallback] = Function .prototype;
 
       this .getSession () .cancelAnimationFrame (this [_animFrame]);
 
