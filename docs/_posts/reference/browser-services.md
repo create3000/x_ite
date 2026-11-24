@@ -330,6 +330,7 @@ print (Browser .getRenderingProperty ("ContentScale"));
 | ContentScale | Float | Currently used factor to scale content. <small class="blue">non-standard</small> |
 | LogarithmicDepthBuffer | Boolean | `true` or `false` if the logarithmic depth buffer is currently enabled or not. <small class="blue">non-standard</small> |
 | MaxAnisotropicDegree | Float | The maximum number of available anisotropy. <small class="blue">non-standard</small> |
+| MaxRenderbufferSize | Integer | The maximum renderbuffer size supported. <small class="blue">non-standard</small> |
 | MaxSamples | Integer | The maximum number of samples supported for doing multisampling. <small class="blue">non-standard</small> |
 | Multisampling | Integer | Number of samples currently used by multisampling. <small class="blue">non-standard</small> |
 | PixelsPerPoint | Float | Number of [pixels](https://developer.mozilla.org/en-US/docs/Glossary/CSS_pixel) per point. <small class="blue">non-standard</small> |

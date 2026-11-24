@@ -139,6 +139,12 @@ Object .assign (X3DRenderingContext .prototype,
               gl .getParameter (gl .GREEN_BITS) +
               gl .getParameter (gl .ALPHA_BITS));
    },
+   getMaxRenderbufferSize ()
+   {
+      const gl = this .getContext ();
+
+      return gl .getParameter (gl .MAX_RENDERBUFFER_SIZE);
+   },
    getViewport ()
    {
       return this ._viewport;

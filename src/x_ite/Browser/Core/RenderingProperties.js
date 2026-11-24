@@ -22,13 +22,14 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
 
       const browser = this .getBrowser ();
 
-      this ._MaxTextureSize       = browser .getMaxTextureSize ();
-      this ._TextureUnits         = browser .getMaxCombinedTextureUnits ();
-      this ._MaxLights            = browser .getMaxLights ();
       this ._ColorDepth           = browser .getColorDepth ();
-      this ._TextureMemory        = browser .getTextureMemory ();
       this ._MaxAnisotropicDegree = browser .getMaxAnisotropicDegree ();
+      this ._MaxLights            = browser .getMaxLights ();
+      this ._MaxRenderbufferSize  = browser .getMaxRenderbufferSize ();
       this ._MaxSamples           = browser .getMaxSamples ();
+      this ._MaxTextureSize       = browser .getMaxTextureSize ();
+      this ._TextureMemory        = browser .getTextureMemory ();
+      this ._TextureUnits         = browser .getMaxCombinedTextureUnits ();
 
       this .set_pixelsPerPoint__ ();
    },
@@ -58,18 +59,19 @@ Object .defineProperties (RenderingProperties,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "Antialiased",            new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
          // non-standard fields
          new X3DFieldDefinition (X3DConstants .outputOnly, "ContentScale",           new Fields .SFDouble (1)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxAnisotropicDegree",   new Fields .SFFloat (1)),
-         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxSamples",             new Fields .SFInt32 (0)),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxRenderbufferSize",    new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxSamples",             new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "Multisampling",          new Fields .SFInt32 (4)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "PixelsPerPoint",         new Fields .SFDouble (1)),
          new X3DFieldDefinition (X3DConstants .outputOnly, "SoundDestinations",      new Fields .SFInt32 ()),
