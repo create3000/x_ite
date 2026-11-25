@@ -43,7 +43,7 @@ Object .assign (Object .setPrototypeOf (CoordinateInterpolator1D .prototype, X3D
 
 Object .defineProperties (CoordinateInterpolator1D,
 {
-   ... X3DNode .getStaticProperties ("CoordinateInterpolator1D", "Interpolation", 1, "children", "4.1"),
+   ... X3DNode .getStaticProperties ("CoordinateInterpolator1D", "Interpolation", 5, "children", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
