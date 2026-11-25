@@ -153,7 +153,7 @@ main ()
    #endif
 
    #if defined (X3D_COLOR_MATERIAL)
-      color = getTargetColor (x3d_Color);
+      color = clamp (getTargetColor (x3d_Color), vec4 (0.0), vec4 (1.0));
    #endif
 
    #if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
