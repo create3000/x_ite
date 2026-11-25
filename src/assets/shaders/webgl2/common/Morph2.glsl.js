@@ -18,14 +18,14 @@ ${targets .map (({ name, type, fn, swizzle }, i) =>
    return /* glsl */ `
 #if defined (X3D_MORPH_TARGET_${name})
 vec4
-getTarget${fn} (in ${type} vector, const in int vertexID)
+getTarget${fn} (in ${type} vector, const in uint coordIndex)
 {
    int size = (X3D_MORPH_TARGET_${targets [i + 1] ?.name ?? "LAST"}_OFFSET - X3D_MORPH_TARGET_${name}_OFFSET)
       / X3D_NUM_MORPH_WEIGHTS;
 
    for (int i = 0; i < X3D_NUM_MORPH_WEIGHTS; ++ i)
    {
-      int  index        = X3D_MORPH_TARGET_${name}_OFFSET + size * i + vertexID;
+      int  index        = X3D_MORPH_TARGET_${name}_OFFSET + size * i + int (coordIndex);
       vec4 displacement = texelFetch (x3d_MorphTargetsTexture, index, 0);
 
       vector .${swizzle} += x3d_MorphWeights [i] * displacement .${swizzle};
@@ -34,7 +34,7 @@ getTarget${fn} (in ${type} vector, const in int vertexID)
    return vector;
 }
 #else
-   #define getTarget${fn}(vector,vertexID) (vector)
+   #define getTarget${fn}(vector,coordIndex) (vector)
 #endif
 `;
 })

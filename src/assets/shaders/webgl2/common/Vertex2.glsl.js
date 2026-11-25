@@ -12,6 +12,10 @@ uniform mat4 x3d_ModelViewMatrix;
 
 // Attributes
 
+#if defined (X3D_MORPH_TARGETS) || defined (X3D_SKINNING)
+   in uint x3d_CoordIndex;
+#endif
+
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
    in vec3 x3d_LineStipple;
 #endif
@@ -101,21 +105,21 @@ main ()
       vec3 tNormal  = x3d_Normal;
       vec3 tTangent = x3d_Tangent .xyz;
 
-      tVertex = getTargetVertex (tVertex, gl_VertexID);
+      tVertex = getTargetVertex (tVertex, x3d_CoordIndex);
       tVertex = getSkinVertex (tVertex, tNormal, tTangent);
       tVertex = getInstanceVertex (tVertex);
 
-      tNormal = getTargetNormal (tNormal, gl_VertexID);
+      tNormal = getTargetNormal (tNormal, x3d_CoordIndex);
       tNormal = getSkinNormal (tNormal);
       tNormal = getInstanceNormal (tNormal);
 
       #if defined (X3D_TANGENTS)
-         tTangent = getTargetTangent (tTangent, gl_VertexID);
+         tTangent = getTargetTangent (tTangent, x3d_CoordIndex);
          tTangent = getSkinTangent (tTangent);
          tTangent = getInstanceNormal (tTangent);
       #endif
    #else
-      tVertex = getTargetVertex (tVertex, gl_VertexID);
+      tVertex = getTargetVertex (tVertex, x3d_CoordIndex);
       tVertex = getSkinVertex (tVertex, vec3 (0.0), vec3 (0.0));
       tVertex = getInstanceVertex (tVertex);
    #endif
@@ -149,7 +153,7 @@ main ()
    #endif
 
    #if defined (X3D_COLOR_MATERIAL)
-      color = getTargetColor (x3d_Color, gl_VertexID);
+      color = getTargetColor (x3d_Color, x3d_CoordIndex);
    #endif
 
    #if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)
