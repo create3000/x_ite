@@ -149,6 +149,10 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
    },
    getShaderOptions (options)
    {
+      if (!this ._weights .length)
+         return;
+
+      options .push (`X3D_MORPH_TARGETS`);
       options .push (`X3D_NUM_MORPH_WEIGHTS ${this ._weights .length}`);
 
       for (const [i, [name, array]] of Object .entries (this .targets) .entries ())

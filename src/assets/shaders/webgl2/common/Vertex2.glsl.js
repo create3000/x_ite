@@ -85,6 +85,7 @@ out vec3 vertex;
 // Main
 
 #include <Utils>
+#include <Morph>
 #include <Skin>
 #include <Instancing>
 #include <PointSize>

@@ -8,6 +8,7 @@ import Lighting2    from "../../../assets/shaders/webgl2/common/Lighting2.glsl.j
 import Line22       from "../../../assets/shaders/webgl2/common/Line22.glsl.js";
 import Logarithmic2 from "../../../assets/shaders/webgl2/common/Logarithmic2.js";
 import Material2    from "../../../assets/shaders/webgl2/common/Material2.glsl.js";
+import Morph2       from "../../../assets/shaders/webgl2/common/Morph2.glsl.js";
 import Normal2      from "../../../assets/shaders/webgl2/common/Normal2.glsl.js";
 import OIT2         from "../../../assets/shaders/webgl2/common/OIT2.js";
 import Perlin2      from "../../../assets/shaders/webgl2/common/Perlin2.glsl.js";
@@ -54,6 +55,7 @@ const ShaderRegistry = {
          Line2: Line22,
          Logarithmic: Logarithmic2,
          Material: Material2,
+         Morph: Morph2,
          Normal: Normal2,
          OIT: OIT2,
          Perlin: Perlin2,
