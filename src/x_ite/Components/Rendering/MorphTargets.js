@@ -36,6 +36,23 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
    {
       X3DGeometricPropertyNode .prototype .initialize .call (this);
 
+      // Textures
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      this .morphTargetsTexture = gl .createTexture ();
+
+      gl .bindTexture (gl .TEXTURE_2D, this .morphTargetsTexture);
+
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+      // Events
+
       this ._targets .addInterest ("set_targets__", this);
 
       this .set_targets__ ();
@@ -78,6 +95,8 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
    },
    createTexture ()
    {
+      // Update targets arrays.
+
       const targets = this .targets;
 
       for (const target of Object .values (targets))
@@ -88,6 +107,8 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       targets .NORMAL = this .createNormalArray (targets .NORMAL);
 
+      // Update offsets array.
+
       const offsets = Object .values (targets) .map (target => target .length / 4);
 
       offsets .unshift (0);
@@ -95,8 +116,23 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       this .offsets = new Int32Array (offsets);
 
-      console .log (this .offsets);
-      console .log (Object .values (targets) .flat ())
+      // Update texture.
+
+      const
+         flatTargets       = Object .values (targets) .flat (),
+         size              = Math .ceil (Math .sqrt (flatTargets .length / 4)),
+         morphTargetsArray = new Float32Array (size * size * 4);
+
+      morphTargetsArray .set (flatTargets);
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      gl .bindTexture (gl .TEXTURE_2D, this .morphTargetsTexture);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, morphTargetsArray);
+
+      // Propagate changes.
 
       this .addNodeEvent ();
    },
