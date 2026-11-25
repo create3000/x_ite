@@ -169,18 +169,22 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_NormalMatrix",
          "x3d_ViewMatrix",
          "x3d_CameraSpaceMatrix",
-         // ParticleSystem and Skinning
-         "x3d_TexCoordRamp",
-         "x3d_JointsTexture",
-         "x3d_DisplacementsTexture",
-         "x3d_DisplacementWeightsTexture",
-         "x3d_JointMatricesTexture",
          // Common
          "x3d_Id", // Pointing ID
          "x3d_AlphaCutoff",
          "x3d_Exposure",
          "x3d_LogarithmicFarFactor1_2",
          "x3d_MultiTextureColor",
+         // Morph Targets
+         "x3d_MorphWeights",
+         "x3d_MorphTargetOffsets",
+         "x3d_MorphTargetsTexture",
+         // ParticleSystem and Skinning
+         "x3d_TexCoordRamp",
+         "x3d_JointsTexture",
+         "x3d_DisplacementsTexture",
+         "x3d_DisplacementWeightsTexture",
+         "x3d_JointMatricesTexture",
       ];
 
       for (const name of commonUniforms)

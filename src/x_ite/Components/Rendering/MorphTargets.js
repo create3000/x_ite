@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
       offsets .unshift (0);
       offsets .pop ();
 
-      this .offsets = new Int32Array (offsets);
+      this .morphTargetOffsets = new Int32Array (offsets);
 
       // Update texture.
 
@@ -153,6 +153,16 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
    },
    setShaderUniforms (gl, shaderObject)
    {
+      gl .uniform1fv (shaderObject .x3d_MorphWeights,       this ._weights .shrinkToFit ());
+      gl .uniform1iv (shaderObject .x3d_MorphTargetOffsets, this .morphTargetOffsets);
+
+      const
+         browser                 = this .getBrowser (),
+         morphTargetsTextureUnit = browser .popTextureUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + morphTargetsTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .morphTargetsTexture);
+      gl .uniform1i (shaderObject .x3d_MorphTargetsTexture, morphTargetsTextureUnit);
    },
 });
 
