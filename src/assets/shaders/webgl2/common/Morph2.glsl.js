@@ -1,65 +1,48 @@
 // import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
+const targets = [
+   { name: "COLOR",    type: "vec4", fn: "Color",   swizzle: "rgba" },
+   { name: "TANGENT",  type: "vec3", fn: "Tangent", swizzle: "xyz" },
+   { name: "NORMAL",   type: "vec3", fn: "Normal",  swizzle: "xyz" },
+   { name: "POSITION", type: "vec4", fn: "Vertex",  swizzle: "xyz" },
+];
+
 export default () => /* glsl */ `
 #if defined (X3D_MORPH_TARGETS)
 
 uniform float     x3d_MorphWeights [X3D_NUM_MORPH_WEIGHTS];
 uniform sampler2D x3d_MorphTargetsTexture;
 
-#if defined (X3D_MORPH_TARGET_COLOR)
+${targets .map (({ name, type, fn, swizzle }, i) =>
+{
+   return /* glsl */ `
+#if defined (X3D_MORPH_TARGET_${name})
 vec4
-getTargetColor (in vec4 color, const in int vertexID)
+getTarget${fn} (in ${type} vector, const in int vertexID)
 {
-   return color;
-}
-#else
-   #define getTargetColor(color,vertexID) (color)
-#endif
-
-#if defined (X3D_MORPH_TARGET_TANGENT)
-vec3
-getTargetTangent (in vec3 tangent, const in int vertexID)
-{
-   return tangent;
-}
-#else
-   #define getTargetTangent(tangent,vertexID) (tangent)
-#endif
-
-#if defined (X3D_MORPH_TARGET_NORMAL)
-vec3
-getTargetNormal (in vec3 normal, const in int vertexID)
-{
-   return normal;
-}
-#else
-   #define getTargetNormal(normal,vertexID) (normal)
-#endif
-
-#if defined (X3D_MORPH_TARGET_POSITION)
-vec4
-getTargetVertex (in vec4 vertex, const in int vertexID)
-{
-   int size = (X3D_MORPH_TARGET_LAST_OFFSET - X3D_MORPH_TARGET_POSITION_OFFSET) / X3D_NUM_MORPH_WEIGHTS;
+   int size = (X3D_MORPH_TARGET_${targets [i + 1] ?.name ?? "LAST"}_OFFSET - X3D_MORPH_TARGET_${name}_OFFSET)
+      / X3D_NUM_MORPH_WEIGHTS;
 
    for (int i = 0; i < X3D_NUM_MORPH_WEIGHTS; ++ i)
    {
-      int  index        = X3D_MORPH_TARGET_POSITION_OFFSET + size * i + vertexID;
+      int  index        = X3D_MORPH_TARGET_${name}_OFFSET + size * i + vertexID;
       vec4 displacement = texelFetch (x3d_MorphTargetsTexture, index, 0);
 
-      vertex .xyz += x3d_MorphWeights [i] * displacement .xyz;
+      vector .${swizzle} += x3d_MorphWeights [i] * displacement .${swizzle};
    }
 
-   return vertex;
+   return vector;
 }
 #else
-   #define getTargetVertex(vertex,vertexID) (vertex)
+   #define getTarget${fn}(vector,vertexID) (vector)
 #endif
+`;
+})
+.join ("\n")}
 
 #else
-   #define getTargetColor(color,vertexID) (color)
-   #define getTargetTangent(tangent,vertexID) (tangent)
-   #define getTargetNormal(normal,vertexID) (normal)
-   #define getTargetVertex(vertex,vertexID) (vertex)
+
+${targets .map (({ fn }) => /* glsl */ `#define getTarget${fn}(vector,vertexID) (vector)`) .join ("\n")}
+
 #endif
 `;
