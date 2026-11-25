@@ -8,6 +8,8 @@ import IndexedTriangleFanSet    from "./Rendering/IndexedTriangleFanSet.js";
 import IndexedTriangleSet       from "./Rendering/IndexedTriangleSet.js";
 import IndexedTriangleStripSet  from "./Rendering/IndexedTriangleStripSet.js";
 import LineSet                  from "./Rendering/LineSet.js";
+import MorphTarget              from "./Rendering/MorphTarget.js";
+import MorphTargets             from "./Rendering/MorphTargets.js";
 import Normal                   from "./Rendering/Normal.js";
 import PointSet                 from "./Rendering/PointSet.js";
 import Tangent                  from "./Rendering/Tangent.js";
@@ -36,6 +38,8 @@ export default {
       IndexedTriangleSet,
       IndexedTriangleStripSet,
       LineSet,
+      MorphTarget,
+      MorphTargets,
       Normal,
       PointSet,
       Tangent,

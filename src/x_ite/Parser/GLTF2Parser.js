@@ -3585,12 +3585,11 @@ function eventsProcessed ()
          geometryNode = scene .createNode ("PointSet", false);
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3603,9 +3602,9 @@ function eventsProcessed ()
          geometryNode = scene .createNode ("IndexedLineSet", false);
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
 
       switch (mode)
       {
@@ -3677,8 +3676,7 @@ function eventsProcessed ()
          }
       }
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3691,12 +3689,11 @@ function eventsProcessed ()
          geometryNode = scene .createNode ("LineSet", false);
 
       geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
-      geometryNode ._normal  = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._normal  = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord   = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3712,13 +3709,12 @@ function eventsProcessed ()
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3733,13 +3729,12 @@ function eventsProcessed ()
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3755,13 +3750,12 @@ function eventsProcessed ()
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3776,9 +3770,9 @@ function eventsProcessed ()
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       const coord = geometryNode ._coord;
@@ -3789,8 +3783,7 @@ function eventsProcessed ()
             geometryNode ._stripCount = [coord .point .length];
       }
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3806,13 +3799,12 @@ function eventsProcessed ()
       geometryNode ._index           = indices .array;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3827,9 +3819,9 @@ function eventsProcessed ()
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
-      geometryNode ._normal          = this .createNormal (attributes .NORMAL, targets, weights);
+      geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT, attributes .NORMAL);
-      geometryNode ._coord           = this .createCoordinate (attributes .POSITION, targets, weights);
+      geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
       const coord = geometryNode ._coord;
@@ -3840,8 +3832,7 @@ function eventsProcessed ()
             geometryNode ._fanCount = [coord .point .length];
       }
 
-      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3943,7 +3934,7 @@ function eventsProcessed ()
 
       return texCoord [mapping] = textureCoordinateNode;
    },
-   createNormal (normal, targets, weights)
+   createNormal (normal)
    {
       if (normal ?.type !== "VEC3")
          return null;
@@ -3956,22 +3947,6 @@ function eventsProcessed ()
          normalNode = scene .createNode ("Normal", false);
 
       normalNode ._vector = normal .array;
-
-      if (Array .isArray (targets) && Array .isArray (weights))
-      {
-         normal .field = normalNode ._vector .copy ();
-
-         const vectors = this .applyMorphTargets (normalNode ._vector, targets, "NORMAL", weights);
-
-         normalNode ._vector .length = 0;
-
-         for (const vector of vectors)
-            normalNode ._vector .push (vector);
-      }
-      else
-      {
-         normal .field = normalNode ._vector;
-      }
 
       normalNode .setup ();
 
@@ -4002,7 +3977,7 @@ function eventsProcessed ()
 
       return tangent .tangentNode = tangentNode;
    },
-   createCoordinate (position, targets, weights)
+   createCoordinate (position)
    {
       if (position ?.type !== "VEC3")
          return null;
@@ -4016,25 +3991,14 @@ function eventsProcessed ()
 
       coordinateNode ._point = position .array;
 
-      if (Array .isArray (targets) && Array .isArray (weights))
-      {
-         position .field = coordinateNode ._point .copy ();
-
-         const points = this .applyMorphTargets (coordinateNode ._point, targets, "POSITION", weights);
-
-         coordinateNode ._point .length = 0;
-
-         for (const point of points)
-            coordinateNode ._point .push (point);
-      }
-      else
-      {
-         position .field = coordinateNode ._point;
-      }
-
       coordinateNode .setup ();
 
       return position .coordinateNode = coordinateNode;
+   },
+   addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes)
+   {
+      this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
+      this .skinGeometry (skin, geometryNode);
    },
    attributesJointsArray (skin, joints, weights)
    {
@@ -4173,8 +4137,6 @@ function eventsProcessed ()
    },
    createInterpolator (timeSensorNode, node, target, interpolation, times, keyValues, cycleInterval)
    {
-      const scene = this .getScene ();
-
       switch (target .path)
       {
          case "pointer":
@@ -4193,70 +4155,74 @@ function eventsProcessed ()
          }
          case "weights":
          {
-            const
-               node              = this .nodes [target .node],
-               mesh              = this .meshes [node .mesh],
-               primitives        = mesh ?.primitives,
-               interpolatorNodes = [ ];
+            return [ ];
 
-            if (!Array .isArray (primitives))
-               return null;
+            // const scene = this .getScene ();
 
-            for (const { meshNode, targets, attributes } of primitives)
-            {
-               const geometryNode = meshNode ._geometry .getValue ();
+            // const
+            //    node              = this .nodes [target .node],
+            //    mesh              = this .meshes [node .mesh],
+            //    primitives        = mesh ?.primitives,
+            //    interpolatorNodes = [ ];
 
-               if (!geometryNode || !geometryNode ._coord .getValue ())
-                  continue;
+            // if (!Array .isArray (primitives))
+            //    return null;
 
-               if (attributes ["POSITION"] ?.field .length !== geometryNode ._coord .point .length)
-                  continue;
+            // for (const { meshNode, targets, attributes } of primitives)
+            // {
+            //    const geometryNode = meshNode ._geometry .getValue ();
 
-               const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "POSITION");
+            //    if (!geometryNode || !geometryNode ._coord .getValue ())
+            //       continue;
 
-               if (!coordinateInterpolatorNode)
-                  continue;
+            //    if (attributes ["POSITION"] ?.field .length !== geometryNode ._coord .point .length)
+            //       continue;
 
-               if (coordinateInterpolatorNode ._key .length < 2)
-                  continue;
+            //    const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "POSITION");
 
-               if (coordinateInterpolatorNode ._keyValue .length / coordinateInterpolatorNode ._key .length !== geometryNode ._coord .point .length)
-                  continue;
+            //    if (!coordinateInterpolatorNode)
+            //       continue;
 
-               interpolatorNodes .push (coordinateInterpolatorNode);
+            //    if (coordinateInterpolatorNode ._key .length < 2)
+            //       continue;
 
-               scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
-               scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
-            }
+            //    if (coordinateInterpolatorNode ._keyValue .length / coordinateInterpolatorNode ._key .length !== geometryNode ._coord .point .length)
+            //       continue;
 
-            for (const { meshNode, targets, attributes } of primitives)
-            {
-               const geometryNode = meshNode ._geometry .getValue ();
+            //    interpolatorNodes .push (coordinateInterpolatorNode);
 
-               if (!geometryNode || !geometryNode ._normal .getValue ())
-                  continue;
+            //    scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
+            //    scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
+            // }
 
-               if (attributes ["NORMAL"] ?.field .length !== geometryNode ._normal .vector .length)
-                  continue;
+            // for (const { meshNode, targets, attributes } of primitives)
+            // {
+            //    const geometryNode = meshNode ._geometry .getValue ();
 
-               const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
+            //    if (!geometryNode || !geometryNode ._normal .getValue ())
+            //       continue;
 
-               if (!normalInterpolatorNode)
-                  continue;
+            //    if (attributes ["NORMAL"] ?.field .length !== geometryNode ._normal .vector .length)
+            //       continue;
 
-               if (normalInterpolatorNode ._key .length < 2)
-                  continue;
+            //    const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
 
-               if (normalInterpolatorNode ._keyValue .length / normalInterpolatorNode ._key .length !== geometryNode ._normal .vector .length)
-                  continue;
+            //    if (!normalInterpolatorNode)
+            //       continue;
 
-               interpolatorNodes .push (normalInterpolatorNode);
+            //    if (normalInterpolatorNode ._key .length < 2)
+            //       continue;
 
-               scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
-               scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "vector");
-            }
+            //    if (normalInterpolatorNode ._keyValue .length / normalInterpolatorNode ._key .length !== geometryNode ._normal .vector .length)
+            //       continue;
 
-            return interpolatorNodes;
+            //    interpolatorNodes .push (normalInterpolatorNode);
+
+            //    scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
+            //    scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "vector");
+            // }
+
+            // return interpolatorNodes;
          }
          default:
          {
@@ -4627,136 +4593,136 @@ function eventsProcessed ()
          }
       }
    },
-   createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key)
-   {
-      const accessor = accessors [key];
+   // createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key)
+   // {
+   //    const accessor = accessors [key];
 
-      if (!accessor)
-         return null;
+   //    if (!accessor)
+   //       return null;
 
-      const
-         scene            = this .getScene (),
-         interpolatorNode = scene .createNode (typeName, false);
+   //    const
+   //       scene            = this .getScene (),
+   //       interpolatorNode = scene .createNode (typeName, false);
 
-      switch (interpolation)
-      {
-         case "STEP":
-         {
-            // Key
+   //    switch (interpolation)
+   //    {
+   //       case "STEP":
+   //       {
+   //          // Key
 
-            interpolatorNode ._key .push (times [0] / cycleInterval);
+   //          interpolatorNode ._key .push (times [0] / cycleInterval);
 
-            for (let i = 1, length = times .length; i < length; ++ i)
-               interpolatorNode ._key .push (times [i] / cycleInterval, times [i] / cycleInterval);
+   //          for (let i = 1, length = times .length; i < length; ++ i)
+   //             interpolatorNode ._key .push (times [i] / cycleInterval, times [i] / cycleInterval);
 
-            // KeyValue
+   //          // KeyValue
 
-            const w = Array .from (targets .keys (), i => weights [i]);
+   //          const w = Array .from (targets .keys (), i => weights [i]);
 
-            for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
-               interpolatorNode ._keyValue .push (value);
+   //          for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+   //             interpolatorNode ._keyValue .push (value);
 
-            for (let t = 1, length = times .length; t < length; ++ t)
-            {
-               const
-                  w      = Array .from (targets .keys (), i => weights [t * targets .length + i]),
-                  values = this .applyMorphTargets (accessor .field, targets, key, w);
+   //          for (let t = 1, length = times .length; t < length; ++ t)
+   //          {
+   //             const
+   //                w      = Array .from (targets .keys (), i => weights [t * targets .length + i]),
+   //                values = this .applyMorphTargets (accessor .field, targets, key, w);
 
-               for (const value of values)
-                  interpolatorNode ._keyValue .push (value);
+   //             for (const value of values)
+   //                interpolatorNode ._keyValue .push (value);
 
-               for (const value of values)
-                  interpolatorNode ._keyValue .push (value);
-            }
+   //             for (const value of values)
+   //                interpolatorNode ._keyValue .push (value);
+   //          }
 
-            // Finish
+   //          // Finish
 
-            interpolatorNode .setup ();
+   //          interpolatorNode .setup ();
 
-            return interpolatorNode;
-         }
-         default:
-         case "LINEAR":
-         {
-            // Key
+   //          return interpolatorNode;
+   //       }
+   //       default:
+   //       case "LINEAR":
+   //       {
+   //          // Key
 
-            interpolatorNode ._key = times .map (t => t / cycleInterval);
+   //          interpolatorNode ._key = times .map (t => t / cycleInterval);
 
-            // KeyValue
+   //          // KeyValue
 
-            for (const t of times .keys ())
-            {
-               const w = Array .from (targets .keys (), i => weights [t * targets .length + i]);
+   //          for (const t of times .keys ())
+   //          {
+   //             const w = Array .from (targets .keys (), i => weights [t * targets .length + i]);
 
-               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
-                  interpolatorNode ._keyValue .push (value);
-            }
+   //             for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+   //                interpolatorNode ._keyValue .push (value);
+   //          }
 
-            // Finish
+   //          // Finish
 
-            interpolatorNode .setup ();
+   //          interpolatorNode .setup ();
 
-            return interpolatorNode;
-         }
-         case "CUBICSPLINE":
-         {
-            // Key
+   //          return interpolatorNode;
+   //       }
+   //       case "CUBICSPLINE":
+   //       {
+   //          // Key
 
-            const
-               length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
-               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1));
+   //          const
+   //             length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
+   //             samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1));
 
-            // KeyValue
+   //          // KeyValue
 
-            for (const t of samples)
-            {
-               interpolatorNode ._key .push (t / cycleInterval);
+   //          for (const t of samples)
+   //          {
+   //             interpolatorNode ._key .push (t / cycleInterval);
 
-               const w = Array .from (targets .keys (), i => this .cubicSplineScalarArray (t, times, weights, targets .length, i));
+   //             const w = Array .from (targets .keys (), i => this .cubicSplineScalarArray (t, times, weights, targets .length, i));
 
-               for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
-                  interpolatorNode ._keyValue .push (value);
-            }
+   //             for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
+   //                interpolatorNode ._keyValue .push (value);
+   //          }
 
-            // Finish
+   //          // Finish
 
-            interpolatorNode .setup ();
+   //          interpolatorNode .setup ();
 
-            return interpolatorNode;
-         }
-      }
-   },
-   applyMorphTargets: (() =>
-   {
-      const value = new Vector3 ();
+   //          return interpolatorNode;
+   //       }
+   //    }
+   // },
+   // applyMorphTargets: (() =>
+   // {
+   //    const value = new Vector3 ();
 
-      return function (array, targets, key, weights)
-      {
-         const vectors = Array .from (array, v => v .getValue () .copy ());
+   //    return function (array, targets, key, weights)
+   //    {
+   //       const vectors = Array .from (array, v => v .getValue () .copy ());
 
-         for (const [i, target] of targets .entries ())
-         {
-            const weight = weights [i];
+   //       for (const [i, target] of targets .entries ())
+   //       {
+   //          const weight = weights [i];
 
-            if (!weight)
-               continue;
+   //          if (!weight)
+   //             continue;
 
-            const accessor = this .accessors [target [key]];
+   //          const accessor = this .accessors [target [key]];
 
-            if (accessor ?.type !== "VEC3")
-               continue;
+   //          if (accessor ?.type !== "VEC3")
+   //             continue;
 
-            const
-               array  = accessor .array,
-               length = array .length;
+   //          const
+   //             array  = accessor .array,
+   //             length = array .length;
 
-            for (let a = 0, p = 0; a < length; a += 3, ++ p)
-               vectors [p] .add (value .set (array [a], array [a + 1], array [a + 2]) .multiply (weight));
-         }
+   //          for (let a = 0, p = 0; a < length; a += 3, ++ p)
+   //             vectors [p] .add (value .set (array [a], array [a + 1], array [a + 2]) .multiply (weight));
+   //       }
 
-         return vectors;
-      };
-   })(),
+   //       return vectors;
+   //    };
+   // })(),
    cubicSplineVector (time, times, values)
    {
       const
