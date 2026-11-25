@@ -106,7 +106,9 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       // Update offsets array.
 
-      const morphTargetOffsets = Object .values (targets) .map (target => target .length / 4);
+      let o = 0;
+
+      const morphTargetOffsets = Object .values (targets) .map (target => o += target .length / 4);
 
       morphTargetOffsets .unshift (0);
 

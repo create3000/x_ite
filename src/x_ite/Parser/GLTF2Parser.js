@@ -4203,74 +4203,38 @@ function eventsProcessed ()
          }
          case "weights":
          {
-            return [ ];
+            const
+               scene      = this .getScene (),
+               node       = this .nodes [target .node],
+               mesh       = this .meshes [node .mesh],
+               primitives = mesh ?.primitives;
 
-            // const scene = this .getScene ();
+            if (!Array .isArray (primitives))
+               return [ ];
 
-            // const
-            //    node              = this .nodes [target .node],
-            //    mesh              = this .meshes [node .mesh],
-            //    primitives        = mesh ?.primitives,
-            //    interpolatorNodes = [ ];
+            let interpolatorNode;
 
-            // if (!Array .isArray (primitives))
-            //    return null;
+            for (const { meshNode } of primitives)
+            {
+               const
+                  geometryNode = meshNode ._geometry .getValue (),
+                  targetsNode  = geometryNode ?._targets .getValue ();
 
-            // for (const { meshNode, targets, attributes } of primitives)
-            // {
-            //    const geometryNode = meshNode ._geometry .getValue ();
+               if (!targetsNode)
+                  continue;
 
-            //    if (!geometryNode || !geometryNode ._coord .getValue ())
-            //       continue;
+               if (interpolatorNode)
+               {
+                  scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+                  scene .addRoute (interpolatorNode, "value_changed", targetsNode, "weights");
+               }
+               else
+               {
+                  interpolatorNode = this .createAnimationPointerInterpolator (timeSensorNode, targetsNode, targetsNode ._weights, interpolation, times, keyValues, cycleInterval, targetsNode ._weights .length);
+               }
+            }
 
-            //    if (attributes ["POSITION"] ?.field .length !== geometryNode ._coord .point .length)
-            //       continue;
-
-            //    const coordinateInterpolatorNode = this .createArrayInterpolator ("CoordinateInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "POSITION");
-
-            //    if (!coordinateInterpolatorNode)
-            //       continue;
-
-            //    if (coordinateInterpolatorNode ._key .length < 2)
-            //       continue;
-
-            //    if (coordinateInterpolatorNode ._keyValue .length / coordinateInterpolatorNode ._key .length !== geometryNode ._coord .point .length)
-            //       continue;
-
-            //    interpolatorNodes .push (coordinateInterpolatorNode);
-
-            //    scene .addRoute (timeSensorNode, "fraction_changed", coordinateInterpolatorNode, "set_fraction");
-            //    scene .addRoute (coordinateInterpolatorNode, "value_changed", geometryNode ._coord, "point");
-            // }
-
-            // for (const { meshNode, targets, attributes } of primitives)
-            // {
-            //    const geometryNode = meshNode ._geometry .getValue ();
-
-            //    if (!geometryNode || !geometryNode ._normal .getValue ())
-            //       continue;
-
-            //    if (attributes ["NORMAL"] ?.field .length !== geometryNode ._normal .vector .length)
-            //       continue;
-
-            //    const normalInterpolatorNode = this .createArrayInterpolator ("NormalInterpolator", interpolation, times, keyValues .array, cycleInterval, targets, attributes, "NORMAL");
-
-            //    if (!normalInterpolatorNode)
-            //       continue;
-
-            //    if (normalInterpolatorNode ._key .length < 2)
-            //       continue;
-
-            //    if (normalInterpolatorNode ._keyValue .length / normalInterpolatorNode ._key .length !== geometryNode ._normal .vector .length)
-            //       continue;
-
-            //    interpolatorNodes .push (normalInterpolatorNode);
-
-            //    scene .addRoute (timeSensorNode, "fraction_changed", normalInterpolatorNode, "set_fraction");
-            //    scene .addRoute (normalInterpolatorNode, "value_changed", geometryNode ._normal, "vector");
-            // }
-
-            // return interpolatorNodes;
+            return [interpolatorNode];
          }
          default:
          {
@@ -4288,7 +4252,7 @@ function eventsProcessed ()
          [X3DConstants .SFVec3f, { typeName: "PositionInterpolator",   components: 3 }],
       ]);
 
-      return function (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval)
+      return function (timeSensorNode, node, field, interpolation, times, keyValues, cycleInterval, components)
       {
          if (!(node && field))
             return [ ];
@@ -4436,6 +4400,17 @@ function eventsProcessed ()
                const interpolatorNode = this .createNamedInterpolator (typeName, components, components ? interpolation : "LINEAR", times, keyValues .array, cycleInterval);
 
                scene .addNamedNode (scene .getUniqueName ($.toUpperCaseFirst (field .getName ()) + suffix), interpolatorNode);
+
+               scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
+               scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
+
+               return interpolatorNode;
+            }
+            case X3DConstants .MFFloat:
+            {
+               const interpolatorNode = this .createNamedInterpolator ("CoordinateInterpolator1D", components, interpolation, times, keyValues .array, cycleInterval);
+
+               scene .addNamedNode (scene .getUniqueName (`${$.toUpperCaseFirst (field .getName ())}Interpolator`), interpolatorNode);
 
                scene .addRoute (timeSensorNode, "fraction_changed", interpolatorNode, "set_fraction");
                scene .addRoute (interpolatorNode, "value_changed", node, field .getName ());
@@ -4641,136 +4616,6 @@ function eventsProcessed ()
          }
       }
    },
-   // createArrayInterpolator (typeName, interpolation, times, weights, cycleInterval, targets, accessors, key)
-   // {
-   //    const accessor = accessors [key];
-
-   //    if (!accessor)
-   //       return null;
-
-   //    const
-   //       scene            = this .getScene (),
-   //       interpolatorNode = scene .createNode (typeName, false);
-
-   //    switch (interpolation)
-   //    {
-   //       case "STEP":
-   //       {
-   //          // Key
-
-   //          interpolatorNode ._key .push (times [0] / cycleInterval);
-
-   //          for (let i = 1, length = times .length; i < length; ++ i)
-   //             interpolatorNode ._key .push (times [i] / cycleInterval, times [i] / cycleInterval);
-
-   //          // KeyValue
-
-   //          const w = Array .from (targets .keys (), i => weights [i]);
-
-   //          for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
-   //             interpolatorNode ._keyValue .push (value);
-
-   //          for (let t = 1, length = times .length; t < length; ++ t)
-   //          {
-   //             const
-   //                w      = Array .from (targets .keys (), i => weights [t * targets .length + i]),
-   //                values = this .applyMorphTargets (accessor .field, targets, key, w);
-
-   //             for (const value of values)
-   //                interpolatorNode ._keyValue .push (value);
-
-   //             for (const value of values)
-   //                interpolatorNode ._keyValue .push (value);
-   //          }
-
-   //          // Finish
-
-   //          interpolatorNode .setup ();
-
-   //          return interpolatorNode;
-   //       }
-   //       default:
-   //       case "LINEAR":
-   //       {
-   //          // Key
-
-   //          interpolatorNode ._key = times .map (t => t / cycleInterval);
-
-   //          // KeyValue
-
-   //          for (const t of times .keys ())
-   //          {
-   //             const w = Array .from (targets .keys (), i => weights [t * targets .length + i]);
-
-   //             for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
-   //                interpolatorNode ._keyValue .push (value);
-   //          }
-
-   //          // Finish
-
-   //          interpolatorNode .setup ();
-
-   //          return interpolatorNode;
-   //       }
-   //       case "CUBICSPLINE":
-   //       {
-   //          // Key
-
-   //          const
-   //             length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
-   //             samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1));
-
-   //          // KeyValue
-
-   //          for (const t of samples)
-   //          {
-   //             interpolatorNode ._key .push (t / cycleInterval);
-
-   //             const w = Array .from (targets .keys (), i => this .cubicSplineScalarArray (t, times, weights, targets .length, i));
-
-   //             for (const value of this .applyMorphTargets (accessor .field, targets, key, w))
-   //                interpolatorNode ._keyValue .push (value);
-   //          }
-
-   //          // Finish
-
-   //          interpolatorNode .setup ();
-
-   //          return interpolatorNode;
-   //       }
-   //    }
-   // },
-   // applyMorphTargets: (() =>
-   // {
-   //    const value = new Vector3 ();
-
-   //    return function (array, targets, key, weights)
-   //    {
-   //       const vectors = Array .from (array, v => v .getValue () .copy ());
-
-   //       for (const [i, target] of targets .entries ())
-   //       {
-   //          const weight = weights [i];
-
-   //          if (!weight)
-   //             continue;
-
-   //          const accessor = this .accessors [target [key]];
-
-   //          if (accessor ?.type !== "VEC3")
-   //             continue;
-
-   //          const
-   //             array  = accessor .array,
-   //             length = array .length;
-
-   //          for (let a = 0, p = 0; a < length; a += 3, ++ p)
-   //             vectors [p] .add (value .set (array [a], array [a + 1], array [a + 2]) .multiply (weight));
-   //       }
-
-   //       return vectors;
-   //    };
-   // })(),
    cubicSplineVector (time, times, values)
    {
       const
