@@ -25,12 +25,11 @@ Object .assign (Object .setPrototypeOf (MorphTarget .prototype, X3DNode .prototy
 
 Object .defineProperties (MorphTarget,
 {
-   ... X3DNode .getStaticProperties ("MorphTarget", "X_ITE", 1, "targets", "4.1"),
+   ... X3DNode .getStaticProperties ("MorphTarget", "Rendering", 5, "targets", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "name",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFNode ()),
       ]),
       enumerable: true,

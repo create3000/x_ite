@@ -2108,7 +2108,6 @@ function eventsProcessed ()
          return;
 
       this .attributesObject (primitive .attributes);
-      this .targetsArray     (primitive .targets);
 
       if (primitive .extensions ?.KHR_gaussian_splatting)
          return this .khrGaussianSplatting (primitive, meshNodes);
@@ -2205,11 +2204,6 @@ function eventsProcessed ()
                break;
          }
       }
-   },
-   targetsArray (targets)
-   {
-      if (!Array .isArray (targets))
-         return;
    },
    primitiveExtensionsObject (extensions, primitive)
    {
@@ -3589,7 +3583,7 @@ function eventsProcessed ()
       geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
 
-      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3676,7 +3670,7 @@ function eventsProcessed ()
          }
       }
 
-      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3693,7 +3687,7 @@ function eventsProcessed ()
       geometryNode ._tangent = this .createTangent (attributes .TANGENT, attributes .NORMAL);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
 
-      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3714,7 +3708,7 @@ function eventsProcessed ()
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3734,7 +3728,7 @@ function eventsProcessed ()
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3755,7 +3749,7 @@ function eventsProcessed ()
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3783,7 +3777,7 @@ function eventsProcessed ()
             geometryNode ._stripCount = [coord .point .length];
       }
 
-      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3804,7 +3798,7 @@ function eventsProcessed ()
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3832,7 +3826,7 @@ function eventsProcessed ()
             geometryNode ._fanCount = [coord .point .length];
       }
 
-      this .addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
 
       geometryNode .setup ();
 
@@ -3995,10 +3989,45 @@ function eventsProcessed ()
 
       return position .coordinateNode = coordinateNode;
    },
-   addTargetsAndSkinning (geometryNode, targets, weights, skin, attributes)
+   targetsAndSkinning (geometryNode, targets, weights, skin, attributes)
    {
+      this .targetsArray (geometryNode, targets, weights);
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
+   },
+   targetsArray (geometryNode, targets, weights)
+   {
+      if (!Array .isArray (targets))
+         return;
+
+      if (!Array .isArray (weights))
+         return;
+
+      if (targets .length !== weights .length)
+         return;
+
+      const
+         scene            = this .getScene (),
+         morphTargetsNode = scene .createNode ("MorphTargets", false);
+
+      morphTargetsNode ._weights = weights;
+
+      for (const target of targets)
+      {
+
+         const
+            scene           = this .getScene (),
+            morphTargetNode = scene .createNode ("MorphTarget", false);
+
+         // morphTargetNode ._displacements .push ();
+         morphTargetNode .setup ();
+
+         morphTargetsNode ._targets .push (morphTargetNode);
+      }
+
+      morphTargetsNode .setup ();
+
+      geometryNode ._targets = morphTargetsNode;
    },
    attributesJointsArray (skin, joints, weights)
    {

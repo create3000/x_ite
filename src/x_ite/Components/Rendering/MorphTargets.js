@@ -26,7 +26,7 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
 Object .defineProperties (MorphTargets,
 {
-   ... X3DNode .getStaticProperties ("MorphTargets", "X_ITE", 1, "targets", "4.1"),
+   ... X3DNode .getStaticProperties ("MorphTargets", "Rendering", 5, "targets", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
