@@ -20,12 +20,12 @@ ${targets .map (({ name, type, fn, components }, i) =>
 ${type}
 getTarget${fn} (in ${type} vector)
 {
-   int size = (X3D_MORPH_TARGET_${targets [i + 1] ?.name ?? "LAST"}_OFFSET - X3D_MORPH_TARGET_${name}_OFFSET)
-      / X3D_NUM_MORPH_WEIGHTS;
+   int offset = X3D_MORPH_TARGET_${name}_OFFSET + int (x3d_CoordIndex);
+   int size   = (X3D_MORPH_TARGET_${targets [i + 1] ?.name ?? "LAST"}_OFFSET - X3D_MORPH_TARGET_${name}_OFFSET) / X3D_NUM_MORPH_WEIGHTS;
 
    for (int i = 0; i < X3D_NUM_MORPH_WEIGHTS; ++ i)
    {
-      int  index        = X3D_MORPH_TARGET_${name}_OFFSET + size * i + int (x3d_CoordIndex);
+      int  index        = offset + size * i;
       vec4 displacement = texelFetch (x3d_MorphTargetsTexture, index, 0);
 
       vector .${components} += x3d_MorphWeights [i] * displacement .${components};
