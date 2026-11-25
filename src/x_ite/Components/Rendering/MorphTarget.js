@@ -14,19 +14,46 @@ function MorphTarget (executionContext)
    X3DNode .call (this, executionContext);
 
    this .addType (X3DConstants .MorphTarget);
+
+   // Private properties
+
+   this .geometricPropertyNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (MorphTarget .prototype, X3DNode .prototype),
 {
-   getDisplacements (targets)
+   initialize ()
    {
+      X3DNode .prototype .initialize .call (this);
+
+      this ._displacements .addInterest ("set_displacements__", this);
+
+      this .set_displacements__ ();
+   },
+   set_displacements__ ()
+   {
+      const geometricPropertyNodes = this .geometricPropertyNodes;
+
+      for (const geometricPropertyNode of geometricPropertyNodes)
+         geometricPropertyNode .removeInterest ("addNodeEvent", this);
+
+      geometricPropertyNodes .length = 0;
+
       for (const node of this ._displacements)
       {
          const geometricPropertyNode = X3DCast (X3DConstants .X3DGeometricPropertyNode, node);
 
-         if (!geometricPropertyNode)
-            continue;
+         if (geometricPropertyNode)
+            geometricPropertyNodes .push (geometricPropertyNode);
+      }
 
+      for (const geometricPropertyNode of geometricPropertyNodes)
+         geometricPropertyNode .addInterest ("addNodeEvent", this);
+   },
+   getDisplacements (targets)
+   {
+      for (const geometricPropertyNode of this .geometricPropertyNodes)
+      {
          const type = geometricPropertyNode .getType ();
 
          for (let t = type .length; t >= 0; -- t)
