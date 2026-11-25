@@ -17,7 +17,7 @@ ${targets .map (({ name, type, fn, components }, i) =>
 {
    return /* glsl */ `
 #if defined (X3D_MORPH_TARGET_${name})
-vec4
+${type}
 getTarget${fn} (in ${type} vector)
 {
    int size = (X3D_MORPH_TARGET_${targets [i + 1] ?.name ?? "LAST"}_OFFSET - X3D_MORPH_TARGET_${name}_OFFSET)
