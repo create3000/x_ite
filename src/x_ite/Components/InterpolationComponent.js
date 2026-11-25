@@ -1,5 +1,6 @@
 import ColorInterpolator            from "./Interpolation/ColorInterpolator.js";
 import CoordinateInterpolator       from "./Interpolation/CoordinateInterpolator.js";
+import CoordinateInterpolator1D     from "./Interpolation/CoordinateInterpolator1D.js";
 import CoordinateInterpolator2D     from "./Interpolation/CoordinateInterpolator2D.js";
 import EaseInEaseOut                from "./Interpolation/EaseInEaseOut.js";
 import NormalInterpolator           from "./Interpolation/NormalInterpolator.js";
@@ -19,6 +20,7 @@ export default {
    [
       ColorInterpolator,
       CoordinateInterpolator,
+      CoordinateInterpolator1D,
       CoordinateInterpolator2D,
       EaseInEaseOut,
       NormalInterpolator,
