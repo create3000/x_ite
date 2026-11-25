@@ -968,6 +968,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
          geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);
 
+         // Morph Targets
+
+         geometryContext .getTargets () ?.setShaderUniforms (gl, this);
+
          // Skinning
 
          hAnimNode ?.setShaderUniforms (gl, this);

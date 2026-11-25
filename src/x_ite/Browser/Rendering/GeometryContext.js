@@ -35,6 +35,10 @@ Object .assign (GeometryContext .prototype,
    {
       return null;
    },
+   getTargets ()
+   {
+      return null;
+   },
    updateGeometryKey: X3DGeometryNode .prototype .updateGeometryKey,
 });
 

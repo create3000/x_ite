@@ -640,6 +640,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       key += this .hasTangents   ? 1 : 0;
       key += this .hasNormals    ? 1 : 0;
 
+      // Handle morphTargets.
+      key += this .targetsNode ?.getKey () ?? "[]";
+
       this .geometryKey = key;
    },
    updateRenderFunctions ()
@@ -1018,6 +1021,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       return this .coordNode;
    },
+   getTargets ()
+   {
+      return this .targetsNode;
+   },
    set_attrib__ ()
    {
       const attribNodes = this .getAttrib ();
@@ -1100,11 +1107,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    set_targets__ ()
    {
-      this .targetsNode ?.removeInterest ("requestRebuild", this);
+      this .targetsNode ?.removeInterest ("updateGeometryKey", this);
 
       this .targetsNode = X3DCast (X3DConstants .MorphTargets, this ._targets);
 
-      this .targetsNode ?.addInterest ("requestRebuild", this);
+      this .targetsNode ?.addInterest ("updateGeometryKey", this);
    },
 });
 
