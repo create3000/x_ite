@@ -78,15 +78,30 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
    },
    createTexture ()
    {
-      for (const target of Object .values (this .targets))
+      const targets = this .targets;
+
+      for (const target of Object .values (targets))
          target .length = 0;
 
       for (const targetNode of this .targetNodes)
-         targetNode .getDisplacements (this .targets);
+         targetNode .getDisplacements (targets);
 
-      console .log (Object .values (this .targets) .flat ())
+      targets .NORMAL = this .createNormalArray (targets .NORMAL);
+
+      console .log (Object .values (targets) .flat ())
 
       this .addNodeEvent ();
+   },
+   createNormalArray (normal)
+   {
+      const
+         length  = normal .length,
+         normal4 = [ ];
+
+      for (let i = 0; i < length; i += 3)
+         normal4 .push (normal [i], normal [i + 1], normal [i + 2], 0);
+
+      return normal4;
    },
    getShaderOptions (options)
    {
