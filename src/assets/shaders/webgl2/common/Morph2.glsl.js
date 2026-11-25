@@ -2,6 +2,10 @@
 
 export default () => /* glsl */ `
 #if defined (X3D_MORPH_TARGETS)
+
+uniform float     x3d_MorphWeights [X3D_NUM_MORPH_WEIGHTS];
+uniform sampler2D x3d_MorphTargetsTexture;
+
 #if defined (X3D_MORPH_TARGET_COLOR)
 vec4
 getTargetColor (in vec4 color, const in int vertexID)
