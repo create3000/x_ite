@@ -60,16 +60,18 @@ Object .assign (Object .setPrototypeOf (MorphTarget .prototype, X3DNode .prototy
          {
             switch (type [t])
             {
-               case X3DConstants .Color:
-               case X3DConstants .ColorRGBA:
-               case X3DConstants .Normal:
+               case X3DConstants .X3DColorNode:
+                  geometricPropertyNode .addColors (targets .COLOR);
+                  break;
                case X3DConstants .Tangent:
+                  geometricPropertyNode .addVectors (targets .TANGENT);
+                  break;
+               case X3DConstants .Normal:
+                  geometricPropertyNode .addVectors (targets .NORMAL);
                   break;
                case X3DConstants .X3DCoordinateNode:
-               {
                   geometricPropertyNode .addPoints (targets .POSITION);
                   break;
-               }
                default:
                   continue;
             }
