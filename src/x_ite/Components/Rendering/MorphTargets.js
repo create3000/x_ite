@@ -88,6 +88,14 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       targets .NORMAL = this .createNormalArray (targets .NORMAL);
 
+      const offsets = Object .values (targets) .map (target => target .length / 4);
+
+      offsets .unshift (0);
+      offsets .pop ();
+
+      this .offsets = new Uint32Array (offsets);
+
+      console .log (this .offsets);
       console .log (Object .values (targets) .flat ())
 
       this .addNodeEvent ();
