@@ -11,6 +11,7 @@ texelFetch (const in sampler2D _sampler, const in int index, const in int lod)
 }
 #endif
 
+// Skin2 is only loaded if HAnim component is available.
 #if !defined (X3D_SKINNING)
    #define getSkinVertex(vertex,normal,tangent) (vertex)
    #define getSkinNormal(normal) (normal)

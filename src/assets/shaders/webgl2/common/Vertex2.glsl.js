@@ -101,14 +101,23 @@ main ()
       vec3 tNormal  = x3d_Normal;
       vec3 tTangent = x3d_Tangent .xyz;
 
-      tVertex = getInstanceVertex (getSkinVertex (tVertex, tNormal, tTangent));
-      tNormal = getInstanceNormal (getSkinNormal (tNormal));
+      tVertex = getTargetVertex (tVertex, gl_VertexID);
+      tVertex = getSkinVertex (tVertex, tNormal, tTangent);
+      tVertex = getInstanceVertex (tVertex);
+
+      tNormal = getTargetNormal (tNormal, gl_VertexID);
+      tNormal = getSkinNormal (tNormal);
+      tNormal = getInstanceNormal (tNormal);
 
       #if defined (X3D_TANGENTS)
-         tTangent = getInstanceNormal (getSkinTangent (tTangent));
+         tTangent = getTargetTangent (tTangent, gl_VertexID);
+         tTangent = getSkinTangent (tTangent);
+         tTangent = getInstanceNormal (tTangent);
       #endif
    #else
-      tVertex = getInstanceVertex (getSkinVertex (tVertex, vec3 (0.0), vec3 (0.0)));
+      tVertex = getTargetVertex (tVertex, gl_VertexID);
+      tVertex = getSkinVertex (tVertex, vec3 (0.0), vec3 (0.0));
+      tVertex = getInstanceVertex (tVertex);
    #endif
 
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
@@ -140,7 +149,7 @@ main ()
    #endif
 
    #if defined (X3D_COLOR_MATERIAL)
-      color = x3d_Color;
+      color = getTargetColor (x3d_Color, gl_VertexID);
    #endif
 
    #if !defined (X3D_GEOMETRY_0D) && !defined (X3D_GEOMETRY_1D)

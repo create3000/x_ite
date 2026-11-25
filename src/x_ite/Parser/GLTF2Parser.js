@@ -3948,6 +3948,8 @@ function eventsProcessed ()
    },
    createTangent (tangent)
    {
+      // TODO: morph tangent is VEC3.
+
       if (tangent ?.type !== "VEC4")
          return null;
 
