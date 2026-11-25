@@ -182,6 +182,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
                break;
          }
 
+         geometryContext .getTargets () ?.getShaderOptions (options);
          hAnimNode ?.getShaderOptions (options);
 
          const

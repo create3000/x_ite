@@ -74,6 +74,10 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       console .log (Object .values (targets) .flat ())
    },
+   getShaderOptions (options)
+   {
+
+   },
    setShaderUniforms (gl, shaderObject)
    {
    },
