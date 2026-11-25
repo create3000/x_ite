@@ -109,12 +109,12 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       // Update offsets array.
 
-      const offsets = Object .values (targets) .map (target => target .length / 4);
+      const morphTargetOffsets = Object .values (targets) .map (target => target .length / 4);
 
-      offsets .unshift (0);
-      offsets .pop ();
+      morphTargetOffsets .unshift (0);
+      morphTargetOffsets .pop ();
 
-      this .morphTargetOffsets = new Int32Array (offsets);
+      this .morphTargetOffsets = morphTargetOffsets;
 
       // Update texture.
 
@@ -149,12 +149,20 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
    },
    getShaderOptions (options)
    {
+      options .push (`X3D_NUM_MORPH_WEIGHTS ${this ._weights .length}`);
 
+      for (const [i, [name, array]] of Object .entries (this .targets) .entries ())
+      {
+         if (!array .length)
+            continue;
+
+         options .push (`X3D_MORPH_TARGET_${name}`);
+         options .push (`X3D_MORPH_TARGET_${name}_OFFSET ${this .morphTargetOffsets [i]}`);
+      }
    },
    setShaderUniforms (gl, shaderObject)
    {
-      gl .uniform1fv (shaderObject .x3d_MorphWeights,       this ._weights .shrinkToFit ());
-      gl .uniform1iv (shaderObject .x3d_MorphTargetOffsets, this .morphTargetOffsets);
+      gl .uniform1fv (shaderObject .x3d_MorphWeights, this ._weights .shrinkToFit ());
 
       const
          browser                 = this .getBrowser (),

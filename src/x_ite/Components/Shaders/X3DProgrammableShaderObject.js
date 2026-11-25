@@ -177,7 +177,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          "x3d_MultiTextureColor",
          // Morph Targets
          "x3d_MorphWeights",
-         "x3d_MorphTargetOffsets",
          "x3d_MorphTargetsTexture",
          // ParticleSystem and Skinning
          "x3d_TexCoordRamp",
