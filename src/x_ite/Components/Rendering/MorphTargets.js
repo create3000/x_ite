@@ -85,10 +85,7 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       key += "[";
       key += this ._weights .length;
-
-      for (const target of Object .values (this .targets))
-         key += target .length ? 1 : 0;
-
+      key += Object .values (this .targets) .map (target => target .length) .join (",");
       key += "]";
 
       return key;
@@ -112,7 +109,6 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
       const morphTargetOffsets = Object .values (targets) .map (target => target .length / 4);
 
       morphTargetOffsets .unshift (0);
-      morphTargetOffsets .pop ();
 
       this .morphTargetOffsets = morphTargetOffsets;
 
@@ -163,6 +159,8 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
          options .push (`X3D_MORPH_TARGET_${name}`);
          options .push (`X3D_MORPH_TARGET_${name}_OFFSET ${this .morphTargetOffsets [i]}`);
       }
+
+      options .push (`X3D_MORPH_TARGET_LAST_OFFSET ${this .morphTargetOffsets .at (-1)}`);
    },
    setShaderUniforms (gl, shaderObject)
    {

@@ -40,6 +40,16 @@ getTargetNormal (in vec3 normal, const in int vertexID)
 vec4
 getTargetVertex (in vec4 vertex, const in int vertexID)
 {
+   int size = (X3D_MORPH_TARGET_LAST_OFFSET - X3D_MORPH_TARGET_POSITION_OFFSET) / X3D_NUM_MORPH_WEIGHTS;
+
+   for (int i = 0; i < X3D_NUM_MORPH_WEIGHTS; ++ i)
+   {
+      int  index        = X3D_MORPH_TARGET_POSITION_OFFSET + size * i + vertexID;
+      vec4 displacement = texelFetch (x3d_MorphTargetsTexture, index, 0);
+
+      vertex .xyz += x3d_MorphWeights [i] * displacement .xyz;
+   }
+
    return vertex;
 }
 #else
