@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
       offsets .unshift (0);
       offsets .pop ();
 
-      this .offsets = new Uint32Array (offsets);
+      this .offsets = new Int32Array (offsets);
 
       console .log (this .offsets);
       console .log (Object .values (targets) .flat ())
