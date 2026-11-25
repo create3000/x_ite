@@ -24,6 +24,7 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
       this ._tangent  .addInterest ("set_tangent__",  this);
       this ._normal   .addInterest ("set_normal__",   this);
       this ._coord    .addInterest ("set_coord__",    this);
+      this ._targets  .addInterest ("set_targets__",  this);
 
       this .set_attrib__ ();
       this .set_fogCoord__ ();
@@ -31,6 +32,7 @@ Object .assign (Object .setPrototypeOf (PointSet .prototype, X3DPointGeometryNod
       this .set_tangent__ ();
       this .set_normal__ ();
       this .set_coord__ ();
+      this .set_targets__ ();
    },
    build ()
    {

@@ -1098,6 +1098,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       this .coordNode ?.addInterest ("requestRebuild", this);
    },
+   set_targets__ ()
+   {
+      this .targetsNode ?.removeInterest ("requestRebuild", this);
+
+      this .targetsNode = X3DCast (X3DConstants .MorphTargets, this ._targets);
+
+      this .targetsNode ?.addInterest ("requestRebuild", this);
+   },
 });
 
 Object .defineProperties (X3DGeometryNode, X3DNode .getStaticProperties ("X3DGeometryNode", "Rendering", 1));
