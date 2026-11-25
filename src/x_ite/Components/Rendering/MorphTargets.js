@@ -21,6 +21,13 @@ function MorphTargets (executionContext)
    // Private properties
 
    this .targetNodes = [ ];
+   this .targets     = {
+      COLOR: [ ],
+      ... Object .fromEntries (Array .from ({ length: maxTexCoords }, (_, i) => [`TEXCOORD_${i}`, [ ]])),
+      TANGENT: [ ],
+      NORMAL: [ ],
+      POSITION: [ ],
+   };
 }
 
 Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPropertyNode .prototype),
@@ -57,22 +64,29 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
    },
    getKey ()
    {
-      return "[]";
+      let key = "";
+
+      key += "[";
+      key += this ._weights .length;
+
+      for (const target of Object .values (this .targets))
+         key += target .length ? 1 : 0;
+
+      key += "]";
+
+      return key;
    },
    createTexture ()
    {
-      const targets = {
-         COLOR: [ ],
-         ... Object .fromEntries (Array .from ({ length: maxTexCoords }, (_, i) => [`TEXCOORD_${i}`, [ ]])),
-         TANGENT: [ ],
-         NORMAL: [ ],
-         POSITION: [ ],
-      };
+      for (const target of Object .values (this .targets))
+         target .length = 0;
 
       for (const targetNode of this .targetNodes)
-         targetNode .getDisplacements (targets);
+         targetNode .getDisplacements (this .targets);
 
-      console .log (Object .values (targets) .flat ())
+      console .log (Object .values (this .targets) .flat ())
+
+      this .addNodeEvent ();
    },
    getShaderOptions (options)
    {
