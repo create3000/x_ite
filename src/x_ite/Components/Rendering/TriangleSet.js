@@ -52,7 +52,7 @@ Object .defineProperties (TriangleSet,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "tangent",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "targets",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "targets",         new Fields .SFNode ()), // experimental
       ]),
       enumerable: true,
    },

@@ -33,7 +33,7 @@ The **MorphTargets** node belongs to the [Rendering](/x_ite/components/overview/
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| MFFloat | [in, out] | [weights](#fields-weights) |  |
+| MFFloat | [in, out] | [weights](#fields-weights) | [ ] |
 | MFNode | [in, out] | [targets](#fields-targets) | [ ] |
 {: .fields }
 
