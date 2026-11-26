@@ -864,8 +864,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       {
          const { renderObject, viewport, modelViewMatrix, fogNode, appearanceNode, hAnimNode, textureNode: geometryTextureNode, localObjects } = renderContext;
 
+         const { geometryType, textureCoordinateNode, targetsNode } = geometryContext;
+
          const
-            stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+            stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
             materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
             textureNode         = geometryTextureNode ?? appearanceNode .getTexture (),
             renderCount         = renderObject .getRenderCount ();
@@ -967,13 +969,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          // Texture
 
          textureNode ?.setShaderUniforms (gl, this .x3d_Texture [0], this);
-
-         appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
-         geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);
+         appearanceNode .getTextureTransform () .setShaderUniforms (gl, this);
+         textureCoordinateNode .setShaderUniforms (gl, this);
 
          // Morph Targets & Skinning
 
-         geometryContext .getTargets () ?.setShaderUniforms (gl, this);
+         targetsNode ?.setShaderUniforms (gl, this);
          hAnimNode ?.setShaderUniforms (gl, this);
       };
    })(),
