@@ -3999,17 +3999,17 @@ function eventsProcessed ()
       if (!Array .isArray (targets))
          return;
 
-      if (!Array .isArray (weights))
-         return;
-
-      if (targets .length !== weights .length)
+      if (!targets .length)
          return;
 
       const
          scene            = this .getScene (),
          morphTargetsNode = scene .createNode ("MorphTargets", false);
 
-      morphTargetsNode ._weights = weights;
+      if (Array .isArray (weights))
+         morphTargetsNode ._weights = weights;
+      else
+         morphTargetsNode ._weights .length = targets .length;
 
       for (const target of targets)
       {
