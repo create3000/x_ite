@@ -63,6 +63,16 @@ Object .assign (Object .setPrototypeOf (MorphTarget .prototype, X3DNode .prototy
                case X3DConstants .X3DColorNode:
                   geometricPropertyNode .addColors (target .COLOR);
                   break;
+               case X3DConstants .X3DSingleTextureCoordinateNode:
+                  geometricPropertyNode .addPoints (target .TEXCOORD_0);
+                  break;
+               case X3DConstants .MultiTextureCoordinate:
+               {
+                  for (const [i, textureCoordinateNode] of geometricPropertyNode .getTextureCoordinates () .entries ())
+                     textureCoordinateNode .addPoints (target [`TEXCOORD_${i}`]);
+
+                  break;
+               }
                case X3DConstants .Tangent:
                   geometricPropertyNode .addVectors (target .TANGENT);
                   break;
