@@ -800,10 +800,10 @@ Object .assign (X3DRenderObject .prototype,
       {
          const
             { renderContext, viewport, modelViewMatrix, shapeNode, hAnimNode, clipPlanes } = shapes [s],
+            { geometryType, targetsNode } = shapeNode .getGeometryContext (),
             appearanceNode      = shapeNode .getAppearance (),
-            geometryContext     = shapeNode .getGeometryContext (),
             depthModeNode       = appearanceNode .getDepthMode (),
-            stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+            stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
             shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, hAnimNode),
             id                  = browser .addPointingShape (renderContext);
 
@@ -823,6 +823,7 @@ Object .assign (X3DRenderObject .prototype,
 
          depthModeNode       ?.enable (gl);
          stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
+         targetsNode         ?.setShaderUniforms (gl, shaderNode);
          hAnimNode           ?.setShaderUniforms (gl, shaderNode);
 
          shapeNode .displaySimple (gl, renderContext, shaderNode);
@@ -1045,9 +1046,9 @@ Object .assign (X3DRenderObject .prototype,
       {
          const
             { renderContext, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = shapes [s],
+            { geometryType, targetsNode } = shapeNode .getGeometryContext (),
             appearanceNode      = shapeNode .getAppearance (),
-            geometryContext     = shapeNode .getGeometryContext (),
-            stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+            stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
             shaderNode          = browser .getDepthShader (normal, clipPlanes .length, shapeNode, hAnimNode);
 
          // Cannot change viewport here, because the viewport is special here.
@@ -1063,6 +1064,7 @@ Object .assign (X3DRenderObject .prototype,
          gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
          stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
+         targetsNode         ?.setShaderUniforms (gl, shaderNode);
          hAnimNode           ?.setShaderUniforms (gl, shaderNode);
 
          shapeNode .displaySimple (gl, renderContext, shaderNode);

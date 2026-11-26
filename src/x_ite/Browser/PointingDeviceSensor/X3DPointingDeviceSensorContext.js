@@ -419,11 +419,12 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    getPointingShader (numClipPlanes, shapeNode, hAnimNode)
    {
-      const { geometryType, hasNormals } = shapeNode .getGeometryContext ();
+      const { geometryType, hasNormals, targetsNode } = shapeNode .getGeometryContext ();
 
       let key = "";
 
       key += numClipPlanes; // Could be more than 9.
+      key += targetsNode ?.getKey () ?? "[]";
       key += hAnimNode ?.getHAnimKey () ?? "[]";
       key += shapeNode .getShapeKey ();
       key += geometryType;
@@ -487,6 +488,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (+appearanceNode .getTextureBits ())
          options .push ("X3D_TEXTURE");
 
+      geometryContext .getTargets () ?.getShaderOptions (options);
       hAnimNode ?.getShaderOptions (options);
 
       const shaderNode = shapeNode .createPointingShader ?.(options) ?? this .createShader ({

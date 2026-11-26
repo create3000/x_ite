@@ -10,6 +10,10 @@ precision highp sampler2DArray;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
+#if defined (X3D_MORPH_TARGETS) || defined (X3D_SKINNING)
+   in uint x3d_CoordIndex;
+#endif
+
 in vec4 x3d_Vertex;
 
 #if defined (X3D_NORMALS)
@@ -40,6 +44,7 @@ out vec3 normal;
 #endif
 
 #include <Utils>
+#include <Morph>
 #include <Skin>
 #include <Instancing>
 #include <PointSize>
@@ -54,12 +59,20 @@ main ()
    #endif
 
    vec4 tVertex = x3d_Vertex;
+   vec3 tNormal = x3d_Normal;
 
-   tVertex = getInstanceVertex (getSkinVertex (tVertex, x3d_Normal, vec3 (0.0)));
+   tNormal = getTargetNormal (tNormal);
+
+   tVertex = getTargetVertex (tVertex);
+   tVertex = getSkinVertex (tVertex, tNormal, vec3 (0.0));
+   tVertex = getInstanceVertex (tVertex);
    tVertex = x3d_ModelViewMatrix * tVertex;
 
+   tNormal = getSkinNormal (tNormal);
+   tNormal = getInstanceNormal (tNormal);
+
    vertex = tVertex .xyz;
-   normal = getInstanceNormal (getSkinNormal (x3d_Normal));
+   normal = tNormal;
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
       gl_PointSize = pointSize = max (getPointSize (vertex), 2.0);

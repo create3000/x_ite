@@ -10,6 +10,10 @@ precision highp sampler2DArray;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
+#if defined (X3D_MORPH_TARGETS) || defined (X3D_SKINNING)
+   in uint x3d_CoordIndex;
+#endif
+
 in vec4 x3d_Vertex;
 
 #if defined (X3D_CLIP_PLANES)
@@ -25,6 +29,7 @@ in vec4 x3d_Vertex;
 #endif
 
 #include <Utils>
+#include <Morph>
 #include <Skin>
 #include <Instancing>
 #include <PointSize>
@@ -35,12 +40,20 @@ main ()
    vec4 tVertex = x3d_Vertex;
 
    #if defined (X3D_NORMALS)
-      vec3 tNormal  = x3d_Normal;
+      vec3 tNormal = x3d_Normal;
 
-      tVertex = getInstanceVertex (getSkinVertex (tVertex, tNormal, vec3 (0.0)));
-      tNormal = getInstanceNormal (getSkinNormal (tNormal));
+      tNormal = getTargetNormal (tNormal);
+
+      tVertex = getTargetVertex (tVertex);
+      tVertex = getSkinVertex (tVertex, tNormal, vec3 (0.0));
+      tVertex = getInstanceVertex (tVertex);
+
+      tNormal = getSkinNormal (tNormal);
+      tNormal = getInstanceNormal (tNormal);
    #else
-      tVertex = getInstanceVertex (getSkinVertex (tVertex, vec3 (0.0), vec3 (0.0)));
+      tVertex = getTargetVertex (tVertex);
+      tVertex = getSkinVertex (tVertex, vec3 (0.0), vec3 (0.0));
+      tVertex = getInstanceVertex (tVertex);
    #endif
 
    tVertex = x3d_ModelViewMatrix * tVertex;

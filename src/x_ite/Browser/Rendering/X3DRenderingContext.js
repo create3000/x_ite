@@ -208,17 +208,18 @@ Object .assign (X3DRenderingContext .prototype,
    },
    getDepthShader (normal, numClipPlanes, shapeNode, hAnimNode)
    {
-      const geometryContext = shapeNode .getGeometryContext ();
+      const { geometryType, targetsNode } = shapeNode .getGeometryContext ();
 
       let key = "";
 
       key += normal ? 1 : 0;
       key += numClipPlanes; // Could be more than 9.
+      key += targetsNode ?.getKey () ?? "[]";
       key += hAnimNode ?.getHAnimKey () ?? "[]";
       key += shapeNode .getShapeKey ();
-      key += geometryContext .geometryType;
+      key += geometryType;
 
-      if (geometryContext .geometryType >= 2)
+      if (geometryType >= 2)
       {
          key += "0.0.0";
       }
@@ -226,7 +227,7 @@ Object .assign (X3DRenderingContext .prototype,
       {
          const appearanceNode  = shapeNode .getAppearance ();
 
-         key += appearanceNode .getStyleProperties (geometryContext .geometryType) ? 1 : 0;
+         key += appearanceNode .getStyleProperties (geometryType) ? 1 : 0;
          key += ".";
          key += appearanceNode .getTextureBits () .toString (16); // Textures for point and line.
          key += ".";
@@ -275,6 +276,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
 
+      geometryContext .getTargets () ?.getShaderOptions (options);
       hAnimNode ?.getShaderOptions (options);
 
       const shaderNode = shapeNode .createDepthShader ?.(options) ?? this .createShader ({

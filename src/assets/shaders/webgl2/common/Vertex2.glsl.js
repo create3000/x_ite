@@ -105,16 +105,20 @@ main ()
       vec3 tNormal  = x3d_Normal;
       vec3 tTangent = x3d_Tangent .xyz;
 
+      tNormal = getTargetNormal (tNormal);
+
+      #if defined (X3D_TANGENTS)
+         tTangent = getTargetTangent (tTangent);
+      #endif
+
       tVertex = getTargetVertex (tVertex);
       tVertex = getSkinVertex (tVertex, tNormal, tTangent);
       tVertex = getInstanceVertex (tVertex);
 
-      tNormal = getTargetNormal (tNormal);
       tNormal = getSkinNormal (tNormal);
       tNormal = getInstanceNormal (tNormal);
 
       #if defined (X3D_TANGENTS)
-         tTangent = getTargetTangent (tTangent);
          tTangent = getSkinTangent (tTangent);
          tTangent = getInstanceNormal (tTangent);
       #endif

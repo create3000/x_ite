@@ -193,8 +193,6 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
          options .push (`X3D_MORPH_TARGET_${name}`);
          options .push (`X3D_MORPH_TARGET_${name}_OFFSET ${this .morphTargetOffsets [i]}`);
       }
-
-      options .push (`X3D_MORPH_TARGET_LAST_OFFSET ${this .morphTargetOffsets .at (-1)}`);
    },
    setShaderUniforms (gl, shaderObject)
    {
