@@ -1107,11 +1107,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    set_targets__ ()
    {
-      this .targetsNode ?.removeInterest ("updateGeometryKey", this);
+      this .targetsNode ?._key .removeInterest ("updateGeometryKey", this);
 
       this .targetsNode = X3DCast (X3DConstants .MorphTargets, this ._targets);
 
-      this .targetsNode ?.addInterest ("updateGeometryKey", this);
+      this .targetsNode ?._key .addInterest ("updateGeometryKey", this);
    },
 });
 

@@ -18,6 +18,8 @@ function MorphTargets (executionContext)
 
    this .addType (X3DConstants .MorphTargets);
 
+   this .addChildObjects (X3DConstants .outputOnly, "key", new Fields .SFTime ());
+
    // Private properties
 
    this .targetNodes = [ ];
@@ -53,9 +55,22 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       // Events
 
+      this ._weights .addInterest ("set_weights__", this);
       this ._targets .addInterest ("set_targets__", this);
 
+      this .set_weights__ ();
       this .set_targets__ ();
+   },
+   set_weights__ ()
+   {
+      const numWeights = this ._weights .length;
+
+      if (numWeights === this .numWeights)
+         return;
+
+      this .numWeights = numWeights;
+
+      this ._key = Date .now () / 1000;
    },
    set_targets__ ()
    {
@@ -132,7 +147,7 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       // Propagate changes.
 
-      this .addNodeEvent ();
+      this ._key = Date .now () / 1000;
    },
    createNormalArray (normal)
    {
