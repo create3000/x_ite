@@ -44,7 +44,7 @@ The **IndexedQuadSet** node belongs to the [CADGeometry](/x_ite/components/overv
 | SFNode | [in, out] | [tangent](#fields-tangent) | NULL |
 | SFNode | [in, out] | [normal](#fields-normal) | NULL |
 | SFNode | [in, out] | [coord](#fields-coord) | NULL |
-| SFNode | [in, out] | [targets](#fields-targets) |  |
+| SFNode | [in, out] | [targets](#fields-targets) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
