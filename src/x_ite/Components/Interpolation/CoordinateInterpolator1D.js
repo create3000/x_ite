@@ -6,6 +6,10 @@ import X3DInterpolatorNode  from "./X3DInterpolatorNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function CoordinateInterpolator1D (executionContext)
 {
    X3DInterpolatorNode .call (this, executionContext);
