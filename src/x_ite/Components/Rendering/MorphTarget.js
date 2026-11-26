@@ -69,7 +69,14 @@ Object .assign (Object .setPrototypeOf (MorphTarget .prototype, X3DNode .prototy
                case X3DConstants .MultiTextureCoordinate:
                {
                   for (const [i, textureCoordinateNode] of geometricPropertyNode .getTextureCoordinates () .entries ())
-                     textureCoordinateNode .addPoints (target [`TEXCOORD_${i}`]);
+                  {
+                     const array = target [`TEXCOORD_${i}`];
+
+                     if (!array)
+                        break;
+
+                     textureCoordinateNode .addPoints (array);
+                  }
 
                   break;
                }
