@@ -23,19 +23,7 @@ function GeometryContext (options = { })
 
 Object .assign (GeometryContext .prototype,
 {
-   getTextureCoordinateMapping ()
-   {
-      return this .textureCoordinateMapping;
-   },
-   getTextureCoordinate ()
-   {
-      return this .textureCoordinateNode;
-   },
    getCoord ()
-   {
-      return null;
-   },
-   getTargets ()
    {
       return null;
    },

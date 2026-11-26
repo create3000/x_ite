@@ -488,7 +488,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (+appearanceNode .getTextureBits ())
          options .push ("X3D_TEXTURE");
 
-      geometryContext .getTargets () ?.getShaderOptions (options);
+      geometryContext .targetsNode ?.getShaderOptions (options);
       hAnimNode ?.getShaderOptions (options);
 
       const shaderNode = shapeNode .createPointingShader ?.(options) ?? this .createShader ({

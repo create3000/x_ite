@@ -864,7 +864,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       {
          const { renderObject, viewport, modelViewMatrix, fogNode, appearanceNode, hAnimNode, textureNode: geometryTextureNode, localObjects } = renderContext;
 
-         const { geometryType, textureCoordinateNode, targetsNode } = geometryContext;
+         const { geometryType, textureCoordinateMapping, textureCoordinateNode, targetsNode } = geometryContext;
 
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryType),
@@ -964,7 +964,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Material
 
-         materialNode .setShaderUniforms (gl, this, appearanceNode .getTextureTransformMapping (), geometryContext .getTextureCoordinateMapping (), front);
+         materialNode .setShaderUniforms (gl, this, appearanceNode .getTextureTransformMapping (), textureCoordinateMapping, front);
 
          // Texture
 

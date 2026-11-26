@@ -276,7 +276,7 @@ Object .assign (X3DRenderingContext .prototype,
       if (appearanceNode .getStyleProperties (geometryContext .geometryType))
          options .push ("X3D_STYLE_PROPERTIES");
 
-      geometryContext .getTargets () ?.getShaderOptions (options);
+      geometryContext .targetsNode ?.getShaderOptions (options);
       hAnimNode ?.getShaderOptions (options);
 
       const shaderNode = shapeNode .createDepthShader ?.(options) ?? this .createShader ({

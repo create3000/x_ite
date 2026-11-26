@@ -223,10 +223,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       return this .texCoords;
    },
-   getTextureCoordinate ()
-   {
-      return this .textureCoordinateNode;
-   },
    setTextureCoordinate (value)
    {
       this .textureCoordinateNode .removeInterest ("updateTextureCoordinateMapping", this);
@@ -236,10 +232,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .textureCoordinateNode .addInterest ("updateTextureCoordinateMapping", this);
 
       this .updateTextureCoordinateMapping ();
-   },
-   getTextureCoordinateMapping ()
-   {
-      return this .textureCoordinateMapping;
    },
    updateTextureCoordinateMapping ()
    {
