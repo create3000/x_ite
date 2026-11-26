@@ -3869,21 +3869,27 @@ function eventsProcessed ()
    })(),
    createMultiTextureCoordinate (texCoords, material)
    {
-      const
-         appearanceNode = this .materialObject ({ material }),
-         materialNode   = appearanceNode ._material .getValue ();
+      if (material)
+      {
+         const
+            appearanceNode = this .materialObject ({ material }),
+            materialNode   = appearanceNode ._material .getValue ();
 
-      if (!this .hasTextures (materialNode))
-         return null;
+         if (!this .hasTextures (materialNode))
+            return null;
+      }
 
       if (texCoords .textureCoordinateNode)
          return texCoords .textureCoordinateNode;
 
-      const textureCoordinateNodes = Array .from (material .texCoordMappings .entries ())
-         .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
-         .sort ((a, b) => a [1] - b [1])
-         .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
-         .filter (node => node);
+      const textureCoordinateNodes = material
+         ? Array .from (material .texCoordMappings .entries ())
+            .sort ((a, b) => a [0] .localeCompare (b [0], "en"))
+            .sort ((a, b) => a [1] - b [1])
+            .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
+            .filter (node => node)
+         : Array .from ({ length: texCoords .length }, (_, i) => this .createTextureCoordinate (texCoords [i], ""))
+            .filter (node => node);
 
       switch (textureCoordinateNodes .length)
       {
@@ -4017,6 +4023,7 @@ function eventsProcessed ()
             scene             = this .getScene (),
             morphTargetNode   = scene .createNode ("MorphTarget", false),
             name              = this .sanitizeName (extras .targetNames ?.[i]),
+            texCoords         = [ ],
             displacementNodes = [ ];
 
          if (name)
@@ -4028,24 +4035,33 @@ function eventsProcessed ()
          {
             const accessor = this .accessors [accessorIndex];
 
+            switch (true)
+            {
+               case /TEXCOORD_\d+/ .test (key):
+                  texCoords .push (accessor);
+                  continue;
+            }
+
             switch (key)
             {
                case "COLOR_0":
                   displacementNodes .push (this .createColor (accessor));
-                  break;
+                  continue;
                case "TEXCOORD_0":
-                  break;
+                  continue;
                case "TANGENT":
                   displacementNodes .push (this .createTangent (accessor, "VEC3"));
-                  break;
+                  continue;
                case "NORMAL":
                   displacementNodes .push (this .createNormal (accessor));
-                  break;
+                  continue;
                case "POSITION":
                   displacementNodes .push (this .createCoordinate (accessor));
-                  break;
+                  continue;
             }
          }
+
+         displacementNodes .push (this .createMultiTextureCoordinate (texCoords));
 
          morphTargetNode ._displacements = displacementNodes .filter (node => node);
          morphTargetNode .setup ();
