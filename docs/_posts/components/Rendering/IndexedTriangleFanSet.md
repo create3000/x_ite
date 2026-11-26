@@ -178,7 +178,7 @@ Optional single contained [Normal](/x_ite/components/rendering/normal/) node tha
 
 Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
 
-### SFNode [in, out] **targets** [ ] <small>[MorphTargets]</small>
+### SFNode [in, out] **targets** [ ] <small>[MorphTargets]</small> <small class="blue">non-standard</small>
 {: #fields-targets }
 
 Input/Output field *targets*.
