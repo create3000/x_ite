@@ -67,7 +67,7 @@ Optional single contained [FogCoordinate](/x_ite/components/environmentaleffects
 
 Optional single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
-### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
+### SFNode [in, out] **tangent** NULL <small>[X3DTangentNode]</small> <small class="blue">non-standard</small>
 {: #fields-tangent }
 
 Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/rendering/tangent/) node, the MikkTSpace algorithm is used to generate tangent vectors.
@@ -90,7 +90,7 @@ Optional single contained [Normal](/x_ite/components/rendering/normal/) node tha
 
 Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
 
-### SFNode [in, out] **targets**
+### SFNode [in, out] **targets** [ ] <small>[MorphTargets]</small>
 {: #fields-targets }
 
 Input/Output field *targets*.

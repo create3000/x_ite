@@ -151,7 +151,7 @@ Optional single contained [Color](/x_ite/components/rendering/color/) or [ColorR
 
 Optional single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
-### SFNode [in, out] **tangent** NULL <small>[Tangent]</small>
+### SFNode [in, out] **tangent** NULL <small>[X3DTangentNode]</small>
 {: #fields-tangent }
 
 Optional single contained [Tangent](/x_ite/components/rendering/tangent/) node that defines a set of 3D surface-normal vectors that apply either to a sibling [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node. [Tangent](/x_ite/components/rendering/tangent/) values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading for advanced physically based rendering (PBR) effects.
@@ -178,7 +178,7 @@ Optional single contained [Normal](/x_ite/components/rendering/normal/) node tha
 
 Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
 
-### SFNode [in, out] **targets**
+### SFNode [in, out] **targets** [ ] <small>[MorphTargets]</small>
 {: #fields-targets }
 
 Input/Output field *targets*.
