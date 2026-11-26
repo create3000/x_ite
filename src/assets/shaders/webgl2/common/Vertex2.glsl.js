@@ -161,7 +161,8 @@ main ()
          ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
          #if X3D_NUM_TEXTURE_COORDINATES > ${i}
-            texCoord${i} = getInstanceTexCoord (x3d_TexCoord${i}, gl_VertexID % 6);
+            texCoord${i} = getTargetTexCoord${i} (x3d_TexCoord${i});
+            texCoord${i} = getInstanceTexCoord (texCoord${i}, gl_VertexID % 6);
          #endif
 
          `) .join ("\n")}

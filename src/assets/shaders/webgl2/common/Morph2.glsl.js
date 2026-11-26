@@ -1,10 +1,14 @@
-// import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfiguration.js";
+import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfiguration.js";
 
 const targets = [
    { name: "COLOR",    type: "vec4", fn: "Color",   components: "rgba" },
    { name: "TANGENT",  type: "vec3", fn: "Tangent", components: "xyz" },
    { name: "NORMAL",   type: "vec3", fn: "Normal",  components: "xyz" },
    { name: "POSITION", type: "vec4", fn: "Vertex",  components: "xyz" },
+   ... Array .from ({ length: maxTexCoords }, (_, i) =>
+   {
+      return { name: `TEXCOORD_${i}`, type: "vec4", fn: `TexCoord${i}`, components: "xyz" };
+   }),
 ];
 
 export default () => /* glsl */ `
