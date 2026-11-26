@@ -146,10 +146,11 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       const
          size              = Math .ceil (Math .sqrt (morphTargetOffsets .at (-1))),
-         morphTargetsArray = new Float32Array (size * size * 4 * targets .length);
+         pageSize          = size * size * 4,
+         morphTargetsArray = new Float32Array (pageSize * targets .length);
 
       for (const [i, target] of targets .entries ())
-         morphTargetsArray .set (Object .values (target) .flat (), size * size * 4 * i);
+         morphTargetsArray .set (Object .values (target) .flat () .slice (0, pageSize), pageSize * i);
 
       const
          browser = this .getBrowser (),
