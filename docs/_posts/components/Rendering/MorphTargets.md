@@ -56,6 +56,10 @@ Input/Output field *weights*.
 
 Input/Output field *targets*.
 
+## Example
+
+- [View »Morph Stress Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=MorphStressTest)
+
 ## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
