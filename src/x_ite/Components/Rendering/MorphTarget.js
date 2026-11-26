@@ -50,7 +50,7 @@ Object .assign (Object .setPrototypeOf (MorphTarget .prototype, X3DNode .prototy
       for (const geometricPropertyNode of geometricPropertyNodes)
          geometricPropertyNode .addInterest ("addNodeEvent", this);
    },
-   getDisplacements (targets)
+   getDisplacements (target)
    {
       for (const geometricPropertyNode of this .geometricPropertyNodes)
       {
@@ -61,16 +61,16 @@ Object .assign (Object .setPrototypeOf (MorphTarget .prototype, X3DNode .prototy
             switch (type [t])
             {
                case X3DConstants .X3DColorNode:
-                  geometricPropertyNode .addColors (targets .COLOR);
+                  geometricPropertyNode .addColors (target .COLOR);
                   break;
                case X3DConstants .Tangent:
-                  geometricPropertyNode .addVectors (targets .TANGENT);
+                  geometricPropertyNode .addVectors (target .TANGENT);
                   break;
                case X3DConstants .Normal:
-                  geometricPropertyNode .addVectors (targets .NORMAL);
+                  geometricPropertyNode .addVectors (target .NORMAL);
                   break;
                case X3DConstants .X3DCoordinateNode:
-                  geometricPropertyNode .addPoints (targets .POSITION);
+                  geometricPropertyNode .addPoints (target .POSITION);
                   break;
                default:
                   continue;
@@ -79,6 +79,8 @@ Object .assign (Object .setPrototypeOf (MorphTarget .prototype, X3DNode .prototy
             break;
          }
       }
+
+      return target;
    },
 });
 

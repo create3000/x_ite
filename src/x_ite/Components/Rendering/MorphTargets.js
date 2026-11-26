@@ -22,14 +22,8 @@ function MorphTargets (executionContext)
 
    // Private properties
 
+   this .targets     = [ ];
    this .targetNodes = [ ];
-   this .targets     = {
-      COLOR: [ ],
-      ... Object .fromEntries (Array .from ({ length: maxTexCoords }, (_, i) => [`TEXCOORD_${i}`, [ ]])),
-      TANGENT: [ ],
-      NORMAL: [ ],
-      POSITION: [ ],
-   };
 }
 
 Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPropertyNode .prototype),
@@ -46,12 +40,13 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
 
       this .morphTargetsTexture = gl .createTexture ();
 
-      gl .bindTexture (gl .TEXTURE_2D, this .morphTargetsTexture);
+      gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .morphTargetsTexture);
 
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+      gl .texParameteri (gl .TEXTURE_2D_ARRAY, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D_ARRAY, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D_ARRAY, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+      gl .texParameteri (gl .TEXTURE_2D_ARRAY, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+      gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGBA16F, 1, 1, 1, 0, gl .RGBA, gl .FLOAT, null);
 
       // Events
 
@@ -96,34 +91,52 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
    },
    getKey ()
    {
+      if (!this ._weights .length)
+         return "[]";
+
+      if (this ._weights .length !== this .targets .length)
+         return "[]";
+
       let key = "";
 
       key += "[";
       key += this ._weights .length;
-      key += Object .values (this .targets) .map (target => target .length) .join (",");
+      key += Object .values (this .targets [0]) .map (target => target .length) .join (",");
       key += "]";
 
       return key;
    },
    createTexture ()
    {
-      // Update targets arrays.
+      // Update targets array.
 
       const targets = this .targets;
 
-      for (const target of Object .values (targets))
-         target .length = 0;
+      targets .length = 0;
+
+      if (!this .targetNodes .length)
+         return;
 
       for (const targetNode of this .targetNodes)
-         targetNode .getDisplacements (targets);
+      {
+         const target = targetNode .getDisplacements ({
+            COLOR: [ ],
+            ... Object .fromEntries (Array .from ({ length: maxTexCoords }, (_, i) => [`TEXCOORD_${i}`, [ ]])),
+            TANGENT: [ ],
+            NORMAL: [ ],
+            POSITION: [ ],
+         });
 
-      targets .NORMAL = this .createNormalArray (targets .NORMAL);
+         target .NORMAL = this .createNormalArray (target .NORMAL);
+
+         targets .push (target);
+      }
 
       // Update offsets array.
 
       let o = 0;
 
-      const morphTargetOffsets = Object .values (targets) .map (target => o += target .length / 4);
+      const morphTargetOffsets = Object .values (targets [0]) .map (target => o += target .length / 4);
 
       morphTargetOffsets .unshift (0);
 
@@ -132,18 +145,18 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
       // Update texture.
 
       const
-         flatTargets       = Object .values (targets) .flat (),
-         size              = Math .ceil (Math .sqrt (flatTargets .length / 4)),
-         morphTargetsArray = new Float32Array (size * size * 4);
+         size              = Math .ceil (Math .sqrt (morphTargetOffsets .at (-1))),
+         morphTargetsArray = new Float32Array (size * size * 4 * targets .length);
 
-      morphTargetsArray .set (flatTargets);
+      for (const [i, target] of targets .entries ())
+         morphTargetsArray .set (Object .values (target) .flat (), size * size * 4 * i);
 
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      gl .bindTexture (gl .TEXTURE_2D, this .morphTargetsTexture);
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, morphTargetsArray);
+      gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .morphTargetsTexture);
+      gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGBA16F, size, size, targets .length, 0, gl .RGBA, gl .FLOAT, morphTargetsArray);
 
       // Propagate changes.
 
@@ -165,10 +178,13 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
       if (!this ._weights .length)
          return;
 
+      if (this ._weights .length !== this .targets .length)
+         return;
+
       options .push (`X3D_MORPH_TARGETS`);
       options .push (`X3D_NUM_MORPH_WEIGHTS ${this ._weights .length}`);
 
-      for (const [i, [name, array]] of Object .entries (this .targets) .entries ())
+      for (const [i, [name, array]] of Object .entries (this .targets [0]) .entries ())
       {
          if (!array .length)
             continue;
@@ -188,7 +204,7 @@ Object .assign (Object .setPrototypeOf (MorphTargets .prototype, X3DGeometricPro
          morphTargetsTextureUnit = browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + morphTargetsTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .morphTargetsTexture);
+      gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .morphTargetsTexture);
       gl .uniform1i (shaderObject .x3d_MorphTargetsTexture, morphTargetsTextureUnit);
    },
 });

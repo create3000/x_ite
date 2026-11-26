@@ -5,6 +5,7 @@ precision highp float;
 precision highp sampler2D;
 precision highp sampler3D;
 precision highp samplerCube;
+precision highp sampler2DArray;
 
 #include <Vertex>
 `;
