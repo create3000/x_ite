@@ -13,9 +13,12 @@ tags: [MorphTarget, Rendering]
 
 ## Overview
 
-**MorphTarget** node defines a morph target for a morph animation. It is used in conjuction with [MorphTargets](/x_ite/components/rendering/morphtargets/) node to define a morph animation.
+**MorphTarget** node defines a morph target for a morph animation. It is used in conjunction with [MorphTargets](/x_ite/components/rendering/morphtargets/) node to define a morph animation.
 
-The **MorphTarget** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *morphTarget.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **MorphTarget** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **5,** its default container field is *targets.* It is available from X3D version 4.1 or higher.
+
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
+{: .prompt-info }
 
 ## Hierarchy
 
@@ -29,7 +32,8 @@ The **MorphTarget** node belongs to the [Rendering](/x_ite/components/overview/#
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| MFColor | [in, out] | [color](#fields-color) | [ ] |
+| SFString | [in, out] | [description](#fields-description) |  |
+| MFNode | [in, out] | [displacements](#fields-displacements) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -41,17 +45,15 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### MFColor [in, out] **color** [ ] <small>[0,1]</small>
-{: #fields-color }
+### SFString [in, out] **description**
+{: #fields-description }
 
-The *color* field defines an array of 3-tuple RGB colors.
+Input/Output field *description*.
 
-## Advice
+### MFNode [in, out] **displacements**
+{: #fields-displacements }
 
-### Hints
-
-- Colors are often controlled by [Material](/x_ite/components/shape/material/) instead.
-- [X3D Scene Authoring Hints, **Color**](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
+Input/Output field *displacements*.
 
 ## Browser Compatibility
 
