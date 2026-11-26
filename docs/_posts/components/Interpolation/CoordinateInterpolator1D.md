@@ -15,7 +15,7 @@ tags: [CoordinateInterpolator1D, Interpolation]
 
 **CoordinateInterpolator1D** generates a series of MFFloat values. Authors can ROUTE value_changed output events to an MFFloat attribute.
 
-The **CoordinateInterpolator1D** node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **CoordinateInterpolator1D** node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **5,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
 ## Hierarchy
 
@@ -98,18 +98,6 @@ Linearly interpolated output value determined by current key time and correspond
 #### Warning
 
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
-
-## Advice
-
-### Hints
-
-- Typical input connection is ROUTE someTimeSensorDEF.fraction_changed TO thisInterpolatorDEF.set_fraction.
-- Typical output connection is ROUTE thisInterpolatorDEF.value_changed TO someDestinationNodeDEF.set_someAttribute.
-- [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter07EventAnimationInterpolation)
-
-### Warning
-
-- Requires X3D `profile='Full'` or else include `<component name='Interpolation' level='3'/>`
 
 ## Browser Compatibility
 
