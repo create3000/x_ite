@@ -3946,11 +3946,11 @@ function eventsProcessed ()
 
       return normal .normalNode = normalNode;
    },
-   createTangent (tangent)
+   createTangent (tangent, type = "VEC4")
    {
-      // TODO: morph tangent is VEC3.
+      // Morph tangents are VEC3.
 
-      if (tangent ?.type !== "VEC4")
+      if (tangent ?.type !== type)
          return null;
 
       if (tangent .tangentNode)
@@ -3960,7 +3960,11 @@ function eventsProcessed ()
          scene       = this .getScene (),
          tangentNode = scene .createNode ("Tangent", false);
 
-      tangentNode ._vector = tangent .array;
+      const e = [ ];
+
+      tangentNode ._vector = tangent .type === "VEC3"
+         ? tangent .array .flatMap ((v, i, a) => i % 3 ? e : [v, a [i + 1], a [i + 2], 0])
+         : tangent .array;
 
       tangentNode .setup ();
 
@@ -4027,7 +4031,7 @@ function eventsProcessed ()
                case "TEXCOORD_1":
                   break;
                case "TANGENT":
-                  displacementNodes .push (this .createTangent (accessor));
+                  displacementNodes .push (this .createTangent (accessor, "VEC3"));
                   break;
                case "NORMAL":
                   displacementNodes .push (this .createNormal (accessor));
