@@ -4025,10 +4025,10 @@ function eventsProcessed ()
 
             switch (key)
             {
-               case "COLOR_1":
+               case "COLOR_0":
                   displacementNodes .push (this .createColor (accessor));
                   break;
-               case "TEXCOORD_1":
+               case "TEXCOORD_0":
                   break;
                case "TANGENT":
                   displacementNodes .push (this .createTangent (accessor, "VEC3"));
