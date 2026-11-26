@@ -4021,14 +4021,14 @@ function eventsProcessed ()
          const
             scene             = this .getScene (),
             morphTargetNode   = scene .createNode ("MorphTarget", false),
-            name              = this .sanitizeName (extras .targetNames ?.[i]),
+            name              = this .sanitizeName (extras ?.targetNames ?.[i]),
             texCoords         = [ ],
             displacementNodes = [ ];
 
          if (name)
             scene .addNamedNode (scene .getUniqueName (name), morphTargetNode);
 
-         morphTargetNode ._description = extras .targetNames ?.[i] ?? "";
+         morphTargetNode ._description = extras ?.targetNames ?.[i] ?? "";
 
          for (const [key, accessorIndex] of Object .entries (target))
          {
