@@ -4035,24 +4035,24 @@ function eventsProcessed ()
             const
                arrayKey = key .match (/^(TEXCOORD)_(\d+)$/),
                accessor = this .accessors [accessorIndex];
- 
+
             switch (arrayKey ?.[1] ?? key)
             {
                case "COLOR_0":
                   displacementNodes .push (this .createColor (accessor));
-                  continue;
+                  break;
                case "TEXCOORD":
                   texCoords [arrayKey ?.[2]] = accessor;
                   break;
                case "TANGENT":
                   displacementNodes .push (this .createTangent (accessor, "VEC3"));
-                  continue;
+                  break;
                case "NORMAL":
                   displacementNodes .push (this .createNormal (accessor));
-                  continue;
+                  break;
                case "POSITION":
                   displacementNodes .push (this .createCoordinate (accessor));
-                  continue;
+                  break;
             }
          }
 
