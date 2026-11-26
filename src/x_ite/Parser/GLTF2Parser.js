@@ -4032,22 +4032,18 @@ function eventsProcessed ()
 
          for (const [key, accessorIndex] of Object .entries (target))
          {
-            const accessor = this .accessors [accessorIndex];
-
-            switch (true)
-            {
-               case /TEXCOORD_\d+/ .test (key):
-                  texCoords .push (accessor);
-                  continue;
-            }
-
-            switch (key)
+            const
+               arrayKey = key .match (/^(TEXCOORD)_(\d+)$/),
+               accessor = this .accessors [accessorIndex];
+ 
+            switch (arrayKey ?.[1] ?? key)
             {
                case "COLOR_0":
                   displacementNodes .push (this .createColor (accessor));
                   continue;
-               case "TEXCOORD_0":
-                  continue;
+               case "TEXCOORD":
+                  texCoords [arrayKey ?.[2]] = accessor;
+                  break;
                case "TANGENT":
                   displacementNodes .push (this .createTangent (accessor, "VEC3"));
                   continue;
