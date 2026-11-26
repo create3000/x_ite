@@ -4,6 +4,8 @@
       url: /components/interpolation/colorinterpolator/
     - title: "CoordinateInterpolator"
       url: /components/interpolation/coordinateinterpolator/
+    - title: "CoordinateInterpolator1D"
+      url: /components/interpolation/coordinateinterpolator1d/
     - title: "CoordinateInterpolator2D"
       url: /components/interpolation/coordinateinterpolator2d/
     - title: "EaseInEaseOut"

@@ -42,7 +42,7 @@ Of course, [all other X3D profiles](/x_ite/profiles/overview/) can also be used,
 
 This section documents all nodes supported by X_ITE.
 
-X_ITE supports a limited number of nodes defined by the X3D specification. Currently 246 out of 259 nodes (95%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
+X_ITE supports a limited number of nodes defined by the X3D specification. Currently 247 out of 260 nodes (95%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
 
 <!--
 Missing Nodes:
@@ -243,6 +243,7 @@ Highest supported level: **5**
 
 - [ColorInterpolator](/x_ite/components/interpolation/colorinterpolator/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/interpolation/colorinterpolator/#example)
 - [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/interpolation/coordinateinterpolator/#example)
+- [CoordinateInterpolator1D](/x_ite/components/interpolation/coordinateinterpolator1d/)
 - [CoordinateInterpolator2D](/x_ite/components/interpolation/coordinateinterpolator2d/)
 - [EaseInEaseOut](/x_ite/components/interpolation/easeineaseout/)
 - [NormalInterpolator](/x_ite/components/interpolation/normalinterpolator/)
@@ -398,6 +399,8 @@ Highest supported level: **5**
 - [IndexedTriangleSet](/x_ite/components/rendering/indexedtriangleset/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rendering/indexedtriangleset/#example)
 - [IndexedTriangleStripSet](/x_ite/components/rendering/indexedtrianglestripset/)
 - [LineSet](/x_ite/components/rendering/lineset/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rendering/lineset/#example)
+- [MorphTarget](/x_ite/components/rendering/morphtarget/) <small class="blue">experimental</small>
+- [MorphTargets](/x_ite/components/rendering/morphtargets/) <small class="blue">experimental</small>
 - [Normal](/x_ite/components/rendering/normal/)
 - [PointSet](/x_ite/components/rendering/pointset/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/rendering/pointset/#example)
 - [Tangent](/x_ite/components/rendering/tangent/) <small class="blue">experimental</small>

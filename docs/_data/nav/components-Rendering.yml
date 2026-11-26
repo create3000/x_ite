@@ -20,6 +20,10 @@
       url: /components/rendering/indexedtrianglestripset/
     - title: "LineSet"
       url: /components/rendering/lineset/
+    - title: "MorphTarget"
+      url: /components/rendering/morphtarget/
+    - title: "MorphTargets"
+      url: /components/rendering/morphtargets/
     - title: "Normal"
       url: /components/rendering/normal/
     - title: "PointSet"
