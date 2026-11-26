@@ -91,7 +91,7 @@ Object .defineProperties (MorphTarget,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-         // new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",   new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "displacements", new Fields .MFNode ()),
       ]),
       enumerable: true,
