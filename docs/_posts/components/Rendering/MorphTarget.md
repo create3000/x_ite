@@ -32,8 +32,8 @@ The **MorphTarget** node belongs to the [Rendering](/x_ite/components/overview/#
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| SFString | [in, out] | [description](#fields-description) |  |
-| MFNode | [in, out] | [displacements](#fields-displacements) |  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| MFNode | [in, out] | [displacements](#fields-displacements) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

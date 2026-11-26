@@ -33,8 +33,8 @@ The **MorphTargets** node belongs to the [Rendering](/x_ite/components/overview/
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| SFString | [in, out] | [description](#fields-description) |  |
-| MFNode | [in, out] | [displacements](#fields-displacements) |  |
+| MFFloat | [in, out] | [weights](#fields-weights) |  |
+| MFNode | [in, out] | [targets](#fields-targets) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -46,15 +46,15 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFString [in, out] **description**
-{: #fields-description }
+### MFFloat [in, out] **weights** <small>(-∞,∞)</small>
+{: #fields-weights }
 
-Input/Output field *description*.
+Input/Output field *weights*.
 
-### MFNode [in, out] **displacements**
-{: #fields-displacements }
+### MFNode [in, out] **targets** [ ] <small>[MorphTarget]</small>
+{: #fields-targets }
 
-Input/Output field *displacements*.
+Input/Output field *targets*.
 
 ## Browser Compatibility
 
