@@ -3888,7 +3888,7 @@ function eventsProcessed ()
             .sort ((a, b) => a [1] - b [1])
             .map (([mapping, i]) => this .createTextureCoordinate (texCoords [i], mapping))
             .filter (node => node)
-         : Array .from ({ length: texCoords .length }, (_, i) => this .createTextureCoordinate (texCoords [i], ""))
+         : texCoords .map (texCoord => this .createTextureCoordinate (texCoord, ""))
             .filter (node => node);
 
       switch (textureCoordinateNodes .length)
