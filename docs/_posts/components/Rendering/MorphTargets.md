@@ -34,7 +34,7 @@ The **MorphTargets** node belongs to the [Rendering](/x_ite/components/overview/
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFFloat | [in, out] | [weights](#fields-weights) |  |
-| MFNode | [in, out] | [targets](#fields-targets) |  |
+| MFNode | [in, out] | [targets](#fields-targets) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
