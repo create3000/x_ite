@@ -2067,7 +2067,7 @@ function eventsProcessed ()
       }
 
       // meshNodes are Shape, InstancedShape, Switch from variants, or GaussianSplats nodes.
-      const meshNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing);
+      const meshNodes = this .primitivesArray (mesh .primitives, skin, weights ?? mesh .weights, EXT_mesh_gpu_instancing, mesh .extras);
 
       // Name Shape nodes.
 
@@ -2090,7 +2090,7 @@ function eventsProcessed ()
 
       return mesh .meshNodes = meshNodes;
    },
-   primitivesArray (primitives, skin, weights, EXT_mesh_gpu_instancing)
+   primitivesArray (primitives, skin, weights, EXT_mesh_gpu_instancing, extras)
    {
       if (!Array .isArray (primitives))
          return [ ];
@@ -2098,11 +2098,11 @@ function eventsProcessed ()
       const meshNodes = [ ];
 
       for (const primitive of primitives)
-         this .primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, meshNodes);
+         this .primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, extras, meshNodes);
 
       return meshNodes;
    },
-   primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, meshNodes)
+   primitiveObject (primitive, weights, skin, EXT_mesh_gpu_instancing, extras, meshNodes)
    {
       if (!(primitive instanceof Object))
          return;
@@ -2118,7 +2118,7 @@ function eventsProcessed ()
       this .primitiveExtensionsObject (primitive .extensions, primitive);
 
       const
-         shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing),
+         shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing, extras),
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
       meshNodes .push (primitive .meshNode = variantsNode ?? shapeNode);
@@ -3377,14 +3377,14 @@ function eventsProcessed ()
          }
       }
    },
-   createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
+   createShape (primitive, weights, skin, EXT_mesh_gpu_instancing, extras)
    {
       const
          scene     = this .getScene (),
          shapeNode = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false);
 
       primitive .appearanceNode ??= this .materialObject (primitive);
-      primitive .geometryNode   ??= this .createGeometry (primitive, weights, skin);
+      primitive .geometryNode   ??= this .createGeometry (primitive, weights, skin, extras);
 
       shapeNode ._appearance = primitive .appearanceNode;
       shapeNode ._geometry   = primitive .geometryNode;
@@ -3525,54 +3525,54 @@ function eventsProcessed ()
          }
       }
    },
-   createGeometry (primitive, weights, skin)
+   createGeometry (primitive, weights, skin, extras)
    {
       switch (primitive .mode)
       {
          case 0: // POINTS
          {
-            return this .createPointSet (primitive, weights, skin);
+            return this .createPointSet (primitive, weights, skin, extras);
          }
          case 1: // LINES
          {
             if (primitive .indices)
-               return this .createIndexedLineSet (primitive, weights, skin, 1);
+               return this .createIndexedLineSet (primitive, weights, skin, 1, extras);
 
-            return this .createLineSet (primitive, weights, skin);
+            return this .createLineSet (primitive, weights, skin, extras);
          }
          case 2: // LINE_LOOP
          {
-            return this .createIndexedLineSet (primitive, weights, skin, 2);
+            return this .createIndexedLineSet (primitive, weights, skin, 2, extras);
          }
          case 3: // LINE_STRIP
          {
-            return this .createIndexedLineSet (primitive, weights, skin, 3);
+            return this .createIndexedLineSet (primitive, weights, skin, 3, extras);
          }
          default:
          case 4: // TRIANGLES
          {
             if (primitive .indices)
-               return this .createIndexedTriangleSet (primitive, weights, skin);
+               return this .createIndexedTriangleSet (primitive, weights, skin, extras);
 
-            return this .createTriangleSet (primitive, weights, skin);
+            return this .createTriangleSet (primitive, weights, skin, extras);
          }
          case 5: // TRIANGLE_STRIP
          {
             if (primitive .indices)
-               return this .createIndexedTriangleStripSet (primitive, weights, skin);
+               return this .createIndexedTriangleStripSet (primitive, weights, skin, extras);
 
-            return this .createTriangleStripSet (primitive, weights, skin);
+            return this .createTriangleStripSet (primitive, weights, skin, extras);
          }
          case 6: // TRIANGLE_FAN
          {
             if (primitive .indices)
-               return this .createIndexedTriangleFanSet (primitive, weights, skin);
+               return this .createIndexedTriangleFanSet (primitive, weights, skin, extras);
 
-            return this .createTriangleFanSet (primitive, weights, skin);
+            return this .createTriangleFanSet (primitive, weights, skin, extras);
          }
       }
    },
-   createPointSet ({ attributes, material, targets }, weights, skin)
+   createPointSet ({ attributes, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -3583,13 +3583,13 @@ function eventsProcessed ()
       geometryNode ._tangent = this .createTangent (attributes .TANGENT);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
 
-      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedLineSet ({ attributes, indices, material, targets }, weights, skin, mode)
+   createIndexedLineSet ({ attributes, indices, material, targets }, weights, skin, mode, extras)
    {
       const
          scene        = this .getScene (),
@@ -3670,13 +3670,13 @@ function eventsProcessed ()
          }
       }
 
-      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createLineSet ({ attributes, material, targets }, weights, skin)
+   createLineSet ({ attributes, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -3687,13 +3687,13 @@ function eventsProcessed ()
       geometryNode ._tangent = this .createTangent (attributes .TANGENT);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
 
-      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedTriangleSet ({ attributes, indices, material, targets }, weights, skin)
+   createIndexedTriangleSet ({ attributes, indices, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -3708,13 +3708,13 @@ function eventsProcessed ()
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createTriangleSet ({ attributes, material, targets }, weights, skin)
+   createTriangleSet ({ attributes, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -3728,13 +3728,13 @@ function eventsProcessed ()
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedTriangleStripSet ({ attributes, indices, material, targets }, weights, skin)
+   createIndexedTriangleStripSet ({ attributes, indices, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -3749,13 +3749,13 @@ function eventsProcessed ()
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createTriangleStripSet ({ attributes, material, targets }, weights, skin)
+   createTriangleStripSet ({ attributes, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -3777,13 +3777,13 @@ function eventsProcessed ()
             geometryNode ._stripCount = [coord .point .length];
       }
 
-      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createIndexedTriangleFanSet ({ attributes, indices, material, targets }, weights, skin)
+   createIndexedTriangleFanSet ({ attributes, indices, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -3798,13 +3798,13 @@ function eventsProcessed ()
       geometryNode ._coord           = this .createCoordinate (attributes .POSITION);
       geometryNode ._normalPerVertex = !! geometryNode ._normal .getValue ();
 
-      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
       return geometryNode;
    },
-   createTriangleFanSet ({ attributes, material, targets }, weights, skin)
+   createTriangleFanSet ({ attributes, material, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
@@ -3826,7 +3826,7 @@ function eventsProcessed ()
             geometryNode ._fanCount = [coord .point .length];
       }
 
-      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes);
+      this .targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras);
 
       geometryNode .setup ();
 
@@ -3988,13 +3988,13 @@ function eventsProcessed ()
 
       return position .coordinateNode = coordinateNode;
    },
-   targetsAndSkinning (geometryNode, targets, weights, skin, attributes)
+   targetsAndSkinning (geometryNode, targets, weights, skin, attributes, extras)
    {
-      this .targetsArray (geometryNode, targets, weights);
+      this .targetsArray (geometryNode, targets, weights, extras);
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
       this .skinGeometry (skin, geometryNode);
    },
-   targetsArray (geometryNode, targets, weights)
+   targetsArray (geometryNode, targets, weights, extras)
    {
       if (!Array .isArray (targets))
          return;
@@ -4011,13 +4011,18 @@ function eventsProcessed ()
       else
          morphTargetsNode ._weights .length = targets .length;
 
-      for (const target of targets)
+      for (const [i, target] of targets .entries ())
       {
-
          const
             scene             = this .getScene (),
             morphTargetNode   = scene .createNode ("MorphTarget", false),
+            name              = this .sanitizeName (extras .targetNames ?.[i]),
             displacementNodes = [ ];
+
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), morphTargetNode);
+
+         morphTargetNode ._description = extras .targetNames ?.[i] ?? "";
 
          for (const [key, accessorIndex] of Object .entries (target))
          {
