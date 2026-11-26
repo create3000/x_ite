@@ -3908,7 +3908,6 @@ function eventsProcessed ()
                textureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
 
             textureCoordinateNode ._texCoord = textureCoordinateNodes;
-
             textureCoordinateNode .setup ();
 
             return texCoords .textureCoordinateNode = textureCoordinateNode;
