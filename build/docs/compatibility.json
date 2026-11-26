@@ -365,6 +365,12 @@
     "x3dom": true,
     "freewrl": true
   },
+  "CoordinateInterpolator1D": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "CoordinateInterpolator2D": {
     "x3d-edit": true,
     "castle": true,
@@ -916,6 +922,18 @@
     "castle": false,
     "x3dom": false,
     "freewrl": true
+  },
+  "MorphTarget": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
+  "MorphTargets": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
   },
   "MotorJoint": {
     "x3d-edit": true,
