@@ -1239,5 +1239,37 @@
       </InterfaceDefinition>
     </ConcreteNode>
 
+    <ConcreteNode name="CoordinateInterpolator1D">
+        <InterfaceDefinition
+              appinfo="CoordinateInterpolator1D generates a series of MFFloat values.">
+          <Inheritance baseType="X3DInterpolatorNode"/>
+          <field name="key"
+              type="MFFloat"
+              accessType="inputOutput"
+              inheritedFrom="X3DInterpolatorNode"
+              description="Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array."/>
+          <field name="keyValue"
+              type="MFFloat"
+              accessType="inputOutput"
+              description="Output values for linear interpolation, each corresponding to an input-fraction value in the key array."/>
+          <field name="metadata"
+              type="SFNode"
+              accessType="inputOutput"
+              default="NULL"
+              acceptableNodeTypes="X3DMetadataObject"
+              inheritedFrom="X3DNode"
+              description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
+          <field name="set_fraction"
+              type="SFFloat"
+              accessType="inputOnly"
+              inheritedFrom="X3DInterpolatorNode"
+              description="set_fraction selects input key for corresponding keyValue output."/>
+          <field name="value_changed"
+              type="MFFloat"
+              accessType="outputOnly"
+              description="Linearly interpolated output value determined by current key time and corresponding keyValue pair."/>
+        </InterfaceDefinition>
+    </ConcreteNode>
+
   </ConcreteNodes>
 </X3dUnifiedObjectModel>

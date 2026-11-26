@@ -1269,6 +1269,7 @@ declare namespace X3D
       readonly CoordinateDamper: number;
       readonly CoordinateDouble: number;
       readonly CoordinateInterpolator: number;
+      readonly CoordinateInterpolator1D: number;
       readonly CoordinateInterpolator2D: number;
       readonly Cylinder: number;
       readonly CylinderSensor: number;
@@ -6842,6 +6843,41 @@ declare namespace X3D
        * This field is of access type 'outputOnly' and type MFVec3f.
        */
       readonly value_changed: MFVec3f;
+   }
+
+   /** CoordinateInterpolator1D generates a series of MFFloat values. */
+   interface CoordinateInterpolator1DProxy extends X3DInterpolatorNodeProxy
+   {
+      /**
+       * Definition values for linear-interpolation function input intervals, listed in non-decreasing order and corresponding to a value in the keyValue array.
+       *
+       * This field is of access type 'inputOutput' and type MFFloat.
+       */
+      key: MFFloat;
+      /**
+       * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
+       *
+       * This field is of access type 'inputOutput' and type MFFloat.
+       */
+      keyValue: MFFloat;
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * set_fraction selects input key for corresponding keyValue output.
+       *
+       * This field is of access type 'inputOnly' and type SFFloat.
+       */
+      set_fraction: number;
+      /**
+       * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
+       *
+       * This field is of access type 'outputOnly' and type MFFloat.
+       */
+      readonly value_changed: MFFloat;
    }
 
    /** CoordinateInterpolator2D generates a series of SFVec2f or MFVec2f 2-tuple float values. */
@@ -23927,6 +23963,7 @@ declare namespace X3D
       CoordinateDamper: CoordinateDamperProxy,
       CoordinateDouble: CoordinateDoubleProxy,
       CoordinateInterpolator: CoordinateInterpolatorProxy,
+      CoordinateInterpolator1D: CoordinateInterpolator1DProxy,
       CoordinateInterpolator2D: CoordinateInterpolator2DProxy,
       Cylinder: CylinderProxy,
       CylinderSensor: CylinderSensorProxy,
