@@ -4094,25 +4094,27 @@ function eventsProcessed ()
          start        = skin .coordinateNode ._point .length,
          jointsArray  = joints .array,
          weightsArray = weights .array,
-         numVertices  = jointsArray .length / 4;
+         numPoints    = jointsArray .length / 4;
 
-      for (let v = 0; v < numVertices; ++ v)
+      for (let p = 0; p < numPoints; ++ p)
       {
          for (let i = 0; i < 4; ++ i)
          {
-            const w = weightsArray [v * 4 + i];
+            const
+               j = p * 4 + i,
+               w = weightsArray [j];
 
             if (w === 0)
                continue;
 
             const
-               index     = skin .joints [jointsArray [v * 4 + i]],
+               index     = skin .joints [jointsArray [j]],
                jointNode = this .nodes [index] ?.transformNode;
 
             if (jointNode ?.getType () .at (-1) !== X3DConstants .HAnimJoint)
                continue;
 
-            jointNode ._skinCoordIndex  .push (v + start);
+            jointNode ._skinCoordIndex  .push (p + start);
             jointNode ._skinCoordWeight .push (w);
          }
       }
