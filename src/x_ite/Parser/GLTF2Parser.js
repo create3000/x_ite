@@ -4128,6 +4128,7 @@ function eventsProcessed ()
          return;
 
       const
+         colorNode             = geometryNode ._color ?.getValue (),
          textureCoordinateNode = geometryNode ._texCoord ?.getValue (),
          tangentNode           = geometryNode ._tangent ?.getValue (),
          normalNode            = geometryNode ._normal ?.getValue (),
@@ -4142,6 +4143,11 @@ function eventsProcessed ()
       geometryNode ._index &&= geometryNode ._index
          .shrinkToFit ()
          .map (index => start + index);
+
+      if (colorNode)
+      {
+         // TODO: Handle color.
+      }
 
       if (textureCoordinateNode)
       {
