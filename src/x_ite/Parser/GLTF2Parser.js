@@ -4144,9 +4144,10 @@ function eventsProcessed ()
                   skinTextureCoordinateNode = skin .textureCoordinateNode,
                   point                     = skinTextureCoordinateNode ._point;
 
-               textureCoordinateNode ._point .forEach ((p, i) => point [start + i] = p);
-               geometryNode ._texCoord = skinTextureCoordinateNode;
+               for (const [i, p] of textureCoordinateNode ._point .entries ())
+                  point [start + i] = p;
 
+               geometryNode ._texCoord = skinTextureCoordinateNode;
                break;
             }
             case X3DConstants .MultiTextureCoordinate:
@@ -4176,7 +4177,8 @@ function eventsProcessed ()
 
                   const point = s ._point;
 
-                  t .point .forEach ((p, i) => point [start + i] = p);
+                  for (const [i, p] of t .point .entries ())
+                     point [start + i] = p;
                }
 
                geometryNode ._texCoord = skinMultiTextureCoordinateNode;
@@ -4191,14 +4193,16 @@ function eventsProcessed ()
             skinNormalNode = skin .normalNode,
             vector         = skinNormalNode ._vector;
 
-         normalNode ._vector .forEach ((v, i) => vector [start + i] = v);
+         for (const [i, v] of normalNode ._vector .entries ())
+            vector [start + i] = v;
+
          geometryNode ._normal = skinNormalNode;
       }
 
       if (coordinateNode)
       {
-         const point = skinCoordinateNode ._point;
-         coordinateNode ._point .forEach ((p, i) => point [start + i] = p);
+         skinCoordinateNode ._point = skinCoordinateNode ._point .concat (coordinateNode ._point);
+
          geometryNode ._coord = skinCoordinateNode;
       }
    },
