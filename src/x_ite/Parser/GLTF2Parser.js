@@ -4150,15 +4150,6 @@ function eventsProcessed ()
    },
    skinGeometry (geometryNode, skin)
    {
-      function addPadding (field, start)
-      {
-         const padding = field .create ();
-
-         padding .length = start;
-
-         field .assign (padding .concat (field));
-      }
-
       if (!(skin instanceof Object))
          return;
 
@@ -4178,6 +4169,15 @@ function eventsProcessed ()
       geometryNode ._index &&= geometryNode ._index
          .shrinkToFit ()
          .map (index => index < 0 ? -1 : start + index);
+
+      function addPadding (field, start)
+      {
+         const padding = field .create ();
+
+         padding .length = start;
+
+         field .assign (padding .concat (field));
+      }
 
       if (colorNode)
       {
