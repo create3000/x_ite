@@ -4144,7 +4144,7 @@ function eventsProcessed ()
                   skinTextureCoordinateNode = skin .textureCoordinateNode,
                   point                     = skinTextureCoordinateNode ._point;
 
-               textureCoordinateNode ._point .forEach ((p, i) => point [i + start] = p);
+               textureCoordinateNode ._point .forEach ((p, i) => point [start + i] = p);
                geometryNode ._texCoord = skinTextureCoordinateNode;
 
                break;
@@ -4176,7 +4176,7 @@ function eventsProcessed ()
 
                   const point = s ._point;
 
-                  t .point .forEach ((p, i) => point [i + start] = p);
+                  t .point .forEach ((p, i) => point [start + i] = p);
                }
 
                geometryNode ._texCoord = skinMultiTextureCoordinateNode;
@@ -4191,14 +4191,14 @@ function eventsProcessed ()
             skinNormalNode = skin .normalNode,
             vector         = skinNormalNode ._vector;
 
-         normalNode ._vector .forEach ((v, i) => vector [i + start] = v);
+         normalNode ._vector .forEach ((v, i) => vector [start + i] = v);
          geometryNode ._normal = skinNormalNode;
       }
 
       if (coordinateNode)
       {
          const point = skinCoordinateNode ._point;
-         coordinateNode ._point .forEach ((p, i) => point [i + start] = p);
+         coordinateNode ._point .forEach ((p, i) => point [start + i] = p);
          geometryNode ._coord = skinCoordinateNode;
       }
    },
