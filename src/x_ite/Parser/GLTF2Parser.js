@@ -4150,6 +4150,15 @@ function eventsProcessed ()
    },
    skinGeometry (geometryNode, skin)
    {
+      function addPadding (field, start)
+      {
+         const padding = field .create ();
+
+         padding .length = start;
+
+         field .assign (padding .concat (field));
+      }
+
       if (!(skin instanceof Object))
          return;
 
@@ -4189,13 +4198,7 @@ function eventsProcessed ()
          else
          {
             if (start)
-            {
-               const padding = colorNode ._color .create ();
-
-               padding .length = start;
-
-               colorNode ._color = padding .concat (colorNode ._color);
-            }
+               addPadding (colorNode ._color, start);
 
             sharedNodes .colorNode = colorNode;
          }
@@ -4219,13 +4222,7 @@ function eventsProcessed ()
                else
                {
                   if (start)
-                  {
-                     const padding = textureCoordinateNode ._point .create ();
-
-                     padding .length = start;
-
-                     textureCoordinateNode ._point = padding .concat (textureCoordinateNode ._point);
-                  }
+                     addPadding (textureCoordinateNode ._point, start);
 
                   sharedNodes [textureCoordinateNode ._mapping .getValue ()] = textureCoordinateNode;
                }
@@ -4248,13 +4245,7 @@ function eventsProcessed ()
                   else
                   {
                      if (start)
-                     {
-                        const padding = texCoordNode ._point .create ();
-
-                        padding .length = start;
-
-                        texCoordNode ._point = padding .concat (texCoordNode ._point);
-                     }
+                        addPadding (texCoordNode ._point, start);
 
                      sharedNodes [texCoordNode .mapping] = texCoordNode .getValue ();
                   }
@@ -4279,13 +4270,7 @@ function eventsProcessed ()
          else
          {
             if (start)
-            {
-               const padding = tangentNode ._vector .create ();
-
-               padding .length = start;
-
-               tangentNode ._vector = padding .concat (tangentNode ._vector);
-            }
+               addPadding (tangentNode ._vector, start);
 
             sharedNodes .tangentNode = tangentNode;
          }
@@ -4305,13 +4290,7 @@ function eventsProcessed ()
          else
          {
             if (start)
-            {
-               const padding = normalNode ._vector .create ();
-
-               padding .length = start;
-
-               normalNode ._vector = padding .concat (normalNode ._vector);
-            }
+               addPadding (normalNode ._vector, start);
 
             sharedNodes .normalNode = normalNode;
          }
