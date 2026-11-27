@@ -3949,7 +3949,7 @@ function eventsProcessed ()
       const e = [ ];
 
       tangentNode ._vector = tangent .type === "VEC3"
-         ? tangent .array .flatMap ((v, i, a) => i % 3 ? e : [v, a [i + 1], a [i + 2], 0])
+         ? Array .from (tangent .array) .flatMap ((v, i, a) => i % 3 ? e : [v, a [i + 1], a [i + 2], 0])
          : tangent .array;
 
       tangentNode .setup ();
