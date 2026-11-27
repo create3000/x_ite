@@ -3575,13 +3575,13 @@ function eventsProcessed ()
          }
       }
    },
-   createPointSet ({ attributes, material, targets }, weights, skin, extras)
+   createPointSet ({ attributes, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("PointSet", false);
 
-      geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._color   = this .createColor (attributes .COLOR [0]);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent = this .createTangent (attributes .TANGENT);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
@@ -3592,13 +3592,13 @@ function eventsProcessed ()
 
       return geometryNode;
    },
-   createIndexedLineSet ({ attributes, indices, material, targets }, weights, skin, mode, extras)
+   createIndexedLineSet ({ attributes, indices, targets }, weights, skin, mode, extras)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("IndexedLineSet", false);
 
-      geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._color   = this .createColor (attributes .COLOR [0]);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent = this .createTangent (attributes .TANGENT);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
@@ -3679,13 +3679,13 @@ function eventsProcessed ()
 
       return geometryNode;
    },
-   createLineSet ({ attributes, material, targets }, weights, skin, extras)
+   createLineSet ({ attributes, targets }, weights, skin, extras)
    {
       const
          scene        = this .getScene (),
          geometryNode = scene .createNode ("LineSet", false);
 
-      geometryNode ._color   = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._color   = this .createColor (attributes .COLOR [0]);
       geometryNode ._normal  = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent = this .createTangent (attributes .TANGENT);
       geometryNode ._coord   = this .createCoordinate (attributes .POSITION);
@@ -3704,7 +3704,7 @@ function eventsProcessed ()
 
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._index           = indices .array;
-      geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
@@ -3724,7 +3724,7 @@ function eventsProcessed ()
          geometryNode = scene .createNode ("TriangleSet", false);
 
       geometryNode ._solid           = !material ?.doubleSided;
-      geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
@@ -3745,7 +3745,7 @@ function eventsProcessed ()
 
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._index           = indices .array;
-      geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
@@ -3765,7 +3765,7 @@ function eventsProcessed ()
          geometryNode = scene .createNode ("TriangleStripSet", false);
 
       geometryNode ._solid           = !material ?.doubleSided;
-      geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
@@ -3794,7 +3794,7 @@ function eventsProcessed ()
 
       geometryNode ._solid           = !material ?.doubleSided;
       geometryNode ._index           = indices .array;
-      geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
@@ -3814,7 +3814,7 @@ function eventsProcessed ()
          geometryNode = scene .createNode ("TriangleFanSet", false);
 
       geometryNode ._solid           = !material ?.doubleSided;
-      geometryNode ._color           = this .createColor (attributes .COLOR [0], material);
+      geometryNode ._color           = this .createColor (attributes .COLOR [0]);
       geometryNode ._texCoord        = this .createMultiTextureCoordinate (attributes .TEXCOORD, material);
       geometryNode ._normal          = this .createNormal (attributes .NORMAL);
       geometryNode ._tangent         = this .createTangent (attributes .TANGENT);
@@ -3842,7 +3842,7 @@ function eventsProcessed ()
          ["VEC4", "ColorRGBA"],
       ]);
 
-      return function (color, material)
+      return function (color)
       {
          if (!(color instanceof Object))
             return null;
@@ -3856,14 +3856,10 @@ function eventsProcessed ()
             return color .colorNode;
 
          const
-            scene          = this .getScene (),
-            appearanceNode = this .materialObject ({ material }),
-            opaque         = appearanceNode ._alphaMode .getValue () === "OPAQUE",
-            colorNode      = scene .createNode (opaque ? "Color" : typeName, false);
+            scene     = this .getScene (),
+            colorNode = scene .createNode (typeName, false);
 
-         colorNode ._color = opaque && typeName !== "Color"
-            ? color .array .filter ((_, i) => (i + 1) % 4)
-            : color .array;
+         colorNode ._color = color .array;
 
          colorNode .setup ();
 
@@ -4146,7 +4142,24 @@ function eventsProcessed ()
 
       if (colorNode)
       {
-         // TODO: Handle color.
+         // TODO: Handle different color types.
+
+         const skinColorNode = skin .colorNode;
+
+         if (skinColorNode)
+         {
+            if (colorNode .getType () .at (-1) === skinColorNode .getType () .at (-1))
+            {
+               skinColorNode ._color .length = start;
+               skinColorNode ._color         = skinColorNode ._color .concat (colorNode ._color);
+
+               geometryNode ._color = skinColorNode;
+            }
+         }
+         else
+         {
+            skin .colorNode = colorNode;
+         }
       }
 
       if (textureCoordinateNode)
