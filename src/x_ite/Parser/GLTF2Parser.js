@@ -4135,8 +4135,13 @@ function eventsProcessed ()
          skinCoordinateNode    = skin .coordinateNode,
          start                 = skinCoordinateNode ._point .length;
 
-      geometryNode ._coordIndex &&= geometryNode ._coordIndex .shrinkToFit () .map (index => index < 0 ? -1 : start + index);
-      geometryNode ._index      &&= geometryNode ._index      .shrinkToFit () .map (index => start + index);
+      geometryNode ._coordIndex &&= geometryNode ._coordIndex
+         .shrinkToFit ()
+         .map (index => index < 0 ? -1 : start + index);
+
+      geometryNode ._index &&= geometryNode ._index
+         .shrinkToFit ()
+         .map (index => start + index);
 
       if (textureCoordinateNode)
       {
