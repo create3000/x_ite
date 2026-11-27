@@ -4125,17 +4125,14 @@ function eventsProcessed ()
          return;
 
       const
-         skinCoordinateNode    = skin .coordinateNode,
-         start                 = skinCoordinateNode ._point .length,
          textureCoordinateNode = geometryNode ._texCoord ?.getValue (),
          normalNode            = geometryNode ._normal ?.getValue (),
-         coordinateNode        = geometryNode ._coord ?.getValue ();
+         coordinateNode        = geometryNode ._coord ?.getValue (),
+         skinCoordinateNode    = skin .coordinateNode,
+         start                 = skinCoordinateNode ._point .length;
 
-      if (geometryNode ._coordIndex)
-         geometryNode ._coordIndex = geometryNode ._coordIndex .map (index => index < 0 ? -1 : index + start);
-
-      if (geometryNode ._index)
-         geometryNode ._index = geometryNode ._index .map (index => index < 0 ? -1 : index + start);
+      geometryNode ._coordIndex &&= geometryNode ._coordIndex .map (index => index < 0 ? -1 : index + start);
+      geometryNode ._index      &&= geometryNode ._index      .map (index => index + start);
 
       if (textureCoordinateNode)
       {
