@@ -3997,7 +3997,7 @@ function eventsProcessed ()
    {
       this .targetsArray (geometryNode, targets, weights, extras);
       this .attributesJointsArray (skin, attributes .JOINTS, attributes .WEIGHTS);
-      this .skinGeometry (skin, geometryNode);
+      this .skinGeometry (geometryNode, skin);
    },
    targetsArray (geometryNode, targets, weights, extras)
    {
@@ -4119,7 +4119,7 @@ function eventsProcessed ()
          }
       }
    },
-   skinGeometry (skin, geometryNode)
+   skinGeometry (geometryNode, skin)
    {
       if (!(skin instanceof Object))
          return;
