@@ -4245,7 +4245,7 @@ function eventsProcessed ()
                   else
                   {
                      if (start)
-                        addPadding (texCoordNode ._point, start);
+                        addPadding (texCoordNode .point, start);
 
                      sharedNodes [texCoordNode .mapping] = texCoordNode .getValue ();
                   }
