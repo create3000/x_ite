@@ -4049,19 +4049,67 @@ function eventsProcessed ()
 
       geometryNode ._targets = morphTargetsNode;
    },
-   attributesJointsArray (skin, joints, weights)
+   attributesJointsArray (skin, joints_n, weights_n)
    {
       if (!(skin instanceof Object))
          return;
 
-      if (!Array .isArray (joints))
+      if (!Array .isArray (joints_n))
          return;
 
-      if (!Array .isArray (weights))
+      if (!Array .isArray (weights_n))
          return;
 
-      for (const [i, joint] of joints .entries ())
-         this .attributesJointsObject (skin, joint, weights [i]);
+      this .normalizeWeights (weights_n);
+
+      for (const [i, joint] of joints_n .entries ())
+         this .attributesJointsObject (skin, joint, weights_n [i]);
+   },
+   normalizeWeights (weights_n)
+   {
+      const sums = [ ];
+
+      for (const weights of weights_n)
+      {
+         if (weights ?.type !== "VEC4")
+            continue;
+
+         const
+            weightsArray = weights .array,
+            numWeights   = weightsArray .length;
+
+         for (let i = 0, s = 0; i < numWeights; i += 4, ++ s)
+         {
+            const
+               w0  = weightsArray [i],
+               w1  = weightsArray [i + 1],
+               w2  = weightsArray [i + 2],
+               w3  = weightsArray [i + 3],
+               sum = w0 + w1 + w2 + w3;
+
+            sums [s] = (sums [s] ?? 0) + sum;
+         }
+      }
+
+      for (const weights of weights_n)
+      {
+         if (weights ?.type !== "VEC4")
+            continue;
+
+         const
+            weightsArray = weights .array,
+            numWeights   = weightsArray .length;
+
+         for (let i = 0, s = 0; i < numWeights; i += 4, ++ s)
+         {
+            const sum = sums [s];
+
+            weightsArray [i]     /= sum;
+            weightsArray [i + 1] /= sum;
+            weightsArray [i + 2] /= sum;
+            weightsArray [i + 3] /= sum;
+         }
+      }
    },
    attributesJointsObject (skin, joints, weights)
    {
