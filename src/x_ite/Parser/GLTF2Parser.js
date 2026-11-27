@@ -2884,34 +2884,16 @@ function eventsProcessed ()
          skin .joints .push (skeleton);
       }
 
-      const commons = this .skeletons .getOrInsert (skin .skeleton [0], { });
+      // Check if skeleton is cloned.
+      const sharedNodes = this .skeletons .getOrInsert (skin .skeleton [0], { });
 
-      commons .childNode      ??= scene .createNode ("Transform",  false);
-      commons .tangentNode    ??= scene .createNode ("Tangent",    false);
-      commons .normalNode     ??= scene .createNode ("Normal",     false);
-      commons .coordinateNode ??= scene .createNode ("Coordinate", false);
+      sharedNodes .childNode ??= scene .createNode ("Transform") .getValue ();
 
-      skin .childNode                  = commons .childNode;
-      skin .tangentNode                = commons .tangentNode;
-      skin .normalNode                 = commons .normalNode;
-      skin .coordinateNode             = commons .coordinateNode;
-      skin .humanoidNode               = scene .createNode ("HAnimHumanoid",          false);
-      skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
-      skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
+      skin .sharedNodes  = sharedNodes;
+      skin .childNode    = sharedNodes .childNode;
+      skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
 
       skin .childNode ._children .push (skin .humanoidNode);
-      skin .textureCoordinateNode ._mapping = "TEXCOORD_0";
-
-      if (skin .childNode ._children .length === 1)
-      {
-         skin .childNode      .setup ();
-         skin .tangentNode    .setup ();
-         skin .normalNode     .setup ();
-         skin .coordinateNode .setup ();
-      }
-
-      skin .textureCoordinateNode      .setup ();
-      skin .multiTextureCoordinateNode .setup ();
    },
    jointsArray (joints, add)
    {
@@ -4090,7 +4072,7 @@ function eventsProcessed ()
          return;
 
       const
-         start        = skin .coordinateNode ._point .length,
+         start        = skin .sharedNodes .coordinateNode ?._point .length ?? 0,
          jointsArray  = joints .array,
          weightsArray = weights .array,
          numPoints    = jointsArray .length / 4;
@@ -4129,8 +4111,8 @@ function eventsProcessed ()
          tangentNode           = geometryNode ._tangent ?.getValue (),
          normalNode            = geometryNode ._normal ?.getValue (),
          coordinateNode        = geometryNode ._coord ?.getValue (),
-         skinCoordinateNode    = skin .coordinateNode,
-         start                 = skinCoordinateNode ._point .length;
+         sharedNodes           = skin .sharedNodes,
+         start                 = sharedNodes .coordinateNode ?._point .length ?? 0;
 
       geometryNode ._coordIndex &&= geometryNode ._coordIndex
          .shrinkToFit ()
@@ -4138,13 +4120,13 @@ function eventsProcessed ()
 
       geometryNode ._index &&= geometryNode ._index
          .shrinkToFit ()
-         .map (index => start + index);
+         .map (index => index < 0 ? -1 : start + index);
 
       if (colorNode)
       {
          // TODO: Handle different color types.
 
-         const skinColorNode = skin .colorNode;
+         const skinColorNode = sharedNodes .colorNode;
 
          if (skinColorNode)
          {
@@ -4158,7 +4140,7 @@ function eventsProcessed ()
          }
          else
          {
-            skin .colorNode = colorNode;
+            sharedNodes .colorNode = colorNode;
          }
       }
 
@@ -4168,44 +4150,41 @@ function eventsProcessed ()
          {
             case X3DConstants .TextureCoordinate:
             {
-               const skinTextureCoordinateNode = skin .textureCoordinateNode;
+               const skinTextureCoordinateNode = sharedNodes [textureCoordinateNode ._mapping .getValue ()];
 
-               skinTextureCoordinateNode ._point .length = start;
-               skinTextureCoordinateNode ._point         = skinTextureCoordinateNode ._point .concat (textureCoordinateNode ._point);
+               if (skinTextureCoordinateNode)
+               {
+                  skinTextureCoordinateNode ._point .length = start;
+                  skinTextureCoordinateNode ._point         = skinTextureCoordinateNode ._point .concat (textureCoordinateNode ._point);
 
-               geometryNode ._texCoord = skinTextureCoordinateNode;
+                  geometryNode ._texCoord = skinTextureCoordinateNode;
+               }
+               else
+               {
+                  sharedNodes [textureCoordinateNode ._mapping .getValue ()] = textureCoordinateNode;
+               }
+
                break;
             }
             case X3DConstants .MultiTextureCoordinate:
             {
-               const skinMultiTextureCoordinateNode = skin .multiTextureCoordinateNode;
-
-               for (const t of textureCoordinateNode ._texCoord)
+               for (const [i, texCoordNode] of textureCoordinateNode ._texCoord .entries ())
                {
-                  let s = skinMultiTextureCoordinateNode ._texCoord .find (s => s .mapping === t .mapping) ?.getValue ();
+                  const skinTextureCoordinateNode = sharedNodes [texCoordNode .mapping];
 
-                  if (!s)
+                  if (skinTextureCoordinateNode)
                   {
-                     if (t .mapping === "TEXCOORD_0")
-                     {
-                        s = skin .textureCoordinateNode;
-                     }
-                     else
-                     {
-                        s           = this .getScene () .createNode ("TextureCoordinate", false);
-                        s ._mapping = t .mapping;
+                     skinTextureCoordinateNode ._point .length = start;
+                     skinTextureCoordinateNode ._point         = skinTextureCoordinateNode ._point .concat (texCoordNode .point);
 
-                        s .setup ();
-                     }
-
-                     skinMultiTextureCoordinateNode ._texCoord .push (s);
+                     textureCoordinateNode ._texCoord [i] = skinTextureCoordinateNode;
                   }
-
-                  s ._point .length = start;
-                  s ._point         = s ._point .concat (t .point);
+                  else
+                  {
+                     sharedNodes [texCoordNode .mapping] = texCoordNode .getValue ();
+                  }
                }
 
-               geometryNode ._texCoord = skinMultiTextureCoordinateNode;
                break;
             }
          }
@@ -4213,29 +4192,52 @@ function eventsProcessed ()
 
       if (tangentNode)
       {
-         const skinTangentNode = skin .tangentNode;
+         const skinTangentNode = sharedNodes .tangentNode;
 
-         skinTangentNode ._vector .length = start;
-         skinTangentNode ._vector         = skinTangentNode ._vector .concat (tangentNode ._vector);
+         if (skinTangentNode)
+         {
+            skinTangentNode ._vector .length = start;
+            skinTangentNode ._vector         = skinTangentNode ._vector .concat (tangentNode ._vector);
 
-         geometryNode ._tangent = skinTangentNode;
+            geometryNode ._tangent = skinTangentNode;
+         }
+         else
+         {
+            sharedNodes .tangentNode = tangentNode;
+         }
       }
 
       if (normalNode)
       {
-         const skinNormalNode = skin .normalNode;
+         const skinNormalNode = sharedNodes .normalNode;
 
-         skinNormalNode ._vector .length = start;
-         skinNormalNode ._vector         = skinNormalNode ._vector .concat (normalNode ._vector);
+         if (skinNormalNode)
+         {
+            skinNormalNode ._vector .length = start;
+            skinNormalNode ._vector         = skinNormalNode ._vector .concat (normalNode ._vector);
 
-         geometryNode ._normal = skinNormalNode;
+            geometryNode ._normal = skinNormalNode;
+         }
+         else
+         {
+            sharedNodes .normalNode = normalNode;
+         }
       }
 
       if (coordinateNode)
       {
-         skinCoordinateNode ._point = skinCoordinateNode ._point .concat (coordinateNode ._point);
+         const skinCoordinateNode = sharedNodes .coordinateNode;
 
-         geometryNode ._coord = skinCoordinateNode;
+         if (skinCoordinateNode)
+         {
+            skinCoordinateNode ._point = skinCoordinateNode ._point .concat (coordinateNode ._point);
+
+            geometryNode ._coord = skinCoordinateNode;
+         }
+         else
+         {
+            sharedNodes .coordinateNode = coordinateNode;
+         }
       }
    },
    createInterpolator (timeSensorNode, node, target, interpolation, times, keyValues, cycleInterval)
