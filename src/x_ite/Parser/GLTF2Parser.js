@@ -2887,10 +2887,12 @@ function eventsProcessed ()
       const commons = this .skeletons .getOrInsert (skin .skeleton [0], { });
 
       commons .childNode      ??= scene .createNode ("Transform",  false);
+      commons .tangentNode    ??= scene .createNode ("Tangent",    false);
       commons .normalNode     ??= scene .createNode ("Normal",     false);
       commons .coordinateNode ??= scene .createNode ("Coordinate", false);
 
       skin .childNode                  = commons .childNode;
+      skin .tangentNode                = commons .tangentNode;
       skin .normalNode                 = commons .normalNode;
       skin .coordinateNode             = commons .coordinateNode;
       skin .humanoidNode               = scene .createNode ("HAnimHumanoid",          false);
@@ -2903,6 +2905,7 @@ function eventsProcessed ()
       if (skin .childNode ._children .length === 1)
       {
          skin .childNode      .setup ();
+         skin .tangentNode    .setup ();
          skin .normalNode     .setup ();
          skin .coordinateNode .setup ();
       }
@@ -4126,6 +4129,7 @@ function eventsProcessed ()
 
       const
          textureCoordinateNode = geometryNode ._texCoord ?.getValue (),
+         tangentNode           = geometryNode ._tangent ?.getValue (),
          normalNode            = geometryNode ._normal ?.getValue (),
          coordinateNode        = geometryNode ._coord ?.getValue (),
          skinCoordinateNode    = skin .coordinateNode,
@@ -4181,6 +4185,16 @@ function eventsProcessed ()
                break;
             }
          }
+      }
+
+      if (tangentNode)
+      {
+         const skinTangentNode = skin .tangentNode;
+
+         skinTangentNode ._vector .length = start;
+         skinTangentNode ._vector         = skinTangentNode ._vector .concat (tangentNode ._vector);
+
+         geometryNode ._tangent = skinTangentNode;
       }
 
       if (normalNode)
