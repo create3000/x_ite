@@ -4140,12 +4140,10 @@ function eventsProcessed ()
          {
             case X3DConstants .TextureCoordinate:
             {
-               const
-                  skinTextureCoordinateNode = skin .textureCoordinateNode,
-                  point                     = skinTextureCoordinateNode ._point;
+               const skinTextureCoordinateNode = skin .textureCoordinateNode;
 
-               for (const [i, p] of textureCoordinateNode ._point .entries ())
-                  point [start + i] = p;
+               skinTextureCoordinateNode ._point .length = start;
+               skinTextureCoordinateNode ._point         = skinTextureCoordinateNode ._point .concat (textureCoordinateNode ._point);
 
                geometryNode ._texCoord = skinTextureCoordinateNode;
                break;
@@ -4175,10 +4173,8 @@ function eventsProcessed ()
                      skinMultiTextureCoordinateNode ._texCoord .push (s);
                   }
 
-                  const point = s ._point;
-
-                  for (const [i, p] of t .point .entries ())
-                     point [start + i] = p;
+                  s ._point .length = start;
+                  s ._point         = s ._point .concat (t .point);
                }
 
                geometryNode ._texCoord = skinMultiTextureCoordinateNode;
@@ -4189,12 +4185,10 @@ function eventsProcessed ()
 
       if (normalNode)
       {
-         const
-            skinNormalNode = skin .normalNode,
-            vector         = skinNormalNode ._vector;
+         const skinNormalNode = skin .normalNode;
 
-         for (const [i, v] of normalNode ._vector .entries ())
-            vector [start + i] = v;
+         skinNormalNode ._vector .length = start;
+         skinNormalNode ._vector         = skinNormalNode ._vector .concat (normalNode ._vector);
 
          geometryNode ._normal = skinNormalNode;
       }
