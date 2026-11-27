@@ -4079,8 +4079,8 @@ function eventsProcessed ()
       if (!Array .isArray (weights))
          return;
 
-      for (let i = 0, length = joints .length; i < length; ++ i)
-         this .attributesJointsObject (skin, joints [i], weights [i]);
+      for (const [i, joint] of joints .entries ())
+         this .attributesJointsObject (skin, joint, weights [i]);
    },
    attributesJointsObject (skin, joints, weights)
    {
