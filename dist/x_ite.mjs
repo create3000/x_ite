@@ -1,7 +1,7 @@
-/* X_ITE v16.8.1 */
+/* X_ITE v16.9.0 */
 var __webpack_modules__ = ({
 
-/***/ 862
+/***/ 593
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 692
+/***/ 675
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 800
+/***/ 255
 (module) {
 
 /**
@@ -18869,7 +18869,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (x_ite_Namespace .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "16.8.1";
+const BROWSER_VERSION_default_ = "16.9.0";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (x_ite_Namespace .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -31238,7 +31238,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (x_ite_Namespace .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(800);
+/* provided dependency */ var libtess = __webpack_require__(255);
 
 
 const Triangle3 =
@@ -48538,7 +48538,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (x_ite_Namespace .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(800);
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(255);
 
 
 
@@ -55315,7 +55315,7 @@ function X3DCoreContext (element)
          const link = document .createElement ("link");
 
          if (!DEVELOPMENT)
-            link .integrity = "sha384-MAr9kMEk8rHQvm6L8WW0ph/qy33A+012CNW7Cp5S31XRn3fpqh/6OxN44YKZUSW8";
+            link .integrity = "sha384-bdXVzIotk3AuJe2uNe0URTaM4ivcFa5lDji38HHo6yF/X8N+aOc8f6JeSboL3PJS";
 
          link .rel         = "stylesheet";
          link .crossOrigin = "anonymous";
@@ -92838,8 +92838,8 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (x_ite_Namespace .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var SuperGif = __webpack_require__(862);
-/* provided dependency */ var APNG = __webpack_require__(692);
+/* provided dependency */ var SuperGif = __webpack_require__(593);
+/* provided dependency */ var APNG = __webpack_require__(675);
 
 
 
@@ -95483,7 +95483,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (x_ite_Namespace .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(800);
+/* provided dependency */ var libtess_libtess = __webpack_require__(255);
 const libtess_default_ = libtess_libtess;
 ;
 
