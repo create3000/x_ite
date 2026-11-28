@@ -161,6 +161,9 @@ Object .assign (Object .setPrototypeOf (PlaneSensor .prototype, X3DDragSensorNod
    {
       try
       {
+         if (!this ._isActive .getValue ())
+            return;
+
          this .motionHit = hit .copy ();
 
          if (this .planeSensor)

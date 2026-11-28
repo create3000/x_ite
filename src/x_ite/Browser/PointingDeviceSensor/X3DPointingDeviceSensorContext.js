@@ -242,8 +242,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       else // WebXR
          hit .type = PointingType .RELEASE;
 
-      this .motion (hit);
-
       // Must advance time, because event are later processed.
       this .advanceOnlyTime ();
 

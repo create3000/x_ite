@@ -80,6 +80,9 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
    },
    set_motion__ (hit)
    {
+      if (!this ._isActive .getValue ())
+         return;
+
       const
          hitRay     = hit .ray .copy () .multLineMatrix (this .invModelViewMatrix),
          trackPoint = new Vector3 ();

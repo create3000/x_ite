@@ -163,6 +163,9 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
    },
    set_motion__ (hit)
    {
+      if (!this ._isActive .getValue ())
+         return;
+
       this .motionHit = hit .copy ();
 
       const
