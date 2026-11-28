@@ -1239,5 +1239,49 @@
       </InterfaceDefinition>
     </ConcreteNode>
 
+    <ConcreteNode name="CoordinateInterpolator1D">
+        <InterfaceDefinition
+              appinfo="CoordinateInterpolator1D generates a series of MFFloat values.">
+          <field name="keyValue"
+              type="MFFloat"
+              accessType="inputOutput"
+              description="Output values for linear interpolation, each corresponding to an input-fraction value in the key array."/>
+          <field name="value_changed"
+              type="MFFloat"
+              accessType="outputOnly"
+              description="Linearly interpolated output value determined by current key time and corresponding keyValue pair."/>
+        </InterfaceDefinition>
+    </ConcreteNode>
+
+    <ConcreteNode name="MorphTargets">
+        <InterfaceDefinition
+              appinfo="MorphTargets holds a set of morph target nodes.">
+          <Inheritance baseType="X3DGeometricPropertyNode"/>
+          <field name="weights"
+              type="MFFloat"
+              accessType="inputOutput"
+              description="Defines the weights for each morph target."/>
+          <field name="targets"
+              type="MFNode"
+              accessType="inputOutput"
+              description="Holds a set of MorphTarget nodes."/>
+        </InterfaceDefinition>
+    </ConcreteNode>
+
+    <ConcreteNode name="MorphTarget">
+        <InterfaceDefinition
+              appinfo="MorphTarget holds displacement information for morphing.">
+          <Inheritance baseType="X3DNode"/>
+          <field name="description"
+              type="SFString"
+              accessType="inputOutput"
+              description="A description of the morph target."/>
+          <field name="displacements"
+              type="MFNode"
+              accessType="inputOutput"
+              description="Holds a set of displacement nodes."/>
+        </InterfaceDefinition>
+    </ConcreteNode>
+
   </ConcreteNodes>
 </X3dUnifiedObjectModel>

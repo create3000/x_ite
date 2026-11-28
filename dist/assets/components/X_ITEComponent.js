@@ -20557,15 +20557,6 @@ materialInfo=getSheenInfo(materialInfo);
 #if defined(X3D_SPECULAR_MATERIAL_EXT)
 materialInfo=getSpecularInfo(materialInfo);
 #endif
-#if defined(X3D_TRANSMISSION_MATERIAL_EXT)
-materialInfo=getTransmissionInfo(materialInfo);
-#endif
-#if defined(X3D_VOLUME_MATERIAL_EXT)
-materialInfo=getVolumeInfo(materialInfo);
-#endif
-#if defined(X3D_SCATTER_MATERIAL_EXT)
-materialInfo=getScatterInfo(materialInfo);
-#endif
 materialInfo.perceptualRoughness=clamp(materialInfo.perceptualRoughness,0.,1.);materialInfo.alphaRoughness=materialInfo.perceptualRoughness*materialInfo.perceptualRoughness;vec3 f_specular_dielectric=vec3(0);vec3 f_diffuse=vec3(0);vec3 f_dielectric_brdf_ibl=vec3(0);float albedoSheenScaling=1.;
 #if defined(X3D_USE_IBL)
 f_diffuse=getDiffuseLight(n)*baseColor.rgb;
@@ -20587,13 +20578,13 @@ return vec4(frontColor,x3d_ScatterMaterialIdEXT);}`
 /* harmony default export */ const Scatter2_glsl = (external_X_ITE_X3D_Namespace_default().add ("Scatter2.glsl", Scatter2_glsl_default_));
 ;// ./src/assets/shaders/webgl2/pbr/SubsurfaceScattering2.glsl.js
 const SubsurfaceScattering2_glsl_default_ = () => /* glsl */ `
-#if defined(X3D_SCATTER_MATERIAL_EXT)
+#if defined(X3D_SCATTER_MATERIAL_EXT)&&!defined(X3D_SCATTER_PASS)
 vec3 multiToSingleScatter(const in vec3 multiscatterColor,const in float scatterStrength,const in float scatterAnisotropy){vec3 rhoMs=multiscatterColor*scatterStrength;vec3 s=4.09712+4.20863*rhoMs-sqrt(9.59217+41.6808*rhoMs+17.7126*rhoMs*rhoMs);s=clamp(s,0.,1.);vec3 zeroInput=vec3(equal(rhoMs,vec3(0)));s=mix(s,vec3(1),zeroInput);vec3 rhoSs=(1.-s*s)/(1.-scatterAnisotropy*s*s);return clamp(rhoSs,0.,1.);}
 #if defined(X3D_VOLUME_MATERIAL_EXT)&&defined(X3D_TRANSMISSION_MATERIAL_EXT)
 #if defined(X3D_USE_IBL)
 vec3 getDiffuseLight(const in vec3 n);
 #endif
-const int SCATTER_VOLUME_STEPS=16;float henyeyGreenstein(const in float g,const in float cosTheta){float gSq=g*g;float denom=1.+gSq-2.*g*cosTheta;return(1.-gSq)/(4.*M_PI*pow(denom,1.5));}vec3 getVolumeSingleScattering(vec3 v,vec3 n,float ior,vec3 attenuationColor,float attenuationDistance,vec3 multiscatterColor,float scatterStrength,float scatterAnisotropy,vec3 frontWorldPos,float thicknessMap,mat4 modelMatrix){vec3 outgoingDir=v;vec3 refractedDir=refract(-outgoingDir,n,1./ior);if(dot(refractedDir,refractedDir)<1e-4)refractedDir=-outgoingDir;float modelScale=length(modelMatrix[0].xyz);float cosRay=1.;float chordLength=thicknessMap*modelScale;vec3 sigma_t=vec3(0);if(attenuationDistance>0.){vec3 attenuation=max(attenuationColor,vec3(1e-4));sigma_t=max(-log(attenuation)/attenuationDistance,vec3(0));}vec3 sigma_s=sigma_t*multiToSingleScatter(multiscatterColor,scatterStrength,scatterAnisotropy);float stepLength=chordLength/float(SCATTER_VOLUME_STEPS);vec3 scattered=vec3(0);for(int i=1;i<=SCATTER_VOLUME_STEPS;++i){float t=(float(i)-.5)*stepLength;vec3 samplePos=frontWorldPos+refractedDir*t;vec3 inscatter=vec3(0);
+const int SCATTER_VOLUME_STEPS=16;float henyeyGreenstein(const in float g,const in float cosTheta){float gSq=g*g;float denom=1.+gSq-2.*g*cosTheta;return(1.-gSq)/(4.*M_PI*pow(denom,1.5));}vec3 getVolumeSingleScattering(const in vec3 v,const in vec3 n,const in float ior,const in vec3 attenuationColor,const in float attenuationDistance,const in vec3 multiscatterColor,const in float scatterStrength,const in float scatterAnisotropy,const in vec3 frontWorldPos,const in float thicknessMap,const in mat4 modelMatrix){vec3 outgoingDir=v;vec3 refractedDir=refract(-outgoingDir,n,1./ior);if(dot(refractedDir,refractedDir)<1e-4)refractedDir=-outgoingDir;float modelScale=length(modelMatrix[0].xyz);float cosRay=1.;float chordLength=thicknessMap*modelScale;vec3 sigma_t=vec3(0);if(attenuationDistance>0.){vec3 attenuation=max(attenuationColor,vec3(1e-4));sigma_t=max(-log(attenuation)/attenuationDistance,vec3(0));}vec3 sigma_s=sigma_t*multiToSingleScatter(multiscatterColor,scatterStrength,scatterAnisotropy);float stepLength=chordLength/float(SCATTER_VOLUME_STEPS);vec3 scattered=vec3(0);for(int i=1;i<=SCATTER_VOLUME_STEPS;++i){float t=(float(i)-.5)*stepLength;vec3 samplePos=frontWorldPos+refractedDir*t;vec3 inscatter=vec3(0);
 #if defined(X3D_LIGHTING)
 for(int l=0;l<X3D_NUM_LIGHTS;++l){x3d_LightSourceParameters light=x3d_LightSource[l];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-samplePos;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}vec3 lightIntensity=getLightIntensity(light,normalize(pointToLight),distanceToLight);float lightDist=max(length(pointToLight),1e-4);vec3 lightDir=-pointToLight/lightDist;float phase=henyeyGreenstein(scatterAnisotropy,dot(lightDir,outgoingDir));inscatter+=lightIntensity*phase;}
 #endif
@@ -20602,9 +20593,7 @@ inscatter+=getDiffuseLight(n)/M_PI;
 #endif
 inscatter*=sigma_s;vec3 transmittance=exp(-sigma_t*t*(1.+cosRay));scattered+=inscatter*transmittance*stepLength;}return scattered;}
 #endif
-#if!defined(X3D_SCATTER_PASS)
 uniform vec3 x3d_ScatterSamplesEXT[X3D_SCATTER_SAMPLES_COUNT_EXT];uniform float x3d_ScatterMinRadiusEXT;uniform sampler2D x3d_ScatterSamplerEXT;uniform sampler2D x3d_ScatterDepthSamplerEXT;const float M_1_PI=1./M_PI;vec3 burley_setup(const in vec3 radius,const in vec3 albedo){vec3 a=albedo-.8;vec3 s=1.9-albedo+3.5*(a*a);vec3 l=.25*M_1_PI*radius;return l/s;}vec3 burley_eval(const in vec3 d,const in float r){vec3 exp_r_3_d=exp(-r/(3.*d));vec3 exp_r_d=exp_r_3_d*exp_r_3_d*exp_r_3_d;return(exp_r_d+exp_r_3_d)/(4.*d);}vec3 getSubsurfaceScattering(const in vec3 vertex,const in mat4 projectionMatrix,const in float attenuationDistance,const in vec3 multiscatterColor,const in float scatterStrength,const in float scatterAnisotropy,const in vec3 singleScatter,const in vec4 fragCoord){vec3 multiScatter=scatterStrength*multiscatterColor;vec3 scatterDistance=attenuationDistance*mix(multiScatter,singleScatter,abs(scatterAnisotropy));float maxColor=max3(scatterDistance);vec3 vMaxColor=max(vec3(maxColor),vec3(.00001));vec2 texelSize=1./vec2(x3d_Viewport.zw);mat4 invProjectionMatrix=inverse(projectionMatrix);vec2 uv=fragCoord.xy*texelSize;vec4 centerSample=textureLod(x3d_ScatterSamplerEXT,uv,0.);float centerDepth=textureLod(x3d_ScatterDepthSamplerEXT,uv,0.).r;centerDepth=centerDepth*2.-1.;vec2 clipUV=uv*2.-1.;vec4 clipSpacePosition=vec4(clipUV.xy,centerDepth,1.);vec4 upos=invProjectionMatrix*clipSpacePosition;vec3 fragViewPosition=upos.xyz/upos.w;upos=invProjectionMatrix*vec4(clipUV.x+texelSize.x,clipUV.y,centerDepth,1.);vec3 offsetViewPosition=upos.xyz/upos.w;float mPerPixel=distance(fragViewPosition,offsetViewPosition);float maxRadiusPixels=maxColor/mPerPixel;if(maxRadiusPixels<=1.)return centerSample.rgb*multiscatterColor;centerDepth=fragViewPosition.z;vec3 totalWeight=vec3(0);vec3 totalDiffuse=vec3(0);vec3 clampedScatterDistance=max(vec3(x3d_ScatterMinRadiusEXT),scatterDistance/maxColor)*maxColor;vec3 d=burley_setup(clampedScatterDistance,vec3(1));for(int i=0;i<X3D_SCATTER_SAMPLES_COUNT_EXT;++i){vec3 scatterSample=x3d_ScatterSamplesEXT[i];float fabAngle=scatterSample.x;float r=scatterSample.y*maxRadiusPixels*texelSize.x;float rcpPdf=scatterSample.z;vec2 sampleCoords=vec2(cos(fabAngle),sin(fabAngle))*r;vec2 sampleUV=uv+sampleCoords;vec4 textureSample=textureLod(x3d_ScatterSamplerEXT,sampleUV,0.);if(centerSample.w!=textureSample.w)continue;float sampleDepth=textureLod(x3d_ScatterDepthSamplerEXT,sampleUV,0.).r;sampleDepth=sampleDepth*2.-1.;vec2 sampleClipUV=sampleUV*2.-1.;vec4 sampleUpos=invProjectionMatrix*vec4(sampleClipUV.xy,sampleDepth,1.);vec3 sampleViewPosition=sampleUpos.xyz/sampleUpos.w;float sampleDistance=distance(sampleViewPosition,fragViewPosition);vec3 weight=burley_eval(d,sampleDistance)*rcpPdf;totalWeight+=weight;totalDiffuse+=weight*textureSample.rgb;}totalWeight=max(totalWeight,vec3(.0001));return totalDiffuse/totalWeight*multiscatterColor;}
-#endif
 #endif
 `
 ;
@@ -20664,15 +20653,15 @@ Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X_I
 
       this ._scatterStrength          .addInterest ("set_scatterStrength__",          this);
       this ._scatterStrengthTexture   .addInterest ("set_scatterStrengthTexture__",   this);
-      this ._scatterAnisotropy        .addInterest ("set_scatterAnisotropy__",        this);
       this ._multiscatterColor        .addInterest ("set_multiscatterColor__",        this);
       this ._multiscatterColorTexture .addInterest ("set_multiscatterColorTexture__", this);
+      this ._scatterAnisotropy        .addInterest ("set_scatterAnisotropy__",        this);
 
       this .set_scatterStrength__ ();
       this .set_scatterStrengthTexture__ ();
-      this .set_scatterAnisotropy__ ();
       this .set_multiscatterColor__ ();
       this .set_multiscatterColorTexture__ ();
+      this .set_scatterAnisotropy__ ();
    },
    set_scatterStrength__ ()
    {
@@ -20684,10 +20673,6 @@ Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X_I
 
       this .addTexture (0, this .scatterStrengthTextureNode);
    },
-   set_scatterAnisotropy__ ()
-   {
-      this .scatterAnisotropy = external_X_ITE_X3D_Algorithm_default().clamp (this ._scatterAnisotropy .getValue (), -1, 1);
-   },
    set_multiscatterColor__ ()
    {
       this .multiscatterColorArray .set (this ._multiscatterColor .getValue ());
@@ -20697,6 +20682,10 @@ Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X_I
       this .multiscatterColorTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._multiscatterColorTexture);
 
       this .addTexture (1, this .multiscatterColorTextureNode);
+   },
+   set_scatterAnisotropy__ ()
+   {
+      this .scatterAnisotropy = external_X_ITE_X3D_Algorithm_default().clamp (this ._scatterAnisotropy .getValue (), -1, 1);
    },
    getExtensionKey ()
    {
@@ -20719,8 +20708,8 @@ Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X_I
    {
       uniforms .push ("x3d_ScatterMaterialIdEXT");
       uniforms .push ("x3d_ScatterStrengthEXT");
-      uniforms .push ("x3d_ScatterAnisotropyEXT");
       uniforms .push ("x3d_MultiscatterColorEXT");
+      uniforms .push ("x3d_ScatterAnisotropyEXT");
       uniforms .push ("x3d_ScatterSamplesEXT");
       uniforms .push ("x3d_ScatterMinRadiusEXT");
       uniforms .push ("x3d_ScatterSamplerEXT");
@@ -20729,6 +20718,20 @@ Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X_I
    setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       const browser = this .getBrowser ();
+
+      if (shaderObject .scatterPass)
+      {
+         gl .uniform1f (shaderObject .x3d_ScatterMaterialIdEXT, browser .getShapeId ());
+         return;
+      }
+
+      gl .uniform1f  (shaderObject .x3d_ScatterStrengthEXT,   this .scatterStrength);
+      gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
+      gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
+      gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    X_ITE_ScatterSamples .SCATTER_SAMPLES);
+      gl .uniform1f  (shaderObject .x3d_ScatterMinRadiusEXT,  X_ITE_ScatterSamples .SCATTER_MIN_RADIUS);
+
+      // Textures
 
       this .scatterStrengthTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject .x3d_ScatterStrengthTextureEXT,
@@ -20741,19 +20744,6 @@ Object .assign (Object .setPrototypeOf (ScatterMaterialExtension .prototype, X_I
          this ._multiscatterColorTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
-
-      if (shaderObject .scatterPass)
-      {
-         gl .uniform1f  (shaderObject .x3d_ScatterMaterialIdEXT, browser .getShapeId ());
-         gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
-         return;
-      }
-
-      gl .uniform1f  (shaderObject .x3d_ScatterStrengthEXT,   this .scatterStrength);
-      gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
-      gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
-      gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    X_ITE_ScatterSamples .SCATTER_SAMPLES);
-      gl .uniform1f  (shaderObject .x3d_ScatterMinRadiusEXT,  X_ITE_ScatterSamples .SCATTER_MIN_RADIUS);
 
       // Set scatter framebuffer textures.
 
@@ -20784,10 +20774,10 @@ Object .defineProperties (ScatterMaterialExtension,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterStrength",                 new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterStrengthTextureMapping",   new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterStrengthTexture",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterAnisotropy",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "multiscatterColor",               new (external_X_ITE_X3D_Fields_default()).SFColor ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "multiscatterColorTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "multiscatterColorTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterAnisotropy",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
       ]),
       enumerable: true,
    },

@@ -1269,6 +1269,7 @@ declare namespace X3D
       readonly CoordinateDamper: number;
       readonly CoordinateDouble: number;
       readonly CoordinateInterpolator: number;
+      readonly CoordinateInterpolator1D: number;
       readonly CoordinateInterpolator2D: number;
       readonly Cylinder: number;
       readonly CylinderSensor: number;
@@ -1360,6 +1361,8 @@ declare namespace X3D
       readonly MetadataSet: number;
       readonly MetadataString: number;
       readonly MicrophoneSource: number;
+      readonly MorphTarget: number;
+      readonly MorphTargets: number;
       readonly MotorJoint: number;
       readonly MovieTexture: number;
       readonly MultiTexture: number;
@@ -6842,6 +6845,23 @@ declare namespace X3D
        * This field is of access type 'outputOnly' and type MFVec3f.
        */
       readonly value_changed: MFVec3f;
+   }
+
+   /** CoordinateInterpolator1D generates a series of MFFloat values. */
+   interface CoordinateInterpolator1DProxy extends SFNode
+   {
+      /**
+       * Output values for linear interpolation, each corresponding to an input-fraction value in the key array.
+       *
+       * This field is of access type 'inputOutput' and type MFFloat.
+       */
+      keyValue: MFFloat;
+      /**
+       * Linearly interpolated output value determined by current key time and corresponding keyValue pair.
+       *
+       * This field is of access type 'outputOnly' and type MFFloat.
+       */
+      readonly value_changed: MFFloat;
    }
 
    /** CoordinateInterpolator2D generates a series of SFVec2f or MFVec2f 2-tuple float values. */
@@ -13477,6 +13497,40 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFTime.
        */
       stopTime: number;
+   }
+
+   /** MorphTarget holds displacement information for morphing. */
+   interface MorphTargetProxy extends X3DNodeProxy
+   {
+      /**
+       * A description of the morph target.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * Holds a set of displacement nodes.
+       *
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      displacements: MFNode <SFNode>;
+   }
+
+   /** MorphTargets holds a set of morph target nodes. */
+   interface MorphTargetsProxy extends X3DGeometricPropertyNodeProxy
+   {
+      /**
+       * Holds a set of MorphTarget nodes.
+       *
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      targets: MFNode <SFNode>;
+      /**
+       * Defines the weights for each morph target.
+       *
+       * This field is of access type 'inputOutput' and type MFFloat.
+       */
+      weights: MFFloat;
    }
 
    /** MotorJoint drives relative angular velocities between body1 and body2 within a common reference frame. */
@@ -23927,6 +23981,7 @@ declare namespace X3D
       CoordinateDamper: CoordinateDamperProxy,
       CoordinateDouble: CoordinateDoubleProxy,
       CoordinateInterpolator: CoordinateInterpolatorProxy,
+      CoordinateInterpolator1D: CoordinateInterpolator1DProxy,
       CoordinateInterpolator2D: CoordinateInterpolator2DProxy,
       Cylinder: CylinderProxy,
       CylinderSensor: CylinderSensorProxy,
@@ -24018,6 +24073,8 @@ declare namespace X3D
       MetadataSet: MetadataSetProxy,
       MetadataString: MetadataStringProxy,
       MicrophoneSource: MicrophoneSourceProxy,
+      MorphTarget: MorphTargetProxy,
+      MorphTargets: MorphTargetsProxy,
       MotorJoint: MotorJointProxy,
       MovieTexture: MovieTextureProxy,
       MultiTexture: MultiTextureProxy,

@@ -301,7 +301,6 @@ var external_X_ITE_X3D_ShaderRegistry_default = /*#__PURE__*/__webpack_require__
 ;// ./src/assets/shaders/webgl2/common/Skin2.glsl.js
 const Skin2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_SKINNING)
-in uint x3d_CoordIndex;
 #if X3D_NUM_JOINT_SETS>0
 uniform sampler2D x3d_JointsTexture;
 #endif

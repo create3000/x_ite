@@ -2821,7 +2821,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
    {
       return Math .floor (NURBS_NURBS .getTessellation (this ._uTessellation .getValue (), this ._uDimension .getValue ()) * this .tessellationScale);
    },
-   getVTessellation (numWeights)
+   getVTessellation (/* numWeights */)
    {
       return Math .floor (NURBS_NURBS .getTessellation (this ._vTessellation .getValue (), this ._vDimension .getValue ()) * this .tessellationScale);
    },
